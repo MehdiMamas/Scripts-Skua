@@ -2711,11 +2711,13 @@ public class CoreFarms
             if (FactionRank("Loremaster") < 3)
             {
                 Core.Logger("Geting r3 Loremaster rep for the member quests");
-
+                Core.RegisterQuests(7505);
                 while (!Bot.ShouldExit && FactionRank("Loremaster") < 3)
                 {
                     Core.HuntMonster("wardwarf", "Drow Assassin", "Poisoned Dagger", 4, log: false);
                     Core.HuntMonster("wardwarf", "D'wain Jonsen", "Scroll: Opportunity's Strike", log: false);
+                    Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
+                    Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
                     Bot.Wait.ForQuestAccept(7505);
                 }
             }
@@ -2746,7 +2748,12 @@ public class CoreFarms
             Core.EquipClass(ClassType.Solo);
             Core.RegisterQuests(3032);
             while (!Bot.ShouldExit && FactionRank("Loremaster") < rank)
+            {
                 Core.KillMonster("druids", "r5", "Left", "Young Void Giant", log: false);
+                Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
+                Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
+                Bot.Wait.ForQuestAccept(3032);
+            }
         }
         else
         {
@@ -2755,11 +2762,13 @@ public class CoreFarms
             {
                 Core.HuntMonster("wardwarf", "Drow Assassin", "Poisoned Dagger", 4, log: false);
                 Core.HuntMonster("wardwarf", "D'wain Jonsen", "Scroll: Opportunity's Strike", log: false);
+                Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
+                Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
                 Bot.Wait.ForQuestAccept(7505);
             }
         }
 
-        Core.CancelRegisteredQuests();
+        Bot.Quests.UnregisterQuests(3032, 7505);
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
     }
