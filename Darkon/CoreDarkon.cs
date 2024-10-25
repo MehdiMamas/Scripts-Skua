@@ -42,7 +42,7 @@ public class CoreDarkon
 
         Core.RegisterQuests(7324);
         while (!Bot.ShouldExit && !Core.CheckInventory("Darkon's Receipt", Quantity))
-            Core.HuntMonster("arcangrove", "Gorillaphant", "Banana", 22, false, log: false);
+            Core.KillMonster("arcangrove", "LeftBack", "Left", "Gorillaphant", "Banana", 22, false, false);
         Core.CancelRegisteredQuests();
     }
 
