@@ -1392,7 +1392,7 @@
       "laewed"
     ],
     "path": "Story/LaeWedding.cs",
-    "size": 2765,
+    "size": 3351,
     "fileName": "LaeWedding.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/LaeWedding.cs"
   },
@@ -16496,6 +16496,35 @@
     "size": 5598,
     "fileName": "TrenchObserveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/TrenchObserveMerge.cs"
+  },
+  {
+    "name": "Lae Wedding Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Lae Wedding Merge [2496] in /laewed",
+    "tags": [
+      "lae",
+      "wedding",
+      "merge",
+      "laewed",
+      "gothic",
+      "altar",
+      "tender",
+      "dark",
+      "wings",
+      "spear",
+      "undying",
+      "love",
+      "chalice",
+      "chalices",
+      "hollowborn",
+      "witch",
+      "witchs",
+      "broom",
+      "shadow"
+    ],
+    "path": "Other/MergeShops/LaeWeddingMerge.cs",
+    "size": 4872,
+    "fileName": "LaeWeddingMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/LaeWeddingMerge.cs"
   },
   {
     "name": "BattleConGearMerge",
