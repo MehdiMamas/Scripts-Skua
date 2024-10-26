@@ -135,6 +135,7 @@ tags: story, quest, complete, all
 
 //cs_include Scripts/Story/J6Saga.cs
 
+//cs_include Scripts/Story/LaeWedding.cs
 //cs_include Scripts/Story/Lair.cs
 //cs_include Scripts/Story/Lightguard[MEM].cs
 //cs_include Scripts/Story/LightoviaCave.cs
@@ -350,6 +351,7 @@ public class AllStories
 
     public IcePlane IcePlane = new();
 
+    public LaeWedding LaeWedding = new();
     public Lair Lair = new();
     public Lightguard Lightguard = new();
     public LightoviaCave LightoviaCave = new();
@@ -789,6 +791,9 @@ public class AllStories
         J6Saga.J6();
         Core.Logger($"Sage: J6 - Complete");
 
+
+        LaeWedding.Storyline();
+        Core.Logger($"Story: Lae's Wedding - Complete");
 
         Lair.DoAll();
         Core.Logger($"Story: Lair - Complete");
