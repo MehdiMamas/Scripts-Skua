@@ -1380,6 +1380,23 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ArtixWedding.cs"
   },
   {
+    "name": "Lae Wedding Story",
+    "description": "This will finish the Lae Wedding Story.",
+    "tags": [
+      "story",
+      "quest",
+      "lae-wedding",
+      "they",
+      "lae",
+      "wedding",
+      "laewed"
+    ],
+    "path": "Story/LaeWedding.cs",
+    "size": 2765,
+    "fileName": "LaeWedding.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/LaeWedding.cs"
+  },
+  {
     "name": "Lightovia Cave Story",
     "description": "This will finish the Lightovia Cave Story.",
     "tags": [
