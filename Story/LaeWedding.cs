@@ -12,6 +12,20 @@ public class LaeWedding
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public CoreStory Story = new();
+    public string[] UseableMonsters { get; private set; }
+
+    public LaeWedding()
+    {
+        UseableMonsters = new[]
+        {
+            "Possessed Rat", // UseableMonsters[0],
+            "Possessed Spider", // UseableMonsters[1],
+            "Vengeful Spirit", // UseableMonsters[2],
+            "Wrathful Spirit", // UseableMonsters[3],
+            "Haunted Closet", // UseableMonsters[4],
+            "Blood Witch", // UseableMonsters[5]
+        };
+    }
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -29,17 +43,17 @@ public class LaeWedding
 
         Story.PreLoad(this);
 
-        #region Useable Monsters
-        string[] UseableMonsters = new[]
-        {
-    "Possessed Rat", // UseableMonsters[0],
-	"Possessed Spider", // UseableMonsters[1],
-	"Vengeful Spirit", // UseableMonsters[2],
-	"Wrathful Spirit", // UseableMonsters[3],
-	"Haunted Closet", // UseableMonsters[4],
-	"Blood Witch", // UseableMonsters[5]
-};
-        #endregion Useable Monsters
+        //         #region Useable Monsters
+        //         string[] UseableMonsters = new[]
+        //         {
+        //     "Possessed Rat", // UseableMonsters[0],
+        // 	"Possessed Spider", // UseableMonsters[1],
+        // 	"Vengeful Spirit", // UseableMonsters[2],
+        // 	"Wrathful Spirit", // UseableMonsters[3],
+        // 	"Haunted Closet", // UseableMonsters[4],
+        // 	"Blood Witch", // UseableMonsters[5]
+        // };
+        //         #endregion Useable Monsters
 
         // 9944 | Wedding Reception
         Story.MapItemQuest(9944, "laewed", new[] { 13769, 13770 });
