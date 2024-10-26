@@ -43,18 +43,6 @@ public class LaeWedding
 
         Story.PreLoad(this);
 
-        //         #region Useable Monsters
-        //         string[] UseableMonsters = new[]
-        //         {
-        //     "Possessed Rat", // UseableMonsters[0],
-        // 	"Possessed Spider", // UseableMonsters[1],
-        // 	"Vengeful Spirit", // UseableMonsters[2],
-        // 	"Wrathful Spirit", // UseableMonsters[3],
-        // 	"Haunted Closet", // UseableMonsters[4],
-        // 	"Blood Witch", // UseableMonsters[5]
-        // };
-        //         #endregion Useable Monsters
-
         // 9944 | Wedding Reception
         Story.MapItemQuest(9944, "laewed", new[] { 13769, 13770 });
 
