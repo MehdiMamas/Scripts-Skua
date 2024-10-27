@@ -969,8 +969,19 @@ public class CoreNation
         if (item != null && Core.CheckInventory(item, quant))
             return;
 
-        Quest Swindles = Bot.Quests.EnsureLoad(7551);
-        Quest Assistant = Bot.Quests.EnsureLoad(2859);
+        Quest? Swindles = Bot.Quests.EnsureLoad(7551);
+        if (Swindles == null)
+        {
+            Core.Logger("Failed to load quest 7551.");
+            return;
+        }
+
+        Quest? Assistant = Bot.Quests.EnsureLoad(2859);
+        if (Assistant == null)
+        {
+            Core.Logger("Failed to load quest 2859.");
+            return;
+        }
 
         // List of available drops for "The Assistant" quest
         string[] selectedDrops = item != null ? new string[] { item } : bagDrops[..^11];
@@ -986,8 +997,16 @@ public class CoreNation
         //handle quant if it goes over max stack.
         if (item != null && quant > 0)
         {
-            var maxStack = Assistant.Rewards.FirstOrDefault(x => x.Name == item).MaxStack;
-            quant = quant > maxStack ? maxStack : quant;
+            var reward = Assistant.Rewards.FirstOrDefault(x => x.Name == item);
+            if (reward != null)
+            {
+                var maxStack = reward.MaxStack;
+                quant = quant > maxStack ? maxStack : quant;
+            }
+            else
+            {
+                Core.Logger($"Reward item \"{item}\" not found.");
+            }
         }
 
         // Check if return policy and sell voucher are active
@@ -1009,8 +1028,17 @@ public class CoreNation
         if (returnPolicyDuringSupplies && Reward != SwindlesReturnReward.None)
         {
             Core.RegisterQuests(7551);
-            Core.Logger($"Swindle's Reward: \"{Reward.ToString().Replace('_', ' ')}\", Quantity: {Bot.Inventory.GetQuantity((int)Reward)}/{Bot.Quests.EnsureLoad(7551).Rewards.FirstOrDefault(x => x.ID == (int)Reward).MaxStack}");
+            var quest = Bot.Quests.EnsureLoad(7551);
+            var rewardItem = quest?.Rewards.FirstOrDefault(x => x.ID == (int)Reward);
 
+            if (rewardItem != null)
+            {
+                Core.Logger($"Swindle's Reward: \"{Reward.ToString().Replace('_', ' ')}\", Quantity: {Bot.Inventory.GetQuantity((int)Reward)}/{rewardItem.MaxStack}");
+            }
+            else
+            {
+                Core.Logger($"Reward item with ID {(int)Reward} not found in quest 7551.");
+            }
         }
 
         if (item == null)
