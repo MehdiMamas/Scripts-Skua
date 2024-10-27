@@ -222,26 +222,26 @@ public class ArmyGold
         Core.AddDrop("Wisper");
         Core.RegisterQuests(9421, 9422, 9426);
 
-        if (Bot.Config!.Get<Method>("mapname") == Method.ShadowBattleon_Baby_Mode)
+        if (Bot.Config!.Get<Method>("mapname") == Method.ShadowBattleonBabyMode)
             Core.RegisterQuests(9421, 9422, 9423);
         else
             Core.RegisterQuests(9421, 9422, 9426);
 
         Core.Logger($"Mode Selected: {Bot.Config!.Get<Method>("mapname")}");
 
-        if (Bot.Config!.Get<Method>("mapname") == Method.ShadowBattleon_High_Levels)
+        if (Bot.Config!.Get<Method>("mapname") == Method.ShadowBattleonHighLevels)
         {
             Army.AggroMonCells("r11", "r12");
             Army.AggroMonStart("shadowbattleon");
             Army.DivideOnCells("r11", "r12");
         }
-        if (Bot.Config!.Get<Method>("mapname") == Method.ShadowBattleon_Lower_Levels)
+        if (Bot.Config!.Get<Method>("mapname") == Method.ShadowBattleonLowerLevels)
         {
             Army.AggroMonCells("r11");
             Army.AggroMonStart("shadowbattleon");
             Army.DivideOnCells("r11");
         }
-        else if (Bot.Config!.Get<Method>("mapname") == Method.ShadowBattleon_Baby_Mode)
+        else if (Bot.Config!.Get<Method>("mapname") == Method.ShadowBattleonBabyMode)
         {
             Army.AggroMonCells("Enter");
             Army.AggroMonStart("shadowbattleon");
