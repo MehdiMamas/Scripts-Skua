@@ -969,6 +969,9 @@ public class CoreNation
         if (item != null && Core.CheckInventory(item, quant))
             return;
 
+        Quest Swindles = Bot.Quests.EnsureLoad(7551);
+        Quest Assistant = Bot.Quests.EnsureLoad(2859);
+
         // List of available drops for "The Assistant" quest
         string[] selectedDrops = item != null ? new string[] { item } : bagDrops[..^11];
         Core.AddDrop(selectedDrops);
@@ -979,6 +982,13 @@ public class CoreNation
         //if running standalone, add the reward slection.
         if (Reward != SwindlesReturnReward.None)
             Core.AddDrop((int)Reward);
+
+        //handle quant if it goes over max stack.
+        if (item != null && quant > 0)
+        {
+            var maxStack = Assistant.Rewards.FirstOrDefault(x => x.Name == item).MaxStack;
+            quant = quant > maxStack ? maxStack : quant;
+        }
 
         // Check if return policy and sell voucher are active
         sellMemVoucher = Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher) && _sellMemVoucher;
@@ -996,13 +1006,16 @@ public class CoreNation
         }
 
         // Register the "Swindles Return Policy" quest if specified
-        if (returnPolicyDuringSupplies && Reward == SwindlesReturnReward.None)
+        if (returnPolicyDuringSupplies && Reward != SwindlesReturnReward.None)
+        {
             Core.RegisterQuests(7551);
+            Core.Logger($"Swindle's Reward: \"{Reward.ToString().Replace('_', ' ')}\", Quantity: {Bot.Inventory.GetQuantity((int)Reward)}/{Bot.Quests.EnsureLoad(7551).Rewards.FirstOrDefault(x => x.ID == (int)Reward).MaxStack}");
 
-        // Farm all drops if 'item' is null
+        }
+
         if (item == null)
         {
-            Core.Logger("Null method");
+            Core.Logger("Assistant Item = null, maxing the important rewards.");
             foreach (string Thing in selectedDrops)
             {
                 // Find the corresponding item in quest rewards
@@ -1012,6 +1025,7 @@ public class CoreNation
                 if (Item == null)
                     continue;
 
+                Core.FarmingLogger(Item.Name, Item.MaxStack);
                 // Continue farming until the desired item quantity is obtained
                 while (!Bot.ShouldExit && !Core.CheckInventory(Item.Name, Item.MaxStack))
                 {
@@ -1027,7 +1041,7 @@ public class CoreNation
                     if (Core.CheckInventory(rPDSuni) && returnPolicyDuringSupplies)
                     {
                         var rewards2 = Core.EnsureLoad(7551).Rewards;
-                        ItemBase? Item2 = rewards2.Find(x => x.ID == Item.ID);
+                        ItemBase? Item2 = rewards2.Find(x => x.ID == (int)Reward);
 
                         if (Item2 == null)
                             continue;
@@ -1037,7 +1051,7 @@ public class CoreNation
                         Core.EnsureAccept(7551);
                         Core.DarkMakaiItem("Dark Makai Rune");
                         if (Reward != SwindlesReturnReward.None)
-                            Core.EnsureComplete(7551, Item2.ID);
+                            Core.EnsureComplete(7551, (int)Reward);
                     }
                     if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
                         Core.EnsureCompleteMulti(4778);
@@ -1047,8 +1061,7 @@ public class CoreNation
         }
         else
         {
-            Core.Logger("Non-null method");
-            // Continue farming the specified item until the desired quantity is obtained
+            Core.FarmingLogger(item, quant);
             while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             {
                 LogMobItemQuant(item, quant);
@@ -1080,6 +1093,8 @@ public class CoreNation
                     Core.EnsureCompleteMulti(4778);
             }
         }
+        if (returnPolicyDuringSupplies && Reward != SwindlesReturnReward.None)
+            Bot.Quests.UnregisterQuests(7551);
     }
 
     /// <summary>
