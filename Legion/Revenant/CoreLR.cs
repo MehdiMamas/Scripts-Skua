@@ -81,8 +81,11 @@ public class CoreLR
         Core.AddDrop(LF2);
         Core.AddDrop(LF3);
 
+        RevenantSpellscroll(forquest: true);
         RevenantSpellscroll();
+        ConquestWreath(forquest: true);
         ConquestWreath();
+        ExaltedCrown(forquest: true);
         ExaltedCrown();
 
         //if you used insignias other quests arent unlocked(yes people have done this...)
@@ -113,7 +116,7 @@ public class CoreLR
         int i = 1;
         Core.FarmingLogger("Revenant's Spellscroll", quant);
         Bot.Quests.UpdateQuest(2060);
-        while (!Bot.ShouldExit && ((forquest && !Story.QuestProgression(6897)) || !Core.CheckInventory("Revenant's Spellscroll", quant)))
+        while (!Bot.ShouldExit && ((forquest && !Core.isCompletedBefore(6897)) || !Core.CheckInventory("Revenant's Spellscroll", quant)))
         {
             Core.EnsureAccept(6897);
 
@@ -140,10 +143,10 @@ public class CoreLR
     //Legion Fealty 2
     public void ConquestWreath(int quant = 6, bool forquest = false)
     {
-        if (!Story.QuestProgression(6898))
+        if (!Core.isCompletedBefore(6898))
             RevenantSpellscroll(1, true);
 
-        if ((forquest && Story.QuestProgression(6898)) || Core.CheckInventory("Conquest Wreath", quant))
+        if ((forquest && Core.isCompletedBefore(6898)) || Core.CheckInventory("Conquest Wreath", quant))
             return;
 
         Legion.JoinLegion();
@@ -156,7 +159,7 @@ public class CoreLR
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger("Conquest Wreath", quant);
         Bot.Quests.UpdateQuest(4614);
-        while (!Bot.ShouldExit && ((forquest && !Story.QuestProgression(6898)) || !Core.CheckInventory("Conquest Wreath", quant)))
+        while (!Bot.ShouldExit && ((forquest && !Core.isCompletedBefore(6898)) || !Core.CheckInventory("Conquest Wreath", quant)))
         {
             Core.EnsureAccept(6898);
             //Adv.BestGear(RacialGearBoost.Undead);
@@ -187,10 +190,10 @@ public class CoreLR
     //Legion Fealty 3
     public void ExaltedCrown(int quant = 10, bool forquest = false)
     {
-        if (!Story.QuestProgression(6899))
+        if (!Core.isCompletedBefore(6899))
             ConquestWreath(1, true);
 
-        if ((forquest && Story.QuestProgression(6899)) || Core.CheckInventory("Exalted Crown", quant))
+        if ((forquest && Core.isCompletedBefore(6899)) || Core.CheckInventory("Exalted Crown", quant))
             return;
 
         Legion.JoinLegion();
@@ -202,7 +205,7 @@ public class CoreLR
 
         int i = 1;
         Core.FarmingLogger("Exalted Crown", quant);
-        while (!Bot.ShouldExit && ((forquest && !Story.QuestProgression(6899)) || !Core.CheckInventory("Exalted Crown", quant)))
+        while (!Bot.ShouldExit && ((forquest && !Core.isCompletedBefore(6899)) || !Core.CheckInventory("Exalted Crown", quant)))
         {
             Core.EnsureAccept(6899);
 
