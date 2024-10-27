@@ -35,6 +35,12 @@ public class TheAssistant
 
     public void dothing()
     {
+        if (Bot.Config == null)
+        {
+            Core.Logger("Config is null.");
+            return;
+        }
+
         if (Bot.Config.Get<SwindlesReturnReward>("ChooseReward") == SwindlesReturnReward.None)
             return;
 
