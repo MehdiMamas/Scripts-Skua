@@ -74,31 +74,30 @@ public class ArmyGold
         switch ((int)mapname)
         {
             case 0:
-            case 1:
                 BGE(Bot.Config!.Get<Method>("mapname"));
                 break;
-            case 2:
+            case 1:
                 DWL();
                 break;
-            case 3:
+            case 2:
                 DWN();
                 break;
-            case 4:
+            case 3:
                 SCW();
                 break;
-            case 5:
+            case 4:
                 StreamWar();
                 break;
+            case 5:
             case 6:
             case 7:
-            case 8:
                 ShadowBattleon();
                 break;
-            case 9:
+            case 8:
                 HakuWar();
                 break;
 
-            case 10:
+            case 9:
                 PirateBloodWar();
                 break;
         }
@@ -108,9 +107,8 @@ public class ArmyGold
 
     public void BGE(Method mapname)
     {
-        // 1 = bge, 0 = HH
-        if ((int)mapname == 0 && Bot.Player.Level <= 60)
-            Core.Logger("Minimum level 61 required for this map", messageBox: true, stopBot: true);
+        if (mapname == 0 && Bot.Player.Level < 61)
+            Core.Logger($"Minimum level 61 required for this map (Player level: {Bot.Player.Level}).", "Attention Needed. Bot Stopped!", messageBox: true, stopBot: true);
 
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
@@ -368,16 +366,15 @@ public class ArmyGold
     public enum Method
     {
         BattleGroundE = 0,
-        HonorHall = 1,
-        DarkWarLegion = 2,
-        DarkWarNation = 3,
-        SevenCirclesWar = 4,
-        StreamWar = 5,
-        ShadowBattleon_Baby_Mode = 6,
-        ShadowBattleon_Lower_Levels = 7,
-        ShadowBattleon_High_Levels = 8,
-        Haku_War = 9,
-        Pirate_Blood_War = 10
-
+        DarkWarLegion = 1,
+        DarkWarNation = 2,
+        SevenCirclesWar = 3,
+        StreamWar = 4,
+        ShadowBattleonBabyMode = 5,
+        ShadowBattleonLowerLevels = 6,
+        ShadowBattleonHighLevels = 7,
+        HakuWar = 8,
+        PirateBloodWar = 9
     }
+
 }
