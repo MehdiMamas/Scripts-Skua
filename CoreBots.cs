@@ -205,9 +205,12 @@ public class CoreBots
             Bot.Events.ExtensionPacketReceived += RespawnListener;
 
             Bot.Drops.Start();
-
             Logger("Bot Configured");
-
+            if (Bot.Map.Name != null && Bot.Map.Name == "oaklore")
+            {
+                Logger("We started in oaklore... starting scripts here can cause \"issues\"... we're not sure why, but this happens, but hopefully this fixes that.\n \tTeleporting to \"battleon\"\n\n");
+                Join("battleon-100000");
+            }
             // Bunch of things that are done in the background and you dont need the bot to wait for 
             void SetOptionsAsync()
             {
@@ -434,7 +437,8 @@ public class CoreBots
                         Bot.Flash.CallGameFunction("world.toggleMonsters");
                 }
 
-                Bot.Options.CustomName = Username().ToUpper();
+                Bot.Options.CustomName = Bot.Player.Username ?? Username().ToUpper();
+                // Bot.Options.CustomName = Username().ToUpper();
                 string? guild = Bot.Flash.GetGameObject<string>("world.myAvatar.objData.guild.Name");
                 Bot.Options.CustomGuild = guild != null ? $"< {guild} >" : string.Empty;
 
@@ -4647,8 +4651,7 @@ public class CoreBots
             switch (Bot.Map.Name)
             {
                 case "oaklore":
-                    if (HasWebBadge("Travel"))
-                        blackListedCells.UnionWith(HasWebBadge("Travel") ? new[] { "Enter" } : new[] { "r1" });
+                    blackListedCells.UnionWith(new[] { "Enter", "r1" });
                     break;
 
                 case "pyrewatch":
@@ -4732,9 +4735,9 @@ public class CoreBots
     public void Join(string? map, string? cell = null, string pad = "Spawn", bool publicRoom = false, bool ignoreCheck = false)
     {
         // If cell is null, determine its value
-        if (cell == null)
+        if (cell == null && map != null && map != "oaklore")
         {
-            var nonEnterCells = Bot.Map.Cells.Where(x => !x.StartsWith("Enter")).ToList();
+            var nonEnterCells = Bot.Map.Cells.Where(x => !x.ToLower().StartsWith("Enter") && !x.ToLower().Contains("Wait") && !x.ToLower().Contains("Blank")).ToList();
             cell = Bot.Map.Cells.Count(x => x.StartsWith("Enter")) > 1
                 ? nonEnterCells.FirstOrDefault() ?? "Enter"
                 : Bot.Map.Cells.FirstOrDefault(x => x.StartsWith("Enter")) ?? "Enter";
@@ -5047,14 +5050,14 @@ public class CoreBots
                 break;
 
             case "oaklore":
-                if (HasAchievement(32) && cell == "Enter")
-                    cell = "r1";
-                Bot.Map.Join(PrivateRooms ? $"{map}-" + PrivateRoomNumber : map, HasAchievement(32) ? "r1" : "Enter", "Spawn", autoCorrect: false);
-                Bot.Wait.ForMapLoad(map);
-                if (Bot.Player.Cell != cell)
+                if (!string.IsNullOrEmpty(cell) && cell != "Enter" && cell != "r1")
                 {
-                    Bot.Map.Jump(cell, pad, autoCorrect: false);
-                    Bot.Wait.ForCellChange(cell);
+                    tryJoin();
+                }
+                else
+                {
+                    SendPackets($"%xt%zm%cmd%1%tfer%{Bot.Player.Username}%{map}-{(PrivateRooms ? PrivateRoomNumber : 100000)}%");
+                    Bot.Wait.ForMapLoad(map);
                 }
                 break;
 
@@ -5257,8 +5260,10 @@ public class CoreBots
                     WriteFile(ButlerLogPath(), Bot.Map.FullName);
             }
 
-            Bot.Map.Jump(cell, pad, false);
-            Bot.Wait.ForCellChange(cell);
+            if (cell != null && Bot.Player.Cell != cell)
+            {
+                Bot.Map.Jump(cell, pad, false);
+            }
             Sleep(1500);
         }
 
@@ -5266,6 +5271,7 @@ public class CoreBots
         {
             try
             {
+                #region ignore this
                 if (Bot.Events == null)
                 {
                     Logger("Bot.Events is null.");
@@ -5295,20 +5301,23 @@ public class CoreBots
                     Logger("Bot.Player is null.");
                     return;
                 }
+                #endregion ignore this
 
                 Bot.Events.ExtensionPacketReceived += MapIsMemberLocked;
                 bool hasMapNumber = map.Contains('-') && int.TryParse(map.Split('-').Last(), out int result) && result >= 1000;
                 Random rnd = new();
                 for (int i = 0; i < 20; i++)
                 {
-                    if (Bot.Options.SafeTimings)
-                        Bot.Wait.ForActionCooldown(GameActions.Transfer);
+                    Bot.Wait.ForActionCooldown(GameActions.Transfer);
                     if (hasMapNumber)
-                        Bot.Map.Join(map, cell, pad, ignoreCheck, false);
+                    {
+                        Bot.Map.Join(map, cell, pad, cell == null, false);
+                    }
                     else
-                        Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell, pad, ignoreCheck, false);
+                    {
+                        Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell, pad, cell == null, false);
+                    }
                     Bot.Wait.ForMapLoad(strippedMap);
-
                     // Exponential Backoff
                     Sleep(Math.Max(1, 100 * rnd.Next((int)Math.Pow(2, i / 2.0))));
 
@@ -5318,9 +5327,13 @@ public class CoreBots
                         if (Bot.Options.SafeTimings)
                         {
                             if (!Bot.Wait.ForMapLoad(map, 20) && !Bot.ShouldExit)
-                                Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad, false);
+                            {
+                                Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad, cell == null);
+                            }
                             else
-                                Bot.Map.Jump(cell, pad, false);
+                            {
+                                Bot.Map.Jump(cell, pad, cell == null);
+                            }
                             Sleep(Bot.Options.ActionDelay);
                             Bot.Wait.ForCellChange(cell);
                         }
@@ -5915,6 +5928,18 @@ public class CoreBots
         var skill = Bot.Flash.GetArrayObject<dynamic>("world.actions.active", 5);
         if (skill == null) return;
         Bot.Flash.CallGameFunction("world.testAction", JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(skill))!);
+    }
+
+    private void ShutdownSkua() // law asked for this. - not to be used publicly.
+    {
+        Process[] processes = Process.GetProcessesByName("Skua");
+        foreach (Process process in processes)
+        {
+            // Releases lingering resources, reducing memory usage before termination.
+            GC.Collect();
+            //terminate the process
+            process.Kill();
+        }
     }
 
     #endregion
