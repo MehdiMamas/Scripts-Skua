@@ -207,7 +207,7 @@ public class CoreNation
         if (item == null)
         {
             ItemBase[] QuestRewards = Core.EnsureLoad(Core.CheckInventory("Bounty Hunter's Drone Pet") ? 6183 : 6697).Rewards.ToArray();
-            foreach (var Item in QuestRewards)
+            foreach (ItemBase Item in QuestRewards)
             {
                 if (Core.CheckInventory(Item.Name, Item.MaxStack))
                     continue;
@@ -700,7 +700,7 @@ public class CoreNation
         else
         {
             // Farming for all drops
-            foreach (var reward in larvaeQuest.Rewards.Where(x => !Core.CheckInventory(x.ID, x.MaxStack, false)))
+            foreach (ItemBase reward in larvaeQuest.Rewards.Where(x => !Core.CheckInventory(x.ID, x.MaxStack, false)))
                 FarmItem(larvaeQuest, voucherQuest, reward.Name, reward.MaxStack);
         }
 
@@ -997,10 +997,10 @@ public class CoreNation
         //handle quant if it goes over max stack.
         if (item != null && quant > 0)
         {
-            var reward = Assistant.Rewards.FirstOrDefault(x => x.Name == item);
+            ItemBase? reward = Assistant.Rewards.FirstOrDefault(x => x.Name == item);
             if (reward != null)
             {
-                var maxStack = reward.MaxStack;
+                int maxStack = reward.MaxStack;
                 quant = quant > maxStack ? maxStack : quant;
             }
             else
@@ -1028,8 +1028,8 @@ public class CoreNation
         if (returnPolicyDuringSupplies && Reward != SwindlesReturnReward.None)
         {
             Core.RegisterQuests(7551);
-            var quest = Bot.Quests.EnsureLoad(7551);
-            var rewardItem = quest?.Rewards.FirstOrDefault(x => x.ID == (int)Reward);
+            Quest? quest = Bot.Quests.EnsureLoad(7551);
+            ItemBase? rewardItem = quest?.Rewards.FirstOrDefault(x => x.ID == (int)Reward);
 
             if (rewardItem != null)
             {
@@ -1047,7 +1047,7 @@ public class CoreNation
             foreach (string Thing in selectedDrops)
             {
                 // Find the corresponding item in quest rewards
-                var rewards = Core.EnsureLoad(2859).Rewards;
+                List<ItemBase> rewards = Core.EnsureLoad(2859).Rewards;
                 ItemBase? Item = rewards.Find(x => x.Name == Thing);
 
                 if (Item == null)
@@ -1068,7 +1068,7 @@ public class CoreNation
                     // Process "Swindles Return Policy" quest if return policy is active
                     if (Core.CheckInventory(rPDSuni) && returnPolicyDuringSupplies)
                     {
-                        var rewards2 = Core.EnsureLoad(7551).Rewards;
+                        List<ItemBase> rewards2 = Core.EnsureLoad(7551).Rewards;
                         ItemBase? Item2 = rewards2.Find(x => x.ID == (int)Reward);
 
                         if (Item2 == null)
@@ -1104,7 +1104,7 @@ public class CoreNation
                 // Process "Swindles Return Policy" quest if return policy is active
                 if (Core.CheckInventory(rPDSuni) && returnPolicyDuringSupplies)
                 {
-                    var rewards2 = Core.EnsureLoad(7551).Rewards;
+                    List<ItemBase> rewards2 = Core.EnsureLoad(7551).Rewards;
                     ItemBase? Item2 = rewards2.Find(x => x.ID == (int)Reward);
 
                     if (Item2 == null)

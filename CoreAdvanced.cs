@@ -252,7 +252,7 @@ public class CoreAdvanced
                                 .GroupBy(item => new { item.Name, item.ID })
                                 .Select(group =>
                                 {
-                                    var orderedGroup = group.OrderBy(item => item.ShopItemID != group.First().ShopItemID);
+                                    IOrderedEnumerable<ShopItem> orderedGroup = group.OrderBy(item => item.ShopItemID != group.First().ShopItemID);
                                     return Group == "First" ? orderedGroup.First() : orderedGroup.Last();
                                 })
                                 .Where(x => !x.Name.ToLower().EndsWith("insignia"))
