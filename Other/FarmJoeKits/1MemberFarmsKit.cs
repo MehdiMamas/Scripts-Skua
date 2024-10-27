@@ -358,7 +358,8 @@ public class MemberFarm
             return;
         }
 
-        while (!Bot.ShouldExit && (!Core.CheckInventory("Weapon Reflection", 12)))
+        Core.AddDrop("Weapon Reflection");
+        while (!Bot.ShouldExit && !Core.CheckInventory("Weapon Reflection", 12))
         {
             Core.EnsureAccept(5518);
             Core.HuntMonster("nostalgiaquest", "Skeletal Viking", "Reflected Glory", 5);
