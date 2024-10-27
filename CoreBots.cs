@@ -5129,8 +5129,8 @@ public class CoreBots
                 Bot.Wait.ForMapLoad("icestormarena");
                 Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
                 Sleep();
-                Bot.Map.Jump(cell, pad, false);
-                Bot.Wait.ForCellChange(cell);
+                Bot.Map.Jump(cell ?? "Enter", pad, false);
+                Bot.Wait.ForCellChange(cell ?? "Enter");
                 break;
 
             #endregion
@@ -5188,7 +5188,7 @@ public class CoreBots
                 JumpWait();
                 map = strippedMap + "-999999";
                 tryJoin();
-                Bot.Wait.ForCellChange(cell);
+                Bot.Wait.ForCellChange(cell ?? "Enter");
                 break;
             #endregion baconcat.. is annoying
 
@@ -5311,11 +5311,11 @@ public class CoreBots
                     Bot.Wait.ForActionCooldown(GameActions.Transfer);
                     if (hasMapNumber)
                     {
-                        Bot.Map.Join(map, cell, pad, cell == null, false);
+                        Bot.Map.Join(map, cell ?? "Enter", pad, cell == null, false);
                     }
                     else
                     {
-                        Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell, pad, cell == null, false);
+                        Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", pad, cell == null, false);
                     }
                     Bot.Wait.ForMapLoad(strippedMap);
                     // Exponential Backoff
@@ -5332,10 +5332,10 @@ public class CoreBots
                             }
                             else
                             {
-                                Bot.Map.Jump(cell, pad, cell == null);
+                                Bot.Map.Jump(cell ?? "Enter", pad, cell == null);
                             }
                             Sleep(Bot.Options.ActionDelay);
-                            Bot.Wait.ForCellChange(cell);
+                            Bot.Wait.ForCellChange(cell ?? "Enter");
                         }
                         break;
                     }
