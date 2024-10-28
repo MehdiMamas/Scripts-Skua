@@ -3431,7 +3431,7 @@ public class CoreBots
             {
                 if (item != null)
                 {
-                    foreach (Monster targetMonster in Bot.Monsters.MapMonsters.Where(x => x != null && x.Cell == cell && x.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
+                    foreach (Monster targetMonster in Bot.Monsters.MapMonsters.Where(x => x != null && x.Cell == cell && x.Name.FormatForCompare() == name.FormatForCompare()))
                     {
                         if (isTemp ? Bot.TempInv.Contains(item, quantity) : Bot.Inventory.Contains(item, quantity))
                             break;
@@ -6832,22 +6832,82 @@ public static class UtilExtensionsS
         => source.ToList().Find(match: Match);
     public static bool TryFind<T>(this IEnumerable<T> source, Predicate<T> Match, out T? toReturn)
         => (toReturn = source.Find(Match)) != null;
-    public static string FormatForCompare(this string? input)
+    public static string FormatForCompare(this string? input, bool DebugLog = false, bool caseSensitive = false)
     {
         if (input == null)
-            return string.Empty; // Handle null input by returning an empty string
+        {
+            if (DebugLog) Console.WriteLine("Input is null, returning an empty string.");
+            return string.Empty;
+        }
 
-        // Normalize, trim, and remove unnecessary punctuation while preserving spaces between words
-        string result = new(input
-            .Trim()
-            .ToLowerInvariant()
-            .Normalize(NormalizationForm.FormKD)
-            .Where(c => !char.IsPunctuation(c) || c == '_' || c == '-' || char.IsWhiteSpace(c))
-            .ToArray());
+        if (DebugLog) Console.WriteLine($"Original input: '{input}'");
+
+        // Normalize, trim, and convert to lower case if case-sensitive is false
+        string result = input.Trim().Normalize(NormalizationForm.FormD); // Decomposes characters
+
+        // Remove diacritics
+        result = RemoveDiacritics(result);
+
+        // Handle case sensitivity
+        if (!caseSensitive)
+        {
+            result = result.ToLowerInvariant();
+        }
 
         // Replace multiple spaces with a single space
-        return Regex.Replace(result, @"\s+", " ");
+        result = Regex.Replace(result, @"\s+", " ");
+
+        if (DebugLog) Console.WriteLine($"Formatted result for comparison: '{result}'");
+
+        return result;
     }
+
+    private static string RemoveDiacritics(string input)
+    {
+        var stringBuilder = new StringBuilder(input.Length); // Preallocate based on input length
+
+        // Normalize the input string and remove diacritics
+        foreach (var c in input)
+        {
+            var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+            // Append the character if it's not a diacritic
+            if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+            {
+                stringBuilder.Append(c);
+            }
+        }
+
+        // Return the cleaned string
+        return stringBuilder.ToString().Normalize(NormalizationForm.FormC); // Normalize to compose characters
+    }
+
+
+    private static string ConvertToEnglish(string input)
+    {
+        // Basic transliteration table for common characters
+        var transliterationMap = new Dictionary<char, char>
+    {
+        { 'é', 'e' }, { 'è', 'e' }, { 'ê', 'e' }, { 'ë', 'e' },
+        { 'á', 'a' }, { 'ä', 'a' }, { 'â', 'a' }, { 'å', 'a' },
+        { 'ó', 'o' }, { 'ö', 'o' }, { 'ô', 'o' },
+        { 'í', 'i' }, { 'ï', 'i' }, { 'ì', 'i' },
+        { 'ç', 'c' },
+        { 'ñ', 'n' },
+        // Add more mappings as needed
+    };
+
+        // Replace characters based on the transliteration map
+        foreach (var kvp in transliterationMap)
+        {
+            input = input.Replace(kvp.Key, kvp.Value);
+        }
+
+        // Remove currency symbols and other irrelevant characters
+        input = Regex.Replace(input, @"[\$€£¥]", ""); // Remove currency symbols
+
+        return input;
+    }
+
 
 
 }
