@@ -2887,7 +2887,7 @@ public class CoreBots
     /// <param name="publicRoom"></param>
     public void KillEscherion(string? item = null, int quant = 1, bool isTemp = false, bool log = true, bool publicRoom = false)
     {
-        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant)))
             return;
 
         // DebugLogger(this);
@@ -2896,6 +2896,8 @@ public class CoreBots
 
         if (item is not null && log)
             FarmingLogger(item, quant);
+        if (!isTemp)
+            AddDrop(item);
 
         bool PreFarmKill = false;
 
@@ -2911,15 +2913,14 @@ public class CoreBots
         }
         else
         {
-            if (!isTemp)
-                AddDrop(item);
-
-            while (!Bot.ShouldExit && !CheckInventory(item, quant))
+            while (!Bot.ShouldExit && !isTemp ? !Bot.TempInv.Contains(item, quant) : !Bot.Inventory.Contains(item, quant))
                 _KillEscherion();
 
             JumpWait();
             Rest();
-            Bot.Wait.ForPickup(item);
+            if (!isTemp)
+                Bot.Wait.ForPickup(item);
+            else Bot.Wait.ForDrop(item);
         }
 
         void _KillEscherion(string? item = null, bool isTemp = false)
@@ -2955,18 +2956,6 @@ public class CoreBots
                     Bot.Combat.Attack(target);
             }
             Sleep();
-
-
-            // if (Staff is not null && Staff.State is 1 or 2)
-            // {
-            //     Bot.Combat.Attack(Staff);
-            //     Bot.Combat.CancelTarget();
-            // }
-            // else if (Staff is not null && Escherion is not null && Staff.State is 0)
-            // {
-            //     Bot.Combat.Attack(Escherion);
-            //     Sleep();
-            // }
         }
     }
 
