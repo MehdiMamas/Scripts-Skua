@@ -191,7 +191,7 @@ public class CoreSepulchure
             Core.KillMonster("valleyofdoom", "r7", "Left", "Doom Scythe", "Doomscythe Destroyed");
             Core.KillMonster("valleyofdoom", "r7", "Left", "Doom Axe", "Doomaxe Destroyed");
             Core.KillMonster("valleyofdoom", "r8", "Left", "Doom Blade", "Doom Blade Destroyed");
-            Core.KillMonster("valleyofdoom", "r8", "Left", "Doom Knight Armor", "Doom Knight Armor Destroyed");
+            Core.HuntMonsterMapID("valleyofdoom", 25, "Doom Knight Armor Destroyed");
             Core.EnsureComplete(6363);
         }
 
