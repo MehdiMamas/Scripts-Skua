@@ -81,11 +81,11 @@ public class CoreLR
         Core.AddDrop(LF2);
         Core.AddDrop(LF3);
 
-        RevenantSpellscroll(forquest: true);
+        RevenantSpellscroll(1, forquest: true);
         RevenantSpellscroll();
-        ConquestWreath(forquest: true);
+        ConquestWreath(1, forquest: true);
         ConquestWreath();
-        ExaltedCrown(forquest: true);
+        ExaltedCrown(1, forquest: true);
         ExaltedCrown();
 
         //if you used insignias other quests arent unlocked(yes people have done this...)
@@ -102,7 +102,7 @@ public class CoreLR
     //Legion Fealty 1
     public void RevenantSpellscroll(int quant = 20, bool forquest = false)
     {
-        if (!forquest && Core.CheckInventory("Revenant's Spellscroll", quant))
+        if (forquest && Core.isCompletedBefore(6897) || !forquest && Core.CheckInventory("Revenant's Spellscroll", quant))
             return;
 
         Legion.JoinLegion();
@@ -116,7 +116,7 @@ public class CoreLR
         int i = 1;
         Core.FarmingLogger("Revenant's Spellscroll", quant);
         Bot.Quests.UpdateQuest(2060);
-        while (!Bot.ShouldExit && ((forquest && !Core.isCompletedBefore(6897)) || !Core.CheckInventory("Revenant's Spellscroll", quant)))
+        while (!Bot.ShouldExit && ((forquest && !Core.isCompletedBefore(6897)) || !forquest && !Core.CheckInventory("Revenant's Spellscroll", quant)))
         {
             Core.EnsureAccept(6897);
 
@@ -146,7 +146,7 @@ public class CoreLR
         if (!Core.isCompletedBefore(6898))
             RevenantSpellscroll(1, true);
 
-        if ((forquest && Core.isCompletedBefore(6898)) || Core.CheckInventory("Conquest Wreath", quant))
+        if ((forquest && Core.isCompletedBefore(6898)) || !forquest && Core.CheckInventory("Conquest Wreath", quant))
             return;
 
         Legion.JoinLegion();
@@ -193,7 +193,7 @@ public class CoreLR
         if (!Core.isCompletedBefore(6899))
             ConquestWreath(1, true);
 
-        if ((forquest && Core.isCompletedBefore(6899)) || Core.CheckInventory("Exalted Crown", quant))
+        if ((forquest && Core.isCompletedBefore(6899)) || !forquest && Core.CheckInventory("Exalted Crown", quant))
             return;
 
         Legion.JoinLegion();
