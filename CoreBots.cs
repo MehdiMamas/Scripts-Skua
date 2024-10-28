@@ -2896,7 +2896,7 @@ public class CoreBots
 
         if (item is not null && log)
             FarmingLogger(item, quant);
-        if (!isTemp)
+        if (item is not null && !isTemp)
             AddDrop(item);
 
         bool PreFarmKill = false;
