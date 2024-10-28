@@ -6832,6 +6832,14 @@ public static class UtilExtensionsS
         => source.ToList().Find(match: Match);
     public static bool TryFind<T>(this IEnumerable<T> source, Predicate<T> Match, out T? toReturn)
         => (toReturn = source.Find(Match)) != null;
+
+    /// <summary>
+    /// Formats a string for comparison by normalizing it, removing diacritics, and handling case sensitivity.
+    /// </summary>
+    /// <param name="input">The input string to format. Can be null.</param>
+    /// <param name="DebugLog">If set to true, logs debugging information to the console.</param>
+    /// <param name="caseSensitive">If set to true, the comparison will be case-sensitive; otherwise, it will be case-insensitive.</param>
+    /// <returns>A normalized string formatted for comparison.</returns>
     public static string FormatForCompare(this string? input, bool DebugLog = false, bool caseSensitive = false)
     {
         if (input == null)
@@ -6862,6 +6870,11 @@ public static class UtilExtensionsS
         return result;
     }
 
+    /// <summary>
+    /// Removes diacritics from a given string, retaining only the base characters.
+    /// </summary>
+    /// <param name="input">The input string from which to remove diacritics.</param>
+    /// <returns>A string with diacritics removed, normalized to composed characters.</returns>
     private static string RemoveDiacritics(string input)
     {
         var stringBuilder = new StringBuilder(input.Length); // Preallocate based on input length
@@ -6882,28 +6895,42 @@ public static class UtilExtensionsS
     }
 
 
+    /// <summary>
+    /// Converts a string with accented characters to its English equivalent by transliterating common characters.
+    /// </summary>
+    /// <param name="input">The input string containing characters to convert.</param>
+    /// <returns>A string with accented characters replaced by their English equivalents, with currency symbols removed.</returns>
     private static string ConvertToEnglish(string input)
     {
-        // Basic transliteration table for common characters
         var transliterationMap = new Dictionary<char, char>
-    {
-        { 'é', 'e' }, { 'è', 'e' }, { 'ê', 'e' }, { 'ë', 'e' },
-        { 'á', 'a' }, { 'ä', 'a' }, { 'â', 'a' }, { 'å', 'a' },
-        { 'ó', 'o' }, { 'ö', 'o' }, { 'ô', 'o' },
-        { 'í', 'i' }, { 'ï', 'i' }, { 'ì', 'i' },
-        { 'ç', 'c' },
-        { 'ñ', 'n' },
-        // Add more mappings as needed
-    };
-
-        // Replace characters based on the transliteration map
-        foreach (var kvp in transliterationMap)
         {
-            input = input.Replace(kvp.Key, kvp.Value);
+            { 'é', 'e' }, { 'è', 'e' }, { 'ê', 'e' }, { 'ë', 'e' },
+            { 'á', 'a' }, { 'ä', 'a' }, { 'â', 'a' }, { 'å', 'a' },
+            { 'ó', 'o' }, { 'ö', 'o' }, { 'ô', 'o' },
+            { 'í', 'i' }, { 'ï', 'i' }, { 'ì', 'i' },
+            { 'ç', 'c' },
+            { 'ñ', 'n' },
+            // Add more mappings as needed
+        };
+
+        // Use StringBuilder for efficient string manipulation
+        var stringBuilder = new StringBuilder(input.Length);
+
+        foreach (char c in input)
+        {
+            // Use the map for transliteration or append the character directly
+            if (transliterationMap.TryGetValue(c, out char mappedChar))
+            {
+                stringBuilder.Append(mappedChar);
+            }
+            else
+            {
+                stringBuilder.Append(c);
+            }
         }
 
         // Remove currency symbols and other irrelevant characters
-        input = Regex.Replace(input, @"[\$€£¥]", ""); // Remove currency symbols
+        input = Regex.Replace(stringBuilder.ToString(), @"[\$€£¥]", ""); // Remove currency symbols
 
         return input;
     }
