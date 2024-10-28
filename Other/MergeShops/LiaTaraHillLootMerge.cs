@@ -66,7 +66,7 @@ public class LiaTaraHillLootMerge
 
                 case "Salvaged Skye Armament":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.KillMonster("castleeblana", "r2", "Left", "Skye Warrior", req.Name, req.Quantity, req.Temp, false);
+                    Core.KillMonster("castleeblana", "r2", "Left", "Skye Warrior", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Golden Catalyst":

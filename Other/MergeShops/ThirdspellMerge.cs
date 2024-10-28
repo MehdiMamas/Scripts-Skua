@@ -61,7 +61,7 @@ public class ThirdspellMerge
 
                 case "Thirdspell Token":
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("thirdspell", "Pure Fire Elemental", req.Name, req.Quantity, false);
+                    Core.HuntMonster("thirdspell", "Pure Fire Elemental", req.Name, quant, false);
                     break;
 
             }

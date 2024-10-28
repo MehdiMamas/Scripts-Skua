@@ -65,7 +65,7 @@ public class BloodWarLycanMerge
                 #endregion
 
                 case "Sapphires":
-                    Core.FarmingLogger(req.Name, req.Quantity);
+                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(6070, 6071, 6073);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
@@ -77,7 +77,7 @@ public class BloodWarLycanMerge
                     break;
 
                 case "Rubies":
-                    Core.FarmingLogger(req.Name, req.Quantity);
+                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(6068, 6069, 6072);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))

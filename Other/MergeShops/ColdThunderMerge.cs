@@ -69,14 +69,14 @@ public class ColdThunderMerge
                     Core.FarmingLogger(req.Name, quant);
                     // 9834 | Eilean a' Cheò
                     Core.RegisterQuests(9834);
-                    CoreAOR.ColdThunderBoss(req.Name, req.Quantity, req.Temp);
+                    CoreAOR.ColdThunderBoss(req.Name, quant, req.Temp);
                     Core.CancelRegisteredQuests();
                     break;
 
                 case "Electrifying Zilla Tail":
                 case "Electrifying Zilla Bag":
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("castlegaheris", "Energy Elemental", req.Name, req.Quantity, req.Temp);
+                    Core.HuntMonster("castlegaheris", "Energy Elemental", req.Name, quant, req.Temp);
                     break;
 
             }

@@ -69,7 +69,7 @@ public class SevenCirclesMerge
                 #endregion
 
                 case "Indulgence":
-                    HeadoftheLegionBeast.Indulgence(req.Quantity);
+                    HeadoftheLegionBeast.Indulgence(quant);
                     break;
 
                 case "Legion Token":

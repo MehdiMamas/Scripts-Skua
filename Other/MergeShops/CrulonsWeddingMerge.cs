@@ -116,7 +116,7 @@ public class CrulonsWeddingMerge
                 case "Desert Bandana":
                 case "Honored Sandsea Guest":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("crulonwed", UseableMonsters[0], req.Name, req.Quantity, req.Temp);
+                    Core.HuntMonster("crulonwed", UseableMonsters[0], req.Name, quant, req.Temp);
                     break;
 
             }

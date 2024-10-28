@@ -133,7 +133,7 @@ public class ArcanaInvokerResourceMerge
                 #endregion
 
                 case "Staff of Inversion":
-                    Core.KillEscherion(req.Name, 1, false);
+                    Core.KillEscherion(req.Name, isTemp: req.Temp);
                     break;
 
                 case "BattleMage Armor":

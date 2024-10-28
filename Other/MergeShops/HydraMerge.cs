@@ -60,7 +60,7 @@ public class HydraMerge
                 #endregion
 
                 case "Hydra Scale Piece":
-                    Core.HuntMonster("hydrachallenge", "Hydra Head 25", req.Name, req.Quantity, isTemp: false, true);
+                    Core.HuntMonster("hydrachallenge", "Hydra Head 25", req.Name, quant, isTemp: false, true);
 
                     break;
 

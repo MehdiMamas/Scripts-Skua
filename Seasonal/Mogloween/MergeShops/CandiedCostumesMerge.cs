@@ -134,7 +134,7 @@ public class CandiedCostumesMerge
                 case "Tactical Alpha Rifles":
                 case "Backup Ol Reliable Zombie Buster":
                 case "Gummy Brains":
-                    Core.HuntMonster("mogloweengrave", "Zombie Terror", req.Name, req.Quantity, req.Temp);
+                    Core.HuntMonster("mogloweengrave", "Zombie Terror", req.Name, quant, req.Temp);
                     break;
             }
         }

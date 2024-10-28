@@ -72,21 +72,21 @@ public class BadmoonMerge
                 #endregion
 
                 case "Lunate Sigil":
-                    ssr2.LunateSigil(req.Quantity);
+                    ssr2.LunateSigil(quant);
                     break;
 
                 case "Darkovia Hunter's Cowl":
                 case "Iron Dussack":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.KillMonster("badmoon", "r5", "left", "hunter", req.Name, req.Quantity, req.Temp);
+                    Core.KillMonster("badmoon", "r5", "left", "hunter", req.Name, quant, req.Temp);
                     break;
 
 
                 case "Darkovian Hunter":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster("badmoon", "Twisted Hunter", req.Name, req.Quantity, req.Temp);
+                    Core.HuntMonster("badmoon", "Twisted Hunter", req.Name, quant, req.Temp);
                     break;
 
                 case "ShadowSlayer's Apprentice":

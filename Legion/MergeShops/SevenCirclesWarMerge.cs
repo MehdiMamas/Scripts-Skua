@@ -90,7 +90,7 @@ public class SevenCirclesWarMerge
                 #endregion
 
                 case "Indulgence":
-                    HeadoftheLegionBeast.Indulgence(req.Quantity);
+                    HeadoftheLegionBeast.Indulgence(quant);
                     break;
 
                 case "Legion Token":
@@ -106,24 +106,24 @@ public class SevenCirclesWarMerge
                     break;
 
                 case "Souls of Heresy":
-                    HeadoftheLegionBeast.SoulsHeresy(req.Quantity);
+                    HeadoftheLegionBeast.SoulsHeresy(quant);
                     break;
 
                 case "Penance":
-                    HeadoftheLegionBeast.Penance(req.Quantity);
+                    HeadoftheLegionBeast.Penance(quant);
                     break;
 
 
                 case "Essence of Treachery":
-                    HeadoftheLegionBeast.EssenceTreachery(req.Quantity);
+                    HeadoftheLegionBeast.EssenceTreachery(quant);
                     break;
 
                 case "Essence of Wrath":
-                    HeadoftheLegionBeast.EssenceWrath(req.Quantity);
+                    HeadoftheLegionBeast.EssenceWrath(quant);
                     break;
 
                 case "Essence of Violence":
-                    HeadoftheLegionBeast.EssenceViolence(req.Quantity);
+                    HeadoftheLegionBeast.EssenceViolence(quant);
                     break;
 
                 //these come from circles not war:

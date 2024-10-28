@@ -63,7 +63,7 @@ public class PirateBloodWarMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(9868, 9869);
-                    Core.KillMonster("piratevampire", "r2", "Left", "*", req.Name, req.Quantity, req.Temp);
+                    Core.KillMonster("piratevampire", "r2", "Left", "*", req.Name, quant, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;

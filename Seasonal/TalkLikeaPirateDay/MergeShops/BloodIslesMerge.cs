@@ -98,15 +98,15 @@ public class BloodIslesMerge
                         Core.Logger("Members only map");
                         return;
                     }
-                    Core.HuntMonster("amira", "Amira 2.0", req.Name, req.Quantity, req.Temp);
+                    Core.HuntMonster("amira", "Amira 2.0", req.Name, quant, req.Temp);
                     break;
 
                 case "Fancy Golden Scissors":
-                    Core.HuntMonster("bloodisles", UseableMonsters[8], req.Name, req.Quantity, req.Temp);
+                    Core.HuntMonster("bloodisles", UseableMonsters[8], req.Name, quant, req.Temp);
                     break;
 
                 case "Dual Fancy Golden Scissors":
-                    Core.HuntMonster("bloodisles", UseableMonsters[8], req.Name, req.Quantity, req.Temp);
+                    Core.HuntMonster("bloodisles", UseableMonsters[8], req.Name, quant, req.Temp);
                     break;
 
             }
