@@ -5044,15 +5044,9 @@ public class CoreBots
 
             #region Quest Prog swaps spawn cell
             case "oaklore":
-                if (!string.IsNullOrEmpty(cell) && cell != "Enter" && cell != "r1")
-                {
-                    tryJoin();
-                }
-                else
-                {
-                    SendPackets($"%xt%zm%cmd%1%tfer%{Bot.Player.Username}%{map}-{(PrivateRooms ? PrivateRoomNumber : 100000)}%");
-                    Bot.Wait.ForMapLoad(map);
-                }
+                if (!string.IsNullOrEmpty(cell) && cell == "Enter" || string.IsNullOrEmpty(cell))
+                    cell = "r1";
+                tryJoin();
                 break;
 
             case "bloodmoon":
