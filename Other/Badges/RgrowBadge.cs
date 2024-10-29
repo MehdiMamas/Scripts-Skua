@@ -10,9 +10,6 @@ public class RGRoWBadge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreAdvanced Adv = new();
-    public UltraSpeakerMergePreReqs USPR = new();
 
     public void ScriptMain(IScriptInterface Bot)
     {
