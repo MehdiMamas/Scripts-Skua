@@ -33,26 +33,23 @@ public class VampireLord
             return;
 
         Core.FarmingLogger("Blood Moon Token", 300);
-        Bot.Drops.Add("Blood Moon Token");
+        Core.AddDrop("Blood Moon Token");
         Core.EquipClass(ClassType.Solo);
 
         while (!Bot.ShouldExit && !Core.CheckInventory("Blood Moon Token", 300))
         {
-
-            while (!Bot.ShouldExit && Core.CheckInventory("Black Blood Vial", 1) && Core.CheckInventory("Moon Stone", 1))
-            {
-                Core.Sleep();
-                Core.ChainComplete(Core.IsMember ? 6060 : 6059);
-                Bot.Wait.ForPickup("Blood Moon Token");
-                if (Core.CheckInventory("Blood Moon Token", 300))
-                    break;
-            }
-
-            //to keep track:
             Core.EnsureAccept(Core.IsMember ? 6060 : 6059);
 
-            Core.KillMonster("bloodmoon", "r12a", "Left", "Black Unicorn", "Black Blood Vial", 100, isTemp: false);
-            Core.KillMonster("bloodmoon", "r4a", "Left", "Lycan Guard", "Moon Stone", 100, isTemp: false);
+            //farm 33x turn-in quants
+            Core.KillMonster("bloodmoon", "r12a", "Left", "Black Unicorn", "Black Blood Vial", 99, isTemp: false);
+            Core.KillMonster("bloodmoon", "r4a", "Left", "Lycan Guard", "Moon Stone", 33, isTemp: false);
+
+            //turning x33
+            Core.EnsureCompleteMulti(Core.IsMember ? 6060 : 6059);
+            Bot.Wait.ForPickup("Blood Moon Token");
+            if (Bot.Inventory.Contains("Blood Moon Token", 300))
+                break;
+
         }
         Core.BuyItem("mogloween", 1477, "Vampire Lord", shopItemID: 5459);
 
