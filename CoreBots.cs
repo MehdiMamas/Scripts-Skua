@@ -4651,6 +4651,10 @@ public class CoreBots
                     blackListedCells.UnionWith(new[] { "New6" });
                     break;
 
+                case "bloodmoon":
+                    blackListedCells.UnionWith(new[] { "Enter", "r17" });
+                    break;
+
                 case "wanders":
                     Bot.Map.Jump("Boss", "left", false);
                     Bot.Sleep(2500);
@@ -5038,6 +5042,7 @@ public class CoreBots
                 tryJoin();
                 break;
 
+            #region Quest Prog swaps spawn cell
             case "oaklore":
                 if (!string.IsNullOrEmpty(cell) && cell != "Enter" && cell != "r1")
                 {
@@ -5049,6 +5054,16 @@ public class CoreBots
                     Bot.Wait.ForMapLoad(map);
                 }
                 break;
+
+            case "bloodmoon":
+                if (isCompletedBefore(6058) && !string.IsNullOrEmpty(cell) && cell == "Enter")
+                {
+                    cell = "r17";
+                    pad = "Left";
+                }
+                tryJoin();
+                break;
+            #endregion
 
             case "collection":
                 JumpWait();
