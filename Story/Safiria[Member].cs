@@ -55,11 +55,9 @@ public class Safiria
         //The First Phylactery 1943
         if (!Story.QuestProgression(1943))
         {
-            if (Core.CheckInventory("Legion Revenant"))
-                Core.Equip("Legion Revenant");
-            else Core.EquipClass(ClassType.Solo);
+            Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(1943);
-            Core.KillMonster("djinn", "r6", "Up", "Ultra-Tibicenas", "Djinn's Magic Trace", 5, isTemp: false);
+            Core.KillMonster("djinn", "r6", "Up", "Ultra Tibicenas", "Djinn's Magic Trace", 5, isTemp: false);
             Core.EnsureComplete(1943);
         }
 
