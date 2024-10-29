@@ -29,7 +29,6 @@ public class RGRoWBadge
         if (!Core.CheckInventory("Radiant Goddess of War"))
             Core.Logger("Missing \"Radiant Goddess of War\", Cannot get badge", stopBot: true, messageBox: true);
 
-        Farm.Experience();
         Core.EnsureAccept(9352);
         // 9352 | Radiant Goddess of War Badge
         Core.EquipClass(ClassType.Solo);
