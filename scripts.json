@@ -2833,7 +2833,7 @@
       "goddess of war"
     ],
     "path": "ShadowsOfWar/UltraSpeakerMergePreReqs.cs",
-    "size": 24306,
+    "size": 14705,
     "fileName": "UltraSpeakerMergePreReqs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/ShadowsOfWar/UltraSpeakerMergePreReqs.cs"
   },
@@ -14286,6 +14286,17 @@
     "size": 841,
     "fileName": "GoldenLaurel.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Badges/GoldenLaurel.cs"
+  },
+  {
+    "name": "RGRoW Badge",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Other/Badges/RgrowBadge.cs",
+    "size": 4227,
+    "fileName": "RgrowBadge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Badges/RgrowBadge.cs"
   },
   {
     "name": "UltraCarnax",
