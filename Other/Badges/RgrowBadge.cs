@@ -33,10 +33,11 @@ public class RGRoWBadge
             Core.Logger("Missing \"Radiant Goddess of War\", Cannot get badge", stopBot: true, messageBox: true);
 
         Farm.Experience();
-
+        Core.EnsureAccept(9352);
         // 9352 | Radiant Goddess of War Badge
         Core.EquipClass(ClassType.Solo);
         Core.KillMonster("manacradle", "r10", "Left", "The Mainyu", "Licorice Scale");
+        Core.EnsureComplete(9352);
 
     }
 
