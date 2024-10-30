@@ -757,27 +757,38 @@ public class CoreNation
         Core.Logger($"Do Return Policy?: {returnPolicyDuringSupplies}");
         Core.Logger($"Sell Voucher(Mem)?: {sellMemVoucher}");
 
-        Core.RegisterQuests(item != Uni(13) && Core.CheckInventory(38261 /* "Swindle Bilk's To Go Hut" */) 
-                            ? (Core.CheckInventory("Drudgen the Assistant")
-                                ? new int[] { 870, 2857, 9542 }
-                                : new int[] { 2857, 9542 })
-                            : new int[] { 2857 });
+        // Register quests based on item check and inventory status
+        Core.RegisterQuests(
+            item != Uni(13) && Core.CheckInventory(38261)  // Checks for "Swindle Bilk's To Go Hut"
+                ? Core.CheckInventory("Drudgen the Assistant")
+                    ? new int[] { 870, 2857, 9542 }
+                    : new int[] { 2857, 9542 }
+                : new int[] { 2857 }
+        );
 
         Core.AddDrop(
             // Include 'item' if it's not null
             (item != null ? new string[] { item } : Enumerable.Empty<string>())
-            .Concat(Core.QuestRewards(9542)) // Add quest rewards
 
-            // Concatenate supplies rewards including 'Voucher of Nulgath' if 'sellMemVoucher' is true
-            .Concat(SuppliesRewards.Concat(sellMemVoucher ? new string[] { "Voucher of Nulgath" } : Enumerable.Empty<string>()).Append("Relic of Chaos"))
+                // Add quest rewards from quest ID 9542
+                .Concat(Core.QuestRewards(9542))
 
-            // Add additional items during supplies if 'returnPolicyDuringSupplies' is true, including 'Receipt of Swindle'
-            .Concat(returnPolicyDuringSupplies
-                ? new string[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20), "Receipt of Swindle" }
-                : Enumerable.Empty<string>()
-            )
-            .ToArray() // Convert to array for adding to the drop list
+                // Concatenate supplies rewards, including 'Voucher of Nulgath' if 'sellMemVoucher' is true
+                .Concat(SuppliesRewards
+                    .Concat(sellMemVoucher ? new string[] { "Voucher of Nulgath" } : Enumerable.Empty<string>())
+                    .Append("Relic of Chaos")
+                )
+
+                // Add extra items if 'returnPolicyDuringSupplies' is true, including 'Receipt of Swindle'
+                .Concat(returnPolicyDuringSupplies
+                    ? new string[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20), "Receipt of Swindle" }
+                    : Enumerable.Empty<string>()
+                )
+
+            // Convert the entire collection to an array for adding to the drop list
+            .ToArray()
         );
+
 
         Core.EquipClass(ClassType.Solo);
         if (item == null)
@@ -1206,7 +1217,7 @@ public class CoreNation
         Core.AddDrop(string.IsNullOrEmpty(item) ? bagDrops : new string[] { item });
 
         bool hasOBoNPet = Core.IsMember && Core.CheckInventory("Oblivion Blade of Nulgath") &&
-                          Bot.Inventory.Items.Any(obon => obon.Category == Skua.Core.Models.Items.ItemCategory.Pet && obon.Name == "Oblivion Blade of Nulgath");
+                          Bot.Inventory.Items.Any(obon => obon.Category == ItemCategory.Pet && obon.Name == "Oblivion Blade of Nulgath");
         if (hasOBoNPet || Core.CheckInventory("Oblivion Blade of Nulgath Pet (Rare)"))
             Core.AddDrop("Tainted Soul");
 
@@ -1224,12 +1235,12 @@ public class CoreNation
 
         Dictionary<string, int> rewardItemIds = new()
         {
-        { "Dark Crystal Shard", 123 },
-        { "Diamond of Nulgath", 456 },
-        { "Gem of Nulgath", 789 },
-        { "Tainted Gem", 101 },
-        { "Unidentified 10", 202 }
-    };
+            { "Dark Crystal Shard", 123 },
+            { "Diamond of Nulgath", 456 },
+            { "Gem of Nulgath", 789 },
+            { "Tainted Gem", 101 },
+            { "Unidentified 10", 202 }
+        };
 
         List<ItemBase> rewards = Core.EnsureLoad(2857).Rewards;
         ItemBase? itemBase = rewards.Find(x => x.Name == item);
@@ -1238,17 +1249,26 @@ public class CoreNation
             Core.FarmingLogger(item, quant);
 
         // Choose the appropriate quest based on pet availability
+        List<int> RegisteredQuests = Bot.Quests.Registered.ToList();
+
+        // Base List with only {CraigName} owned
+        RegisteredQuests.AddRange(new[] { 2857, 609 });
+
         if (Core.CheckInventory("Oblivion Blade of Nulgath Pet (Rare)") && Core.IsMember)
-            Core.RegisterQuests(2857, 609, 599);
-        else if (hasOBoNPet)
-            Core.RegisterQuests(2857, 609, 2561);
-        else
-            Core.RegisterQuests(2857, 609);
+            RegisteredQuests.Add(599);
+
+        // Swindle Bilk's To Go Hut
+        if (Core.CheckInventory(38261))
+            RegisteredQuests.Add(9542);
+
+        if (hasOBoNPet)
+            RegisteredQuests.Add(2561);
+
+        // Register unique quests only
+        Core.RegisterQuests(RegisteredQuests.Distinct().ToArray());
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
-            // if (Bot.Player.Cell != "End")
-            //     Core.Jump("Eend", "Left");
             Core.HuntMonster("evilmarsh", "Tainted Elemental", log: false);
 
             if (item != "Voucher of Nulgath" && sellMemVoucher == true && Core.CheckInventory("Voucher of Nulgath"))
