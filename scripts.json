@@ -16944,6 +16944,35 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/StormCacheMerge.cs"
   },
   {
+    "name": "Light Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Light Merge [422] in /necropolis",
+    "tags": [
+      "light",
+      "merge",
+      "necropolis",
+      "armored",
+      "daimyo",
+      "battlepet",
+      "spirit",
+      "orb",
+      "destiny",
+      "broadsword",
+      "scythe",
+      "mace",
+      "bow",
+      "bright",
+      "blinding",
+      "twilly",
+      "moglinrider",
+      "twig",
+      "zorbak"
+    ],
+    "path": "Other/MergeShops/LightMerge.cs",
+    "size": 9740,
+    "fileName": "LightMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/LightMerge.cs"
+  },
+  {
     "name": "ExtinctionGamesMerge",
     "description": "null",
     "tags": [
