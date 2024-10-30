@@ -206,6 +206,7 @@ public class CoreBots
 
             Bot.Drops.Start();
             Logger("Bot Configured");
+            // oaklore brwokey, start somewhere else (we'll move you)
             if (Bot.Map.Name != null && Bot.Map.Name == "oaklore")
             {
                 Logger("We started in oaklore... starting scripts here can cause \"issues\"... we're not sure why, but this happens, but hopefully this fixes that.\n \tTeleporting to \"battleon\"\n\n");
@@ -345,8 +346,14 @@ public class CoreBots
         Bot.Lite.ReacceptQuest = false;
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
-        CancelRegisteredQuests();
-        AbandonQuest(Bot.Quests.Active.Select(x => x.ID).ToArray());
+        Bot.Lite.InvisibleMonsters = false;
+        Bot.Lite.DisableMonsterAnimation = false;
+        Bot.Lite.HidePlayers = false;
+        Bot.Lite.DisableSelfAnimation = false;
+        Bot.Lite.FreezeMonsterPosition = false;
+        Bot.Lite.DisableWeaponAnimation = false;
+        Bot.Lite.DisableSkillAnimation = false;
+        Bot.Lite.DisableSkillAnimations = false;
         StopBotAsync();
         Bot.Handlers.Clear();
 
@@ -354,6 +361,9 @@ public class CoreBots
         {
             JumpWait();
             Sleep();
+            CancelRegisteredQuests();
+            AbandonQuest(Bot.Quests.Active.Select(x => x.ID).ToArray());
+            // Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad);
 
             if (!string.IsNullOrWhiteSpace(CustomStopLocation))
             {
@@ -1693,13 +1703,25 @@ public class CoreBots
     /// <param name="questIDs">ID of the quests to be completed.</param>
     public void RegisterQuests(params int[] questIDs)
     {
-        if (questCTS is not null)
-            CancelRegisteredQuests();
+        // Get the current list of registered quest IDs
+        List<int> registeredQuestIDs = Bot.Quests.Registered.ToList();
 
+        // Add only unregistered quest IDs
+        foreach (int questID in questIDs)
+        {
+            if (!registeredQuestIDs.Contains(questID))
+            {
+                // Register the quest if it's not already registered
+                Bot.Quests.RegisterQuests(questID); // Use the correct method
+                registeredQuestIDs.Add(questID); // Keep the list updated
+            }
+        }
+
+        // Enable reaccepting quests
         Bot.Lite.ReacceptQuest = true;
 
-        // Defining all the lists to be used=
-        List<Quest> questData = EnsureLoad(questIDs);
+        // Load and return quest data based on updated list of quest IDs
+        List<Quest> questData = EnsureLoad(registeredQuestIDs.ToArray());
         Dictionary<Quest, int> chooseQuests = new();
         Dictionary<Quest, int> nonChooseQuests = new();
 
@@ -1736,9 +1758,6 @@ public class CoreBots
         }
 
         registeredQuests = questIDs;
-        // if (questIDs.Length > 1)
-        //     EnsureAcceptmultiple(true, questIDs);
-        // else EnsureAccept(questIDs[1]);
         questCTS = new();
         Task.Run(async () =>
         {
@@ -1809,13 +1828,19 @@ public class CoreBots
     public void CancelRegisteredQuests()
     {
         Bot.Lite.ReacceptQuest = false;
-        questCTS?.Cancel();
-        Bot.Wait.ForTrue(() => questCTS == null, 30);
-        Bot.Quests.UnregisterQuests(registeredQuests!);
-        AbandonQuest(registeredQuests!);
+        if (questCTS != null)
+        {
+            questCTS?.Cancel();
+            Bot.Wait.ForTrue(() => questCTS == null, 10);
+        }
+        if (Bot.Quests.Registered.Any())
+        {
+            Bot.Quests.UnregisterQuests(registeredQuests);
+            AbandonQuest(registeredQuests);
+        }
         registeredQuests = null;
     }
-    private int[]? registeredQuests = null;
+    private int[] registeredQuests = null;
 
     /// <summary>
     /// Ensures the quest is ready for acceptance by handling membership checks,
