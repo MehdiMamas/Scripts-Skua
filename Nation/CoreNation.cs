@@ -757,7 +757,7 @@ public class CoreNation
         Core.Logger($"Do Return Policy?: {returnPolicyDuringSupplies}");
         Core.Logger($"Sell Voucher(Mem)?: {sellMemVoucher}");
 
-        Core.RegisterQuests(item != Uni(13) && Core.CheckInventory("Swindle Bilk's To Go Hut")
+        Core.RegisterQuests(item != Uni(13) && Core.CheckInventory(38261 /* "Swindle Bilk's To Go Hut" */) 
                             ? (Core.CheckInventory("Drudgen the Assistant")
                                 ? new int[] { 870, 2857, 9542 }
                                 : new int[] { 2857, 9542 })
