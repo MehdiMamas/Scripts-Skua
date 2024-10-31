@@ -186,10 +186,16 @@ public class CoreBots
 
             Bot.Bank.Open();
             Bot.Bank.Loaded = true;
+            
             if (BankMiscAC)
                 BankACMisc();
+
             if (BankUnenhancedACGear)
                 BankACUnenhancedGear();
+
+            // Unregister all quests if any are found
+            if (Bot.Quests.Registered.Any())
+                Bot.Quests.UnregisterAllQuests();
 
             EquipmentBeforeBot.AddRange(Bot.Inventory.Items.Where(i => i.Equipped).Select(x => x.Name));
             currentClass = ClassType.None;
@@ -1298,7 +1304,8 @@ public class CoreBots
     {
         if (!(quant > 0 ? CheckInventory(itemName, quant) : CheckInventory(itemName)) || !Bot.Inventory.TryGetItem(itemName, out var item))
             return;
-
+        int retryCount = 0;
+    Retry:
         while (!Bot.ShouldExit && Bot.Player.InCombat)
         {
             JumpWait();
@@ -1317,9 +1324,27 @@ public class CoreBots
             Sleep();
             return;
         }
-        else Bot.Shops.SellItem(itemName);
-
-        Logger($"{(all ? string.Empty : quant.ToString())} {itemName} sold");
+        else
+        {
+            Bot.Shops.SellItem(itemName);
+            Bot.Wait.ForItemSell();
+        }
+        if (!Bot.Inventory.Contains(itemName) && !Bot.Bank.Contains(itemName))
+            Logger($"{(all ? string.Empty : quant.ToString())} {itemName} sold");
+        else
+        {
+            if (retryCount < 5)
+            {
+                retryCount++;
+                Logger($"{itemName} failed to sell, retrying [Try x{retryCount}]");
+                goto Retry;
+            }
+            else
+            {
+                retryCount = 0;
+                return;
+            }
+        }
     }
 
     /// <summary>
@@ -1768,52 +1793,74 @@ public class CoreBots
                 // Quests that dont need a choice
                 foreach (KeyValuePair<Quest, int> kvp in nonChooseQuests)
                 {
-                    if (!Bot.Quests.IsInProgress(kvp.Key.ID))
+                    if (!Bot.Quests.Registered.Contains(kvp.Key.ID) && !Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
+                    {
                         EnsureAccept(kvp.Key.ID);
+                        await Task.Delay(ActionDelay);
+                    }
                     if (Bot.Quests.CanCompleteFullCheck(kvp.Key.ID))
                     {
+                        // int amountTurnedIn = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", kvp.Key.ID);
                         int amountTurnedIn = EnsureCompleteMulti(kvp.Key.ID);
                         if (amountTurnedIn == 0)
                             continue;
                         await Task.Delay(ActionDelay);
-                        EnsureAccept(kvp.Key.ID);
+                        if (!Bot.Lite.ReacceptQuest && !Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
+                        {
+                            EnsureAccept(kvp.Key.ID);
+                            await Task.Delay(ActionDelay);
+                        }
                         nonChooseQuests[kvp.Key] = nonChooseQuests[kvp.Key] + amountTurnedIn;
-                        Logger($"Quest completed x{nonChooseQuests[kvp.Key]} times: [{kvp.Key.ID}] \"{kvp.Key.Name}\"");
+                        //lessen log spam - log every 10 completions.
+                        if (nonChooseQuests[kvp.Key] % 10 == 0)
+                        {
+                            Logger($"Quest completed [{kvp.Key.ID}] \"{kvp.Key.Name}\" x{nonChooseQuests[kvp.Key]} times.");
+                        }
                     }
+                    await Task.Delay(ActionDelay);
                 }
+                await Task.Delay(ActionDelay);
 
                 // Quests that need a choice
                 foreach (KeyValuePair<Quest, int> kvp in chooseQuests)
                 {
                     if (!Bot.Quests.IsInProgress(kvp.Key.ID))
+                    {
                         EnsureAccept(kvp.Key.ID);
+                        await Task.Delay(ActionDelay);
+                    }
 
                     if (Bot.Quests.CanCompleteFullCheck(kvp.Key.ID))
                     {
                         // Finding the list of items you dont have yet.
                         List<SimpleReward> simpleRewards =
-                            kvp.Key.SimpleRewards.Where(r => r.Type == 2 &&
-                                !CheckInventory(r.ID, toInv: false)).ToList();
+                            kvp.Key.SimpleRewards.Where(r =>
+                            r != null &&
+                            r.Type == 2 &&
+                            !CheckInventory(r.ID, toInv: false)).ToList();
 
                         // If you have at least 1 of each item, start finding items that you dont have max stack of yet
                         if (simpleRewards.Count == 0)
                         {
-                            List<int> matches = kvp.Key.Rewards.Where(x => !CheckInventory(x.ID, x.MaxStack, toInv: false)).Select(i => i.ID).ToList();
+                            List<int> matches = kvp.Key.Rewards.Where(x => x != null && !CheckInventory(x.ID, x.MaxStack, toInv: false)).Select(i => i.ID).ToList();
                             simpleRewards =
-                                kvp.Key.SimpleRewards.Where(r => r.Type == 2 && matches.Contains(r.ID)).ToList();
+                                kvp.Key.SimpleRewards.Where(r => r != null && r.Type == 2 && matches.Contains(r.ID)).ToList();
                         }
                         if (simpleRewards.Count == 0)
                         {
                             EnsureCompleteMulti(kvp.Key.ID);
                             await Task.Delay(ActionDelay);
-                            EnsureAccept(kvp.Key.ID);
+                            if (!Bot.Lite.ReacceptQuest && !Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
+                                EnsureAccept(kvp.Key.ID);
                             continue;
                         }
 
-                        Bot.Drops.Add(kvp.Key.Rewards.Where(x => simpleRewards.Any(t => t.ID == x.ID)).Select(i => i.Name).ToArray());
+                        Bot.Drops.Add(kvp.Key.Rewards.Where(x => simpleRewards.Any(t => t != null && t.ID == x.ID)).Select(i => i.Name).ToArray());
                         EnsureCompleteMulti(kvp.Key.ID, simpleRewards.First().ID);
-                        await Task.Delay(ActionDelay);
-                        EnsureAccept(kvp.Key.ID);
+                        // await Task.Delay(ActionDelay);
+                        await Task.Delay(Bot.Quests.RegisterCompleteInterval);
+                        if (!Bot.Lite.ReacceptQuest && !Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
+                            EnsureAccept(kvp.Key.ID);
                         Logger($"Quest completed x{chooseQuests[kvp.Key]++} times: [{kvp.Key.ID}] \"{kvp.Key.Name}\" (Got \"{kvp.Key.Rewards.First(x => x.ID == simpleRewards.First().ID).Name}\")");
                     }
                 }
@@ -2100,8 +2147,12 @@ public class CoreBots
     /// <param name="itemID">ID of the choose-able reward item</param>
     public int EnsureCompleteMulti(int questID, int amount = -1, int itemID = -1)
     {
-        var quest = EnsureLoad(questID);
-        if (!Bot.Quests.Active.Any(x => x.ID == questID))
+        Quest quest = EnsureLoad(questID);
+
+        if (quest == null)
+            return 0;
+
+        if (!Bot.Lite.ReacceptQuest && !Bot.Quests.Active.Any(x => x.ID == questID))
             EnsureAccept(questID);
 
         int turnIns;
@@ -2114,16 +2165,14 @@ public class CoreBots
             if (turnIns == 0)
                 return 0;
         }
+        if (Bot.Quests.CanCompleteFullCheck(questID))
+            Bot.Flash.CallGameFunction("world.tryQuestComplete", questID, itemID, false, turnIns);
 
-        Bot.Flash.CallGameFunction("world.tryQuestComplete", questID, itemID, false, turnIns);
-        Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
-
-        if (Bot.Options.SafeTimings)
-            Bot.Wait.ForQuestComplete(questID);
+        Bot.Wait.ForQuestComplete(questID);
         if (Bot.Lite.ReacceptQuest)
             Bot.Wait.ForQuestAccept(questID);
 
-        return !Bot.Quests.IsInProgress(questID) ? turnIns : 0;
+        return turnIns;
     }
 
 
@@ -5879,24 +5928,17 @@ public class CoreBots
         var maps = new[] { ("tercessuinotlim", "m1"), (IsMember ? "Nulgath" : "evilmarsh", "Field1") };
         var randomMapIndex = new Random().Next(0, maps.Length);
         var selectedMap = maps[randomMapIndex];
-        DebugLogger(this);
 
         Join(selectedMap.Item1, selectedMap.Item2, "Left");
-        DebugLogger(this);
 
         while (!Bot.ShouldExit && isTemp ? !Bot.TempInv.Contains(item!, quantity) : !Bot.Inventory.Contains(item, quantity))
         {
-            DebugLogger(this);
             if (Bot.Player.Cell != selectedMap.Item2)
                 Jump(selectedMap.Item2);
 
-            DebugLogger(this);
             Bot.Combat.Attack("Dark Makai");
-            DebugLogger(this);
             Sleep();
-            DebugLogger(this);
         }
-        DebugLogger(this);
     }
 
     public void AuraHandling(string? targetAuraName)
