@@ -1271,6 +1271,9 @@ public class CoreNation
         if (Core.CheckInventory("Oblivion Blade of Nulgath Pet (Rare)") && Core.IsMember)
             RegisteredQuests.Add(599);
 
+        if (returnPolicyDuringSupplies)
+            RegisteredQuests.Add(7551);
+
         // Swindle Bilk's To Go Hut
         if (Core.CheckInventory(38261))
             RegisteredQuests.Add(9542);
