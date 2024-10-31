@@ -48,20 +48,23 @@ public class SuppliesToSpinTheWheelofChance
         // Check to see if we're maxing 1 or all items for reward sets.
         SuppliesItem = SuppliesItem == "All" ? null : SuppliesItem;
         SwindlesReturnItem = SwindlesReturnItem == "All" ? null : SwindlesReturnItem;
-
+    Retry2857:
         // Load quests
         Quest? Supplies = Bot.Quests.EnsureLoad(2857);
         if (Supplies == null)
         {
             Core.Logger("Failed to load quest 2857.");
-            return;
+            Core.Sleep();
+            goto Retry2857;
         }
 
+    Retry7551:
         Quest? SwindlesReturn = Bot.Quests.EnsureLoad(7551);
         if (SwindlesReturn == null)
         {
             Core.Logger("Failed to load quest 7551.");
-            return;
+            Core.Sleep();
+            goto Retry7551;
         }
 
         // Create a list to hold combined rewards from Supplies and SwindlesReturn

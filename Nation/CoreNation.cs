@@ -842,6 +842,7 @@ public class CoreNation
                             }
                             if (returnPolicyDuringSupplies && Core.CheckInventory(new[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20) }))
                             {
+                            Retry:
                                 Core.ResetQuest(7551);
                                 Core.DarkMakaiItem("Dark Makai Rune");
                                 Quest? quest = Core.EnsureLoad(7551);
@@ -875,7 +876,11 @@ public class CoreNation
                                     }
                                 }
                                 else
-                                    Core.Logger("Failed to load quest 7551.");
+                                {
+                                    Core.Logger("Failed to load quest 7551, retrying...");
+                                    Core.Sleep();
+                                    goto Retry;
+                                }
                             }
                             if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
                                 Core.EnsureCompleteMulti(4778);
@@ -933,6 +938,7 @@ public class CoreNation
                     // Return Policy area
                     if (returnPolicyDuringSupplies && Core.CheckInventory(new[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20) }))
                     {
+                    Retry:
                         Core.ResetQuest(7551);
                         Core.DarkMakaiItem("Dark Makai Rune");
                         List<ItemBase> ReturnRewards = Core.EnsureLoad(7551).Rewards;
@@ -956,7 +962,11 @@ public class CoreNation
                                 }
                             }
                             else
-                                Core.Logger("Failed to load quest 7551.");
+                            {
+                                Core.Logger("Failed to load quest 7551, retrying...");
+                                Core.Sleep();
+                                goto Retry;
+                            }
                         }
                     }
                     if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
@@ -980,18 +990,22 @@ public class CoreNation
         if (item != null && Core.CheckInventory(item, quant))
             return;
 
+        Retry7551:
         Quest? Swindles = Bot.Quests.EnsureLoad(7551);
         if (Swindles == null)
         {
-            Core.Logger("Failed to load quest 7551.");
-            return;
+            Core.Logger("Failed to load quest 7551, retrying...");
+            Core.Sleep();
+            goto Retry7551;
         }
 
+    Retry2859:
         Quest? Assistant = Bot.Quests.EnsureLoad(2859);
         if (Assistant == null)
         {
-            Core.Logger("Failed to load quest 2859.");
-            return;
+            Core.Logger("Failed to load quest 2859, retrying...");
+            Core.Sleep();
+            goto Retry2859;
         }
 
         // List of available drops for "The Assistant" quest
@@ -1266,14 +1280,13 @@ public class CoreNation
 
         // Register unique quests only
         Core.RegisterQuests(RegisteredQuests.Distinct().ToArray());
-
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
             Core.HuntMonster("evilmarsh", "Tainted Elemental", log: false);
 
             if (item != "Voucher of Nulgath" && sellMemVoucher == true && Core.CheckInventory("Voucher of Nulgath"))
             {
-                do
+                while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
                 {
                     // Ensure not in combat or has a target
                     Bot.Combat.CancelTarget();
@@ -1281,23 +1294,20 @@ public class CoreNation
                     Core.Sleep();
 
                     // Jump to "Enter" and wait until successfully in "Enter" cell
-                    do
+                    while (!Bot.ShouldExit && Bot.Player.Cell != "Enter")
                     {
                         Core.Sleep();
                         Core.Jump("Enter", "Spawn");
 
                         if (Bot.Player.Cell == "Enter")
                             break;
-
                     }
-                    while (!Bot.ShouldExit && Bot.Player.Cell != "Enter");
 
                 }
-                while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter");
 
                 // Pickup and sell the item
                 Bot.Drops.Pickup("Voucher of Nulgath");
-                Core.SellItem("Voucher of Nulgath", KeepVoucher ? 1 : 0, !KeepVoucher);
+                Core.SellItem("Voucher of Nulgath", KeepVoucher ? 0 : 1, !KeepVoucher);
                 Bot.Wait.ForItemSell();
 
                 if (Bot.Player.Gold >= 1000000 && AssistantDuring)
@@ -1315,6 +1325,7 @@ public class CoreNation
                 }
             }
 
+        Retry:
             //reduce spam
             Quest? quest = Bot.Quests.EnsureLoad(7551);
             if (quest != null)
@@ -1359,7 +1370,11 @@ public class CoreNation
                     Core.EnsureCompleteMulti(4778);
             }
             else
+            {
                 Core.Logger("Failed to load quest 7551.");
+                Core.Sleep();
+                goto Retry;
+            }
         }
         HasLogged = false;
 

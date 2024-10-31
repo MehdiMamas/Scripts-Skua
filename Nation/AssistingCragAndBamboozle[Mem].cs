@@ -101,6 +101,7 @@ public class AssistingCragAndBamboozle
                         continue;
 
                     string? rewardName = rewardEnum.ToString().Replace("_", " ");
+                Retry5817:
                     Quest? quest = Bot.Quests.EnsureLoad(5817);
 
                     if (quest != null)
@@ -124,7 +125,11 @@ public class AssistingCragAndBamboozle
                             Core.Logger("Failed to find the reward item in the quest rewards.");
                     }
                     else
+                    {
                         Core.Logger("Failed to load quest 5817.");
+                        Core.Sleep();
+                        goto Retry5817;
+                    }
                 }
             }
             else
