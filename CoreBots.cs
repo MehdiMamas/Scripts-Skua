@@ -1758,8 +1758,19 @@ public class CoreBots
             {
                 if (req != null)
                 {
-                    if (req.Temp ? Bot.TempInv.Contains(req.ID, req.Quantity) : CheckInventory(req.ID, req.Quantity))
+                    if (!req.Temp && Bot.Bank.Contains(req.ID) && !Bot.Inventory.Contains(req.ID))
                     {
+                    //continue retrying till its in inv.
+                    Retry:
+                        if (!req.Temp && Bot.Bank.Contains(req.ID) && !Bot.Inventory.Contains(req.ID))
+                        {
+                            Logger($"Unbanking {req.Name}");
+                            Bot.Bank.ToInventory(req.ID);
+                            Sleep();
+                            if (!Bot.Inventory.Contains(req.ID))
+                                goto Retry;
+                        }
+
                         Bot.Wait.ForTrue(() => req.Temp ? Bot.TempInv.Contains(req.ID, req.Quantity) : Bot.Inventory.Contains(req.ID, req.Quantity), 20);
                         continue;
                     }
@@ -1770,6 +1781,29 @@ public class CoreBots
                     Logger($"Missing requirement \"{req.Name}\" [{req.ID}] for \"{q.Name}\" [{q.ID}]");
                     shouldBreak = true;
                     break;
+                }
+            }
+            foreach (ItemBase Item in q.Requirements)
+            {
+                if (Item != null)
+                {
+                    Bot.Drops.Add(Item.ID);
+                    if (!Item.Temp && Bot.Bank.Contains(Item.ID) && !Bot.Inventory.Contains(Item.ID))
+                    {
+                    //continue retrying till its in inv.
+                    Retry:
+                        if (!Item.Temp && Bot.Bank.Contains(Item.ID) && !Bot.Inventory.Contains(Item.ID))
+                        {
+                            Logger($"Unbanking {Item.Name}");
+                            Bot.Bank.ToInventory(Item.ID);
+                            Sleep();
+                            if (!Bot.Inventory.Contains(Item.ID))
+                                goto Retry;
+                        }
+
+                        Bot.Wait.ForTrue(() => Item.Temp ? Bot.TempInv.Contains(Item.ID, Item.Quantity) : Bot.Inventory.Contains(Item.ID, Item.Quantity), 20);
+                        continue;
+                    }
                 }
             }
             if (shouldBreak)
