@@ -186,7 +186,7 @@ public class CoreBots
 
             Bot.Bank.Open();
             Bot.Bank.Loaded = true;
-            
+
             if (BankMiscAC)
                 BankACMisc();
 
@@ -2147,13 +2147,9 @@ public class CoreBots
     /// <param name="itemID">ID of the choose-able reward item</param>
     public int EnsureCompleteMulti(int questID, int amount = -1, int itemID = -1)
     {
-        Quest quest = EnsureLoad(questID);
+        var quest = EnsureLoad(questID);
 
-        if (quest == null)
-            return 0;
-
-        if (!Bot.Lite.ReacceptQuest && !Bot.Quests.Active.Any(x => x.ID == questID))
-            EnsureAccept(questID);
+        EnsureAccept(questID);
 
         int turnIns;
         if (quest.Once || !string.IsNullOrEmpty(quest.Field))
@@ -2169,10 +2165,9 @@ public class CoreBots
             Bot.Flash.CallGameFunction("world.tryQuestComplete", questID, itemID, false, turnIns);
 
         Bot.Wait.ForQuestComplete(questID);
-        if (Bot.Lite.ReacceptQuest)
-            Bot.Wait.ForQuestAccept(questID);
+        Bot.Wait.ForQuestAccept(questID);
 
-        return turnIns;
+        return !Bot.Quests.IsInProgress(questID) ? turnIns : 0;
     }
 
 
