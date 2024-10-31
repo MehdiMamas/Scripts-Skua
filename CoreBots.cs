@@ -186,7 +186,7 @@ public class CoreBots
 
             Bot.Bank.Open();
             Bot.Bank.Loaded = true;
-            
+
             if (BankMiscAC)
                 BankACMisc();
 
@@ -1885,9 +1885,9 @@ public class CoreBots
             Bot.Quests.UnregisterQuests(registeredQuests);
             AbandonQuest(registeredQuests);
         }
-        registeredQuests = null;
+        registeredQuests = Array.Empty<int>();
     }
-    private int[] registeredQuests = null;
+    private int[] registeredQuests = Array.Empty<int>();
 
     /// <summary>
     /// Ensures the quest is ready for acceptance by handling membership checks,
