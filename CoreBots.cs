@@ -686,7 +686,7 @@ public class CoreBots
         if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
             Bot.Bank.Open();
 
-        foreach (var item in items)
+        foreach (string item in items)
         {
             if (Bot.Inventory.Contains(item) || Bot.House.Contains(item))
                 continue;
@@ -750,11 +750,11 @@ public class CoreBots
 
         JumpWait();
 
-        var currentLabel = Bot.Flash.GetGameObject("ui.mcPopup.currentLabel");
+        string? currentLabel = Bot.Flash.GetGameObject("ui.mcPopup.currentLabel");
         if (currentLabel != "\"Bank\"")
             Bot.Bank.Open();
 
-        foreach (var item in items)
+        foreach (int item in items)
         {
             if (Bot.Inventory.Contains(item))
                 continue;
@@ -807,7 +807,7 @@ public class CoreBots
                 continue;
             }
 
-            var inventoryItem = Bot.Inventory.Items.Concat(Bot.House.Items).FirstOrDefault(x => x.Name == item);
+            InventoryItem? inventoryItem = Bot.Inventory.Items.Concat(Bot.House.Items).FirstOrDefault(x => x.Name == item);
             bool itemIsForHouse = Bot.House.TryGetItem(item, out InventoryItem? _item) &&
                                             _item != null &&
                                             (_item.CategoryString == "House" || _item.CategoryString == "Wall Item" || _item.CategoryString == "Floor Item");
@@ -1137,7 +1137,7 @@ public class CoreBots
             string? questName = Bot.Flash.GetGameObject<List<dynamic>>("world.shopinfo.items")?.Find(d => d.ItemID == item.ID)?.sQuest;
             if (!string.IsNullOrEmpty(questName))
             {
-                var v = JsonConvert.DeserializeObject<List<QuestData>?>(File.ReadAllText(ClientFileSources.SkuaQuestsFile));
+                List<QuestData>? v = JsonConvert.DeserializeObject<List<QuestData>?>(File.ReadAllText(ClientFileSources.SkuaQuestsFile));
                 if (v != null)
                 {
                     List<int> ids = v.Where(x => x.Name == questName).Select(q => q.ID).ToList();
@@ -1302,7 +1302,7 @@ public class CoreBots
     /// <param name="all">Set to true if you wish to sell all the items</param>
     public void SellItem(string itemName, int quant = 0, bool all = false)
     {
-        if (!(quant > 0 ? CheckInventory(itemName, quant) : CheckInventory(itemName)) || !Bot.Inventory.TryGetItem(itemName, out var item))
+        if (!(quant > 0 ? CheckInventory(itemName, quant) : CheckInventory(itemName)) || !Bot.Inventory.TryGetItem(itemName, out InventoryItem? item))
             return;
         int retryCount = 0;
     Retry:
@@ -1484,8 +1484,8 @@ public class CoreBots
         item.bStaff = 0;
 
         // Adding / modifying based on extra info
-        var _item = item as IDictionary<string, object>;
-        foreach (var info in extraInfo)
+        IDictionary<string, object>? _item = item as IDictionary<string, object>;
+        foreach ((string, object) info in extraInfo)
             _item![info.Item1] = info.Item2;
         //if (item.sLink is not null && item.sFile is not null)
         //    item.bSCP = false;
@@ -1572,10 +1572,10 @@ public class CoreBots
             return Array.Empty<string>();
 
         // Initialize the list to hold the best items for each category
-        var bestItems = new List<string>();
+        List<string> bestItems = new List<string>();
 
         // Define categories and their corresponding category strings
-        var categories = new Dictionary<string, string?>
+        Dictionary<string, string?> categories = new Dictionary<string, string?>
     {
         { "Armor", ItemCategory.Armor.ToString() },
         { "Helm", ItemCategory.Helm.ToString() },
@@ -1585,7 +1585,7 @@ public class CoreBots
     };
 
         // Add the best item for each defined category
-        foreach (var category in categories)
+        foreach (KeyValuePair<string, string?> category in categories)
         {
             string bestItem = GetBestItem(boostType, category.Value) ?? "None";
             if (bestItem == "None")
@@ -1648,7 +1648,7 @@ public class CoreBots
 
         foreach (string item in items)
         {
-            if (!Bot.Inventory.TryGetItem(item, out var TrashItem) || TrashItem == null || TrashItem.Temp)
+            if (!Bot.Inventory.TryGetItem(item, out InventoryItem? TrashItem) || TrashItem == null || TrashItem.Temp)
                 continue;
 
             if (!TrashItem.Coins)
@@ -1974,14 +1974,14 @@ public class CoreBots
                 continue;
 
             DebugLogger(this);
-            var requiredItemNames = quest.AcceptRequirements.Where(x => !x.Temp)
+            string?[] requiredItemNames = quest.AcceptRequirements.Where(x => !x.Temp)
                 .Concat(quest.Requirements.Where(x => !x.Temp))
                 .Select(item => item?.Name)
                 .Where(name => !string.IsNullOrEmpty(name))
                 .ToArray();
 
             DebugLogger(this);
-            foreach (var itemName in requiredItemNames)
+            foreach (string? itemName in requiredItemNames)
             {
                 if (itemName != null && !Bot.Inventory.Contains(itemName))
                 {
@@ -2147,7 +2147,7 @@ public class CoreBots
     /// <param name="itemID">ID of the choose-able reward item</param>
     public int EnsureCompleteMulti(int questID, int amount = -1, int itemID = -1)
     {
-        var quest = EnsureLoad(questID);
+        Quest quest = EnsureLoad(questID);
 
         EnsureAccept(questID);
 
@@ -2173,7 +2173,7 @@ public class CoreBots
 
     public Quest EnsureLoad(int questID)
     {
-        var toReturn = Bot.Quests.Tree.Find(x => x.ID == questID) ?? _EnsureLoad1() ?? _EnsureLoad2();
+        Quest? toReturn = Bot.Quests.Tree.Find(x => x.ID == questID) ?? _EnsureLoad1() ?? _EnsureLoad2();
         if (toReturn == null)
         {
             Bot.Quests.Load(questID);
@@ -2315,7 +2315,7 @@ public class CoreBots
         if (questIDs == null || questIDs.Length == 0)
             return;
 
-        foreach (var q in EnsureLoad(questIDs))
+        foreach (Quest q in EnsureLoad(questIDs))
         {
             if (q == null || !q.Active)
                 continue;
@@ -3020,7 +3020,7 @@ public class CoreBots
 
             if (Staff is not null && Escherion is not null)
             {
-                var target = Staff.State is 1 or 2 ? Staff : Escherion is not null && Staff.State is 0 ? Escherion : null;
+                Monster? target = Staff.State is 1 or 2 ? Staff : Escherion is not null && Staff.State is 0 ? Escherion : null;
                 if (target is not null)
                     Bot.Combat.Attack(target);
             }
@@ -3158,7 +3158,7 @@ public class CoreBots
                     case "ct":
                         if (data.a is not null)
                         {
-                            foreach (var a in data.a)
+                            foreach (dynamic a in data.a)
                             {
                                 if (a is null)
                                     continue;
@@ -3421,7 +3421,7 @@ public class CoreBots
 
         while (!Bot.ShouldExit && !HasItem())
         {
-            var monsters = FindMonsters().ToList();
+            List<Monster> monsters = FindMonsters().ToList();
             if (!monsters.Any())
             {
                 Sleep(); // No monsters found, wait a bit before retrying
