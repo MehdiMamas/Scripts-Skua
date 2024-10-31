@@ -1307,8 +1307,11 @@ public class CoreNation
 
                 // Pickup and sell the item
                 Bot.Drops.Pickup("Voucher of Nulgath");
-                Core.SellItem("Voucher of Nulgath", KeepVoucher ? 0 : 1, !KeepVoucher);
-                Bot.Wait.ForItemSell();
+                if (!KeepVoucher)
+                {
+                    Core.SellItem("Voucher of Nulgath", all: true);
+                    Bot.Wait.ForItemSell();
+                }
 
                 if (Bot.Player.Gold >= 1000000 && AssistantDuring)
                 {
