@@ -2938,7 +2938,7 @@ public class CoreBots
         }
         else
         {
-            while (!Bot.ShouldExit && !isTemp ? !Bot.TempInv.Contains(item, quant) : !Bot.Inventory.Contains(item, quant))
+            while (!Bot.ShouldExit && isTemp ? !Bot.TempInv.Contains(item, quant) : !Bot.Inventory.Contains(item, quant))
                 _KillEscherion();
 
             JumpWait();
