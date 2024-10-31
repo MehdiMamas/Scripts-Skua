@@ -7,6 +7,7 @@ tags: candied, costumes, merge, candyshop, fairy, tale, wanderer, flesh, ripper,
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
+//cs_include Scripts/Seasonal/Mogloween/CoreMogloween.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -18,6 +19,7 @@ public class CandiedCostumesMerge
     public CoreFarms Farm = new();
     public CoreStory Story = new();
     public CoreAdvanced Adv = new();
+    public CoreMogloween CMoging = new();
     public static CoreAdvanced sAdv = new();
 
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -42,6 +44,7 @@ public class CandiedCostumesMerge
         if (!Core.isSeasonalMapActive("mogloween"))
             return;
 
+        CMoging.Chromafection();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("candyshop", 1761, findIngredients, buyOnlyThis, buyMode: buyMode);
 
