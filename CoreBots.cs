@@ -5007,8 +5007,6 @@ public class CoreBots
                 SimpleQuestBypass((456, 13));
                 break;
 
-
-
             case "championdrakath":
                 SimpleQuestBypass((182, 7));
                 break;
@@ -5143,6 +5141,11 @@ public class CoreBots
 
                 Jump("m22", "Left");
                 tryJoin();
+                break;
+
+                case "druids":
+                tryJoin();
+                Bot.Wait.ForItemEquip(18524);
                 break;
 
             #region Quest Prog swaps spawn cell
