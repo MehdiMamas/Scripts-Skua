@@ -2195,7 +2195,7 @@ public class CoreBots
             if (turnIns == 0)
                 return 0;
         }
-        if (Bot.Quests.CanCompleteFullCheck(questID))
+        if (Bot.Quests.CanCompleteFullCheck(questID) || quest.Requirements.Count == 0)
             Bot.Flash.CallGameFunction("world.tryQuestComplete", questID, itemID, false, turnIns);
 
         Bot.Wait.ForQuestComplete(questID);
