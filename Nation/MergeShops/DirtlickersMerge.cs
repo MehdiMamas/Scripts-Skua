@@ -40,7 +40,7 @@ public class DirtlickersMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Nulgath Nation House", "Pink Star Diamond of Nulgath", "Musgravite of Nulgath", "Nulgath's Approval", "Totem of Nulgath", "Voucher of Nulgath (non-mem)", "Unidentified 13", "Dark Crystal Shard", "Tainted Gem", "Gem of Nulgath", "Corpse Maker of Nulgath", "Overfiend Blade of Nulgath", "Archfiend's Favor", "Hadean Onyx of Nulgath", "Essence of Nulgath", "Letter from Asuka and Tendou", "Chain of Nulgath", "Yulgath's Hut", "Unidentified 10" });
+        Core.BankingBlackList.AddRange(new[] { "Nulgath Nation House", "Pink Star Diamond of Nulgath", "Musgravite of Nulgath", "Nulgath's Approval", "Totem of Nulgath", "Voucher of Nulgath (non-mem)", "Voucher of Nulgath", "Unidentified 13", "Dark Crystal Shard", "Tainted Gem", "Gem of Nulgath", "Corpse Maker of Nulgath", "Overfiend Blade of Nulgath", "Archfiend's Favor", "Hadean Onyx of Nulgath", "Essence of Nulgath", "Letter from Asuka and Tendou", "Chain of Nulgath", "Yulgath's Hut", "Unidentified 10" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -122,14 +122,19 @@ public class DirtlickersMerge
                 case "Diamond of Nulgath":
                     Nation.FarmDiamondofNulgath(300);
                     break;
-                    
+
                 case "Totem of Nulgath":
                     Nation.FarmTotemofNulgath(quant);
                     break;
 
                 case "Voucher of Nulgath (non-mem)":
-                    Nation.FarmVoucher(false);
+                    Nation.FarmVoucher(false, true);
                     break;
+
+                case "Voucher of Nulgath":
+                    Nation.FarmVoucher(true, true);
+                    break;
+
 
                 case "Unidentified 13":
                     Nation.FarmUni13(quant);
