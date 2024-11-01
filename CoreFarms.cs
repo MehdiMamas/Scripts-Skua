@@ -2731,11 +2731,11 @@ public class CoreFarms
                 Core.EnsureComplete(3029);
 
                 Core.EnsureAccept(3030); // Cull the Foot Soldiers 3030
-                Core.KillMonster("druids", "Void Larva", "r6", "Left", "Void Larvae Death Cry", 4);
+                Core.KillMonster("druids", "r6", "Left", "Void Larva", "Void Larvae Death Cry", 4);
                 Core.EnsureComplete(3030);
 
                 Core.EnsureAccept(3031); // Bad Vibes 3031
-                Core.KillMonster("druids", "Void Ghast", "r6", "Left", "Ghast's Death Cry", 4);
+                Core.KillMonster("druids", "r6", "Left", "Void Ghast", "Ghast's Death Cry", 4);
                 Core.EnsureComplete(3031);
 
                 Core.EnsureAccept(3032); // Quite the Problem 3032
