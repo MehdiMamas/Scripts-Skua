@@ -2462,7 +2462,7 @@ public class CoreAdvanced
 
                 #region Luck - Vim - Lam - Rav
                 case "Chrono ShadowSlayer":
-                case "Chrono ShadowHunter":
+                case "chrono shadowhunter":
                     type = EnhancementType.Lucky;
                     cSpecial = uLament() ? CapeSpecial.Lament : (uForgeCape() ? CapeSpecial.Forge : CurrentCapeSpecial());
                     wSpecial = uRavenous() ? WeaponSpecial.Ravenous : (uArcanasConcerto() ? WeaponSpecial.Arcanas_Concerto : (uForgeWeapon() ? WeaponSpecial.Forge : WeaponSpecial.Awe_Blast));
@@ -2756,7 +2756,7 @@ public class CoreAdvanced
         void AweEnhancementLibrary()
         {
             //tolower incase we accidentaly use capitals.. it breaks
-            switch (className.ToLower())
+            switch (className)
             {
                 #region Lucky Region
 
@@ -2960,7 +2960,7 @@ public class CoreAdvanced
                 case "vampire lord":
                 case "enchanted vampire lord":
                 case "royal vampire lord":
-                case "Chrono ShadowHunter":
+                case "chrono shadowhunter":
                     type = EnhancementType.Lucky;
                     wSpecial = WeaponSpecial.Health_Vamp;
                     break;
