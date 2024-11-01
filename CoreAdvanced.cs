@@ -2755,7 +2755,8 @@ public class CoreAdvanced
 
         void AweEnhancementLibrary()
         {
-            switch (className)
+            //tolower incase we accidentaly use capitals.. it breaks
+            switch (className.ToLower())
             {
                 #region Lucky Region
 
