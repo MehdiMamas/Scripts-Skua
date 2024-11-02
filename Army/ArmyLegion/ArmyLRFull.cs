@@ -552,9 +552,9 @@ public class ArmyLR
             Army.StartFarm(item, quant);
         else
             Core.Logger("Item parameter is null or empty.");
-            
+
         Army.AggroMonStop(true);
-        Core.Jump(Bot.Player.Cell, Bot.Player.Pad);
+        Core.JumpWait();
         // Core.ToBank(item);
         Core.Logger($"everyone has finished {quant} {item}");
     }
@@ -616,18 +616,6 @@ public class ArmyLR
                 Army.AggroMonMIDs(25, 27, 29, 31, 41, 43, 46, 48);
                 Army.DivideOnCellsPriority(new[] { "r12", "r13", "r16", "r17" }, priorityCell: "", log: true);
                 Army.AggroMonStart();
-                // if (item == "Legion Seal")
-                // {
-                //     Army.AggroMonMIDs(25, 27, 29, 31);
-                //     Army.DivideOnCellsPriority(new[] {"r12", "r13"}, priorityCell: "", log: true);
-                //     Army.AggroMonStart();
-                // }
-                // else if (item == "Gem of Mastery")
-                // {
-                //     Army.AggroMonMIDs(41, 43, 46, 48);
-                //     Army.DivideOnCellsPriority(new[] {"r16", "r17"}, priorityCell: "", log: true);
-                //     Army.AggroMonStart();
-                // }
                 break;
 
             case "tercessuinotlim":
