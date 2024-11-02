@@ -183,8 +183,13 @@ public class CoreBots
             SetOptionsAsync();
 
             Bot.Options.HuntDelay = HuntDelay;
+            // Ensure Bank is loaded on script start, without opening.
+            if (!Bot.Bank.Loaded)
+            {
+                Bot.Bank.Load();
+                Bot.Wait.ForTrue(() => Bot.Bank.Loaded, 20);
+            }
 
-            Bot.Bank.Open();
             Bot.Bank.Loaded = true;
 
             if (BankMiscAC)
@@ -542,7 +547,13 @@ public class CoreBots
         if (Bot.Inventory.Contains(item, quant))
             return true;
 
-        Bot.Bank.Load(); // Sometimes bank won't load for some reason
+        // Ensure Bank is loaded.
+        if (!Bot.Bank.Loaded)
+        {
+            Bot.Bank.Load();
+            Bot.Wait.ForTrue(() => Bot.Bank.Loaded, 20);
+        }
+
         if (Bot.House.Contains(item))
             return true;
 
@@ -682,8 +693,12 @@ public class CoreBots
         if (Bot.Player.InCombat)
             JumpWait();
 
-        if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
-            Bot.Bank.Open();
+        // Ensure Bank is loaded.
+        while (!Bot.ShouldExit && !Bot.Bank.Loaded)
+        {
+            Bot.Bank.Load();
+            Bot.Wait.ForTrue(() => Bot.Bank.Loaded, 20);
+        }
 
         foreach (string item in items)
         {
@@ -1969,7 +1984,7 @@ public class CoreBots
         // Bot.Send.Packet($"%xt%zm%acceptQuest%{Bot.Map.RoomID}%{questID}%");
         if (Bot.Quests.Active.Any(x => x.ID == questID))
             return true;
-        else 
+        else
         {
             Bot.Quests.EnsureAccept(questID);
             Bot.Wait.ForQuestAccept(questID);
@@ -2174,7 +2189,7 @@ public class CoreBots
         EnsureAccept(quest.ID);
         int turnIns;
 
-        string[] requiredItemNames = 
+        string[] requiredItemNames =
         quest.Requirements.Concat(quest.AcceptRequirements)
         .Select(item => item.Name).ToArray();
 
@@ -2185,9 +2200,7 @@ public class CoreBots
         else
         {
             int possibleTurnin = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID);
-            Bot.Log($"possibleTurnin: {possibleTurnin}");
             turnIns = possibleTurnin > amount && amount > 0 ? amount : possibleTurnin;
-            Bot.Log($"turnIns: {turnIns}");
             if (turnIns == 0)
             {
                 return 0;

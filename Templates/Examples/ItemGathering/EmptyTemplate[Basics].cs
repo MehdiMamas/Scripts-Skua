@@ -37,7 +37,16 @@ public class DefaultTemplate
     {
         //Test Stuff  below  here
 
-
+        Bot.Log($"Bank Loaded? {Bot.Bank.Loaded}");
+        
+        // Ensure Bank is loaded.
+        while (!Bot.ShouldExit && !Bot.Bank.Loaded)
+        {
+            Bot.Bank.Load();
+            Bot.Wait.ForTrue(() => Bot.Bank.Loaded, 20);
+        }
+        
+        Bot.Log($"Bank Loaded? {Bot.Bank.Loaded}");
 
         //Test Stuff Above here
 
