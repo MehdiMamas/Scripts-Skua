@@ -15,12 +15,14 @@ public class BuyScrolls
     public CoreBots Core => CoreBots.Instance;
     public CoreFarms Farm = new();
 
+    public bool DontPreconfigure = true;
     public string OptionsStorage = "BuyScrolls";
     public List<IOption> Options = new()
     {
         new Option<bool>("UseMysticParchment", "Use Mystic Parchment", "Use Mystic Parchment instead of gold To Buy Ink", false),
         new Option<Scrolls>("scrollSelect", "Scroll of", "Select the scroll of your choise"),
         new Option<int>("scrollAmount", "How many", "Write -1 to buy up to max. stack", -1),
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -34,8 +36,8 @@ public class BuyScrolls
 
     public void BuyScroll(Scrolls scroll, int quant = -1, bool useMysticParchment = false)
     {
+        Core.DL_Enable();
         useMysticParchment = useMysticParchment || Bot.Config!.Get<bool>("UseMysticParchment");
-
         Quest questData = Core.EnsureLoad((int)scroll);
         string scrollName = questData.Rewards.First().Name;
         int maxStack = questData.Rewards.First().MaxStack;
@@ -72,9 +74,8 @@ public class BuyScrolls
         while (!Bot.ShouldExit && !Core.CheckInventory(scrollName, quant))
         {
             gatherMaterials();
-            Core.EnsureAccept((int)scroll);
-            int currentQuantity = Bot.Inventory.GetQuantity(scrollName);
-            Core.EnsureCompleteMulti((int)scroll, currentQuantity - (int)Math.Ceiling(quant / (float)maxStack));
+            Core.EnsureAccept(questData.ID);
+            Core.EnsureCompleteMulti(questData.ID);
             Bot.Wait.ForPickup(scrollName);
             Core.FarmingLogger(scrollName, quant);
         }
