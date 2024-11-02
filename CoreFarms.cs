@@ -2070,7 +2070,6 @@ public class CoreFarms
     {
         if (FactionRank("Fishing") >= rank)
         {
-            Core.DebugLogger(this);
             if (trashBait)
                 Core.TrashCan("Fishing Bait", "Fishing Dynamite");
             return;

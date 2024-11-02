@@ -425,8 +425,6 @@ public class CoreBots
             {
                 Task.Run(async () =>
                 {
-                    //DL_Enable();
-                    DebugLogger(this);
                     await Bot.Manager.RestartScriptAsync();
                     if (Bot.Player.LoggedIn)
                         return;
@@ -1573,11 +1571,11 @@ public class CoreBots
             return Array.Empty<string>();
 
         // Initialize the list to hold the best items for each category
-        List<string> bestItems = new List<string>();
+        List<string> bestItems = new();
 
         // Define categories and their corresponding category strings
-        Dictionary<string, string?> categories = new Dictionary<string, string?>
-    {
+        Dictionary<string, string?> categories = new()
+        {
         { "Armor", ItemCategory.Armor.ToString() },
         { "Helm", ItemCategory.Helm.ToString() },
         { "Cape", ItemCategory.Cape.ToString() },
@@ -1672,15 +1670,11 @@ public class CoreBots
     /// <param name="items">Items to add</param>
     public void AddDrop(params string[] items)
     {
-        DebugLogger(this);
         if (items == null || items.Length == 0)
         {
-            DebugLogger(this);
             return;
         }
-        DebugLogger(this);
         Unbank(items);
-        DebugLogger(this);
         Bot.Drops.Add(items);
     }
 
@@ -1692,7 +1686,6 @@ public class CoreBots
     {
         if (items == null || items.Length == 0)
         {
-            DebugLogger(this);
             return;
         }
         Unbank(items);
@@ -1976,7 +1969,12 @@ public class CoreBots
         // Bot.Send.Packet($"%xt%zm%acceptQuest%{Bot.Map.RoomID}%{questID}%");
         if (Bot.Quests.Active.Any(x => x.ID == questID))
             return true;
-        return Bot.Quests.EnsureAccept(questID);
+        else 
+        {
+            Bot.Quests.EnsureAccept(questID);
+            Bot.Wait.ForQuestAccept(questID);
+            return true;
+        }
     }
 
     /// <summary>
@@ -1991,36 +1989,29 @@ public class CoreBots
             questIDs = new int[] { 0 }; // Default value
         }
 
-        DebugLogger(this);
         List<Quest> QuestData = EnsureLoad(questIDs?.Where(q => q > 0).ToArray() ?? Array.Empty<int>());
 
         if (RegisterQuest)
             Bot.Lite.ReacceptQuest = true;
 
-        DebugLogger(this);
         foreach (Quest quest in QuestData)
         {
-            DebugLogger(this);
             if (quest.Upgrade && !IsMember)
                 Logger($"\"{quest.Name}\" [{quest.ID}] is member-only, stopping the bot.", stopBot: true);
 
-            DebugLogger(this);
             if (Bot.Quests.IsInProgress(quest.ID) || quest.ID <= 0)
                 continue;
 
-            DebugLogger(this);
             string?[] requiredItemNames = quest.AcceptRequirements.Where(x => !x.Temp)
                 .Concat(quest.Requirements.Where(x => !x.Temp))
                 .Select(item => item?.Name)
                 .Where(name => !string.IsNullOrEmpty(name))
                 .ToArray();
 
-            DebugLogger(this);
             foreach (string? itemName in requiredItemNames)
             {
                 if (itemName != null && !Bot.Inventory.Contains(itemName))
                 {
-                    DebugLogger(this);
                     Unbank(itemName);
                 }
             }
@@ -2036,24 +2027,19 @@ public class CoreBots
 
             foreach (ItemBase item in quest.Requirements.Where(x => !x.Temp))
             {
-                DebugLogger(this);
                 if (item == null)
                     continue;
 
-                DebugLogger(this);
                 if (!Bot.Drops.ToPickupIDs.Contains(item.ID) && item?.Name != null)
                 {
-                    DebugLogger(this);
                     Bot.Drops.Add(item.ID);
                 }
             }
 
-            DebugLogger(this);
             Sleep(ActionDelay * 2);
             // Bot.Send.Packet($"%xt%zm%acceptQuest%{Bot.Map.RoomID}%{quest.ID}%");
             Bot.Quests.EnsureAccept(quest.ID);
             Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
-            DebugLogger(this);
         }
     }
 
@@ -2182,27 +2168,42 @@ public class CoreBots
     /// <param name="itemID">ID of the choose-able reward item</param>
     public int EnsureCompleteMulti(int questID, int amount = -1, int itemID = -1)
     {
+        //idk why but it wants `var` not `Quest`.. and it just works :|
         Quest quest = EnsureLoad(questID);
 
-        EnsureAccept(questID);
-
+        EnsureAccept(quest.ID);
         int turnIns;
+
+        string[] requiredItemNames = 
+        quest.Requirements.Concat(quest.AcceptRequirements)
+        .Select(item => item.Name).ToArray();
+
         if (quest.Once || !string.IsNullOrEmpty(quest.Field))
+        {
             turnIns = 1;
+        }
         else
         {
-            int possibleTurnin = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", questID);
+            int possibleTurnin = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID);
+            Bot.Log($"possibleTurnin: {possibleTurnin}");
             turnIns = possibleTurnin > amount && amount > 0 ? amount : possibleTurnin;
+            Bot.Log($"turnIns: {turnIns}");
             if (turnIns == 0)
+            {
                 return 0;
+            }
         }
-        if (Bot.Quests.CanCompleteFullCheck(questID) || quest.Requirements.Count == 0)
-            Bot.Flash.CallGameFunction("world.tryQuestComplete", questID, itemID, false, turnIns);
 
-        Bot.Wait.ForQuestComplete(questID);
-        Bot.Wait.ForQuestAccept(questID);
+        // Ensure quest is loaded, and is entirely completable.
+        if (EnsureAccept(quest.ID) && CheckInventory(requiredItemNames))
+        {
+            Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, itemID, false, turnIns);
+        }
 
-        return !Bot.Quests.IsInProgress(questID) ? turnIns : 0;
+        Bot.Wait.ForQuestComplete(quest.ID);
+        Bot.Wait.ForQuestAccept(quest.ID);
+
+        return !Bot.Quests.IsInProgress(quest.ID) ? turnIns : 0;
     }
 
 
@@ -2492,21 +2493,15 @@ public class CoreBots
         }
         else
         {
-            DebugLogger(this);
 
             if (monster == "*")
                 _KillForItem("*", item, quant, isTemp, log: log, cell: cell);
             else
                 _KillForItem(monster, item, quant, isTemp, log: log, cell: cell);
 
-            DebugLogger(this);
-            DebugLogger(this);
             Bot.Options.AttackWithoutTarget = false;
-            DebugLogger(this);
             ToggleAggro(false);
-            DebugLogger(this);
             JumpWait();
-            DebugLogger(this);
             Rest();
         }
     }
@@ -2778,13 +2773,10 @@ public class CoreBots
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant)))
             return;
 
-        DebugLogger(this);
         Join(map, publicRoom: publicRoom);
 
-        DebugLogger(this);
         //*insurance**
         Bot.Wait.ForMapLoad(map);
-        DebugLogger(this);
 
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
@@ -2798,7 +2790,6 @@ public class CoreBots
 
         if (targetMonster == null)
         {
-            DebugLogger(this);
             return;
         }
 
@@ -2865,7 +2856,6 @@ public class CoreBots
 
         if (targetMonster == null)
         {
-            DebugLogger(this);
             return;
         }
 
@@ -2994,7 +2984,6 @@ public class CoreBots
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant)))
             return;
 
-        // DebugLogger(this);
         Join("escherion", publicRoom: publicRoom);
         Jump("Boss", "Left");
 
@@ -3492,10 +3481,8 @@ public class CoreBots
 
     public void _KillForItem(string name, string? item = null, int quantity = 1, bool isTemp = false, bool rejectElse = false, bool log = true, string? cell = null)
     {
-        DebugLogger(this);
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
         {
-            DebugLogger(this);
             return;
         }
         if (log && item != null)
@@ -3504,7 +3491,6 @@ public class CoreBots
 
         while (!Bot.ShouldExit && item != null && (isTemp ? !Bot.TempInv.Contains(item, quantity) : !Bot.Inventory.Contains(item, quantity)))
         {
-            DebugLogger(this);
             if (name == "*")
             {
                 foreach (Monster monster in Bot.Monsters.MapMonsters.Where(x => x != null && x.Cell == cell))
@@ -3568,12 +3554,10 @@ public class CoreBots
                     return;
                 }
 
-                DebugLogger(this);
                 if (rejectElse)
                     if (item != null)
                         Bot.Drops.RejectExcept(item);
             }
-            DebugLogger(this);
             if (item != null)
             {
                 Bot.Wait.ForDrop(item);
@@ -3584,10 +3568,8 @@ public class CoreBots
     }
     public void _KillForItem(string name, int itemID = 0, int quantity = 1, bool isTemp = false, bool rejectElse = false, bool log = true, string? cell = null)
     {
-        DebugLogger(this);
         if (itemID != 0 && (isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity)))
         {
-            DebugLogger(this);
             return;
         }
         if (log)
@@ -3601,9 +3583,7 @@ public class CoreBots
             {
                 if (cell != null && Bot.Player.Cell != cell)
                 {
-                    DebugLogger(this);
                     Jump(cell, "Left");
-                    DebugLogger(this);
                     Bot.Wait.ForCellChange(cell);
                 }
                 if (!Bot.Combat.StopAttacking)

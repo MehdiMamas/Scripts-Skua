@@ -94,18 +94,14 @@ public class CoreAdvanced
 
         Core.Join(map);
         Bot.Wait.ForMapLoad(map);
-        Core.DebugLogger(this);
 
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
         {
-            Core.DebugLogger(this);
             Core.JumpWait();
             Bot.Wait.ForCombatExit();
         }
 
-        Core.DebugLogger(this);
         ShopItem? item = Core.parseShopItem(Core.GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.ID == itemID : x.ShopItemID == shopItemID).ToList(), shopID, itemID.ToString());
-        Core.DebugLogger(this);
         if (item == null)
             return;
 

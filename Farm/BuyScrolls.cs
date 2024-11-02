@@ -36,7 +36,6 @@ public class BuyScrolls
 
     public void BuyScroll(Scrolls scroll, int quant = -1, bool useMysticParchment = false)
     {
-        Core.DL_Enable();
         useMysticParchment = useMysticParchment || Bot.Config!.Get<bool>("UseMysticParchment");
         Quest questData = Core.EnsureLoad((int)scroll);
         string scrollName = questData.Rewards.First().Name;

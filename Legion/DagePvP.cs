@@ -31,8 +31,6 @@ public class LegionCombatTrophy
     {
         Bot.Options.LagKiller = false;
         Core.BankACMisc();
-        // Core.DL_Enable();
-        //Adv.BestGear(RacialGearBoost.Undead);
         //order of quants: Trophy - Technique - Scroll
         Legion.DagePvP(4000, 50, 1000);
 
