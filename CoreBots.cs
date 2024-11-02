@@ -544,6 +544,7 @@ public class CoreBots
         if (Bot.Inventory.Contains(item, quant))
             return true;
 
+        Bot.Bank.Load(); // Sometimes bank won't load for some reason
         if (Bot.House.Contains(item))
             return true;
 
@@ -5143,7 +5144,7 @@ public class CoreBots
                 tryJoin();
                 break;
 
-                case "druids":
+            case "druids":
                 tryJoin();
                 Bot.Wait.ForItemEquip(18524);
                 break;

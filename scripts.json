@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 277072,
+    "size": 277264,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -9714,10 +9714,13 @@
       "story",
       "quest",
       "shadow-war",
-      "mana cradle"
+      "mana cradle",
+      "ultra speaker",
+      "ultraspeaker",
+      "malgor"
     ],
     "path": "Story/ShadowsOfWar/21ManaCradle.cs",
-    "size": 658,
+    "size": 692,
     "fileName": "21ManaCradle.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ShadowsOfWar/21ManaCradle.cs"
   },
