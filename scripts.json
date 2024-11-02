@@ -16328,6 +16328,35 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SeaBaseHouseMerge.cs"
   },
   {
+    "name": "MonaghanGorge Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the MonaghanGorge Merge [2499] in /monaghangorge",
+    "tags": [
+      "monaghangorge",
+      "merge",
+      "monaghangorge",
+      "enchanted",
+      "tricksters",
+      "apprentice",
+      "omen",
+      "trickster",
+      "morph",
+      "dark",
+      "cards",
+      "assistant",
+      "barb",
+      "barbs",
+      "trick",
+      "card",
+      "allure",
+      "grinning",
+      "stage"
+    ],
+    "path": "Other/MergeShops/MonaghanGorgeMerge.cs",
+    "size": 6047,
+    "fileName": "MonaghanGorgeMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/MonaghanGorgeMerge.cs"
+  },
+  {
     "name": "Yulgar's Dual Wield Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Yulgar’s Dual Wield Merge [1311] in /nostalgiaquest",
     "tags": [
