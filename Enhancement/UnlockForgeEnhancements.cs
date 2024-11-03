@@ -380,7 +380,7 @@ public class UnlockForgeEnhancements
                 if (!Bot.Quests.IsUnlocked(91))
                 {
                     Core.EnsureAccept(90);
-                    Core.HuntMonster("pirates", "Shark Bait", "Pirate Pegleg", 5);
+                    Core.HuntMonster("pirates", "Shark Bait", "Pirate Medallion", 5);
                     Core.EnsureComplete(90);
                 }
                 Core.EnsureAccept(91);
