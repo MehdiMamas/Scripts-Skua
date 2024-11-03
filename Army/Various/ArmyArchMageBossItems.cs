@@ -70,7 +70,7 @@ public class ArchMageMatsArmy
 
         ArmyKillMonster("voidflibbi", "Enter", 5131, "Void Essentia");
         ArmyKillMonster("voidnightbane", "Enter", 5240, "Insatiable Hunger");
-        ArmyKillMonster("dage", "Boss", 0, "Vital Exanima");
+        ArmyKillMonster("dage", "Boss", 5086, "Vital Exanima");
         ArmyKillMonster("fireavatar", "r9", 4926, "Everlight Flame");
         ArmyKillMonster("tercessuinotlim", "Boss2", 35, "The Mortal Coil");
         ArmyKillMonster("theworld", "r9", 5187, "Undying Resolve");
@@ -89,6 +89,11 @@ public class ArchMageMatsArmy
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
 
+        Core.Join(map);
+        Army.waitForPartyCell(cell, playerCount: Army.Players().Count());
+
+        Monster mon = Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.MapID == MonID);
+
         if (!isTemp)
             Core.AddDrop(item);
 
@@ -97,17 +102,16 @@ public class ArchMageMatsArmy
 
         if (!Core.CheckInventory(item, toInv: false))
         {
-            Bot.Drops.Add(item);
-            Core.FarmingLogger(item, 1);
+            Core.AddDrop(item);
+            Core.FarmingLogger(item, quant);
             if (MonID != 5295)
-                Army.AggroMonMIDs(MonID);
+                Army.AggroMonMIDs(mon.MapID);
             Army.AggroMonStart(map);
             Army.DivideOnCells(cell);
         }
         else
         {
             Core.Logger($"{item} Found.");
-            //Army.waitForParty(map, item);
         }
 
         if (Bot.Map.Name == "darkcarnax")
@@ -130,17 +134,17 @@ public class ArchMageMatsArmy
         }
         else if (Bot.Map.Name == "archmage")
         {
+            bool shouldExit = false;
             while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             {
-                foreach (Monster mon in Bot.Monsters.MapMonsters.Where(x => x.ID == 1 || x.ID == 2))
+                foreach (Monster M in Bot.Monsters.MapMonsters.Where(mon => mon != null && mon.MapID is 1 or 2))
                 {
-                    bool shouldExit = false;
 
                     while (!Bot.ShouldExit && mon.HP >= 0 && !shouldExit)
                     {
-                        Bot.Combat.Attack(mon.MapID);
+                        Bot.Combat.Attack(M.MapID);
                         Core.Sleep();
-                        shouldExit = Core.CheckInventory(item, quant);
+                        shouldExit = Bot.TempInv.Contains(item, quant) || Bot.Inventory.Contains(item, quant);
                     }
 
                     if (shouldExit)
@@ -157,7 +161,7 @@ public class ArchMageMatsArmy
                     Core.Jump(cell);
                     Core.Sleep();
                 }
-                Bot.Combat.Attack(MonID);
+                Bot.Combat.Attack(mon.MapID);
             }
         }
         Army.AggroMonStop(true);
