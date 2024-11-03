@@ -570,9 +570,17 @@ public class CoreAdvanced
     {
         InventoryItem? itemInv = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == className.ToLower().Trim() && i.Category == ItemCategory.Class);
 
-        if (itemInv != null && itemInv.Quantity < 302500)
-            Bot.Wait.ForBankToInventory(itemInv.ID);
-        else Bot.Wait.ForTrue(() => Bot.Inventory.Contains(className), 20);
+        if (itemInv != null && Bot.Inventory.Contains(itemInv.ID) && itemInv.Quantity >= 302500)
+            return;
+
+        while (!Bot.ShouldExit && itemInv != null && Bot.Bank.Contains(itemInv.ID) && !Bot.Inventory.Contains(itemInv.ID))
+        {
+            Bot.Bank.ToInventory(itemInv.ID);
+            Core.Sleep();
+
+            if (Bot.Inventory.Contains(itemInv.ID))
+                break;
+        }
 
         if (itemInv == null)
         {
