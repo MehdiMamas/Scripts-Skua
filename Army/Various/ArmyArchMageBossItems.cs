@@ -92,7 +92,7 @@ public class ArchMageMatsArmy
         Core.Join(map);
         Army.waitForPartyCell(cell, playerCount: Army.Players().Count());
 
-        Monster mon = Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.MapID == MonID);
+        Monster mon = Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.ID == MonID);
 
         if (!isTemp)
             Core.AddDrop(item);
