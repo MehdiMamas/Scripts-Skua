@@ -68,7 +68,11 @@ public class ScarletSorceress
         Core.Logger("Quest Classes are received unenhanced until relog...\n" +
         "GOOD LUCK ON THE RELOG WORKING");
 
+        Bot.Options.AutoRelogin = false;
         Core.Relogin();
+        while (!Bot.ShouldExit && Bot.Player.LoggedIn && !Bot.Player.Loaded && Bot.Player.Playing && Bot.Map.Loaded)
+            Core.Sleep(1500);
+
 
         while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
         {
@@ -77,6 +81,7 @@ public class ScarletSorceress
         }
 
         Core.Logger("Holy F**k it worked, congrats!");
+        Bot.Options.AutoRelogin = true;
 
         if (rankUpClass)
             Adv.RankUpClass("Scarlet Sorceress");
