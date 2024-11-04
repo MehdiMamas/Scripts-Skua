@@ -92,11 +92,19 @@ public class ArchMageMatsArmy
         Core.Join(map);
         Army.waitForPartyCell(cell, playerCount: Army.Players().Count());
 
-        Monster? mon = Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.ID == MonID);
+        Monster? mon = null;
+        for (int i = 0; i < 5; i++)
+        {
+            mon = Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.ID == MonID);
+            if (mon != null)
+                break;
+            Core.Logger($"Attempt {i + 1}: Monster {MonID} not found. Retrying...");
+            Core.Sleep(1000); // Wait for 1 second before retrying
+        }
 
         if (mon == null)
         {
-            Core.Logger($"Monster {MonID} not found.");
+            Core.Logger($"Monster {MonID} not found after 5 attempts.");
             return;
         }
 
