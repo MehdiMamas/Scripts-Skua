@@ -14411,6 +14411,18 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Badges/LordOfTheWeddingRing.cs"
   },
   {
+    "name": "Stubborn",
+    "description": "null",
+    "tags": [
+      "badge",
+      "stubborn"
+    ],
+    "path": "Other/Badges/Stubborn.cs",
+    "size": 951,
+    "fileName": "Stubborn.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Badges/Stubborn.cs"
+  },
+  {
     "name": "Goal",
     "description": "null",
     "tags": [
