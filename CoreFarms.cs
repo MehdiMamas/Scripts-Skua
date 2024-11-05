@@ -871,7 +871,7 @@ public class CoreFarms
 
     public void BattleUnderB(string item = "Bone Dust", int quant = 10000, bool isTemp = false)
     {
-        if (Core.CheckInventory(item, quant))
+        if (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant))
             return;
 
         if (item == "Undead Energy" && !Core.isCompletedBefore(2084))
