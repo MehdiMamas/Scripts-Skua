@@ -184,8 +184,10 @@ public class CoreBots
 
             Bot.Options.HuntDelay = HuntDelay;
             // Ensure Bank is loaded on script start, without opening.
-            if (!Bot.Bank.Loaded)
+            if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
             {
+                Bot.Bank.Open();
+                Bot.Wait.ForTrue(() => Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"", 20);
                 Bot.Bank.Load();
                 Bot.Wait.ForTrue(() => Bot.Bank.Loaded, 20);
             }
@@ -550,9 +552,10 @@ public class CoreBots
         if (Bot.Inventory.Contains(item, quant))
             return true;
 
-        // Ensure Bank is loaded.
-        if (!Bot.Bank.Loaded)
+        if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
         {
+            Bot.Bank.Open();
+            Bot.Wait.ForTrue(() => Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"", 20);
             Bot.Bank.Load();
             Bot.Wait.ForTrue(() => Bot.Bank.Loaded, 20);
         }
@@ -691,38 +694,63 @@ public class CoreBots
     public void Unbank(params string[] items)
     {
         if (items == null || items.Length == 0)
-            return;
-
-        if (Bot.Player.InCombat)
-            JumpWait();
-
-        // Ensure Bank is loaded.
-        while (!Bot.ShouldExit && !Bot.Bank.Loaded)
         {
-            Bot.Bank.Load();
-            Bot.Wait.ForTrue(() => Bot.Bank.Loaded, 20);
+            DebugLogger(this);
+            return;
         }
+
+        DebugLogger(this);
+        if (Bot.Player.InCombat)
+        {
+            DebugLogger(this);
+            JumpWait();
+        }
+        DebugLogger(this);
+
+        if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
+        {
+            Bot.Bank.Open();
+            DebugLogger(this);
+            Bot.Wait.ForTrue(() => Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"", 20);
+            DebugLogger(this);
+            Bot.Bank.Load();
+            DebugLogger(this);
+            Bot.Wait.ForTrue(() => Bot.Bank.Loaded, 20);
+            DebugLogger(this);
+        }
+        DebugLogger(this);
 
         foreach (string item in items)
         {
+            DebugLogger(this);
             if (Bot.Inventory.Contains(item) || Bot.House.Contains(item))
+            {
+                DebugLogger(this);
                 continue;
+            }
 
+            DebugLogger(this);
             if (Bot.Bank.Contains(item))
             {
+                DebugLogger(this);
                 Sleep();
+                DebugLogger(this);
                 if (Bot.Inventory.FreeSlots <= 0 && Bot.Inventory.Slots != 0 && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots)
                 {
+                    DebugLogger(this);
                     Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please Make {items.Count()} space(s), and restart the bot", messageBox: true, stopBot: true);
                     return;
                 }
+                DebugLogger(this);
 
                 bool isHouseItem = Bot.Bank.TryGetItem(item, out InventoryItem? x) &&
                                   x != null &&
                                   (x.CategoryString == "House" || x.CategoryString == "Wall Item" || x.CategoryString == "Floor Item");
 
+                DebugLogger(this);
                 if (isHouseItem)
                 {
+                    DebugLogger(this);
                     bool success = false;
                     for (int i = 0; i < 20; i++) // Retry up to 20 times
                     {
@@ -743,13 +771,31 @@ public class CoreBots
                 }
                 else
                 {
-                    if (!Bot.Wait.ForTrue(() => Bot.Bank.EnsureToInventory(item), 20))
+                    DebugLogger(this);
+                    bool success = false;
+                    for (int i = 0; i < 20; i++) // Retry up to 20 times
                     {
+                        DebugLogger(this);
+                        Bot.Bank.ToInventory(item);
+                        DebugLogger(this);
+                        Sleep(); // Wait for a short period before checking
+                        if (Bot.Inventory.Contains(item))
+                        {
+                            DebugLogger(this);
+                            success = true;
+                            break;
+                        }
+                    }
+
+                    if (!success)
+                    {
+                        DebugLogger(this);
                         Logger($"Failed to unbank {item}, skipping it", messageBox: true);
                         continue;
                     }
                 }
 
+                DebugLogger(this);
                 Logger($"{item} moved from bank");
             }
         }
@@ -775,6 +821,7 @@ public class CoreBots
         {
             if (Bot.Inventory.Contains(item))
                 continue;
+
 
             if (Bot.Bank.Contains(item))
             {
@@ -1699,9 +1746,12 @@ public class CoreBots
     {
         if (items == null || items.Length == 0)
         {
+            DebugLogger(this);
             return;
         }
+        DebugLogger(this);
         Unbank(items);
+        DebugLogger(this);
         Bot.Drops.Add(items);
     }
 
@@ -2465,7 +2515,6 @@ public class CoreBots
 
         if (item != null && !isTemp)
             AddDrop(item);
-
 
         if (Bot.Player.Cell != cell)
         {
