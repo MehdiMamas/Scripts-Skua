@@ -222,6 +222,10 @@ public class CoreBots
                 Logger("We started in oaklore... starting scripts here can cause \"issues\"... we're not sure why, but this happens, but hopefully this fixes that.\n \tTeleporting to \"battleon\"\n\n");
                 Join("battleon-100000");
             }
+
+            // Making sure its set and wont change
+            IsMember = Bot.Player.IsMember;
+
             // Bunch of things that are done in the background and you dont need the bot to wait for 
             void SetOptionsAsync()
             {
@@ -245,9 +249,6 @@ public class CoreBots
                         if (files.Any(x => x.Contains("~!") && x.Split("~!").First() == Username().ToLower()))
                             File.Delete(files.First(x => x.Contains("~!") && x.Split("~!").First() == Username().ToLower()));
                     }
-
-                    // Making sure its set and wont change
-                    IsMember = Bot.Player.IsMember;
 
                     // AFK Handler
                     Bot.Send.Packet("%xt%zm%afk%1%false%");
