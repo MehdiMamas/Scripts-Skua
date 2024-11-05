@@ -691,7 +691,7 @@ public class CoreBots
     {
         if (items == null || items.Length == 0)
         {
-`            return;
+            return;
         }
 
         if (Bot.Player.InCombat)
