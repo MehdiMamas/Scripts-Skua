@@ -418,7 +418,10 @@ public class CoreBots
                 else Bot.Send.Packet($"%xt%zm%cmd%1%tfer%{Username()}%{_stopLoc}-{PrivateRoomNumber}%");
 
                 if (EquipmentBeforeBot.Any())
+                {
+                    JumpWait();
                     Equip(EquipmentBeforeBot.ToArray());
+                }
             }
         }
 
@@ -1318,33 +1321,41 @@ public class CoreBots
     {
         if (!(quant > 0 ? CheckInventory(itemName, quant) : CheckInventory(itemName)) || !Bot.Inventory.TryGetItem(itemName, out InventoryItem? item))
             return;
+
+        ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == itemName);
+        if (Bot.Bank.Contains(itemName) && !Bot.Inventory.Contains(itemName))
+            Unbank(itemName);
+
         int retryCount = 0;
+        int sell_count = all ? Bot.Inventory.GetQuantity(itemName) : quant;
     Retry:
         while (!Bot.ShouldExit && Bot.Player.InCombat)
         {
             JumpWait();
             Sleep();
+            if (!Bot.Player.InCombat)
+                break;
         }
 
         if (!all)
         {
             // Inv quant >= current quantity.
-            if (Bot.Options.SafeTimings)
-                Bot.Wait.ForActionCooldown(GameActions.SellItem);
+            Bot.Wait.ForActionCooldown(GameActions.SellItem);
             Bot.Send.Packet($"%xt%zm%sellItem%{Bot.Map.RoomID}%{item!.ID}%{item!.Quantity - quant}%{item!.CharItemID}%");
-            if (Bot.Options.SafeTimings)
-                Bot.Wait.ForItemSell();
-
+            Bot.Wait.ForItemSell();
             Sleep();
-            return;
         }
         else
         {
             Bot.Shops.SellItem(itemName);
             Bot.Wait.ForItemSell();
         }
+
         if (!Bot.Inventory.Contains(itemName) && !Bot.Bank.Contains(itemName))
-            Logger($"{(all ? string.Empty : quant.ToString())} {itemName} sold");
+        {
+            Logger($"Sold x{sell_count} \"{itemName}\"");
+            return;
+        }
         else
         {
             if (retryCount < 5)
@@ -1355,6 +1366,7 @@ public class CoreBots
             }
             else
             {
+                Logger($"{itemName} failed to sell, retrying x{retryCount} times did not succeed");
                 retryCount = 0;
                 return;
             }
@@ -2186,7 +2198,10 @@ public class CoreBots
         //idk why but it wants `var` not `Quest`.. and it just works :|
         Quest quest = EnsureLoad(questID);
 
-        EnsureAccept(quest.ID);
+        if (!Bot.Lite.ReacceptQuest || quest != null && !Bot.Quests.Active.Contains(quest))
+            EnsureAccept(questID);
+        else Bot.Wait.ForTrue(() => Bot.Quests.IsInProgress(questID), 20);
+
         int turnIns;
 
         string[] requiredItemNames =
@@ -2199,7 +2214,7 @@ public class CoreBots
         }
         else
         {
-            int possibleTurnin = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID);
+            int possibleTurnin = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", questID);
             turnIns = possibleTurnin > amount && amount > 0 ? amount : possibleTurnin;
             if (turnIns == 0)
             {
@@ -2208,15 +2223,15 @@ public class CoreBots
         }
 
         // Ensure quest is loaded, and is entirely completable.
-        if (EnsureAccept(quest.ID) && CheckInventory(requiredItemNames))
+        if (EnsureAccept(questID) && CheckInventory(requiredItemNames))
         {
-            Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, itemID, false, turnIns);
+            Bot.Flash.CallGameFunction("world.tryQuestComplete", questID, itemID, false, turnIns);
         }
 
-        Bot.Wait.ForQuestComplete(quest.ID);
-        Bot.Wait.ForQuestAccept(quest.ID);
+        Bot.Wait.ForQuestComplete(questID);
+        Bot.Wait.ForQuestAccept(questID);
 
-        return !Bot.Quests.IsInProgress(quest.ID) ? turnIns : 0;
+        return !Bot.Quests.IsInProgress(questID) ? turnIns : 0;
     }
 
 
@@ -2901,7 +2916,9 @@ public class CoreBots
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                     break;
             }
-            Rest();
+            if (Bot.Options.RestPackets)
+                Rest();
+            Bot.Wait.ForPickup(item);
         }
     }
 
@@ -6010,6 +6027,7 @@ public class CoreBots
 
                 default:
                     break;
+
             }
         }
     }
@@ -6017,8 +6035,8 @@ public class CoreBots
     public void UsePotion()
     {
         var skill = Bot.Flash.GetArrayObject<dynamic>("world.actions.active", 5);
-        if (skill == null) return;
-        Bot.Flash.CallGameFunction("world.testAction", JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(skill))!);
+        if (!Bot.Player.Alive || skill == null) return;
+        Bot.Flash.CallGameFunction("world.testAction", JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(skill)));
     }
 
     private void ShutdownSkua() // law asked for this. - not to be used publicly.
