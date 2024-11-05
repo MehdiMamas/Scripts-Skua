@@ -22,23 +22,20 @@ public class Stubborn
 
     public void Badge()
     {
-
-        if (Core.HasAchievement(56) || !Bot.Player.IsMember)
+        if (Core.HasAchievement(56) || !Core.IsMember)
         {
-            Core.Logger($"Already have the \"Stubborn\" badge");
+            Core.Logger(!Core.IsMember ? "Player isnt member"
+                        : "Already have the \"Stubborn\" badge");
             return;
         }
 
         //ensure private...because yes
-        Core.Join("twig-100000");
-        int i = 0;
-        while (!Bot.ShouldExit && i < 100)
+        Core.Join("twig-100000", "r2", "left");
+        for (int i = 0; i < 100; i++)
         {
-            //leave autocorrect enabled as it double jumps and gest it done quicker.
+            //leave autocorrect enabled as it double jumps and gets it done quicker.
             Bot.Map.Jump("r2", "left");
-            i++;
-            if (i >= 100)
-                break;
         }
+
     }
 }
