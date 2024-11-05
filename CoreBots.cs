@@ -1356,7 +1356,21 @@ public class CoreBots
         if (!(quant > 0 ? CheckInventory(itemName, quant) : CheckInventory(itemName)) || !Bot.Inventory.TryGetItem(itemName, out InventoryItem? item))
             return;
 
-        ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == itemName);
+        InventoryItem? Item = null;
+        for (int i = 0; i < 5; i++)
+        {
+            Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == itemName);
+            if (Item != null)
+                break;
+            Logger($"Attempt {i + 1}: Item {itemName} not found. Retrying...");
+            Sleep(1000); // Wait for 1 second before retrying
+        }
+
+        if (item == null)
+        {
+            Logger($"Item {itemName} not found after 5 attempts.");
+            return;
+        }
         if (Bot.Bank.Contains(itemName) && !Bot.Inventory.Contains(itemName))
             Unbank(itemName);
 
@@ -2230,42 +2244,64 @@ public class CoreBots
     public int EnsureCompleteMulti(int questID, int amount = -1, int itemID = -1)
     {
         //idk why but it wants `var` not `Quest`.. and it just works :|
-        Quest quest = EnsureLoad(questID);
+        Quest? quest = null;
+        for (int i = 0; i < 5; i++)
+        {
+            quest = EnsureLoad(questID);
+            if (quest != null)
+                break;
+            Logger($"Attempt {i + 1}: Quest {questID} not loaded. Retrying...");
+            Sleep(1000); // Wait for 1 second before retrying
+        }
 
+        if (quest == null)
+        {
+            Logger($"Quest {questID} not loaded after 5 attempts.");
+            return 0;
+        }
         if (!Bot.Lite.ReacceptQuest || quest != null && !Bot.Quests.Active.Contains(quest))
             EnsureAccept(questID);
         else Bot.Wait.ForTrue(() => Bot.Quests.IsInProgress(questID), 20);
 
         int turnIns;
 
-        string[] requiredItemNames =
-        quest.Requirements.Concat(quest.AcceptRequirements)
-        .Select(item => item.Name).ToArray();
-
-        if (quest.Once || !string.IsNullOrEmpty(quest.Field))
+        if (quest != null)
         {
-            turnIns = 1;
+            string[] requiredItemNames =
+            quest.Requirements.Concat(quest.AcceptRequirements)
+            .Select(item => item.Name).ToArray();
+
+            if (quest.Once || !string.IsNullOrEmpty(quest.Field))
+            {
+                turnIns = 1;
+            }
+            else
+            {
+                int possibleTurnin = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", questID);
+                turnIns = possibleTurnin > amount && amount > 0 ? amount : possibleTurnin;
+                if (turnIns == 0)
+                {
+                    return 0;
+                }
+            }
+
+
+            // Ensure quest is loaded, and is entirely completable.
+            if (EnsureAccept(questID) && CheckInventory(requiredItemNames))
+            {
+                Bot.Flash.CallGameFunction("world.tryQuestComplete", questID, itemID, false, turnIns);
+            }
+
+            Bot.Wait.ForQuestComplete(questID);
+            Bot.Wait.ForQuestAccept(questID);
+
+            return !Bot.Quests.IsInProgress(questID) ? turnIns : 0;
         }
         else
         {
-            int possibleTurnin = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", questID);
-            turnIns = possibleTurnin > amount && amount > 0 ? amount : possibleTurnin;
-            if (turnIns == 0)
-            {
-                return 0;
-            }
+            Logger($"Failed to get the Quest Object for questID {questID}");
+            return 0;
         }
-
-        // Ensure quest is loaded, and is entirely completable.
-        if (EnsureAccept(questID) && CheckInventory(requiredItemNames))
-        {
-            Bot.Flash.CallGameFunction("world.tryQuestComplete", questID, itemID, false, turnIns);
-        }
-
-        Bot.Wait.ForQuestComplete(questID);
-        Bot.Wait.ForQuestAccept(questID);
-
-        return !Bot.Quests.IsInProgress(questID) ? turnIns : 0;
     }
 
 
