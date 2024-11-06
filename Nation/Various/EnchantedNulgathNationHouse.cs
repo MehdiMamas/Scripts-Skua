@@ -72,8 +72,8 @@ public class EnhancedNulgathNationHouse
             }
             Bot.Drops.Pickup("Nulgath Nation House");
         }
-
-        Core.HuntMonster("guru", "Guru Chest", "Pink Star Diamond of Nulgath", 1, false);
+        
+        Adv.BuyItem("tercessuinotlim", 1951, "Pink Star Diamond of Nulgath");
         Core.HuntMonster("timelibrary", "Ancient Chest", "Musgravite of Nulgath", 2, false);
         Adv.BuyItem("archportal", 1211, "Enchanted Nulgath Nation House");
     }

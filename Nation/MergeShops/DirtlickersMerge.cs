@@ -106,8 +106,7 @@ public class DirtlickersMerge
                     break;
 
                 case "Pink Star Diamond of Nulgath":
-                    Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("guru", "Guru Chest", req.Name, quant, false);
+                Adv.BuyItem("tercessuinotlim", 1951, "Pink Star Diamond of Nulgath");
                     break;
 
                 case "Musgravite of Nulgath":

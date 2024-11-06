@@ -63,15 +63,7 @@ public class ArchFiend
 
         Nation.FarmUni13(3);
 
-        if (!Core.CheckInventory("Pink Star Diamond of Nulgath"))
-        {
-            if (Bot.Player.Gold >= 2000000)
-            {
-                Core.BuyItem("tercessuinotlim", 1951, "Receipt of Swindle", 6);
-                Core.BuyItem("tercessuinotlim", 1951, "Pink Star Diamond of Nulgath");
-            }
-            else Core.HuntMonster("guru", "Guru Chest", "Pink Star Diamond of Nulgath", 1, false);
-        }
+        Adv.BuyItem("tercessuinotlim", 1951, "Pink Star Diamond of Nulgath");
 
         Core.HuntMonster("mercutio", "Mercutio", "Immortal Joe's Black Star", 1, false);
 
