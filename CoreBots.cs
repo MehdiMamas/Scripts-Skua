@@ -4784,16 +4784,29 @@ public class CoreBots
 
         ToggleAggro(false);
 
-        (string?, string) cellPad = (null, "Left");
+        (string, string) cellPad = (string.Empty, "Left");
         int jumpCount = 1;
 
         if (!blackListedCells.Contains("Enter"))
         {
-            cellPad =
-            // Set Cell:
-            (Bot.Map.Cells.Any(x => x.Contains("Enter")) ? "Enter" : Bot.Map.Cells.FirstOrDefault(x => !x.StartsWith("Wait") || !x.StartsWith("Blank")),
-            // Set Pad:
-            Bot.Map.Cells.Any(x => x.Contains("Enter")) ? "Spawn" : "Left");
+            string? cell = null;
+            for (int i = 0; i < 5; i++)
+            {
+                cell = Bot.Map.Cells.FirstOrDefault(x => x.Contains("Enter")) ??
+                       Bot.Map.Cells.FirstOrDefault(x => !x.StartsWith("Wait") && !x.StartsWith("Blank"));
+                if (cell != null)
+                    break;
+                Logger($"Attempt {i + 1}: Suitable cell not found. Retrying...");
+                Sleep(1000); // Wait for 1 second before retrying
+            }
+
+            if (cell == null)
+            {
+                Logger("Suitable cell not found after 5 attempts.");
+                return;
+            }
+
+            cellPad = (cell, Bot.Map.Cells.Any(x => x.Contains("Enter")) ? "Spawn" : "Left");
         }
         else
         {
@@ -4869,16 +4882,23 @@ public class CoreBots
 
         if (lastMapJW != Bot.Map.Name || lastCellPadJW != cellPad)
         {
-            for (int i = 0; i < jumpCount; i++)
+            if (!string.IsNullOrEmpty(cellPad.Item1) && !string.IsNullOrEmpty(cellPad.Item2))
             {
-                Jump(cellPad!.Item1, cellPad.Item2, true);
-                Bot.Wait.ForTrue(() => Bot.Player.Cell == cellPad!.Item1, 20);
+                for (int i = 0; i < jumpCount; i++)
+                {
+                    Jump(cellPad.Item1, cellPad.Item2, true);
+                    Bot.Wait.ForTrue(() => Bot.Player.Cell == cellPad.Item1, 20);
+                }
+
+                lastMapJW = Bot.Map.Name;
+                lastCellPadJW = cellPad;
+
+                Sleep(ExitCombatDelay < 200 ? ExitCombatDelay : ExitCombatDelay - 200);
             }
-
-            lastMapJW = Bot.Map.Name;
-            lastCellPadJW = cellPad!;
-
-            Sleep(ExitCombatDelay < 200 ? ExitCombatDelay : ExitCombatDelay - 200);
+            else
+            {
+                Logger("cellPad is null. Cannot perform jump.");
+            }
         }
         GC.Collect();
     }

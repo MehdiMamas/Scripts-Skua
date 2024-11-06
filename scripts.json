@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 280157,
+    "size": 280869,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -664,7 +664,7 @@
       "nythera"
     ],
     "path": "Story/NytheraSaga.cs",
-    "size": 3997,
+    "size": 3959,
     "fileName": "NytheraSaga.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/NytheraSaga.cs"
   },
@@ -14629,7 +14629,7 @@
       "class"
     ],
     "path": "Other/Classes/VerusDoomKnight.cs",
-    "size": 14093,
+    "size": 14239,
     "fileName": "VerusDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/VerusDoomKnight.cs"
   },
