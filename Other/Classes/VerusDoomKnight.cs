@@ -84,6 +84,7 @@ public class VerusDoomKnightClass
             Core.EnsureAccept(9412);
             Core.HuntMonsterMapID("necrodungeon", 47, "The Mask of the Skulls", isTemp: false);
             Core.HuntMonster("lumafortress", "Corrupted Luma", "Doom Worshipper's Blade Of Doom", isTemp: false);
+            Core.Logger(" \"Empress' ShadowCloak\" 's Droprate is fairly low... so dont complain if it takes \"hours\" according to reddit... ");
             Core.HuntMonster("innershadows", "Krahen", "Empress' ShadowCloak", isTemp: false);
             Bot.Quests.UpdateQuest(7646);
             Core.HuntMonster("techfortress", "MechaVortrix", "Cybernetic Doom Blade", isTemp: false);
