@@ -139,7 +139,6 @@ public class NytheraSaga
 
     public void Void()
     {
-
         if (Core.isCompletedBefore(904))
             return;
 
@@ -152,7 +151,8 @@ public class NytheraSaga
         Story.KillQuest(902, "Void", "Void Elemental");
 
         //Null and Void Spheres 903
-        Story.KillQuest(903, "palooza ", new[] { "Chaos Lord Discordia", "Chaos Lord Discordia", "Chaos Lord Discordia", "Chaos Lord Discordia" });
+        Story.KillQuest(903, "palooza",
+        new[] { "Discordia", "Discordia", "Discordia", "Discordia" });
 
         //Enter the Great Void Dragon's Lair 904
         Story.KillQuest(904, "Void", "Void Dragon");
