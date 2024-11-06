@@ -218,7 +218,8 @@ public class CoreNation
                 {
                     if (!Core.CheckInventory("Slugfit Horn", 5) || !Core.CheckInventory("Cyclops Horn", 3))
                     {
-                        Core.JoinSWF("mobius-999999", "ChiralValley/town-Mobius-21Feb14.swf", "Slugfit", "Bottom");
+                        Core.JoinSWF("mobius-999999", "ChiralValley/town-Mobius-21Feb14.swf");
+                        Core.Jump("Slugfit", "Bottom");
 
                         foreach ((string mobName, string itemName, int quantity) in new[] { ("Slugfit", "Slugfit Horn", 5), ("Cyclops Warlord", "Cyclops Horn", 3) })
                         {
@@ -1830,8 +1831,10 @@ public class CoreNation
             Core.KillMonster("blindingsnow", "r17", "Left", "*", "Fragment of Chaos", 80, false);
             Core.KillMonster("evilwarnul", "r13", "Left", "Legion Fenrir", "Broken Betrayal Blade", 8, false);
             Core.EnsureComplete(3743);
+            Bot.Wait.ForQuestComplete(3743);
 
             string itemToPickup = betrayalBlade ?? "Blood Gem of the Archfiend";
+            Bot.Wait.ForDrop(itemToPickup);
             Bot.Wait.ForPickup(itemToPickup);
             Core.Logger($"Completed x{i++}");
 
