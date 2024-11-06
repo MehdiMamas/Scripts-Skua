@@ -20046,7 +20046,7 @@
       "yo mama"
     ],
     "path": "Nation/Various/Archfiend.cs",
-    "size": 3239,
+    "size": 2893,
     "fileName": "Archfiend.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/Archfiend.cs"
   },
@@ -20359,7 +20359,7 @@
       "nulgath"
     ],
     "path": "Nation/Various/EnchantedNulgathNationHouse.cs",
-    "size": 2648,
+    "size": 2644,
     "fileName": "EnchantedNulgathNationHouse.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/EnchantedNulgathNationHouse.cs"
   },
@@ -20894,7 +20894,7 @@
       "enchanted nulgath nation house"
     ],
     "path": "Nation/MergeShops/DirtlickersMerge.cs",
-    "size": 9657,
+    "size": 9606,
     "fileName": "DirtlickersMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/DirtlickersMerge.cs"
   },
@@ -25820,7 +25820,7 @@
       "null"
     ],
     "path": "Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs",
-    "size": 2056,
+    "size": 2230,
     "fileName": "EmptyTemplate[Basics].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs"
   },
