@@ -281,7 +281,7 @@ public class CoreNation
                 Core.KillMonster("hydra", "Rune2", "Left", "Fire Imp", "Imp Flame", 3, log: false);
                 Core.KillMonster("greenguardwest", "West12", "Up", "Big Bad Boar", "Wereboar Tusk", 2, log: false);
             }
-            Core.Logger("items quant maxed");
+            Core.Logger($"{item} is now maxed");
             Core.CancelRegisteredQuests();
         }
         Core.CancelRegisteredQuests();

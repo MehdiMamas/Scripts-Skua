@@ -98,7 +98,7 @@ public class CoreBots
     const int OneHundredMillion = 100000000; // 100m
 
     //Max integer
-    const int maxint = 2147483647;
+    const int maxint = Int32.MaxValue;
 
     private static CoreBots? _instance;
     public static CoreBots Instance => _instance ??= new CoreBots();
@@ -156,7 +156,6 @@ public class CoreBots
         Bot.Options.SafeTimings = changeTo;
         Bot.Options.RestPackets = changeTo && ShouldRest;
         Bot.Options.AutoRelogin = true;
-        Bot.Lite.DisableMonsterAnimation = true;
         Bot.Options.InfiniteRange = changeTo;
         Bot.Options.SkipCutscenes = changeTo;
         Bot.Options.QuestAcceptAndCompleteTries = AcceptandCompleteTries;
@@ -168,40 +167,36 @@ public class CoreBots
         Bot.Lite.CharacterSelectScreen = false;
 
         //adding sommore
-        // Bot.Lite.CustomDropsUI = true;
-        // Bot.Lite.DisableDamageStrobe = true;
-        // Bot.Lite.DisableWeaponAnimation = true;
-        // Bot.Lite.DisableSkillAnimations = true;
         // Bot.Lite.SmoothBackground = true;
         // Bot.Lite.ShowMonsterType = true;
+        // Bot.Lite.CustomDropsUI = true;
 
         CollectData(changeTo);
 
         #region Required things that must be done before starting the Script
-        
-        // Open Bank on startup ensuring current window is `Bank`, then load the bank information.
-        Bot.Bank.Open();
-        while (!Bot.ShouldExit && Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"") {/* wait */}
-        Bot.Bank.Load();
-        Bot.Bank.Loaded = true;
-
-        // Set the IsMember bool
-        IsMember = Bot.Player.IsMember;
-
-        // Oaklore is Broke as fffff. So we'll move you somewhere else to start the script.
-        if (Bot.Map.Name != null && Bot.Map.Name == "oaklore")
+        if (changeTo)
         {
-            Bot.Wait.ForMapLoad("oaklore");
-            Logger("We started in oaklore... starting scripts here can cause \"issues\"... we're not sure why this happens... but hopefully this fixes that.\n \tTeleporting to \"battleon\"\n\n");
-            Join("battleon-100000");
+            // Open Bank on startup ensuring current window is `Bank`, then load the bank information.
+            if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
+                Bot.Bank.Open();
+            Bot.Bank.Load();
+            Bot.Bank.Loaded = true;
+
+            // Set the IsMember bool
+            IsMember = Bot.Player.IsMember;
+
+            // Oaklore is Broke as fffff. So we'll move you somewhere else to start the script.
+            if (Bot.Map.Name != null && Bot.Map.Name == "oaklore")
+            {
+                Bot.Wait.ForMapLoad("oaklore");
+                Logger("We started in oaklore... starting scripts here can cause \"issues\"... we're not sure why this happens... but hopefully this fixes that.\n \tTeleporting to \"battleon\"\n\n");
+                Join("battleon-100000");
+            }
         }
 
-        // Unregister all quests if any are found
-        if (Bot.Quests.Registered.Any())
-            Bot.Quests.UnregisterAllQuests();
 
         #endregion Required things that must be done before starting the Script
-        
+
         // These things need to be taken care of too, but less priority
         if (changeTo)
         {
@@ -234,6 +229,7 @@ public class CoreBots
             // Bunch of things that are done in the background and you dont need the bot to wait for 
             void SetOptionsAsync()
             {
+                #region Handlers
                 Task.Run(() =>
                 {
                     Task.Run(() =>
@@ -254,6 +250,7 @@ public class CoreBots
                         if (files.Any(x => x.Contains("~!") && x.Split("~!").First() == Username().ToLower()))
                             File.Delete(files.First(x => x.Contains("~!") && x.Split("~!").First() == Username().ToLower()));
                     }
+
 
                     // AFK Handler
                     Bot.Send.Packet("%xt%zm%afk%1%false%");
@@ -318,16 +315,19 @@ public class CoreBots
                         }
                     }
 
+                    #endregion Handlers
 
                     // Anti-lag option
                     if (AntiLag)
                     {
                         Bot.Options.LagKiller = true;
+                        Bot.Lite.HidePlayers = true;
+                        Bot.Lite.FreezeMonsterPosition = true;
+                        Bot.Lite.DisableDamageStrobe = true;
                         Bot.Lite.DisableMonsterAnimation = true;
                         Bot.Lite.DisableSelfAnimation = true;
-                        Bot.Lite.FreezeMonsterPosition = true;
                         Bot.Lite.DisableWeaponAnimation = true;
-                        Bot.Lite.HidePlayers = true;
+                        Bot.Lite.DisableSkillAnimations = true;
                         Bot.Flash.SetGameObject("stage.frameRate", 10);
                         if (!Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
                             Bot.Flash.CallGameFunction("world.toggleMonsters");
@@ -345,6 +345,7 @@ public class CoreBots
                 });
             }
         }
+
     }
 
     public List<string> BankingBlackList = new();
@@ -359,17 +360,8 @@ public class CoreBots
     private bool StopBot(bool crashed)
     {
         Bot.Options.AttackWithoutTarget = false;
-        Bot.Lite.ReacceptQuest = false;
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
-        Bot.Lite.InvisibleMonsters = false;
-        Bot.Lite.DisableMonsterAnimation = false;
-        Bot.Lite.HidePlayers = false;
-        Bot.Lite.DisableSelfAnimation = false;
-        Bot.Lite.FreezeMonsterPosition = false;
-        Bot.Lite.DisableWeaponAnimation = false;
-        Bot.Lite.DisableSkillAnimation = false;
-        Bot.Lite.DisableSkillAnimations = false;
         StopBotAsync();
         Bot.Handlers.Clear();
 
@@ -377,9 +369,19 @@ public class CoreBots
         {
             JumpWait();
             Sleep();
-            CancelRegisteredQuests();
-            AbandonQuest(Bot.Quests.Active.Select(x => x.ID).ToArray());
-            // Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad);
+            // Set `Lite` options whilst logged in
+            Bot.Lite.ReacceptQuest = false;
+            Bot.Lite.DisableSelfAnimation = false;
+            Bot.Lite.FreezeMonsterPosition = false;
+            Bot.Lite.DisableWeaponAnimation = false;
+            Bot.Lite.DisableSkillAnimation = false;
+            Bot.Lite.DisableSkillAnimations = false;
+            Bot.Lite.InvisibleMonsters = false;
+            Bot.Lite.DisableMonsterAnimation = false;
+            Bot.Lite.HidePlayers = false;
+            if (Bot.Quests.Registered.Any(q => q > 0))
+                Bot.Quests.UnregisterAllQuests();
+            // AbandonQuest(Bot.Quests.Active.Where(q => q != null && Bot.Quests.IsInProgress(q.ID)).Select(q => q.ID).ToArray());
 
             if (!string.IsNullOrWhiteSpace(CustomStopLocation))
             {
@@ -1284,7 +1286,7 @@ public class CoreBots
         if (requestedQuant > item.MaxStack)
         {
             Logger($"Attempting to buy more than {item.MaxStack} of {item.Name}. The developer needs to fix the calling script.", "BuyItem");
-            Bot.Stop();
+            Bot.Stop(true);
         }
 
         // requestQuant <= max stack.
@@ -3804,7 +3806,7 @@ public class CoreBots
     {
         if (Bot.ShouldExit)
         {
-            Bot.Stop(false);
+            Bot.Stop(true);
             return;
         }
         Bot.Sleep((ms == -1) ? ActionDelay : ms);
@@ -4771,13 +4773,14 @@ public class CoreBots
         HashSet<string> blackListedCells = Bot.Monsters.MapMonsters.Select(monster => monster.Cell).ToHashSet();
 
         // Check if there are more than one cell that starts with "Enter"
-        if (Bot.Map.Cells.Count(cell => cell.StartsWith("Enter")) > 1)
+        if (Bot.Map.Cells.Count(cell => cell.Contains("Enter")) != 1)
         {
             blackListedCells.UnionWith(Bot.Map.Cells.Where(cell => cell.StartsWith("Enter")));
         }
 
-        if (!blackListedCells.Contains(Bot.Player.Cell))
-            return;
+        // This just.. wouldnt jump in some cases?
+        // if (!blackListedCells.Contains(Bot.Player.Cell))
+        //     return;
 
         ToggleAggro(false);
 
@@ -4786,7 +4789,11 @@ public class CoreBots
 
         if (!blackListedCells.Contains("Enter"))
         {
-            cellPad = (Bot.Map.Cells.Any(x => x.StartsWith("Enter")) ? "Enter" : Bot.Player.Cell, "Spawn");
+            cellPad =
+            // Set Cell:
+            (Bot.Map.Cells.Any(x => x.Contains("Enter")) ? "Enter" : Bot.Map.Cells.FirstOrDefault(x => !x.StartsWith("Wait") || !x.StartsWith("Blank")),
+            // Set Pad:
+            Bot.Map.Cells.Any(x => x.Contains("Enter")) ? "Spawn" : "Left");
         }
         else
         {
@@ -6914,7 +6921,15 @@ public class CoreBots
                                 "https://www.youtube.com/watch?v=ykwqXuMPsoc",
                                 "https://www.youtube.com/watch?v=oavMtUWDBTM",
                                 "https://www.youtube.com/watch?v=LH5ay10RTGY",
-                                "https://www.youtube.com/watch?v=sSTXrRXjdR8"
+                                "https://www.youtube.com/watch?v=sSTXrRXjdR8",
+                                "https://www.youtube.com/watch?v=IFP3Jc5ztgg",
+                                "https://www.youtube.com/watch?v=2yJgwwDcgV8",
+                                "https://www.youtube.com/watch?v=H9K8-3PHZOU",
+                                "https://www.youtube.com/watch?v=PfYnvDL0Qcw",
+                                "https://www.youtube.com/watch?v=Ct6BUPvE2sM",
+                                "https://www.youtube.com/watch?v=L5inD4XWz4U",
+                                "https://www.youtube.com/watch?v=fGgOzxg2lRI",
+                                ""
                             };
 
                     Random random = new();
