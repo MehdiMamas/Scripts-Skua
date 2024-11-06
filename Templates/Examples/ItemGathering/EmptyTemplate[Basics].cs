@@ -25,7 +25,7 @@ public class DefaultTemplate
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "item1", "Item2", "Etc" });
+        // Core.BankingBlackList.AddRange(new[] { "item1", "Item2", "Etc" });
         Core.SetOptions();
 
         Example();
@@ -35,14 +35,13 @@ public class DefaultTemplate
 
     public void Example(bool TestMode = false)
     {
-        //Test Stuff  below  here
+        //Test Stuff Below here
 
 
 
         //Test Stuff Above here
 
-
-        //Test Push
+        #region Fold me
         if (TestMode)
         {
             if (Core.CheckInventory("item", 1))
@@ -67,6 +66,7 @@ public class DefaultTemplate
             Story.ChainQuest(000);
             #endregion
         }
+        #endregion Fold me
     }
 }
 
