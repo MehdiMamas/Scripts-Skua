@@ -50,7 +50,7 @@ public class ShadowVault
         Story.KillQuest(6788, "ShadowVault", new[] { "Shadowscythe Minion", "Spiderscythe" });
 
         //An Actual Skeleton... key? 6789
-        Story.KillQuest(6789, "ShadowVault", new[] { "Fallen Adventurer", "Shadowscythe Minion", "Spiderscythe" });
+        Story.KillQuest(6789, "ShadowVault", new[] { "Fallen Adventurer", "Spiderscythe", "Shadowscythe Minion" });
 
         //Open Sesame 6790
         Story.MapItemQuest(6790, "ShadowVault", 6314);
