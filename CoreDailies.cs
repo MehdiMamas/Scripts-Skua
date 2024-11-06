@@ -35,7 +35,7 @@ public class CoreDailies
     const int OneHundredMillion = 100000000; // 100m
 
     //Max integer
-    const int maxint = 2147483647;
+    const int maxint = Int32.MaxValue;
 
     public void ScriptMain(IScriptInterface Bot)
     {

@@ -40,7 +40,7 @@ public class CoreFarms
     const int OneHundredMillion = 100000000; // 100m
 
     //Max integer
-    const int maxint = 2147483647;
+    const int maxint = Int32.MaxValue;
 
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
