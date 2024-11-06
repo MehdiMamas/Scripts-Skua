@@ -177,29 +177,43 @@ public class CoreBots
 
         CollectData(changeTo);
 
+        #region Required things that must be done before starting the Script
+        
+        // Open Bank on startup ensuring current window is `Bank`, then load the bank information.
+        Bot.Bank.Open();
+        while (!Bot.ShouldExit && Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"") {/* wait */}
+        Bot.Bank.Load();
+        Bot.Bank.Loaded = true;
+
+        // Set the IsMember bool
+        IsMember = Bot.Player.IsMember;
+
+        // Oaklore is Broke as fffff. So we'll move you somewhere else to start the script.
+        if (Bot.Map.Name != null && Bot.Map.Name == "oaklore")
+        {
+            Bot.Wait.ForMapLoad("oaklore");
+            Logger("We started in oaklore... starting scripts here can cause \"issues\"... we're not sure why this happens... but hopefully this fixes that.\n \tTeleporting to \"battleon\"\n\n");
+            Join("battleon-100000");
+        }
+
+        // Unregister all quests if any are found
+        if (Bot.Quests.Registered.Any())
+            Bot.Quests.UnregisterAllQuests();
+
+        #endregion Required things that must be done before starting the Script
+        
         // These things need to be taken care of too, but less priority
         if (changeTo)
         {
             SetOptionsAsync();
 
             Bot.Options.HuntDelay = HuntDelay;
-            // Ensure Bank is loaded on script start, without opening.
-            if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
-            {
-                Bot.Bank.Open();
-                Sleep();
-                Bot.Bank.Load();
-            }
 
             if (BankMiscAC)
                 BankACMisc();
 
             if (BankUnenhancedACGear)
                 BankACUnenhancedGear();
-
-            // Unregister all quests if any are found
-            if (Bot.Quests.Registered.Any())
-                Bot.Quests.UnregisterAllQuests();
 
             EquipmentBeforeBot.AddRange(Bot.Inventory.Items.Where(i => i.Equipped).Select(x => x.Name));
             currentClass = ClassType.None;
@@ -216,15 +230,6 @@ public class CoreBots
 
             Bot.Drops.Start();
             Logger("Bot Configured");
-            // oaklore brwokey, start somewhere else (we'll move you)
-            if (Bot.Map.Name != null && Bot.Map.Name == "oaklore")
-            {
-                Logger("We started in oaklore... starting scripts here can cause \"issues\"... we're not sure why, but this happens, but hopefully this fixes that.\n \tTeleporting to \"battleon\"\n\n");
-                Join("battleon-100000");
-            }
-
-            // Making sure its set and wont change
-            IsMember = Bot.Player.IsMember;
 
             // Bunch of things that are done in the background and you dont need the bot to wait for 
             void SetOptionsAsync()
@@ -550,13 +555,6 @@ public class CoreBots
         if (Bot.Inventory.Contains(item, quant))
             return true;
 
-        if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
-        {
-            Bot.Bank.Open();
-            Sleep();
-            Bot.Bank.Load();
-        }
-
         if (Bot.House.Contains(item))
             return true;
 
@@ -700,13 +698,6 @@ public class CoreBots
             JumpWait();
         }
 
-        if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
-        {
-            Bot.Bank.Open();
-            Sleep();
-            Bot.Bank.Load();
-        }
-
         foreach (string item in items)
         {
             if (Bot.Inventory.Contains(item) || Bot.House.Contains(item))
@@ -752,7 +743,7 @@ public class CoreBots
                     bool success = false;
                     for (int i = 0; i < 20; i++) // Retry up to 20 times
                     {
-                        Bot.Bank.ToInventory(item);
+                        Bot.Bank.EnsureToInventory(item);
                         Sleep(); // Wait for a short period before checking
                         if (Bot.Inventory.Contains(item))
                         {
@@ -784,10 +775,6 @@ public class CoreBots
             return;
 
         JumpWait();
-
-        string? currentLabel = Bot.Flash.GetGameObject("ui.mcPopup.currentLabel");
-        if (currentLabel != "\"Bank\"")
-            Bot.Bank.Open();
 
         foreach (int item in items)
         {
@@ -824,13 +811,6 @@ public class CoreBots
             return;
 
         JumpWait();
-
-        if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
-        {
-            Bot.Bank.Open();
-            Sleep();
-            Bot.Bank.Load();
-        }
 
         // Whitelist categories and items
         List<ItemCategory> whiteList = new() { ItemCategory.Note, ItemCategory.Item, ItemCategory.Resource, ItemCategory.QuestItem };
@@ -904,13 +884,6 @@ public class CoreBots
 
         JumpWait();
 
-        if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
-        {
-            Bot.Bank.Open();
-            Sleep();
-            Bot.Bank.Load();
-        }
-
         foreach (string? item in items)
         {
             if (item == null || item == SoloClass || item == FarmClass)
@@ -939,13 +912,6 @@ public class CoreBots
             return;
 
         JumpWait();
-
-        if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
-        {
-            Bot.Bank.Open();
-            Sleep();
-            Bot.Bank.Load();
-        }
 
         foreach (int item in items)
         {
@@ -980,13 +946,6 @@ public class CoreBots
 
         JumpWait();
 
-        if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
-        {
-            Bot.Bank.Open();
-            Sleep();
-            Bot.Bank.Load();
-        }
-
         foreach (int item in items)
         {
             if (item == 0)
@@ -996,16 +955,27 @@ public class CoreBots
                 Logger("Can't bank an equipped item");
                 continue;
             }
-            if (Bot.Inventory.Contains(item))
+
+            string name = Bot.Inventory.GetItem(item)?.Name ?? $"[{item}]";
+            bool success = false;
+            for (int i = 0; i < 20; i++) // Retry up to 20 times
             {
-                string name = Bot.Inventory.GetItem(item)?.Name ?? $"[{item}]";
-                if (!Bot.Inventory.EnsureToBank(item))
+                Bot.Inventory.EnsureToBank(item);
+                Sleep(); // Wait for a short period before checking
+                if (Bot.Bank.Contains(item))
                 {
-                    Logger($"Failed to bank {name}, skipping it");
-                    continue;
+                    success = true;
+                    break;
                 }
-                Logger($"{name} moved to bank");
             }
+
+            if (!success)
+            {
+                Logger($"Failed to unbank {name}, skipping it", messageBox: true);
+                continue;
+            }
+
+
         }
     }
 
@@ -1835,7 +1805,7 @@ public class CoreBots
                         if (!req.Temp && Bot.Bank.Contains(req.ID) && !Bot.Inventory.Contains(req.ID))
                         {
                             Logger($"Unbanking {req.Name}");
-                            Bot.Bank.ToInventory(req.ID);
+                            Bot.Bank.EnsureToInventory(req.ID);
                             Sleep();
                             if (!Bot.Inventory.Contains(req.ID))
                                 goto Retry;
@@ -1865,7 +1835,7 @@ public class CoreBots
                         if (!Item.Temp && Bot.Bank.Contains(Item.ID) && !Bot.Inventory.Contains(Item.ID))
                         {
                             Logger($"Unbanking {Item.Name}");
-                            Bot.Bank.ToInventory(Item.ID);
+                            Bot.Bank.EnsureToInventory(Item.ID);
                             Sleep();
                             if (!Bot.Inventory.Contains(Item.ID))
                                 goto Retry;
@@ -4110,8 +4080,14 @@ public class CoreBots
 
 
     /// <summary>
-    /// Logs the player out and then in again to the same server. Disables Options.AutoRelogin temporarily 
+    /// Logs the player out and attempts to relogin to the same or a suitable server.
+    /// Temporarily disables <c>Options.AutoRelogin</c>. If no preferred server is set or available, 
+    /// connects to the first available server based on membership, ensuring it’s not a test realm, 
+    /// isn’t full, and is online.
     /// </summary>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if server details cannot be fetched or no preferred server is set in <c>Options > Game</c>.
+    /// </exception>
     public void Relogin()
     {
         if (Bot.Options.ReloginServer == null || !Bot.Servers.EnsureRelogin(Bot.Options.ReloginServer))
@@ -4119,7 +4095,9 @@ public class CoreBots
             var servers = Bot.Servers.GetServers(true).Result;
             if (servers.Count == 0)
                 Logger("Failed to relogin: could not fetch server details" + (Bot.Options.ReloginServer == null ? '.' : " or the find the server you've set in Options > Game."), messageBox: true, stopBot: true);
-            Bot.Servers.EnsureRelogin(servers.First(s => s.Name != "Class Test Realm").Name);
+            Bot.Servers.EnsureRelogin((Bot.Player.IsMember == true)
+                ? servers.First(s => s.Name != "Class Test Realm" && s.PlayerCount < s.MaxPlayers && s.Online).Name
+                : servers.First(s => s.Name != "Class Test Realm" && !s.Upgrade && s.PlayerCount < s.MaxPlayers && s.Online).Name);
         }
     }
 
