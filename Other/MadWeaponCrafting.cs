@@ -53,7 +53,7 @@ public class MadWeaponCrafting
             }
             Core.HuntMonster("Artixpointe", "Enchanted Sushi", "Sushi!!!");
             Core.HuntMonster("Citadel", "Grizzly Bear", "Bear Feet", 2);
-            Core.Jump("Wait", "Spawn");
+            Core.Jump("Enter", "Spawn");
             Core.ToBank(Rewards);
         }
         Core.CancelRegisteredQuests();
