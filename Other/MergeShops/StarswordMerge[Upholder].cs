@@ -39,6 +39,11 @@ public class StarswordMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        if (!Core.isUpholder())
+        {
+            Core.Logger("Upholder Required.");
+            return;
+        }
         DR.StoryLine();
         Core.BuyItem("dragonroad", 2342, "DragonRoad Merge Access Card");
         //Only edit the map and shopID here

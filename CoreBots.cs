@@ -3751,35 +3751,9 @@ public class CoreBots
     public bool IsMember = false;
 
     /// <summary>
-    /// Checks whether the player is Upholder
+    /// Checks whether the player is an Upholder
     /// </summary>
-    public bool isUpholder()
-    {
-        string[] upholder = new string[]
-        {
-            "1st Upholder",
-            "2nd Upholder",
-            "3rd Upholder",
-            "4th Upholder",
-            "5th Upholder",
-            "6th Upholder",
-            "7th Upholder",
-            "8th Upholder",
-            "9th Upholder",
-            "10th Upholder",
-            "11th Upholder",
-            "12th Upholder",
-            "13th Upholder",
-            "14th Upholder",
-            "15th Upholder",
-        };
-
-        foreach (string badge in upholder)
-            if (HasWebBadge(badge))
-                return true;
-
-        return false;
-    }
+    public bool IsUpholder() => Badges.Any(badge => badge.Name.Contains("Upholder"));
 
     /// <summary>
     /// Retrieves the username from a game object or falls back to the player's username.
