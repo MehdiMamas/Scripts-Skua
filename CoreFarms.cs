@@ -584,16 +584,13 @@ public class CoreFarms
 
             Core.PvPMove(18, "Resource1A");
             Bot.Kill.Monster("(B) Defensive Restorer");
-            Bot.Drops.Pickup("The Secret 4");
-            Bot.Kill.Monster("(B) Defensive Restorer");
-            Bot.Drops.Pickup("The Secret 4");
+            if (Bot.Drops.Exists("The Secret 4"))
+                Bot.Drops.Pickup("The Secret 4");
 
             Core.PvPMove(20, "Resource1B");
             Bot.Kill.Monster("(B) Defensive Restorer");
-            Bot.Drops.Pickup("The Secret 4");
-            Bot.Kill.Monster("(B) Defensive Restorer");
-            Bot.Wait.ForDrop("The Sercret 4");
-            Bot.Drops.Pickup("The Secret 4");
+            if (Bot.Drops.Exists("The Secret 4"))
+                Bot.Drops.Pickup("The Secret 4");
 
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
@@ -625,95 +622,95 @@ public class CoreFarms
 
         Core.EquipClass(ClassType.Solo);
         Core.FarmingLogger(item, quant);
-        Core.ConfigureAggro(false);
+        Bot.Options.AggroAllMonsters = false;
+        Bot.Options.AggroMonsters = false;
 
     Start:
         Core.EquipClass(ClassType.Solo);
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
             Core.Join("bludrutbrawl", "Enter0", "Spawn");
-            Core.Sleep(2500);
+            Bot.Wait.ForMapLoad("bludrutbrawl");
+            while (!Bot.ShouldExit && !Bot.Player.Loaded) { Core.Sleep(); /* wait for player loaded */}
 
-            #region GotoMobsRoom1
+
+            #region GotoRoom1
             Core.PvPMove(5, "Morale0C");
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
+            // if (!Bot.Player.Alive)
+            //     goto RestartOnDeath;
             Core.PvPMove(4, "Morale0B");
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
+            // if (!Bot.Player.Alive)
+            //     goto RestartOnDeath;
             Core.PvPMove(7, "Morale0A");
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
+            // if (!Bot.Player.Alive)
+            //     goto RestartOnDeath;
             Core.PvPMove(9, "Crosslower");
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PvPMove(14, "Crossupper", 528, 255);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PvPMove(18, "Resource1A");
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            #endregion GotoMobsRoom1
-            foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
-            {
-                bool ded = false;
-                Bot.Events.MonsterKilled += b => ded = true;
-                while (!Bot.ShouldExit && !ded)
-                {
-                    if (!Bot.Player.Alive)
-                        goto RestartOnDeath;
-                    if (!Bot.Combat.StopAttacking)
-                        Bot.Combat.Attack(MID);
-                    Core.Sleep();
-                }
-                Bot.Combat.CancelTarget();
-            }
+            // if (!Bot.Player.Alive)
+            //     goto RestartOnDeath;
+            // Core.PvPMove(14, "Crossupper", 528, 255);
+            // if (!Bot.Player.Alive)
+            //     goto RestartOnDeath;
+            // Core.PvPMove(18, "Resource1A");
+            // if (!Bot.Player.Alive)
+            //     goto RestartOnDeath;
+            // foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
+            // {
+            //     bool ded = false;
+            //     Bot.Events.MonsterKilled += b => ded = true;
+            //     while (!Bot.ShouldExit && !ded)
+            //     {
+            //         if (!Bot.Player.Alive)
+            //             goto RestartOnDeath;
+            //         if (!Bot.Combat.StopAttacking)
+            //             Bot.Combat.Attack(MID);
+            //         Core.Sleep();
+            //     }
+            //     Bot.Combat.CancelTarget();
+            // }
+            #endregion GotoRoom1
 
-            #region GotoMobsRoom2
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
+            // #region GotomobRoom1and2
+            // if (!Bot.Player.Alive)
+            //     goto RestartOnDeath;
+            // if (!Bot.Player.Alive)
+            //     goto RestartOnDeath;
 
-            Core.PvPMove(20, "Resource1B");
+            // Core.PvPMove(20, "Resource1B");
 
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            #endregion GotoMobsRoom2
-            foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
-            {
-                bool ded = false;
-                Bot.Events.MonsterKilled += b => ded = true;
-                while (!Bot.ShouldExit && !ded)
-                {
-                    if (!Bot.Player.Alive)
-                        goto RestartOnDeath;
-                    if (!Bot.Combat.StopAttacking)
-                        Bot.Combat.Attack(MID);
-                    Core.Sleep();
-                }
-                Bot.Combat.CancelTarget();
-            }
+            // if (!Bot.Player.Alive)
+            //     goto RestartOnDeath;
+            // foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
+            // {
+            //     bool ded = false;
+            //     Bot.Events.MonsterKilled += b => ded = true;
+            //     while (!Bot.ShouldExit && !ded)
+            //     {
+            //         if (!Bot.Player.Alive)
+            //             goto RestartOnDeath;
+            //         if (!Bot.Combat.StopAttacking)
+            //             Bot.Combat.Attack(MID);
+            //         Core.Sleep();
+            //     }
+            //     Bot.Combat.CancelTarget();
+            // }
+            // #endregion GotomobRoom1and2
 
-            #region GotoMobsRoom3
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
+            #region GotoRoom2
 
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PvPMove(21, "Resource1A", 124);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PvPMove(19, "Crossupper", 124);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PvPMove(17, "Crosslower", 488, 483);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
+            // if (!Bot.Player.Alive)
+            //     goto RestartOnDeath;
+            // Core.PvPMove(21, "Resource1A", 124);
+            // // if (!Bot.Player.Alive)
+            // //     goto RestartOnDeath;
+            // Core.PvPMove(19, "Crossupper", 124);
+            // // if (!Bot.Player.Alive)
+            // //     goto RestartOnDeath;
+            // Core.PvPMove(17, "Crosslower", 488, 483);
+            // if (!Bot.Player.Alive)
+            //     goto RestartOnDeath;
             Core.PvPMove(15, "Morale1A", 862, 268);
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
-            #endregion GotoMobsRoom3
             foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
             {
                 bool ded = false;
@@ -728,18 +725,18 @@ public class CoreFarms
                 }
                 Bot.Combat.CancelTarget();
             }
+            #endregion GotoRoom2
 
-            #region GotoMobsRoom4
+            #region Kill Dmg Buggers
+
+            #region GotoRoom3
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
             Core.PvPMove(23, "Morale1B", 860, 267);
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
-            #endregion GotoMobsRoom4
             foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
             {
                 bool ded = false;
@@ -755,18 +752,16 @@ public class CoreFarms
                 Bot.Combat.CancelTarget();
             }
 
-            #region GotoMobsRoom5
+            #endregion GotoRoom3
+
+            #region GotoRoom4
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
-
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
             Core.PvPMove(25, "Morale1C", 857, 267);
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
-            #endregion GotoMobsRoom5
             foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
             {
                 bool ded = false;
@@ -782,17 +777,16 @@ public class CoreFarms
                 Bot.Combat.CancelTarget();
             }
 
-            #region GotoMobsRoom6
+            #endregion GotoRoom4
+
+            #region GotoBossRoom
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
-
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
             Core.PvPMove(28, "Captain1", 528, 255);
+
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
-            #endregion GotoMobsRoom6
             foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
             {
                 bool ded = false;
@@ -807,8 +801,12 @@ public class CoreFarms
                 }
                 Bot.Combat.CancelTarget();
             }
+            #endregion GotoBossRoom
 
-            #region Exit
+            #endregion Kill Dmg Buggers
+            #endregion
+
+            #region Exit PvP
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
@@ -826,14 +824,17 @@ public class CoreFarms
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
                 Core.Logger($"Attempting Exit {ExitAttempt++}.");
-                Bot.Map.Join("battleon-999999");
                 Bot.Combat.CancelTarget();
                 Bot.Wait.ForCombatExit();
+                Bot.Map.Join("battleon-999999");
                 Core.Sleep(1500);
                 if (Bot.Map.Name != "battleon")
                     Core.Logger("Failed!? HOW.. try agian");
-                else Core.Logger("Successful!");
-                goto Start;
+                else
+                {
+                    Core.Logger("Successful!");
+                    goto Start;
+                }
             }
 
         RestartOnDeath:
@@ -864,7 +865,7 @@ public class CoreFarms
         Core.Logger($"Deaths:[{Death}]");
         Death = 0;
         ExitAttempt = 0;
-        #endregion Exit
+        #endregion Exit PvP
 
     }
 
@@ -941,7 +942,6 @@ public class CoreFarms
         Core.CancelRegisteredQuests();
     }
 
-    #endregion
 
     #region Reputation
     public void GetAllRanks()
