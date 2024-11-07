@@ -25,9 +25,9 @@ public class DragonRoad
 
     public void StoryLine()
     {
-        if (!Core.isUpholder() || Core.isCompletedBefore(4547))
+        if (!Core.IsUpholder() || Core.isCompletedBefore(4547))
         {
-            Core.Logger(!Core.isUpholder() ? "Not an upholder." : "Quest Already complete");
+            Core.Logger(!Core.IsUpholder() ? "Not an upholder." : "Quest Already complete");
             return;
         }
 
