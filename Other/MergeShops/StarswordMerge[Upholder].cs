@@ -39,7 +39,7 @@ public class StarswordMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
-        if (!Core.isUpholder())
+        if (!Core.IsUpholder())
         {
             Core.Logger("Upholder Required.");
             return;
