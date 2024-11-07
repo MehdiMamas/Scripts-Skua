@@ -4236,13 +4236,13 @@ public class CoreBots
     /// <param name="item">Inventory item to equip.</param>
     private void _Equip(InventoryItem? item)
     {
-    Retry:
         if (item == null)
         {
             Logger($"Equipping Failed: Parsed object for \"{item}\" is null");
             return;
         }
 
+        // Exit combat mode
         while (!Bot.ShouldExit && Bot.Player.InCombat)
         {
             if (Bot.Player.HasTarget)
@@ -4251,36 +4251,43 @@ public class CoreBots
             Sleep();
         }
 
-        switch (item.CategoryString.ToLower())
+        // Attempt to equip the item up to 5 times
+        for (int attempt = 0; attempt < 5; attempt++)
         {
-            case "item": // Consumables
-                dynamic dItem = new ExpandoObject();
-                dItem.ItemID = item.ID;
-                dItem.sLink = Bot.Flash.GetGameObject<string>($"world.invTree.{item.ID}.sLink");
-                dItem.sES = item.ItemGroup;
-                dItem.sType = item.CategoryString;
-                dItem.sIcon = Bot.Flash.GetGameObject<string>($"world.invTree.{item.ID}.sIcon");
-                dItem.sFile = Bot.Flash.GetGameObject<string>($"world.invTree.{item.ID}.sFile");
-                dItem.bUpg = item.Upgrade ? 1 : 0;
-                dItem.sDesc = item.Description;
-                dItem.bEquip = item.Equipped ? 1 : 0;
-                dItem.sName = item.Name;
-                dItem.sMeta = item.Meta;
-
-                Bot.Flash.CallGameFunction("toggleItemEquip", dItem);
+            if (Bot.Inventory.Items.Any(x => x != null && x.ID == item.ID && x.Equipped))
                 break;
 
-            default:
-                Bot.Inventory.EquipItem(item.ID);
-                break;
+            switch (item.CategoryString.ToLower())
+            {
+                case "item": // Consumables
+                    dynamic dItem = new ExpandoObject();
+                    dItem.ItemID = item.ID;
+                    dItem.sLink = Bot.Flash.GetGameObject<string>($"world.invTree.{item.ID}.sLink");
+                    dItem.sES = item.ItemGroup;
+                    dItem.sType = item.CategoryString;
+                    dItem.sIcon = Bot.Flash.GetGameObject<string>($"world.invTree.{item.ID}.sIcon");
+                    dItem.sFile = Bot.Flash.GetGameObject<string>($"world.invTree.{item.ID}.sFile");
+                    dItem.bUpg = item.Upgrade ? 1 : 0;
+                    dItem.sDesc = item.Description;
+                    dItem.bEquip = item.Equipped ? 1 : 0;
+                    dItem.sName = item.Name;
+                    dItem.sMeta = item.Meta;
+
+                    Bot.Flash.CallGameFunction("toggleItemEquip", dItem);
+                    break;
+
+                default:
+                    Bot.Inventory.EquipItem(item.ID);
+                    break;
+            }
+
+            // Wait for item to equip, add sleep before retry if not successful
+            Bot.Wait.ForItemEquip(item.ID);
+            Sleep();
         }
-        Sleep();
-        // Bot.Wait.ForTrue(() => Bot.Inventory.IsEquipped(item.ID), 20);
-        Bot.Wait.ForItemEquip(item.ID);
-        if (!Bot.Inventory.Items.Any(x => x != null && x.ID == item.ID && x.Equipped))
-            goto Retry;
-        if (logEquip)
-            Logger($"Equipping {(Bot.Inventory.IsEquipped(item.ID) ? string.Empty : "failed: ")} {item.Name}", "Equip");
+
+        // Log result
+        Logger($"Equipping {(Bot.Inventory.IsEquipped(item.ID) ? string.Empty : "Failed! (either you're in combat, or in a PvP map): ")} {item.Name}", "Equip");
     }
 
     /// <summary>
@@ -5475,11 +5482,13 @@ public class CoreBots
                     Bot.Wait.ForActionCooldown(GameActions.Transfer);
                     if (hasMapNumber)
                     {
-                        Bot.Map.Join(map, cell ?? "Enter", pad, cell == null, false);
+                        Bot.Map.Join(map, cell ?? "Enter", pad, false, false);
+                        Bot.Wait.ForActionCooldown(GameActions.Transfer);
                     }
                     else
                     {
-                        Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", pad, cell == null, false);
+                        Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", pad, false, false);
+                        Bot.Wait.ForActionCooldown(GameActions.Transfer);
                     }
                     Bot.Wait.ForMapLoad(strippedMap);
                     // Exponential Backoff
@@ -5492,11 +5501,11 @@ public class CoreBots
                         {
                             if (!Bot.Wait.ForMapLoad(map, 20) && !Bot.ShouldExit)
                             {
-                                Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad, cell == null);
+                                Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad, false);
                             }
                             else
                             {
-                                Bot.Map.Jump(cell ?? "Enter", pad, cell == null);
+                                Bot.Map.Jump(cell ?? "Enter", pad, false);
                             }
                             Sleep(Bot.Options.ActionDelay);
                             Bot.Wait.ForCellChange(cell ?? "Enter");
@@ -5766,7 +5775,6 @@ public class CoreBots
             Sleep(2500);
             Bot.Send.Packet($"%xt%zm%mtcid%{Bot.Map.RoomID}%{mtcid}%");
         }
-        Bot.Wait.ForCellChange(cell);
     }
 
     /// <summary>
