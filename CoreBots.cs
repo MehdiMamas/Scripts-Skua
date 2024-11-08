@@ -4146,9 +4146,7 @@ public class CoreBots
                 if (Bot.Player.InCombat)
                     Bot.Combat.Exit();
 
-                logEquip = false;
                 Equip(Bot.Inventory.Items.First(x => x.Name.ToLower().Trim() == className && x.Category == ItemCategory.Class).ID);
-                logEquip = true;
                 equipedClass = Bot.Player.CurrentClass?.Name.Trim().ToLower();
             }
 
@@ -4158,7 +4156,6 @@ public class CoreBots
             return true;
         }
     }
-    private bool logEquip = true;
 
     /// <summary>
     /// Equips multiple items by their names from the bot's inventory if not already equipped.
