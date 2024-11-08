@@ -31,7 +31,7 @@ public class EmpoweredWeaponsofNulgath
         Core.BankingBlackList.AddRange(Nation.bagDrops);
         Core.SetOptions();
 
-        GetEmpoweredItem(Bot.Config?.Get<EmpoweredItems>("EmpoweredWep") ?? default);
+        GetEmpoweredItem(Bot.Config.Get<EmpoweredItems>("EmpoweredWep"));
 
         Core.SetOptions(false);
     }
@@ -41,12 +41,32 @@ public class EmpoweredWeaponsofNulgath
         if (!Core.CheckInventory("Nulgath Insignia", 25))
             Core.Logger("Could not find 25x Nulgath Insignia, stopping.", messageBox: true, stopBot: true);
 
+        // Add list to drop table.
+        new[] { "Empowered Overfiend Blade", "Empowered Ungodly Reavers", "Empowered Shadow Spear",
+         "Empowered Bloodletter", "Empowered Prismatic Manslayer", "Empowered Prismatic Manslayers",
+          "Empowered Legacy of Nulgath", "Empowered Worshipper of Nulgath",
+           "Empowered Evolved Void", "Empowered Evolved Fiend", "Empowered Evolved Blood",
+            "Empowered Evolved Hex", "Empowered Evolved Shadow" }.ToList().ForEach(item => Bot.Drops.Add(item));
+
         Farm.Experience(80);
         Core.AddDrop(Nation.bagDrops);
 
         foreach (EmpoweredItems item in (EmpoweredItems[])Enum.GetValues(typeof(EmpoweredItems)))
         {
-            switch (Bot.Config?.Get<EmpoweredItems>("EmpoweredWep") ?? default)
+            // Get the selected item from config
+            EmpoweredItems? selectedItem = Bot.Config?.Get<EmpoweredItems>("EmpoweredWep");
+
+            // Ensure we have a valid item selection from the config
+            if (selectedItem == null)
+                continue;
+
+            // Convert the enum value to a string for checking in the inventory
+            string itemName = selectedItem.ToString().Replace('_', ' ');
+
+            if (Core.CheckInventory(itemName, toInv: false))
+                return;
+
+            switch (Bot.Config?.Get<EmpoweredItems>("EmpoweredWep"))
             {
                 //Empowered Bloodletter 8696
                 case EmpoweredItems.Empowered_Bloodletter:
