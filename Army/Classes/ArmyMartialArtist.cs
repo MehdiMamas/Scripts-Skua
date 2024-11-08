@@ -70,13 +70,63 @@ public class ArmyMartialArtist
         if (!Story.QuestProgression(9923))
         {
             Core.Logger("Quest is required, we'll stack mats via \"Deathly Slow Start [9933]\" After");
-            Core.HuntMonsterQuest(9923,
-("nexus", "Frogzard", ClassType.Farm),         // Frogzards Defeated (500): Join nexus, kill Frogzards
-                    ("arcangrove", "Gorillaphant", ClassType.Farm), // Gorillaphants Defeated (500): Join arcangrove, kill Gorillaphants
-                    ("etherwardes", "Water Dragon Warrior", ClassType.Farm)    // Dragons Defeated (500): Join etherwardes, kill dragons
-);
+            Core.EnsureAccept(9923);
+            Core.EquipClass(ClassType.Farm);
+
+            #region Frogzard Defeated
+            Army.waitForParty("nexus", "Enter");
+            Army.AggroMonMIDs(1, 2, 3);
+            Army.AggroMonStart("nexus");
+            Army.DivideOnCells("Enter");
+            Bot.Player.SetSpawnPoint();
+
+            while (!Bot.ShouldExit && !Core.CheckInventory("Frogzards Defeated", 500))
+            {
+                Bot.Combat.Attack("*");
+                Bot.Sleep(200);
+            }
+            Army.AggroMonStop(true);
+            Bot.Wait.ForPickup("Frogzards Defeated");
+            #endregion Frogzard Defeated
+
+            #region Gorillaphant Defeated
+            Army.waitForParty("arcangrove", "Enter");
+            Army.AggroMonMIDs(2, 5, 8, 9, 10);
+            Army.AggroMonStart("arcangrove");
+            Army.DivideOnCells("Left", "Back", "LeftBack");
+            Bot.Player.SetSpawnPoint();
+
+            while (!Bot.ShouldExit && !Core.CheckInventory("Gorillaphants Defeated", 500))
+            {
+                Bot.Combat.Attack("Gorillaphant");
+                Bot.Sleep(200);
+            }
+            Army.AggroMonStop(true);
+            Bot.Wait.ForPickup("Gorillaphants Defeated");
+
+            #endregion Gorillaphant Defeated
+
+            #region Dragons Defeated
+            Army.waitForParty("etherwardes", "Enter");
+            Army.AggroMonMIDs(Core.FromTo(1, 18));
+            Army.AggroMonStart("etherwardes");
+            Army.DivideOnCells("Enter", "r2", "r3", "r4", "r5", "r6");
+            Bot.Player.SetSpawnPoint();
+
+            while (!Bot.ShouldExit && !Core.CheckInventory("Dragons Defeated", 500))
+            {
+                Bot.Combat.Attack("*");
+                Bot.Sleep(200);
+            }
+            Bot.Wait.ForPickup("Dragons Defeated");
+            Army.AggroMonStop(true);
+
+            #endregion Dragons Defeated
+
+            Core.EnsureComplete(9923);
         }
-        Core.EquipClass(ClassType.Solo);
+        // go back and help if needed
+        Army.waitForParty("party", "Enter");
 
         // Generate the list of quest IDs
         int[]? questIDs = Core.FromTo(9922, 9927).Append(Core.IsMember ? 9911 : 9902)?.Where(q => q > 0).ToArray();
@@ -85,6 +135,7 @@ public class ArmyMartialArtist
         List<Quest> quests = Core.EnsureLoad(questIDs ?? Array.Empty<int>());
 
         Core.EnsureAccept(Core.IsMember ? 9911 : 9902);
+        Core.EquipClass(ClassType.Solo);
 
         #region Dreadhaven General's Soul Fragment
 
