@@ -23505,6 +23505,36 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/NightmareHarvestMerge.cs"
   },
   {
+    "name": "Robinas Harvest Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Robinas Harvest Merge [2366] in /blightharvest",
+    "tags": [
+      "robinas",
+      "harvest",
+      "merge",
+      "blightharvest",
+      "turdracolich",
+      "hunter",
+      "stalker",
+      "brimmed",
+      "morph",
+      "hunting",
+      "gear",
+      "goldtouched",
+      "carver",
+      "carvers",
+      "rifle",
+      "turdraken",
+      "carving",
+      "cranberry",
+      "imp",
+      "pet"
+    ],
+    "path": "Seasonal/HarvestDay/MergeShops/RobinasHarvestMerge.cs",
+    "size": 6184,
+    "fileName": "RobinasHarvestMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/RobinasHarvestMerge.cs"
+  },
+  {
     "name": "Harvest Day Parade Merge",
     "description": "This will get all or selected items on this merge shop.",
     "tags": [
