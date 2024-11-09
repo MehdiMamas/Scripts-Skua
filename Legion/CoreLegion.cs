@@ -8,11 +8,9 @@ tags: null
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
-using Skua.Core.Models;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Quests;
-using System;
 
 public class CoreLegion
 {
@@ -440,10 +438,6 @@ public class CoreLegion
             return;
         }
 
-        List<int> Quests = new(); // List to store quest IDs
-        List<(ItemBase, int)> QuestItems = new(); // List to store quest items
-        bool HasQuestPet = false; // Tracks if the player has the required pet
-
         // Pairs of quest IDs with their respective accept requirements
         (int, int)[] questPairs = new[]
         {
@@ -459,30 +453,34 @@ public class CoreLegion
             (5755, 5753)  // Shogun Paragon Pet [38621]
         };
 
+        List<Quest> QuestList = new(); // List to store quest IDs
+        List<(ItemBase, int)> QuestItems = new(); // List to store quest items
+        bool HasQuestPet = false; // Tracks if the player has the required pet
+
         // Process quest pairs
         foreach ((int firstQuestID, int secondQuestID) in questPairs)
         {
             // Load and process the first quest in the pair
-            Quest firstQID = Core.EnsureLoad(firstQuestID);
-            ItemBase? firstAcceptReq = firstQID.AcceptRequirements.FirstOrDefault();
-            if (firstAcceptReq?.ID != null && Core.CheckInventory(firstAcceptReq.ID))
+            Quest? MainQuestID = Core.EnsureLoad(firstQuestID);
+            Quest? SideQuest = Core.EnsureLoad(secondQuestID);
+            ItemBase? PetToAcceptQuest = MainQuestID.AcceptRequirements.FirstOrDefault();
+            if (PetToAcceptQuest != null && Core.CheckInventory(PetToAcceptQuest.ID))
             {
-                Quests.Add(firstQID.ID);
+                QuestList.Add(MainQuestID);
 
                 // Add first quest's rewards
-                Core.AddDrop(firstQID.Rewards.Select(item => item.Name).Distinct().ToArray());
+                Core.AddDrop(MainQuestID.Rewards.Where(x => x != null && x.Quantity < x.MaxStack).Select(item => item.Name).Distinct().ToArray());
 
                 // If DoClearaPath is true, also add the second quest's rewards
                 if (DoClearaPath)
                 {
-                    Quest secondQID = Core.EnsureLoad(secondQuestID);
-                    Quests.Add(secondQID.ID);
+                    QuestList.Add(SideQuest);
 
-                    Core.AddDrop(secondQID.Rewards.Select(item => item.Name).Distinct().ToArray());
+                    Core.AddDrop(SideQuest.Rewards.Where(x => x != null && x.Quantity < x.MaxStack).Select(item => item.Name).Distinct().ToArray());
                 }
 
                 HasQuestPet = true;
-                Bot.Log($"✔️ Pet: {firstAcceptReq.Name}\n PetID: [{firstAcceptReq.ID}]\n PetQuestID(s): [{string.Join(", ", Quests)}]");
+                Bot.Log($"✔️ Pet: {PetToAcceptQuest.Name}\n PetID: [{PetToAcceptQuest.ID}]\n PetQuestID(s): [{string.Join(", ", QuestList)}]");
             }
             if (HasQuestPet) break;
         }
@@ -495,60 +493,51 @@ public class CoreLegion
         }
 
         // Collect requirements for each quest in the list
-        foreach (int questID in Quests)
+        foreach (Quest Q in QuestList)
         {
-            Quest quest = Core.EnsureLoad(questID);
+            Quest quest = Core.EnsureLoad(Q.ID);
 
             foreach (ItemBase requirement in quest.Requirements)
             {
-                var reqs = quest.Requirements.FirstOrDefault(i => i.Name == requirement.Name);
+                ItemBase? QuestItem = quest.Requirements.FirstOrDefault(i => i != null && i.ID == requirement.ID);
 
-                if (reqs != null)
-                {
-                    QuestItems.Add((reqs, requirement.Quantity));
-                }
-                else
-                {
-                    Core.Logger($"❗ Missing requirement '{requirement.Name}' for quest '{quest.Name}'.");
-                }
+                QuestItems.Add((QuestItem!, QuestItem.Quantity));
             }
         }
-
 
         // Equip class, log farming, add drop, and register quests
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger("Legion Token", quant);
         Core.AddDrop("Legion Token");
-        Core.RegisterQuests(Quests.ToArray());
+        Core.RegisterQuests(QuestList.Where(q => q != null).Select(Q => Q.ID).ToArray());
         // Hunt monsters until the desired quantity of Legion Tokens is obtained
         while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
         {
             foreach ((ItemBase QuestItem, int ItemQuant) in QuestItems)
             {
-                if (Bot.TempInv.Contains(QuestItem.ID, ItemQuant))
-                {
-                    Core.Logger($"{QuestItem.Name} owned x {ItemQuant} skipping");
+                if (Bot.TempInv.Contains(QuestItem.Name, ItemQuant))
                     continue;
-                }
+
+                Core.FarmingLogger(QuestItem.Name, ItemQuant);
 
                 Core.KillMonster("fotia",
-                // Set cell:
+                    // Set cell:
                     QuestItem.Name == "Femme Cult Worshipper's Soul" ? "r5" : "Enter",
-                // Set Pad:
+                    // Set Pad:
                     QuestItem.Name == "Femme Cult Worshipper's Soul" ? "Left" : "Spawn",
-                // Set Mob:
+                    // Set Mob:
                     QuestItem.Name == "Femme Cult Worshipper's Soul" ? "Femme Cult Worshiper" : "*",
-                // Set ItemName:
+                    // Set ItemName:
                     QuestItem.Name,
-                // Set ItemName Quant:
+                    // Set ItemName Quant:
                     ItemQuant,
                      log: Logger);
-            }
 
-            if (Core.CheckInventory("Legion Token", quant))
-            {
-                Core.Logger("Legion Tokens maxed!");
-                break;
+                if (Core.CheckInventory("Legion Token", quant))
+                {
+                    Core.Logger("Legion Tokens maxed!");
+                    break;
+                }
             }
         }
         Core.CancelRegisteredQuests();
