@@ -5517,6 +5517,29 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/BlackFriday/ShadowDragonShinobi.cs"
   },
   {
+    "name": "HiddenDuat Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the HiddenDuat Merge [2501] in /hiddenduat",
+    "tags": [
+      "hiddenduat",
+      "merge",
+      "hiddenduat",
+      "apophis",
+      "medjai",
+      "bangs",
+      "morph",
+      "horned",
+      "dark",
+      "umbral",
+      "scythe",
+      "aaru",
+      "bow"
+    ],
+    "path": "Seasonal/BlackFriday/HiddenDuatMerge.cs",
+    "size": 5192,
+    "fileName": "HiddenDuatMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/BlackFriday/HiddenDuatMerge.cs"
+  },
+  {
     "name": "Creepy Undead Monkey",
     "description": "This will do the Creepy Undead Monkey quest to obtain all of the reward items.",
     "tags": [
@@ -22882,15 +22905,51 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/BlackFriday/ShadowofDoom/00DoAll.cs"
   },
   {
+    "name": "Hidden Palace of Duat",
+    "description": "Does the /hiddenduat storyline",
+    "tags": [
+      "shadow of doom",
+      "hiddenduat",
+      "hidden",
+      "duat",
+      "story",
+      "saga",
+      "zhoom",
+      "hidden palace",
+      "palace"
+    ],
+    "path": "Seasonal/BlackFriday/ShadowofDoom/05HiddenDuat.cs",
+    "size": 715,
+    "fileName": "05HiddenDuat.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/BlackFriday/ShadowofDoom/05HiddenDuat.cs"
+  },
+  {
     "name": "null",
     "description": "null",
     "tags": [
       "null"
     ],
     "path": "Seasonal/BlackFriday/ShadowofDoom/CoreShadowofDoom.cs",
-    "size": 5732,
+    "size": 10090,
     "fileName": "CoreShadowofDoom.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/BlackFriday/ShadowofDoom/CoreShadowofDoom.cs"
+  },
+  {
+    "name": "Shadow Duat",
+    "description": "Does the /shadowduat storyline",
+    "tags": [
+      "shadow of doom",
+      "shadowduat",
+      "shadow",
+      "duat",
+      "story",
+      "saga",
+      "zhoom"
+    ],
+    "path": "Seasonal/BlackFriday/ShadowofDoom/04ShadowDuat.cs",
+    "size": 683,
+    "fileName": "04ShadowDuat.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/BlackFriday/ShadowofDoom/04ShadowDuat.cs"
   },
   {
     "name": "Headless Horseman Gear",
