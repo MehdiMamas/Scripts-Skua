@@ -35,6 +35,8 @@ public class CoreShadowofDoom
         ShadowBattleon();
         Camlan(ReturnEarly);
         LotusTomb();
+        ShadowDuat();
+        HiddenDuat();
     }
 
     public void ShadowBattleon()
@@ -213,6 +215,171 @@ public class CoreShadowofDoom
 
 
     }
+
+    public void ShadowDuat()
+    {
+        if (Core.isCompletedBefore(9943))
+            return;
+
+        LotusTomb();
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Umbral Serpent", // UseableMonsters[0],
+	"Umbral Tomb Hound", // UseableMonsters[1],
+	"Umbral Sphinx", // UseableMonsters[2],
+	"Royal Umbral Guard", // UseableMonsters[3],
+	"Apophis Chantress", // UseableMonsters[4],
+	"DoomKnight Dryden", // UseableMonsters[5]
+};
+        #endregion Useable Monsters
+
+        // 9938 | Shadow Duat Medal
+        if (!Story.QuestProgression(9938))
+        {
+            Core.HuntMonsterQuest(9938,
+                ("shadowduat", UseableMonsters[0], ClassType.Solo));
+        }
+
+        // 9940 | Funerary Shesepankh
+        if (!Story.QuestProgression(9940))
+        {
+            Core.HuntMonsterQuest(9940,
+                ("shadowduat", UseableMonsters[2], ClassType.Solo));
+        }
+
+
+        // 9941 | Old Guarde
+        if (!Story.QuestProgression(9941))
+        {
+            Core.HuntMonsterQuest(9941,
+                ("shadowduat", UseableMonsters[3], ClassType.Solo));
+        }
+
+
+        // 9942 | Enemy of the Sun
+        if (!Story.QuestProgression(9942))
+        {
+            Core.HuntMonsterQuest(9942,
+                ("shadowduat", UseableMonsters[4], ClassType.Solo));
+        }
+
+
+        // 9943 | Doomed Heir
+        if (!Story.QuestProgression(9943))
+        {
+            Core.HuntMonsterQuest(9943,
+                ("shadowduat", UseableMonsters[5], ClassType.Solo));
+        }
+
+    }
+
+    public void HiddenDuat()
+    {
+        if (Core.isCompletedBefore(9964))
+            return;
+
+        ShadowDuat();
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Umbral Sphinx", // UseableMonsters[0],
+	"Depths of Isfet", // UseableMonsters[1],
+	"Umbral Royal Guard", // UseableMonsters[2],
+	"Royal Mummy", // UseableMonsters[3],
+	"Anubian Overseer", // UseableMonsters[4],
+	"Pharaoh Neith", // UseableMonsters[5],
+	"Umbral Chaos", // UseableMonsters[6]
+};
+        #endregion Useable Monsters
+
+        // 9955 | Eclipsed Memory
+        if (!Story.QuestProgression(9955))
+        {
+            Story.KillQuest(9955, "hiddenduat", UseableMonsters[0]);
+            Story.MapItemQuest(9955, "hiddenduat", 13812);
+        }
+
+
+        // 9956 | Sons in Spirit
+        if (!Story.QuestProgression(9956))
+        {
+            Core.HuntMonsterQuest(9956,
+                ("hiddenduat", UseableMonsters[2], ClassType.Solo));
+        }
+
+
+        // 9957 | Cleopatra's Asp
+        if (!Story.QuestProgression(9957))
+        {
+            Story.MapItemQuest(9957, "hiddenduat", new[] { 13813, 13814 });
+        }
+
+
+        // 9958 | Canopic Guardians
+        if (!Story.QuestProgression(9958))
+        {
+            Core.HuntMonsterQuest(9958,
+                ("hiddenduat", UseableMonsters[0], ClassType.Solo),
+                ("hiddenduat", UseableMonsters[2], ClassType.Solo));
+        }
+
+
+        // 9959 | Lum'ah
+        if (!Story.QuestProgression(9959))
+        {
+            Story.KillQuest(9959, "hiddenduat", UseableMonsters[3]);
+            Story.MapItemQuest(9959, "hiddenduat", 13815);
+        }
+
+
+        // 9960 | Asyut's Hounds
+        if (!Story.QuestProgression(9960))
+        {
+            Core.HuntMonsterQuest(9960,
+                ("hiddenduat", UseableMonsters[4], ClassType.Solo));
+        }
+
+
+        // 9961 | Chaotic Magnetism
+        if (!Story.QuestProgression(9961))
+        {
+            Story.MapItemQuest(9961, "hiddenduat", new[] { 13816, 13817 });
+        }
+
+
+        // 9962 | Warrior's Death
+        if (!Story.QuestProgression(9962))
+        {
+            Story.KillQuest(9962, "hiddenduat", new[] { UseableMonsters[3], UseableMonsters[4] });
+            Story.MapItemQuest(9962, "hiddenduat", 13818);
+        }
+
+
+        // 9963 | Uraeus
+        if (!Story.QuestProgression(9963))
+        {
+            Core.HuntMonsterQuest(9963,
+                ("hiddenduat", UseableMonsters[5], ClassType.Solo));
+        }
+
+
+        // 9964 | Dragon of Duat
+        if (!Story.QuestProgression(9964))
+        {
+            Core.HuntMonsterQuest(9964,
+                ("hiddenduat", UseableMonsters[6], ClassType.Solo));
+        }
+
+
+    }
+
 }
 
 
