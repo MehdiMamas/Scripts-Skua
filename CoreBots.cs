@@ -2232,9 +2232,8 @@ public class CoreBots
             Logger($"Quest {questID} not loaded after 5 attempts.");
             return 0;
         }
-        if (!Bot.Lite.ReacceptQuest || quest != null && !Bot.Quests.Active.Contains(quest))
+        else
             EnsureAccept(questID);
-        else Bot.Wait.ForTrue(() => Bot.Quests.IsInProgress(questID), 20);
 
         int turnIns;
 
