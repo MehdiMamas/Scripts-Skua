@@ -6120,7 +6120,7 @@ public class CoreBots
         Bot.Flash.CallGameFunction("world.testAction", JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(skill)));
     }
 
-    private void ShutdownSkua()
+    public void ShutdownSkua()
     {
         Process currentProcess = Process.GetCurrentProcess();
         if (currentProcess.ProcessName == "Skua")
