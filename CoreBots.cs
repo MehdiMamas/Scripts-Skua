@@ -1885,6 +1885,7 @@ public class CoreBots
                         {
                             EnsureAccept(kvp.Key.ID);
                             await Task.Delay(ActionDelay);
+
                         }
                         nonChooseQuests[kvp.Key] = nonChooseQuests[kvp.Key] + amountTurnedIn;
                         //lessen log spam - log every 10 completions.
@@ -1900,7 +1901,7 @@ public class CoreBots
                 // Quests that need a choice
                 foreach (KeyValuePair<Quest, int> kvp in chooseQuests)
                 {
-                    if (!Bot.Quests.IsInProgress(kvp.Key.ID))
+                    if (!Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
                     {
                         EnsureAccept(kvp.Key.ID);
                         await Task.Delay(ActionDelay);
@@ -1926,7 +1927,7 @@ public class CoreBots
                         {
                             EnsureCompleteMulti(kvp.Key.ID);
                             await Task.Delay(ActionDelay);
-                            if (!Bot.Lite.ReacceptQuest && !Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
+                            if (!Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
                                 EnsureAccept(kvp.Key.ID);
                             continue;
                         }
@@ -1934,8 +1935,8 @@ public class CoreBots
                         Bot.Drops.Add(kvp.Key.Rewards.Where(x => simpleRewards.Any(t => t != null && t.ID == x.ID)).Select(i => i.Name).ToArray());
                         EnsureCompleteMulti(kvp.Key.ID, simpleRewards.First().ID);
                         // await Task.Delay(ActionDelay);
-                        await Task.Delay(Bot.Quests.RegisterCompleteInterval);
-                        if (!Bot.Lite.ReacceptQuest && !Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
+                        await Task.Delay(ActionDelay);
+                        if (!Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
                             EnsureAccept(kvp.Key.ID);
                         Logger($"Quest completed x{chooseQuests[kvp.Key]++} times: [{kvp.Key.ID}] \"{kvp.Key.Name}\" (Got \"{kvp.Key.Rewards.First(x => x.ID == simpleRewards.First().ID).Name}\")");
                     }
@@ -2232,11 +2233,12 @@ public class CoreBots
             Logger($"Quest {questID} not loaded after 5 attempts.");
             return 0;
         }
-        else
+
+        if (quest != null && !Bot.Quests.Active.Contains(quest))
             EnsureAccept(questID);
+        Bot.Wait.ForTrue(() => Bot.Quests.IsInProgress(questID), 20);
 
         int turnIns;
-
         if (quest != null)
         {
             string[] requiredItemNames =
@@ -2453,8 +2455,13 @@ public class CoreBots
     {
         if (itemID > 0)
             Bot.Drops.Add(itemID);
-        EnsureAccept(questID);
-        Sleep();
+
+        ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == itemID);
+        if (Item != null && Item.Quantity == Item.MaxStack)
+            Bot.Drops.Remove(Item.ID);
+
+        // EnsureAccept(questID);
+        // Sleep();
         EnsureCompleteMulti(questID, itemID: itemID);
     }
 
@@ -2499,14 +2506,18 @@ public class CoreBots
 
         if (!Bot.Map.Cells.Any(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)))
             cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell;
-
         pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
 
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+        {
             return;
+        }
 
         if (item != null && !isTemp)
             AddDrop(item);
+        ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
+        if (Item != null && Item.Quantity == Item.MaxStack)
+            Bot.Drops.Remove(Item.ID);
 
         if (Bot.Player.Cell != cell)
         {
@@ -2602,6 +2613,10 @@ public class CoreBots
         // Add item to drop list if it's not a temporary item
         if (item != null && !isTemp)
             AddDrop(item);
+
+        ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
+        if (Item != null && Item.Quantity == Item.MaxStack)
+            Bot.Drops.Remove(Item.ID);
 
         // Join the specified map, cell, and pad
         if (Bot.Map.Name != map)
@@ -2732,6 +2747,10 @@ public class CoreBots
         // Add item to drop list if it's not a temporary item
         if (ItemID != 0 && !isTemp)
             AddDrop(ItemID);
+
+        ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == ItemID);
+        if (Item != null && Item.Quantity == Item.MaxStack)
+            Bot.Drops.Remove(Item.ID);
 
         // Join the specified map, cell, and pad
         if (Bot.Map.Name != map)
@@ -2873,6 +2892,11 @@ public class CoreBots
         {
             if (!isTemp)
                 AddDrop(item);
+
+            ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
+            if (Item != null && Item.Quantity == Item.MaxStack)
+                Bot.Drops.Remove(Item.ID);
+
             if (log)
                 FarmingLogger(item, quant);
 
@@ -2944,6 +2968,10 @@ public class CoreBots
         {
             if (!isTemp)
                 AddDrop(item);
+
+            ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
+            if (Item != null && Item.Quantity == Item.MaxStack)
+                Bot.Drops.Remove(Item.ID);
 
             bool ded = false;
             Bot.Events.MonsterKilled += b => ded = true;
@@ -4891,7 +4919,7 @@ public class CoreBots
     /// <param name="pad">The pad to jump to</param>
     /// <param name="publicRoom">Whether or not it should be a public room, if PrivateRoom is on in the CanChange section on the top of CoreBots</param>
     /// <param name="ignoreCheck">If set to true, the bot will not check if the player is already in the given room</param>
-    public void Join(string? map, string? cell = null, string pad = "Spawn", bool publicRoom = false, bool ignoreCheck = false)
+    public void Join(string? map, string? cell = "Enter", string pad = "Spawn", bool publicRoom = false, bool ignoreCheck = false)
     {
         // If cell is null, determine its value
         if (cell == null && map != null && map != "oaklore")
