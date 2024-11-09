@@ -19,7 +19,7 @@ public class WeeklyReleaseGenerator
     private CoreBots Core => CoreBots.Instance;
     private CoreStory Story = new();
 
-    public string OptionsStorage = "QuestIDRange";
+    public string OptionsStorage = "WeeklyReleaseGenerator";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
@@ -55,8 +55,8 @@ public class WeeklyReleaseGenerator
         }
 
         // Join the map first
-        Core.Join(mapName);
-        Bot.Wait.ForMapLoad(mapName);
+        Core.Join(mapName.ToLower());
+        Bot.Wait.ForMapLoad(mapName.ToLower());
 
         // Initialize a list to store generated lines
         List<string> generatedLines = new()
