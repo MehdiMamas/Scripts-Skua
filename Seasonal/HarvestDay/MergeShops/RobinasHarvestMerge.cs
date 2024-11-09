@@ -6,6 +6,8 @@ tags: robinas, harvest, merge, blightharvest, turdracolich, hunter, stalker, bri
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreStory.cs
+//cs_include Scripts/Seasonal\HarvestDay\CoreHarvestDay.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -17,6 +19,7 @@ public class RobinasHarvestMerge
     private CoreFarms Farm = new();
     private CoreAdvanced Adv = new();
     private static CoreAdvanced sAdv = new();
+    private CoreHarvestDay CHD = new();
 
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
@@ -36,9 +39,7 @@ public class RobinasHarvestMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
-        /* @bogi insert story here
-            >>>>> ---- <<<<<<<<
-        */
+        CHD.BlightHarvest();
 
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("blightharvest", 2366, findIngredients, buyOnlyThis, buyMode: buyMode);

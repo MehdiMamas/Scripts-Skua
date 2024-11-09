@@ -7640,7 +7640,7 @@
       "null"
     ],
     "path": "Seasonal/HarvestDay/CoreHarvestDay.cs",
-    "size": 23587,
+    "size": 26162,
     "fileName": "CoreHarvestDay.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/CoreHarvestDay.cs"
   },
@@ -7682,6 +7682,22 @@
     "size": 676,
     "fileName": "09FurbleFeastStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/09FurbleFeastStory.cs"
+  },
+  {
+    "name": "Blight Harvest Story",
+    "description": "This will finish the Blight Harvest storyline.",
+    "tags": [
+      "blightharvest",
+      "blight harvest",
+      "seasonal",
+      "harvest-day",
+      "blight",
+      "harvest"
+    ],
+    "path": "Seasonal/HarvestDay/18BlightHarvest.cs",
+    "size": 703,
+    "fileName": "18BlightHarvest.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/18BlightHarvest.cs"
   },
   {
     "name": "Gothic Dream Story",
@@ -23503,6 +23519,36 @@
     "size": 6122,
     "fileName": "NightmareHarvestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/NightmareHarvestMerge.cs"
+  },
+  {
+    "name": "Robinas Harvest Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Robinas Harvest Merge [2366] in /blightharvest",
+    "tags": [
+      "robinas",
+      "harvest",
+      "merge",
+      "blightharvest",
+      "turdracolich",
+      "hunter",
+      "stalker",
+      "brimmed",
+      "morph",
+      "hunting",
+      "gear",
+      "goldtouched",
+      "carver",
+      "carvers",
+      "rifle",
+      "turdraken",
+      "carving",
+      "cranberry",
+      "imp",
+      "pet"
+    ],
+    "path": "Seasonal/HarvestDay/MergeShops/RobinasHarvestMerge.cs",
+    "size": 6268,
+    "fileName": "RobinasHarvestMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/RobinasHarvestMerge.cs"
   },
   {
     "name": "Harvest Day Parade Merge",

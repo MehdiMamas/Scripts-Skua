@@ -43,6 +43,7 @@ public class CoreHarvestDay
             EpilTakeOver();
             BirdsWithHarms();
             EbilCorpHQ();
+            BlightHarvest();
         }
         else
         {
@@ -90,7 +91,7 @@ public class CoreHarvestDay
         //Whine n' Cheese (134)
         if (!Story.QuestProgression(134))
         {
-            Core.EnsureAcceptmultiple(false, new[ ]{134, 423});
+            Core.EnsureAcceptmultiple(false, new[] { 134, 423 });
             Core.HuntMonster("harvest", "Grapes of Wrath", "Whine", 8, log: false);
             Core.EnsureComplete(423);
             Core.EnsureComplete(134);
@@ -777,5 +778,96 @@ public class CoreHarvestDay
         // The M.C.P 8407
         Story.KillQuest(8407, "ebilcorphq", "Master Chairman");
     }
+
+    public void BlightHarvest()
+    {
+        if (Core.isCompletedBefore(9481) || !Core.isSeasonalMapActive("blightharvest"))
+            return;
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Cursed Corn", // UseableMonsters[0],
+	"Tantalocust", // UseableMonsters[1],
+	"Scales of Greed", // UseableMonsters[2],
+	"Fear Gorta", // UseableMonsters[3],
+	"Famine", // UseableMonsters[4]
+};
+        #endregion Useable Monsters
+
+        // 9472 | Bug Blight
+        if (!Story.QuestProgression(9472))
+        {
+            Story.KillQuest(9472, "blightharvest", UseableMonsters[0]);
+            Story.MapItemQuest(9472, "blightharvest", 12334);
+        }
+
+
+        // 9473 | Struggle Soup
+        if (!Story.QuestProgression(9473))
+        {
+            Story.KillQuest(9473, "blightharvest", UseableMonsters[1]);
+            Story.MapItemQuest(9473, "blightharvest", 12335);
+        }
+
+
+        // 9474 | Fetid Feast
+        if (!Story.QuestProgression(9474))
+        {
+            Story.KillQuest(9474, "blightharvest", new[] { UseableMonsters[0], UseableMonsters[1] });
+            Story.MapItemQuest(9474, "blightharvest", 12336, 3);
+        }
+
+
+        // 9475 | Dire Disparity
+        Story.MapItemQuest(9475, "blightharvest", new[] { 12337, 12338 });
+
+
+        // 9476 | Balancing Crumbs
+        if (!Story.QuestProgression(9476))
+        {
+            Core.HuntMonsterQuest(9476,
+                ("blightharvest", UseableMonsters[2], ClassType.Solo));
+        }
+
+
+        // 9477 | Harrowing Hike
+        if (!Story.QuestProgression(9477))
+        {
+            Story.KillQuest(9477, "blightharvest", UseableMonsters[3]);
+            Story.MapItemQuest(9477, "blightharvest", 12339);
+        }
+
+
+        // 9478 | Down the Grapevine
+        Story.MapItemQuest(9478, "blightharvest", new[] { 12340, 12341 });
+
+
+        // 9479 | Hungry Hive
+        if (!Story.QuestProgression(9479))
+        {
+            Core.HuntMonsterQuest(9479, "blightharvest", UseableMonsters[1]);
+        }
+
+
+        // 9480 | Acrid Abundance
+        if (!Story.QuestProgression(9480))
+        {
+
+            Story.KillQuest(9480, "blightharvest", new[] { UseableMonsters[1], UseableMonsters[3] });
+            Story.MapItemQuest(9480, "blightharvest", 12342);
+        }
+
+
+        // 9481 | Keeper of the Scales
+        if (!Story.QuestProgression(9481))
+        {
+            Core.HuntMonsterQuest(9481,
+                ("blightharvest", UseableMonsters[4], ClassType.Solo));
+        }
+    }
+
 
 }
