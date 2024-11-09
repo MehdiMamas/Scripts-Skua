@@ -6120,15 +6120,15 @@ public class CoreBots
         Bot.Flash.CallGameFunction("world.testAction", JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(skill)));
     }
 
-    private void ShutdownSkua() // law asked for this. - not to be used publicly.
+    private void ShutdownSkua()
     {
-        Process[] processes = Process.GetProcessesByName("Skua");
-        foreach (Process process in processes)
+        Process currentProcess = Process.GetCurrentProcess();
+        if (currentProcess.ProcessName == "Skua")
         {
             // Releases lingering resources, reducing memory usage before termination.
             GC.Collect();
             //terminate the process
-            process.Kill();
+            currentProcess.Kill();
         }
     }
 
