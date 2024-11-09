@@ -31,7 +31,7 @@ public class EmpoweredWeaponsofNulgath
         Core.BankingBlackList.AddRange(Nation.bagDrops);
         Core.SetOptions();
 
-        GetEmpoweredItem(Bot.Config.Get<EmpoweredItems>("EmpoweredWep"));
+        GetEmpoweredItem(Bot.Config!.Get<EmpoweredItems>("EmpoweredWep"));
 
         Core.SetOptions(false);
     }
@@ -53,19 +53,35 @@ public class EmpoweredWeaponsofNulgath
 
         foreach (EmpoweredItems item in (EmpoweredItems[])Enum.GetValues(typeof(EmpoweredItems)))
         {
-            // Get the selected item from config
-            EmpoweredItems? selectedItem = Bot.Config?.Get<EmpoweredItems>("EmpoweredWep");
+            // Retry mechanism to get the selected item from config
+            EmpoweredItems? selectedItem = null;
+            for (int i = 0; i < 5; i++)
+            {
+                selectedItem = Bot.Config?.Get<EmpoweredItems>("EmpoweredWep");
+                if (selectedItem != null)
+                    break;
+                Core.Logger($"Attempt {i + 1}: EmpoweredWep not found in config. Retrying...");
+                Core.Sleep(1000); // Wait for 1 second before retrying
+            }
 
             // Ensure we have a valid item selection from the config
             if (selectedItem == null)
+            {
+                Core.Logger("EmpoweredWep not found in config after 5 attempts.");
                 continue;
+            }
 
             // Convert the enum value to a string for checking in the inventory
-            string itemName = selectedItem.ToString().Replace('_', ' ');
+            string? itemName = selectedItem?.ToString()?.Replace('_', ' ');
+
+            if (string.IsNullOrEmpty(itemName))
+            {
+                Core.Logger("Item name is null or empty after conversion.");
+                continue;
+            }
 
             if (Core.CheckInventory(itemName, toInv: false))
                 return;
-
             switch (Bot.Config?.Get<EmpoweredItems>("EmpoweredWep"))
             {
                 //Empowered Bloodletter 8696
