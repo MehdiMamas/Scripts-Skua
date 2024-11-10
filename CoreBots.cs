@@ -1763,6 +1763,15 @@ public class CoreBots
 
     #region Quest
     private CancellationTokenSource? questCTS = null;
+    private async Task EnsureQuestAccepted(int questID)
+    {
+        if (!Bot.Quests.IsInProgress(questID))
+        {
+            Bot.Quests.Accept(questID);
+            await Task.Delay(ActionDelay); // Wait for the action delay to ensure the quest is accepted
+        }
+    }
+
     /// <summary>
     /// This will register quests to be completed while doing something else, i.e. while in combat.
     /// If it has quests already registered, it will cancel them first and then register the new quests.
@@ -1770,88 +1779,18 @@ public class CoreBots
     /// <param name="questIDs">ID of the quests to be completed.</param>
     public void RegisterQuests(params int[] questIDs)
     {
-        // Get the current list of registered quest IDs
-        List<int> registeredQuestIDs = Bot.Quests.Registered.ToList();
+        if (questIDs == null || questIDs.Length == 0)
+            return;
 
-        // Add only unregistered quest IDs
-        foreach (int questID in questIDs)
-        {
-            if (!registeredQuestIDs.Contains(questID))
-            {
-                // Register the quest if it's not already registered
-                Bot.Quests.RegisterQuests(questID); // Use the correct method
-                registeredQuestIDs.Add(questID); // Keep the list updated
-            }
-        }
-
-        // Enable reaccepting quests
-        Bot.Lite.ReacceptQuest = true;
-
-        // Load and return quest data based on updated list of quest IDs
-        List<Quest> questData = EnsureLoad(registeredQuestIDs.ToArray());
         Dictionary<Quest, int> chooseQuests = new();
         Dictionary<Quest, int> nonChooseQuests = new();
 
-        foreach (Quest q in questData)
+        foreach (int questID in questIDs)
         {
-            bool shouldBreak = false;
-            // Removing quests that you can't accept
-            foreach (ItemBase req in q.AcceptRequirements)
-            {
-                if (req != null)
-                {
-                    if (!req.Temp && Bot.Bank.Contains(req.ID) && !Bot.Inventory.Contains(req.ID))
-                    {
-                    //continue retrying till its in inv.
-                    Retry:
-                        if (!req.Temp && Bot.Bank.Contains(req.ID) && !Bot.Inventory.Contains(req.ID))
-                        {
-                            Logger($"Unbanking {req.Name}");
-                            Bot.Bank.EnsureToInventory(req.ID);
-                            Sleep();
-                            if (!Bot.Inventory.Contains(req.ID))
-                                goto Retry;
-                        }
+            Quest? q = Bot.Quests.EnsureLoad(questID);
+            if (q == null)
+                continue;
 
-                        Bot.Wait.ForTrue(() => req.Temp ? Bot.TempInv.Contains(req.ID, req.Quantity) : Bot.Inventory.Contains(req.ID, req.Quantity), 20);
-                        continue;
-                    }
-                }
-
-                if (req != null && (req.Temp ? !Bot.TempInv.Contains(req.ID, req.Quantity) : !Bot.Inventory.Contains(req.ID, req.Quantity)))
-                {
-                    Logger($"Missing requirement \"{req.Name}\" [{req.ID}] for \"{q.Name}\" [{q.ID}]");
-                    shouldBreak = true;
-                    break;
-                }
-            }
-            foreach (ItemBase Item in q.Requirements)
-            {
-                if (Item != null)
-                {
-                    Bot.Drops.Add(Item.ID);
-                    if (!Item.Temp && Bot.Bank.Contains(Item.ID) && !Bot.Inventory.Contains(Item.ID))
-                    {
-                    //continue retrying till its in inv.
-                    Retry:
-                        if (!Item.Temp && Bot.Bank.Contains(Item.ID) && !Bot.Inventory.Contains(Item.ID))
-                        {
-                            Logger($"Unbanking {Item.Name}");
-                            Bot.Bank.EnsureToInventory(Item.ID);
-                            Sleep();
-                            if (!Bot.Inventory.Contains(Item.ID))
-                                goto Retry;
-                        }
-
-                        Bot.Wait.ForTrue(() => Item.Temp ? Bot.TempInv.Contains(Item.ID, Item.Quantity) : Bot.Inventory.Contains(Item.ID, Item.Quantity), 20);
-                        continue;
-                    }
-                }
-            }
-            if (shouldBreak)
-                break;
-
-            // Separating the quests into choose and non-choose
             if (q.SimpleRewards.Any(r => r.Type == 2))
                 chooseQuests.Add(q, 0);
             else
@@ -1864,85 +1803,24 @@ public class CoreBots
         {
             while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
             {
-                await Task.Delay(ActionDelay);
-
-                // Quests that dont need a choice
-                foreach (KeyValuePair<Quest, int> kvp in nonChooseQuests)
+                foreach (var quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys))
                 {
-                    if (!Bot.Quests.Registered.Contains(kvp.Key.ID) && !Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
+                    if (!Bot.Quests.IsInProgress(quest.ID))
                     {
-                        EnsureAccept(kvp.Key.ID);
-                        await Task.Delay(ActionDelay);
+                        Bot.Quests.Accept(quest.ID);
+                        await Task.Delay(500); // Wait for half a second to ensure the quest is accepted
                     }
-                    if (Bot.Quests.CanCompleteFullCheck(kvp.Key.ID))
-                    {
-                        // int amountTurnedIn = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", kvp.Key.ID);
-                        int amountTurnedIn = EnsureCompleteMulti(kvp.Key.ID);
-                        if (amountTurnedIn == 0)
-                            continue;
-                        await Task.Delay(ActionDelay);
-                        if (!Bot.Lite.ReacceptQuest && !Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
-                        {
-                            EnsureAccept(kvp.Key.ID);
-                            await Task.Delay(ActionDelay);
 
-                        }
-                        nonChooseQuests[kvp.Key] = nonChooseQuests[kvp.Key] + amountTurnedIn;
-                        //lessen log spam - log every 10 completions.
-                        if (nonChooseQuests[kvp.Key] % 10 == 0)
-                        {
-                            Logger($"Quest completed [{kvp.Key.ID}] \"{kvp.Key.Name}\" x{nonChooseQuests[kvp.Key]} times.");
-                        }
+                    if (Bot.Quests.CanComplete(quest.ID))
+                    {
+                        Bot.Quests.Complete(quest.ID);
+                        await Task.Delay(500); // Wait for half a second to ensure the quest is completed
+                        Bot.Quests.Accept(quest.ID); // Reaccept the quest after completion
+                        await Task.Delay(500); // Wait for half a second to ensure the quest is reaccepted
                     }
-                    await Task.Delay(ActionDelay);
                 }
                 await Task.Delay(ActionDelay);
-
-                // Quests that need a choice
-                foreach (KeyValuePair<Quest, int> kvp in chooseQuests)
-                {
-                    if (!Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
-                    {
-                        EnsureAccept(kvp.Key.ID);
-                        await Task.Delay(ActionDelay);
-                    }
-
-                    if (Bot.Quests.CanCompleteFullCheck(kvp.Key.ID))
-                    {
-                        // Finding the list of items you dont have yet.
-                        List<SimpleReward> simpleRewards =
-                            kvp.Key.SimpleRewards.Where(r =>
-                            r != null &&
-                            r.Type == 2 &&
-                            !CheckInventory(r.ID, toInv: false)).ToList();
-
-                        // If you have at least 1 of each item, start finding items that you dont have max stack of yet
-                        if (simpleRewards.Count == 0)
-                        {
-                            List<int> matches = kvp.Key.Rewards.Where(x => x != null && !CheckInventory(x.ID, x.MaxStack, toInv: false)).Select(i => i.ID).ToList();
-                            simpleRewards =
-                                kvp.Key.SimpleRewards.Where(r => r != null && r.Type == 2 && matches.Contains(r.ID)).ToList();
-                        }
-                        if (simpleRewards.Count == 0)
-                        {
-                            EnsureCompleteMulti(kvp.Key.ID);
-                            await Task.Delay(ActionDelay);
-                            if (!Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
-                                EnsureAccept(kvp.Key.ID);
-                            continue;
-                        }
-
-                        Bot.Drops.Add(kvp.Key.Rewards.Where(x => simpleRewards.Any(t => t != null && t.ID == x.ID)).Select(i => i.Name).ToArray());
-                        EnsureCompleteMulti(kvp.Key.ID, simpleRewards.First().ID);
-                        // await Task.Delay(ActionDelay);
-                        await Task.Delay(ActionDelay);
-                        if (!Bot.Quests.Active.Any(Q => Q != null && Q.ID == kvp.Key.ID))
-                            EnsureAccept(kvp.Key.ID);
-                        Logger($"Quest completed x{chooseQuests[kvp.Key]++} times: [{kvp.Key.ID}] \"{kvp.Key.Name}\" (Got \"{kvp.Key.Rewards.First(x => x.ID == simpleRewards.First().ID).Name}\")");
-                    }
-                }
             }
-            questCTS = null;
         });
     }
 
