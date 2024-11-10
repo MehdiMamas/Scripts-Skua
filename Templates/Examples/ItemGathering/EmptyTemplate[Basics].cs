@@ -36,9 +36,7 @@ public class DefaultTemplate
     public void Example(bool TestMode = false)
     {
         //Test Stuff Below here
-        Adv.BuyItem("tercessuinotlim", 1951, "Pink Star Diamond of Nulgath");
-        // Core.HuntMonster("guru", "Guru Chest", "Pink Star Diamond of Nulgath", isTemp: false);
-
+       
         //Test Stuff Above here
 
         #region Fold me
