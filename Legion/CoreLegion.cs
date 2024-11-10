@@ -499,9 +499,23 @@ public class CoreLegion
 
             foreach (ItemBase requirement in quest.Requirements)
             {
-                ItemBase? QuestItem = quest.Requirements.FirstOrDefault(i => i != null && i.ID == requirement.ID);
+                ItemBase? questItem = null;
+                for (int i = 0; i < 5; i++)
+                {
+                    questItem = quest.Requirements.FirstOrDefault(i => i != null && i.ID == requirement.ID);
+                    if (questItem != null)
+                        break;
+                    Core.Logger($"Attempt {i + 1}: Quest item with ID {requirement.ID} not found. Retrying...");
+                    Core.Sleep(1000); // Wait for 1 second before retrying
+                }
 
-                QuestItems.Add((QuestItem!, QuestItem.Quantity));
+                if (questItem == null)
+                {
+                    Core.Logger($"Quest item with ID {requirement.ID} not found after 5 attempts.");
+                    continue;
+                }
+
+                QuestItems.Add((questItem, questItem.Quantity));
             }
         }
 
