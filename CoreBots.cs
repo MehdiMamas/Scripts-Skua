@@ -2456,7 +2456,7 @@ public class CoreBots
         if (itemID > 0)
             Bot.Drops.Add(itemID);
 
-        ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == itemID);
+        ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == itemID);
         if (Item != null && Item.Quantity == Item.MaxStack)
             Bot.Drops.Remove(Item.ID);
 
@@ -2515,7 +2515,7 @@ public class CoreBots
 
         if (item != null && !isTemp)
             AddDrop(item);
-        ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
+        ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
         if (Item != null && Item.Quantity == Item.MaxStack)
             Bot.Drops.Remove(Item.ID);
 
@@ -2614,7 +2614,7 @@ public class CoreBots
         if (item != null && !isTemp)
             AddDrop(item);
 
-        ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
+        ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
         if (Item != null && Item.Quantity == Item.MaxStack)
             Bot.Drops.Remove(Item.ID);
 
@@ -2748,7 +2748,7 @@ public class CoreBots
         if (ItemID != 0 && !isTemp)
             AddDrop(ItemID);
 
-        ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == ItemID);
+        ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == ItemID);
         if (Item != null && Item.Quantity == Item.MaxStack)
             Bot.Drops.Remove(Item.ID);
 
@@ -2893,7 +2893,7 @@ public class CoreBots
             if (!isTemp)
                 AddDrop(item);
 
-            ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
+            ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
             if (Item != null && Item.Quantity == Item.MaxStack)
                 Bot.Drops.Remove(Item.ID);
 
@@ -2969,7 +2969,7 @@ public class CoreBots
             if (!isTemp)
                 AddDrop(item);
 
-            ItemBase Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
+            ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
             if (Item != null && Item.Quantity == Item.MaxStack)
                 Bot.Drops.Remove(Item.ID);
 
