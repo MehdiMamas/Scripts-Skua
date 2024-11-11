@@ -669,6 +669,33 @@ public class CoreBots
     }
 
     /// <summary>
+    /// Attempts to initialize an object using the provided initializer function, retrying up to a specified number of times if the initialization fails.
+    /// </summary>
+    /// <typeparam name="T">The type of the object to be initialized.</typeparam>
+    /// <param name="initializer">A function that attempts to initialize the object and returns the initialized object or null if the initialization fails.</param>
+    /// <param name="retries">The number of times to retry the initialization if it fails. Default is 5.</param>
+    /// <param name="delay">The delay in milliseconds between retry attempts. Default is 1000 milliseconds (1 second).</param>
+    public T? InitializeWithRetries<T>(Func<T?> initializer, int retries = 5, int delay = 1000) where T : class
+    {
+        T? result = null;
+        for (int i = 0; i < retries; i++)
+        {
+            result = initializer();
+            if (result != null)
+                break;
+            Logger($"Attempt {i + 1}: Initialization failed. Retrying...");
+            Sleep(delay); // Wait for the specified delay before retrying
+        }
+
+        if (result == null)
+        {
+            Logger($"Initialization failed after {retries} attempts at: {initializer}.");
+        }
+
+        return result;
+    }
+
+    /// <summary>
     /// Checks if there is enough space in the inventory for specified items and logs a message if space is insufficient.
     /// </summary>
     /// <param name="counter">Reference to a counter variable tracking successful checks.</param>

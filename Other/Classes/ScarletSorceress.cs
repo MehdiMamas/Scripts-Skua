@@ -44,35 +44,23 @@ public class ScarletSorceress
         TOD.TowerofMirrors();
         BS.GetBSorc(false);
 
-        InventoryItem? BloodSorceress = null;
-        for (int i = 0; i < 5; i++)
-        {
-            BloodSorceress = Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == "Blood Sorceress".ToLower().Trim() && i.Category == ItemCategory.Class);
-            if (BloodSorceress != null)
-                break;
-            Core.Logger($"Attempt {i + 1}: Blood Sorceress not found in inventory. Retrying...");
-            Core.Sleep(1000); // Wait for 1 second before retrying
-        }
+        InventoryItem? BloodSorceress = Core.InitializeWithRetries(() =>
+            Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == "Blood Sorceress".ToLower().Trim() && i.Category == ItemCategory.Class)
+        );
 
         if (BloodSorceress == null)
         {
-            Core.Logger("Blood Sorceress not found in inventory after 5 attempts.");
+            Core.Logger("Blood Sorceress not found in inventory, returning.");
             return;
         }
 
-        InventoryItem? ScarletSorceress = null;
-        for (int i = 0; i < 5; i++)
-        {
-            ScarletSorceress = Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == "Scarlet Sorceress".ToLower().Trim() && i.Category == ItemCategory.Class);
-            if (ScarletSorceress != null)
-                break;
-            Core.Logger($"Attempt {i + 1}: Scarlet Sorceress not found in inventory. Retrying...");
-            Core.Sleep(1000); // Wait for 1 second before retrying
-        }
+        InventoryItem? ScarletSorceress = Core.InitializeWithRetries(() =>
+            Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == "Scarlet Sorceress".ToLower().Trim() && i.Category == ItemCategory.Class)
+        );
 
         if (ScarletSorceress == null)
         {
-            Core.Logger("Scarlet Sorceress not found in inventory after 5 attempts.");
+            Core.Logger("Scarlet Sorceress not found in inventory, returning.");
             return;
         }
 
