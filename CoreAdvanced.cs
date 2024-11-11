@@ -603,13 +603,13 @@ public class CoreAdvanced
 
             Core.JumpWait();
 
-            SmartEnhance(itemInv.Name);
+            SmartEnhance(itemInv.Name ?? className);
             InventoryItem? classItem = Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == className.ToLower().Trim() && i.Category == ItemCategory.Class);
             if (classItem == null)
             {
                 Core.Logger($"Class item \"{className}\" not found in inventory.");
             }
-            else if (classItem.EnhancementLevel == 0)
+            else if (classItem.EnhancementLevel <= 0)
             {
                 Core.Logger($"Can't level up \"{classItem.Name}\" because it's not enhanced, and AutoEnhance is turned off");
             }
@@ -1910,7 +1910,7 @@ public class CoreAdvanced
 
         // Error correction
         className = className.ToLower().Trim();
-        InventoryItem? SelectedClass = Bot.Inventory.Items.Find(i => i.Name.ToLower() == className && i.Category == ItemCategory.Class);
+        InventoryItem? SelectedClass = Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == className.ToLower().Trim() && i.Category == ItemCategory.Class);
         if (SelectedClass == null)
         {
             Core.Logger($"SmartEnhance Failed: Class {className} was not found in inventory");
@@ -1937,7 +1937,7 @@ public class CoreAdvanced
 
         // If the class isn't enhanced yet, enhance it with the enhancement type
         if (SelectedClass.EnhancementLevel <= 0)
-            EnhanceItem(className, (EnhancementType)type);
+            EnhanceItem(SelectedClass.Name ?? className, (EnhancementType)type);
         Core.Equip(className);
         Bot.Wait.ForTrue(() => Bot.Player.CurrentClass?.Name == className, 40);
         EnhanceEquipped((EnhancementType)type, cSpecial, hSpecial, wSpecial);
