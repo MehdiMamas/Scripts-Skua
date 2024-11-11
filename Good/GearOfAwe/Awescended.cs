@@ -77,9 +77,8 @@ public class Awescended
             Core.KillMonster("uppercity", "r3", "Left", "Chaos Egg", "Fossilized Egg Yolk", 12);
             Bot.Quests.UpdateQuest(567);
             Core.KillMonster("lycanwar", "Boss", "Left", "Edvard", "Stone Mask");
-            Bot.Quests.UpdateQuest(4614);
-            Core.KillMonster("pyramid", "r5", "Left", "*", "Mummified Bone", 6);
-            Core.KillMonster("ravinetemple", "r11", "Left", "*", "Iron Head", 4);
+            Core.HuntMonster("odokuro", "O-dokuro", "Ancient Bone", 6);
+            Core.HuntMonster("cornelis","Stone Golem", "Block Head", 4);
             Core.EnsureComplete(8035);
         }
 
