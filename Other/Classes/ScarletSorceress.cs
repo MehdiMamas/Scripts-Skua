@@ -44,46 +44,29 @@ public class ScarletSorceress
         TOD.TowerofMirrors();
         BS.GetBSorc(false);
 
-        //checking if BS has atleast 1 classpoint.
-        Adv.GearStore();
         InventoryItem? BloodSorceress = Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == "Blood Sorceress".ToLower().Trim() && i.Category == ItemCategory.Class);
+        InventoryItem? ScarletSorceress = Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == "Scarlet Sorceress".ToLower().Trim() && i.Category == ItemCategory.Class);
+
+        // Requires rank 10 now, ensure this is the case.
+        Adv.RankUpClass("Blood Sorceress");
 
         Core.JumpWait();
-        while (!Bot.ShouldExit && BloodSorceress!.Quantity < 1)
+
+        if (BloodSorceress!.Quantity < 302500) //now requires it to be rank 10?
         {
-            if (Core.CheckInventory("Blood Sorceress") && !Bot.Inventory.IsEquipped("Blood Sorceress"))
-            {
-                Core.Equip("Blood Sorceress");
-                Core.Sleep();
-            }
-            else if (Bot.Inventory.IsEquipped("Blood Sorceress"))
-                Core.KillMonster("battleontown", "Enter", "Spawn", "*");
+            Core.Relogin();
+            Adv.RankUpClass(BloodSorceress.Name);
         }
-        Adv.GearStore(true);
 
         Farm.Experience(50);
 
         Core.ChainComplete(6236);
         Bot.Wait.ForPickup("Scarlet Sorceress");
-        Core.Logger("Quest Classes are received unenhanced until relog...\n" +
-        "GOOD LUCK ON THE RELOG WORKING");
 
-        Bot.Options.AutoRelogin = false;
-        Core.Relogin();
-        while (!Bot.ShouldExit && Bot.Player.LoggedIn && !Bot.Player.Loaded && Bot.Player.Playing && Bot.Map.Loaded)
-            Core.Sleep(1500);
-
-
-        while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
-        {
-            Core.Sleep();
-            Bot.Wait.ForMapLoad("battleon");
-        }
-
-        Core.Logger("Holy F**k it worked, congrats!");
-        Bot.Options.AutoRelogin = true;
+        if (ScarletSorceress.EnhancementLevel == 0)
+            Adv.SmartEnhance(ScarletSorceress.Name);
 
         if (rankUpClass)
-            Adv.RankUpClass("Scarlet Sorceress");
+            Adv.RankUpClass(ScarletSorceress.Name);
     }
 }
