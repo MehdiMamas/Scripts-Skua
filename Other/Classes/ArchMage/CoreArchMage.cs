@@ -148,6 +148,7 @@ public class CoreArchMage
         if (!Bot.Quests.IsUnlocked(8919))
             GetAM(false);
 
+        Core.AddDrop("Providence");
         Core.EnsureAccept(8919);
         Core.Logger("Doing the extra quest for the 51% weapon \"Providence\"");
 
@@ -158,20 +159,7 @@ public class CoreArchMage
 
         SOWM.PrismaticSeams(2000);
 
-        Core.FarmingLogger("Unbound Thread", 100);
-        //Fallen Branches 8869
-        Core.RegisterQuests(8869);
-        Core.AddDrop("Unbound Thread", "Providence");
-        while (!Bot.ShouldExit && !Core.CheckInventory("Unbound Thread", 100))
-        {
-            Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster("DeadLines", "Frenzied Mana", "Captured Mana", 8);
-            Core.HuntMonster("DeadLines", "Shadowfall Warrior", "Armor Scrap", 8);
-            Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("DeadLines", "Eternal Dragon", "Eternal Dragon Scale");
-            Bot.Wait.ForPickup("Unbound Thread");
-        }
-        Core.CancelRegisteredQuests();
+        UnboundThread(100);
 
         foreach ((int ItemID, int ShopItemID) Enh in new[] { (71629, 43050), (70752, 42601) })
         {
@@ -483,7 +471,26 @@ public class CoreArchMage
                 break;
         }
     }
+    public void UnboundThread(int quant = 1000)
+    {
+        if (Core.CheckInventory("Unbound Thread", quant))
+            return;
 
+        Core.FarmingLogger("Unbound Thread", quant);
+        //Fallen Branches 8869
+        Core.RegisterQuests(8869);
+        Core.AddDrop("Unbound Thread");
+        while (!Bot.ShouldExit && !Core.CheckInventory("Unbound Thread", 100))
+        {
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("DeadLines", "Frenzied Mana", "Captured Mana", 8);
+            Core.HuntMonster("DeadLines", "Shadowfall Warrior", "Armor Scrap", 8);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("DeadLines", "Eternal Dragon", "Eternal Dragon Scale");
+            Bot.Wait.ForPickup("Unbound Thread");
+        }
+        Core.CancelRegisteredQuests();
+    }
     #endregion
 
     private void BossItemCheck(int quant = 1, params string[] Items)
