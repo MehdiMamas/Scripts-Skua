@@ -1814,7 +1814,7 @@ public class CoreBots
 
         foreach (int questID in questIDs)
         {
-            Quest? q = Bot.Quests.EnsureLoad(questID);
+            Quest? q = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questID));
             if (q == null)
                 continue;
 
@@ -1830,7 +1830,7 @@ public class CoreBots
         {
             while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
             {
-                foreach (var quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys))
+                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys))
                 {
                     if (!Bot.Quests.IsInProgress(quest.ID))
                     {
@@ -1841,9 +1841,19 @@ public class CoreBots
                     if (Bot.Quests.CanComplete(quest.ID))
                     {
                         // Determine reward ID if quest is in the chooseQuests dictionary
-                        int rewardId = chooseQuests.ContainsKey(quest)
-                            ? Bot.Quests.Active.FirstOrDefault(q => q.ID == q.ID)
-                                .Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack).ID : -1;
+                        int rewardId = -1;
+                        if (chooseQuests.ContainsKey(quest))
+                        {
+                            Quest? activeQuest = InitializeWithRetries(() => Bot.Quests.Active.FirstOrDefault(q => q.ID == quest.ID));
+                            if (activeQuest != null)
+                            {
+                                ItemBase? reward = InitializeWithRetries(() => activeQuest.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack));
+                                if (reward != null)
+                                {
+                                    rewardId = reward.ID;
+                                }
+                            }
+                        }
 
                         Bot.Quests.Complete(quest.ID, rewardId);
                         await Task.Delay(500); // Wait for half a second to ensure the quest is completed
@@ -2064,7 +2074,7 @@ public class CoreBots
 
         if (quest is not null)
         {
-           foreach (ItemBase item in quest.Rewards)
+            foreach (ItemBase item in quest.Rewards)
             {
                 if (!CheckInventory(item.Name, toInv: false)
                     && (itemList == null || (itemList != null && itemList.Contains(item.Name))))
