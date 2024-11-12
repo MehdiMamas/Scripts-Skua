@@ -671,10 +671,24 @@ public class CoreBots
     /// <summary>
     /// Attempts to initialize an object using the provided initializer function, retrying up to a specified number of times if the initialization fails.
     /// </summary>
-    /// <typeparam name="T">The type of the object to be initialized.</typeparam>
-    /// <param name="initializer">A function that attempts to initialize the object and returns the initialized object or null if the initialization fails.</param>
-    /// <param name="retries">The number of times to retry the initialization if it fails. Default is 5.</param>
-    /// <param name="delay">The delay in milliseconds between retry attempts. Default is 1000 milliseconds (1 second).</param>
+    /// <typeparam name="T">The type of the object to be initialized. This must be a class type.</typeparam>
+    /// <param name="initializer">
+    /// A function that attempts to initialize the object and returns the initialized object or null if the initialization fails.
+    /// </param>
+    /// <param name="retries">
+    /// The number of times to retry the initialization if it fails. The default value is 5 retries.
+    /// </param>
+    /// <param name="delay">
+    /// The delay in milliseconds between retry attempts. The default value is 1000 milliseconds (1 second).
+    /// </param>
+    /// <returns>
+    /// Returns the initialized object of type <typeparamref name="T"/> if the initialization succeeds within the specified retries, 
+    /// otherwise returns null after exhausting all retry attempts.
+    /// </returns>
+    /// <remarks>
+    /// This method provides a way to retry an initialization operation, which can be useful when dealing with operations that might fail intermittently.
+    /// It logs each retry attempt and will notify if all attempts fail.
+    /// </remarks>
     public T? InitializeWithRetries<T>(Func<T?> initializer, int retries = 5, int delay = 1000) where T : class
     {
         T? result = null;
@@ -712,9 +726,18 @@ public class CoreBots
     }
 
     /// <summary>
-    /// Moves items from the bank to the inventory.
+    /// Moves specified items by their names from the inventory to the bank.
     /// </summary>
-    /// <param name="items">The items to move.</param>
+    /// <param name="items">
+    /// Array of item names to transfer to the bank. Items will be skipped if
+    /// they are equipped, in use, or not present in the inventory. Skips blacklisted
+    /// or non-bankable categories.
+    /// </param>
+    /// <remarks>
+    /// Only whitelisted item categories are moved, and house items are handled
+    /// separately from inventory items. Attempts each move up to 5 times for
+    /// reliability and logs each success or failure.
+    /// </remarks>
     public void Unbank(params string[] items)
     {
         if (items == null || items.Length == 0)
@@ -734,7 +757,7 @@ public class CoreBots
                 continue;
             }
 
-            if (Bot.Bank.Contains(item))
+            if (Bot.Bank.Contains(item) && (!Bot.Inventory.Contains(item) || !Bot.House.Contains(item)))
             {
                 Sleep();
                 if (Bot.Inventory.FreeSlots <= 0 && Bot.Inventory.Slots != 0 && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots)
@@ -793,48 +816,109 @@ public class CoreBots
         }
     }
 
-
     /// <summary>
-    /// Moves items from the bank to the inventory.
+    /// Transfers specified items by their unique IDs from the bank to the inventory.
     /// </summary>
-    /// <param name="items">The items to move.</param>
-    public void Unbank(params int[] items)
+    /// <param name="itemIDs">
+    /// Array of item IDs to transfer from the bank. Items will be skipped if
+    /// they are already in the inventory, house, or cannot be found in the bank.
+    /// </param>
+    /// <remarks>
+    /// Ensures that items can be transferred by checking inventory space, 
+    /// and retries failed transfers up to 20 times before skipping.
+    /// Provides detailed logging for each success or failure.
+    /// </remarks>
+    public void Unbank(params int[] itemIDs)
     {
-        if (items == null)
+        if (itemIDs == null || itemIDs.Length == 0)
             return;
 
-        JumpWait();
+        if (Bot.Player.InCombat)
+            JumpWait();
 
-        foreach (int item in items)
+        foreach (int itemID in itemIDs)
         {
-            if (Bot.Inventory.Contains(item))
+            // Check if the item is already in inventory or null-check fail-safes
+            if (Bot.Inventory.Contains(itemID) || Bot.House.Contains(itemID))
                 continue;
 
-
-            if (Bot.Bank.Contains(item))
+            // Check if item exists in the bank and not in inventory or house
+            if (Bot.Bank.Contains(itemID) && (!Bot.Inventory.Contains(itemID) || !Bot.House.Contains(itemID)))
             {
                 if (Bot.Inventory.FreeSlots <= 0 && Bot.Inventory.Slots != 0 && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots)
                 {
-                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please make {items.Count()} space(s), and restart the bot", messageBox: true, stopBot: true);
+                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}). Please make {itemIDs.Length} space(s) and restart the bot.", messageBox: true, stopBot: true);
                     return;
                 }
 
-                if (!Bot.Wait.ForTrue(() => Bot.Bank.EnsureToInventory(item), 20))
+                bool success = false;
+                for (int attempt = 0; attempt < 20; attempt++) // Retry up to 20 times
                 {
-                    Logger($"Failed to unbank {Bot.Bank.GetItem(item)?.Name ?? item.ToString()}, skipping it");
+                    InventoryItem? bankItem = Bot.Bank.GetItem(itemID); // Fetch bank item safely
+                    if (bankItem == null)
+                    {
+                        Logger($"Item ID {itemID} not found in bank, skipping it", messageBox: true);
+                        break;
+                    }
+
+                    bool isHouseItem = bankItem.CategoryString == "House" || bankItem.CategoryString == "Wall Item" || bankItem.CategoryString == "Floor Item";
+
+                    // Handle house items differently
+                    if (isHouseItem)
+                    {
+                        SendPackets($"%xt%zm%bankToInv%{Bot.Map.RoomID}%{bankItem.ID}%{bankItem.CharItemID}%");
+                        Sleep(); // Small delay for action to process
+                        if (Bot.House.Contains(itemID))
+                        {
+                            success = true;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        Bot.Bank.EnsureToInventory(itemID);
+                        Sleep(); // Small delay for action to process
+                        if (Bot.Inventory.Contains(itemID))
+                        {
+                            success = true;
+                            break;
+                        }
+                    }
+                }
+
+                string itemName = Bot.Inventory.GetItem(itemID)?.Name ?? Bot.Bank.GetItem(itemID)?.Name ?? itemID.ToString();
+
+                if (!success)
+                {
+                    Logger($"Failed to unbank {itemName}, skipping it", messageBox: true);
                     continue;
                 }
 
-                Logger($"{Bot.Inventory.GetItem(item)?.Name ?? item.ToString()} moved from bank");
+                Logger($"{itemName} moved from bank");
+            }
+            else
+            {
+                Logger($"Item ID {itemID} not found in bank or already in inventory/house, skipping it", messageBox: true);
             }
         }
     }
 
     /// <summary>
-    /// Move items from inventory to bank
+    /// Transfers specified items from the inventory to the bank by item name.
     /// </summary>
-    /// <param name="items">Items to move</param>
-    public void ToBank(params string?[]? items)
+    /// <param name="items">
+    /// An array of item names to move to the bank. Items are ignored if they are
+    /// equipped, excluded by the blacklist, or do not exist in the inventory.
+    /// </param>
+    /// <remarks>
+    /// The method ensures only items from specified whitelisted categories or
+    /// items marked as "Coins" are moved. Attempts each transfer up to 5 times
+    /// if the initial move fails and logs any unsuccessful attempts.
+    /// 
+    /// House items are transferred separately, bypassing the normal inventory-to-bank process.
+    /// Certain items specified in the Extras array are also excluded from being banked.
+    /// </remarks>
+    public void ToBank(params string[] items)
     {
         if (items == null || !items.Any(x => x != null))
             return;
@@ -905,7 +989,18 @@ public class CoreBots
         }
     }
 
-
+    /// <summary>
+    /// Transfers specified items from the inventory to the house bank by item name.
+    /// </summary>
+    /// <param name="items">
+    /// An array of item names to move to the house bank. Items are ignored if
+    /// they are equipped, set as restricted classes, or do not exist in the house inventory.
+    /// </param>
+    /// <remarks>
+    /// This method ensures each item is properly transferred to the house bank and
+    /// logs any unsuccessful attempts. Restricted classes are defined by the variables 
+    /// <c>SoloClass</c> and <c>FarmClass</c>, which are skipped during processing.
+    /// </remarks>
     public void ToHouseBank(params string?[]? items)
     {
         if (items == null || !items.Any(x => x != null))
@@ -935,6 +1030,19 @@ public class CoreBots
         }
     }
 
+    /// <summary>
+    /// Transfers specified items from the inventory to the house bank by item ID.
+    /// </summary>
+    /// <param name="items">
+    /// An array of item IDs to move to the house bank. Items are ignored if
+    /// they are equipped or do not exist in the house inventory.
+    /// </param>
+    /// <remarks>
+    /// This method performs a series of checks for each item ID to ensure it is
+    /// eligible for transfer. Equipped items are skipped, and each item is 
+    /// transferred and logged individually. Any unsuccessful attempts to move 
+    /// items are logged for review.
+    /// </remarks>
     public void ToHouseBank(params int[]? items)
     {
         if (items == null || !items.Any())
@@ -965,9 +1073,17 @@ public class CoreBots
     }
 
     /// <summary>
-    /// Move items from inventory to bank
+    /// Transfers specified items from the inventory to the bank by item ID.
     /// </summary>
-    /// <param name="items">Items to move</param>
+    /// <param name="items">
+    /// An array of item IDs to move to the bank. Items are ignored if
+    /// they are equipped or set as zero.
+    /// </param>
+    /// <remarks>
+    /// This method checks if each item ID exists in the inventory and is not
+    /// currently equipped. Items are retried up to 20 times if an initial move
+    /// attempt fails. After each successful transfer, the item ID is logged.
+    /// </remarks>
     public void ToBank(params int[]? items)
     {
         if (items == null || !items.Any())
