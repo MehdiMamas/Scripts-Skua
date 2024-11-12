@@ -1979,11 +1979,7 @@ public class CoreBots
                             if (activeQuest != null)
                             {
                                 ItemBase? reward = InitializeWithRetries(() => activeQuest.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack));
-                                rewardId = reward.ID;
-                                if (reward != null)
-                                {
-                                    rewardId = reward.ID;
-                                }
+                                rewardId = reward?.ID ?? -1;
                             }
                         }
 
