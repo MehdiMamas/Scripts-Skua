@@ -69,7 +69,6 @@ public class ArmyGold
         Core.EquipClass(ClassType.Farm);
         //Adv.BestGear(GenericGearBoost.gold);
         Farm.ToggleBoost(BoostType.Gold);
-        Bot.Lite.ReacceptQuest = true;
 
         switch ((int)mapname)
         {
@@ -102,7 +101,6 @@ public class ArmyGold
                 break;
         }
 
-        Bot.Lite.ReacceptQuest = false;
     }
 
     public void BGE(Method mapname)
@@ -217,7 +215,6 @@ public class ArmyGold
     {
         RequiredQuest("shadowbattleon", 9426);
 
-        Bot.Lite.ReacceptQuest = true;
         Core.EquipClass(ClassType.Farm);
         Core.AddDrop("Wisper");
         Core.RegisterQuests(9421, 9422, 9426);
@@ -301,7 +298,6 @@ public class ArmyGold
             return;
         }
 
-        Bot.Lite.ReacceptQuest = false;
         Core.Logger($"Unlocking {QuestData.Name} [ {QuestData.ID}]");
         switch (map)
         {

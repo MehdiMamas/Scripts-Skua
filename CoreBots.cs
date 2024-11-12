@@ -752,7 +752,7 @@ public class CoreBots
 
         foreach (string item in items)
         {
-            if (Bot.House.Contains(item) || Bot.Bank.Contains(item)
+            if (Bot.House.Contains(item) || Bot.Inventory.Contains(item)
                 || !Bot.Inventory.Contains(item) && !Bot.House.Contains(item) && !Bot.Bank.Contains(item))
             {
                 continue; // Skip the item if it's in house or bank, or nowhere (not in any of the 3 places)
@@ -839,7 +839,7 @@ public class CoreBots
 
         foreach (int itemID in itemIDs)
         {
-            if (Bot.House.Contains(itemID) || Bot.Bank.Contains(itemID)
+            if (Bot.House.Contains(itemID) || Bot.Inventory.Contains(itemID)
                 || !Bot.Inventory.Contains(itemID) && !Bot.House.Contains(itemID) && !Bot.Bank.Contains(itemID))
             {
                 continue; // Skip the item if it's in house or bank, or nowhere (not in any of the 3 places)
@@ -1961,12 +1961,25 @@ public class CoreBots
                     {
                         // Determine reward ID if quest is in the chooseQuests dictionary
                         int rewardId = -1;
+                        int turnIns = 0;
+                        int amount = -1;
+                        if (quest.Once || !string.IsNullOrEmpty(quest.Field))
+                        {
+                            turnIns = 1;
+                        }
+                        else
+                        {
+                            int possibleTurnin = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID);
+                            turnIns = possibleTurnin > amount && amount > 0 ? amount : possibleTurnin;
+                        }
+
                         if (chooseQuests.ContainsKey(quest))
                         {
                             Quest? activeQuest = InitializeWithRetries(() => Bot.Quests.Active.FirstOrDefault(q => q.ID == quest.ID));
                             if (activeQuest != null)
                             {
                                 ItemBase? reward = InitializeWithRetries(() => activeQuest.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack));
+                                rewardId = reward.ID;
                                 if (reward != null)
                                 {
                                     rewardId = reward.ID;
@@ -1974,13 +1987,21 @@ public class CoreBots
                             }
                         }
 
-                        Bot.Quests.Complete(quest.ID, rewardId);
-                        await Task.Delay(500); // Wait for half a second to ensure the quest is completed
-                        Bot.Quests.Accept(quest.ID); // Reaccept the quest after completion
-                        await Task.Delay(500); // Wait for half a second to ensure the quest is reaccepted
+                        // Ensure quest is loaded, and is entirely completable.
+                        if (Bot.Quests.IsInProgress(quest.ID)
+                            && quest.Requirements.All(req =>
+                            Bot.Inventory.Items.Concat(Bot.TempInv.Items)
+                            .Any(item => item.ID == req.ID)))
+                        {
+                            Bot.Log($"Quest: {quest.Name}, Turnins: {turnIns}");
+                            Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, rewardId, false, turnIns);
+                            // await Task.Delay(500); // Wait for half a second to ensure the quest is completed
+                            Bot.Quests.EnsureAccept(quest.ID); // Reaccept the quest after completion
+                            // await Task.Delay(500); // Wait for half a second to ensure the quest is reaccepted
+                        }
                     }
+                    await Task.Delay(ActionDelay);
                 }
-                await Task.Delay(ActionDelay);
             }
         });
     }
