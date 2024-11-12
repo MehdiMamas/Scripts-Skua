@@ -1987,11 +1987,10 @@ public class CoreBots
                             await Task.Delay(500); // Wait for half a second to ensure the quest is reaccepted
                         }
                     }
-                    // await Task.Delay(ActionDelay);
                 }
+                await Task.Delay(ActionDelay);
             }
         });
-        GC.Collect();
         questCTS = new();
     }
 
