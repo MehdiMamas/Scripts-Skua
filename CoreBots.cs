@@ -1943,35 +1943,28 @@ public class CoreBots
                 nonChooseQuests.Add(q, 0);
         }
 
-        registeredQuests = questIDs;
         questCTS = new();
         Task.Run(async () =>
         {
             while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
             {
-                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys))
+                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => x != null))
                 {
                     if (!Bot.Quests.IsInProgress(quest.ID))
                     {
-                        Bot.Quests.Accept(quest.ID);
+                        Bot.Quests.EnsureAccept(quest.ID);
                         await Task.Delay(500); // Wait for half a second to ensure the quest is accepted
                     }
 
-                    if (Bot.Quests.CanComplete(quest.ID))
+                    if (Bot.Quests.CanCompleteFullCheck(quest.ID))
                     {
                         // Determine reward ID if quest is in the chooseQuests dictionary
                         int rewardId = -1;
-                        int turnIns = 0;
-                        int amount = -1;
-                        if (quest.Once || !string.IsNullOrEmpty(quest.Field))
-                        {
-                            turnIns = 1;
-                        }
-                        else
-                        {
-                            int possibleTurnin = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID);
-                            turnIns = possibleTurnin > amount && amount > 0 ? amount : possibleTurnin;
-                        }
+
+                        int turnIns = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID);
+
+                        if (turnIns == 0)
+                            continue;
 
                         if (chooseQuests.ContainsKey(quest))
                         {
@@ -1979,30 +1972,27 @@ public class CoreBots
                             if (activeQuest != null)
                             {
                                 ItemBase? reward = InitializeWithRetries(() => activeQuest.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack));
-                                rewardId = reward.ID;
-                                if (reward != null)
-                                {
-                                    rewardId = reward.ID;
-                                }
+                                rewardId = reward?.ID ?? -1;
                             }
                         }
 
                         // Ensure quest is loaded, and is entirely completable.
-                        if (Bot.Quests.IsInProgress(quest.ID)
-                            && quest.Requirements.All(req =>
-                            Bot.Inventory.Items.Concat(Bot.TempInv.Items)
-                            .Any(item => item.ID == req.ID)))
+                        if (Bot.Quests.IsInProgress(quest.ID))
                         {
-                            Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, rewardId, false, turnIns);
-                            // await Task.Delay(500); // Wait for half a second to ensure the quest is completed
+                            if (Bot.Quests.CanCompleteFullCheck(quest.ID))
+                                Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%");
+                            // Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, false, turnIns);
+                            await Task.Delay(500); // Wait for half a second to ensure the quest is completed
                             Bot.Quests.EnsureAccept(quest.ID); // Reaccept the quest after completion
-                            // await Task.Delay(500); // Wait for half a second to ensure the quest is reaccepted
+                            await Task.Delay(500); // Wait for half a second to ensure the quest is reaccepted
                         }
                     }
-                    await Task.Delay(ActionDelay);
+                    // await Task.Delay(ActionDelay);
                 }
             }
         });
+        GC.Collect();
+        questCTS = new();
     }
 
     /// <summary>
@@ -5820,13 +5810,14 @@ public class CoreBots
     /// <param name="cell">Cell you want to be</param>
     /// <param name="moveX">X position of the door</param>
     /// <param name="moveY">Y position of the door</param>
-    public void PvPMove(int mtcid, string cell, int moveX = 828, int moveY = 276)
+    public void PvPMove(int mtcid, string cell, int moveX = 0, int moveY = 0)
     {
         while (!Bot.ShouldExit && Bot.Player.Cell != cell)
         {
-            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%{moveX}%{moveY}%8%");
+            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%{moveX}%{moveY}%30%");
             Sleep(2500);
             Bot.Send.Packet($"%xt%zm%mtcid%{Bot.Map.RoomID}%{mtcid}%");
+            Sleep(2500);
         }
     }
 
@@ -5841,6 +5832,79 @@ public class CoreBots
             nr = 1;
         return nr < 1000;
     }
+
+    public void PVPKilling(int MonsterMapID = 0)
+    {
+        if (Bot.Map.Name == "legionpvp")
+        {
+            Join("dagepvp-999999", "Enter0", "Spawn");
+            Bot.Wait.ForMapLoad("davepvp");
+            return;
+        }
+
+        //attempt to set monster state
+        foreach (Monster target in Bot.Monsters.MapMonsters
+        .Where(x => x != null && x.Cell == Bot.Player.Cell))
+        {
+
+            Logger($"setting mob State for {target.MapID}");
+            Bot.Combat.Attack(target);
+            Bot.Combat.CancelAutoAttack();
+            Bot.Combat.CancelTarget();
+            Bot.Wait.ForTrue(() => target.State > 0 || Bot.Monsters.CurrentAvailableMonsters.Any(x => x.MapID == 27), 20);
+
+            Bot.Combat.StopAttacking = false;
+            if (Bot.Map.Name == "legionpvp")
+            {
+                Join("dagepvp-999999", "Enter0", "Spawn");
+                Bot.Wait.ForMapLoad("davepvp");
+                return;
+            }
+        }
+
+        if (!Bot.Monsters.MapMonsters
+        .Any(x => x != null && x.Cell == Bot.Player.Cell && x.State > 0))
+        {
+            Logger("All mobs in room where killed during State setting process onto the next room");
+        }
+
+        //with state set, we can identifiy if they're dead or not
+        foreach (Monster targetMonster in Bot.Monsters.MapMonsters
+        .Where(x => x != null && x.Cell == Bot.Player.Cell && x.State > 0))
+        {
+            DebugLogger(this);
+
+            Logger($"Killing {targetMonster}");
+            while (!Bot.ShouldExit && Bot.Monsters.MapMonsters.Any(x => x.State > 0))
+            {
+                while (!Bot.ShouldExit && (!Bot.Player.Alive || Bot.Map.Name == "legionpvp"))
+                {
+                    Sleep();
+                    DebugLogger(this);
+                    if (Bot.Map.Name == "legionpvp")
+                    {
+                        Join("dagepvp-999999", "Enter0", "Spawn");
+                        Bot.Wait.ForMapLoad("davepvp");
+                        return;
+                    }
+                    return;
+                }
+
+                Monster? availableMonster = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x.State != 0);
+                if (availableMonster != null)
+                {
+                    Bot.Combat.Attack(availableMonster.MapID);
+                }
+                else
+                {
+                    Logger("No available monsters to attack");
+                    break;
+                }
+                Sleep();
+            }
+        }
+    }
+
 
     /// <summary>
     /// Resets a quest by ensuring its loading, abandoning if active, and returning whether it was accepted.
