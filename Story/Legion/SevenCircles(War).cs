@@ -82,8 +82,10 @@ public class SevenCircles
         Core.EquipClass(ClassType.Farm);
         Story.KillQuest(7983, "sevencircleswar", "Heresy Guard");
         //Violence's Gatekeeper
+        Core.EquipClass(ClassType.Solo);
         Story.KillQuest(7984, "sevencircleswar", "Violence's Gatekeeper");
         //Meaningless Violence
+        Core.EquipClass(ClassType.Farm);
         Story.KillQuest(7985, "sevencircleswar", "Violence Guard");
         //Geryon, Not Gary On!
         Core.EquipClass(ClassType.Solo);
