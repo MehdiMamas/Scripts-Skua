@@ -1218,7 +1218,8 @@ public class CoreNation
         Core.RegisterQuests(RegisteredQuests.Distinct().ToArray());
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
-            Core.HuntMonster("evilmarsh", "Tainted Elemental", log: false);
+            Core.KillMonster("evilmarsh", "End", "Left", "Tainted Elemental", log: false);
+            Bot.Sleep(500);
 
             if (item != "Voucher of Nulgath" && sellMemVoucher == true && Core.CheckInventory("Voucher of Nulgath"))
             {
