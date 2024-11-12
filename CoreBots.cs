@@ -1840,7 +1840,12 @@ public class CoreBots
 
                     if (Bot.Quests.CanComplete(quest.ID))
                     {
-                        Bot.Quests.Complete(quest.ID);
+                        // Determine reward ID if quest is in the chooseQuests dictionary
+                        int rewardId = chooseQuests.ContainsKey(quest)
+                            ? Bot.Quests.Active.FirstOrDefault(q => q.ID == q.ID)
+                                .Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack).ID : -1;
+
+                        Bot.Quests.Complete(quest.ID, rewardId);
                         await Task.Delay(500); // Wait for half a second to ensure the quest is completed
                         Bot.Quests.Accept(quest.ID); // Reaccept the quest after completion
                         await Task.Delay(500); // Wait for half a second to ensure the quest is reaccepted
@@ -1883,9 +1888,6 @@ public class CoreBots
         if (QuestData.Upgrade && !IsMember)
             Logger($"\"{QuestData.Name}\" [{questID}] is member-only, stopping the bot.", stopBot: true);
 
-        if (Bot.Quests.IsInProgress(questID))
-            return true;
-
         if (questID <= 0)
             return false;
 
@@ -1896,7 +1898,7 @@ public class CoreBots
 
         foreach (ItemBase item in requiredItems.Where(x => !x.Temp))
         {
-            if (item != null && !Bot.Inventory.Items.Any(i => i.ID == item.ID))
+            if (item != null && Bot.Bank.Contains(item.ID) && !Bot.Inventory.Contains(item.ID))
             {
                 Unbank(item.ID);
             }
@@ -1944,9 +1946,6 @@ public class CoreBots
         }
 
         List<Quest> QuestData = EnsureLoad(questIDs?.Where(q => q > 0).ToArray() ?? Array.Empty<int>());
-
-        if (RegisterQuest)
-            Bot.Lite.ReacceptQuest = true;
 
         foreach (Quest quest in QuestData)
         {
@@ -2017,16 +2016,7 @@ public class CoreBots
                         && CheckInventory(questData.Requirements.Select(x => x.ID).ToArray())
                         && CheckInventory(questData.AcceptRequirements.Select(x => x.ID).ToArray())))
         {
-            Bot.Flash.CallGameFunction("world.tryQuestComplete", questID, itemID, false, 1);
-            Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
-
-            if (Bot.Options.SafeTimings)
-                Bot.Wait.ForQuestComplete(questID);
-
-            if (Bot.Lite.ReacceptQuest)
-                Bot.Wait.ForQuestAccept(questID);
-
-            return !Bot.Quests.IsInProgress(questID);
+            return Bot.Quests.EnsureComplete(questID, itemID);
         }
         else
         {
@@ -2053,14 +2043,8 @@ public class CoreBots
                 || questID.Requirements.All(r => r != null && r.ID > 0)
                 && CheckInventory(questID.Requirements.Select(x => x.ID).ToArray())))
             {
-
-                Bot.Flash.CallGameFunction("world.tryQuestComplete", questID.ID, -1, false, 1);
+                Bot.Quests.EnsureComplete(questID.ID);
                 Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
-
-                if (Bot.Options.SafeTimings)
-                    Bot.Wait.ForQuestComplete(questID.ID);
-                if (Bot.Lite.ReacceptQuest)
-                    Bot.Wait.ForQuestAccept(questID.ID);
             }
         }
     }
@@ -2080,25 +2064,16 @@ public class CoreBots
 
         if (quest is not null)
         {
-            foreach (ItemBase item in quest.Rewards)
+           foreach (ItemBase item in quest.Rewards)
             {
                 if (!CheckInventory(item.Name, toInv: false)
                     && (itemList == null || (itemList != null && itemList.Contains(item.Name))))
                 {
-                    bool completed = !Bot.Quests.IsInProgress(questID);
+                    bool completed = Bot.Quests.EnsureComplete(questID, item.ID);
                     if (Bot.Drops.Exists(item.ID))
                         Bot.Drops.Pickup(item.Name);
                     Bot.Wait.ForPickup(item.Name);
-
-                    Bot.Flash.CallGameFunction("world.tryQuestComplete", questID, item.ID, false, 1);
-                    Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
-
-                    if (Bot.Options.SafeTimings)
-                        Bot.Wait.ForQuestComplete(questID);
-
-                    if (Bot.Lite.ReacceptQuest)
-                        Bot.Wait.ForQuestAccept(questID);
-
+                    Bot.Wait.ForQuestComplete(questID);
                     return completed;
                 }
             }
