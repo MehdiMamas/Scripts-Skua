@@ -1993,7 +1993,6 @@ public class CoreBots
                             Bot.Inventory.Items.Concat(Bot.TempInv.Items)
                             .Any(item => item.ID == req.ID)))
                         {
-                            Bot.Log($"Quest: {quest.Name}, Turnins: {turnIns}");
                             Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, rewardId, false, turnIns);
                             // await Task.Delay(500); // Wait for half a second to ensure the quest is completed
                             Bot.Quests.EnsureAccept(quest.ID); // Reaccept the quest after completion
