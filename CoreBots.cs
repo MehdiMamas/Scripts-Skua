@@ -752,9 +752,10 @@ public class CoreBots
 
         foreach (string item in items)
         {
-            if (Bot.Inventory.Contains(item) || Bot.House.Contains(item))
+            if (Bot.House.Contains(item) || Bot.Bank.Contains(item)
+                || !Bot.Inventory.Contains(item) && !Bot.House.Contains(item) && !Bot.Bank.Contains(item))
             {
-                continue;
+                continue; // Skip the item if it's in house or bank, or nowhere (not in any of the 3 places)
             }
 
             if (Bot.Bank.Contains(item) && (!Bot.Inventory.Contains(item) || !Bot.House.Contains(item)))
@@ -838,9 +839,11 @@ public class CoreBots
 
         foreach (int itemID in itemIDs)
         {
-            // Check if the item is already in inventory or null-check fail-safes
-            if (Bot.Inventory.Contains(itemID) || Bot.House.Contains(itemID))
-                continue;
+            if (Bot.House.Contains(itemID) || Bot.Bank.Contains(itemID)
+                || !Bot.Inventory.Contains(itemID) && !Bot.House.Contains(itemID) && !Bot.Bank.Contains(itemID))
+            {
+                continue; // Skip the item if it's in house or bank, or nowhere (not in any of the 3 places)
+            }
 
             // Check if item exists in the bank and not in inventory or house
             if (Bot.Bank.Contains(itemID) && (!Bot.Inventory.Contains(itemID) || !Bot.House.Contains(itemID)))
@@ -1001,7 +1004,7 @@ public class CoreBots
     /// logs any unsuccessful attempts. Restricted classes are defined by the variables 
     /// <c>SoloClass</c> and <c>FarmClass</c>, which are skipped during processing.
     /// </remarks>
-    public void ToHouseBank(params string?[]? items)
+    public void ToHouseBank(params string[] items)
     {
         if (items == null || !items.Any(x => x != null))
             return;
@@ -1043,7 +1046,7 @@ public class CoreBots
     /// transferred and logged individually. Any unsuccessful attempts to move 
     /// items are logged for review.
     /// </remarks>
-    public void ToHouseBank(params int[]? items)
+    public void ToHouseBank(params int[] items)
     {
         if (items == null || !items.Any())
             return;
@@ -1084,7 +1087,7 @@ public class CoreBots
     /// currently equipped. Items are retried up to 20 times if an initial move
     /// attempt fails. After each successful transfer, the item ID is logged.
     /// </remarks>
-    public void ToBank(params int[]? items)
+    public void ToBank(params int[] items)
     {
         if (items == null || !items.Any())
             return;
