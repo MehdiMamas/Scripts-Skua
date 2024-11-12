@@ -9,6 +9,7 @@ tags: birthday-feast-quest-rewards, seasonal, harvest-day
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
+using Skua.Core.Models.Quests;
 
 
 public class BirthdayFeastQuestRewards
@@ -45,23 +46,41 @@ public class BirthdayFeastQuestRewards
         if (Bot.Config!.Get<bool>("ArlettesQuests"))
         {
             ArlettesQuests();
-            Core.ToBank(Core.EnsureLoad(8385).Rewards.ToString());
+            Quest? arlettesQuest = Core.InitializeWithRetries(() => Core.EnsureLoad(8385));
+            if (arlettesQuest != null)
+            {
+                Core.ToBank(arlettesQuest.Rewards.Select(r => r.Name).ToArray());
+            }
         }
 
         if (Bot.Config!.Get<bool>("InanitasQuests"))
         {
             InanitasQuests();
-            Core.ToBank(Core.EnsureLoad(8384).Rewards.ToString());
+            Quest? inanitasQuest = Core.InitializeWithRetries(() => Core.EnsureLoad(8384));
+            if (inanitasQuest != null)
+            {
+                Core.ToBank(inanitasQuest.Rewards.Select(r => r.Name).ToArray());
+            }
         }
+
         if (Bot.Config!.Get<bool>("MemetsQuests"))
         {
             MemetsQuests();
-            Core.ToBank(Core.EnsureLoad(8382).Rewards.ToString());
+            Quest? memetsQuest = Core.InitializeWithRetries(() => Core.EnsureLoad(8382));
+            if (memetsQuest != null)
+            {
+                Core.ToBank(memetsQuest.Rewards.Select(r => r.Name).ToArray());
+            }
         }
+
         if (Bot.Config!.Get<bool>("KotarosQuests"))
         {
             KotarosQuests();
-            Core.ToBank(Core.EnsureLoad(8383).Rewards.ToString());
+            Quest? kotarosQuest = Core.InitializeWithRetries(() => Core.EnsureLoad(8383));
+            if (kotarosQuest != null)
+            {
+                Core.ToBank(kotarosQuest.Rewards.Select(r => r.Name).ToArray());
+            }
         }
     }
 
