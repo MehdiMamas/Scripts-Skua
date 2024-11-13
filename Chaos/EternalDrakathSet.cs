@@ -44,7 +44,7 @@ public class EternalDrakath
             return;
 
         if (item != null)
-            Core.AddDrop(new[] { item });
+            Core.AddDrop(item);
         else
             Core.AddDrop(Rewards);
         Core.AddDrop(25286);
