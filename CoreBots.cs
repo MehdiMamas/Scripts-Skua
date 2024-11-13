@@ -1939,10 +1939,26 @@ public class CoreBots
                 continue;
 
             if (q.SimpleRewards.Any(r => r.Type == 2))
-                chooseQuests.Add(q, 0);
+            {
+                if (!chooseQuests.ContainsKey(q))
+                    chooseQuests.Add(q, 0);
+            }
             else
-                nonChooseQuests.Add(q, 0);
+            {
+                if (!nonChooseQuests.ContainsKey(q))
+                    nonChooseQuests.Add(q, 0);
+            }
+
+            // Collect unique item IDs and unbank them in one call
+            int[] itemsToUnbank = q.AcceptRequirements
+                                   .Concat(q.Requirements)
+                                   .Select(x => x.ID)
+                                   .Distinct()
+                                   .ToArray();
+
+            Unbank(itemsToUnbank);
         }
+
 
         questCTS = new();
         Task.Run(async () =>
