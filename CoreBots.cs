@@ -1965,23 +1965,27 @@ public class CoreBots
         {
             while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
             {
-                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => x != null && Bot.Quests.TryGetQuest(x.ID, out Quest _quest) && _quest != null))
+                await Task.Delay(ActionDelay);
+                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest _quest) && _quest != null))
                 {
-                    Quest Q = Bot.Quests.EnsureLoad(quest.ID);
-                    if (!Bot.Quests.IsInProgress(Q.ID))
+                    if (Bot.Quests.IsInProgress(quest.ID) && !Bot.Quests.CanComplete(quest.ID))
+                        continue;
+
+                    if (!quest.Active)
                     {
-                        Bot.Quests.EnsureAccept(Q.ID);
+                        Bot.Quests.EnsureAccept(quest.ID);
                         await Task.Delay(ActionDelay);
                     }
+                    else await Task.Delay(ActionDelay);
 
-                    if (Bot.Quests.CanComplete(Q.ID))
+                    if (Bot.Quests.CanComplete(quest.ID))
                     {
                         // Determine reward ID if quest is in the chooseQuests dictionary
                         int rewardId = -1;
 
-                        if (chooseQuests.ContainsKey(Q))
+                        if (chooseQuests.ContainsKey(quest))
                         {
-                            Quest? activeQuest = InitializeWithRetries(() => Bot.Quests.Active.FirstOrDefault(q => q.ID == Q.ID));
+                            Quest? activeQuest = InitializeWithRetries(() => Bot.Quests.Active.FirstOrDefault(q => q.ID == quest.ID));
                             if (activeQuest != null)
                             {
                                 ItemBase? reward = InitializeWithRetries(() => activeQuest.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack));
@@ -1990,15 +1994,17 @@ public class CoreBots
                         }
 
                         // Ensure quest is loaded, and is entirely completable.
-                        if (Bot.Quests.IsInProgress(Q.ID))
+                        if (quest.Active)
                         {
-                            Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{Q.ID}%{rewardId}%false%{(Q.Once || !string.IsNullOrEmpty(Q.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", Q.ID))}%wvz%");
+                            Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%");
                             // Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, false, turnIns);
                             await Task.Delay(ActionDelay); // Wait for half a second to ensure the quest is completed
-                            Bot.Quests.EnsureAccept(Q.ID); // Reaccept the quest after completion
+                            Bot.Quests.EnsureAccept(quest.ID); // Reaccept the quest after completion
                             await Task.Delay(ActionDelay); // Wait for half a second to ensure the quest is reaccepted
                         }
+                        await Task.Delay(ActionDelay);
                     }
+                    await Task.Delay(ActionDelay);
                 }
                 await Task.Delay(ActionDelay);
             }
@@ -5827,7 +5833,8 @@ public class CoreBots
     {
         while (!Bot.ShouldExit && Bot.Player.Cell != cell)
         {
-            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%{moveX}%{moveY}%30%");
+            // Different maps = differnt walk speeds for pvp appearenty
+            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%{moveX}%{moveY}%{(Bot.Map.Name == "dagepvp" ? "10%" : "8%")}");
             Sleep(2500);
             Bot.Send.Packet($"%xt%zm%mtcid%{Bot.Map.RoomID}%{mtcid}%");
             Sleep(2500);
