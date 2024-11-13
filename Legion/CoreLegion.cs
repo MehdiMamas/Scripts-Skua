@@ -827,8 +827,7 @@ public class CoreLegion
             Core.CheckInventory("Sword Scroll Fragment", scrollQuant))
             return;
 
-        if (Core.CBOBool("PvP_SoloPvPBoss", out bool _canSoloBoss))
-            canSoloBoss = !_canSoloBoss;
+        canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool _canSoloBoss);
 
         Core.AddDrop("Legion Combat Trophy", "Technique Observed", "Sword Scroll Fragment");
         Core.EquipClass(ClassType.Solo);

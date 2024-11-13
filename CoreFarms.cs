@@ -602,21 +602,20 @@ public class CoreFarms
     }
 
     /// <summary>
-    /// Kills the Team B Captain in /BludrutBrawl for the desired item (Combat Trophy or Yoshino's Citrine).
+    /// Defeats the Team B Captain in /BludrutBrawl to farm the specified item.
     /// </summary>
-    /// <param name="item">Name of the desired item</param>
-    /// <param name="quant">Desired quantity</param>
-    public void BludrutBrawlBoss(string item = "Combat Trophy", int quant = 5000) //, bool canSoloBoss = true)
+    /// <param name="item">The name of the item to be obtained (e.g., "Combat Trophy" or "Yoshino's Citrine").</param>
+    /// <param name="quant">The target quantity of the item.</param>
+    /// <param name="canSoloBoss">Indicates if the boss can be soloed; true by default.</param>
+    public void BludrutBrawlBoss(string item = "Combat Trophy", int quant = 5000, bool canSoloBoss = true)
     {
         if (Core.CheckInventory(item, quant))
             return;
 
+        canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool _canSoloBoss);
+
         int ExitAttempt = 1;
         int Death = 1;
-
-        Core.Logger("Kill ads is on by default now\n" +
-        "as you get rewarded 10 rather then 3\n" +
-        "Combat Trophies");
 
         Core.AddDrop(item, "The Secret 4", "Yoshino's Citrine");
 
@@ -626,109 +625,67 @@ public class CoreFarms
         Bot.Options.AggroMonsters = false;
 
     Start:
-        Core.EquipClass(ClassType.Solo);
+        Random random = new();
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
             Core.Join("bludrutbrawl", "Enter0", "Spawn");
             Bot.Wait.ForMapLoad("bludrutbrawl");
-            while (!Bot.ShouldExit && !Bot.Player.Loaded) { Core.Sleep(); /* wait for player loaded */}
 
+            Core.PvPMove(5, "Morale0C", random.Next(784, 862), random.Next(254, 274));
+            Core.PvPMove(4, "Morale0B", random.Next(786, 850), random.Next(262, 287));
+            Core.PvPMove(7, "Morale0A", random.Next(783, 857), random.Next(263, 293));
+            Core.PvPMove(9, "Crosslower", random.Next(777, 857), random.Next(254, 290));
 
-            #region GotoRoom1
-            Core.PvPMove(5, "Morale0C");
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PvPMove(4, "Morale0B");
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PvPMove(7, "Morale0A");
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PvPMove(9, "Crosslower");
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PvPMove(14, "Crossupper", 528, 255);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PvPMove(18, "Resource1A");
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
+            // If CBO setting for `canSoloBoss` is enabled do:
+            if (!canSoloBoss)
+            {
+                Core.PvPMove(14, "Crossupper", random.Next(399, 545), random.Next(255, 256));
+                Core.PvPMove(18, "Resource1A", random.Next(786, 860), random.Next(255, 274));
+
+                Core.PVPKilling();
+                if (!Bot.Player.Alive)
+                    goto RestartOnDeath;
+
+                Core.PvPMove(20, "Resource1B", random.Next(784, 852), random.Next(254, 293));
+
+                Core.PVPKilling();
+                if (!Bot.Player.Alive)
+                    goto RestartOnDeath;
+
+                Core.PvPMove(21, "Resource1A", random.Next(123, 189), random.Next(262, 297));
+                Core.PvPMove(19, "Crossupper", random.Next(122, 189), random.Next(258, 282));
+                Core.PvPMove(17, "Crosslower", random.Next(439, 536), random.Next(467, 470));
+            }
+
+            Core.PvPMove(15, "Morale1A", random.Next(781, 858), random.Next(258, 290));
+
+            if (!canSoloBoss)
+            {
+                Core.PVPKilling();
+                if (!Bot.Player.Alive)
+                    goto RestartOnDeath;
+            }
+
+            Core.PvPMove(23, "Morale1B", random.Next(782, 850), random.Next(259, 276));
+
+            if (!canSoloBoss)
+            {
+                Core.PVPKilling();
+                if (!Bot.Player.Alive)
+                    goto RestartOnDeath;
+            }
+
+            Core.PvPMove(25, "Morale1C", random.Next(802, 865), random.Next(264, 286));
+
+            if (!canSoloBoss)
+            {
+                Core.PVPKilling();
+                if (!Bot.Player.Alive)
+                    goto RestartOnDeath;
+            }
+
+            Core.PvPMove(28, "Captain1", random.Next(430, 537), random.Next(254, 255));
             Core.PVPKilling();
-            #endregion GotoRoom1
-
-            #region GotomobRoom1and2
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-
-            Core.PvPMove(20, "Resource1B");
-
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PVPKilling();
-
-            #endregion GotomobRoom1and2
-
-            #region GotoRoom2
-
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PvPMove(21, "Resource1A", 124);
-            // if (!Bot.Player.Alive)
-            //     goto RestartOnDeath;
-            Core.PvPMove(19, "Crossupper", 124);
-            // if (!Bot.Player.Alive)
-            //     goto RestartOnDeath;
-            Core.PvPMove(17, "Crosslower", 488, 483);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PvPMove(15, "Morale1A", 862, 268);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PVPKilling();
-
-            #endregion GotoRoom2
-
-            #region Kill Dmg Buggers
-
-            #region GotoRoom3
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-
-            Core.PvPMove(23, "Morale1B", 860, 267);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-
-            Core.PVPKilling();
-
-            #endregion GotoRoom3
-
-            #region GotoRoom4
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-
-            Core.PvPMove(25, "Morale1C", 857, 267);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-
-            Core.PVPKilling();
-
-            #endregion GotoRoom4
-
-            #region GotoBossRoom
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-
-            Core.PvPMove(28, "Captain1", 528, 255);
-
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.PVPKilling();
-            #endregion GotoBossRoom
-
-            #endregion Kill Dmg Buggers
-            #endregion
-
-            #region Exit PvP
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
@@ -738,11 +695,9 @@ public class CoreFarms
 
             Core.Logger("Delaying exit");
             Core.Sleep(7500);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            else goto Exit;
+            goto Exit;
 
-            Exit:
+        Exit:
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
                 Core.Logger($"Attempting Exit {ExitAttempt++}.");
@@ -787,10 +742,7 @@ public class CoreFarms
         Core.Logger($"Deaths:[{Death}]");
         Death = 0;
         ExitAttempt = 0;
-        #endregion Exit PvP
-
     }
-
 
     public void BattleUnderB(string item = "Bone Dust", int quant = 10000, bool isTemp = false)
     {
@@ -864,6 +816,7 @@ public class CoreFarms
         Core.CancelRegisteredQuests();
     }
 
+    #endregion Misc
 
     #region Reputation
     public void GetAllRanks()
@@ -1041,7 +994,6 @@ public class CoreFarms
         }
 
     }
-
 
     /// <summary>
     /// Uses the Jera:hOu in the alchemy packet for starting rep.
@@ -1364,7 +1316,7 @@ public class CoreFarms
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
     }
-    #endregion
+    #endregion BlacksmithingREP
 
     /// <summary>
     /// Farms reputation for the "Blade of Awe" faction and optionally purchases the Blade of Awe.
@@ -1488,7 +1440,6 @@ public class CoreFarms
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
     }
-
 
     public void BrightoakREP(int rank = 10)
     {
@@ -1868,8 +1819,6 @@ public class CoreFarms
         Core.SavedState(false);
     }
 
-
-
     public void EmberseaREP(int rank = 10)
     {
         if (FactionRank("Embersea") >= rank)
@@ -1925,7 +1874,6 @@ public class CoreFarms
     {
         if (FactionRank("Etherstorm") >= rank)
             return;
-
 
         Core.EquipClass(ClassType.Farm);
         Core.SavedState();
@@ -2125,6 +2073,33 @@ public class CoreFarms
         Bot.Quests.UnregisterQuests(1682);
         Core.AbandonQuest(1682);
         Core.Logger("Returing to Fishing Map");
+    }
+
+    public void GetFish(int itemID, int quant, int quest)
+    {
+        if (Core.CheckInventory(itemID, quant)) return;
+
+        ItemBase? reward = Core.EnsureLoad(quest)?.Rewards.Find(x => x.ID == itemID);
+        if (reward != null)
+            Core.FarmingLogger(reward.Name, quant);
+
+        while (!Bot.ShouldExit && !Core.CheckInventory(itemID, quant))
+        {
+            if (!Core.CheckInventory("Fishing Dynamite"))
+                GetBaitandDynamite(0, 20);
+
+            Core.Join("fishing");
+
+            while (!Bot.ShouldExit && Core.CheckInventory("Fishing Dynamite") && !Core.CheckInventory(itemID, quant))
+            {
+                int CurrentDynamiteQuant = Bot.Inventory.GetQuantity("Fishing Dynamite");
+                Bot.Send.Packet($"%xt%zm%FishCast%1%Dynamite%30%");
+                Core.Sleep(3500);
+                Bot.Wait.ForTrue(() => CurrentDynamiteQuant == CurrentDynamiteQuant - 1, 20);
+                Core.SendPackets($"%xt%zm%getFish%1%false");
+                Core.Logger($"Dynamite: {Bot.Inventory.GetQuantity("Fishing Dynamite")} Fish: {Bot.TempInv.GetQuantity(itemID)}/{quant}");
+            }
+        }
     }
 
     public void DeathPitBrawlREP(int rank = 10)
@@ -3251,7 +3226,6 @@ public class CoreFarms
         Core.CancelRegisteredQuests();
     }
 
-
     public void SwagTokenAF2p(int quant = 100)
     {
         if (Core.CheckInventory("Super-Fan Swag Token A", quant))
@@ -3335,8 +3309,6 @@ public class CoreFarms
         Core.CancelRegisteredQuests();
     }
 
-
-
     public void MembershipDues(MemberShipsIDS faction, int rank = 10)
     {
         if (FactionRank(faction.ToString()) >= rank)
@@ -3359,6 +3331,21 @@ public class CoreFarms
         Core.SavedState(false);
         Bot.Options.SkipCutscenes = true;
     }
+
+    public int FactionRank(string faction) => Bot.Reputation.GetRank(faction);
+    public int FactionRep(string faction) =>
+    Bot.Reputation.FactionList
+        .FirstOrDefault(f => string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase))
+        ?.Rep ?? 0;
+    public int RemainingFactionXp(string faction)
+    {
+        var factionData = Bot.Reputation.FactionList
+            .FirstOrDefault(f => string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase));
+
+        return factionData?.RemainingRep ?? 302500; // Return 0 if factionData is null
+    }
+
+    #endregion Reputation
 
     public void UndeadGiantUnlock()
     {
@@ -3420,48 +3407,7 @@ public class CoreFarms
         Core.CancelRegisteredQuests();
     }
 
-    void GetFish(int itemID, int quant, int quest)
-    {
-        if (Core.CheckInventory(itemID, quant)) return;
 
-        ItemBase? reward = Core.EnsureLoad(quest)?.Rewards.Find(x => x.ID == itemID);
-        if (reward != null)
-            Core.FarmingLogger(reward.Name, quant);
-
-        while (!Bot.ShouldExit && !Core.CheckInventory(itemID, quant))
-        {
-            if (!Core.CheckInventory("Fishing Dynamite"))
-                GetBaitandDynamite(0, 20);
-
-            Core.Join("fishing");
-
-            while (!Bot.ShouldExit && Core.CheckInventory("Fishing Dynamite") && !Core.CheckInventory(itemID, quant))
-            {
-                int CurrentDynamiteQuant = Bot.Inventory.GetQuantity("Fishing Dynamite");
-                Bot.Send.Packet($"%xt%zm%FishCast%1%Dynamite%30%");
-                Core.Sleep(3500);
-                Bot.Wait.ForTrue(() => CurrentDynamiteQuant == CurrentDynamiteQuant - 1, 20);
-                Core.SendPackets($"%xt%zm%getFish%1%false");
-                Core.Logger($"Dynamite: {Bot.Inventory.GetQuantity("Fishing Dynamite")} Fish: {Bot.TempInv.GetQuantity(itemID)}/{quant}");
-            }
-        }
-    }
-
-    public int FactionRank(string faction) => Bot.Reputation.GetRank(faction);
-    public int FactionRep(string faction) =>
-    Bot.Reputation.FactionList
-        .FirstOrDefault(f => string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase))
-        ?.Rep ?? 0;
-    public int RemainingFactionXp(string faction)
-    {
-        var factionData = Bot.Reputation.FactionList
-            .FirstOrDefault(f => string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase));
-
-        return factionData?.RemainingRep ?? 302500; // Return 0 if factionData is null
-    }
-
-
-    #endregion
 }
 
 public enum BoostIDs
