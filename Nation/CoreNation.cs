@@ -682,7 +682,7 @@ public class CoreNation
         {
             Core.Logger("Nulgath Larvae quest not found.");
             return;
-        }        
+        }
 
         Quest? voucherQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(4778));
         if (voucherQuest == null)
@@ -1222,14 +1222,7 @@ public class CoreNation
         Core.EquipClass(ClassType.Solo);
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
-            if (Bot.Map.Name != "evilmarsh")
-                Core.Join("evilmarsh");
-            if (Bot.Player.Cell != "End")
-                Core.Jump("End", "Left");
-
-            // Core.KillMonster("evilmarsh", "End", "Left", "Tainted Elemental", log: false);
-            Bot.Combat.Attack("*");
-            Core.Sleep();
+            Core.KillMonster("evilmarsh", "End", "Left", "Tainted Elemental", log: false);
 
             if (item != "Voucher of Nulgath" && sellMemVoucher == true && Core.CheckInventory("Voucher of Nulgath"))
             {
