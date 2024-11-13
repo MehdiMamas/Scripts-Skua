@@ -749,11 +749,12 @@ public class CoreBots
         {
             JumpWait();
         }
+
         int RequiredSpaces = items.Count();
         foreach (string item in items)
         {
             if (Bot.House.Contains(item) || Bot.Inventory.Contains(item)
-                || !Bot.Inventory.Contains(item) && !Bot.House.Contains(item) && !Bot.Bank.Contains(item))
+                || (!Bot.Inventory.Contains(item) && !Bot.House.Contains(item) && !Bot.Bank.Contains(item)))
             {
                 RequiredSpaces--;
                 continue; // Skip the item if it's in house or bank, or nowhere (not in any of the 3 places)
@@ -796,7 +797,7 @@ public class CoreBots
                     bool success = false;
                     for (int i = 0; i < 20; i++) // Retry up to 20 times
                     {
-                        Bot.Bank.EnsureToInventory(item);
+                        Bot.Bank.ToInventory(item);
                         Sleep(); // Wait for a short period before checking
                         if (Bot.Inventory.Contains(item))
                         {
@@ -836,7 +837,7 @@ public class CoreBots
 
         if (Bot.Player.InCombat)
             JumpWait();
-            
+
         int RequiredSpaces = itemIDs.Count();
         foreach (int item in itemIDs)
         {
@@ -884,7 +885,7 @@ public class CoreBots
                     bool success = false;
                     for (int i = 0; i < 20; i++) // Retry up to 20 times
                     {
-                        Bot.Bank.EnsureToInventory(item);
+                        Bot.Bank.ToInventory(item);
                         Sleep(); // Wait for a short period before checking
                         if (Bot.Inventory.Contains(item))
                         {
@@ -1923,82 +1924,24 @@ public class CoreBots
     /// If it has quests already registered, it will cancel them first and then register the new quests.
     /// </summary>
     /// <param name="questIDs">ID of the quests to be completed.</param>
-    // public void RegisterQuests(params int[] questIDs)
-    // {
-    //     if (questIDs == null || questIDs.Length == 0)
-    //         return;
-
-    //     Dictionary<Quest, int> chooseQuests = new();
-    //     Dictionary<Quest, int> nonChooseQuests = new();
-
-    //     foreach (int questID in questIDs)
-    //     {
-    //         Quest? q = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questID));
-    //         if (q == null)
-    //             continue;
-
-    //         if (q.SimpleRewards.Any(r => r.Type == 2))
-    //             chooseQuests.Add(q, 0);
-    //         else
-    //             nonChooseQuests.Add(q, 0);
-    //     }
-
-    //     questCTS = new();
-    //     Task.Run(async () =>
-    //     {
-    //         while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
-    //         {
-    //             foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => x != null))
-    //             {
-    //                 if (!Bot.Quests.IsInProgress(quest.ID))
-    //                 {
-    //                     Bot.Quests.Accept(quest.ID);
-    //                     await Task.Delay(500); // Wait for half a second to ensure the quest is accepted
-    //                 }
-
-    //                 if (Bot.Quests.CanCompleteFullCheck(quest.ID))
-    //                 {
-    //                     // Determine reward ID if quest is in the chooseQuests dictionary
-    //                     int rewardId = -1;
-
-    //                     if (chooseQuests.ContainsKey(quest))
-    //                     {
-    //                         Quest? activeQuest = InitializeWithRetries(() => Bot.Quests.Active.FirstOrDefault(q => q.ID == quest.ID));
-    //                         if (activeQuest != null)
-    //                         {
-    //                             ItemBase? reward = InitializeWithRetries(() => activeQuest.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack));
-    //                             rewardId = reward?.ID ?? -1;
-    //                         }
-    //                     }
-
-    //                     // Ensure quest is loaded, and is entirely completable.
-    //                     if (Bot.Quests.IsInProgress(quest.ID))
-    //                     {
-    //                         Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%");
-    //                         // Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, false, turnIns);
-    //                         await Task.Delay(500); // Wait for half a second to ensure the quest is completed
-    //                         Bot.Quests.Accept(quest.ID); // Reaccept the quest after completion
-    //                         await Task.Delay(500); // Wait for half a second to ensure the quest is reaccepted
-    //                     }
-    //                 }
-    //             }
-    //             await Task.Delay(ActionDelay);
-    //         }
-    //     });
-    //     questCTS = new();
-    // }
     public void RegisterQuests(params int[] questIDs)
     {
         if (questIDs == null || questIDs.Length == 0)
             return;
 
-        Dictionary<Quest, int> questDictionary = new();
+        Dictionary<Quest, int> chooseQuests = new();
+        Dictionary<Quest, int> nonChooseQuests = new();
 
         foreach (int questID in questIDs)
         {
-            Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questID));
-            if (quest != null)
-                questDictionary.Add(quest, quest.SimpleRewards.Any(r => r.Type == 2) ? 1 : 0);
+            Quest? q = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questID));
+            if (q == null)
+                continue;
+
+            if (q.SimpleRewards.Any(r => r.Type == 2))
+                chooseQuests.Add(q, 0);
+            else
+                nonChooseQuests.Add(q, 0);
         }
 
         questCTS = new();
@@ -2006,36 +1949,45 @@ public class CoreBots
         {
             while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
             {
-                foreach (Quest quest in questDictionary.Keys.Where(q => q != null))
+                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => x != null && Bot.Quests.TryGetQuest(x.ID, out Quest _quest) && _quest != null))
                 {
-                    if (!Bot.Quests.IsInProgress(quest.ID))
+                    Quest Q = Bot.Quests.EnsureLoad(quest.ID);
+                    if (!Bot.Quests.IsInProgress(Q.ID))
                     {
-                        Bot.Quests.Accept(quest.ID);
-                        await Task.Delay(500);
+                        Bot.Quests.EnsureAccept(Q.ID);
+                        await Task.Delay(ActionDelay);
                     }
 
-                    if (Bot.Quests.CanComplete(quest.ID))
+                    if (Bot.Quests.CanComplete(Q.ID))
                     {
+                        // Determine reward ID if quest is in the chooseQuests dictionary
                         int rewardId = -1;
 
-                        if (questDictionary[quest] == 1) // Check if it's a choose quest
+                        if (chooseQuests.ContainsKey(Q))
                         {
-                            Quest? activeQuest = InitializeWithRetries(() => Bot.Quests.Active.FirstOrDefault(q => q.ID == quest.ID));
-                            rewardId = activeQuest?.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack)?.ID ?? -1;
+                            Quest? activeQuest = InitializeWithRetries(() => Bot.Quests.Active.FirstOrDefault(q => q.ID == Q.ID));
+                            if (activeQuest != null)
+                            {
+                                ItemBase? reward = InitializeWithRetries(() => activeQuest.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack));
+                                rewardId = reward?.ID ?? -1;
+                            }
                         }
 
-                        if (Bot.Quests.IsInProgress(quest.ID))
+                        // Ensure quest is loaded, and is entirely completable.
+                        if (Bot.Quests.IsInProgress(Q.ID))
                         {
-                            Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%");
-                            await Task.Delay(500);
-                            Bot.Quests.Accept(quest.ID);
-                            await Task.Delay(500);
+                            Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{Q.ID}%{rewardId}%false%{(Q.Once || !string.IsNullOrEmpty(Q.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", Q.ID))}%wvz%");
+                            // Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, false, turnIns);
+                            await Task.Delay(ActionDelay); // Wait for half a second to ensure the quest is completed
+                            Bot.Quests.EnsureAccept(Q.ID); // Reaccept the quest after completion
+                            await Task.Delay(ActionDelay); // Wait for half a second to ensure the quest is reaccepted
                         }
                     }
                 }
                 await Task.Delay(ActionDelay);
             }
         });
+        questCTS = new();
     }
 
 
