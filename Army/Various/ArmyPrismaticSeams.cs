@@ -60,12 +60,12 @@ public class ArmyPrimaticSeams
         Core.PrivateRoomNumber = Army.getRoomNr();
         Core.EquipClass(ClassType.Farm);
 
+        Core.Unbank("Prismatic Seams");
+
+        Core.RegisterQuests(8814, 8815);
         Army.AggroMonMIDs(1, 2, 15, 3, 4, 14, 8, 9, 10, 11, 12, 13);
         Army.AggroMonStart("streamwar");
         Army.DivideOnCells("r2", "r3", "r3a");
-        Core.RegisterQuests(8814, 8815);
-
-        
 
         while (!Bot.ShouldExit && !Core.CheckInventory("Prismatic Seams", 2000))
             Bot.Combat.Attack("*");
