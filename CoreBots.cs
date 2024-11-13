@@ -1952,7 +1952,7 @@ public class CoreBots
                 {
                     if (!Bot.Quests.IsInProgress(quest.ID))
                     {
-                        Bot.Quests.EnsureAccept(quest.ID);
+                        Bot.Quests.Accept(quest.ID);
                         await Task.Delay(500); // Wait for half a second to ensure the quest is accepted
                     }
 
@@ -1960,11 +1960,6 @@ public class CoreBots
                     {
                         // Determine reward ID if quest is in the chooseQuests dictionary
                         int rewardId = -1;
-
-                        int turnIns = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID);
-
-                        if (turnIns == 0)
-                            continue;
 
                         if (chooseQuests.ContainsKey(quest))
                         {
@@ -1979,11 +1974,10 @@ public class CoreBots
                         // Ensure quest is loaded, and is entirely completable.
                         if (Bot.Quests.IsInProgress(quest.ID))
                         {
-                            if (Bot.Quests.CanCompleteFullCheck(quest.ID))
-                                Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%");
+                            Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%");
                             // Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, false, turnIns);
                             await Task.Delay(500); // Wait for half a second to ensure the quest is completed
-                            Bot.Quests.EnsureAccept(quest.ID); // Reaccept the quest after completion
+                            Bot.Quests.Accept(quest.ID); // Reaccept the quest after completion
                             await Task.Delay(500); // Wait for half a second to ensure the quest is reaccepted
                         }
                     }
