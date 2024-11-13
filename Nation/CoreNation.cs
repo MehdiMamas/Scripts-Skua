@@ -674,21 +674,24 @@ public class CoreNation
     /// <param name="quant">The quantity of the item to farm.</param>
     public void NulgathLarvae(string? item = null, int quant = 1)
     {
-        Quest? larvaeQuest = Bot.Quests.EnsureLoad(2566);
+        if (Core.CheckInventory(item, quant))
+            return;
+
+        Quest? larvaeQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2566));
         if (larvaeQuest == null)
         {
             Core.Logger("Nulgath Larvae quest not found.");
             return;
-        }
+        }        
 
-        Quest? voucherQuest = Bot.Quests.EnsureLoad(4778);
+        Quest? voucherQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(4778));
         if (voucherQuest == null)
             Core.Logger("Voucher quest not found.");
 
         if (item != null)
         {
             // Check if the item is a valid drop from quest 2566
-            bool isValidItem = larvaeQuest.Rewards.Any(reward => reward.Name == item);
+            bool isValidItem = larvaeQuest.Rewards.Any(reward => reward != null && reward.Name.FormatForCompare() == item.FormatForCompare());
             if (!isValidItem)
             {
                 Core.Logger($"{item} is not a valid drop from Nulgath Larvae quest.");
@@ -701,29 +704,29 @@ public class CoreNation
         else
         {
             // Farming for all drops
-            foreach (ItemBase reward in larvaeQuest.Rewards.Where(x => !Core.CheckInventory(x.ID, x.MaxStack, false)))
+            foreach (ItemBase reward in larvaeQuest.Rewards.Where(x => x != null && !Core.CheckInventory(x.ID, x.MaxStack, false)))
                 FarmItem(larvaeQuest, voucherQuest, reward.Name, reward.MaxStack);
         }
 
         void FarmItem(Quest? larvaeQuest, Quest? voucherQuest, string item, int quant)
         {
-            int itemId = voucherQuest?.Rewards.FirstOrDefault(x => x.Name == item)?.ID ?? -1;
-            bool shouldFarm4778 = item != null && voucherQuest != null && voucherQuest.Rewards.Any(x => x.Name == item);
+            int itemId = voucherQuest.Rewards.FirstOrDefault(x => x != null && x.Name == item).ID;
+            bool shouldFarm4778 = item != null && voucherQuest != null && voucherQuest.Rewards.Any(x => x != null && x.Name == item);
 
-            Bot.Drops.Add("Mana Energy for Nulgath", item ?? string.Empty);
+            Bot.Drops.Add("Mana Energy for Nulgath", item);
 
             Core.FarmingLogger(item, quant);
             while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             {
                 Core.EnsureAccept(2566);
                 Core.EquipClass(ClassType.Solo);
-                Core.HuntMonster("elemental", "Mana Golem", "Mana Energy for Nulgath", 13, isTemp: false);
+                Core.HuntMonster("elemental", "Mana Golem", "Mana Energy for Nulgath", 13, isTemp: false, log: false);
                 Core.EquipClass(ClassType.Farm);
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(item, quant) && Core.CheckInventory("Mana Energy for Nulgath"))
                 {
                     Core.EnsureAccept(2566);
-                    Core.HuntMonster("elemental", "Mana Falcon", "Charged Mana Energy for Nulgath", 5);
+                    Core.HuntMonster("elemental", "Mana Falcon", "Charged Mana Energy for Nulgath", 5, log: false);
                     Core.EnsureComplete(2566);
                     Bot.Wait.ForPickup(item ?? string.Empty);
                     if (shouldFarm4778 && Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
@@ -1226,7 +1229,6 @@ public class CoreNation
 
             // Core.KillMonster("evilmarsh", "End", "Left", "Tainted Elemental", log: false);
             Bot.Combat.Attack("*");
-            Bot.Wait.ForMonsterDeath();
             Core.Sleep();
 
             if (item != "Voucher of Nulgath" && sellMemVoucher == true && Core.CheckInventory("Voucher of Nulgath"))
