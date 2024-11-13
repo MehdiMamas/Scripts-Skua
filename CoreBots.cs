@@ -1972,7 +1972,7 @@ public class CoreBots
                     if (Bot.Quests.IsInProgress(quest.ID) && !Bot.Quests.CanComplete(quest.ID))
                         continue;
 
-                    if (!quest.Active)
+                    if (!Bot.Quests.IsInProgress(quest.ID))
                     {
                         Bot.Quests.EnsureAccept(quest.ID);
                         await Task.Delay(ActionDelay);
@@ -1995,7 +1995,7 @@ public class CoreBots
                         }
 
                         // Ensure quest is loaded, and is entirely completable.
-                        if (quest.Active)
+                        if (Bot.Quests.IsInProgress(quest.ID))
                         {
                             Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%");
                             // Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, false, turnIns);
@@ -2005,9 +2005,7 @@ public class CoreBots
                         }
                         await Task.Delay(ActionDelay);
                     }
-                    await Task.Delay(ActionDelay);
                 }
-                await Task.Delay(ActionDelay);
             }
         });
         questCTS = new();
