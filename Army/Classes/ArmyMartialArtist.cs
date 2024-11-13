@@ -80,13 +80,13 @@ public class ArmyMartialArtist
             Army.DivideOnCells("Enter");
             Bot.Player.SetSpawnPoint();
 
-            while (!Bot.ShouldExit && !Core.CheckInventory("Frogzards Defeated", 500))
+            while (!Bot.ShouldExit && !Core.CheckInventory("Frogzard Defeated", 500))
             {
                 Bot.Combat.Attack("*");
                 Bot.Sleep(200);
             }
             Army.AggroMonStop(true);
-            Bot.Wait.ForPickup("Frogzards Defeated");
+            Bot.Wait.ForPickup("Frogzard Defeated");
             #endregion Frogzard Defeated
 
             #region Gorillaphant Defeated
@@ -96,32 +96,32 @@ public class ArmyMartialArtist
             Army.DivideOnCells("Left", "Back", "LeftBack");
             Bot.Player.SetSpawnPoint();
 
-            while (!Bot.ShouldExit && !Core.CheckInventory("Gorillaphants Defeated", 500))
+            while (!Bot.ShouldExit && !Core.CheckInventory("Gorillaphant Defeated", 500))
             {
                 Bot.Combat.Attack("Gorillaphant");
                 Bot.Sleep(200);
             }
             Army.AggroMonStop(true);
-            Bot.Wait.ForPickup("Gorillaphants Defeated");
+            Bot.Wait.ForPickup("Gorillaphant Defeated");
 
             #endregion Gorillaphant Defeated
 
-            #region Dragons Defeated
+            #region Dragon Defeated
             Army.waitForParty("etherwardes", "Enter");
             Army.AggroMonMIDs(Core.FromTo(1, 18));
             Army.AggroMonStart("etherwardes");
             Army.DivideOnCells("Enter", "r2", "r3", "r4", "r5", "r6");
             Bot.Player.SetSpawnPoint();
 
-            while (!Bot.ShouldExit && !Core.CheckInventory("Dragons Defeated", 500))
+            while (!Bot.ShouldExit && !Core.CheckInventory("Dragon Defeated", 500))
             {
                 Bot.Combat.Attack("*");
                 Bot.Sleep(200);
             }
-            Bot.Wait.ForPickup("Dragons Defeated");
+            Bot.Wait.ForPickup("Dragon Defeated");
             Army.AggroMonStop(true);
 
-            #endregion Dragons Defeated
+            #endregion Dragon Defeated
 
             Core.EnsureComplete(9923);
         }
