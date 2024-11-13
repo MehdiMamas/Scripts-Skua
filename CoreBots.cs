@@ -1496,6 +1496,7 @@ public class CoreBots
 
         int retryCount = 0;
         int sell_count = all ? Bot.Inventory.GetQuantity(itemName) : quant;
+        int QuantAfterSale = Bot.Inventory.GetQuantity(itemName) - sell_count;
     Retry:
         while (!Bot.ShouldExit && Bot.Player.InCombat)
         {
@@ -1509,7 +1510,7 @@ public class CoreBots
         {
             // Inv quant >= current quantity.
             Bot.Wait.ForActionCooldown(GameActions.SellItem);
-            Bot.Send.Packet($"%xt%zm%sellItem%{Bot.Map.RoomID}%{item!.ID}%{item!.Quantity - quant}%{item!.CharItemID}%");
+            Bot.Send.Packet($"%xt%zm%sellItem%{Bot.Map.RoomID}%{item.ID}%{item.Quantity - quant}%{item.CharItemID}%");
             Bot.Wait.ForItemSell();
             Sleep();
         }
@@ -1519,7 +1520,7 @@ public class CoreBots
             Bot.Wait.ForItemSell();
         }
 
-        if (!Bot.Inventory.Contains(itemName) && !Bot.Bank.Contains(itemName))
+        if (!all && Bot.Inventory.Contains(itemName, QuantAfterSale) || !Bot.Inventory.Contains(itemName) && !Bot.Bank.Contains(itemName))
         {
             Logger($"Sold x{sell_count} \"{itemName}\"");
             return;
