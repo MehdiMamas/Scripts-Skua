@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 286158,
+    "size": 285875,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -4752,7 +4752,7 @@
       "pickle face"
     ],
     "path": "Seasonal/AprilFools/TheGreenWeaponSnack.cs",
-    "size": 2035,
+    "size": 1995,
     "fileName": "TheGreenWeaponSnack.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/TheGreenWeaponSnack.cs"
   },
@@ -11290,7 +11290,7 @@
       "aggro"
     ],
     "path": "Army/ArmyFarm/ArmyLeveling.cs",
-    "size": 12658,
+    "size": 12618,
     "fileName": "ArmyLeveling.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/ArmyFarm/ArmyLeveling.cs"
   },
