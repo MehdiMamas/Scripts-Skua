@@ -608,7 +608,7 @@ public class CoreDailies
         Core.ToBank("Shadow Shroud");
     }
 
-    public void DagesScrollFragment()
+    public void DagesScrollFragment(bool ToBank = false)
     {
         Core.Logger("Daily: Dage's Scroll Fragment");
         if (!CheckDailyv2(3596, true, true, "Dage's Scroll Fragment") || Core.CheckInventory("Dage's Scroll Fragment", 13, false))
@@ -617,7 +617,8 @@ public class CoreDailies
         DailyRoutine(3596, "mountdoomskull", "*", "Chaos Power Increased", 6, cell: "b1", pad: "Left");
 
         Bot.Wait.ForPickup("Dage's Scroll Fragment");
-        Core.ToBank("Dage's Scroll Fragment");
+        if (ToBank)
+            Core.ToBank("Dage's Scroll Fragment");
     }
 
     public void CryptoToken()
