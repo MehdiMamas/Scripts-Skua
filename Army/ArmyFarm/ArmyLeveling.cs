@@ -313,7 +313,6 @@ public class ArmyLeveling
             return;
         }
 
-        Bot.Lite.ReacceptQuest = false;
         Core.Logger($"Unlocking {QuestData.Name} [ {QuestData.ID}]");
         switch (map)
         {

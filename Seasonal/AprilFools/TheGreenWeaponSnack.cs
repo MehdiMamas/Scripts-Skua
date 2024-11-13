@@ -55,7 +55,6 @@ public class TheGreenWeaponSnack
             Core.JumpWait();
             Core.ToBank(Reward.Name);
         }
-        Bot.Lite.ReacceptQuest = false;
         Core.AbandonQuest(QuestID);
     }
 }
