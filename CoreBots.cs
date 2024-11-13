@@ -788,7 +788,7 @@ public class CoreBots
 
                     if (!success)
                     {
-                        Logger($"Failed to unbank {item}, skipping it", messageBox: true);
+                        Logger($"Failed to unbank {item}, skipping it");
                         continue;
                     }
                 }
@@ -797,7 +797,7 @@ public class CoreBots
                     bool success = false;
                     for (int i = 0; i < 20; i++) // Retry up to 20 times
                     {
-                        Bot.Bank.ToInventory(item);
+                        Bot.Bank.EnsureToInventory(item);
                         Sleep(); // Wait for a short period before checking
                         if (Bot.Inventory.Contains(item))
                         {
@@ -808,7 +808,7 @@ public class CoreBots
 
                     if (!success)
                     {
-                        Logger($"Failed to unbank {item}, skipping it", messageBox: true);
+                        Logger($"Failed to unbank {item}, skipping it");
                         continue;
                     }
                 }
@@ -876,7 +876,7 @@ public class CoreBots
 
                     if (!success)
                     {
-                        Logger($"Failed to unbank {item}, skipping it", messageBox: true);
+                        Logger($"Failed to unbank {item}, skipping it");
                         continue;
                     }
                 }
@@ -885,7 +885,7 @@ public class CoreBots
                     bool success = false;
                     for (int i = 0; i < 20; i++) // Retry up to 20 times
                     {
-                        Bot.Bank.ToInventory(item);
+                        Bot.Bank.EnsureToInventory(item);
                         Sleep(); // Wait for a short period before checking
                         if (Bot.Inventory.Contains(item))
                         {
@@ -896,7 +896,7 @@ public class CoreBots
 
                     if (!success)
                     {
-                        Logger($"Failed to unbank {item}, skipping it", messageBox: true);
+                        Logger($"Failed to unbank {item}, skipping it");
                         continue;
                     }
                 }
@@ -4852,7 +4852,7 @@ public class CoreBots
         }
         else
         {
-            blackListedCells.UnionWith(new List<string> { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video" /* <-oaklore */ });
+            blackListedCells.UnionWith(new List<string> { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave" /* <-oaklore */ });
             blackListedCells.UnionWith(Bot.Map.Cells.Where(x => x.StartsWith("Cut")));
             blackListedCells.UnionWith(Bot.Map.Cells.Where(x => x.StartsWith("moveFrame")));
             //Matches: "r12", "r5", "r100"
@@ -4899,6 +4899,10 @@ public class CoreBots
 
                 case "battlecon":
                     blackListedCells.UnionWith(new[] { "rFight" });
+                    break;
+
+                case "necroU":
+                    blackListedCells.UnionWith(new[] { "Leave", "r6" });
                     break;
 
 
