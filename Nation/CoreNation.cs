@@ -1277,10 +1277,10 @@ public class CoreNation
                         Core.Logger("All Swindles Return Items are maxed stopping Swindles Return");
                         Core.AbandonQuest(7551);
                         HasLogged = true;
-                 
+
                     }
                 }
-                
+
                 DoSwindlesReturnArea(returnPolicyDuringSupplies, item);
 
                 if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
@@ -1874,41 +1874,48 @@ public class CoreNation
         {
             Core.EnsureAccept(gemstonesForNulgathQuest);
 
+            // Ensure required quests are unlocked
             if (!Core.isCompletedBefore(boneTerrorQuest))
             {
+                Core.EquipClass(ClassType.Farm);
                 if (!Core.isCompletedBefore(skeletalWarriorQuest1))
                 {
                     Core.EnsureAccept(skeletalWarriorQuest1);
-                    Core.HuntMonster("battleundera", "Skeletal Warrior", "Yara's Ring", log: false);
+                    Core.HuntMonster("battleundera", "Skeletal Warrior", "Yara's Ring");
                     Core.EnsureComplete(skeletalWarriorQuest1);
                 }
 
                 if (!Core.isCompletedBefore(skeletalWarriorQuest2))
                 {
                     Core.EnsureAccept(skeletalWarriorQuest2);
-                    Core.HuntMonster("battleundera", "Skeletal Warrior", "Skeletal Claymore", 6, log: false);
-                    Core.HuntMonster("battleundera", "Skeletal Warrior", "Bony Chestplate", 3, log: false);
+                    Core.HuntMonster("battleundera", "Skeletal Warrior", "Skeletal Claymore", 6);
+                    Core.HuntMonster("battleundera", "Skeletal Warrior", "Bony Chestplate", 3);
                     Core.EnsureComplete(skeletalWarriorQuest2);
                 }
 
                 if (!Core.isCompletedBefore(boneTerrorQuest))
                 {
                     Core.EnsureAccept(boneTerrorQuest);
-                    Core.HuntMonster("battleundera", "Bone Terror", "Bone Terror's Head", log: false);
+                    Core.HuntMonster("battleundera", "Bone Terror", "Bone Terror's Head");
                     Core.EnsureComplete(boneTerrorQuest);
                 }
             }
 
-            while (!Bot.ShouldExit && !Core.CheckInventory("Yara's Sword"))
+            // Aquire sword & weapon
+            Core.EquipClass(ClassType.Farm);
+            Core.AddDrop("Yara's Sword", "Unidentified Weapon");
+            while (!Bot.ShouldExit && !Core.CheckInventory("Unidentified Weapon"))
             {
-                Core.AddDrop("Yara's Sword");
                 Core.EnsureAccept(unidentifiedWeaponQuest);
-                Core.HuntMonster("battleundera", "Skeletal Warrior", "Unidentified Weapon", isTemp: false, log: false);
+                Core.KillMonster("battleundera", "r3", "Left", "*");
                 Core.EnsureComplete(unidentifiedWeaponQuest);
             }
 
-            Core.HuntMonster("Twilight", "Abaddon", "Balor's Cruelty", isTemp: false, log: false);
-            Core.HuntMonster("ShadowfallWar", "Bonemuncher", "Ultimate Darkness Gem", isTemp: false, log: false);
+            // get other 2 quest items
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("Twilight", "Abaddon", "Balor's Cruelty", isTemp: false);
+            Core.EquipClass(ClassType.Farm);
+            Core.KillMonster("ShadowfallWar", "Garden1", "Bottom", "*", "Ultimate Darkness Gem", isTemp: false);
             Core.EnsureComplete(gemstonesForNulgathQuest);
         }
     }
