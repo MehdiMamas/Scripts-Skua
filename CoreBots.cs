@@ -749,21 +749,21 @@ public class CoreBots
         {
             JumpWait();
         }
-
+        int RequiredSpaces = items.Count();
         foreach (string item in items)
         {
             if (Bot.House.Contains(item) || Bot.Inventory.Contains(item)
                 || !Bot.Inventory.Contains(item) && !Bot.House.Contains(item) && !Bot.Bank.Contains(item))
             {
+                RequiredSpaces--;
                 continue; // Skip the item if it's in house or bank, or nowhere (not in any of the 3 places)
             }
 
             if (Bot.Bank.Contains(item) && (!Bot.Inventory.Contains(item) || !Bot.House.Contains(item)))
             {
-                Sleep();
                 if (Bot.Inventory.FreeSlots <= 0 && Bot.Inventory.Slots != 0 && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots)
                 {
-                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please Make {items.Count()} space(s), and restart the bot", messageBox: true, stopBot: true);
+                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please Make {RequiredSpaces} space(s), and restart the bot", messageBox: true, stopBot: true);
                     return;
                 }
 
@@ -836,74 +836,74 @@ public class CoreBots
 
         if (Bot.Player.InCombat)
             JumpWait();
-
-        foreach (int itemID in itemIDs)
+            
+        int RequiredSpaces = itemIDs.Count();
+        foreach (int item in itemIDs)
         {
-            if (Bot.House.Contains(itemID) || Bot.Inventory.Contains(itemID)
-                || !Bot.Inventory.Contains(itemID) && !Bot.House.Contains(itemID) && !Bot.Bank.Contains(itemID))
+            if (Bot.House.Contains(item) || Bot.Inventory.Contains(item)
+                || !Bot.Inventory.Contains(item) && !Bot.House.Contains(item) && !Bot.Bank.Contains(item))
             {
+                RequiredSpaces--;
                 continue; // Skip the item if it's in house or bank, or nowhere (not in any of the 3 places)
             }
 
-            // Check if item exists in the bank and not in inventory or house
-            if (Bot.Bank.Contains(itemID) && (!Bot.Inventory.Contains(itemID) || !Bot.House.Contains(itemID)))
+            if (Bot.Bank.Contains(item) && (!Bot.Inventory.Contains(item) || !Bot.House.Contains(item)))
             {
                 if (Bot.Inventory.FreeSlots <= 0 && Bot.Inventory.Slots != 0 && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots)
                 {
-                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}). Please make {itemIDs.Length} space(s) and restart the bot.", messageBox: true, stopBot: true);
+                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please Make {RequiredSpaces} space(s), and restart the bot", messageBox: true, stopBot: true);
                     return;
                 }
 
-                bool success = false;
-                for (int attempt = 0; attempt < 20; attempt++) // Retry up to 20 times
+                bool isHouseItem = Bot.Bank.TryGetItem(item, out InventoryItem? x) &&
+                                  x != null &&
+                                  (x.CategoryString == "House" || x.CategoryString == "Wall Item" || x.CategoryString == "Floor Item");
+
+                if (isHouseItem)
                 {
-                    InventoryItem? bankItem = Bot.Bank.GetItem(itemID); // Fetch bank item safely
-                    if (bankItem == null)
+                    bool success = false;
+                    for (int i = 0; i < 20; i++) // Retry up to 20 times
                     {
-                        Logger($"Item ID {itemID} not found in bank, skipping it", messageBox: true);
-                        break;
-                    }
-
-                    bool isHouseItem = bankItem.CategoryString == "House" || bankItem.CategoryString == "Wall Item" || bankItem.CategoryString == "Floor Item";
-
-                    // Handle house items differently
-                    if (isHouseItem)
-                    {
-                        SendPackets($"%xt%zm%bankToInv%{Bot.Map.RoomID}%{bankItem.ID}%{bankItem.CharItemID}%");
-                        Sleep(); // Small delay for action to process
-                        if (Bot.House.Contains(itemID))
+                        SendPackets($"%xt%zm%bankToInv%{Bot.Map.RoomID}%{x!.ID}%{x.CharItemID}%");
+                        Sleep(); // Wait for a short period before checking
+                        if (Bot.House.Contains(item))
                         {
                             success = true;
                             break;
                         }
                     }
-                    else
+
+                    if (!success)
                     {
-                        Bot.Bank.EnsureToInventory(itemID);
-                        Sleep(); // Small delay for action to process
-                        if (Bot.Inventory.Contains(itemID))
+                        Logger($"Failed to unbank {item}, skipping it", messageBox: true);
+                        continue;
+                    }
+                }
+                else
+                {
+                    bool success = false;
+                    for (int i = 0; i < 20; i++) // Retry up to 20 times
+                    {
+                        Bot.Bank.EnsureToInventory(item);
+                        Sleep(); // Wait for a short period before checking
+                        if (Bot.Inventory.Contains(item))
                         {
                             success = true;
                             break;
                         }
                     }
+
+                    if (!success)
+                    {
+                        Logger($"Failed to unbank {item}, skipping it", messageBox: true);
+                        continue;
+                    }
                 }
 
-                string itemName = Bot.Inventory.GetItem(itemID)?.Name ?? Bot.Bank.GetItem(itemID)?.Name ?? itemID.ToString();
-
-                if (!success)
-                {
-                    Logger($"Failed to unbank {itemName}, skipping it", messageBox: true);
-                    continue;
-                }
-
-                Logger($"{itemName} moved from bank");
-            }
-            else
-            {
-                Logger($"Item ID {itemID} not found in bank or already in inventory/house, skipping it", messageBox: true);
+                Logger($"{item} moved from bank");
             }
         }
+
     }
 
     /// <summary>
@@ -1923,24 +1923,82 @@ public class CoreBots
     /// If it has quests already registered, it will cancel them first and then register the new quests.
     /// </summary>
     /// <param name="questIDs">ID of the quests to be completed.</param>
+    // public void RegisterQuests(params int[] questIDs)
+    // {
+    //     if (questIDs == null || questIDs.Length == 0)
+    //         return;
+
+    //     Dictionary<Quest, int> chooseQuests = new();
+    //     Dictionary<Quest, int> nonChooseQuests = new();
+
+    //     foreach (int questID in questIDs)
+    //     {
+    //         Quest? q = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questID));
+    //         if (q == null)
+    //             continue;
+
+    //         if (q.SimpleRewards.Any(r => r.Type == 2))
+    //             chooseQuests.Add(q, 0);
+    //         else
+    //             nonChooseQuests.Add(q, 0);
+    //     }
+
+    //     questCTS = new();
+    //     Task.Run(async () =>
+    //     {
+    //         while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
+    //         {
+    //             foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => x != null))
+    //             {
+    //                 if (!Bot.Quests.IsInProgress(quest.ID))
+    //                 {
+    //                     Bot.Quests.Accept(quest.ID);
+    //                     await Task.Delay(500); // Wait for half a second to ensure the quest is accepted
+    //                 }
+
+    //                 if (Bot.Quests.CanCompleteFullCheck(quest.ID))
+    //                 {
+    //                     // Determine reward ID if quest is in the chooseQuests dictionary
+    //                     int rewardId = -1;
+
+    //                     if (chooseQuests.ContainsKey(quest))
+    //                     {
+    //                         Quest? activeQuest = InitializeWithRetries(() => Bot.Quests.Active.FirstOrDefault(q => q.ID == quest.ID));
+    //                         if (activeQuest != null)
+    //                         {
+    //                             ItemBase? reward = InitializeWithRetries(() => activeQuest.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack));
+    //                             rewardId = reward?.ID ?? -1;
+    //                         }
+    //                     }
+
+    //                     // Ensure quest is loaded, and is entirely completable.
+    //                     if (Bot.Quests.IsInProgress(quest.ID))
+    //                     {
+    //                         Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%");
+    //                         // Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, false, turnIns);
+    //                         await Task.Delay(500); // Wait for half a second to ensure the quest is completed
+    //                         Bot.Quests.Accept(quest.ID); // Reaccept the quest after completion
+    //                         await Task.Delay(500); // Wait for half a second to ensure the quest is reaccepted
+    //                     }
+    //                 }
+    //             }
+    //             await Task.Delay(ActionDelay);
+    //         }
+    //     });
+    //     questCTS = new();
+    // }
     public void RegisterQuests(params int[] questIDs)
     {
         if (questIDs == null || questIDs.Length == 0)
             return;
 
-        Dictionary<Quest, int> chooseQuests = new();
-        Dictionary<Quest, int> nonChooseQuests = new();
+        Dictionary<Quest, int> questDictionary = new();
 
         foreach (int questID in questIDs)
         {
-            Quest? q = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questID));
-            if (q == null)
-                continue;
-
-            if (q.SimpleRewards.Any(r => r.Type == 2))
-                chooseQuests.Add(q, 0);
-            else
-                nonChooseQuests.Add(q, 0);
+            Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questID));
+            if (quest != null)
+                questDictionary.Add(quest, quest.SimpleRewards.Any(r => r.Type == 2) ? 1 : 0);
         }
 
         questCTS = new();
@@ -1948,45 +2006,39 @@ public class CoreBots
         {
             while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
             {
-                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => x != null))
+                foreach (Quest quest in questDictionary.Keys.Where(q => q != null))
                 {
                     if (!Bot.Quests.IsInProgress(quest.ID))
                     {
                         Bot.Quests.Accept(quest.ID);
-                        await Task.Delay(500); // Wait for half a second to ensure the quest is accepted
+                        await Task.Delay(500);
                     }
 
-                    if (Bot.Quests.CanCompleteFullCheck(quest.ID))
+                    if (Bot.Quests.CanComplete(quest.ID))
                     {
-                        // Determine reward ID if quest is in the chooseQuests dictionary
                         int rewardId = -1;
 
-                        if (chooseQuests.ContainsKey(quest))
+                        if (questDictionary[quest] == 1) // Check if it's a choose quest
                         {
                             Quest? activeQuest = InitializeWithRetries(() => Bot.Quests.Active.FirstOrDefault(q => q.ID == quest.ID));
-                            if (activeQuest != null)
-                            {
-                                ItemBase? reward = InitializeWithRetries(() => activeQuest.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack));
-                                rewardId = reward?.ID ?? -1;
-                            }
+                            rewardId = activeQuest?.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack)?.ID ?? -1;
                         }
 
-                        // Ensure quest is loaded, and is entirely completable.
                         if (Bot.Quests.IsInProgress(quest.ID))
                         {
                             Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%");
-                            // Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, false, turnIns);
-                            await Task.Delay(500); // Wait for half a second to ensure the quest is completed
-                            Bot.Quests.Accept(quest.ID); // Reaccept the quest after completion
-                            await Task.Delay(500); // Wait for half a second to ensure the quest is reaccepted
+                            await Task.Delay(500);
+                            Bot.Quests.Accept(quest.ID);
+                            await Task.Delay(500);
                         }
                     }
                 }
                 await Task.Delay(ActionDelay);
             }
         });
-        questCTS = new();
     }
+
+
 
     /// <summary>
     /// Cancels the current registered quests.
@@ -6141,6 +6193,7 @@ public class CoreBots
 
         Join(selectedMap.Item1, selectedMap.Item2, "Left");
 
+        EquipClass(ClassType.Farm);
         while (!Bot.ShouldExit && isTemp ? !Bot.TempInv.Contains(item!, quantity) : !Bot.Inventory.Contains(item, quantity))
         {
             if (Bot.Player.Cell != selectedMap.Item2)
