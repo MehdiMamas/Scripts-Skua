@@ -1510,7 +1510,7 @@ public class CoreBots
         {
             // Inv quant >= current quantity.
             Bot.Wait.ForActionCooldown(GameActions.SellItem);
-            Bot.Send.Packet($"%xt%zm%sellItem%{Bot.Map.RoomID}%{item.ID}%{item.Quantity - quant}%{item.CharItemID}%");
+            Bot.Send.Packet($"%xt%zm%sellItem%{Bot.Map.RoomID}%{item.ID}%{sell_count}%{item.CharItemID}%");
             Bot.Wait.ForItemSell();
             Sleep();
         }
@@ -1520,7 +1520,7 @@ public class CoreBots
             Bot.Wait.ForItemSell();
         }
 
-        if (!all && Bot.Inventory.Contains(itemName, QuantAfterSale) || !Bot.Inventory.Contains(itemName) && !Bot.Bank.Contains(itemName))
+        if (!all && Bot.Inventory.Contains(itemName))
         {
             Logger($"Sold x{sell_count} \"{itemName}\"");
             return;
@@ -2018,8 +2018,6 @@ public class CoreBots
         questCTS = new();
     }
 
-
-
     /// <summary>
     /// Cancels the current registered quests.
     /// </summary>
@@ -2188,7 +2186,6 @@ public class CoreBots
         }
     }
 
-
     /// <summary>
     /// Completes all the quests given but doesn't support quests with choose-able rewards.
     /// </summary>
@@ -2212,7 +2209,6 @@ public class CoreBots
             }
         }
     }
-
 
     /// <summary>
     /// Completes a quest and choose any item from it that you don't have (automatically accepts the drop)
@@ -2251,7 +2247,6 @@ public class CoreBots
             return false;
         }
     }
-
 
     /// <summary>
     /// Completes the quest with a choose-able reward item
@@ -2313,7 +2308,6 @@ public class CoreBots
             return 0;
         }
     }
-
 
     public Quest EnsureLoad(int questID)
     {
@@ -2491,7 +2485,7 @@ public class CoreBots
     {
         if (itemID > 0)
             Bot.Drops.Add(itemID);
-       
+
         Quest? QuestData = InitializeWithRetries(() => EnsureLoad(questID));
 
         ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == itemID);
@@ -2517,6 +2511,226 @@ public class CoreBots
             return QuestData?.Slot < 0 || Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData!.Slot) >= QuestData.Value;
         }
     }
+
+    #region Backups - from 2022
+    /// <summary>
+    /// This will register quests to be completed while doing something else, i.e. while in combat.
+    /// If it has quests already registered, it will cancel them first and then register the new quests.
+    /// </summary>
+    /// <param name="questIDs">ID of the quests to be completed.</param>
+    public void RegisterQuestsOld(params int[] questIDs)
+    {
+        if (questCTS is not null)
+            CancelRegisteredQuests();
+
+        // Defining all the lists to be used=
+        List<Quest> questData = EnsureLoad(questIDs);
+        Dictionary<Quest, int> chooseQuests = new();
+        Dictionary<Quest, int> nonChooseQuests = new();
+
+        foreach (Quest q in questData)
+        {
+            bool shouldBreak = false;
+            // Removing quests that you can't accept
+            foreach (ItemBase req in q.AcceptRequirements)
+            {
+                if (!CheckInventory(req.Name))
+                {
+                    Logger($"Missing requirement {req.Name} for \"{q.Name}\" [{q.ID}]");
+                    shouldBreak = true;
+                    break;
+                }
+            }
+            if (shouldBreak)
+                break;
+
+            // Separating the quests into choose and non-choose
+            if (q.SimpleRewards.Any(r => r.Type == 2))
+                chooseQuests.Add(q, 1);
+            else
+                nonChooseQuests.Add(q, 1);
+        }
+
+        EnsureAcceptOld(questIDs);
+        questCTS = new();
+        Task.Run(async () =>
+        {
+            while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
+            {
+                try
+                {
+                    await Task.Delay(ActionDelay);
+
+                    // Quests that dont need a choice
+                    foreach (KeyValuePair<Quest, int> kvp in nonChooseQuests)
+                    {
+                        if (Bot.Quests.CanComplete(kvp.Key.ID))
+                        {
+                            int amountTurnedIn = EnsureCompleteMultiOld(kvp.Key.ID);
+                            if (amountTurnedIn == 0)
+                                continue;
+                            await Task.Delay(ActionDelay);
+                            EnsureAcceptOld(kvp.Key.ID);
+                            Logger($"Quest completed x{nonChooseQuests[kvp.Key] + amountTurnedIn} times: [{kvp.Key.ID}] \"{kvp.Key.Name}\"");
+                        }
+                    }
+
+                    // Quests that need a choice
+                    foreach (KeyValuePair<Quest, int> kvp in chooseQuests)
+                    {
+                        if (Bot.Quests.CanComplete(kvp.Key.ID))
+                        {
+                            // Finding the next item that you dont have max stack of yet
+                            List<SimpleReward> simpleRewards =
+                                kvp.Key.SimpleRewards.Where(r => r.Type == 2 &&
+                                                            (!Bot.Inventory.IsMaxStack(r.Name) ||
+                                                                            !(Bot.Bank.TryGetItem(r.Name, out InventoryItem? item) && item != null && item.Quantity >= r.MaxStack))).ToList(); if (simpleRewards.Count == 0)
+                            {
+                                EnsureCompleteOld(kvp.Key.ID);
+                                await Task.Delay(ActionDelay);
+                                EnsureAcceptOld(kvp.Key.ID);
+                                continue;
+                            }
+
+                            Bot.Drops.Add(kvp.Key.Rewards.Where(x => simpleRewards.Any(t => t.ID == x.ID)).Select(i => i.Name).ToArray());
+                            EnsureCompleteOld(kvp.Key.ID, simpleRewards.First().ID);
+                            await Task.Delay(ActionDelay);
+                            EnsureAcceptOld(kvp.Key.ID);
+                            Logger($"Quest completed x{chooseQuests[kvp.Key]++} times: [{kvp.Key.ID} \"{kvp.Key.Name}\" (got {kvp.Key.Rewards.First(x => x.ID == simpleRewards.First().ID).Name}])");
+
+                        }
+                    }
+                }
+                catch { }
+            }
+            questCTS = null;
+        });
+    }
+
+    /// <summary>
+    /// Ensures you are out of combat before accepting the quest
+    /// </summary>
+    /// <param name="questID">ID of the quest to accept</param>
+    public bool EnsureAcceptOld(int questID)
+    {
+        Quest QuestData = EnsureLoad(questID);
+
+        if (QuestData.Upgrade && !IsMember)
+            Logger($"\"{QuestData.Name}\" [{questID}] is member-only, stopping the bot.", stopBot: true);
+
+        if (Bot.Quests.IsInProgress(questID))
+            return true;
+        if (questID <= 0)
+            return false;
+
+        Bot.Drops.Add(QuestData.Requirements.Where(x => !x.Temp).Select(y => y.Name).ToArray());
+        Bot.Sleep(ActionDelay);
+        return Bot.Quests.EnsureAccept(questID);
+    }
+
+    /// <summary>
+    /// Accepts all the quests given
+    /// </summary>
+    /// <param name="questIDs">IDs of the quests</param>
+    public void EnsureAcceptOld(params int[] questIDs)
+    {
+        List<Quest> QuestData = EnsureLoad(questIDs);
+        foreach (Quest quest in QuestData)
+        {
+            if (quest.Upgrade && !IsMember)
+                Logger($"\"{quest.Name}\" [{quest.ID}] is member-only, stopping the bot.", stopBot: true);
+
+            if (Bot.Quests.IsInProgress(quest.ID) || quest.ID <= 0)
+                continue;
+
+            Bot.Drops.Add(quest.Requirements.Where(x => !x.Temp).Select(y => y.Name).ToArray());
+            Bot.Sleep(ActionDelay);
+            Bot.Quests.EnsureAccept(quest.ID);
+        }
+    }
+
+    /// <summary>
+    /// Completes the quest with a choose-able reward item
+    /// </summary>
+    /// <param name="questID">ID of the quest to complete</param>
+    /// <param name="itemID">ID of the choose-able reward item</param>
+    public bool EnsureCompleteOld(int questID, int itemID = -1)
+    {
+        if (questID <= 0)
+            return false;
+        Bot.Sleep(ActionDelay);
+        return Bot.Quests.EnsureComplete(questID, itemID);
+    }
+
+    /// <summary>
+    /// Completes all the quests given but doesn't support quests with choose-able rewards
+    /// </summary>
+    /// <param name="questIDs">IDs of the quests</param>
+    public void EnsureCompleteOld(params int[] questIDs)
+    {
+        Bot.Quests.EnsureComplete(questIDs);
+    }
+
+    /// <summary>
+    /// Completes a quest and choose any item from it that you don't have (automatically accepts the drop)
+    /// </summary>
+    /// <param name="questID">ID of the quest</param>
+    /// <param name="itemList">List of the items to get, if you want all just let it be null</param>
+    public bool EnsureCompleteChooseOld(int questID, string[]? itemList = null)
+    {
+        if (questID <= 0)
+            return false;
+        Bot.Sleep(ActionDelay);
+        Quest quest = EnsureLoad(questID);
+        if (quest is not null)
+        {
+            foreach (ItemBase item in quest.Rewards)
+            {
+                if (!CheckInventory(item.Name, toInv: false)
+                    && (itemList == null || (itemList != null && itemList.Contains(item.Name))))
+                {
+                    bool completed = Bot.Quests.EnsureComplete(questID, item.ID);
+                    Bot.Drops.Pickup(item.Name);
+                    Bot.Wait.ForPickup(item.Name);
+                    return completed;
+                }
+            }
+        }
+        else
+        {
+            Logger($"Failed to load Quest {questID}, EnsureCompleteChoose failed");
+            return false;
+        }
+        Logger($"Could not complete the quest {questID}. Maybe all items are already in your inventory");
+        return false;
+    }
+
+    /// <summary>
+    /// Completes the quest with a choose-able reward item
+    /// </summary>
+    /// <param name="questID">ID of the quest to complete</param>
+    /// <param name="amount">Amount of times you want it to turn in the quest, -1 is maximum amount possible.</param>
+    /// <param name="itemID">ID of the choose-able reward item</param>
+    public int EnsureCompleteMultiOld(int questID, int amount = -1, int itemID = -1)
+    {
+        var q = EnsureLoad(questID);
+
+        int turnIns = 0;
+        if (q.Once || !String.IsNullOrEmpty(q.Field))
+            turnIns = 1;
+        else
+        {
+            int possibleTurnin = Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", questID);
+            turnIns = possibleTurnin > amount && amount > 0 ? amount : possibleTurnin;
+            if (turnIns == 0)
+                return 0;
+        }
+        Bot.Flash.CallGameFunction("world.tryQuestComplete", questID, itemID, false, turnIns);
+        if (Bot.Options.SafeTimings)
+            Bot.Wait.ForQuestComplete(questID);
+        return !Bot.Quests.IsInProgress(questID) ? turnIns : 0;
+    }
+    #endregion Backups - from 2022
 
     #endregion
 
