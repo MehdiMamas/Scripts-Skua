@@ -20,6 +20,7 @@ public class BlackHoleSunMerge
     public CoreAdvanced Adv = new();
     public static CoreAdvanced sAdv = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

@@ -21,6 +21,7 @@ public class PaladinTreasureHunterMerge
     private static CoreAdvanced sAdv = new();
     public SEP SEP = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

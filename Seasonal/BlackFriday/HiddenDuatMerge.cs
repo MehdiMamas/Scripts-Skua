@@ -21,6 +21,7 @@ public class HiddenDuatMerge
     private static CoreAdvanced sAdv = new();
     private CoreShadowofDoom CSoD = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

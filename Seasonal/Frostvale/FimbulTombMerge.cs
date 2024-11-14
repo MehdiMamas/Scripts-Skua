@@ -23,6 +23,7 @@ public class FimbulTombMerge
     private static CoreAdvanced sAdv = new();
     private Frostvale FV = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

@@ -23,6 +23,7 @@ public class UbearMerge
     public static CoreAdvanced sAdv = new();
     public CoreLegion Legion = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

@@ -51,6 +51,7 @@ public class YulgarsDualWieldMerge
     private NulgathDiamondMerge NDM = new();
     private SpiritHunterMerge SHM = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

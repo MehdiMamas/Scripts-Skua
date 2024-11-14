@@ -21,6 +21,7 @@ public class LoreTrekMerge
     private static CoreAdvanced sAdv = new();
     private CoreFriday13th F13 = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

@@ -22,6 +22,7 @@ public class SuperDeathMerge
     public static CoreAdvanced sAdv = new();
     public SuperDeath SuperDeath = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

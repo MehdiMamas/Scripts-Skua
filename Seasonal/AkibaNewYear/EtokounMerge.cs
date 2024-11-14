@@ -21,6 +21,7 @@ public class EtokounMerge
     private static CoreAdvanced sAdv = new();
     private YokaiHunt YH = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

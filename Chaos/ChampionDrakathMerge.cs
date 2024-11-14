@@ -27,6 +27,7 @@ public class ChampionDrakathMerge
     public Core13LoC LOC => new();
     private DrakathArmorBot DAB = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

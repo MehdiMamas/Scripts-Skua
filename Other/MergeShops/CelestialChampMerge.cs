@@ -22,6 +22,7 @@ public class CelestialChampion
     public static CoreAdvanced sAdv = new();
     public CelestialArenaQuests CAQ = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

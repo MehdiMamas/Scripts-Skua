@@ -35,6 +35,7 @@ public class NightmareCarnaxMerge
     private ArchFiend AF = new();
     private UltimateBLoD uBLOD = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
