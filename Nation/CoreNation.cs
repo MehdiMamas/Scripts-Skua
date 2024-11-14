@@ -939,7 +939,7 @@ public class CoreNation
     /// </summary>
     /// <param name="returnPolicyActive">Indicates if the return policy is active.</param>
     /// <param name="item">The name of the specific reward item to prioritize.</param>
-    private void DoSwindlesReturnArea(bool returnPolicyActive, string item)
+    private void DoSwindlesReturnArea(bool returnPolicyActive, string? item)
     {
         // Return if the policy isn't active or required items are missing
         if (!returnPolicyActive || !Core.CheckInventory(new[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20) }))
