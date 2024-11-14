@@ -2224,9 +2224,6 @@ public class CoreBots
     {
         Quest quest = InitializeWithRetries(() => EnsureLoad(questID));
 
-        EnsureLoad(quest.ID);
-        Sleep();
-
         if (quest is not null)
         {
             foreach (ItemBase item in quest.Rewards)
