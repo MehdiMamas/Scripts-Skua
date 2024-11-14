@@ -3016,7 +3016,7 @@
       "royal"
     ],
     "path": "Chaos/ChampionDrakathMerge.cs",
-    "size": 7178,
+    "size": 7219,
     "fileName": "ChampionDrakathMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Chaos/ChampionDrakathMerge.cs"
   },
@@ -3316,7 +3316,7 @@
       "null"
     ],
     "path": "Templates/MergeTemplate.cs",
-    "size": 3062,
+    "size": 3103,
     "fileName": "MergeTemplate.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Templates/MergeTemplate.cs"
   },
@@ -3869,7 +3869,7 @@
       "trainer"
     ],
     "path": "Seasonal/BackToSchool/ExtraCreditMerge.cs",
-    "size": 11759,
+    "size": 11800,
     "fileName": "ExtraCreditMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/BackToSchool/ExtraCreditMerge.cs"
   },
@@ -3916,7 +3916,7 @@
       "merge-shop"
     ],
     "path": "Seasonal/AkibaNewYear/EtokounMerge.cs",
-    "size": 7444,
+    "size": 7485,
     "fileName": "EtokounMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AkibaNewYear/EtokounMerge.cs"
   },
@@ -3964,7 +3964,7 @@
       "merge shop"
     ],
     "path": "Seasonal/AkibaNewYear/LadyLuasMerge.cs",
-    "size": 8967,
+    "size": 9008,
     "fileName": "LadyLuasMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AkibaNewYear/LadyLuasMerge.cs"
   },
@@ -3999,7 +3999,7 @@
       "fortune"
     ],
     "path": "Seasonal/AkibaNewYear/DescendantsDesignMerge.cs",
-    "size": 8948,
+    "size": 8989,
     "fileName": "DescendantsDesignMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AkibaNewYear/DescendantsDesignMerge.cs"
   },
@@ -4064,7 +4064,7 @@
       "merge shop"
     ],
     "path": "Seasonal/AkibaNewYear/YokaiNewYearMerge.cs",
-    "size": 17797,
+    "size": 17838,
     "fileName": "YokaiNewYearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AkibaNewYear/YokaiNewYearMerge.cs"
   },
@@ -4123,7 +4123,7 @@
       "wings"
     ],
     "path": "Seasonal/NewYear/ArchiveofTimeMerge.cs",
-    "size": 5143,
+    "size": 5184,
     "fileName": "ArchiveofTimeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/NewYear/ArchiveofTimeMerge.cs"
   },
@@ -4151,7 +4151,7 @@
       "shield"
     ],
     "path": "Seasonal/NewYear/ChronoGemMerge.cs",
-    "size": 5311,
+    "size": 5352,
     "fileName": "ChronoGemMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/NewYear/ChronoGemMerge.cs"
   },
@@ -4194,7 +4194,7 @@
       "new-year"
     ],
     "path": "Seasonal/NewYear/TimeRetaliateMerge.cs",
-    "size": 4509,
+    "size": 4550,
     "fileName": "TimeRetaliateMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/NewYear/TimeRetaliateMerge.cs"
   },
@@ -4209,7 +4209,7 @@
       "summer-break"
     ],
     "path": "Seasonal/SummerBreak/CoralBeachMerge.cs",
-    "size": 5018,
+    "size": 5059,
     "fileName": "CoralBeachMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/SummerBreak/CoralBeachMerge.cs"
   },
@@ -4252,7 +4252,7 @@
       "oaths"
     ],
     "path": "Seasonal/SummerBreak/LavarockMerge.cs",
-    "size": 4112,
+    "size": 4153,
     "fileName": "LavarockMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/SummerBreak/LavarockMerge.cs"
   },
@@ -4267,7 +4267,7 @@
       "big"
     ],
     "path": "Seasonal/SummerBreak/CraterHouseMerge.cs",
-    "size": 3170,
+    "size": 3211,
     "fileName": "CraterHouseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/SummerBreak/CraterHouseMerge.cs"
   },
@@ -4298,7 +4298,7 @@
       "summer-break"
     ],
     "path": "Seasonal/SummerBreak/LunaCoveMerge.cs",
-    "size": 3532,
+    "size": 3573,
     "fileName": "LunaCoveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/SummerBreak/LunaCoveMerge.cs"
   },
@@ -4357,7 +4357,7 @@
       "summer-break"
     ],
     "path": "Seasonal/SummerBreak/SummerBreakMerge.cs",
-    "size": 7057,
+    "size": 7098,
     "fileName": "SummerBreakMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/SummerBreak/SummerBreakMerge.cs"
   },
@@ -4450,7 +4450,7 @@
       "summer-break"
     ],
     "path": "Seasonal/SummerBreak/BlazingBeachMerge.cs",
-    "size": 5031,
+    "size": 5072,
     "fileName": "BlazingBeachMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/SummerBreak/BlazingBeachMerge.cs"
   },
@@ -4476,7 +4476,7 @@
       "null"
     ],
     "path": "Seasonal/SolarNewYear/WaterWarMerge.cs",
-    "size": 4417,
+    "size": 4458,
     "fileName": "WaterWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/SolarNewYear/WaterWarMerge.cs"
   },
@@ -4538,7 +4538,7 @@
       "ultimate"
     ],
     "path": "Seasonal/AprilFools/DuplicationErrorBadgeMerge.cs",
-    "size": 3845,
+    "size": 3886,
     "fileName": "DuplicationErrorBadgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/DuplicationErrorBadgeMerge.cs"
   },
@@ -4587,7 +4587,7 @@
       "merge"
     ],
     "path": "Seasonal/AprilFools/MeateorShardMerge.cs",
-    "size": 7728,
+    "size": 7769,
     "fileName": "MeateorShardMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/MeateorShardMerge.cs"
   },
@@ -4690,7 +4690,7 @@
       "signature"
     ],
     "path": "Seasonal/AprilFools/YesMaamsMerge.cs",
-    "size": 6515,
+    "size": 6556,
     "fileName": "YesMaamsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/YesMaamsMerge.cs"
   },
@@ -4733,7 +4733,7 @@
       "merge"
     ],
     "path": "Seasonal/AprilFools/NeighBeleenMerge.cs",
-    "size": 15914,
+    "size": 15955,
     "fileName": "NeighBeleenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/NeighBeleenMerge.cs"
   },
@@ -4763,7 +4763,7 @@
       "null"
     ],
     "path": "Seasonal/LuckyDay/LuckdragonMerge.cs",
-    "size": 3799,
+    "size": 3840,
     "fileName": "LuckdragonMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/LuckyDay/LuckdragonMerge.cs"
   },
@@ -4895,7 +4895,7 @@
       "bow"
     ],
     "path": "Seasonal/LuckyDay/LuckyDayShamrockFairMerge.cs",
-    "size": 13794,
+    "size": 13835,
     "fileName": "LuckyDayShamrockFairMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/LuckyDay/LuckyDayShamrockFairMerge.cs"
   },
@@ -4911,7 +4911,7 @@
       "merge"
     ],
     "path": "Seasonal/LuckyDay/DaibhsMerge.cs",
-    "size": 4855,
+    "size": 4896,
     "fileName": "DaibhsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/LuckyDay/DaibhsMerge.cs"
   },
@@ -4958,7 +4958,7 @@
       "merge"
     ],
     "path": "Seasonal/LuckyDay/BattleGemsGameGearMerge.cs",
-    "size": 5431,
+    "size": 5472,
     "fileName": "BattleGemsGameGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/LuckyDay/BattleGemsGameGearMerge.cs"
   },
@@ -5300,7 +5300,7 @@
       "merge"
     ],
     "path": "Seasonal/Carnaval/SambasFlagMerge.cs",
-    "size": 5721,
+    "size": 5762,
     "fileName": "SambasFlagMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Carnaval/SambasFlagMerge.cs"
   },
@@ -5344,7 +5344,7 @@
       "merge"
     ],
     "path": "Seasonal/Carnaval/DarkFestaMerge.cs",
-    "size": 4756,
+    "size": 4797,
     "fileName": "DarkFestaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Carnaval/DarkFestaMerge.cs"
   },
@@ -5358,7 +5358,7 @@
       "carnaval"
     ],
     "path": "Seasonal/Carnaval/DanceGuruMerge.cs",
-    "size": 5055,
+    "size": 5096,
     "fileName": "DanceGuruMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Carnaval/DanceGuruMerge.cs"
   },
@@ -5397,7 +5397,7 @@
       "seasonal"
     ],
     "path": "Seasonal/BlackFriday/TechnocasterMerge.cs",
-    "size": 5836,
+    "size": 5877,
     "fileName": "TechnocasterMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/BlackFriday/TechnocasterMerge.cs"
   },
@@ -5423,7 +5423,7 @@
       "scepter"
     ],
     "path": "Seasonal/BlackFriday/LotusTombMerge.cs",
-    "size": 4977,
+    "size": 5018,
     "fileName": "LotusTombMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/BlackFriday/LotusTombMerge.cs"
   },
@@ -5461,7 +5461,7 @@
       "loyal"
     ],
     "path": "Seasonal/BlackFriday/ShadowDuatMerge.cs",
-    "size": 6697,
+    "size": 6738,
     "fileName": "ShadowDuatMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/BlackFriday/ShadowDuatMerge.cs"
   },
@@ -5496,7 +5496,7 @@
       "cleaver"
     ],
     "path": "Seasonal/BlackFriday/CamlanMerge.cs",
-    "size": 5533,
+    "size": 5574,
     "fileName": "CamlanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/BlackFriday/CamlanMerge.cs"
   },
@@ -5535,7 +5535,7 @@
       "bow"
     ],
     "path": "Seasonal/BlackFriday/HiddenDuatMerge.cs",
-    "size": 5192,
+    "size": 5233,
     "fileName": "HiddenDuatMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/BlackFriday/HiddenDuatMerge.cs"
   },
@@ -5561,7 +5561,7 @@
       "seasonal"
     ],
     "path": "Seasonal/BlackFriday/ShadowDragonShinobiMerge.cs",
-    "size": 4861,
+    "size": 4902,
     "fileName": "ShadowDragonShinobiMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/BlackFriday/ShadowDragonShinobiMerge.cs"
   },
@@ -5601,7 +5601,7 @@
       "hideout"
     ],
     "path": "Seasonal/MayThe4th/TwiggusGearMerge.cs",
-    "size": 8165,
+    "size": 8206,
     "fileName": "TwiggusGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/MayThe4th/TwiggusGearMerge.cs"
   },
@@ -5650,7 +5650,7 @@
       "may-the-4th"
     ],
     "path": "Seasonal/MayThe4th/MurderMoonMerge.cs",
-    "size": 10470,
+    "size": 10511,
     "fileName": "MurderMoonMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/MayThe4th/MurderMoonMerge.cs"
   },
@@ -5682,7 +5682,7 @@
       "glst"
     ],
     "path": "Seasonal/MayThe4th/GL24KsLootMerge.cs",
-    "size": 7425,
+    "size": 7466,
     "fileName": "GL24KsLootMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/MayThe4th/GL24KsLootMerge.cs"
   },
@@ -5724,7 +5724,7 @@
       "double"
     ],
     "path": "Seasonal/MayThe4th/ZodasMerge.cs",
-    "size": 9939,
+    "size": 9980,
     "fileName": "ZodasMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/MayThe4th/ZodasMerge.cs"
   },
@@ -5755,7 +5755,7 @@
       "sheathed"
     ],
     "path": "Seasonal/MayThe4th/MawasStandMerge.cs",
-    "size": 5523,
+    "size": 5564,
     "fileName": "MawasStandMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/MayThe4th/MawasStandMerge.cs"
   },
@@ -5815,7 +5815,7 @@
       "suns"
     ],
     "path": "Seasonal/StarFestival/ShorinzanMerge.cs",
-    "size": 8218,
+    "size": 8259,
     "fileName": "ShorinzanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StarFestival/ShorinzanMerge.cs"
   },
@@ -5911,7 +5911,7 @@
       "heros heart day"
     ],
     "path": "Seasonal/HerosHeartDay/WubblesMerge.cs",
-    "size": 4799,
+    "size": 4840,
     "fileName": "WubblesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HerosHeartDay/WubblesMerge.cs"
   },
@@ -5940,7 +5940,7 @@
       "bolsa"
     ],
     "path": "Seasonal/HerosHeartDay/YguasuFallsMerge.cs",
-    "size": 6076,
+    "size": 6117,
     "fileName": "YguasuFallsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HerosHeartDay/YguasuFallsMerge.cs"
   },
@@ -6002,7 +6002,7 @@
       "seasonal"
     ],
     "path": "Seasonal/HerosHeartDay/BeleensGiftsMerge.cs",
-    "size": 7372,
+    "size": 7413,
     "fileName": "BeleensGiftsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HerosHeartDay/BeleensGiftsMerge.cs"
   },
@@ -6017,7 +6017,7 @@
       "heros heart day"
     ],
     "path": "Seasonal/HerosHeartDay/LoveLockedMerge.cs",
-    "size": 3782,
+    "size": 3823,
     "fileName": "LoveLockedMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HerosHeartDay/LoveLockedMerge.cs"
   },
@@ -6153,7 +6153,7 @@
       "beleen"
     ],
     "path": "Seasonal/HerosHeartDay/GemsofLoveMerge.cs",
-    "size": 8979,
+    "size": 9020,
     "fileName": "GemsofLoveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HerosHeartDay/GemsofLoveMerge.cs"
   },
@@ -6239,7 +6239,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/SnowviewRaceMerge.cs",
-    "size": 4391,
+    "size": 4432,
     "fileName": "SnowviewRaceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/SnowviewRaceMerge.cs"
   },
@@ -6273,7 +6273,7 @@
       "shillelagh"
     ],
     "path": "Seasonal/Frostvale/GlacialTombMerge.cs",
-    "size": 5569,
+    "size": 5610,
     "fileName": "GlacialTombMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/GlacialTombMerge.cs"
   },
@@ -6286,7 +6286,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/HelsgroveMerge.cs",
-    "size": 5428,
+    "size": 5469,
     "fileName": "HelsgroveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/HelsgroveMerge.cs"
   },
@@ -6299,7 +6299,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/WinterHorrorWarRewardsMerge.cs",
-    "size": 4760,
+    "size": 4801,
     "fileName": "WinterHorrorWarRewardsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/WinterHorrorWarRewardsMerge.cs"
   },
@@ -6312,7 +6312,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/SnowviewMerge.cs",
-    "size": 5345,
+    "size": 5386,
     "fileName": "SnowviewMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/SnowviewMerge.cs"
   },
@@ -6325,7 +6325,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/BowJanglesMerge.cs",
-    "size": 5331,
+    "size": 5372,
     "fileName": "BowJanglesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/BowJanglesMerge.cs"
   },
@@ -6352,7 +6352,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/FrozenSoulMerge.cs",
-    "size": 6208,
+    "size": 6249,
     "fileName": "FrozenSoulMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/FrozenSoulMerge.cs"
   },
@@ -6405,7 +6405,7 @@
       "crystals"
     ],
     "path": "Seasonal/Frostvale/FimbulTombMerge.cs",
-    "size": 5550,
+    "size": 5591,
     "fileName": "FimbulTombMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/FimbulTombMerge.cs"
   },
@@ -6431,7 +6431,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/GundaharsStashMerge.cs",
-    "size": 5047,
+    "size": 5088,
     "fileName": "GundaharsStashMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/GundaharsStashMerge.cs"
   },
@@ -6444,7 +6444,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/HuntressMerge.cs",
-    "size": 8009,
+    "size": 8051,
     "fileName": "HuntressMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/HuntressMerge.cs"
   },
@@ -6514,7 +6514,7 @@
       "zorbak"
     ],
     "path": "Seasonal/Frostvale/CarolingMerge.cs",
-    "size": 9660,
+    "size": 9701,
     "fileName": "CarolingMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/CarolingMerge.cs"
   },
@@ -6569,7 +6569,7 @@
       "merge"
     ],
     "path": "Seasonal/Grenwog(Easter)/EvolvedBunnyItemsMerge.cs",
-    "size": 3937,
+    "size": 3978,
     "fileName": "EvolvedBunnyItemsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Grenwog(Easter)/EvolvedBunnyItemsMerge.cs"
   },
@@ -6642,7 +6642,7 @@
       "merge"
     ],
     "path": "Seasonal/Grenwog(Easter)/ElixirGrenwogMerge.cs",
-    "size": 6199,
+    "size": 6240,
     "fileName": "ElixirGrenwogMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Grenwog(Easter)/ElixirGrenwogMerge.cs"
   },
@@ -6704,7 +6704,7 @@
       "dracoswords"
     ],
     "path": "Seasonal/Grenwog(Easter)/CandyshellMerge.cs",
-    "size": 9371,
+    "size": 9412,
     "fileName": "CandyshellMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Grenwog(Easter)/CandyshellMerge.cs"
   },
@@ -6717,7 +6717,7 @@
       "merge"
     ],
     "path": "Seasonal/Grenwog(Easter)/GrenstoryMerge.cs",
-    "size": 3710,
+    "size": 3751,
     "fileName": "GrenstoryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Grenwog(Easter)/GrenstoryMerge.cs"
   },
@@ -6769,7 +6769,7 @@
       "puffs"
     ],
     "path": "Seasonal/Eclipse/leZardManMerge.cs",
-    "size": 7233,
+    "size": 7274,
     "fileName": "leZardManMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Eclipse/leZardManMerge.cs"
   },
@@ -6856,7 +6856,7 @@
       "katana"
     ],
     "path": "Seasonal/FrostvalInJuly/YlsasGiftSacMerge.cs",
-    "size": 5168,
+    "size": 5209,
     "fileName": "YlsasGiftSacMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/FrostvalInJuly/YlsasGiftSacMerge.cs"
   },
@@ -6926,7 +6926,7 @@
       "wings"
     ],
     "path": "Seasonal/IndonesianDay/RangdaMerge.cs",
-    "size": 4090,
+    "size": 4131,
     "fileName": "RangdaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/IndonesianDay/RangdaMerge.cs"
   },
@@ -6965,7 +6965,7 @@
       "fans"
     ],
     "path": "Seasonal/IndonesianDay/RoyalWentiraMerge.cs",
-    "size": 7100,
+    "size": 7141,
     "fileName": "RoyalWentiraMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/IndonesianDay/RoyalWentiraMerge.cs"
   },
@@ -7300,7 +7300,7 @@
       "celestial"
     ],
     "path": "Seasonal/Mogloween/MoonlightKhopeshMerge.cs",
-    "size": 3430,
+    "size": 3471,
     "fileName": "MoonlightKhopeshMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MoonlightKhopeshMerge.cs"
   },
@@ -7422,7 +7422,7 @@
       "pitiless"
     ],
     "path": "Seasonal/ObrigadoBrasil/TrickstersGiftsMerge.cs",
-    "size": 11073,
+    "size": 11114,
     "fileName": "TrickstersGiftsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/ObrigadoBrasil/TrickstersGiftsMerge.cs"
   },
@@ -7447,7 +7447,7 @@
       "orb"
     ],
     "path": "Seasonal/ObrigadoBrasil/IaraMerge.cs",
-    "size": 5424,
+    "size": 5465,
     "fileName": "IaraMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/ObrigadoBrasil/IaraMerge.cs"
   },
@@ -7489,7 +7489,7 @@
       "aqw-anniverasary"
     ],
     "path": "Seasonal/AqwBirthday/BeleensPartyPresentsMerge.cs",
-    "size": 9063,
+    "size": 9104,
     "fileName": "BeleensPartyPresentsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/BeleensPartyPresentsMerge.cs"
   },
@@ -7502,7 +7502,7 @@
       "aqw-anniversary"
     ],
     "path": "Seasonal/AqwBirthday/MermaidSushiMerge.cs",
-    "size": 3720,
+    "size": 3761,
     "fileName": "MermaidSushiMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/MermaidSushiMerge.cs"
   },
@@ -7588,7 +7588,7 @@
       "aqw-anniversary"
     ],
     "path": "Seasonal/AqwBirthday/ZorbaksMerge.cs",
-    "size": 13473,
+    "size": 13514,
     "fileName": "ZorbaksMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/ZorbaksMerge.cs"
   },
@@ -7601,7 +7601,7 @@
       "aqw-anniversary"
     ],
     "path": "Seasonal/AqwBirthday/AspiringNecromancerMerge.cs",
-    "size": 6445,
+    "size": 6486,
     "fileName": "AspiringNecromancerMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/AspiringNecromancerMerge.cs"
   },
@@ -7955,7 +7955,7 @@
       "dark"
     ],
     "path": "Seasonal/FathersDay/GravelynsGiftMerge.cs",
-    "size": 4338,
+    "size": 4380,
     "fileName": "GravelynsGiftMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/FathersDay/GravelynsGiftMerge.cs"
   },
@@ -8036,7 +8036,7 @@
       "kitchen"
     ],
     "path": "Seasonal/FathersDay/ShadowscytheHouseMerge.cs",
-    "size": 6299,
+    "size": 6341,
     "fileName": "ShadowscytheHouseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/FathersDay/ShadowscytheHouseMerge.cs"
   },
@@ -11992,7 +11992,7 @@
       "ordo"
     ],
     "path": "Hollowborn/MergeShops/HBJudgementMerge.cs",
-    "size": 6860,
+    "size": 6901,
     "fileName": "HBJudgementMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/HBJudgementMerge.cs"
   },
@@ -12020,7 +12020,7 @@
       "katanas"
     ],
     "path": "Hollowborn/MergeShops/EddensTreasuresMerge.cs",
-    "size": 6900,
+    "size": 6941,
     "fileName": "EddensTreasuresMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/EddensTreasuresMerge.cs"
   },
@@ -12071,7 +12071,7 @@
       "thorn"
     ],
     "path": "Hollowborn/MergeShops/ShadowslayerDMerge.cs",
-    "size": 11685,
+    "size": 11726,
     "fileName": "ShadowslayerDMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/ShadowslayerDMerge.cs"
   },
@@ -12133,7 +12133,7 @@
       "armaments"
     ],
     "path": "Hollowborn/MergeShops/ShadowrealmMerge.cs",
-    "size": 17531,
+    "size": 17572,
     "fileName": "ShadowrealmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/ShadowrealmMerge.cs"
   },
@@ -12173,7 +12173,7 @@
       "armaments"
     ],
     "path": "Hollowborn/MergeShops/DawnFortressMerge.cs",
-    "size": 11370,
+    "size": 11411,
     "fileName": "DawnFortressMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/DawnFortressMerge.cs"
   },
@@ -12202,7 +12202,7 @@
       "battlegear"
     ],
     "path": "Hollowborn/MergeShops/HollowbornLabMerge.cs",
-    "size": 6509,
+    "size": 6550,
     "fileName": "HollowbornLabMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/HollowbornLabMerge.cs"
   },
@@ -12228,7 +12228,7 @@
       "burning"
     ],
     "path": "Hollowborn/MergeShops/HollowbornMerge.cs",
-    "size": 8176,
+    "size": 8217,
     "fileName": "HollowbornMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/HollowbornMerge.cs"
   },
@@ -12243,7 +12243,7 @@
       "tophat"
     ],
     "path": "Hollowborn/MergeShops/HollowbornLoveCasterMerge.cs",
-    "size": 3954,
+    "size": 3995,
     "fileName": "HollowbornLoveCasterMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/HollowbornLoveCasterMerge.cs"
   },
@@ -12266,7 +12266,7 @@
       "claws"
     ],
     "path": "Hollowborn/MergeShops/NeotowerMerge.cs",
-    "size": 6077,
+    "size": 6118,
     "fileName": "NeotowerMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/NeotowerMerge.cs"
   },
@@ -13627,7 +13627,7 @@
       "enchanted"
     ],
     "path": "Good/GearOfAwe/AweMerge.cs",
-    "size": 7248,
+    "size": 7289,
     "fileName": "AweMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Good/GearOfAwe/AweMerge.cs"
   },
@@ -13746,7 +13746,7 @@
       "mergeshop"
     ],
     "path": "Darkon/MergeShops/AstraviaJudgementMerge.cs",
-    "size": 3903,
+    "size": 3945,
     "fileName": "AstraviaJudgementMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/AstraviaJudgementMerge.cs"
   },
@@ -13786,7 +13786,7 @@
       "sheathe"
     ],
     "path": "Darkon/MergeShops/AstravianMerge.cs",
-    "size": 7163,
+    "size": 7204,
     "fileName": "AstravianMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/AstravianMerge.cs"
   },
@@ -13799,7 +13799,7 @@
       "mergeshop"
     ],
     "path": "Darkon/MergeShops/FirstObservatoryMerge.cs",
-    "size": 3596,
+    "size": 3638,
     "fileName": "FirstObservatoryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/FirstObservatoryMerge.cs"
   },
@@ -13812,7 +13812,7 @@
       "mergeshop"
     ],
     "path": "Darkon/MergeShops/EridaniPastMerge.cs",
-    "size": 4681,
+    "size": 4723,
     "fileName": "EridaniPastMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/EridaniPastMerge.cs"
   },
@@ -13826,7 +13826,7 @@
       "mergeshop"
     ],
     "path": "Darkon/MergeShops/GardenMerge.cs",
-    "size": 11026,
+    "size": 11068,
     "fileName": "GardenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/GardenMerge.cs"
   },
@@ -13840,7 +13840,7 @@
       "mergeshop"
     ],
     "path": "Darkon/MergeShops/GenesisGardenMerge.cs",
-    "size": 4719,
+    "size": 4761,
     "fileName": "GenesisGardenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/GenesisGardenMerge.cs"
   },
@@ -13855,7 +13855,7 @@
       "mergeshop"
     ],
     "path": "Darkon/MergeShops/TheWorldHouseMerge.cs",
-    "size": 4699,
+    "size": 4741,
     "fileName": "TheWorldHouseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/TheWorldHouseMerge.cs"
   },
@@ -13868,7 +13868,7 @@
       "mergeshop"
     ],
     "path": "Darkon/MergeShops/AstraviaPastMerge.cs",
-    "size": 4920,
+    "size": 4962,
     "fileName": "AstraviaPastMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/AstraviaPastMerge.cs"
   },
@@ -13941,7 +13941,7 @@
       "mergeshop"
     ],
     "path": "Darkon/MergeShops/AstraviaCastleMerge.cs",
-    "size": 5501,
+    "size": 5543,
     "fileName": "AstraviaCastleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/AstraviaCastleMerge.cs"
   },
@@ -13954,7 +13954,7 @@
       "mergeshop"
     ],
     "path": "Darkon/MergeShops/EridaniMerge.cs",
-    "size": 3951,
+    "size": 3993,
     "fileName": "EridaniMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/EridaniMerge.cs"
   },
@@ -13969,7 +13969,7 @@
       "mergeshop"
     ],
     "path": "Darkon/MergeShops/TheWorldMerge.cs",
-    "size": 3110,
+    "size": 3152,
     "fileName": "TheWorldMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/TheWorldMerge.cs"
   },
@@ -15507,7 +15507,7 @@
       "null"
     ],
     "path": "Other/MergeShops/DreadspaceReplicatorMerge.cs",
-    "size": 9800,
+    "size": 9841,
     "fileName": "DreadspaceReplicatorMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DreadspaceReplicatorMerge.cs"
   },
@@ -15529,7 +15529,7 @@
       "banes"
     ],
     "path": "Other/MergeShops/MoltenForgeMerge.cs",
-    "size": 4969,
+    "size": 5010,
     "fileName": "MoltenForgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/MoltenForgeMerge.cs"
   },
@@ -15545,7 +15545,7 @@
       "tail"
     ],
     "path": "Other/MergeShops/FoxMerge[MEM].cs",
-    "size": 3633,
+    "size": 3675,
     "fileName": "FoxMerge[MEM].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FoxMerge[MEM].cs"
   },
@@ -15576,7 +15576,7 @@
       "wreath"
     ],
     "path": "Other/MergeShops/YulgarsUndineMerge.cs",
-    "size": 5464,
+    "size": 5506,
     "fileName": "YulgarsUndineMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/YulgarsUndineMerge.cs"
   },
@@ -15587,7 +15587,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ArtixWeddingMerge.cs",
-    "size": 5214,
+    "size": 5255,
     "fileName": "ArtixWeddingMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ArtixWeddingMerge.cs"
   },
@@ -15598,7 +15598,7 @@
       "null"
     ],
     "path": "Other/MergeShops/BlackHoleSunMerge.cs",
-    "size": 4231,
+    "size": 4272,
     "fileName": "BlackHoleSunMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BlackHoleSunMerge.cs"
   },
@@ -15609,7 +15609,7 @@
       "null"
     ],
     "path": "Other/MergeShops/EternalChaosMerge.cs",
-    "size": 6821,
+    "size": 6862,
     "fileName": "EternalChaosMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/EternalChaosMerge.cs"
   },
@@ -15625,7 +15625,7 @@
       "aranx"
     ],
     "path": "Other/MergeShops/CelestialPastMerge.cs",
-    "size": 3903,
+    "size": 3944,
     "fileName": "CelestialPastMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CelestialPastMerge.cs"
   },
@@ -15659,7 +15659,7 @@
       "mystical"
     ],
     "path": "Other/MergeShops/HydraMerge.cs",
-    "size": 7972,
+    "size": 8013,
     "fileName": "HydraMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/HydraMerge.cs"
   },
@@ -15679,7 +15679,7 @@
       "conquerer"
     ],
     "path": "Other/MergeShops/EtherstormGoodMerge.cs",
-    "size": 5252,
+    "size": 5294,
     "fileName": "EtherstormGoodMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/EtherstormGoodMerge.cs"
   },
@@ -15690,7 +15690,7 @@
       "null"
     ],
     "path": "Other/MergeShops/DeepTunnelMerge.cs",
-    "size": 6755,
+    "size": 6796,
     "fileName": "DeepTunnelMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DeepTunnelMerge.cs"
   },
@@ -15701,7 +15701,7 @@
       "null"
     ],
     "path": "Other/MergeShops/TechfortressWarMerge.cs",
-    "size": 9940,
+    "size": 9981,
     "fileName": "TechfortressWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/TechfortressWarMerge.cs"
   },
@@ -15712,7 +15712,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ChaosWarMerge.cs",
-    "size": 4578,
+    "size": 4619,
     "fileName": "ChaosWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ChaosWarMerge.cs"
   },
@@ -15723,7 +15723,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ChronoMerge.cs",
-    "size": 7053,
+    "size": 7094,
     "fileName": "ChronoMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ChronoMerge.cs"
   },
@@ -15734,7 +15734,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ArchFiendWarlordMerge.cs",
-    "size": 9406,
+    "size": 9447,
     "fileName": "ArchFiendWarlordMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ArchFiendWarlordMerge.cs"
   },
@@ -15745,7 +15745,7 @@
       "null"
     ],
     "path": "Other/MergeShops/AQWorldsWarZMerge.cs",
-    "size": 3580,
+    "size": 3621,
     "fileName": "AQWorldsWarZMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/AQWorldsWarZMerge.cs"
   },
@@ -15756,7 +15756,7 @@
       "null"
     ],
     "path": "Other/MergeShops/BeleensChaosFuzzyMerge.cs",
-    "size": 4820,
+    "size": 4861,
     "fileName": "BeleensChaosFuzzyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BeleensChaosFuzzyMerge.cs"
   },
@@ -15767,7 +15767,7 @@
       "null"
     ],
     "path": "Other/MergeShops/4DPyramidHouseMerge.cs",
-    "size": 3196,
+    "size": 3237,
     "fileName": "4DPyramidHouseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/4DPyramidHouseMerge.cs"
   },
@@ -15792,7 +15792,7 @@
       "pet"
     ],
     "path": "Other/MergeShops/BloodMoonLycanMerge.cs",
-    "size": 4803,
+    "size": 4844,
     "fileName": "BloodMoonLycanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BloodMoonLycanMerge.cs"
   },
@@ -15819,7 +15819,7 @@
       "bank"
     ],
     "path": "Other/MergeShops/FireWarMerge.cs",
-    "size": 5980,
+    "size": 6021,
     "fileName": "FireWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FireWarMerge.cs"
   },
@@ -15837,7 +15837,7 @@
       "crusher"
     ],
     "path": "Other/MergeShops/BloodTitanMerge[mem].cs",
-    "size": 4464,
+    "size": 4505,
     "fileName": "BloodTitanMerge[mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BloodTitanMerge[mem].cs"
   },
@@ -15863,7 +15863,7 @@
       "gaheris"
     ],
     "path": "Other/MergeShops/FelixsGildedGearMerge.cs",
-    "size": 5436,
+    "size": 5477,
     "fileName": "FelixsGildedGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FelixsGildedGearMerge.cs"
   },
@@ -15874,7 +15874,7 @@
       "null"
     ],
     "path": "Other/MergeShops/UbearMerge.cs",
-    "size": 4037,
+    "size": 4078,
     "fileName": "UbearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/UbearMerge.cs"
   },
@@ -15885,7 +15885,7 @@
       "null"
     ],
     "path": "Other/MergeShops/DarkbloodWarMerge.cs",
-    "size": 4693,
+    "size": 4734,
     "fileName": "DarkbloodWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DarkbloodWarMerge.cs"
   },
@@ -15897,7 +15897,7 @@
       "mergeshop"
     ],
     "path": "Other/MergeShops/Adam1a1Merge.cs",
-    "size": 11785,
+    "size": 11826,
     "fileName": "Adam1a1Merge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/Adam1a1Merge.cs"
   },
@@ -15918,7 +15918,7 @@
       "noble"
     ],
     "path": "Other/MergeShops/LordGranvillesMerge.cs",
-    "size": 3507,
+    "size": 3548,
     "fileName": "LordGranvillesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/LordGranvillesMerge.cs"
   },
@@ -15934,7 +15934,7 @@
       "wings"
     ],
     "path": "Other/MergeShops/OwlMerge.cs",
-    "size": 3521,
+    "size": 3563,
     "fileName": "OwlMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/OwlMerge.cs"
   },
@@ -15945,7 +15945,7 @@
       "null"
     ],
     "path": "Other/MergeShops/QueensReignMerge.cs",
-    "size": 6501,
+    "size": 6542,
     "fileName": "QueensReignMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/QueensReignMerge.cs"
   },
@@ -15964,7 +15964,7 @@
       "golden"
     ],
     "path": "Other/MergeShops/BonecastleTowerMerge.cs",
-    "size": 8711,
+    "size": 8752,
     "fileName": "BonecastleTowerMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BonecastleTowerMerge.cs"
   },
@@ -15994,7 +15994,7 @@
       "glasses"
     ],
     "path": "Other/MergeShops/UndineCommissaryMerge.cs",
-    "size": 5021,
+    "size": 5063,
     "fileName": "UndineCommissaryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/UndineCommissaryMerge.cs"
   },
@@ -16024,7 +16024,7 @@
       "banner"
     ],
     "path": "Other/MergeShops/YokaiPortalMerge.cs",
-    "size": 9913,
+    "size": 9954,
     "fileName": "YokaiPortalMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/YokaiPortalMerge.cs"
   },
@@ -16035,7 +16035,7 @@
       "null"
     ],
     "path": "Other/MergeShops/KagesMerge[mem-non-ac].cs",
-    "size": 4406,
+    "size": 4448,
     "fileName": "KagesMerge[mem-non-ac].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/KagesMerge[mem-non-ac].cs"
   },
@@ -16065,7 +16065,7 @@
       "powerfist"
     ],
     "path": "Other/MergeShops/TitanAttackGearMerge.cs",
-    "size": 7169,
+    "size": 7210,
     "fileName": "TitanAttackGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/TitanAttackGearMerge.cs"
   },
@@ -16076,7 +16076,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ShinkansenMerge.cs",
-    "size": 6477,
+    "size": 6518,
     "fileName": "ShinkansenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ShinkansenMerge.cs"
   },
@@ -16087,7 +16087,7 @@
       "null"
     ],
     "path": "Other/MergeShops/TachyonMerge.cs",
-    "size": 6242,
+    "size": 6283,
     "fileName": "TachyonMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/TachyonMerge.cs"
   },
@@ -16098,7 +16098,7 @@
       "null"
     ],
     "path": "Other/MergeShops/SpoilsofLightMerge.cs",
-    "size": 7023,
+    "size": 7065,
     "fileName": "SpoilsofLightMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SpoilsofLightMerge.cs"
   },
@@ -16109,7 +16109,7 @@
       "null"
     ],
     "path": "Other/MergeShops/CelestialChallengerMerge.cs",
-    "size": 3881,
+    "size": 3922,
     "fileName": "CelestialChallengerMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CelestialChallengerMerge.cs"
   },
@@ -16135,7 +16135,7 @@
       "flames"
     ],
     "path": "Other/MergeShops/SunsetTreasuresMerge.cs",
-    "size": 5702,
+    "size": 5743,
     "fileName": "SunsetTreasuresMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SunsetTreasuresMerge.cs"
   },
@@ -16175,7 +16175,7 @@
       "long"
     ],
     "path": "Other/MergeShops/GrimGiftMerge.cs",
-    "size": 8722,
+    "size": 8763,
     "fileName": "GrimGiftMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/GrimGiftMerge.cs"
   },
@@ -16199,7 +16199,7 @@
       "morph"
     ],
     "path": "Other/MergeShops/DjinnGateMerge.cs",
-    "size": 5192,
+    "size": 5234,
     "fileName": "DjinnGateMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DjinnGateMerge.cs"
   },
@@ -16225,7 +16225,7 @@
       "guardian"
     ],
     "path": "Other/MergeShops/LoughshineLootMerge.cs",
-    "size": 6429,
+    "size": 6470,
     "fileName": "LoughshineLootMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/LoughshineLootMerge.cs"
   },
@@ -16236,7 +16236,7 @@
       "null"
     ],
     "path": "Other/MergeShops/BarricadeDefenseMerge.cs",
-    "size": 3902,
+    "size": 3943,
     "fileName": "BarricadeDefenseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BarricadeDefenseMerge.cs"
   },
@@ -16247,7 +16247,7 @@
       "null"
     ],
     "path": "Other/MergeShops/CrystalBrightMerge.cs",
-    "size": 3779,
+    "size": 3821,
     "fileName": "CrystalBrightMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CrystalBrightMerge.cs"
   },
@@ -16273,7 +16273,7 @@
       "visor"
     ],
     "path": "Other/MergeShops/StarsincMerge.cs",
-    "size": 7211,
+    "size": 7252,
     "fileName": "StarsincMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/StarsincMerge.cs"
   },
@@ -16298,7 +16298,7 @@
       "armblades"
     ],
     "path": "Other/MergeShops/DiogonsMerge.cs",
-    "size": 6599,
+    "size": 6640,
     "fileName": "DiogonsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DiogonsMerge.cs"
   },
@@ -16374,7 +16374,7 @@
       "deep"
     ],
     "path": "Other/MergeShops/SeaBaseHouseMerge.cs",
-    "size": 12542,
+    "size": 12583,
     "fileName": "SeaBaseHouseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SeaBaseHouseMerge.cs"
   },
@@ -16403,7 +16403,7 @@
       "stage"
     ],
     "path": "Other/MergeShops/MonaghanGorgeMerge.cs",
-    "size": 6047,
+    "size": 6088,
     "fileName": "MonaghanGorgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/MonaghanGorgeMerge.cs"
   },
@@ -16563,7 +16563,7 @@
       "katanas"
     ],
     "path": "Other/MergeShops/YulgarsDualWieldMerge.cs",
-    "size": 46057,
+    "size": 46098,
     "fileName": "YulgarsDualWieldMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/YulgarsDualWieldMerge.cs"
   },
@@ -16587,7 +16587,7 @@
       "streams"
     ],
     "path": "Other/MergeShops/TrenchObserveMerge.cs",
-    "size": 5598,
+    "size": 5639,
     "fileName": "TrenchObserveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/TrenchObserveMerge.cs"
   },
@@ -16616,7 +16616,7 @@
       "shadow"
     ],
     "path": "Other/MergeShops/LaeWeddingMerge.cs",
-    "size": 4872,
+    "size": 4913,
     "fileName": "LaeWeddingMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/LaeWeddingMerge.cs"
   },
@@ -16627,7 +16627,7 @@
       "null"
     ],
     "path": "Other/MergeShops/BattleConGearMerge.cs",
-    "size": 4256,
+    "size": 4297,
     "fileName": "BattleConGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BattleConGearMerge.cs"
   },
@@ -16659,7 +16659,7 @@
       "reavers"
     ],
     "path": "Other/MergeShops/NovaShrineGiftsMerge.cs",
-    "size": 10303,
+    "size": 10344,
     "fileName": "NovaShrineGiftsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/NovaShrineGiftsMerge.cs"
   },
@@ -16670,7 +16670,7 @@
       "null"
     ],
     "path": "Other/MergeShops/PaladinTreasureHunterMerge.cs",
-    "size": 8782,
+    "size": 8823,
     "fileName": "PaladinTreasureHunterMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/PaladinTreasureHunterMerge.cs"
   },
@@ -16709,7 +16709,7 @@
       "arrow"
     ],
     "path": "Other/MergeShops/DeimosDenRewardsMerge.cs",
-    "size": 6119,
+    "size": 6160,
     "fileName": "DeimosDenRewardsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DeimosDenRewardsMerge.cs"
   },
@@ -16731,7 +16731,7 @@
       "morph"
     ],
     "path": "Other/MergeShops/SuperSlayinMerge.cs",
-    "size": 4554,
+    "size": 4595,
     "fileName": "SuperSlayinMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SuperSlayinMerge.cs"
   },
@@ -16760,7 +16760,7 @@
       "thyllian"
     ],
     "path": "Other/MergeShops/KathoolsChestMerge.cs",
-    "size": 7231,
+    "size": 7272,
     "fileName": "KathoolsChestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/KathoolsChestMerge.cs"
   },
@@ -16771,7 +16771,7 @@
       "null"
     ],
     "path": "Other/MergeShops/CruxShadowsMerge.cs",
-    "size": 5774,
+    "size": 5815,
     "fileName": "CruxShadowsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CruxShadowsMerge.cs"
   },
@@ -16806,7 +16806,7 @@
       "hook"
     ],
     "path": "Other/MergeShops/SeaviewSouvenirsMerge.cs",
-    "size": 5755,
+    "size": 5796,
     "fileName": "SeaviewSouvenirsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SeaviewSouvenirsMerge.cs"
   },
@@ -16832,7 +16832,7 @@
       "stone"
     ],
     "path": "Other/MergeShops/AshfallCampMerge.cs",
-    "size": 9914,
+    "size": 9955,
     "fileName": "AshfallCampMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/AshfallCampMerge.cs"
   },
@@ -16843,7 +16843,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ParadoxPortalMerge.cs",
-    "size": 3635,
+    "size": 3676,
     "fileName": "ParadoxPortalMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ParadoxPortalMerge.cs"
   },
@@ -16866,7 +16866,7 @@
       "toxic"
     ],
     "path": "Other/MergeShops/ElfhameMerge.cs",
-    "size": 4753,
+    "size": 4795,
     "fileName": "ElfhameMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ElfhameMerge.cs"
   },
@@ -16877,7 +16877,7 @@
       "null"
     ],
     "path": "Other/MergeShops/3LittleWolvesHousesMerge.cs",
-    "size": 10236,
+    "size": 10277,
     "fileName": "3LittleWolvesHousesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/3LittleWolvesHousesMerge.cs"
   },
@@ -16888,7 +16888,7 @@
       "null"
     ],
     "path": "Other/MergeShops/CraggleRockMerge.cs",
-    "size": 9356,
+    "size": 9397,
     "fileName": "CraggleRockMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CraggleRockMerge.cs"
   },
@@ -16937,7 +16937,7 @@
       "order"
     ],
     "path": "Other/MergeShops/FishingGearMerge.cs",
-    "size": 10028,
+    "size": 10069,
     "fileName": "FishingGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FishingGearMerge.cs"
   },
@@ -16964,7 +16964,7 @@
       "paladin"
     ],
     "path": "Other/MergeShops/SeraphicWarChestMerge.cs",
-    "size": 5264,
+    "size": 5305,
     "fileName": "SeraphicWarChestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SeraphicWarChestMerge.cs"
   },
@@ -16989,7 +16989,7 @@
       "higure"
     ],
     "path": "Other/MergeShops/DeepTrobbleMerge.cs",
-    "size": 6020,
+    "size": 6061,
     "fileName": "DeepTrobbleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DeepTrobbleMerge.cs"
   },
@@ -17000,7 +17000,7 @@
       "null"
     ],
     "path": "Other/MergeShops/PlagueGearMerge.cs",
-    "size": 5500,
+    "size": 5541,
     "fileName": "PlagueGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/PlagueGearMerge.cs"
   },
@@ -17011,7 +17011,7 @@
       "null"
     ],
     "path": "Other/MergeShops/BrightForestMerge.cs",
-    "size": 5240,
+    "size": 5281,
     "fileName": "BrightForestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BrightForestMerge.cs"
   },
@@ -17022,7 +17022,7 @@
       "null"
     ],
     "path": "Other/MergeShops/StormCacheMerge.cs",
-    "size": 4211,
+    "size": 4252,
     "fileName": "StormCacheMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/StormCacheMerge.cs"
   },
@@ -17051,7 +17051,7 @@
       "zorbak"
     ],
     "path": "Other/MergeShops/LightMerge.cs",
-    "size": 9740,
+    "size": 9781,
     "fileName": "LightMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/LightMerge.cs"
   },
@@ -17062,7 +17062,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ExtinctionGamesMerge.cs",
-    "size": 6256,
+    "size": 6298,
     "fileName": "ExtinctionGamesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ExtinctionGamesMerge.cs"
   },
@@ -17089,7 +17089,7 @@
       "lance"
     ],
     "path": "Other/MergeShops/ThirdspellMerge.cs",
-    "size": 4472,
+    "size": 4513,
     "fileName": "ThirdspellMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ThirdspellMerge.cs"
   },
@@ -17116,7 +17116,7 @@
       "wrap"
     ],
     "path": "Other/MergeShops/CyseroMerge.cs",
-    "size": 3912,
+    "size": 3954,
     "fileName": "CyseroMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CyseroMerge.cs"
   },
@@ -17127,7 +17127,7 @@
       "null"
     ],
     "path": "Other/MergeShops/OriginulMerge.cs",
-    "size": 7189,
+    "size": 7230,
     "fileName": "OriginulMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/OriginulMerge.cs"
   },
@@ -17138,7 +17138,7 @@
       "null"
     ],
     "path": "Other/MergeShops/NightmareCarnaxMerge.cs",
-    "size": 8441,
+    "size": 8482,
     "fileName": "NightmareCarnaxMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/NightmareCarnaxMerge.cs"
   },
@@ -17175,7 +17175,7 @@
       "dirk"
     ],
     "path": "Other/MergeShops/TwilightZoneMerge.cs",
-    "size": 6223,
+    "size": 6264,
     "fileName": "TwilightZoneMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/TwilightZoneMerge.cs"
   },
@@ -17324,7 +17324,7 @@
       "revontheus"
     ],
     "path": "Other/MergeShops/YulgarsDualWieldDropOffMerge.cs",
-    "size": 21015,
+    "size": 21056,
     "fileName": "YulgarsDualWieldDropOffMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/YulgarsDualWieldDropOffMerge.cs"
   },
@@ -17357,7 +17357,7 @@
       "accoutrements"
     ],
     "path": "Other/MergeShops/TerminaTempleMerge.cs",
-    "size": 7165,
+    "size": 7206,
     "fileName": "TerminaTempleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/TerminaTempleMerge.cs"
   },
@@ -17368,7 +17368,7 @@
       "null"
     ],
     "path": "Other/MergeShops/CharonsPurgeMerge.cs",
-    "size": 7188,
+    "size": 7229,
     "fileName": "CharonsPurgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CharonsPurgeMerge.cs"
   },
@@ -17412,7 +17412,7 @@
       "papa"
     ],
     "path": "Other/MergeShops/VinarasOddMerge.cs",
-    "size": 4924,
+    "size": 4965,
     "fileName": "VinarasOddMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/VinarasOddMerge.cs"
   },
@@ -17423,7 +17423,7 @@
       "null"
     ],
     "path": "Other/MergeShops/MirrorRealmMerge.cs",
-    "size": 9266,
+    "size": 9307,
     "fileName": "MirrorRealmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/MirrorRealmMerge.cs"
   },
@@ -17461,7 +17461,7 @@
       "twintails"
     ],
     "path": "Other/MergeShops/QueensBattleMerge.cs",
-    "size": 8869,
+    "size": 8910,
     "fileName": "QueensBattleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/QueensBattleMerge.cs"
   },
@@ -17472,7 +17472,7 @@
       "null"
     ],
     "path": "Other/MergeShops/DwobosMerge.cs",
-    "size": 3780,
+    "size": 3821,
     "fileName": "DwobosMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DwobosMerge.cs"
   },
@@ -17483,7 +17483,7 @@
       "null"
     ],
     "path": "Other/MergeShops/DreampalaceMerge.cs",
-    "size": 6782,
+    "size": 6823,
     "fileName": "DreampalaceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DreampalaceMerge.cs"
   },
@@ -17512,7 +17512,7 @@
       "enchanted"
     ],
     "path": "Other/MergeShops/HakuWarMerge.cs",
-    "size": 7394,
+    "size": 7435,
     "fileName": "HakuWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/HakuWarMerge.cs"
   },
@@ -17523,7 +17523,7 @@
       "null"
     ],
     "path": "Other/MergeShops/Crownsreach50ChestMerge.cs",
-    "size": 3989,
+    "size": 4030,
     "fileName": "Crownsreach50ChestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/Crownsreach50ChestMerge.cs"
   },
@@ -17537,7 +17537,7 @@
       "shop"
     ],
     "path": "Other/MergeShops/InevitabilisMerge.cs",
-    "size": 6929,
+    "size": 6970,
     "fileName": "InevitabilisMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/InevitabilisMerge.cs"
   },
@@ -17565,7 +17565,7 @@
       "fans"
     ],
     "path": "Other/MergeShops/YokaiRealmMerge.cs",
-    "size": 5079,
+    "size": 5120,
     "fileName": "YokaiRealmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/YokaiRealmMerge.cs"
   },
@@ -17607,7 +17607,7 @@
       "reavers"
     ],
     "path": "Other/MergeShops/CelestialSpoilsMerge.cs",
-    "size": 8803,
+    "size": 8844,
     "fileName": "CelestialSpoilsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CelestialSpoilsMerge.cs"
   },
@@ -17626,7 +17626,7 @@
       "scythe"
     ],
     "path": "Other/MergeShops/SpiritHunterMerge[Mem].cs",
-    "size": 5352,
+    "size": 5393,
     "fileName": "SpiritHunterMerge[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SpiritHunterMerge[Mem].cs"
   },
@@ -17672,7 +17672,7 @@
       "greatswords"
     ],
     "path": "Other/MergeShops/ColdThunderMerge.cs",
-    "size": 7495,
+    "size": 7536,
     "fileName": "ColdThunderMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ColdThunderMerge.cs"
   },
@@ -17683,7 +17683,7 @@
       "null"
     ],
     "path": "Other/MergeShops/DreadForestMerge.cs",
-    "size": 10682,
+    "size": 10723,
     "fileName": "DreadForestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DreadForestMerge.cs"
   },
@@ -17694,7 +17694,7 @@
       "null"
     ],
     "path": "Other/MergeShops/BloodWarLycanMerge.cs",
-    "size": 4547,
+    "size": 4588,
     "fileName": "BloodWarLycanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BloodWarLycanMerge.cs"
   },
@@ -17705,7 +17705,7 @@
       "null"
     ],
     "path": "Other/MergeShops/DruidMerge.cs",
-    "size": 5982,
+    "size": 6023,
     "fileName": "DruidMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DruidMerge.cs"
   },
@@ -17731,7 +17731,7 @@
       "skulls"
     ],
     "path": "Other/MergeShops/ObsessorCommanderMerge.cs",
-    "size": 4521,
+    "size": 4562,
     "fileName": "ObsessorCommanderMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ObsessorCommanderMerge.cs"
   },
@@ -17759,7 +17759,7 @@
       "honored"
     ],
     "path": "Other/MergeShops/DwarfholdMerge.cs",
-    "size": 6047,
+    "size": 6088,
     "fileName": "DwarfholdMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DwarfholdMerge.cs"
   },
@@ -17770,7 +17770,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ShadowfallDefenseMerge.cs",
-    "size": 4752,
+    "size": 4793,
     "fileName": "ShadowfallDefenseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ShadowfallDefenseMerge.cs"
   },
@@ -17811,7 +17811,7 @@
       "stream"
     ],
     "path": "Other/MergeShops/HallofClassesMerge.cs",
-    "size": 7327,
+    "size": 7368,
     "fileName": "HallofClassesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/HallofClassesMerge.cs"
   },
@@ -17822,7 +17822,7 @@
       "null"
     ],
     "path": "Other/MergeShops/BeleensMerge.cs",
-    "size": 20547,
+    "size": 20588,
     "fileName": "BeleensMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BeleensMerge.cs"
   },
@@ -17841,7 +17841,7 @@
       "membership"
     ],
     "path": "Other/MergeShops/BoneBreakerMergeShop[MEM].cs",
-    "size": 3853,
+    "size": 3895,
     "fileName": "BoneBreakerMergeShop[MEM].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BoneBreakerMergeShop[MEM].cs"
   },
@@ -17875,7 +17875,7 @@
       "hand"
     ],
     "path": "Other/MergeShops/SkyeEmissarysMerge.cs",
-    "size": 8331,
+    "size": 8372,
     "fileName": "SkyeEmissarysMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SkyeEmissarysMerge.cs"
   },
@@ -17886,7 +17886,7 @@
       "null"
     ],
     "path": "Other/MergeShops/VokunMerge.cs",
-    "size": 5237,
+    "size": 5278,
     "fileName": "VokunMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/VokunMerge.cs"
   },
@@ -17914,7 +17914,7 @@
       "craft"
     ],
     "path": "Other/MergeShops/CastleGaherisMerge.cs",
-    "size": 5922,
+    "size": 5963,
     "fileName": "CastleGaherisMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CastleGaherisMerge.cs"
   },
@@ -17946,7 +17946,7 @@
       "warlord"
     ],
     "path": "Other/MergeShops/DeathPitArenaRepMerge.cs",
-    "size": 7947,
+    "size": 7989,
     "fileName": "DeathPitArenaRepMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DeathPitArenaRepMerge.cs"
   },
@@ -17957,7 +17957,7 @@
       "null"
     ],
     "path": "Other/MergeShops/BrightshadowMerge.cs",
-    "size": 9153,
+    "size": 9194,
     "fileName": "BrightshadowMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BrightshadowMerge.cs"
   },
@@ -17997,7 +17997,7 @@
       "fangs"
     ],
     "path": "Other/MergeShops/HakuVillageMerge.cs",
-    "size": 7779,
+    "size": 7820,
     "fileName": "HakuVillageMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/HakuVillageMerge.cs"
   },
@@ -18008,7 +18008,7 @@
       "null"
     ],
     "path": "Other/MergeShops/CelestialChampMerge.cs",
-    "size": 6813,
+    "size": 6854,
     "fileName": "CelestialChampMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CelestialChampMerge.cs"
   },
@@ -18019,7 +18019,7 @@
       "null"
     ],
     "path": "Other/MergeShops/TrygveMerge.cs",
-    "size": 6660,
+    "size": 6701,
     "fileName": "TrygveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/TrygveMerge.cs"
   },
@@ -18030,7 +18030,7 @@
       "null"
     ],
     "path": "Other/MergeShops/DeerHuntMerge.cs",
-    "size": 4857,
+    "size": 4898,
     "fileName": "DeerHuntMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DeerHuntMerge.cs"
   },
@@ -18058,7 +18058,7 @@
       "tanks"
     ],
     "path": "Other/MergeShops/NaoiseGraveLootMerge.cs",
-    "size": 5660,
+    "size": 5701,
     "fileName": "NaoiseGraveLootMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/NaoiseGraveLootMerge.cs"
   },
@@ -18069,7 +18069,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ShadowScytheGeneralMerge.cs",
-    "size": 4034,
+    "size": 4075,
     "fileName": "ShadowScytheGeneralMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ShadowScytheGeneralMerge.cs"
   },
@@ -18100,7 +18100,7 @@
       "bow"
     ],
     "path": "Other/MergeShops/MidnightZoneMerge.cs",
-    "size": 5330,
+    "size": 5371,
     "fileName": "MidnightZoneMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/MidnightZoneMerge.cs"
   },
@@ -18169,7 +18169,7 @@
       "zorbaks"
     ],
     "path": "Other/MergeShops/StarswordMerge[Upholder].cs",
-    "size": 11819,
+    "size": 11860,
     "fileName": "StarswordMerge[Upholder].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/StarswordMerge[Upholder].cs"
   },
@@ -18193,7 +18193,7 @@
       ""
     ],
     "path": "Other/MergeShops/ChaosLabMerge.cs",
-    "size": 4110,
+    "size": 4152,
     "fileName": "ChaosLabMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ChaosLabMerge.cs"
   },
@@ -18221,7 +18221,7 @@
       "minions"
     ],
     "path": "Other/MergeShops/SidhesDevoteeMerge.cs",
-    "size": 5649,
+    "size": 5690,
     "fileName": "SidhesDevoteeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SidhesDevoteeMerge.cs"
   },
@@ -18257,7 +18257,7 @@
       "armblades"
     ],
     "path": "Other/MergeShops/CrocriverMerge.cs",
-    "size": 8983,
+    "size": 9024,
     "fileName": "CrocriverMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CrocriverMerge.cs"
   },
@@ -18268,7 +18268,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ShadowSlayerKMerge.cs",
-    "size": 10162,
+    "size": 10203,
     "fileName": "ShadowSlayerKMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ShadowSlayerKMerge.cs"
   },
@@ -18279,7 +18279,7 @@
       "null"
     ],
     "path": "Other/MergeShops/BloodMoonVampireMerge.cs",
-    "size": 4606,
+    "size": 4647,
     "fileName": "BloodMoonVampireMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BloodMoonVampireMerge.cs"
   },
@@ -18290,7 +18290,7 @@
       "null"
     ],
     "path": "Other/MergeShops/SuperDeathMerge.cs",
-    "size": 6154,
+    "size": 6195,
     "fileName": "SuperDeathMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SuperDeathMerge.cs"
   },
@@ -18301,7 +18301,7 @@
       "null"
     ],
     "path": "Other/MergeShops/TerranesMerge.cs",
-    "size": 6266,
+    "size": 6307,
     "fileName": "TerranesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/TerranesMerge.cs"
   },
@@ -18312,7 +18312,7 @@
       "null"
     ],
     "path": "Other/MergeShops/CommitedMerge.cs",
-    "size": 4000,
+    "size": 4041,
     "fileName": "CommitedMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CommitedMerge.cs"
   },
@@ -18325,7 +18325,7 @@
       "battleodium"
     ],
     "path": "Other/MergeShops/FriendshipMerge.cs",
-    "size": 6838,
+    "size": 6879,
     "fileName": "FriendshipMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FriendshipMerge.cs"
   },
@@ -18352,7 +18352,7 @@
       "shattered"
     ],
     "path": "Other/MergeShops/LiaTaraHillLootMerge.cs",
-    "size": 5095,
+    "size": 5136,
     "fileName": "LiaTaraHillLootMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/LiaTaraHillLootMerge.cs"
   },
@@ -18383,7 +18383,7 @@
       "bow"
     ],
     "path": "Other/MergeShops/CrulonsWeddingMerge.cs",
-    "size": 7221,
+    "size": 7262,
     "fileName": "CrulonsWeddingMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CrulonsWeddingMerge.cs"
   },
@@ -18394,7 +18394,7 @@
       "null"
     ],
     "path": "Other/MergeShops/FirePlaneWarMerge.cs",
-    "size": 8385,
+    "size": 8426,
     "fileName": "FirePlaneWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FirePlaneWarMerge.cs"
   },
@@ -18405,7 +18405,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ShadowFirePlaneMerge.cs",
-    "size": 4753,
+    "size": 4794,
     "fileName": "ShadowFirePlaneMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ShadowFirePlaneMerge.cs"
   },
@@ -18416,7 +18416,7 @@
       "null"
     ],
     "path": "Other/MergeShops/FlockMerge.cs",
-    "size": 3979,
+    "size": 4021,
     "fileName": "FlockMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FlockMerge.cs"
   },
@@ -18427,7 +18427,7 @@
       "null"
     ],
     "path": "Other/MergeShops/BonecastleMerge.cs",
-    "size": 6237,
+    "size": 6278,
     "fileName": "BonecastleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BonecastleMerge.cs"
   },
@@ -18452,7 +18452,7 @@
       "corps"
     ],
     "path": "Other/MergeShops/TitanStrikeGearMerge.cs",
-    "size": 11349,
+    "size": 11390,
     "fileName": "TitanStrikeGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/TitanStrikeGearMerge.cs"
   },
@@ -18476,7 +18476,7 @@
       "horned"
     ],
     "path": "Other/MergeShops/DradensMerge.cs",
-    "size": 5491,
+    "size": 5533,
     "fileName": "DradensMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DradensMerge.cs"
   },
@@ -18487,7 +18487,7 @@
       "null"
     ],
     "path": "Other/MergeShops/MazeMerge.cs",
-    "size": 3300,
+    "size": 3341,
     "fileName": "MazeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/MazeMerge.cs"
   },
@@ -18498,7 +18498,7 @@
       "null"
     ],
     "path": "Other/MergeShops/BloodAncientMerge.cs",
-    "size": 3489,
+    "size": 3530,
     "fileName": "BloodAncientMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BloodAncientMerge.cs"
   },
@@ -18509,7 +18509,7 @@
       "null"
     ],
     "path": "Other/MergeShops/SynderesMerge.cs",
-    "size": 4292,
+    "size": 4333,
     "fileName": "SynderesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SynderesMerge.cs"
   },
@@ -18520,7 +18520,7 @@
       "null"
     ],
     "path": "Other/MergeShops/EaglesReachArmoryMerge.cs",
-    "size": 8777,
+    "size": 8818,
     "fileName": "EaglesReachArmoryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/EaglesReachArmoryMerge.cs"
   },
@@ -18531,7 +18531,7 @@
       "null"
     ],
     "path": "Other/MergeShops/WorldCoreMerge.cs",
-    "size": 3719,
+    "size": 3760,
     "fileName": "WorldCoreMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/WorldCoreMerge.cs"
   },
@@ -18564,7 +18564,7 @@
       "freed"
     ],
     "path": "Other/MergeShops/AranxsAzalithRewardsMerge.cs",
-    "size": 6593,
+    "size": 6634,
     "fileName": "AranxsAzalithRewardsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/AranxsAzalithRewardsMerge.cs"
   },
@@ -18605,7 +18605,7 @@
       "throne"
     ],
     "path": "Other/MergeShops/FactionBannersMerge.cs",
-    "size": 9577,
+    "size": 9619,
     "fileName": "FactionBannersMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FactionBannersMerge.cs"
   },
@@ -18616,7 +18616,7 @@
       "null"
     ],
     "path": "Other/MergeShops/EctocaveMerge.cs",
-    "size": 6197,
+    "size": 6238,
     "fileName": "EctocaveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/EctocaveMerge.cs"
   },
@@ -18627,7 +18627,7 @@
       "null"
     ],
     "path": "Other/MergeShops/GachaponMerge.cs",
-    "size": 4196,
+    "size": 4237,
     "fileName": "GachaponMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/GachaponMerge.cs"
   },
@@ -18672,7 +18672,7 @@
       "horns"
     ],
     "path": "Other/MergeShops/InfernalArenaMerge.cs",
-    "size": 9326,
+    "size": 9367,
     "fileName": "InfernalArenaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/InfernalArenaMerge.cs"
   },
@@ -18689,7 +18689,7 @@
       "tail"
     ],
     "path": "Other/MergeShops/RabbitMerge.cs",
-    "size": 3556,
+    "size": 3598,
     "fileName": "RabbitMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/RabbitMerge.cs"
   },
@@ -18700,7 +18700,7 @@
       "null"
     ],
     "path": "Other/MergeShops/SkullbreakerKnightMerge.cs",
-    "size": 4882,
+    "size": 4923,
     "fileName": "SkullbreakerKnightMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SkullbreakerKnightMerge.cs"
   },
@@ -18711,7 +18711,7 @@
       "null"
     ],
     "path": "Other/MergeShops/FireandIceMerge.cs",
-    "size": 6067,
+    "size": 6109,
     "fileName": "FireandIceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FireandIceMerge.cs"
   },
@@ -18731,7 +18731,7 @@
       "armament"
     ],
     "path": "Other/MergeShops/PanopticonGearMerge.cs",
-    "size": 4565,
+    "size": 4606,
     "fileName": "PanopticonGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/PanopticonGearMerge.cs"
   },
@@ -18753,7 +18753,7 @@
       "trident"
     ],
     "path": "Other/MergeShops/SeaVoiceMerge.cs",
-    "size": 13494,
+    "size": 13535,
     "fileName": "SeaVoiceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SeaVoiceMerge.cs"
   },
@@ -18764,7 +18764,7 @@
       "null"
     ],
     "path": "Other/MergeShops/OrbHuntMerge.cs",
-    "size": 6667,
+    "size": 6708,
     "fileName": "OrbHuntMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/OrbHuntMerge.cs"
   },
@@ -18775,7 +18775,7 @@
       "null"
     ],
     "path": "Other/MergeShops/GooseMerge.cs",
-    "size": 3932,
+    "size": 3973,
     "fileName": "GooseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/GooseMerge.cs"
   },
@@ -18786,7 +18786,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ByrodaxMerge.cs",
-    "size": 4408,
+    "size": 4450,
     "fileName": "ByrodaxMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ByrodaxMerge.cs"
   },
@@ -18797,7 +18797,7 @@
       "null"
     ],
     "path": "Other/MergeShops/WarTrainingMerge.cs",
-    "size": 6834,
+    "size": 6875,
     "fileName": "WarTrainingMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/WarTrainingMerge.cs"
   },
@@ -18839,7 +18839,7 @@
       "intenso"
     ],
     "path": "Other/MergeShops/BadmoonMerge.cs",
-    "size": 8351,
+    "size": 8392,
     "fileName": "BadmoonMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BadmoonMerge.cs"
   },
@@ -18850,7 +18850,7 @@
       "null"
     ],
     "path": "Other/MergeShops/DoomLegacyMerge.cs",
-    "size": 10677,
+    "size": 10718,
     "fileName": "DoomLegacyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DoomLegacyMerge.cs"
   },
@@ -18861,7 +18861,7 @@
       "null"
     ],
     "path": "Other/MergeShops/CrownsreachDefenseMerge.cs",
-    "size": 5032,
+    "size": 5073,
     "fileName": "CrownsreachDefenseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CrownsreachDefenseMerge.cs"
   },
@@ -18887,7 +18887,7 @@
       "hatchling"
     ],
     "path": "Other/MergeShops/FellBeastMerge.cs",
-    "size": 4205,
+    "size": 4247,
     "fileName": "FellBeastMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FellBeastMerge.cs"
   },
@@ -18920,7 +18920,7 @@
       "streams"
     ],
     "path": "Other/MergeShops/AbyssalZoneMerge.cs",
-    "size": 6067,
+    "size": 6108,
     "fileName": "AbyssalZoneMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/AbyssalZoneMerge.cs"
   },
@@ -18951,7 +18951,7 @@
       "storms"
     ],
     "path": "Other/MergeShops/LothianTreasuryMerge.cs",
-    "size": 5870,
+    "size": 5911,
     "fileName": "LothianTreasuryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/LothianTreasuryMerge.cs"
   },
@@ -18973,7 +18973,7 @@
       "water"
     ],
     "path": "Other/MergeShops/EtherstormEvilMerge.cs",
-    "size": 5187,
+    "size": 5229,
     "fileName": "EtherstormEvilMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/EtherstormEvilMerge.cs"
   },
@@ -19021,7 +19021,7 @@
       "battlepet"
     ],
     "path": "Other/MergeShops/ExaltiaMerge.cs",
-    "size": 8693,
+    "size": 8734,
     "fileName": "ExaltiaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ExaltiaMerge.cs"
   },
@@ -19040,7 +19040,7 @@
       "purple"
     ],
     "path": "Other/MergeShops/SambaArmorMerge.cs",
-    "size": 4396,
+    "size": 4438,
     "fileName": "SambaArmorMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SambaArmorMerge.cs"
   },
@@ -19082,7 +19082,7 @@
       "elements"
     ],
     "path": "Other/MergeShops/FableForestMergeShop[Mem].cs",
-    "size": 8704,
+    "size": 8745,
     "fileName": "FableForestMergeShop[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FableForestMergeShop[Mem].cs"
   },
@@ -19093,7 +19093,7 @@
       "null"
     ],
     "path": "Other/MergeShops/CelestialRealmMerge.cs",
-    "size": 8713,
+    "size": 8754,
     "fileName": "CelestialRealmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CelestialRealmMerge.cs"
   },
@@ -19104,7 +19104,7 @@
       "null"
     ],
     "path": "Other/MergeShops/IceDungeonMerge.cs",
-    "size": 8897,
+    "size": 8938,
     "fileName": "IceDungeonMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/IceDungeonMerge.cs"
   },
@@ -19115,7 +19115,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ShipWreckMerge[non-ac].cs",
-    "size": 6281,
+    "size": 6323,
     "fileName": "ShipWreckMerge[non-ac].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ShipWreckMerge[non-ac].cs"
   },
@@ -19126,7 +19126,7 @@
       "null"
     ],
     "path": "Other/MergeShops/DragonSoulShinobiMerge.cs",
-    "size": 5651,
+    "size": 5692,
     "fileName": "DragonSoulShinobiMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DragonSoulShinobiMerge.cs"
   },
@@ -19137,7 +19137,7 @@
       "null"
     ],
     "path": "Other/MergeShops/AprilFools2019WarMerge.cs",
-    "size": 4532,
+    "size": 4573,
     "fileName": "AprilFools2019WarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/AprilFools2019WarMerge.cs"
   },
@@ -19151,7 +19151,7 @@
       ""
     ],
     "path": "Other/MergeShops/DiplomatMerge.cs",
-    "size": 5886,
+    "size": 5927,
     "fileName": "DiplomatMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DiplomatMerge.cs"
   },
@@ -19162,7 +19162,7 @@
       "null"
     ],
     "path": "Other/MergeShops/TowerofWindsMerge.cs",
-    "size": 8422,
+    "size": 8463,
     "fileName": "TowerofWindsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/TowerofWindsMerge.cs"
   },
@@ -19173,7 +19173,7 @@
       "null"
     ],
     "path": "Other/MergeShops/FiendPastMerge.cs",
-    "size": 5327,
+    "size": 5369,
     "fileName": "FiendPastMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FiendPastMerge.cs"
   },
@@ -19234,7 +19234,7 @@
       "necro"
     ],
     "path": "Other/Concerts/SkullDomeMerge.cs",
-    "size": 7964,
+    "size": 8005,
     "fileName": "SkullDomeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Concerts/SkullDomeMerge.cs"
   },
@@ -19434,7 +19434,7 @@
       "null"
     ],
     "path": "ShadowsOfWar/MergeShops/ManaCradleMerge.cs",
-    "size": 5725,
+    "size": 5766,
     "fileName": "ManaCradleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/ShadowsOfWar/MergeShops/ManaCradleMerge.cs"
   },
@@ -19445,7 +19445,7 @@
       "null"
     ],
     "path": "ShadowsOfWar/MergeShops/TimekeepMerge.cs",
-    "size": 3767,
+    "size": 3808,
     "fileName": "TimekeepMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/ShadowsOfWar/MergeShops/TimekeepMerge.cs"
   },
@@ -19456,7 +19456,7 @@
       "null"
     ],
     "path": "ShadowsOfWar/MergeShops/StreamwarMerge.cs",
-    "size": 6932,
+    "size": 6973,
     "fileName": "StreamwarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/ShadowsOfWar/MergeShops/StreamwarMerge.cs"
   },
@@ -19467,7 +19467,7 @@
       "null"
     ],
     "path": "ShadowsOfWar/MergeShops/DeadLinesMerge.cs",
-    "size": 4551,
+    "size": 4592,
     "fileName": "DeadLinesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/ShadowsOfWar/MergeShops/DeadLinesMerge.cs"
   },
@@ -19496,7 +19496,7 @@
       "mortal"
     ],
     "path": "ShadowsOfWar/MergeShops/ShadowflameFinaleMerge.cs",
-    "size": 5891,
+    "size": 5932,
     "fileName": "ShadowflameFinaleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/ShadowsOfWar/MergeShops/ShadowflameFinaleMerge.cs"
   },
@@ -19507,7 +19507,7 @@
       "null"
     ],
     "path": "ShadowsOfWar/MergeShops/WorldsCoreMerge.cs",
-    "size": 5058,
+    "size": 5099,
     "fileName": "WorldsCoreMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/ShadowsOfWar/MergeShops/WorldsCoreMerge.cs"
   },
@@ -19528,7 +19528,7 @@
       "fighting"
     ],
     "path": "ShadowsOfWar/MergeShops/FireInvasionMerge.cs",
-    "size": 5432,
+    "size": 5473,
     "fileName": "FireInvasionMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/ShadowsOfWar/MergeShops/FireInvasionMerge.cs"
   },
@@ -20700,7 +20700,7 @@
       "null"
     ],
     "path": "Nation/MergeShops/NulgathWarMerge.cs",
-    "size": 7964,
+    "size": 8005,
     "fileName": "NulgathWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/NulgathWarMerge.cs"
   },
@@ -20736,7 +20736,7 @@
       "shard"
     ],
     "path": "Nation/MergeShops/VoidChasmMerge.cs",
-    "size": 8434,
+    "size": 8475,
     "fileName": "VoidChasmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/VoidChasmMerge.cs"
   },
@@ -20778,7 +20778,7 @@
       "unstable"
     ],
     "path": "Nation/MergeShops/VoidRefugeMerge.cs",
-    "size": 13447,
+    "size": 13488,
     "fileName": "VoidRefugeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/VoidRefugeMerge.cs"
   },
@@ -20789,7 +20789,7 @@
       "null"
     ],
     "path": "Nation/MergeShops/FiendishLoreMasterMerge.cs",
-    "size": 8260,
+    "size": 8301,
     "fileName": "FiendishLoreMasterMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/FiendishLoreMasterMerge.cs"
   },
@@ -20804,7 +20804,7 @@
       "empowered voidstone"
     ],
     "path": "Nation/MergeShops/CragsGemMerge.cs",
-    "size": 9570,
+    "size": 9611,
     "fileName": "CragsGemMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/CragsGemMerge.cs"
   },
@@ -20815,7 +20815,7 @@
       "null"
     ],
     "path": "Nation/MergeShops/FiendshardMerge.cs",
-    "size": 5335,
+    "size": 5376,
     "fileName": "FiendshardMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/FiendshardMerge.cs"
   },
@@ -20834,7 +20834,7 @@
       "executioner"
     ],
     "path": "Nation/MergeShops/NationMerge.cs",
-    "size": 3719,
+    "size": 3760,
     "fileName": "NationMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/NationMerge.cs"
   },
@@ -20845,7 +20845,7 @@
       "null"
     ],
     "path": "Nation/MergeShops/DilligasMerge.cs",
-    "size": 6434,
+    "size": 6475,
     "fileName": "DilligasMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/DilligasMerge.cs"
   },
@@ -20862,7 +20862,7 @@
       "exalted"
     ],
     "path": "Nation/MergeShops/ShadowscytheMerge.cs",
-    "size": 5659,
+    "size": 5700,
     "fileName": "ShadowscytheMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/ShadowscytheMerge.cs"
   },
@@ -20917,7 +20917,7 @@
       "cane"
     ],
     "path": "Nation/MergeShops/NulgathDiamondMerge.cs",
-    "size": 14124,
+    "size": 14165,
     "fileName": "NulgathDiamondMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/NulgathDiamondMerge.cs"
   },
@@ -20933,7 +20933,7 @@
       "enchanted nulgath nation house"
     ],
     "path": "Nation/MergeShops/DirtlickersMerge.cs",
-    "size": 9606,
+    "size": 9647,
     "fileName": "DirtlickersMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/DirtlickersMerge.cs"
   },
@@ -21452,7 +21452,7 @@
       "null"
     ],
     "path": "Legion/Various/VulcarsMerge.cs",
-    "size": 4992,
+    "size": 5033,
     "fileName": "VulcarsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Various/VulcarsMerge.cs"
   },
@@ -21498,7 +21498,7 @@
       "exanima"
     ],
     "path": "Legion/Various/DageChallengeMerge.cs",
-    "size": 7363,
+    "size": 7404,
     "fileName": "DageChallengeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Various/DageChallengeMerge.cs"
   },
@@ -21509,7 +21509,7 @@
       "null"
     ],
     "path": "Legion/Various/DarkHandMerge.cs",
-    "size": 6722,
+    "size": 6763,
     "fileName": "DarkHandMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Various/DarkHandMerge.cs"
   },
@@ -21699,7 +21699,7 @@
       "birthday"
     ],
     "path": "Legion/MergeShops/DageRecruitMerge.cs",
-    "size": 11232,
+    "size": 11273,
     "fileName": "DageRecruitMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/DageRecruitMerge.cs"
   },
@@ -21710,7 +21710,7 @@
       "null"
     ],
     "path": "Legion/MergeShops/SevenCirclesWarMerge.cs",
-    "size": 6361,
+    "size": 6402,
     "fileName": "SevenCirclesWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/SevenCirclesWarMerge.cs"
   },
@@ -21736,7 +21736,7 @@
       "warlock"
     ],
     "path": "Legion/MergeShops/DarkAllianceMerge.cs",
-    "size": 6338,
+    "size": 6379,
     "fileName": "DarkAllianceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/DarkAllianceMerge.cs"
   },
@@ -21761,7 +21761,7 @@
       "underworld"
     ],
     "path": "Legion/MergeShops/ForgottenTombsMerge.cs",
-    "size": 5617,
+    "size": 5658,
     "fileName": "ForgottenTombsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/ForgottenTombsMerge.cs"
   },
@@ -21779,7 +21779,7 @@
       "soulstealer"
     ],
     "path": "Legion/MergeShops/LegionMerge.cs",
-    "size": 3714,
+    "size": 3755,
     "fileName": "LegionMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/LegionMerge.cs"
   },
@@ -21790,7 +21790,7 @@
       "null"
     ],
     "path": "Legion/MergeShops/LegionPyromancerMerge.cs",
-    "size": 7405,
+    "size": 7446,
     "fileName": "LegionPyromancerMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/LegionPyromancerMerge.cs"
   },
@@ -21814,7 +21814,7 @@
       "mini"
     ],
     "path": "Legion/MergeShops/LichKingsBountyMerge.cs",
-    "size": 5810,
+    "size": 5851,
     "fileName": "LichKingsBountyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/LichKingsBountyMerge.cs"
   },
@@ -21941,7 +21941,7 @@
       "pet"
     ],
     "path": "Legion/MergeShops/UndeadLegionMerge.cs",
-    "size": 24033,
+    "size": 24074,
     "fileName": "UndeadLegionMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/UndeadLegionMerge.cs"
   },
@@ -21972,7 +21972,7 @@
       "warrior"
     ],
     "path": "Legion/MergeShops/SoulForgeMerge.cs",
-    "size": 4551,
+    "size": 4592,
     "fileName": "SoulForgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/SoulForgeMerge.cs"
   },
@@ -21983,7 +21983,7 @@
       "null"
     ],
     "path": "Legion/MergeShops/DarkPalaceMerge.cs",
-    "size": 5215,
+    "size": 5256,
     "fileName": "DarkPalaceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/DarkPalaceMerge.cs"
   },
@@ -21994,7 +21994,7 @@
       "null"
     ],
     "path": "Legion/MergeShops/SevenCirclesMerge.cs",
-    "size": 5797,
+    "size": 5838,
     "fileName": "SevenCirclesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/SevenCirclesMerge.cs"
   },
@@ -22279,7 +22279,7 @@
       "platinum"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/BlazeBeardMerge.cs",
-    "size": 9786,
+    "size": 9827,
     "fileName": "BlazeBeardMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/BlazeBeardMerge.cs"
   },
@@ -22325,7 +22325,7 @@
       "straw"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/CelestiasRewardsMerge.cs",
-    "size": 6311,
+    "size": 6352,
     "fileName": "CelestiasRewardsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/CelestiasRewardsMerge.cs"
   },
@@ -22340,7 +22340,7 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/DragonPirateMerge.cs",
-    "size": 7509,
+    "size": 7551,
     "fileName": "DragonPirateMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/DragonPirateMerge.cs"
   },
@@ -22380,7 +22380,7 @@
       "rapier"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/YokaiPirateTreasuresMerge.cs",
-    "size": 7564,
+    "size": 7605,
     "fileName": "YokaiPirateTreasuresMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/YokaiPirateTreasuresMerge.cs"
   },
@@ -22416,7 +22416,7 @@
       "bladed"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/RakhamsPirateMerge.cs",
-    "size": 5864,
+    "size": 5905,
     "fileName": "RakhamsPirateMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/RakhamsPirateMerge.cs"
   },
@@ -22457,7 +22457,7 @@
       "hooks"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/PirateBloodWarMerge.cs",
-    "size": 5395,
+    "size": 5436,
     "fileName": "PirateBloodWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/PirateBloodWarMerge.cs"
   },
@@ -22487,7 +22487,7 @@
       "toxic"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/BarnaclesBandanasMerge.cs",
-    "size": 5135,
+    "size": 5176,
     "fileName": "BarnaclesBandanasMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/BarnaclesBandanasMerge.cs"
   },
@@ -22538,7 +22538,7 @@
       "grim"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/NavalTopHatMerge.cs",
-    "size": 11094,
+    "size": 11135,
     "fileName": "NavalTopHatMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/NavalTopHatMerge.cs"
   },
@@ -22570,7 +22570,7 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/BloodIslesMerge.cs",
-    "size": 7900,
+    "size": 7941,
     "fileName": "BloodIslesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/BloodIslesMerge.cs"
   },
@@ -22585,7 +22585,7 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/DragonCapitalMerge.cs",
-    "size": 10463,
+    "size": 10504,
     "fileName": "DragonCapitalMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/DragonCapitalMerge.cs"
   },
@@ -22622,7 +22622,7 @@
       "pistols"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/ShadowofChaosMerge.cs",
-    "size": 5804,
+    "size": 5845,
     "fileName": "ShadowofChaosMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/ShadowofChaosMerge.cs"
   },
@@ -22652,7 +22652,7 @@
       "rocker"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/PirateBloodWarMusicMerge.cs",
-    "size": 5292,
+    "size": 5333,
     "fileName": "PirateBloodWarMusicMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/PirateBloodWarMusicMerge.cs"
   },
@@ -22666,7 +22666,7 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/LowTideMerge.cs",
-    "size": 7039,
+    "size": 7080,
     "fileName": "LowTideMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/LowTideMerge.cs"
   },
@@ -22700,7 +22700,7 @@
       "crimson"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHaulMerge.cs",
-    "size": 7416,
+    "size": 7457,
     "fileName": "DoomPirateHaulMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHaulMerge.cs"
   },
@@ -22753,7 +22753,7 @@
       "beard"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/LegendaryNavalTopHatsMerge.cs",
-    "size": 11643,
+    "size": 11684,
     "fileName": "LegendaryNavalTopHatsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/LegendaryNavalTopHatsMerge.cs"
   },
@@ -22797,7 +22797,7 @@
       "battlepet"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/YokaiTreasureMerge.cs",
-    "size": 7805,
+    "size": 7846,
     "fileName": "YokaiTreasureMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/YokaiTreasureMerge.cs"
   },
@@ -22813,7 +22813,7 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/AluteaNurseryMerge.cs",
-    "size": 9991,
+    "size": 10032,
     "fileName": "AluteaNurseryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/AluteaNurseryMerge.cs"
   },
@@ -22834,7 +22834,7 @@
       "statue"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHouseMerge.cs",
-    "size": 5133,
+    "size": 5174,
     "fileName": "DoomPirateHouseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHouseMerge.cs"
   },
@@ -23004,7 +23004,7 @@
       "claws"
     ],
     "path": "Seasonal/Mogloween/MergeShops/AlnswickCastleMerge.cs",
-    "size": 8254,
+    "size": 8295,
     "fileName": "AlnswickCastleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/AlnswickCastleMerge.cs"
   },
@@ -23019,7 +23019,7 @@
       "mogloween"
     ],
     "path": "Seasonal/Mogloween/MergeShops/CrescentMerge.cs",
-    "size": 4412,
+    "size": 4453,
     "fileName": "CrescentMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/CrescentMerge.cs"
   },
@@ -23034,7 +23034,7 @@
       "merge"
     ],
     "path": "Seasonal/Mogloween/MergeShops/MogloweenSeasonalMerge.cs",
-    "size": 14989,
+    "size": 15030,
     "fileName": "MogloweenSeasonalMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/MogloweenSeasonalMerge.cs"
   },
@@ -23049,7 +23049,7 @@
       "town"
     ],
     "path": "Seasonal/Mogloween/MergeShops/TricktownMerge.cs",
-    "size": 8339,
+    "size": 8381,
     "fileName": "TricktownMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/TricktownMerge.cs"
   },
@@ -23106,7 +23106,7 @@
       "blasters"
     ],
     "path": "Seasonal/Mogloween/MergeShops/CandiedCostumesMerge.cs",
-    "size": 13923,
+    "size": 13964,
     "fileName": "CandiedCostumesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/CandiedCostumesMerge.cs"
   },
@@ -23121,7 +23121,7 @@
       "chroma"
     ],
     "path": "Seasonal/Mogloween/MergeShops/ChromaCandyMerge.cs",
-    "size": 4646,
+    "size": 4688,
     "fileName": "ChromaCandyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/ChromaCandyMerge.cs"
   },
@@ -23136,7 +23136,7 @@
       "lord"
     ],
     "path": "Seasonal/Mogloween/MergeShops/VampireLordMerge.cs",
-    "size": 4238,
+    "size": 4279,
     "fileName": "VampireLordMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/VampireLordMerge.cs"
   },
@@ -23149,7 +23149,7 @@
       "seasonal"
     ],
     "path": "Seasonal/Mogloween/MergeShops/Mog-GLOW-weenMerge.cs",
-    "size": 4254,
+    "size": 4295,
     "fileName": "Mog-GLOW-weenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/Mog-GLOW-weenMerge.cs"
   },
@@ -23394,7 +23394,7 @@
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/MergeShops/OdditiesMerge.cs",
-    "size": 7338,
+    "size": 7379,
     "fileName": "OdditiesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/OdditiesMerge.cs"
   },
@@ -23407,7 +23407,7 @@
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/MergeShops/DeadflyMerge.cs",
-    "size": 5263,
+    "size": 5304,
     "fileName": "DeadflyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/DeadflyMerge.cs"
   },
@@ -23420,7 +23420,7 @@
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/MergeShops/FabyosSpookyMerge.cs",
-    "size": 5260,
+    "size": 5301,
     "fileName": "FabyosSpookyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/FabyosSpookyMerge.cs"
   },
@@ -23459,7 +23459,7 @@
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/MergeShops/ValariansMerge.cs",
-    "size": 5816,
+    "size": 5857,
     "fileName": "ValariansMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/ValariansMerge.cs"
   },
@@ -23472,7 +23472,7 @@
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/MergeShops/LoreTrekMerge.cs",
-    "size": 6005,
+    "size": 6046,
     "fileName": "LoreTrekMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/LoreTrekMerge.cs"
   },
@@ -23485,7 +23485,7 @@
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/MergeShops/GonnaGetchaMerge.cs",
-    "size": 4701,
+    "size": 4742,
     "fileName": "GonnaGetchaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/GonnaGetchaMerge.cs"
   },
@@ -23498,7 +23498,7 @@
       "harvest-day"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/EbilCorpHQMerge.cs",
-    "size": 8258,
+    "size": 8299,
     "fileName": "EbilCorpHQMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/EbilCorpHQMerge.cs"
   },
@@ -23523,7 +23523,7 @@
       "warrior"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/FreeasaBirdMerge.cs",
-    "size": 5036,
+    "size": 5077,
     "fileName": "FreeasaBirdMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/FreeasaBirdMerge.cs"
   },
@@ -23536,7 +23536,7 @@
       "harvest-day"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/HarvestMerge.cs",
-    "size": 11752,
+    "size": 11793,
     "fileName": "HarvestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/HarvestMerge.cs"
   },
@@ -23549,7 +23549,7 @@
       "harvest-day"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/NightmareHarvestWarMerge.cs",
-    "size": 6421,
+    "size": 6462,
     "fileName": "NightmareHarvestWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/NightmareHarvestWarMerge.cs"
   },
@@ -23562,7 +23562,7 @@
       "harvest-day"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/EbilCorpCafeMerge.cs",
-    "size": 4735,
+    "size": 4776,
     "fileName": "EbilCorpCafeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/EbilCorpCafeMerge.cs"
   },
@@ -23575,7 +23575,7 @@
       "harvest-day"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/NightmareHarvestMerge.cs",
-    "size": 6122,
+    "size": 6163,
     "fileName": "NightmareHarvestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/NightmareHarvestMerge.cs"
   },
@@ -23605,7 +23605,7 @@
       "pet"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/RobinasHarvestMerge.cs",
-    "size": 6268,
+    "size": 6309,
     "fileName": "RobinasHarvestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/RobinasHarvestMerge.cs"
   },
@@ -23618,7 +23618,7 @@
       "harvest-day"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/HarvestDayParadeMerge.cs",
-    "size": 4168,
+    "size": 4209,
     "fileName": "HarvestDayParadeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/HarvestDayParadeMerge.cs"
   },
@@ -23657,7 +23657,7 @@
       "ninja"
     ],
     "path": "Seasonal/StaffBirthdays/Beleen/BeleensDyeMerge.cs",
-    "size": 6484,
+    "size": 6525,
     "fileName": "BeleensDyeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/Beleen/BeleensDyeMerge.cs"
   },
@@ -23673,7 +23673,7 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/Nulgath/TempleDelveMerge.cs",
-    "size": 6773,
+    "size": 6814,
     "fileName": "TempleDelveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/Nulgath/TempleDelveMerge.cs"
   },
@@ -23692,7 +23692,7 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/Nulgath/TempleSiegeMerge.cs",
-    "size": 9971,
+    "size": 10012,
     "fileName": "TempleSiegeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/Nulgath/TempleSiegeMerge.cs"
   },
@@ -23758,7 +23758,7 @@
       "null"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/UnderworldTeamMerge.cs",
-    "size": 5411,
+    "size": 5452,
     "fileName": "UnderworldTeamMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/UnderworldTeamMerge.cs"
   },
@@ -23793,7 +23793,7 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/DarkwarlegionWarChestMerge.cs",
-    "size": 4038,
+    "size": 4079,
     "fileName": "DarkwarlegionWarChestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DarkwarlegionWarChestMerge.cs"
   },
@@ -23819,7 +23819,7 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/FortressDelveMerge.cs",
-    "size": 6659,
+    "size": 6700,
     "fileName": "FortressDelveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/FortressDelveMerge.cs"
   },
@@ -23881,7 +23881,7 @@
       "null"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/DagesBirthdayMerge.cs",
-    "size": 6097,
+    "size": 6138,
     "fileName": "DagesBirthdayMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DagesBirthdayMerge.cs"
   },
@@ -23921,7 +23921,7 @@
       "morph"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/CocytusBarracksMerge.cs",
-    "size": 8962,
+    "size": 9003,
     "fileName": "CocytusBarracksMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/CocytusBarracksMerge.cs"
   },
@@ -23939,7 +23939,7 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/NationWarChestMerge.cs",
-    "size": 3946,
+    "size": 3987,
     "fileName": "NationWarChestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/NationWarChestMerge.cs"
   },
@@ -24013,7 +24013,7 @@
       "gem"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/AbyssalMerge.cs",
-    "size": 8677,
+    "size": 8718,
     "fileName": "AbyssalMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/AbyssalMerge.cs"
   },
@@ -24024,7 +24024,7 @@
       "null"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/FutureWarMerge.cs",
-    "size": 6366,
+    "size": 6407,
     "fileName": "FutureWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/FutureWarMerge.cs"
   },
@@ -24070,7 +24070,7 @@
       "darkbirthday"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/DarkBirthdayTokenMerge.cs",
-    "size": 15459,
+    "size": 15500,
     "fileName": "DarkBirthdayTokenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DarkBirthdayTokenMerge.cs"
   },
@@ -24106,7 +24106,7 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/DarkWarNationMerge.cs",
-    "size": 8123,
+    "size": 8164,
     "fileName": "DarkWarNationMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DarkWarNationMerge.cs"
   },
@@ -24127,7 +24127,7 @@
       "darkbirthday"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/RandsMerge.cs",
-    "size": 5069,
+    "size": 5110,
     "fileName": "RandsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/RandsMerge.cs"
   },
@@ -24141,7 +24141,7 @@
       "staff birthday"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/ShakazsMerge.cs",
-    "size": 5994,
+    "size": 6035,
     "fileName": "ShakazsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/ShakazsMerge.cs"
   },
@@ -24174,7 +24174,7 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/DarkWarLegionMerge.cs",
-    "size": 6961,
+    "size": 7002,
     "fileName": "DarkWarLegionMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DarkWarLegionMerge.cs"
   },
@@ -24213,7 +24213,7 @@
       "spear"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/LegionBarracksMerge.cs",
-    "size": 6579,
+    "size": 6620,
     "fileName": "LegionBarracksMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/LegionBarracksMerge.cs"
   },
@@ -24224,7 +24224,7 @@
       "null"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/DageWar50Merge.cs",
-    "size": 3148,
+    "size": 3189,
     "fileName": "DageWar50Merge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DageWar50Merge.cs"
   },
@@ -24241,7 +24241,7 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/Yang/YangsFavorsMerge.cs",
-    "size": 3800,
+    "size": 3841,
     "fileName": "YangsFavorsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/Yang/YangsFavorsMerge.cs"
   },
@@ -24287,7 +24287,7 @@
       "lance"
     ],
     "path": "Seasonal/StaffBirthdays/Bido/BidoBirthdayMerge.cs",
-    "size": 10633,
+    "size": 10674,
     "fileName": "BidoBirthdayMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/Bido/BidoBirthdayMerge.cs"
   },
@@ -25958,7 +25958,7 @@
       "null"
     ],
     "path": "Templates/Examples/Other/MergeExample.cs",
-    "size": 4675,
+    "size": 4716,
     "fileName": "MergeExample.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Templates/Examples/Other/MergeExample.cs"
   },
