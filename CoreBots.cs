@@ -2047,7 +2047,7 @@ public class CoreBots
     /// <param name="questID">ID of the quest to accept</param>
     public bool EnsureAccept(int questID = 0)
     {
-        Quest QuestData = EnsureLoad(questID);
+        Quest QuestData = InitializeWithRetries(() => EnsureLoad(questID));
 
         if (QuestData.Upgrade && !IsMember)
             Logger($"\"{QuestData.Name}\" [{questID}] is member-only, stopping the bot.", stopBot: true);
@@ -2109,7 +2109,7 @@ public class CoreBots
             questIDs = new int[] { 0 }; // Default value
         }
 
-        List<Quest> QuestData = EnsureLoad(questIDs?.Where(q => q > 0).ToArray() ?? Array.Empty<int>());
+        List<Quest> QuestData = InitializeWithRetries(() => EnsureLoad(questIDs?.Where(q => q > 0).ToArray() ?? Array.Empty<int>()));
 
         foreach (Quest quest in QuestData)
         {
@@ -2170,7 +2170,7 @@ public class CoreBots
         if (questID <= 0)
             return false;
 
-        Quest questData = EnsureLoad(questID);
+        Quest questData = InitializeWithRetries(() => EnsureLoad(questID));
 
         // Bot.Wait.ForTrue(() => questData != null, 20);
 
@@ -2195,7 +2195,7 @@ public class CoreBots
     /// <param name="questIDs">IDs of the quests.</param>
     public void EnsureComplete(params int[] questIDs)
     {
-        List<Quest> questData = EnsureLoad(questIDs);
+        List<Quest> questData = InitializeWithRetries(() => EnsureLoad(questIDs));
 
         foreach (Quest questID in questData)
         {
@@ -2221,7 +2221,7 @@ public class CoreBots
     /// <param name="itemList">List of the items to get, if you want all just let it be null</param>
     public bool EnsureCompleteChoose(int questID, string[]? itemList = null)
     {
-        Quest quest = EnsureLoad(questID);
+        Quest quest = InitializeWithRetries(() => EnsureLoad(questID));
 
         EnsureLoad(quest.ID);
         Sleep();
@@ -2262,15 +2262,7 @@ public class CoreBots
     public int EnsureCompleteMulti(int questID, int amount = -1, int itemID = -1)
     {
         //idk why but it wants `var` not `Quest`.. and it just works :|
-        Quest? quest = null;
-        for (int i = 0; i < 5; i++)
-        {
-            quest = EnsureLoad(questID);
-            if (quest != null)
-                break;
-            Logger($"Attempt {i + 1}: Quest {questID} not loaded. Retrying...");
-            Sleep(1000); // Wait for 1 second before retrying
-        }
+        Quest quest = InitializeWithRetries(() => EnsureLoad(questID));
 
         if (quest == null)
         {
@@ -2499,6 +2491,8 @@ public class CoreBots
     {
         if (itemID > 0)
             Bot.Drops.Add(itemID);
+       
+        Quest? QuestData = InitializeWithRetries(() => EnsureLoad(questID));
 
         ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == itemID);
         if (Item != null && Item.Quantity == Item.MaxStack)
@@ -2512,14 +2506,14 @@ public class CoreBots
     /// <param name="QuestID">ID of the quest</param>
     public bool isCompletedBefore(int QuestID)
     {
-        Quest? QuestData = EnsureLoad(QuestID);
+        Quest? QuestData = InitializeWithRetries(() => EnsureLoad(QuestID));
         try
         {
             return QuestData.Slot < 0 || Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot) >= QuestData.Value;
         }
         catch
         {
-            QuestData = EnsureLoad(QuestID);
+            QuestData = InitializeWithRetries(() => EnsureLoad(QuestID));
             return QuestData?.Slot < 0 || Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData!.Slot) >= QuestData.Value;
         }
     }
