@@ -711,10 +711,10 @@ public class CoreNation
         void FarmItem(Quest? larvaeQuest, Quest? voucherQuest, string item, int quant)
         {
 
-            voucherQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
+            voucherQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(4778));
             if (voucherQuest == null)
             {
-                Core.Logger("Failed to load voucher quest (ID: 7551) after multiple attempts.");
+                Core.Logger("Failed to load voucher quest (ID: 4778) after multiple attempts.");
                 return;
             }
 
@@ -726,7 +726,7 @@ public class CoreNation
                 return;
             }
 
-            int itemId = rewardItem.ID; bool shouldFarm4778 = item != null && voucherQuest != null && voucherQuest.Rewards.Any(x => x != null && x.Name == item);
+            bool shouldFarm4778 = item != null && voucherQuest != null && voucherQuest.Rewards.Any(x => x != null && x.Name == item);
 
             Bot.Drops.Add("Mana Energy for Nulgath", item!);
 
@@ -747,8 +747,8 @@ public class CoreNation
                     if (shouldFarm4778 && Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
                     {
                         Core.EnsureAccept(4778);
-                        Core.EnsureCompleteMulti(4778, itemId);
-                        Bot.Wait.ForPickup(item ?? string.Empty);
+                        Core.EnsureCompleteMulti(4778, rewardItem?.ID ?? -1);
+                        Bot.Wait.ForPickup(rewardItem?.ID ?? -1);
                     }
                 }
             }
