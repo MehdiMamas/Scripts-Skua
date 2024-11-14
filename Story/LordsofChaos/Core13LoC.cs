@@ -2400,12 +2400,14 @@ public class Core13LoC
         }
 
         //Defeat the 13th Lord of Chaos
-        if (!Story.QuestProgression(3880))
+        if (!Core.isCompletedBefore(3881))
         {
             Core.EnsureAccept(3880);
             Core.HuntMonsterMapID("chaoslord", 1, "13th Lord of Chaos Defeated");
             Core.EnsureComplete(3880);
             Bot.Wait.ForMapLoad("confrontation");
+            // Insurance
+            Core.Join("whitemap");
         }
 
         //The Final Showdown!
