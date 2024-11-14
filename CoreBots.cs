@@ -1967,8 +1967,15 @@ public class CoreBots
             while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
             {
                 await Task.Delay(ActionDelay);
-                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest _quest) && _quest != null))
+                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys))
                 {
+                    Quest? initializedQuest = InitializeWithRetries(() => Bot.Quests.TryGetQuest(quest.ID, out Quest? _quest) ? _quest : null);
+                    if (initializedQuest == null)
+                    {
+                        Logger($"Failed to initialize quest with ID {quest.ID} after multiple attempts.");
+                        continue;
+                    }
+
                     if (Bot.Quests.IsInProgress(quest.ID) && !Bot.Quests.CanComplete(quest.ID))
                         continue;
 
