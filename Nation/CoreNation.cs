@@ -710,10 +710,25 @@ public class CoreNation
 
         void FarmItem(Quest? larvaeQuest, Quest? voucherQuest, string item, int quant)
         {
-            int itemId = voucherQuest.Rewards.FirstOrDefault(x => x != null && x.Name == item).ID;
-            bool shouldFarm4778 = item != null && voucherQuest != null && voucherQuest.Rewards.Any(x => x != null && x.Name == item);
 
-            Bot.Drops.Add("Mana Energy for Nulgath", item);
+            voucherQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
+            if (voucherQuest == null)
+            {
+                Core.Logger("Failed to load voucher quest (ID: 7551) after multiple attempts.");
+                return;
+            }
+
+            // Ensure rewardItem is properly loaded
+            ItemBase? rewardItem = Core.InitializeWithRetries(() => voucherQuest.Rewards.FirstOrDefault(x => x != null && x.Name == item));
+            if (rewardItem == null)
+            {
+                Core.Logger($"Reward item '{item}' not found in voucher quest rewards.");
+                return;
+            }
+
+            int itemId = rewardItem.ID; bool shouldFarm4778 = item != null && voucherQuest != null && voucherQuest.Rewards.Any(x => x != null && x.Name == item);
+
+            Bot.Drops.Add("Mana Energy for Nulgath", item!);
 
             Core.FarmingLogger(item, quant);
             while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
@@ -860,9 +875,17 @@ public class CoreNation
             {
                 List<ItemBase> rewards = Core.EnsureLoad(2857).Rewards;
                 ItemBase? Item = rewards.Find(x => x.Name == item);
-                // If return item = null, use firs non-maxed reward, if this returns null then use -1 as an id
-                ReturnItem ??= Bot.Quests.EnsureLoad(7551).Rewards
-                 .FirstOrDefault(x => x != null && x.Quantity < x.MaxStack)?.Name ?? "None";
+                Quest? voucherQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
+                if (voucherQuest == null)
+                {
+                    Core.Logger("Failed to load voucher quest (ID: 7551) after multiple attempts.");
+                }
+                else
+                {
+                    // If return item = null, use firs non-maxed reward, if this returns null then use -1 as an id
+                    ReturnItem ??= voucherQuest.Rewards
+                     .FirstOrDefault(x => x != null && x.Quantity < x.MaxStack)?.Name ?? "None";
+                }
 
                 if (Item != null && Core.CheckInventory(Item.ID, quant))
                 {
@@ -927,8 +950,8 @@ public class CoreNation
         Core.DarkMakaiItem("Dark Makai Rune");
 
         // Try to find the specified reward item, skipping "Receipt of Swindle"
-        Quest quest = Bot.Quests.EnsureLoad(7551);
-        ItemBase targetReward = quest?.Rewards.FirstOrDefault(r => r.Name == item && r.Name != "Receipt of Swindle");
+        Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
+        ItemBase? targetReward = quest?.Rewards.FirstOrDefault(r => r.Name == item && r.Name != "Receipt of Swindle");
 
         // Complete with targetReward if found, otherwise find a non-maxed reward or use -1 as fallback
         int rewardID = targetReward?.ID ??
@@ -936,7 +959,8 @@ public class CoreNation
 
         if (rewardID != -1 && Bot.Quests.CanCompleteFullCheck(7551))
         {
-            Core.Logger($"Completing with: {quest.Rewards.First(r => r.ID == rewardID).Name} [ID: {rewardID}]");
+            if (quest != null)
+                Core.Logger($"Completing with: {quest.Rewards.First(r => r.ID == rewardID).Name} [ID: {rewardID}]");
             Core.EnsureComplete(7551, rewardID);
         }
         else if (quest == null)
