@@ -711,10 +711,10 @@ public class CoreNation
         void FarmItem(Quest? larvaeQuest, Quest? voucherQuest, string item, int quant)
         {
 
-            voucherQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
+            voucherQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(4778));
             if (voucherQuest == null)
             {
-                Core.Logger("Failed to load voucher quest (ID: 7551) after multiple attempts.");
+                Core.Logger("Failed to load voucher quest (ID: 4778) after multiple attempts.");
                 return;
             }
 
@@ -748,7 +748,7 @@ public class CoreNation
                     {
                         Core.EnsureAccept(4778);
                         Core.EnsureCompleteMulti(4778, itemId);
-                        Bot.Wait.ForPickup(item ?? string.Empty);
+                        Bot.Wait.ForPickup(itemId);
                     }
                 }
             }
