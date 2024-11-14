@@ -7,7 +7,7 @@ tags: robinas, harvest, merge, blightharvest, turdracolich, hunter, stalker, bri
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/Seasonal\HarvestDay\CoreHarvestDay.cs
+//cs_include Scripts/Seasonal/HarvestDay/CoreHarvestDay.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
