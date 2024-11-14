@@ -18,6 +18,7 @@ public class ShadowMerge
     private CoreAdvanced Adv = new();
     private static CoreAdvanced sAdv = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
@@ -63,7 +64,7 @@ public class ShadowMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(9421, 9422);
-                    Core.KillMonster("shadowbattleon", "r7", "Left", "*", req.Name, quant, false, false);
+                    Core.KillMonster("shadowbattleon", "r7", "Left", "*", req.Name, quant, false);
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
