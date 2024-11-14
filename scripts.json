@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 297154,
+    "size": 296483,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 132321,
+    "size": 132405,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -10107,7 +10107,7 @@
       "null"
     ],
     "path": "Story/LordsofChaos/Core13LoC.cs",
-    "size": 80658,
+    "size": 80718,
     "fileName": "Core13LoC.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/LordsofChaos/Core13LoC.cs"
   },
@@ -13928,7 +13928,7 @@
       "voyage"
     ],
     "path": "Darkon/MergeShops/ArcanaInvokerResourceMerge.cs",
-    "size": 34588,
+    "size": 34629,
     "fileName": "ArcanaInvokerResourceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/ArcanaInvokerResourceMerge.cs"
   },
@@ -23446,7 +23446,7 @@
       "enchanted"
     ],
     "path": "Seasonal/Friday13th/MergeShops/ShadowMerge.cs",
-    "size": 5692,
+    "size": 5726,
     "fileName": "ShadowMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/ShadowMerge.cs"
   },

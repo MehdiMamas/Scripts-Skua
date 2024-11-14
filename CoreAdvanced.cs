@@ -63,6 +63,8 @@ public class CoreAdvanced
             return;
 
         Core.Join(map);
+        Bot.Wait.ForMapLoad(map);
+        Core.JumpWait();
 
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
         {
@@ -94,6 +96,7 @@ public class CoreAdvanced
 
         Core.Join(map);
         Bot.Wait.ForMapLoad(map);
+        Core.JumpWait();
 
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
         {
