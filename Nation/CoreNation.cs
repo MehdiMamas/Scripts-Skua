@@ -674,7 +674,7 @@ public class CoreNation
     /// <param name="quant">The quantity of the item to farm.</param>
     public void NulgathLarvae(string? item = null, int quant = 1)
     {
-        if (Core.CheckInventory(item, quant))
+        if (string.IsNullOrEmpty(item) || Core.CheckInventory(item, quant))
             return;
 
         Quest? larvaeQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2566));
