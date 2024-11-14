@@ -21,6 +21,7 @@ public class WubblesMerge
     private static CoreAdvanced sAdv = new();
     private Wubbles Wub = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

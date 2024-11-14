@@ -23,6 +23,7 @@ public class DeepTunnelMerge
     public CoreQOM QOM = new();
     public CoreNation Nation = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

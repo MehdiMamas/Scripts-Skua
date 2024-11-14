@@ -25,6 +25,7 @@ public class AstraviaCastleMerge
     public CoreDarkon Darkon = new();
     public CoreAstravia Astravia = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

@@ -28,6 +28,7 @@ public class WarTrainingMerge
     public DragonslayerGeneral DSG = new();
     public FireChampionsArmor FCA = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

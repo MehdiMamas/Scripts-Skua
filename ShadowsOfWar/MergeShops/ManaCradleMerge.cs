@@ -24,6 +24,7 @@ public class ManaCradleMerge
     private CoreSoWMats SOWM = new();
     private CoreSoW SoW = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

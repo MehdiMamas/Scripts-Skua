@@ -22,6 +22,7 @@ public class DreampalaceMerge
     public static CoreAdvanced sAdv = new();
     public DreamPalace dreamPalace = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

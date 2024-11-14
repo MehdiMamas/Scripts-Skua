@@ -7,7 +7,7 @@ tags: hiddenduat, merge, hiddenduat, apophis, medjai, bangs, morph, horned, dark
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Seasonal\BlackFriday\ShadowofDoom\CoreShadowofDoom.cs
+//cs_include Scripts/Seasonal/BlackFriday/ShadowofDoom/CoreShadowofDoom.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -21,6 +21,7 @@ public class HiddenDuatMerge
     private static CoreAdvanced sAdv = new();
     private CoreShadowofDoom CSoD = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

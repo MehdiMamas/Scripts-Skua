@@ -23,6 +23,7 @@ public class NightmareHarvestWarMerge
     public static CoreAdvanced sAdv = new();
     public CoreHarvestDay HarvestDay = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

@@ -25,6 +25,7 @@ public class Adam1a1Merge
     public Banished Banished = new();
     public Adam1a1Quest Adam1a1Quest = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

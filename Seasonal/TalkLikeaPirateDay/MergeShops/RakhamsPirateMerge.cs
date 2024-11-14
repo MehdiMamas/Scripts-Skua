@@ -21,6 +21,7 @@ public class RakhamsPirateMerge
     private static CoreAdvanced sAdv = new();
     private Pirates Pir = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;

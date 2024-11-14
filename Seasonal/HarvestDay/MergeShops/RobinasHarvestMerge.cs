@@ -7,7 +7,7 @@ tags: robinas, harvest, merge, blightharvest, turdracolich, hunter, stalker, bri
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/Seasonal\HarvestDay\CoreHarvestDay.cs
+//cs_include Scripts/Seasonal/HarvestDay/CoreHarvestDay.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -21,6 +21,7 @@ public class RobinasHarvestMerge
     private static CoreAdvanced sAdv = new();
     private CoreHarvestDay CHD = new();
 
+    public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
