@@ -2045,7 +2045,12 @@ public class CoreBots
     /// <param name="questID">ID of the quest to accept</param>
     public bool EnsureAccept(int questID = 0)
     {
-        Quest QuestData = InitializeWithRetries(() => EnsureLoad(questID));
+        Quest? QuestData = InitializeWithRetries(() => EnsureLoad(questID));
+        if (QuestData == null)
+        {
+            Logger($"Failed to load quest with ID {questID} after multiple attempts.");
+            return false;
+        }
 
         if (QuestData.Upgrade && !IsMember)
             Logger($"\"{QuestData.Name}\" [{questID}] is member-only, stopping the bot.", stopBot: true);
@@ -2107,7 +2112,12 @@ public class CoreBots
             questIDs = new int[] { 0 }; // Default value
         }
 
-        List<Quest> QuestData = InitializeWithRetries(() => EnsureLoad(questIDs?.Where(q => q > 0).ToArray() ?? Array.Empty<int>()));
+        List<Quest>? QuestData = InitializeWithRetries(() => EnsureLoad(questIDs?.Where(q => q > 0).ToArray() ?? Array.Empty<int>()));
+        if (QuestData == null)
+        {
+            Logger("Failed to load quests after multiple attempts.");
+            return;
+        }
 
         foreach (Quest quest in QuestData)
         {
@@ -2168,7 +2178,12 @@ public class CoreBots
         if (questID <= 0)
             return false;
 
-        Quest questData = InitializeWithRetries(() => EnsureLoad(questID));
+        Quest? questData = InitializeWithRetries(() => EnsureLoad(questID));
+        if (questData == null)
+        {
+            Logger($"Failed to load quest with ID {questID} after multiple attempts.");
+            return false;
+        }
 
         // Bot.Wait.ForTrue(() => questData != null, 20);
 
@@ -2192,7 +2207,12 @@ public class CoreBots
     /// <param name="questIDs">IDs of the quests.</param>
     public void EnsureComplete(params int[] questIDs)
     {
-        List<Quest> questData = InitializeWithRetries(() => EnsureLoad(questIDs));
+        List<Quest>? questData = InitializeWithRetries(() => EnsureLoad(questIDs));
+        if (questData == null)
+        {
+            Logger("Failed to load quests after multiple attempts.");
+            return;
+        }
 
         foreach (Quest questID in questData)
         {
@@ -2217,7 +2237,12 @@ public class CoreBots
     /// <param name="itemList">List of the items to get, if you want all just let it be null</param>
     public bool EnsureCompleteChoose(int questID, string[]? itemList = null)
     {
-        Quest quest = InitializeWithRetries(() => EnsureLoad(questID));
+        Quest? quest = InitializeWithRetries(() => EnsureLoad(questID));
+        if (quest == null)
+        {
+            Logger($"Failed to load quest with ID {questID} after multiple attempts.");
+            return false;
+        }
 
         EnsureLoad(quest.ID);
         Sleep();
@@ -2257,8 +2282,7 @@ public class CoreBots
     public int EnsureCompleteMulti(int questID, int amount = -1, int itemID = -1)
     {
         //idk why but it wants `var` not `Quest`.. and it just works :|
-        Quest quest = InitializeWithRetries(() => EnsureLoad(questID));
-
+        Quest? quest = InitializeWithRetries(() => EnsureLoad(questID));
         if (quest == null)
         {
             Logger($"Quest {questID} not loaded after 5 attempts.");
@@ -2501,6 +2525,12 @@ public class CoreBots
     public bool isCompletedBefore(int QuestID)
     {
         Quest? QuestData = InitializeWithRetries(() => EnsureLoad(QuestID));
+        if (QuestData == null)
+        {
+            Logger($"Failed to initialize quest with ID {QuestID} after multiple attempts.");
+            return false;
+        }
+
         try
         {
             return QuestData.Slot < 0 || Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot) >= QuestData.Value;
@@ -2508,7 +2538,12 @@ public class CoreBots
         catch
         {
             QuestData = InitializeWithRetries(() => EnsureLoad(QuestID));
-            return QuestData?.Slot < 0 || Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData!.Slot) >= QuestData.Value;
+            if (QuestData == null)
+            {
+                Logger($"Failed to reinitialize quest with ID {QuestID} after multiple attempts.");
+                return false;
+            }
+            return QuestData.Slot < 0 || Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot) >= QuestData.Value;
         }
     }
 
