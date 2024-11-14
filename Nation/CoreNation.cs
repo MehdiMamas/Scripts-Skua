@@ -726,7 +726,7 @@ public class CoreNation
                 return;
             }
 
-            int itemId = rewardItem.ID; bool shouldFarm4778 = item != null && voucherQuest != null && voucherQuest.Rewards.Any(x => x != null && x.Name == item);
+            bool shouldFarm4778 = item != null && voucherQuest != null && voucherQuest.Rewards.Any(x => x != null && x.Name == item);
 
             Bot.Drops.Add("Mana Energy for Nulgath", item!);
 
@@ -747,8 +747,8 @@ public class CoreNation
                     if (shouldFarm4778 && Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
                     {
                         Core.EnsureAccept(4778);
-                        Core.EnsureCompleteMulti(4778, itemId);
-                        Bot.Wait.ForPickup(itemId);
+                        Core.EnsureCompleteMulti(4778, rewardItem?.ID ?? -1);
+                        Bot.Wait.ForPickup(rewardItem?.ID ?? -1);
                     }
                 }
             }
