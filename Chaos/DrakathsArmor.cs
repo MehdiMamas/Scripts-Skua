@@ -75,7 +75,7 @@ public class DrakathArmorBot
         Core.AddDrop("Dage's Scroll Fragment", "Treasure Chest", "Face of Chaos", "Get Your Original Drakath's Armor");
 
         Core.EnsureAccept(3882);
-
+        Farm.ChaosREP();
         if (!Core.CheckInventory("Dage's Scroll Fragment", 13))
         {
             Daily.DagesScrollFragment();
