@@ -1250,51 +1250,32 @@ public class CoreNation
 
             if (item != "Voucher of Nulgath" && sellMemVoucher == true && Core.CheckInventory("Voucher of Nulgath"))
             {
-                while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
-                {
-                    // Ensure not in combat or has a target
-                    Bot.Combat.CancelTarget();
-                    Bot.Wait.ForCombatExit();
-                    Core.Sleep();
+                Core.Jump("Enter", "Spawn");
 
-                    // Jump to "Enter" and wait until successfully in "Enter" cell
-                    while (!Bot.ShouldExit && Bot.Player.Cell != "Enter")
-                    {
-                        Core.Sleep();
-                        Core.Jump("Enter", "Spawn");
+                // Wait for pickup, and sell the item
+                Bot.Wait.ForPickup("Voucher of Nulgath");
 
-                        if (Bot.Player.Cell == "Enter")
-                            break;
-                    }
-
-                }
-
-                // Pickup and sell the item
-                Bot.Drops.Pickup("Voucher of Nulgath");
                 if (!KeepVoucher)
-                {
                     Core.SellItem("Voucher of Nulgath", all: true);
-                    Bot.Wait.ForItemSell();
-                }
+            }
 
-                if (Bot.Player.Gold >= 1000000 && AssistantDuring)
-                {
-                    Core.JumpWait();
+            if (Bot.Player.Gold >= 1000000 && AssistantDuring)
+            {
+                Core.JumpWait();
 
-                    decimal calculatedAmount = Bot.Player.Gold / 100000M;
-                    int quantityToBuy = (int)calculatedAmount;
+                decimal calculatedAmount = Bot.Player.Gold / 100000M;
+                int quantityToBuy = (int)calculatedAmount;
 
-                    quantityToBuy = Math.Min(quantityToBuy, 250);
+                quantityToBuy = Math.Min(quantityToBuy, 250);
 
-                    Core.EnsureAccept(2859);
-                    Core.BuyItem("yulgar", 41, "War-Torn Memorabilia", quantityToBuy);
-                    Core.EnsureCompleteMulti(2859);
-                }
+                Core.EnsureAccept(2859);
+                Core.BuyItem("yulgar", 41, "War-Torn Memorabilia", quantityToBuy);
+                Core.EnsureCompleteMulti(2859);
             }
 
         Retry:
             //reduce spam
-            Quest? quest = Bot.Quests.EnsureLoad(7551);
+            Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
             if (quest != null)
             {
                 if (quest.Rewards.All(x => Bot.Inventory.GetQuantity(x.ID) >= x.MaxStack))

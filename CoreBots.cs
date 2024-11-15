@@ -1525,6 +1525,11 @@ public class CoreBots
             Logger($"Sold x{sell_count} \"{itemName}\"");
             return;
         }
+        else if (all && !Bot.Inventory.Contains(itemName))
+        {
+            Logger($"Sold ALL of \"{itemName}\"");
+            return;
+        }
         else
         {
             if (retryCount < 5)
