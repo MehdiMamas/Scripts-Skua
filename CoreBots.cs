@@ -2103,9 +2103,8 @@ public class CoreBots
     /// <summary>
     /// Accepts all the quests given
     /// </summary>
-    /// <param name="RegisterQuest"></param>
     /// <param name="questIDs">IDs of the quests</param>
-    public void EnsureAcceptmultiple(bool RegisterQuest = false, params int[]? questIDs)
+    public void EnsureAcceptmultiple(params int[]? questIDs)
     {
         if (questIDs == null || questIDs.Length == 0)
         {

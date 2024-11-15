@@ -72,7 +72,7 @@ public class ArmyLightCaster
 
         while (!Bot.ShouldExit && !Core.CheckInventory(new[] { 38153, 31058 }))
         {
-            Core.EnsureAcceptmultiple(false, new[ ]{4510, 4511, 4512});
+            Core.EnsureAcceptmultiple( new[ ]{4510, 4511, 4512});
             if (!Core.CheckInventory(30266))
                 ArmyHunt("lostruinswar", new[] { "Fallen Knight" }, "Trapped Spirits", ClassType.Farm, isTemp: false, 500);
             if (!Core.CheckInventory(31019))

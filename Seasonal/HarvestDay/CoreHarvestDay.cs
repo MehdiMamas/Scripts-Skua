@@ -64,7 +64,7 @@ public class CoreHarvestDay
         //Unboiling Water (131)
         if (!Story.QuestProgression(131))
         {
-            Core.EnsureAcceptmultiple(false, new[] { 131, 420 });
+            Core.EnsureAcceptmultiple( new[] { 131, 420 });
             Core.GetMapItem(31, 1, "harvest");
             Core.EnsureComplete(420);
             Core.EnsureComplete(131);
@@ -73,7 +73,7 @@ public class CoreHarvestDay
         //The Corn has Ears (132)
         if (!Story.QuestProgression(132))
         {
-            Core.EnsureAcceptmultiple(false, new[] { 132, 421 });
+            Core.EnsureAcceptmultiple( new[] { 132, 421 });
             Core.HuntMonster("harvest", "Corn Stalker", "Corn Stalker Ears", 8, log: false);
             Core.EnsureComplete(421);
             Core.EnsureComplete(132);
@@ -82,7 +82,7 @@ public class CoreHarvestDay
         //An Apple a Day (133)
         if (!Story.QuestProgression(133))
         {
-            Core.EnsureAcceptmultiple(false, new[] { 133, 422 });
+            Core.EnsureAcceptmultiple( new[] { 133, 422 });
             Core.HuntMonster("harvest", "Bad Apple", "Worm", 5, log: false);
             Core.EnsureComplete(422);
             Core.EnsureComplete(133);
@@ -91,7 +91,7 @@ public class CoreHarvestDay
         //Whine n' Cheese (134)
         if (!Story.QuestProgression(134))
         {
-            Core.EnsureAcceptmultiple(false, new[] { 134, 423 });
+            Core.EnsureAcceptmultiple( new[] { 134, 423 });
             Core.HuntMonster("harvest", "Grapes of Wrath", "Whine", 8, log: false);
             Core.EnsureComplete(423);
             Core.EnsureComplete(134);

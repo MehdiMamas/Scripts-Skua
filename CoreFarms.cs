@@ -1749,7 +1749,7 @@ public class CoreFarms
         // Core.RegisterQuests(320, 321); //Warm and Furry 320, Shell Shock 321
         while (!Bot.ShouldExit && FactionRank("Dwarfhold") < rank)
         {
-            Core.EnsureAcceptmultiple(false, new[] { 320, 321 }); //Warm and Furry 320, Shell Shock 321
+            Core.EnsureAcceptmultiple( new[] { 320, 321 }); //Warm and Furry 320, Shell Shock 321
             Core.KillMonster("pines", "Enter", "Right", "Pine Grizzly", "Bear Skin", 5, log: false);
             Core.KillMonster("pines", "Enter", "Right", "Red Shell Turtle", "Red Turtle Shell", 5, log: false);
             Core.EnsureComplete(new[] { 320, 321 }); //Warm and Furry 320, Shell Shock 321
@@ -1802,7 +1802,7 @@ public class CoreFarms
 
         while (!Bot.ShouldExit && FactionRank("Elemental Master") < rank)
         {
-            Core.EnsureAcceptmultiple(false, new[] { 3050, 3298 });
+            Core.EnsureAcceptmultiple( new[] { 3050, 3298 });
             Core.EquipClass(ClassType.Farm);
             foreach (var element in elementalItems)
             {
@@ -2882,7 +2882,7 @@ public class CoreFarms
         // Core.RegisterQuests(916, 917, 919, 921, 922); //Dissertations Bupers Camel 916, Crafty Creepers: A Favorite of Mine 917, Parched Pets 919, Oasis Ornaments 921, The Power of Pomade 922
         while (!Bot.ShouldExit && FactionRank("Sandsea") < rank)
         {
-            Core.EnsureAcceptmultiple(false, new[] { 916, 917, 919, 921, 922 });
+            Core.EnsureAcceptmultiple( new[] { 916, 917, 919, 921, 922 });
             Core.HuntMonster("sandsea", "Bupers Camel", "Bupers Camel Document", 10, log: false);
             Core.HuntMonster("sandsea", "Bupers Camel", "Barrel of Desert Water", 10, log: false);
             Core.HuntMonster("sandsea", "Bupers Camel", "Flexible Camel Spit", 7, log: false);
@@ -2927,7 +2927,7 @@ public class CoreFarms
         // Core.RegisterQuests(7665, 7666, 7669);
         while (!Bot.ShouldExit && FactionRank("Somnia") < rank)
         {
-            Core.EnsureAcceptmultiple(false, new[] { 7665, 7666, 7669 });
+            Core.EnsureAcceptmultiple( new[] { 7665, 7666, 7669 });
             Core.HuntMonster("somnia", "Nightspore", "Dream Truffle", 8, log: false);
             Core.HuntMonster("somnia", "Orpheum Elemental", "Orphium Ore", 8, log: false);
             Core.HuntMonster("somnia", "Dream Larva", "Dreamsilk", 5, log: false);
@@ -2993,7 +2993,7 @@ public class CoreFarms
         // Core.RegisterQuests(3065, 3066, 3067, 3070, 3085, 3086, 3087);
         while (!Bot.ShouldExit && FactionRank("Swordhaven") < rank)
         {
-            Core.EnsureAcceptmultiple(false, new[] { 3065, 3066, 3067, 3070, 3085, 3086, 3087 });
+            Core.EnsureAcceptmultiple( new[] { 3065, 3066, 3067, 3070, 3085, 3086, 3087 });
             Core.HuntMonster("castle", "Castle Spider", "Eradicated Arachnid", 10, log: false);
             Core.HuntMonster("castle", "Castle Spider", "Castle Spider Silk", 8, log: false);
             Core.HuntMonster("castle", "Castle Spider", "Castle Spider Silk Yarn", 2, log: false);
