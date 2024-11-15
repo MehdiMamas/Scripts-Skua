@@ -48,6 +48,7 @@ public class VerusDoomKnightClass
     private SRoD SRoD = new();
     private TerminaTempleMerge TTMerge = new();
     private DoomPirateHaulMerge DPHM = new();
+    public CoreStory Story = new();
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -66,8 +67,10 @@ public class VerusDoomKnightClass
         Farm.EvilREP();
         Core.EquipClass(ClassType.Solo);
 
+        Story.PreLoad(this);
+
         // Body, Soul and, Domination (9411)
-        if (!Core.isCompletedBefore(9411))
+        if (!Story.QuestProgression(9411))
         {
             Core.EnsureAccept(9411);
             Core.HuntMonster("underrealm", "Fear", "Fear's Bones", 13, false);
@@ -79,7 +82,7 @@ public class VerusDoomKnightClass
         }
 
         // Of the Same Cloak (9412)
-        if (!Core.isCompletedBefore(9412))
+        if (!Story.QuestProgression(9412))
         {
             Core.EnsureAccept(9412);
             Core.HuntMonsterMapID("necrodungeon", 47, "The Mask of the Skulls", isTemp: false);
@@ -95,7 +98,7 @@ public class VerusDoomKnightClass
         }
 
         // Refracted Light (9413)
-        if (!Core.isCompletedBefore(9413))
+        if (!Story.QuestProgression(9413))
         {
             Core.EnsureAccept(9413);
             Core.EquipClass(ClassType.Farm);
@@ -109,7 +112,7 @@ public class VerusDoomKnightClass
         }
 
         // Life Carve (9417)
-        if (!Core.isCompletedBefore(9417))
+        if (!Story.QuestProgression(9417))
         {
             Core.EnsureAccept(9417);
             Core.Logger("The map \"Wanders\", is a bit broke,\n" +
@@ -128,7 +131,7 @@ public class VerusDoomKnightClass
         }
 
         // Soul Fracture (9416)
-        if (!Core.isCompletedBefore(9416))
+        if (!Story.QuestProgression(9416))
         {
             Core.EnsureAccept(9416);
             Core.HuntMonster("ultraalteon", "Ultra Alteon", "Soul of Alteon", 40, false); //goodluck
@@ -141,7 +144,7 @@ public class VerusDoomKnightClass
         }
 
         // Doom Spikes (9418)
-        if (!Core.isCompletedBefore(9418))
+        if (!Story.QuestProgression(9418))
         {
             Core.EnsureAccept(9418);
             Adv.GearStore();
@@ -159,7 +162,7 @@ public class VerusDoomKnightClass
                 Core.Sleep();
                 Core.HuntMonster("infernalarena", "Deadly Duo", "Deadly Duo's Decayed Denture", 10, false);
                 Core.JumpWait();
-            Adv.GearStore(true, true);
+                Adv.GearStore(true, true);
             }
 
             if (!Core.CheckInventory("Maw of the Sea", 10))
@@ -178,7 +181,7 @@ public class VerusDoomKnightClass
         }
 
         // Necrotic Blade (9414)
-        if (!Core.isCompletedBefore(9414))
+        if (!Story.QuestProgression(9414))
         {
             Core.EnsureAccept(9414);
             SRoD.ShadowReaperOfDoom();
@@ -193,7 +196,7 @@ public class VerusDoomKnightClass
         }
 
         // Unleash Doom (9419)
-        if (!Core.isCompletedBefore(9419))
+        if (!Story.QuestProgression(9419))
         {
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(9419);
@@ -244,7 +247,7 @@ public class VerusDoomKnightClass
             quant: 10,
             isTemp: true
         );
-            Adv.GearStore(true, true);
+        Adv.GearStore(true, true);
     }
 
     public void KillThing(string? map = null, int mobMapID = 1, string? targetAuraName = null, int ItemUsed = 1, string? Class = null, string? item = null, int quant = 1, bool isTemp = false)
