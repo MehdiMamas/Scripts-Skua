@@ -2112,7 +2112,12 @@ public class CoreBots
             questIDs = new int[] { 0 }; // Default value
         }
 
-        List<Quest> QuestData = InitializeWithRetries(() => EnsureLoad(questIDs?.Where(q => q > 0).ToArray() ?? Array.Empty<int>()));
+        List<Quest>? QuestData = InitializeWithRetries(() => EnsureLoad(questIDs?.Where(q => q > 0).ToArray() ?? Array.Empty<int>()));
+        if (QuestData == null)
+        {
+            Logger("Failed to load quests after multiple attempts.");
+            return;
+        }
 
         foreach (Quest quest in QuestData)
         {
@@ -2173,7 +2178,12 @@ public class CoreBots
         if (questID <= 0)
             return false;
 
-        Quest questData = InitializeWithRetries(() => EnsureLoad(questID));
+        Quest? questData = InitializeWithRetries(() => EnsureLoad(questID));
+        if (questData == null)
+        {
+            Logger($"Failed to load quest with ID {questID} after multiple attempts.");
+            return false;
+        }
 
         // Bot.Wait.ForTrue(() => questData != null, 20);
 
@@ -2197,7 +2207,12 @@ public class CoreBots
     /// <param name="questIDs">IDs of the quests.</param>
     public void EnsureComplete(params int[] questIDs)
     {
-        List<Quest> questData = InitializeWithRetries(() => EnsureLoad(questIDs));
+        List<Quest>? questData = InitializeWithRetries(() => EnsureLoad(questIDs));
+        if (questData == null)
+        {
+            Logger("Failed to load quests after multiple attempts.");
+            return;
+        }
 
         foreach (Quest questID in questData)
         {
@@ -2222,7 +2237,12 @@ public class CoreBots
     /// <param name="itemList">List of the items to get, if you want all just let it be null</param>
     public bool EnsureCompleteChoose(int questID, string[]? itemList = null)
     {
-        Quest quest = InitializeWithRetries(() => EnsureLoad(questID));
+        Quest? quest = InitializeWithRetries(() => EnsureLoad(questID));
+        if (quest == null)
+        {
+            Logger($"Failed to load quest with ID {questID} after multiple attempts.");
+            return false;
+        }
 
         if (quest is not null)
         {
@@ -2259,7 +2279,7 @@ public class CoreBots
     public int EnsureCompleteMulti(int questID, int amount = -1, int itemID = -1)
     {
         //idk why but it wants `var` not `Quest`.. and it just works :|
-        Quest quest = InitializeWithRetries(() => EnsureLoad(questID));
+        Quest? quest = InitializeWithRetries(() => EnsureLoad(questID));
 
         if (quest == null)
         {
