@@ -711,10 +711,10 @@ public class CoreNation
         void FarmItem(Quest? larvaeQuest, Quest? voucherQuest, string item, int quant)
         {
 
-            voucherQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(4778));
+            voucherQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2556));
             if (voucherQuest == null)
             {
-                Core.Logger("Failed to load voucher quest (ID: 4778) after multiple attempts.");
+                Core.Logger("Failed to load larvae quest (ID: 4778) after multiple attempts.");
                 return;
             }
 
@@ -722,7 +722,7 @@ public class CoreNation
             ItemBase? rewardItem = Core.InitializeWithRetries(() => voucherQuest.Rewards.FirstOrDefault(x => x != null && x.Name == item));
             if (rewardItem == null)
             {
-                Core.Logger($"Reward item '{item}' not found in voucher quest rewards.");
+                Core.Logger($"Reward item '{item}' not found in larvae quest rewards.");
                 return;
             }
 
