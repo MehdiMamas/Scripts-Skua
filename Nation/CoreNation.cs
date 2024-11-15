@@ -1223,26 +1223,26 @@ public class CoreNation
             Core.FarmingLogger(item, quant);
 
         // Choose the appropriate quest based on pet availability
-        List<int> RegisteredQuests = Bot.Quests.Registered.ToList();
+        List<int> QuestToRegister = new();
 
         // Base List with only {CraigName} owned
-        RegisteredQuests.AddRange(new[] { 2857, 609 });
+        QuestToRegister.AddRange(new[] { 2857, 609 });
 
         if (Core.CheckInventory("Oblivion Blade of Nulgath Pet (Rare)") && Core.IsMember)
-            RegisteredQuests.Add(599);
+            QuestToRegister.Add(599);
 
         if (returnPolicyDuringSupplies)
-            RegisteredQuests.Add(7551);
+            QuestToRegister.Add(7551);
 
         // Swindle Bilk's To Go Hut
         if (Core.CheckInventory(38261))
-            RegisteredQuests.Add(9542);
+            QuestToRegister.Add(9542);
 
         if (hasOBoNPet)
-            RegisteredQuests.Add(2561);
+            QuestToRegister.Add(2561);
 
         // Register unique quests only
-        Core.RegisterQuests(RegisteredQuests.Distinct().ToArray());
+        Core.RegisterQuests(QuestToRegister.Distinct().ToArray());
         Core.EquipClass(ClassType.Solo);
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
