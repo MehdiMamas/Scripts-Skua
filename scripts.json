@@ -7663,7 +7663,7 @@
       "null"
     ],
     "path": "Seasonal/HarvestDay/CoreHarvestDay.cs",
-    "size": 26138,
+    "size": 28552,
     "fileName": "CoreHarvestDay.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/CoreHarvestDay.cs"
   },
@@ -7679,6 +7679,22 @@
     "size": 653,
     "fileName": "01HarvestStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/01HarvestStory.cs"
+  },
+  {
+    "name": "Mana Harvest Story",
+    "description": "This will finish the Mana Harvest storyline.",
+    "tags": [
+      "manaharvest",
+      "mana harvest",
+      "seasonal",
+      "harvest-day",
+      "mana",
+      "harvest"
+    ],
+    "path": "Seasonal/HarvestDay/19ManaHarvest.cs",
+    "size": 689,
+    "fileName": "19ManaHarvest.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/19ManaHarvest.cs"
   },
   {
     "name": "Memet Nightmare Story",
