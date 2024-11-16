@@ -12,6 +12,21 @@ public class CoreHarvestDay
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public CoreStory Story = new();
+    public string[] UMManaHarvest { get; private set; }
+
+    public CoreHarvestDay()
+    {
+        UMManaHarvest = new[] {
+    "Azoth Pumpkin", // UseableMonsters[0],
+	"Cosmic Egg", // UseableMonsters[1],
+	"Ascended Chickencow", // UseableMonsters[2],
+	"Apple of Life", // UseableMonsters[3],
+	"Bunch of Mananas", // UseableMonsters[4],
+	"Cookie Monster", // UseableMonsters[5],
+	"Burgoo", // UseableMonsters[6],
+	"Mananxiety", // UseableMonsters[7]
+};
+    }
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -877,22 +892,9 @@ public class CoreHarvestDay
 
         Story.PreLoad(this);
 
-        #region Useable Monsters
-        string[] UseableMonsters = new[]
-        {
-    "Azoth Pumpkin", // UseableMonsters[0],
-	"Cosmic Egg", // UseableMonsters[1],
-	"Ascended Chickencow", // UseableMonsters[2],
-	"Apple of Life", // UseableMonsters[3],
-	"Bunch of Mananas", // UseableMonsters[4],
-	"Cookie Monster", // UseableMonsters[5],
-	"Burgoo", // UseableMonsters[6],
-	"Mananxiety", // UseableMonsters[7]
-};
-        #endregion Useable Monsters
 
         // 9966 | Philosopher's Pumpkin
-        Story.KillQuest(9966, "manaharvest", UseableMonsters[0]);
+        Story.KillQuest(9966, "manaharvest", UMManaHarvest[0]);
         Story.MapItemQuest(9966, "manaharvest", 13837);
 
 
@@ -900,7 +902,7 @@ public class CoreHarvestDay
         if (!Story.QuestProgression(9967))
         {
             Core.HuntMonsterQuest(9967,
-                ("manaharvest", UseableMonsters[1], ClassType.Farm));
+                ("manaharvest", UMManaHarvest[1], ClassType.Farm));
         }
 
 
@@ -910,13 +912,13 @@ public class CoreHarvestDay
 
 
         // 9969 | Impossible Meat
-        Story.KillQuest(9969, "manaharvest", UseableMonsters[2]);
+        Story.KillQuest(9969, "manaharvest", UMManaHarvest[2]);
         Story.MapItemQuest(9969, "manaharvest", 13840);
 
 
 
         // 9970 | Forbidden Fruit
-        Story.KillQuest(9970, "manaharvest", UseableMonsters[3]);
+        Story.KillQuest(9970, "manaharvest", UMManaHarvest[3]);
         Story.MapItemQuest(9970, "manaharvest", 13841);
 
 
@@ -924,14 +926,14 @@ public class CoreHarvestDay
         if (!Story.QuestProgression(9976))
         {
             Core.HuntMonsterQuest(9976,
-                ("manaharvest", UseableMonsters[4], ClassType.Farm));
+                ("manaharvest", UMManaHarvest[4], ClassType.Farm));
         }
 
         // 9971 | How the Cookie Crumbles
         if (!Story.QuestProgression(9971))
         {
             Core.HuntMonsterQuest(9971,
-                ("manaharvest", UseableMonsters[5], ClassType.Farm));
+                ("manaharvest", UMManaHarvest[5], ClassType.Farm));
         }
 
 
@@ -939,7 +941,7 @@ public class CoreHarvestDay
         if (!Story.QuestProgression(9972))
         {
             Core.HuntMonsterQuest(9972,
-                ("manaharvest", UseableMonsters[6], ClassType.Farm));
+                ("manaharvest", UMManaHarvest[6], ClassType.Farm));
         }
 
 
@@ -950,7 +952,7 @@ public class CoreHarvestDay
         if (!Story.QuestProgression(9974))
         {
             Core.HuntMonsterQuest(9974,
-                ("manaharvest", UseableMonsters[7], ClassType.Solo));
+                ("manaharvest", UMManaHarvest[7], ClassType.Solo));
         }
 
 
