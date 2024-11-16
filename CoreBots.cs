@@ -1105,8 +1105,14 @@ public class CoreBots
                 continue;
             }
 
-            string name = Bot.Inventory.GetItem(item)?.Name ?? $"[{item}]";
-            bool success = false;
+            InventoryItem? item1 = InitializeWithRetries(() => Bot.Inventory.GetItem(item));
+            if (item1 == null)
+            {
+                Logger($"Failed to find item with ID {item} in inventory after multiple attempts.");
+                continue;
+            }
+
+            string name = item1.Name; bool success = false;
             for (int i = 0; i < 20; i++) // Retry up to 20 times
             {
                 Bot.Inventory.EnsureToBank(item);
@@ -1120,7 +1126,7 @@ public class CoreBots
 
             if (!success)
             {
-                Logger($"Failed to unbank {name}, skipping it", messageBox: true);
+                Logger($"Failed to bank {name}, skipping it", messageBox: true);
                 continue;
             }
 
