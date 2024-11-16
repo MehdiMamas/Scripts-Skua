@@ -2521,8 +2521,6 @@ public class CoreBots
         Quest? QuestData = InitializeWithRetries(() => EnsureLoad(questID));
 
         ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == itemID);
-        if (Item != null && Item.Quantity == Item.MaxStack)
-            Bot.Drops.Remove(Item.ID);
 
         // EnsureAccept(questID);
         // Sleep();
@@ -2811,8 +2809,6 @@ public class CoreBots
         if (item != null && !isTemp)
             AddDrop(item);
         ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
-        if (Item != null && Item.Quantity == Item.MaxStack)
-            Bot.Drops.Remove(Item.ID);
 
         if (Bot.Player.Cell != cell)
         {
@@ -2910,8 +2906,6 @@ public class CoreBots
             AddDrop(item);
 
         ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
-        if (Item != null && Item.Quantity == Item.MaxStack)
-            Bot.Drops.Remove(Item.ID);
 
         // Join the specified map, cell, and pad
         if (Bot.Map.Name != map)
@@ -3044,8 +3038,6 @@ public class CoreBots
             AddDrop(ItemID);
 
         ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == ItemID);
-        if (Item != null && Item.Quantity == Item.MaxStack)
-            Bot.Drops.Remove(Item.ID);
 
         // Join the specified map, cell, and pad
         if (Bot.Map.Name != map)
