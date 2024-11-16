@@ -7663,7 +7663,7 @@
       "null"
     ],
     "path": "Seasonal/HarvestDay/CoreHarvestDay.cs",
-    "size": 28552,
+    "size": 28545,
     "fileName": "CoreHarvestDay.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/CoreHarvestDay.cs"
   },
@@ -23637,6 +23637,35 @@
     "size": 4209,
     "fileName": "HarvestDayParadeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/HarvestDayParadeMerge.cs"
+  },
+  {
+    "name": "ManaHarvest Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the ManaHarvest Merge [2503] in /manaharvest",
+    "tags": [
+      "manaharvest",
+      "merge",
+      "manaharvest",
+      "shadowslayer",
+      "leathers",
+      "leather",
+      "cap",
+      "ritual",
+      "headstone",
+      "shadowslayerss",
+      "quiver",
+      "immortal",
+      "shadow",
+      "breaker",
+      "breakers",
+      "shadowslayers",
+      "heirloom",
+      "rifle",
+      "bow"
+    ],
+    "path": "Seasonal/HarvestDay/MergeShops/ManaHarvestMerge.cs",
+    "size": 5081,
+    "fileName": "ManaHarvestMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/ManaHarvestMerge.cs"
   },
   {
     "name": "Beleens Dye Merge",
