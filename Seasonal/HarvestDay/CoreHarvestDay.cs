@@ -44,6 +44,7 @@ public class CoreHarvestDay
             BirdsWithHarms();
             EbilCorpHQ();
             BlightHarvest();
+            ManaHarvest();
         }
         else
         {
@@ -64,7 +65,7 @@ public class CoreHarvestDay
         //Unboiling Water (131)
         if (!Story.QuestProgression(131))
         {
-            Core.EnsureAcceptmultiple( new[] { 131, 420 });
+            Core.EnsureAcceptmultiple(new[] { 131, 420 });
             Core.GetMapItem(31, 1, "harvest");
             Core.EnsureComplete(420);
             Core.EnsureComplete(131);
@@ -73,7 +74,7 @@ public class CoreHarvestDay
         //The Corn has Ears (132)
         if (!Story.QuestProgression(132))
         {
-            Core.EnsureAcceptmultiple( new[] { 132, 421 });
+            Core.EnsureAcceptmultiple(new[] { 132, 421 });
             Core.HuntMonster("harvest", "Corn Stalker", "Corn Stalker Ears", 8, log: false);
             Core.EnsureComplete(421);
             Core.EnsureComplete(132);
@@ -82,7 +83,7 @@ public class CoreHarvestDay
         //An Apple a Day (133)
         if (!Story.QuestProgression(133))
         {
-            Core.EnsureAcceptmultiple( new[] { 133, 422 });
+            Core.EnsureAcceptmultiple(new[] { 133, 422 });
             Core.HuntMonster("harvest", "Bad Apple", "Worm", 5, log: false);
             Core.EnsureComplete(422);
             Core.EnsureComplete(133);
@@ -91,7 +92,7 @@ public class CoreHarvestDay
         //Whine n' Cheese (134)
         if (!Story.QuestProgression(134))
         {
-            Core.EnsureAcceptmultiple( new[] { 134, 423 });
+            Core.EnsureAcceptmultiple(new[] { 134, 423 });
             Core.HuntMonster("harvest", "Grapes of Wrath", "Whine", 8, log: false);
             Core.EnsureComplete(423);
             Core.EnsureComplete(134);
@@ -867,6 +868,92 @@ public class CoreHarvestDay
             Core.HuntMonsterQuest(9481,
                 ("blightharvest", UseableMonsters[4], ClassType.Solo));
         }
+    }
+
+    public void ManaHarvest()
+    {
+        if (Core.isCompletedBefore(9974) || !Core.isSeasonalMapActive("manaharvest"))
+            return;
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Azoth Pumpkin", // UseableMonsters[0],
+	"Cosmic Egg", // UseableMonsters[1],
+	"Ascended Chickencow", // UseableMonsters[2],
+	"Apple of Life", // UseableMonsters[3],
+	"Bunch of Mananas", // UseableMonsters[4],
+	"Cookie Monster", // UseableMonsters[5],
+	"Burgoo", // UseableMonsters[6],
+	"Mananxiety", // UseableMonsters[7]
+};
+        #endregion Useable Monsters
+
+        // 9966 | Philosopher's Pumpkin
+        Story.KillQuest(9966, "manaharvest", UseableMonsters[0]);
+        Story.MapItemQuest(9966, "manaharvest", 13837);
+
+
+        // 9967 | Cosmic Surprise
+        if (!Story.QuestProgression(9967))
+        {
+            Core.HuntMonsterQuest(9967,
+                ("manaharvest", UseableMonsters[1], ClassType.Farm));
+        }
+
+
+        // 9968 | Early Birds
+        Story.MapItemQuest(9968, "manaharvest", new[] { 13838, 13839 });
+
+
+
+        // 9969 | Impossible Meat
+        Story.KillQuest(9969, "manaharvest", UseableMonsters[2]);
+        Story.MapItemQuest(9969, "manaharvest", 13840);
+
+
+
+        // 9970 | Forbidden Fruit
+        Story.KillQuest(9970, "manaharvest", UseableMonsters[3]);
+        Story.MapItemQuest(9970, "manaharvest", 13841);
+
+
+        // 9976 | Mananania
+        if (!Story.QuestProgression(9976))
+        {
+            Core.HuntMonsterQuest(9976,
+                ("manaharvest", UseableMonsters[4], ClassType.Farm));
+        }
+
+        // 9971 | How the Cookie Crumbles
+        if (!Story.QuestProgression(9971))
+        {
+            Core.HuntMonsterQuest(9971,
+                ("manaharvest", UseableMonsters[5], ClassType.Farm));
+        }
+
+
+        // 9972 | Everything Burger
+        if (!Story.QuestProgression(9972))
+        {
+            Core.HuntMonsterQuest(9972,
+                ("manaharvest", UseableMonsters[6], ClassType.Farm));
+        }
+
+
+        // 9973 | Pretend You Don't See Anything
+        Story.MapItemQuest(9973, "manaharvest", new[] { 13842, 13843 });
+
+        // 9974 | Coiled Cornucopia
+        if (!Story.QuestProgression(9974))
+        {
+            Core.HuntMonsterQuest(9974,
+                ("manaharvest", UseableMonsters[7], ClassType.Solo));
+        }
+
+
     }
 
 
