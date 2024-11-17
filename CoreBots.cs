@@ -1947,8 +1947,25 @@ public class CoreBots
         foreach (int questID in questIDs)
         {
             Quest? q = InitializeWithRetries(() => EnsureLoad(questID));
-            if (q == null || q.Upgrade && !IsMember || !CheckInventory(q.AcceptRequirements.Where(x => x != null).Select(x => x.ID).ToArray()))
+            if (q == null)
+            {
+                Logger($"Failed to initialize quest with ID {questID}.");
                 continue;
+            }
+
+            if (q.Upgrade && !IsMember)
+            {
+                Logger($"Quest {questID} requires membership, but the player is not a member.");
+                continue;
+            }
+
+            List<ItemBase> missingRequirements = q.AcceptRequirements.Where(x => x != null && !CheckInventory(x.ID)).ToList();
+            if (missingRequirements.Any())
+            {
+                Logger($"Player is missing the following accept requirements for quest {questID}: {string.Join(", ", missingRequirements.Select(x => x.Name))}");
+                continue;
+            }
+
 
             if (q.SimpleRewards.Any(r => r.Type == 2))
             {
