@@ -134,7 +134,7 @@ public class VerusDoomKnightClass
         if (!Story.QuestProgression(9416))
         {
             Core.HuntMonsterQuest(9416,
-            ("ultraalteon", "Ultra Alteon", ClassType.Solo),
+            ("ultraalteon", "Ultra Chaos Alteon", ClassType.Solo),
             ("ebondungeon", "Dethrix", ClassType.Solo),
             ("shadowstrike", "Sepulchuroth", ClassType.Solo),
             ("ultradrakath", "Champion of Chaos", ClassType.Solo),
