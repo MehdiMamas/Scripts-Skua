@@ -2251,7 +2251,7 @@ public class Core13LoC
         Story.ChainQuest(3779);
 
         //Battle for Chaos in Willowcreek!
-        Story.KillQuest(3781, "newfinale", "Chaos Healer");
+        Story.KillQuest(3781, "newfinale", "Alliance Soldier");
 
         //Defeat the Chaos Challenger
         Story.KillQuest(3788, "newfinale", "Chaos Challenger");
