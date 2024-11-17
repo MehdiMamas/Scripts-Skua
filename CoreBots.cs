@@ -1947,7 +1947,7 @@ public class CoreBots
         foreach (int questID in questIDs)
         {
             Quest? q = InitializeWithRetries(() => EnsureLoad(questID));
-            if (q == null)
+            if (q == null || q.Upgrade && !IsMember || !CheckInventory(q.AcceptRequirements.Where(x => x != null).Select(x => x.ID).ToArray()))
                 continue;
 
             if (q.SimpleRewards.Any(r => r.Type == 2))
@@ -1969,12 +1969,9 @@ public class CoreBots
                                    .ToArray();
 
             Unbank(itemsToUnbank);
-
-            // Add the non-temp items to the drop pickup list
-            foreach (ItemBase item in q.AcceptRequirements.Concat(q.Requirements).Where(x => !x.Temp))
-            {
-                Bot.Drops.Add(item.ID);
-            }
+            Bot.Drops.Add(q.AcceptRequirements.Concat(q.Requirements)
+                .Where(x => x != null && !x.Temp)
+                .Select(x => x.Name).ToArray());
         }
 
 
