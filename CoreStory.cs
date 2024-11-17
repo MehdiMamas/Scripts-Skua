@@ -703,14 +703,9 @@ public class CoreStory
             return;
         }
 
-        // Find the target monster by name
-        Monster? FindMonster()
-        {
-            return Core.InitializeWithRetries(() => Bot.Monsters.MapMonsters.Find(x => x.Name.FormatForCompare() == monster.FormatForCompare()));
-        }
 
         // Find the target monster
-        Monster? targetMonster = FindMonster();
+        Monster? targetMonster = Core.InitializeWithRetries(() => Bot.Monsters.MapMonsters.Find(x => x.Name.FormatForCompare() == monster.FormatForCompare()));
         if (targetMonster == null)
         {
             Core.Logger($"Monster \"{monster}\" not found on the map");
