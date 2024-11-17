@@ -23,7 +23,7 @@ public class CoreStory
 
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    
+
     // Thousand-level Constants
     const int OneK = 1000;        // 1k
     const int TenK = 10000;       // 10k
@@ -706,13 +706,14 @@ public class CoreStory
         // Find the target monster by name
         Monster? FindMonster()
         {
-            return Bot.Monsters.MapMonsters.Find(x => x.Name.FormatForCompare() == monster.FormatForCompare());
+            return Core.InitializeWithRetries(() => Bot.Monsters.MapMonsters.Find(x => x.Name.FormatForCompare() == monster.FormatForCompare()));
         }
 
         // Find the target monster
         Monster? targetMonster = FindMonster();
         if (targetMonster == null)
         {
+            Core.Logger($"Monster \"{monster}\" not found on the map");
             shouldRepeat = false;
             return;
         }
