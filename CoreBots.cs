@@ -1969,6 +1969,12 @@ public class CoreBots
                                    .ToArray();
 
             Unbank(itemsToUnbank);
+
+            // Add the non-temp items to the drop pickup list
+            foreach (ItemBase item in q.AcceptRequirements.Concat(q.Requirements).Where(x => !x.Temp))
+            {
+                Bot.Drops.Add(item.ID);
+            }
         }
 
 
@@ -3295,6 +3301,20 @@ public class CoreBots
         if (!Bot.Quests.EnsureAccept(questId))
             EnsureAccept(questId);
 
+        int[] itemsToUnbank = quest.AcceptRequirements
+                               .Concat(quest.Requirements)
+                               .Select(x => x.ID)
+                               .Distinct()
+                               .ToArray();
+
+        Unbank(itemsToUnbank);
+
+        // Add the non-temp items to the drop pickup list
+        foreach (ItemBase item in quest.AcceptRequirements.Concat(quest.Requirements).Where(x => !x.Temp))
+        {
+            Bot.Drops.Add(item.ID);
+        }
+
         // If no MapMonsterClassPairs are provided, auto-generate default values
         if (MapMonsterClassPairs.Length == 0)
         {
@@ -3339,6 +3359,20 @@ public class CoreBots
 
         if (!Bot.Quests.EnsureAccept(questId))
             EnsureAccept(questId);
+
+        int[] itemsToUnbank = quest.AcceptRequirements
+                                       .Concat(quest.Requirements)
+                                       .Select(x => x.ID)
+                                       .Distinct()
+                                       .ToArray();
+
+        Unbank(itemsToUnbank);
+
+        // Add the non-temp items to the drop pickup list
+        foreach (ItemBase item in quest.AcceptRequirements.Concat(quest.Requirements).Where(x => !x.Temp))
+        {
+            Bot.Drops.Add(item.ID);
+        }
 
         for (int i = 0; i < quest.Requirements.Count; i++)
         {

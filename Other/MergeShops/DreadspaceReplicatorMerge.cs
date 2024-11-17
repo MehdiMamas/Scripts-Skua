@@ -147,13 +147,11 @@ public class DreadspaceReplicatorMerge
                 case "Blinding Light of Dread Space":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.RegisterQuests(4294);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("dreadspace", "Dra'gorn", "Space Dragon Balls", 7, false, false);
+                        Core.HuntMonsterQuest(4294, "dreadspace", "Dra'gorn");
                         Bot.Wait.ForPickup(req.Name);
                     }
-                    Core.CancelRegisteredQuests();
                     break;
             }
         }
