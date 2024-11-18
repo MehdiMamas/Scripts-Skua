@@ -179,7 +179,7 @@ public class LordOfOrder
             Core.EnsureAccept(7162);
 
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster("newfinale", "Chaos Healer", "Acolyte's Braille", isTemp: false);
+            Core.HuntMonster("newfinale", "Alliance Healer", "Acolyte's Braille", isTemp: false);
             Core.HuntMonster("wardwarf", "Drow Assassin", "Suppressed Drows", 50, false);
             Core.HuntMonster("warundead", "Skeletal Fire Mage", "Suppressed Undead", 50, false);
             Core.HuntMonster("warhorc", "Horc Warrior", "Suppressed Horcs", 50, false);
