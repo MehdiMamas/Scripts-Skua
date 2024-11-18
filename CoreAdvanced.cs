@@ -573,7 +573,7 @@ public class CoreAdvanced
     {
         InventoryItem? itemInv = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == className.ToLower().Trim() && i.Category == ItemCategory.Class);
 
-        if (itemInv != null && Bot.Inventory.Contains(itemInv.ID) && itemInv.Quantity >= 302500)
+        if (itemInv != null && ((itemInv.Upgrade && Bot.Player.IsMember) || (Bot.Inventory.Contains(itemInv.ID) && itemInv.Quantity >= 302500)))
             return;
 
         while (!Bot.ShouldExit && itemInv != null && Bot.Bank.Contains(itemInv.ID) && !Bot.Inventory.Contains(itemInv.ID))
