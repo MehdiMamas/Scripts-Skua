@@ -46,11 +46,15 @@ public class RankUpAll
 
         // Populate SelectedClasses from inventory, excluding specific classes
         List<string> SelectedClasses = Bot.Inventory.Items
-            .Where(c => c.Category == ItemCategory.Class
-                        && c.Quantity < 302500
-                        && !excludedClasses.Contains(c.Name)) // Exclude specific classes
-            .Select(x => x.Name)
-            .ToList();
+    .Where(c => c.Category == ItemCategory.Class
+                && c.Quantity < 302500
+                && !excludedClasses.Contains(c.Name) // Exclude specific classes
+                && (Core.IsMember || !c.Upgrade) // Remove upgrade classes if not a member
+                && c.EnhancementLevel > 0) // Ensure enhancement level is greater than 0
+    .Select(x => x.Name)
+    .ToList();
+
+
 
         // If includeBank is true, add classes from bank to SelectedClasses
         List<string> bankClasses = new();
@@ -59,12 +63,15 @@ public class RankUpAll
             bankClasses = Bot.Bank.Items
                 .Where(c => c.Category == ItemCategory.Class
                             && c.Quantity < 302500
-                            && !excludedClasses.Contains(c.Name)) // Exclude specific classes
+                            && !excludedClasses.Contains(c.Name) // Exclude specific classes
+                            && (Core.IsMember || !c.Upgrade) // Remove upgrade classes if not a member
+                            && c.EnhancementLevel > 0) // Ensure enhancement level is greater than 0
                 .Select(x => x.Name)
                 .ToList();
 
             SelectedClasses.AddRange(bankClasses);
         }
+
 
         // Optional: Log the updated SelectedClasses
         Core.Logger("Classes to Rank: " + string.Join(", ", SelectedClasses));
