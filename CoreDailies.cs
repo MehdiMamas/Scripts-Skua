@@ -943,19 +943,17 @@ public class CoreDailies
             return;
         if (!CheckDailyv2(9896, true, true, "Elden Ruby"))
             return;
-
+        if (!Core.CheckInventory("Compass Rose Skull"))
+        {
+            Core.Logger("Getting the Compass Rose Skull.");
+            Core.HuntMonsterQuest(9894,
+("dracocon", "Treasure Pile", ClassType.Farm),
+                ("battleundere", "Treasure Pile", ClassType.Farm),
+                ("greed", "Treasure Pile", ClassType.Farm)
+);
+        }
         if (!Core.CheckInventory("Obsessor Captain"))
         {
-            if (!Core.CheckInventory("Compass Rose Skull"))
-            {
-                Core.Logger("Getting the Compass Rose Skull.");
-                Core.HuntMonsterQuest(9894,
-("dracocon", "Treasure Pile", ClassType.Farm),
-                    ("battleundere", "Treasure Pile", ClassType.Farm),
-                    ("greed", "Treasure Pile", ClassType.Farm)
-);
-            }
-
             Core.Logger("Getting the Obsessor Captain.");
             Core.HuntMonsterQuest(9895,
 ("shadowrealm", "Shadow Lord", ClassType.Solo)
