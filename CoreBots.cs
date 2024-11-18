@@ -1998,12 +1998,11 @@ public class CoreBots
             while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
             {
                 await Task.Delay(ActionDelay);
-                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys))
+                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest _quest) && _quest != null))
                 {
-                    Quest? initializedQuest = InitializeWithRetries(() => Bot.Quests.TryGetQuest(quest.ID, out Quest? _quest) ? _quest : null);
-                    if (initializedQuest == null)
-                    {
-                        Logger($"Failed to initialize quest with ID {quest.ID} after multiple attempts.");
+                    if (quest == null)
+                    {                        
+                        // Logger($"Failed to initialize quest with ID {quest.ID} after multiple attempts.");
                         continue;
                     }
 
@@ -3305,15 +3304,11 @@ public class CoreBots
     /// <param name="MapMonsterClassPairs">Array of map name, monster name, and class type tuples.</param>
     public void HuntMonsterQuest(int questId, params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs)
     {
-        Quest? quest = Bot.Quests.EnsureLoad(questId);
+        Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
         if (quest == null)
         {
-            Logger($"Quest {questId} not found");
-            return;
+            Logger($"Failed to load quest \"{quest.Name}\" with ID [{quest.ID}] after multiple attempts.", stopBot: true);
         }
-
-        if (!Bot.Quests.EnsureAccept(questId))
-            EnsureAccept(questId);
 
         int[] itemsToUnbank = quest.AcceptRequirements
                                .Concat(quest.Requirements)
@@ -3324,10 +3319,9 @@ public class CoreBots
         Unbank(itemsToUnbank);
 
         // Add the non-temp items to the drop pickup list
-        foreach (ItemBase item in quest.AcceptRequirements.Concat(quest.Requirements).Where(x => !x.Temp))
-        {
-            Bot.Drops.Add(item.ID);
-        }
+        Bot.Drops.Add(quest.AcceptRequirements.Concat(quest.Requirements)
+                .Where(x => x != null && !x.Temp)
+                .Select(x => x.Name).ToArray());
 
         // If no MapMonsterClassPairs are provided, auto-generate default values
         if (MapMonsterClassPairs.Length == 0)
