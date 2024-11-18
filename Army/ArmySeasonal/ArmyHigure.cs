@@ -125,9 +125,11 @@ public class FarmHigure
             case "Darkon's Receipt":
                 Core.EquipClass(ClassType.Farm);
                 Core.RegisterQuests(7324);
-                Army.AggroMonCells("Right", "LeftBack");
+                Army.waitForParty("arcangrove", "Enter");
+                Army.AggroMonMIDs(2, 5, 8, 9, 10);
                 Army.AggroMonStart("arcangrove");
-                Army.DivideOnCells("Right", "LeftBack");
+                Army.DivideOnCells("Left", "Back", "LeftBack");
+                Bot.Player.SetSpawnPoint();
 
                 while (!Bot.ShouldExit && !Core.CheckInventory("Darkon's Receipt", 66))
                 {
@@ -142,6 +144,7 @@ public class FarmHigure
             case "La's Gratitude":
                 Core.RegisterQuests(8001);
                 Core.EquipClass(ClassType.Farm);
+                Army.waitForParty("astravia", "Enter");
                 Army.AggroMonCells("r6", "r7", "r8");
                 Army.AggroMonStart("astravia");
                 Army.DivideOnCells("r6", "r7", "r8");
@@ -156,6 +159,7 @@ public class FarmHigure
             case "Astravian Medal":
                 Core.RegisterQuests(8257);
                 Core.EquipClass(ClassType.Farm);
+                Army.waitForParty("astraviacastle", "Enter");
                 Army.AggroMonCells("r11", "r6", "r3", "r4");
                 Army.AggroMonStart("astraviacastle");
                 Army.DivideOnCells("r11", "r6", "r3", "r4");
@@ -170,6 +174,7 @@ public class FarmHigure
             case "A Melody":
                 Core.RegisterQuests(8396);
                 Core.EquipClass(ClassType.Farm);
+                Army.waitForParty("astraviajudge", "Enter");
                 Army.AggroMonCells("r11", "r3", "r2");
                 Army.AggroMonStart("astraviajudge");
                 Army.DivideOnCells("r11", "r3", "r2");
@@ -184,6 +189,7 @@ public class FarmHigure
             case "Suki's Prestige":
                 Core.EquipClass(ClassType.Farm);
                 Core.RegisterQuests(8602);
+                Army.waitForParty("astraviapast", "Enter");
                 Army.AggroMonCells("r4", "r7", "r8", "r6");
                 Army.AggroMonStart("astraviapast");
                 Army.DivideOnCells("r4", "r7", "r8", "r6");
@@ -198,6 +204,7 @@ public class FarmHigure
             case "Ancient Remnant":
                 Core.EquipClass(ClassType.Solo);
                 Core.RegisterQuests(8641);
+                Army.waitForParty("firstobservatory", "Enter");
                 Army.AggroMonCells("r10a", "r6", "r7");
                 Army.AggroMonStart("firstobservatory");
                 Army.DivideOnCells("r10a", "r6", "r7");
@@ -229,6 +236,7 @@ public class FarmHigure
             case "Mourning Flower":
                 Core.EquipClass(ClassType.Farm);
                 Core.RegisterQuests(8688);
+                Army.waitForParty("genesisgarden", "Enter");
                 Army.AggroMonCells("r11", "r9", "r6");
                 Army.AggroMonStart("genesisgarden");
                 Army.DivideOnCells("r11", "r9", "r6");
@@ -241,6 +249,7 @@ public class FarmHigure
 
             case "Unfinished Musical Score":
                 Core.EquipClass(ClassType.Solo);
+                Army.waitForParty("theworld", "Enter");
                 Army.AggroMonCells("r9");
                 Army.AggroMonStart("theworld");
                 Army.DivideOnCells("r9");
