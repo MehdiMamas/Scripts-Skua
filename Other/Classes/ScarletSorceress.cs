@@ -39,7 +39,7 @@ public class ScarletSorceress
             return;
         }
 
-        Core.AddDrop("Scarlet Sorceress");
+        Core.AddDrop("Scarlet Sorceress", "Blood Sorceress");
 
         TOD.TowerofMirrors();
         BS.GetBSorc(false);
@@ -51,16 +51,6 @@ public class ScarletSorceress
         if (BloodSorceress == null)
         {
             Core.Logger("Blood Sorceress not found in inventory, returning.");
-            return;
-        }
-
-        InventoryItem? ScarletSorceress = Core.InitializeWithRetries(() =>
-            Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == "Scarlet Sorceress".ToLower().Trim() && i.Category == ItemCategory.Class)
-        );
-
-        if (ScarletSorceress == null)
-        {
-            Core.Logger("Scarlet Sorceress not found in inventory, returning.");
             return;
         }
 
@@ -80,6 +70,17 @@ public class ScarletSorceress
         Core.ChainComplete(6236);
         Bot.Wait.ForPickup("Scarlet Sorceress");
 
+
+        InventoryItem? ScarletSorceress = Core.InitializeWithRetries(() =>
+            Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == "Scarlet Sorceress".ToLower().Trim() && i.Category == ItemCategory.Class)
+        );
+
+        if (ScarletSorceress == null)
+        {
+            Core.Logger("Scarlet Sorceress not found in inventory, returning.");
+            return;
+        }
+        
         if (ScarletSorceress.EnhancementLevel == 0)
             Adv.SmartEnhance(ScarletSorceress.Name);
 
