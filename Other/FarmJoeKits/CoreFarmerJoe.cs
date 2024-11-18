@@ -760,11 +760,12 @@ public class CoreFarmerJoe
                 case ItemCategory.Mace:
                 case ItemCategory.Polearm:
                     ItemBase? DefaultWep = Bot.Inventory.Items.Find(x => x.Name.StartsWith("Default"));
-                    if (DefaultWep != null && Core.CheckInventory(DefaultWep.Name))
+                    if (DefaultWep != null && Core.CheckInventory(DefaultWep.ID))
                     {
                         Core.BuyItem("classhalla", 299, "Battle Oracle Battlestaff");
                         Core.Equip("Battle Oracle Battlestaff");
-                        Core.SellItem(DefaultWep.Name);
+                        Bot.Shops.SellItem(DefaultWep.ID);
+                        Bot.Wait.ForTrue(() => !Bot.Inventory.Contains(DefaultWep.ID), 20);
                     }
                     break;
 
