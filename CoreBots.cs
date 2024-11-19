@@ -938,23 +938,28 @@ public class CoreBots
             if (item == null || item == SoloClass || item == FarmClass || FarmGear.Contains(item) || SoloGear.Contains(item))
                 continue;
 
-            if (!Bot.Inventory.Items.Concat(Bot.House.Items).Any(x => x.Name == item))
-            {
-                Logger($"{item} not found in inventory, skipping it");
-                continue;
-            }
-
-            InventoryItem? inventoryItem = Bot.Inventory.Items.Concat(Bot.House.Items).FirstOrDefault(x => x.Name == item);
-            bool itemIsForHouse = Bot.House.TryGetItem(item, out InventoryItem? _item) &&
-                                            _item != null &&
-                                            (_item.CategoryString == "House" || _item.CategoryString == "Wall Item" || _item.CategoryString == "Floor Item");
-
-            // Check if item is equipped
             if (Bot.Inventory.IsEquipped(item) || Bot.House.IsEquipped(item))
             {
                 Logger($"Can't bank an equipped item: {item}");
                 continue;
             }
+            else if ((!Bot.Inventory.Contains(item) || !Bot.House.Contains(item)) && Bot.Bank.Contains(item))
+            {
+                Logger($"Item {item} is already in the bank, skipping it");
+                continue;
+            }
+            else if (!Bot.Inventory.Items.Concat(Bot.House.Items).Any(x => x.Name == item))
+            {
+                Logger($"{item} not found in inventory, skipping it");
+                continue;
+            }
+
+            ItemBase? inventoryItem = Bot.Inventory.Items.Concat(Bot.House.Items).FirstOrDefault(x => x != null && x.Name == item);
+            bool itemIsForHouse = Bot.House.TryGetItem(item, out InventoryItem? _item) &&
+                                            _item != null &&
+                                            (_item.CategoryString == "House" || _item.CategoryString == "Wall Item" || _item.CategoryString == "Floor Item");
+
+
 
             // Check if item is in whitelist and not in blacklist or Extras
             if ((inventoryItem?.Category != null && whiteList.Contains(inventoryItem.Category) || inventoryItem?.Coins == true) &&
@@ -1099,20 +1104,20 @@ public class CoreBots
         {
             if (item == 0)
                 continue;
-            if (Bot.Inventory.IsEquipped(item))
+
+            if (Bot.Inventory.IsEquipped(item) || Bot.House.IsEquipped(item))
             {
                 Logger("Can't bank an equipped item");
                 continue;
             }
-
-            InventoryItem? item1 = InitializeWithRetries(() => Bot.Inventory.GetItem(item));
-            if (item1 == null)
+            else if ((!Bot.Inventory.Contains(item) || !Bot.House.Contains(item)) && Bot.Bank.Contains(item))
             {
-                Logger($"Failed to find item with ID {item} in inventory after multiple attempts.");
+                Logger($"Item {item} is already in the bank, skipping it");
                 continue;
             }
 
-            string name = item1.Name; bool success = false;
+            string name = Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == item).Name;
+            bool success = false;
             for (int i = 0; i < 20; i++) // Retry up to 20 times
             {
                 Bot.Inventory.EnsureToBank(item);
