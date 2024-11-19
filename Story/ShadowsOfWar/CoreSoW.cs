@@ -77,10 +77,19 @@ public class CoreSoW
         Story.KillQuest(6847, "shadowwar", "Seed Spitter", GetReward: false);
 
         //Mega Shadow Medals 6848
-        Story.KillQuest(6848, "shadowwar", "Shadowflame Slasher", GetReward: false);
-
+        if (!Story.QuestProgression(6848))
+        {
+            Core.EnsureAccept(6848);
+            Core.HuntMonster("shadowwar", "Shadowflame Slasher", "Mega Shadow Medal", 3);
+            Core.EnsureComplete(6848);
+        }
         //Shadow Samples 6849
-        Story.KillQuest(6849, "shadowwar", "Umbral Goo", GetReward: false);
+        if (!Story.QuestProgression(6849))
+        {
+            Core.EnsureAccept(6849);
+            Core.HuntMonster("shadowwar", "Umbral Goo", "Shadow Samples", 5);
+            Core.EnsureComplete(6849);
+        }
 
         //Shadow Medals: Fight them Back! 6850
         if (!Story.QuestProgression(6850))
