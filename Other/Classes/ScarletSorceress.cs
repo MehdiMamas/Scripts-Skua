@@ -40,29 +40,30 @@ public class ScarletSorceress
         }
 
         Core.AddDrop("Scarlet Sorceress", "Blood Sorceress");
-
-        TOD.TowerofMirrors();
-        BS.GetBSorc(false);
-
-        InventoryItem? BloodSorceress = Core.InitializeWithRetries(() =>
-            Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == "Blood Sorceress".ToLower().Trim() && i.Category == ItemCategory.Class)
-        );
-
-        if (BloodSorceress == null)
+       
+        if (!Core.CheckInventory("Blood Sorceress") && !Bot.Inventory.TryGetItem("Blood Sorceress", out InventoryItem _Blood) && _Blood != null && _Blood.Category == ItemCategory.Class && _Blood.Quantity < 302500)
         {
-            Core.Logger("Blood Sorceress not found in inventory, returning.");
-            return;
-        }
+            TOD.TowerofMirrors();
+            BS.GetBSorc(true);
 
-        // Requires rank 10 now, ensure this is the case.
-        Adv.RankUpClass("Blood Sorceress");
+            ItemBase? BloodSorceress = Core.InitializeWithRetries(() =>
+                Bot.Inventory.Items.FirstOrDefault(i => i != null && i.Name == "Blood Sorceress" && i.Category == ItemCategory.Class)
+            );
 
-        Core.JumpWait();
+            if (BloodSorceress == null)
+            {
+                Core.Logger("Blood Sorceress not found in inventory, returning.");
+                return;
+            }
 
-        if (BloodSorceress.Quantity < 302500) //now requires it to be rank 10?
-        {
-            Core.Relogin();
-            Adv.RankUpClass(BloodSorceress.Name);
+            Core.JumpWait();
+
+            // Check if R10, soemtimes the game can get it stuck at r9 with 100% Cxp
+            if (BloodSorceress.Quantity < 302500) //now requires it to be rank 10?
+            {
+                Core.Relogin();
+                Adv.RankUpClass(BloodSorceress.Name);
+            }
         }
 
         Farm.Experience(50);
@@ -72,7 +73,7 @@ public class ScarletSorceress
 
 
         InventoryItem? ScarletSorceress = Core.InitializeWithRetries(() =>
-            Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == "Scarlet Sorceress".ToLower().Trim() && i.Category == ItemCategory.Class)
+            Bot.Inventory.Items.Find(i => i.Name == "Scarlet Sorceress" && i.Category == ItemCategory.Class)
         );
 
         if (ScarletSorceress == null)
@@ -80,7 +81,7 @@ public class ScarletSorceress
             Core.Logger("Scarlet Sorceress not found in inventory, returning.");
             return;
         }
-        
+
         if (ScarletSorceress.EnhancementLevel == 0)
             Adv.SmartEnhance(ScarletSorceress.Name);
 
