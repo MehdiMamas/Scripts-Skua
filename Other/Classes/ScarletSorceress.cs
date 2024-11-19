@@ -40,8 +40,8 @@ public class ScarletSorceress
         }
 
         Core.AddDrop("Scarlet Sorceress", "Blood Sorceress");
-       
-        if (!Core.CheckInventory("Blood Sorceress") && !Bot.Inventory.TryGetItem("Blood Sorceress", out InventoryItem _Blood) && _Blood != null && _Blood.Category == ItemCategory.Class && _Blood.Quantity < 302500)
+
+        if (!Core.CheckInventory("Blood Sorceress") && (!Bot.Inventory.TryGetItem("Blood Sorceress", out InventoryItem? _Blood) || _Blood == null))
         {
             TOD.TowerofMirrors();
             BS.GetBSorc(true);
