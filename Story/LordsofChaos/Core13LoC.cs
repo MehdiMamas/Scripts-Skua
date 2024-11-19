@@ -743,8 +743,8 @@ public class Core13LoC
         {
             Core.EnsureAccept(810);
 
-            if (Core.CheckInventory("Mana Potion"))
-                Core.SellItem("Mana Potion", all: true);
+            Bot.Shops.SellItem(43280);
+            Bot.Wait.ForItemSell();
 
             Adv.BuyItem("embersea", 1100, 5572, shopItemID: 17967);
             Core.GetMapItem(141, 3, "cloister");
