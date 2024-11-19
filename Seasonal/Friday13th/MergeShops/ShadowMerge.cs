@@ -64,7 +64,8 @@ public class ShadowMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(9421, 9422);
-                    Core.KillMonster("shadowbattleon", "r7", "Left", "*", req.Name, quant, false);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                        Core.KillMonster("shadowbattleon", "r7", "Left", "*");
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
