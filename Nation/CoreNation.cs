@@ -218,7 +218,7 @@ public class CoreNation
                 {
                     if (!Core.CheckInventory("Slugfit Horn", 5) || !Core.CheckInventory("Cyclops Horn", 3))
                     {
-                        Core.JoinSWF("mobius-999999", "ChiralValley/town-Mobius-21Feb14.swf");
+                        Core.JoinSWF("mobius", "ChiralValley/town-Mobius-21Feb14.swf");
                         Core.Jump("Slugfit", "Bottom");
 
                         foreach ((string mobName, string itemName, int quantity) in new[] { ("Slugfit", "Slugfit Horn", 5), ("Cyclops Warlord", "Cyclops Horn", 3) })
