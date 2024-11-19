@@ -2001,7 +2001,7 @@ public class CoreBots
                 foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest _quest) && _quest != null))
                 {
                     if (quest == null)
-                    {                        
+                    {
                         // Logger($"Failed to initialize quest with ID {quest.ID} after multiple attempts.");
                         continue;
                     }
@@ -3322,6 +3322,9 @@ public class CoreBots
         Bot.Drops.Add(quest.AcceptRequirements.Concat(quest.Requirements)
                 .Where(x => x != null && !x.Temp)
                 .Select(x => x.Name).ToArray());
+
+        if (!Bot.Quests.IsInProgress(questId))
+            EnsureAccept(questId);
 
         // If no MapMonsterClassPairs are provided, auto-generate default values
         if (MapMonsterClassPairs.Length == 0)
