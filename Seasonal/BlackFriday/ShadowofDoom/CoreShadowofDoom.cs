@@ -136,8 +136,6 @@ public class CoreShadowofDoom
 
     public void LotusTomb()
     {
-
-
         if (Core.isCompletedBefore(9920))
             return;
 
