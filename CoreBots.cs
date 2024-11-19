@@ -1116,8 +1116,17 @@ public class CoreBots
                 continue;
             }
 
-            string name = Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == item).Name;
-            bool success = false;
+            InventoryItem? inventoryItem = InitializeWithRetries(() =>
+                Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == item)
+            );
+
+            if (inventoryItem == null)
+            {
+                Logger($"Failed to find item with ID {item} in inventory after multiple attempts.");
+                return;
+            }
+
+            string name = inventoryItem.Name; bool success = false;
             for (int i = 0; i < 20; i++) // Retry up to 20 times
             {
                 Bot.Inventory.EnsureToBank(item);
@@ -2003,11 +2012,11 @@ public class CoreBots
             while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
             {
                 await Task.Delay(ActionDelay);
-                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest _quest) && _quest != null))
+                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest? _quest) && _quest != null))
                 {
                     if (quest == null)
                     {
-                        // Logger($"Failed to initialize quest with ID {quest.ID} after multiple attempts.");
+                        Logger($"Failed to initialize quest.");
                         continue;
                     }
 
@@ -3312,10 +3321,10 @@ public class CoreBots
         Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
         if (quest == null)
         {
-            Logger($"Failed to load quest \"{quest.Name}\" with ID [{quest.ID}] after multiple attempts.", stopBot: true);
+            Logger($"Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
         }
 
-        int[] itemsToUnbank = quest.AcceptRequirements
+        int[] itemsToUnbank = quest!.AcceptRequirements
                                .Concat(quest.Requirements)
                                .Select(x => x.ID)
                                .Distinct()
@@ -6061,7 +6070,7 @@ public class CoreBots
 
     public void JoinSWF(string map, string swfPath, string cell = "Enter", string pad = "Spawn", bool ignoreCheck = false)
     {
-        retry:
+    retry:
         Join(map + "-999999", ignoreCheck: ignoreCheck);
         Bot.Wait.ForMapLoad(map);
         Bot.Flash.CallGameFunction("world.loadMap", swfPath);
@@ -6069,8 +6078,20 @@ public class CoreBots
         Sleep();
         if (Bot.Map != null)
         {
-            Bot.Map.Jump(Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)), CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower()), autoCorrect: false);
-            Bot.Wait.ForCellChange(Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)));
+            string? targetCell = InitializeWithRetries(() =>
+            Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase))
+        );
+
+            if (targetCell == null)
+            {
+                Logger($"Failed to find cell '{cell}' in map '{map}' after multiple attempts.");
+                return;
+            }
+
+            string targetPad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
+
+            Bot.Map.Jump(targetCell, targetPad, autoCorrect: false);
+            Bot.Wait.ForCellChange(targetCell);
         }
         else goto retry;
     }
