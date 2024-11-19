@@ -6061,18 +6061,18 @@ public class CoreBots
 
     public void JoinSWF(string map, string swfPath, string cell = "Enter", string pad = "Spawn", bool ignoreCheck = false)
     {
-        Join(map, ignoreCheck: ignoreCheck);
-        Bot.Flash.CallGameFunction("world.loadMap", swfPath);
-
+        retry:
+        Join(map + "-999999", ignoreCheck: ignoreCheck);
         Bot.Wait.ForMapLoad(map);
+        Bot.Flash.CallGameFunction("world.loadMap", swfPath);
+        Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
         Sleep();
-
-        cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell;
-        pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
-
-        Bot.Map.Jump(cell, pad, autoCorrect: false);
-        Bot.Wait.ForCellChange(cell);
-        GC.Collect();
+        if (Bot.Map != null)
+        {
+            Bot.Map.Jump(Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)), CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower()), autoCorrect: false);
+            Bot.Wait.ForCellChange(Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)));
+        }
+        else goto retry;
     }
 
     /// <summary>
