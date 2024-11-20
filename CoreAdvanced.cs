@@ -138,11 +138,16 @@ public class CoreAdvanced
                 if (bundlesToBuy <= 0)
                     continue; // Skip if we already have enough
 
-                // Specific handling for certain requirements
+                // Specific handling for certain requirements 
+                // Most items wont be in the initial shop from merge scripts, so we have to add them here, if this gets bloaded, we can move it to a separate function).
                 switch (req.ID)
                 {
-                    case 7132: // Example specific handling
+                    case 7132: // Dragon Runestone
                         Farm.DragonRunestone(req.Quantity * bundlesToBuy);
+                        break;
+
+                    case 32004: // Khopesh Seal
+                        Core.HuntMonster("cruxship", "Apephryx", req.Name, quant, false);
                         break;
 
                     // Check if the required item is available in the shop and buy it if necessary
@@ -155,9 +160,12 @@ public class CoreAdvanced
                             GetItemReq(SubItem, req.Quantity * bundlesToBuy);
                             Core.BuyItem(map, shopID, req.Name, req.Quantity * bundlesToBuy, Log: Log);
                         }
-                        else // I don't know if logging this is necessary, delete if not 
+                        else // Log if the required item is a mob drop, and needs added here.
                         {
-                            Core.Logger($"Required item {req.Name} with ID {req.ID} not found in the shop.");
+                            Core.Logger($"Required item {req.Name} with ID {req.ID} not found in the shop." +
+                            "Item most likely is a mob drop, and needs added to Cadv => _BuyItem's switchcase(req.ID)." +
+                            "Please report this to one of the scripters, using @tato2 or @bogalj, with this information and where it drops from." +
+                            "Wiki links Perfered.", "Item Needs is a Mob Drop!", true, true);
                         }
                         break;
                 }
@@ -329,7 +337,7 @@ public class CoreAdvanced
 
                     if (item.Coins)
                         Core.ToBank(item.ID);
-                    else Core.Logger($"{item} could not be banked");
+                    else Core.Logger($"{item.Name} [{item.ID}] is Non-AC Tagged, and would fill your bank (so we wont bank it).");
                 }
             }
             if (!matsOnly)
