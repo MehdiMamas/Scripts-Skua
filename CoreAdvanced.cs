@@ -140,35 +140,8 @@ public class CoreAdvanced
 
                 // Specific handling for certain requirements 
                 // Most items wont be in the initial shop from merge scripts, so we have to add them here, if this gets bloaded, we can move it to a separate function).
-                switch (req.ID)
-                {
-                    case 7132: // Dragon Runestone
-                        Farm.DragonRunestone(req.Quantity * bundlesToBuy);
-                        break;
 
-                    case 32004: // Khopesh Seal
-                        Core.HuntMonster("cruxship", "Apephryx", req.Name, quant, false);
-                        break;
 
-                    // Check if the required item is available in the shop and buy it if necessary
-                    default:
-                        // Find the required item from the shop
-                        ShopItem? SubItem = Core.GetShopItems(map, shopID).FirstOrDefault(x => x.ID == req.ID);
-
-                        if (SubItem != null)
-                        {
-                            GetItemReq(SubItem, req.Quantity * bundlesToBuy);
-                            Core.BuyItem(map, shopID, req.Name, req.Quantity * bundlesToBuy, Log: Log);
-                        }
-                        else // Log if the required item is a mob drop, and needs added here.
-                        {
-                            Core.Logger($"Required item {req.Name} with ID {req.ID} not found in the shop." +
-                            "Item most likely is a mob drop, and needs added to Cadv => _BuyItem's switchcase(req.ID)." +
-                            "Please report this to one of the scripters, using @tato2 or @bogalj, with this information and where it drops from." +
-                            "Wiki links Perfered.", "Item Needs is a Mob Drop!", true, true);
-                        }
-                        break;
-                }
             }
 
             // Attempt to purchase the main item after ensuring required items are available
@@ -177,6 +150,61 @@ public class CoreAdvanced
         }
     }
 
+    /// <summary>
+    /// Handles cases when the _BuyItem function fails to find the item in the shop and requires it to be hunted. 
+    /// It checks the item ID and performs specific actions:
+    /// - For certain items (e.g., Dragon Runestone, Khopesh Seal), it triggers farming actions.
+    /// - For other items, it attempts to buy them from the specified shop.
+    /// - If the item is not found in the shop, a log is generated, indicating that it might be a mob drop.
+    /// </summary>
+    /// <param name="map">The map where the item may be hunted or bought.</param>
+    /// <param name="shopID">The ID of the shop from which the item might be purchased.</param>
+    /// <param name="req">The required item, containing its ID, name, and quantity needed.</param>
+    /// <param name="quant">The quantity of the item required.</param>
+    /// <param name="bundlesToBuy">The number of bundles to be bought (multiplies the required quantity).</param>
+    /// <param name="Log">A boolean flag indicating whether logging should be enabled during item purchase.</param>
+    public void HandleSubItems(string map, int shopID, ItemBase req, int quant, int bundlesToBuy, bool Log)
+    {
+        switch (req.ID)
+        {
+            case 7132: // Dragon Runestone
+                Farm.DragonRunestone(req.Quantity * bundlesToBuy);
+                break;
+
+            case 32004: // Khopesh Seal
+                Core.HuntMonster("cruxship", "Apephryx", req.Name, quant, false);
+                break;
+
+            case 80694: // A Whisper
+                Core.FarmingLogger(req.Name, quant);
+                Core.EquipClass(ClassType.Farm);
+                Core.RegisterQuests(9421, 9422);
+                while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    Core.KillMonster("shadowbattleon", "r7", "Left", "*", log: false);
+                Bot.Wait.ForPickup(req.Name);
+                Core.CancelRegisteredQuests();
+                break;
+
+            // Check if the required item is available in the shop and buy it if necessary
+            default:
+                // Find the required item from the shop
+                ShopItem? SubItem = Core.GetShopItems(map, shopID).FirstOrDefault(x => x.ID == req.ID);
+
+                if (SubItem != null)
+                {
+                    GetItemReq(SubItem, req.Quantity * bundlesToBuy);
+                    BuyItem(map, shopID, req.Name, req.Quantity * bundlesToBuy, Log: Log);
+                }
+                else // Log if the required item is a mob drop, and needs added here.
+                {
+                    Core.Logger($"Required item {req.Name} with ID {req.ID} not found in the shop." +
+                    "Item most likely is a mob drop, and needs added to Cadv => _BuyItem's switchcase(req.ID)." +
+                    "Please report this to one of the scripters, using @tato2 or @bogalj, with this information and where it drops from." +
+                    "Wiki links Perfered.", "Item Needs is a Mob Drop!", true, true);
+                }
+                break;
+        }
+    }
 
     /// <summary>
     /// Will make sure you have every requierment (XP, Rep and Gold) to buy the item.
@@ -379,7 +407,6 @@ public class CoreAdvanced
                     .Where(x => x.ID == req.ID && !x.Name.EndsWith("Insignia"))
                     // Add more filtering conditions as needed
                     .First();
-
 
                     if (selectedItem.Requirements.Any(r => MaxStackOneItems.Contains(r.Name)))
                     {
