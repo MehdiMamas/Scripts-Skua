@@ -140,8 +140,7 @@ public class CoreAdvanced
 
                 // Specific handling for certain requirements 
                 // Most items wont be in the initial shop from merge scripts, so we have to add them here, if this gets bloaded, we can move it to a separate function).
-
-
+                HandleSubItems(map, shopID, req, quant, bundlesToBuy, Log);
             }
 
             // Attempt to purchase the main item after ensuring required items are available
