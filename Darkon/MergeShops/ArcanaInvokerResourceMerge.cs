@@ -559,19 +559,35 @@ public class ArcanaInvokerResourceMerge
                     break;
 
                 case "Sun Zone Chit":
-                    Core.FarmingLogger(req.Name, quant);
+                    int remainingQuant = quant - Bot.Inventory.GetQuantity(req.Name);
+
+                    // Calculate the maximum items per quest turn-in (5 * max reward = 35)
+                    int maxRewardPerTurnIn = 35;
+
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
+                        Core.FarmingLogger(req.Name, quant);
                         Core.EnsureAccept(9252);
+
+                        // Adjust quantities based on remaining required items
+                        int infernalQty = remainingQuant < maxRewardPerTurnIn ? 10 : 50;
+                        int seraphicQty = remainingQuant < maxRewardPerTurnIn ? 10 : 50;
+                        int marineQty = remainingQuant < maxRewardPerTurnIn ? 1 : 5;
+
+                        // Equip solo class for Marine Snow
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("sunlightzone", "Marine Snow", "Marine Sample", log: false);
+                        Core.HuntMonster("sunlightzone", "Marine Snow", "Marine Sample", marineQty);
+
+                        // Equip farming class for the rest
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("sunlightzone", "Infernal Illusion", "Infernal Sample", 10, log: false);
-                        Core.HuntMonster("sunlightzone", "Seraphic Illusion", "Seraphic Sample", 10, log: false);
-                        Core.EnsureComplete(9252);
+                        Core.KillMonster("sunlightzone", "r9", "left", "*", "seraphic sample", seraphicQty);
+                        Core.KillMonster("sunlightzone", "r8", "left", "*", "infernal sample", infernalQty);
+                        Core.EnsureCompleteMulti(9252);
                         Bot.Wait.ForPickup(req.Name);
+
+                        // Recalculate remaining quantity after each turn-in
+                        remainingQuant = quant - Bot.Inventory.GetQuantity(req.Name);
                     }
-                    Core.CancelRegisteredQuests();
                     break;
 
                 case "Armor of the Sun":
