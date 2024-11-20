@@ -232,31 +232,27 @@ public class ArcanaInvokerResourceMerge
                 case "Chaos Weaver Cleric's Doctrine":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("chaosweb", "ChaosWeaver Cleric", req.Name, quant, false, false);
+                    Core.HuntMonster("chaosweb", "ChaosWeaver Cleric", req.Name, quant, req.Temp);
                     break;
 
                 case "Love Token":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("battlewedding", "Platinum Mech Dragon", req.Name, quant, false, false);
+                    Core.HuntMonster("battlewedding", "Platinum Mech Dragon", req.Name, quant, req.Temp);
                     break;
 
                 case "Time Heart":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("portalmazec", "Vorefax ", req.Name, quant, false, false);
+                    Core.HuntMonster("portalmazec", "Vorefax ", req.Name, quant, req.Temp);
                     break;
 
                 case "Storm Heart":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("pride", "Valsarian", req.Name, quant, false, false);
+                    Core.HuntMonster("pride", "Valsarian", req.Name, quant, req.Temp);
                     break;
 
                 case "Mercutio's Heart":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("mercutio", "Mercutio", req.Name, quant, false, false);
+                    Core.HuntMonster("mercutio", "Mercutio", req.Name, quant, req.Temp);
                     break;
 
                 case "Racing Trophy":
@@ -274,15 +270,13 @@ public class ArcanaInvokerResourceMerge
                     break;
 
                 case "Dread Deadmoor BattleAxe":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("deadmoor", "Lucid Nightmare", req.Name, quant, false, false);
+                    Core.HuntMonster("deadmoor", "Lucid Nightmare", req.Name, quant, req.Temp);
                     break;
 
                 case "SMU Brutalcorn's Horn":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("ultrabrutalcorn", "SMU BrutalCorn", req.Name, quant, false, false);
+                    Core.HuntMonster("ultrabrutalcorn", "SMU BrutalCorn", req.Name, quant, req.Temp);
                     break;
 
                 case "Ouroboros Scale":
@@ -301,51 +295,43 @@ public class ArcanaInvokerResourceMerge
                     break;
 
                 case "Libran Scales":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("lightoviacave", "Imbalanced Mage", req.Name, quant, false, false);
+                    Core.HuntMonster("lightoviacave", "Imbalanced Mage", req.Name, quant, req.Temp);
                     break;
 
                 case "Akriloth's Scale":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("shadowstrike", "Sepulchuroth", req.Name, quant, false, false);
+                    Core.HuntMonster("shadowstrike", "Sepulchuroth", req.Name, quant, req.Temp);
                     break;
 
                 case "ArchFiend DragonKnight's Scale":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("underlair", "ArchFiend DragonKnight", req.Name, quant, false, false);
+                    Core.HuntMonster("underlair", "ArchFiend DragonKnight", req.Name, quant, req.Temp);
                     break;
 
                 case "Fa's Gamer Fuel":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("garden", "Fa", req.Name, quant, false, false);
+                    Core.HuntMonster("garden", "Fa", req.Name, quant, req.Temp);
                     break;
 
                 case "ARTX 3090 Controller":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("mverse", "Major Mushroom", req.Name, quant, false, false);
+                    Core.HuntMonster("mverse", "Major Mushroom", req.Name, quant, req.Temp);
                     break;
 
                 case "Soulseeker's Grim Hood":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("marsh2", "Soulseeker", req.Name, quant, false, false);
+                    Core.HuntMonster("marsh2", "Soulseeker", req.Name, quant, req.Temp);
                     break;
 
                 case "Nothing's Solus":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("pocketdimension", "Nothing", req.Name, quant, false, false);
+                    Core.HuntMonster("pocketdimension", "Nothing", req.Name, quant, req.Temp);
                     break;
 
                 case "Lucky Pet":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("pilgrimage", "Lucky", req.Name, quant, false, false);
+                    Core.HuntMonster("pilgrimage", "Lucky", req.Name, quant, req.Temp);
                     break;
 
                 case "Second Chance Coin":
@@ -362,22 +348,19 @@ public class ArcanaInvokerResourceMerge
                     break;
 
                 case "Treasure Chest":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster("finalbattle", "r2", "Left", "*", req.Name, quant, false, false);
+                    Core.KillMonster("finalbattle", "r2", "Left", "*", req.Name, quant, req.Temp);
                     break;
 
                 case "Divine Elixir":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("poisonforest", "Xavier Lionfang", "Divine Elixir", 55, false, false);
+                    Core.HuntMonster("poisonforest", "Xavier Lionfang", req.Name, quant, req.Temp);
                     break;
 
 
                 case "Ultra Lobthulu's Fortune":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("ultralob", "Ultra Lobthulhu", req.Name, quant, false, false);
+                    Core.HuntMonster("ultralob", "Ultra Lobthulhu", req.Name, quant, req.Temp);
                     break;
 
                 case "Enchanted Martial Artist's Gi":
@@ -394,45 +377,38 @@ public class ArcanaInvokerResourceMerge
                     break;
 
                 case "Strong Drag's Intact Wing":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("dracocon", "Strong Drag", req.Name, quant, false, false);
+                    Core.HuntMonster("dracocon", "Strong Drag", req.Name, quant, req.Temp);
                     break;
 
                 case "Chained Rune Bonebreaker":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("archportal", "High Legion Inquisitor", req.Name, quant, false, false);
+                    Core.HuntMonster("archportal", "High Legion Inquisitor", req.Name, quant, req.Temp);
                     break;
 
                 case "Noble Sacrifice":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonsterMapID("necrodungeon", 48, req.Name, quant, false, false);
+                    Core.HuntMonsterMapID("necrodungeon", 48, req.Name, quant, req.Temp);
                     break;
 
                 case "The Answer":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("battlefowl", "Zeuster Projection", req.Name, quant, false, false);
+                    Core.HuntMonster("battlefowl", "Zeuster Projection", req.Name, quant, req.Temp);
                     break;
 
                 case "Astero's Insight":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("fortressdelve", "Astero", req.Name, quant, false, false);
+                    Core.HuntMonster("fortressdelve", "Astero", req.Name, quant, req.Temp);
                     break;
 
                 case "Death's Oversight":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.KillMonster("shadowattack", "Boss", "Left", "Death", req.Name, quant, false, false);
+                    Core.KillMonster("shadowattack", "Boss", "Left", "Death", req.Name, quant, req.Temp);
                     break;
 
                 case "Death Pit Arena Medal":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("deathpit", "Training Dummy", req.Name, quant, false, false);
+                    Core.HuntMonster("deathpit", "Training Dummy", req.Name, quant, req.Temp);
                     break;
 
                 case "Enchanted DeathKnight":
@@ -440,9 +416,8 @@ public class ArcanaInvokerResourceMerge
                     break;
 
                 case "Super Death's Scythe Fragment":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("superdeath", "Super Death", req.Name, quant, false, false);
+                    Core.HuntMonster("superdeath", "Super Death", req.Name, quant, req.Temp);
                     break;
 
                 case "Celestial Wings of Guiding":
@@ -450,6 +425,7 @@ public class ArcanaInvokerResourceMerge
                     break;
 
                 case "Blessed Coffee Cup":
+                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(5405);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -463,19 +439,19 @@ public class ArcanaInvokerResourceMerge
                 case "Northern Crown":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("snowmore", "Jon S'NOOOOOOO", req.Name, quant, false, false);
+                    Core.HuntMonster("snowmore", "Jon S'NOOOOOOO", req.Name, quant, req.Temp);
                     break;
 
                 case "Azkorath's Wing":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("infernalspire", "Azkorath", req.Name, quant, false, false);
+                    Core.HuntMonster("infernalspire", "Azkorath", req.Name, quant, req.Temp);
                     break;
 
                 case "Fiendish Outlaw":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("fiendpast", "Dage the Lich", req.Name, quant, false, false);
+                    Core.HuntMonster("fiendpast", "Dage the Lich", req.Name, quant, req.Temp);
                     break;
 
                 case "Fiendish Remains":
@@ -497,13 +473,13 @@ public class ArcanaInvokerResourceMerge
                 case "Glass Horns":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("ashfallcamp", "Blackrawk", req.Name, quant, false, false);
+                    Core.HuntMonster("ashfallcamp", "Blackrawk", req.Name, quant, req.Temp);
                     break;
 
                 case "Fiend Champion's Spike":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("originul", "Fiend Champion", req.Name, quant, false, false);
+                    Core.HuntMonster("originul", "Fiend Champion", req.Name, quant, req.Temp);
                     break;
 
                 case "Earth Stone":
@@ -520,9 +496,10 @@ public class ArcanaInvokerResourceMerge
                     break;
 
                 case "Dragon Runestone":
-                    Core.FarmingLogger(req.Name, quant);
-                    Adv.BuyItem("alchemyacademy", 395, 62749, quant, 1, 8777);
-                    Core.BuyItem("alchemyacademy", 395, "Dragon Runestone", quant, 8844);
+                    // Core.FarmingLogger(req.Name, quant);
+                    // Adv.BuyItem("alchemyacademy", 395, 62749, quant, 1, 8777);
+                    // Core.BuyItem("alchemyacademy", 395, "Dragon Runestone", quant, 8844);
+                    Farm.DragonRunestone(quant);
                     break;
 
                 case "Arcangrove Tower House":
@@ -532,38 +509,37 @@ public class ArcanaInvokerResourceMerge
                 case "Nevanna's Revelation":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("gaiazor", "Nevanna", req.Name, quant, false, false);
+                    Core.HuntMonster("gaiazor", "Nevanna", req.Name, quant, req.Temp);
                     break;
 
                 case "Star Scrap":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("starsinc", "Star Sprites", req.Name, quant, false);
+                    Core.HuntMonster("starsinc", "Star Sprites", req.Name, quant, req.Temp);
                     break;
 
                 case "Rising Star Token":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("herolobby", "Training Partner", req.Name, quant, false);
+                    Core.HuntMonster("herolobby", "Training Partner", req.Name, quant, req.Temp);
                     break;
 
                 case "Dark Stars":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("deadlines", "Eternal Dragon", req.Name, quant, false);
+                    Core.HuntMonster("deadlines", "Eternal Dragon", req.Name, quant, req.Temp);
                     break;
 
                 case "Star Sapphire Fragment":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("skytower", "Star Sapphire", req.Name, quant, false);
+                    Core.HuntMonster("skytower", "Star Sapphire", req.Name, quant, req.Temp);
                     break;
 
                 case "Moon Rock Fragments":
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster("lunacove", "r2", "Right", "*", req.Name, quant, false);
+                    Core.KillMonster("lunacove", "r2", "Right", "*", req.Name, quant, req.Temp);
                     break;
 
                 case "Blood Moon Warrior":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("marchosiasfight", "Marchosias", req.Name, quant, false);
+                    Core.HuntMonster("marchosiasfight", "Marchosias", req.Name, quant, req.Temp);
                     break;
 
                 case "Celestial Khopesh":
@@ -573,23 +549,26 @@ public class ArcanaInvokerResourceMerge
                 case "The Moon's Reflection":
                     Bot.Quests.UpdateQuest(8000);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("Astravia", "The Moon", req.Name, quant, false);
+                    Core.HuntMonster("Astravia", "The Moon", req.Name, quant, req.Temp);
                     break;
 
                 case "Golden Sun Seal":
+                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("titanattack", "Titanic Paladin", req.Name, quant, false);
+                    Core.HuntMonster("titanattack", "Titanic Paladin", req.Name, quant, req.Temp);
                     break;
 
                 case "Sun Zone Chit":
-                    Core.RegisterQuests(9252);
+                    Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
+                        Core.EnsureAccept(9252);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("sunlightzone", "Marine Snow", "Marine Sample", log: false);
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("sunlightzone", "Infernal Illusion", "Infernal Sample", 10, log: false);
                         Core.HuntMonster("sunlightzone", "Seraphic Illusion", "Seraphic Sample", 10, log: false);
+                        Core.EnsureComplete(9252);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -602,12 +581,12 @@ public class ArcanaInvokerResourceMerge
                 case "The Sun's Enlightenment":
                     Bot.Quests.UpdateQuest(8256);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("astraviacastle", "The Sun", req.Name, quant, false);
+                    Core.HuntMonster("astraviacastle", "The Sun", req.Name, quant, req.Temp);
                     break;
 
                 case "Trumpet":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("astraviajudge", "Trumpeter", req.Name, quant, false);
+                    Core.HuntMonster("astraviajudge", "Trumpeter", req.Name, quant, req.Temp);
                     break;
 
                 case "Enchanted Lance of Doom Reborn":
@@ -616,7 +595,7 @@ public class ArcanaInvokerResourceMerge
 
                 case "Minos' Sentence":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("judgement", "Minos", req.Name, quant, false);
+                    Core.HuntMonster("judgement", "Minos", req.Name, quant, req.Temp);
                     break;
 
                 case "Darkon's Receipt":
