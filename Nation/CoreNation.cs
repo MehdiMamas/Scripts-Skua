@@ -674,15 +674,14 @@ public class CoreNation
     /// <param name="quant">The quantity of the item to farm.</param>
     public void NulgathLarvae(string? item = null, int quant = 1)
     {
-        if (string.IsNullOrEmpty(item) || Core.CheckInventory(item, quant))
-            return;
-
         Quest? larvaeQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2566));
         if (larvaeQuest == null)
         {
             Core.Logger("Nulgath Larvae quest not found.");
             return;
         }
+        if (item != null && Core.CheckInventory(item, quant))
+            return;
 
         Quest? voucherQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(4778));
         if (voucherQuest == null)
