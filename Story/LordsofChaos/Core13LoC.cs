@@ -2261,7 +2261,7 @@ public class Core13LoC
         Story.KillQuest(3788, "newfinale", "Chaos Challenger");
 
         //Battle for Chaos in Doomwood!
-        Story.KillQuest(3783, "newfinale", "Chaotic Virago");
+        Story.KillQuest(3783, "newfinale", "Alliance Virago");
 
         //Beat Chaorrupted Lycan Hunter
         if (!Story.QuestProgression(3789))
@@ -2278,7 +2278,7 @@ public class Core13LoC
         Story.KillQuest(3790, "newfinale", "Memory of Vampires");
 
         //Battle for Chaos in the Lair!
-        Story.KillQuest(3787, "newfinale", "Chaotic Virago");
+        Story.KillQuest(3787, "newfinale", "Alliance Virago");
 
         //1st Chaos Beast
         Story.ChainQuest(3608);
@@ -2398,7 +2398,7 @@ public class Core13LoC
         if (!Story.QuestProgression(3879))
         {
             Core.EnsureAccept(3879);
-            Core.HuntMonsterMapID("chaosrealm", 13, "Chaos Lord Alteon Defeated");
+            Core.HuntMonsterMapID("chaosrealm", 13, "Alteon");
             Core.EnsureComplete(3879);
             Bot.Wait.ForMapLoad("confrontation");
         }
