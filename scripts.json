@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 128520,
+    "size": 128844,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -2724,7 +2724,7 @@
       "mega shadow medal"
     ],
     "path": "Other/ShadowflameWarMedal.cs",
-    "size": 1511,
+    "size": 1594,
     "fileName": "ShadowflameWarMedal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/ShadowflameWarMedal.cs"
   },
@@ -14623,7 +14623,7 @@
       "legend"
     ],
     "path": "Other/FarmJoeKits/1MemberFarmsKit.cs",
-    "size": 27070,
+    "size": 27121,
     "fileName": "1MemberFarmsKit.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/1MemberFarmsKit.cs"
   },
@@ -18877,7 +18877,7 @@
       "null"
     ],
     "path": "Other/MergeShops/CrownsreachDefenseMerge.cs",
-    "size": 5073,
+    "size": 5016,
     "fileName": "CrownsreachDefenseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CrownsreachDefenseMerge.cs"
   },
