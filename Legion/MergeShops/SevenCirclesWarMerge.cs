@@ -11,7 +11,6 @@ tags: null
 //cs_include Scripts/Story/Legion/SevenCircles(War).cs
 //cs_include Scripts/Legion/MergeShops/SevenCirclesMerge.cs
 //cs_include Scripts/Legion/HeadOfTheLegionBeast.cs
-//cs_include Scripts/Story/Legion/SevenCircles(War).cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -67,6 +66,8 @@ public class SevenCirclesWarMerge
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
         Circles.CirclesWar();
+        Core.DL_Enable();
+        Core.DebugLogger(this);
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("sevencircleswar", 1984, findIngredients, buyOnlyThis, buyMode: buyMode);
 
