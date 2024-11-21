@@ -1186,18 +1186,23 @@ public class CoreBots
         _BuyItem(map, shopID, item, quant, Log);
     }
 
+    int retrys = 0;
     public void _BuyItem(string map, int shopID, ShopItem? item, int quant, bool Log = true)
     {
         int buy_quant;
-
         if (item == null || (buy_quant = _CalcBuyQuantity(item, quant)) == 0 || !_canBuy(shopID, item, buy_quant))
             return;
 
         Join(map);
         Bot.Wait.ForMapLoad(map);
-        JumpWait();
         Bot.Events.ExtensionPacketReceived += RelogRequieredListener;
-
+        while (!Bot.ShouldExit && Bot.Player.InCombat)
+        {
+            if (Bot.Player.HasTarget)
+                Bot.Combat.CancelTarget();
+            JumpWait();
+            Sleep();
+        }
         Bot.Shops.Load(shopID);
         Bot.Wait.ForActionCooldown(GameActions.LoadShop);
 
@@ -1248,11 +1253,22 @@ public class CoreBots
             if (Log)
                 Logger($"Bought {buy_quant} {item.Name}, now at {quant} {item.Name}", "BuyItem");
         }
-        else
+        else if (retrys < 5)
         {
             if (Log)
-                Logger($"Failed at buying {buy_quant}/{quant} {item.Name}", "BuyItem");
+            {
+                Logger($"Failed at buying {buy_quant}/{quant} {item.Name}, retrying: x{retrys}", "BuyItem");
+                retrys++;
+                JumpWait();
+                _BuyItem(map, shopID, item, quant, Log);
+            }
         }
+        else
+        {
+            retrys = 0;
+            Logger($"Failed at buying {buy_quant}/{quant} {item.Name}", "BuyItem");
+        }
+
 
         void RelogRequieredListener(dynamic packet)
         {
@@ -1577,7 +1593,11 @@ public class CoreBots
     {
         Bot.Wait.ForTrue(() => Bot.Shops.ID == shopID, () =>
         {
-            Join(map);
+            if (Bot.Map.Name != map)
+            {
+                Join(map);
+                Bot.Wait.ForMapLoad(map);
+            }
             Bot.Shops.Load(shopID);
             Sleep();
         }, 20, 1000);
@@ -4627,6 +4647,8 @@ public class CoreBots
             if (Bot.Inventory.Items.Any(x => x != null && x.ID == item.ID && x.Equipped))
                 break;
 
+            JumpWait();
+
             switch (item.CategoryString.ToLower())
             {
                 case "item": // Consumables
@@ -5119,6 +5141,9 @@ public class CoreBots
     /// </summary>
     public void JumpWait()
     {
+        //just do this initialy.. as `InCombat` only counts for having a target.
+        Bot.Map.Jump(Bot.Player.Cell ?? "Enter", Bot.Player.Pad ?? "Spawn", false);
+        Sleep(1000);
         Bot.Options.AttackWithoutTarget = false;
 
         HashSet<string> blackListedCells = Bot.Monsters.MapMonsters.Select(monster => monster.Cell).ToHashSet();
@@ -5230,7 +5255,7 @@ public class CoreBots
             }
             else
             {
-                cellPad = (Bot.Player.Cell, Bot.Player.Pad);
+                cellPad = (Bot.Player.Cell!, Bot.Player.Pad!);
                 jumpCount = 2;
             }
         }
@@ -5873,7 +5898,7 @@ public class CoreBots
                     {
                         if (Bot.Options.SafeTimings)
                         {
-                            if (!Bot.Wait.ForMapLoad(map, 20) && !Bot.ShouldExit)
+                            if (!Bot.Wait.ForMapLoad(map, 20))
                             {
                                 Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad, false);
                             }
@@ -6216,7 +6241,7 @@ public class CoreBots
         foreach (Monster targetMonster in Bot.Monsters.MapMonsters
         .Where(x => x != null && x.Cell == Bot.Player.Cell && x.State > 0))
         {
-            DebugLogger(this);
+            // DebugLogger(this);
 
             Logger($"Killing {targetMonster}");
             while (!Bot.ShouldExit && Bot.Monsters.MapMonsters.Any(x => x.State > 0))
@@ -6224,7 +6249,7 @@ public class CoreBots
                 while (!Bot.ShouldExit && (!Bot.Player.Alive || Bot.Map.Name == "legionpvp"))
                 {
                     Sleep();
-                    DebugLogger(this);
+                    // DebugLogger(this);
                     if (Bot.Map.Name == "legionpvp")
                     {
                         Join("dagepvp-999999", "Enter0", "Spawn");
