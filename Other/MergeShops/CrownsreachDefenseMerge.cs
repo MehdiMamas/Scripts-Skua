@@ -71,7 +71,6 @@ public class CrownsreachDefenseMerge
                 #endregion
 
                 case "ShadowFlame War Medal":
-                    Core.FarmingLogger(req.Name, quant);
                     SWM.Medals(quant);
                     break;
             }

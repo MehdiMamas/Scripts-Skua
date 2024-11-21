@@ -36,7 +36,7 @@ public class ShadowflameWarMedal
 
         SoW.ShadowWar();
         SoC.DualPlane();
-
+        Core.FarmingLogger("ShadowFlame War Medal", quant);
         Core.EquipClass(ClassType.Farm);
         Core.RegisterQuests(7685, 7686);
         while (!Bot.ShouldExit && !Core.CheckInventory("ShadowFlame War Medal", quant))
