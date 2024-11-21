@@ -66,8 +66,6 @@ public class SevenCirclesWarMerge
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
         Circles.CirclesWar();
-        Core.DL_Enable();
-        Core.DebugLogger(this);
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("sevencircleswar", 1984, findIngredients, buyOnlyThis, buyMode: buyMode);
 
