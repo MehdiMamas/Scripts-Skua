@@ -563,7 +563,8 @@ public class MemberFarm
         GetItems("gonnagetcha", "Shrade", "DeathHunter Hair", "DeathHunter Hood", "DeathHunter Locks", "Fanged Cultist Mask", "Feral Cultist Mask", "Malevolent Cultist Mask", "Shadow Cultist Armor");
         GetItems("splatterwardage", "Shrade", "Celtic Hunter Blade", "Underworld Shrade", "Underworld Shrade Axe", "Underworld Shrade Helm", "Underworld Shrade Minion", "Well-wet Hair");
         GetItems("greymoor", "Shrade", "Necrotic Caster", "Necrotic Caster Cross Back", "Necrotic Caster Grave Spade", "Necrotic Caster Hair", "Necrotic Caster Locks", "Necrotic Caster Locks Morph", "Necrotic Caster Mask", "Necrotic Caster Mask Morph", "Necrotic Caster Masked Locks", "Necrotic Caster Scroll");
-        GetItems("greymoor", "Ultra Shrade", "Shrade Armor", "Shrade Helm");
+        // Non Soloable appearntly (33k hits)vv
+        // GetItems("greymoor", "Ultra Shrade", "Shrade Armor", "Shrade Helm");
         GetItems("battledoom", "13th Doom Lord", "Doom Lord Vaal and Vayle", "Dual Skull Half-Axes", "Skulled Half-Axe", "SkullBorne Dagger", "Vaal's Doom Visage", "Vayle's Doom Hood", "Weeping Axe of DOOM");
         GetItems("crownsreachfxiii", "Shub-Hathrys", "Tentacled Tophat and Beard", "Tentacled Tophat and Locks");
     }
