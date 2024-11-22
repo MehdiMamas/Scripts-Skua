@@ -388,7 +388,7 @@ public class CoreAdvanced
                     ? Math.Min(Bot.Inventory.GetQuantity(item.ID) + req.Quantity, req.MaxStack)
                     : req.Quantity * (craftingQ - Bot.Inventory.GetQuantity(item.ID));
 
-                
+
                 // Skip if the required quantity is already in inventory
                 if (Core.CheckInventory(req.ID, externalQuant))
                     continue;
@@ -400,10 +400,10 @@ public class CoreAdvanced
 
                     getIngredients(selectedItem, req.Quantity);
 
-                    if (matsOnly)
-                    {
-                        continue;
-                    }
+                    if (!matsOnly)
+                        BuyItem(map, shopID, selectedItem.ID, Bot.Inventory.GetQuantity(selectedItem.ID) + selectedItem.Quantity, shopItemID: selectedItem.ShopItemID, Log: Log);
+                    else
+                        break;
                 }
                 else
                 {
