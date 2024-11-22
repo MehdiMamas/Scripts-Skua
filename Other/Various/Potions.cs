@@ -152,13 +152,13 @@ public class PotionBuyer
             return;
         }
 
-        for (int i = 0; i < Potions!.Length; i++)
-            Core.Logger($"- {Potions[i]} x {Core.dynamicQuant(Potions[i], false)}/ {PotionQuant}");
+        // for (int i = 0; i < Potions!.Length; i++)
+        //     Core.Logger($"- {Potions[i]} x {Core.dynamicQuant(Potions[i], false)}/ {PotionQuant}");
 
         Core.AddDrop(Potions);
 
         //2ndary potions that are obtained alongside the normal versions, to be banked and added as a drop.
-        string[] SecondaryPotions = new[] {"Potent Malice Potion", "Potent Soul Potion"};
+        string[] SecondaryPotions = new[] { "Potent Malice Potion", "Potent Soul Potion" };
         Core.ToBank(SecondaryPotions);
         Bot.Drops.Add(SecondaryPotions);
 
@@ -166,19 +166,15 @@ public class PotionBuyer
         {
             if (PotionsFarm != null && !PotionsFarm[t] && !Seperate)
             {
-                Core.Logger($"{t}: {PotionsFarm[t]}");
-                Core.Sleep();
+                Core.Logger($"{t}: {Potions[t]}: {PotionsFarm[t]}");
                 continue;
             }
 
             string Potion = Potions[t];
-            Core.Logger($"{t}: {Potion}");
+            Core.Logger($"{t}: {Potions[t]}: {PotionsFarm[t]}");
 
             if (Core.CheckInventory(Potion, PotionQuant))
-            {
-                Core.FarmingLogger(Potion, PotionQuant);
                 continue;
-            }
 
             Core.FarmingLogger(Potion, PotionQuant);
 
