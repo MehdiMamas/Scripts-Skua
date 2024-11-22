@@ -1245,7 +1245,7 @@ public class CoreBots
             // Sell spares
             // This only occurs when you buy sth with stack limits, but want less then the stack limit.
             int sell_quant = buy_quant - quant;
-            SellItem(item.Name, quant);
+            SellItem(item.Name, sell_quant);
             Logger($"Bought {buy_quant} {item.Name}, sold {sell_quant}, now at {quant} {item.Name}", "BuyItem");
         }
         else if (CheckInventory(item.Name, quant))
@@ -1965,6 +1965,8 @@ public class CoreBots
         }
     }
 
+
+
     /// <summary>
     /// This will register quests to be completed while doing something else, i.e. while in combat.
     /// If it has quests already registered, it will cancel them first and then register the new quests.
@@ -2024,6 +2026,7 @@ public class CoreBots
                 .Where(x => x != null && !x.Temp)
                 .Select(x => x.Name).ToArray());
         }
+        Bot.Events.ExtensionPacketReceived += QuestDataFixer;
 
 
         questCTS = new();
@@ -2034,7 +2037,8 @@ public class CoreBots
                 await Task.Delay(ActionDelay);
                 foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest? _quest) && _quest != null))
                 {
-                    if (quest == null)
+                    Quest q = InitializeWithRetries(() => EnsureLoad(quest.ID));
+                    if (!Bot.Player.Alive || quest == null)
                     {
                         Logger($"Failed to initialize quest.");
                         continue;
@@ -2077,9 +2081,32 @@ public class CoreBots
                         await Task.Delay(ActionDelay);
                     }
                 }
+                GC.Collect();
             }
         });
         questCTS = new();
+        Bot.Events.ExtensionPacketReceived -= QuestDataFixer;
+
+        void QuestDataFixer(dynamic packet)
+        {
+            string type = packet["params"].type;
+            dynamic data = packet["params"].dataObj;
+            if (type == "json")
+            {
+                string str = data.strMessage;
+                int QID = data.strQuestID;
+                switch (str)
+                {
+                    case "Quest Complete Failed: Missing Required Item":
+                        Logger("Quest de-sync (AE Issue) detected, Abandoning and re-accepting quest");
+
+                        Bot.Log("Abandoning and re-accepting quest.");
+                        Bot.Flash.CallGameFunction("world.abandonQuest", QID);
+                        Bot.Quests.EnsureAccept(QID);               
+                        break;
+                }
+            }
+        }
     }
 
     /// <summary>

@@ -897,7 +897,7 @@ public class CoreNation
                     return;
                 }
                 else if (Item == null)
-                    Core.Logger("Item is null.");
+                    Core.Logger("Item is null or all rewards maxed.");
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                 {

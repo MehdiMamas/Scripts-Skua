@@ -1958,9 +1958,9 @@ public class CoreFarms
         }
 
         int waitTimer = 3500;
-        var successful = 1;
-        var failed = 1;
-        var startingRep = FactionRep("Fishing");
+        int successful = 1;
+        int failed = 1;
+        int startingRep = FactionRep("Fishing");
         int currentRep = FactionRep("Fishing");
         Core.AddDrop("Fishing Bait", "Fishing Dynamite");
         Core.EquipClass(ClassType.Farm);
@@ -1973,18 +1973,19 @@ public class CoreFarms
             GetBaitandDynamite(0, 50); // Always get dynamite since we're above rank 2
 
             Core.Join("fishing");
-            while (!Bot.ShouldExit && !Bot.Player.Loaded)
-            { int i = 0; Core.Logger($"Waiting for play to load {i++}"); Core.Sleep(1000); }
+            Bot.Wait.ForCellChange("Enter");
+            Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
 
             Core.Logger("Fishing With: Dynamite");
 
             while (!Bot.ShouldExit && Core.CheckInventory("Fishing Dynamite") && FactionRank("Fishing") < rank && (!shouldDerp || !Core.HasAchievement(14)))
             {
-                Core.Sleep();
+                Core.Sleep(1000);
                 Bot.Send.Packet("%xt%zm%FishCast%1%Dynamite%30%");
                 Core.Logger($"CatchTimer™ Delay: {waitTimer}ms");
                 Core.Sleep(waitTimer);
                 Bot.Send.Packet("%xt%zm%getFish%1%false%");
+                Core.Sleep(1000);
 
                 currentRep = FactionRep("Fishing");
                 Core.Logger(currentRep > startingRep ? $"Successful! [Dynamite Cast x{successful++}]" : $"Failed! [Dynamite Cast x{failed++}]");
@@ -2044,42 +2045,34 @@ public class CoreFarms
 
     }
 
-    public void GetBaitandDynamite(int FishingBaitQuant, int FishingDynamiteQuant)
+    public void GetBaitandDynamite(int fishingBaitQuant, int fishingDynamiteQuant)
     {
-        if (Core.CheckInventory("Fishing Bait", FishingBaitQuant) && Core.CheckInventory("Fishing Dynamite", FishingDynamiteQuant))
+        if (Core.CheckInventory("Fishing Bait", fishingBaitQuant) && Core.CheckInventory("Fishing Dynamite", fishingDynamiteQuant))
             return;
 
-        // Check and handle Fishing Bait if quantity is greater than 0
-        if (FishingBaitQuant > 0)
+        void FarmItem(string itemName, int quantity, string map, string cell, string pad, string monster)
         {
-            KillMonsterForItem("Fishing Bait", FishingBaitQuant, "greenguardwest", "West3", "Right", "Frogzard");
-        }
+            if (quantity <= 0) return;
 
-        // Check and handle Fishing Dynamite if quantity is greater than 0
-        if (FishingDynamiteQuant > 0)
-        {
-            KillMonsterForItem("Fishing Dynamite", FishingDynamiteQuant, "greenguardwest", "West4", "Right", "Slime");
-        }
-
-        // Method to kill a monster to obtain a specific item
-        void KillMonsterForItem(string itemName, int quantity, string map, string cell, string pad, string monster)
-        {
             Core.AddDrop(itemName);
             Core.RegisterQuests(1682);
             Core.FarmingLogger(itemName, quantity);
-            int ItemNameQuant = Bot.Inventory.GetQuantity(itemName);
-            while (!Bot.ShouldExit && quantity > 0 && !Core.CheckInventory(itemName, quantity))
+
+            while (!Bot.ShouldExit && !Core.CheckInventory(itemName, quantity))
             {
                 Core.KillMonster(map, cell, pad, monster, log: false);
-                if (Bot.Inventory.GetQuantity(itemName) > ItemNameQuant)
-                    Core.FarmingLogger(itemName, quantity);
+                Bot.Wait.ForPickup(itemName);
             }
         }
 
+        FarmItem("Fishing Bait", fishingBaitQuant, "greenguardwest", "West3", "Right", "Frogzard");
+        FarmItem("Fishing Dynamite", fishingDynamiteQuant, "greenguardwest", "West4", "Right", "Slime");
+
         Bot.Quests.UnregisterQuests(1682);
         Core.AbandonQuest(1682);
-        Core.Logger("Returing to Fishing Map");
+        Core.Logger("Returning to Fishing Map");
     }
+
 
     public void GetFish(int itemID, int quant, int quest)
     {
