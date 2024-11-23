@@ -1,14 +1,14 @@
 /*
-name: Hollowborn Saga
-description: This script will complete Hollowborn Saga.
-tags: hollowborn, saga, trygve, neofortress, lae, treasure hunt, lae birthday, shadowrealm, whispering helmet, neotower,dawnsanctum,neo tower,dawn sanctum,quest
+name: Dawn Vindicators' Sanctum
+description: This script will complete the Lae's storyline in /dawnsanctum.
+tags: hollowborn, saga, lae, dawn, dawn sanctum, quest,vindicators, sanctum,dawnsanctum
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
 using Skua.Core.Interfaces;
 
-public class DoAllHB
+public class DawnSanctum
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
@@ -18,7 +18,7 @@ public class DoAllHB
     {
         Core.SetOptions();
 
-        HB.DoAll();
+        HB.DawnSanctum();
 
         Core.SetOptions(false);
     }

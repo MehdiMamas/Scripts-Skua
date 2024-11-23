@@ -25,6 +25,7 @@ public class CoreHollowbornStory
         ShadowslayerD();
         Shadowrealm();
         NeoTower();
+        DawnSanctum();
     }
 
     public void Trygve()
@@ -297,6 +298,105 @@ public class CoreHollowbornStory
 
     }
 
+    public void DawnSanctum()
+    {
+        if (Core.isCompletedBefore(9986))
+            return;
+
+        NeoTower();
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Vindicator Soldier", // UseableMonsters[0],
+	"Hollowborn Soldier", // UseableMonsters[1],
+	"Vindicator Recruit", // UseableMonsters[2],
+	"Vindicator Hound", // UseableMonsters[3],
+	"Hollowborn Hound", // UseableMonsters[4],
+	"Vindicator Draconian", // UseableMonsters[5],
+	"Hollowborn Draconian", // UseableMonsters[6],
+	"Grandmaster Gramiel", // UseableMonsters[7],
+	"Celestial Gramiel", // UseableMonsters[8]
+};
+        #endregion Useable Monsters
+
+        // 9977 | Wunjo, Reversed - Realized
+        if (!Story.QuestProgression(9977))
+        {
+            Core.HuntMonsterQuest(9977,
+                ("dawnsanctum", UseableMonsters[0], ClassType.Farm));
+        }
+
+
+        // 9978 | Berkana - Realized
+        if (!Story.QuestProgression(9978))
+        {
+            Core.HuntMonsterQuest(9978,
+                ("dawnsanctum", UseableMonsters[1], ClassType.Farm));
+        }
+
+
+        // 9979 | Algiz, Reversed - Realized
+        Story.KillQuest(9979, "dawnsanctum", UseableMonsters[2]);
+        Story.MapItemQuest(9979, "dawnsanctum", 13853);
+
+        // 9980 | Gebo - Realized
+        if (!Story.QuestProgression(9980))
+        {
+            Core.HuntMonsterQuest(9980,
+                ("dawnsanctum", UseableMonsters[3], ClassType.Farm));
+        }
+
+
+        // 9981 | Eihwaz - Realized
+        Story.KillQuest(9981, "dawnsanctum", UseableMonsters[4]);
+        Story.MapItemQuest(9981, "dawnsanctum", 13854);
+
+
+        // 9982 | Hagalaz - Realized
+        if (!Story.QuestProgression(9982))
+        {
+            Core.HuntMonsterQuest(9982,
+                ("dawnsanctum", UseableMonsters[5], ClassType.Farm));
+        }
+
+
+        // 9983 | Mannaz - Realized
+        if (!Story.QuestProgression(9983))
+        {
+            Core.HuntMonsterQuest(9983,
+                ("dawnsanctum", UseableMonsters[6], ClassType.Farm));
+        }
+
+
+        // 9984 | Thurisaz - Realized
+        if (!Story.QuestProgression(9984))
+        {
+            Core.HuntMonsterQuest(9984,
+                ("dawnsanctum", UseableMonsters[5], ClassType.Farm),
+                ("dawnsanctum", UseableMonsters[6], ClassType.Farm));
+        }
+
+
+        // 9985 | Othala - Realized
+        if (!Story.QuestProgression(9985))
+        {
+            Core.HuntMonsterQuest(9985,
+                ("dawnsanctum", UseableMonsters[7], ClassType.Solo));
+        }
+
+
+        // 9986 | Isa, Reversed - Realized
+        if (!Story.QuestProgression(9986))
+        {
+            Core.HuntMonsterQuest(9986,
+                ("dawnsanctum", UseableMonsters[8], ClassType.Solo));
+        }
+
+
+    }
 
     // I'll put it here in case it turns out its needed
     // public void ShadowrRealm()
