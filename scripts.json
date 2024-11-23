@@ -12272,6 +12272,41 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/HollowbornMerge.cs"
   },
   {
+    "name": "Dawnsanctum Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Dawnsanctum Merge [2505] in /dawnsanctum",
+    "tags": [
+      "dawnsanctum",
+      "merge",
+      "dawnsanctum",
+      "gramiels",
+      "celestial",
+      "enoch",
+      "enochs",
+      "glorified",
+      "hollowborn",
+      "draconian",
+      "hollow",
+      "beast",
+      "tamer",
+      "claws",
+      "vindicated",
+      "assassin",
+      "dirk",
+      "soldier",
+      "dawn",
+      "priest",
+      "tome",
+      "grace",
+      "texts",
+      "spellbooks",
+      "grimoires"
+    ],
+    "path": "Hollowborn/MergeShops/DawnsanctumMerge.cs",
+    "size": 15708,
+    "fileName": "DawnsanctumMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/DawnsanctumMerge.cs"
+  },
+  {
     "name": "Hollowborn LoveCaster Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Hollowborn LoveCaster Merge [2422] in /shadowrealm",
     "tags": [
@@ -19939,7 +19974,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelper.cs",
-    "size": 8848,
+    "size": 8959,
     "fileName": "MergeTemplateHelper.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelper.cs"
   },
