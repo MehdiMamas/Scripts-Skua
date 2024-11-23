@@ -9140,7 +9140,7 @@
       "null"
     ],
     "path": "Story/Hollowborn/CoreHollowbornStory.cs",
-    "size": 8341,
+    "size": 11163,
     "fileName": "CoreHollowbornStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Hollowborn/CoreHollowbornStory.cs"
   },
@@ -9176,12 +9176,35 @@
       "lae birthday",
       "shadowrealm",
       "whispering helmet",
-      "neotower"
+      "neotower",
+      "dawnsanctum",
+      "neo tower",
+      "dawn sanctum",
+      "quest"
     ],
     "path": "Story/Hollowborn/00DoAll.cs",
-    "size": 681,
+    "size": 722,
     "fileName": "00DoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Hollowborn/00DoAll.cs"
+  },
+  {
+    "name": "Dawn Vindicators' Sanctum",
+    "description": "This script will complete the Lae's storyline in /dawnsanctum.",
+    "tags": [
+      "hollowborn",
+      "saga",
+      "lae",
+      "dawn",
+      "dawn sanctum",
+      "quest",
+      "vindicators",
+      "sanctum",
+      "dawnsanctum"
+    ],
+    "path": "Story/Hollowborn/05DawnSanctum.cs",
+    "size": 689,
+    "fileName": "05DawnSanctum.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Hollowborn/05DawnSanctum.cs"
   },
   {
     "name": "Neo Fortress",
