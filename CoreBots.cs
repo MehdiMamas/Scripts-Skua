@@ -2037,7 +2037,7 @@ public class CoreBots
                 await Task.Delay(ActionDelay);
                 foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest? _quest) && _quest != null))
                 {
-                    Quest q = InitializeWithRetries(() => EnsureLoad(quest.ID));
+                    Quest? q = InitializeWithRetries(() => EnsureLoad(quest.ID));
                     if (!Bot.Player.Alive || quest == null)
                     {
                         Logger($"Failed to initialize quest.");
@@ -2102,7 +2102,7 @@ public class CoreBots
 
                         Bot.Log("Abandoning and re-accepting quest.");
                         Bot.Flash.CallGameFunction("world.abandonQuest", QID);
-                        Bot.Quests.EnsureAccept(QID);               
+                        Bot.Quests.EnsureAccept(QID);
                         break;
                 }
             }
