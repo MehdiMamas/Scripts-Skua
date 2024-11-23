@@ -137,6 +137,7 @@ public class MergeTemplateHelper
 
             foreach (ItemBase req in item.Requirements)
             {
+                //if shop doesnt contain requirement, and output (whats generated already) doesnt contain name
                 if (!shopItems.Any(_item => _item.ID == req.ID) && !output.Contains(req.Name))
                 {
                     if (!genFile)
