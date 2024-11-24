@@ -2880,9 +2880,6 @@ public class CoreBots
             Bot.Wait.ForCellChange(cell);
         }
 
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
-
         List<Monster> FindMonsters()
         {
             // If monster is "*", return all mobs in the specified cell
@@ -2897,6 +2894,12 @@ public class CoreBots
                 .Where(x => x != null && x.Cell == cell && x.Name.FormatForCompare() == monster.FormatForCompare())
                 .ToList();
         }
+
+        Bot.Options.AggroAllMonsters = false;
+        //fuck it lets test it.
+        if (Bot.Map.PlayerNames.Count > 1)
+            Bot.Options.AggroMonsters = true;
+        else Bot.Options.AggroMonsters = false;
 
         List<Monster> targetMonsters = FindMonsters();
         if (item == null)
@@ -2936,6 +2939,8 @@ public class CoreBots
 
             Bot.Options.AttackWithoutTarget = false;
             ToggleAggro(false);
+            Jump("Enter", "Spawn");
+            Bot.Options.AggroMonsters = false;
             JumpWait();
             Rest();
         }
