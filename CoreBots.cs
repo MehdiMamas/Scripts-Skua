@@ -681,7 +681,7 @@ public class CoreBots
             result = initializer();
             if (result != null)
                 break;
-            Logger($"Attempt {i + 1}: Initialization failed. Retrying...");
+            Logger($"Attempt {i++}: Initialization failed. Retrying...");
             Sleep(delay); // Wait for the specified delay before retrying
         }
 
@@ -1086,7 +1086,7 @@ public class CoreBots
 
         foreach (int item in items)
         {
-            if (item == 0)
+            if (item == 0 || (!Bot.Inventory.Contains(item) && !Bot.House.Contains(item) && !Bot.Bank.Contains(item)))
                 continue;
 
             if (Bot.Inventory.IsEquipped(item) || Bot.House.IsEquipped(item))
@@ -1100,17 +1100,7 @@ public class CoreBots
                 continue;
             }
 
-            InventoryItem? inventoryItem = InitializeWithRetries(() =>
-                Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == item)
-            );
-
-            if (inventoryItem == null)
-            {
-                Logger($"Failed to find item with ID {item} in inventory after multiple attempts.");
-                return;
-            }
-
-            string name = inventoryItem.Name; bool success = false;
+            bool success = false;
             for (int i = 0; i < 20; i++) // Retry up to 20 times
             {
                 Bot.Inventory.EnsureToBank(item);
@@ -1124,7 +1114,7 @@ public class CoreBots
 
             if (!success)
             {
-                Logger($"Failed to bank {name}, skipping it", messageBox: true);
+                Logger($"Failed to bank {item}, skipping it");
                 continue;
             }
 
@@ -2021,14 +2011,13 @@ public class CoreBots
                 await Task.Delay(ActionDelay);
                 foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest? _quest) && _quest != null))
                 {
-                    Quest? q = InitializeWithRetries(() => EnsureLoad(quest.ID));
-                    if (!Bot.Player.Alive || quest == null)
-                    {
-                        Logger($"Failed to initialize quest.");
+                    // Ensure player is alive so it can load the quest.
+                    if (!Bot.Player.Alive)
                         continue;
-                    }
 
-                    if (Bot.Quests.IsInProgress(quest.ID) && !Bot.Quests.CanComplete(quest.ID))
+                    Quest? q = InitializeWithRetries(() => EnsureLoad(quest.ID));
+
+                    if (quest == null || Bot.Quests.IsInProgress(quest.ID) && !Bot.Quests.CanComplete(quest.ID))
                         continue;
 
                     if (!Bot.Quests.IsInProgress(quest.ID))
@@ -2939,7 +2928,7 @@ public class CoreBots
 
             Bot.Options.AttackWithoutTarget = false;
             ToggleAggro(false);
-            Jump("Enter", "Spawn");
+            Jump();
             Bot.Options.AggroMonsters = false;
             JumpWait();
             Rest();
