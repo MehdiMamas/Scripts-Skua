@@ -320,8 +320,8 @@ public class CoreBots
                     // Anti-lag option
                     if (AntiLag)
                     {
-                        Bot.Options.LagKiller = true;
-                        Bot.Lite.HidePlayers = true;
+                        Bot.Options.LagKiller = changeTo;
+                        Bot.Lite.HidePlayers = changeTo;
                         Bot.Lite.FreezeMonsterPosition = true;
                         Bot.Lite.DisableDamageStrobe = true;
                         Bot.Lite.DisableMonsterAnimation = true;
@@ -359,9 +359,6 @@ public class CoreBots
     /// </summary>
     private bool StopBot(bool crashed)
     {
-        Bot.Options.AttackWithoutTarget = false;
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
         StopBotAsync();
         Bot.Handlers.Clear();
 
@@ -369,19 +366,6 @@ public class CoreBots
         {
             JumpWait();
             Sleep();
-            // Set `Lite` options whilst logged in
-            Bot.Lite.ReacceptQuest = false;
-            Bot.Lite.DisableSelfAnimation = false;
-            Bot.Lite.FreezeMonsterPosition = false;
-            Bot.Lite.DisableWeaponAnimation = false;
-            Bot.Lite.DisableSkillAnimation = false;
-            Bot.Lite.DisableSkillAnimations = false;
-            Bot.Lite.InvisibleMonsters = false;
-            Bot.Lite.DisableMonsterAnimation = false;
-            Bot.Lite.HidePlayers = false;
-            if (Bot.Quests.Registered.Any(q => q > 0))
-                Bot.Quests.UnregisterAllQuests();
-            // AbandonQuest(Bot.Quests.Active.Where(q => q != null && Bot.Quests.IsInProgress(q.ID)).Select(q => q.ID).ToArray());
 
             if (!string.IsNullOrWhiteSpace(CustomStopLocation))
             {
