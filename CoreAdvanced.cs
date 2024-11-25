@@ -187,7 +187,7 @@ public class CoreAdvanced
             // Check if the required item is available in the shop and buy it if necessary
             default:
                 // Find the required item from the shop
-                if (Core.GetShopItems(map, shopID).TryFind(x => x != null && x.ID == req.ID, out ShopItem SubItem) && SubItem.ShopItemID != 0)
+                if (Core.GetShopItems(map, shopID).TryFind(x => x != null && x.ID == req.ID, out ShopItem? SubItem) && SubItem != null && SubItem.ShopItemID != 0)
                 {
                     GetItemReq(SubItem, req.Quantity * bundlesToBuy);
                     BuyItem(map, shopID, req.Name, req.Quantity * bundlesToBuy, Log: Log);
@@ -391,7 +391,7 @@ public class CoreAdvanced
                 }
 
                 // Check if the requirement is another shop item
-                if (shopItems.TryFind(x => x != null && x.ID == req.ID, out ShopItem selectedItem) && selectedItem.ShopItemID != 0)
+                if (shopItems.TryFind(x => x != null && x.ID == req.ID, out ShopItem? selectedItem) && selectedItem != null && selectedItem.ShopItemID != 0)
                 {
                     // Warn if the external quantity exceeds the item's maximum stack size
                     if (externalQuant > selectedItem.MaxStack)
@@ -450,8 +450,10 @@ public class CoreAdvanced
                     Core.AddDrop(req.ID);
                     externalItem = req;
                     externalQuant = req.Quantity;
-                    if (externalQuant > inventoryItem.MaxStack)
+                    if (inventoryItem != null && externalQuant > inventoryItem.MaxStack)
+                    {
                         externalQuant = inventoryItem.MaxStack;
+                    }
                     findIngredients();
                 }
             }
