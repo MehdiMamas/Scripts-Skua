@@ -231,13 +231,18 @@ public class HeadoftheLegionBeast
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger("Indulgence", quant);
 
+        int currentQuantity = Bot.Inventory.GetQuantity("Indulgence");
+        int deficit = quant - currentQuantity;
+
+        int soulsTarget = deficit >= 3 ? 75 : deficit == 2 ? 50 : 25;
+        int essenceTarget = deficit >= 3 ? 3 : deficit;
         Core.RegisterQuests(7978);
         while (!Bot.ShouldExit && !Core.CheckInventory("Indulgence", quant))
         {
-            Core.KillMonster("sevencircles", "r2", "Left", "Limbo Guard", "Souls of Limbo", 25, log: false);
-            Core.KillMonster("sevencircles", "r4", "Left", "Luxuria", "Essence of Luxuria", 1, log: false);
-            Core.KillMonster("sevencircles", "r6", "Left", "Gluttony", "Essence of Gluttony", 1, log: false);
-            Core.KillMonster("sevencircles", "r8", "Left", "Avarice", "Essence of Avarice", 1, log: false);
+            Core.KillMonster("sevencircles", "r2", "Left", "Limbo Guard", "Souls of Limbo", soulsTarget, log: false);
+            Core.KillMonster("sevencircles", "r4", "Left", "Luxuria", "Essence of Luxuria", essenceTarget, log: false);
+            Core.KillMonster("sevencircles", "r6", "Left", "Gluttony", "Essence of Gluttony", essenceTarget, log: false);
+            Core.KillMonster("sevencircles", "r8", "Left", "Avarice", "Essence of Avarice", essenceTarget, log: false);
             Bot.Wait.ForPickup("Indulgence");
         }
         Core.CancelRegisteredQuests();
