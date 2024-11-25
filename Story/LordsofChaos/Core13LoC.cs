@@ -2367,9 +2367,7 @@ public class Core13LoC
         if (!Story.QuestProgression(3876))
         {
             Core.EnsureAccept(3876);
-
             Core.KillMonster("finalbattle", "r1", "Left", 1, 26875);
-
             Core.EnsureComplete(3876);
         }
 
@@ -2377,9 +2375,7 @@ public class Core13LoC
         if (!Story.QuestProgression(3877))
         {
             Core.EnsureAccept(3877);
-
             Core.KillMonster("finalbattle", "r4", "Left", 14, 26876);
-
             Core.EnsureComplete(3877);
         }
 
@@ -2387,11 +2383,9 @@ public class Core13LoC
         if (!Story.QuestProgression(3878))
         {
             Core.EnsureAccept(3878);
-
             Core.KillMonster("finalbattle", "r9", "Left", 23, 26877);
-
             Core.EnsureComplete(3878);
-            Bot.Wait.ForMapLoad("confrontation");
+            Core.Join("whitemap");
         }
 
         //Defeat the 12 Lords of Chaos!
@@ -2400,27 +2394,27 @@ public class Core13LoC
             Core.EnsureAccept(3879);
             Core.HuntMonsterMapID("chaosrealm", 13, "Alteon");
             Core.EnsureComplete(3879);
-            Bot.Wait.ForMapLoad("confrontation");
-        }
-
-        //Defeat the 13th Lord of Chaos
-        if (!Core.isCompletedBefore(3881))
-        {
-            Core.EnsureAccept(3880);
-            Core.HuntMonsterMapID("chaoslord", 1, "13th Lord of Chaos Defeated");
-            Core.EnsureComplete(3880);
-            Bot.Wait.ForMapLoad("confrontation");
-            // Insurance
             Core.Join("whitemap");
         }
 
-        //The Final Showdown!
+        //Defeat the 13th Lord of Chaos
         if (!Story.QuestProgression(3881))
         {
+            if (!Core.isCompletedBefore(3881))
+            {
+                Core.EnsureAccept(3880);
+                Core.HuntMonsterMapID("chaoslord", 1, "13th Lord of Chaos Defeated");
+                Bot.Wait.ForQuestComplete(3880);
+                // Insurance
+                Core.Join("whitemap");
+            }
+
+            //The Final Showdown!
             Core.EnsureAccept(3881);
             while (!Bot.ShouldExit && !Core.CheckInventory("Prince Drakath Defeated"))
                 Core.HuntMonsterMapID("finalshowdown", 1);
             Core.EnsureComplete(3881);
+            Core.Join("whitemap");
         }
     }
 
