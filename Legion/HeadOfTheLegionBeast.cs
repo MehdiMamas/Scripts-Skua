@@ -64,7 +64,7 @@ public class HeadoftheLegionBeast
 
         Core.EquipClass(ClassType.Solo);
         //Adv.BestGear(RacialGearBoost.Undead);
-        Core.KillMonster("sevencircleswar", "r17", "Left", "The Beast", "Beast Soul", 15, isTemp: false, publicRoom: true);
+        Core.KillMonster("sevencircleswar", "r17", "Left", "The Beast", "Beast Soul", 15, isTemp: false, publicRoom: true, log: false);
 
         Adv.BuyItem("sevencircleswar", 1984, "Head of the Legion Beast");
     }
@@ -234,10 +234,10 @@ public class HeadoftheLegionBeast
         Core.RegisterQuests(7978);
         while (!Bot.ShouldExit && !Core.CheckInventory("Indulgence", quant))
         {
-            Core.KillMonster("sevencircles", "r2", "Left", "Limbo Guard", "Souls of Limbo", 25);
-            Core.KillMonster("sevencircles", "r3", "Left", "Luxuria Guard", "Essence of Luxuria", 1);
-            Core.KillMonster("sevencircles", "r5", "Left", "Gluttony Guard", "Essence of Gluttony", 1);
-            Core.KillMonster("sevencircles", "r7", "Left", "Avarice Guard", "Essence of Avarice", 1);
+            Core.KillMonster("sevencircles", "r2", "Left", "Limbo Guard", "Souls of Limbo", 25, log: false);
+            Core.KillMonster("sevencircles", "r3", "Left", "Luxuria Guard", "Essence of Luxuria", 1, log: false);
+            Core.KillMonster("sevencircles", "r5", "Left", "Gluttony Guard", "Essence of Gluttony", 1, log: false);
+            Core.KillMonster("sevencircles", "r7", "Left", "Avarice Guard", "Essence of Avarice", 1, log: false);
             Bot.Wait.ForPickup("Indulgence");
         }
         Core.CancelRegisteredQuests();

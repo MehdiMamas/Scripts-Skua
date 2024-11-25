@@ -423,8 +423,8 @@ public class CoreAdvanced
                     // findIngredients(); // Call a method to handle farming logic
                     // Retrieve the MaxStack value from the inventory
                     int maxStack = req.MaxStack;
-                    InventoryItem? inventoryItem = Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == req.ID);
-                    if (maxStack <= 0 || !Bot.Inventory.TryGetItem(req.ID, out inventoryItem))
+                    ItemBase? inventoryItem = Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == req.ID);
+                    if (maxStack <= 0 || !Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.TempInv.Items).TryFind(x => x != null && x.ID == req.ID, out inventoryItem))
                     {
                         if (inventoryItem != null)
                         {
