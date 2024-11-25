@@ -220,18 +220,18 @@ public class DawnsanctumMerge
             Core.CancelRegisteredQuests();
         }
 
-        void GramielsEmblem(int quant)
-        {
-            if (Core.CheckInventory("Gramiel's Emblem", quant))
-                return;
+        // void GramielsEmblem(int quant)
+        // {
+        //     if (Core.CheckInventory("Gramiel's Emblem", quant))
+        //         return;
 
-            Core.FarmingLogger("Gramiel's Emblem", quant);
-            Core.AddDrop("Gramiel's Emblem");
-            Core.EquipClass(ClassType.Solo);
+        //     Core.FarmingLogger("Gramiel's Emblem", quant);
+        //     Core.AddDrop("Gramiel's Emblem");
+        //     Core.EquipClass(ClassType.Solo);
 
-            Core.HuntMonster("dawnsanctum", "Celestial Gramiel", "Gramiel's Emblem", quant, isTemp: false);
-            Bot.Wait.ForPickup("Gramiel's Emblem");
-        }
+        //     Core.HuntMonster("dawnsanctum", "Celestial Gramiel", "Gramiel's Emblem", quant, isTemp: false);
+        //     Bot.Wait.ForPickup("Gramiel's Emblem");
+        // }
 
         void GraceOrb(int quant)
         {
@@ -246,10 +246,10 @@ public class DawnsanctumMerge
             Core.CancelRegisteredQuests();
         }
 
-        bool IsShopLoaded(string? mapName, string? shopName)
-        {
-            return Bot.Map.Name == mapName && Bot.Shops.IsLoaded && Bot.Shops.Name == shopName;
-        }
+        // bool IsShopLoaded(string? mapName, string? shopName)
+        // {
+        //     return Bot.Map.Name == mapName && Bot.Shops.IsLoaded && Bot.Shops.Name == shopName;
+        // }
 
         #endregion Farm Area
 
