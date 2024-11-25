@@ -235,9 +235,9 @@ public class HeadoftheLegionBeast
         while (!Bot.ShouldExit && !Core.CheckInventory("Indulgence", quant))
         {
             Core.KillMonster("sevencircles", "r2", "Left", "Limbo Guard", "Souls of Limbo", 25, log: false);
-            Core.KillMonster("sevencircles", "r3", "Left", "Luxuria Guard", "Essence of Luxuria", 1, log: false);
-            Core.KillMonster("sevencircles", "r5", "Left", "Gluttony Guard", "Essence of Gluttony", 1, log: false);
-            Core.KillMonster("sevencircles", "r7", "Left", "Avarice Guard", "Essence of Avarice", 1, log: false);
+            Core.KillMonster("sevencircles", "r4", "Left", "Luxuria", "Essence of Luxuria", 1, log: false);
+            Core.KillMonster("sevencircles", "r6", "Left", "Gluttony", "Essence of Gluttony", 1, log: false);
+            Core.KillMonster("sevencircles", "r8", "Left", "Avarice", "Essence of Avarice", 1, log: false);
             Bot.Wait.ForPickup("Indulgence");
         }
         Core.CancelRegisteredQuests();
