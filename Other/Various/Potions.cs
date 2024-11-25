@@ -155,7 +155,10 @@ public class PotionBuyer
         // for (int i = 0; i < Potions!.Length; i++)
         //     Core.Logger($"- {Potions[i]} x {Core.dynamicQuant(Potions[i], false)}/ {PotionQuant}");
 
-        Core.AddDrop(Potions);
+        if (Potions != null)
+        {
+            Core.AddDrop(Potions);
+        }
 
         //2ndary potions that are obtained alongside the normal versions, to be banked and added as a drop.
         string[] SecondaryPotions = new[] { "Potent Malice Potion", "Potent Soul Potion" };
@@ -171,7 +174,8 @@ public class PotionBuyer
             }
 
             string Potion = Potions[t];
-            Core.Logger($"{t}: {Potions[t]}: {PotionsFarm[t]}");
+            if (PotionsFarm != null)
+                Core.Logger($"{t}: {Potions[t]}: {PotionsFarm[t]}");
 
             if (Core.CheckInventory(Potion, PotionQuant))
                 continue;
