@@ -2880,7 +2880,7 @@ public class CoreBots
 
         Bot.Options.AggroAllMonsters = false;
         //fuck it lets test it.
-        if (Bot.Map.PlayerNames.Count > 1)
+        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Count > 1)
             Bot.Options.AggroMonsters = true;
         else Bot.Options.AggroMonsters = false;
 
