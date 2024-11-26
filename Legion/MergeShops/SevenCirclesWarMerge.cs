@@ -75,6 +75,7 @@ public class SevenCirclesWarMerge
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
             int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            // Core.DebugLogger(this, $"req.Name: {req.Name} | quant: {quant} | currentQuant: {currentQuant}");
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -98,9 +99,11 @@ public class SevenCirclesWarMerge
                     break;
 
                 case "Beast Soul":
+                    if (Core.CheckInventory(req.Name, quant))
+                        break;
+
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    //Adv.BestGear(RacialGearBoost.Undead);
                     Adv.SmartEnhance(Core.SoloClass);
                     Core.HuntMonster("sevencircleswar", "The Beast", req.Name, quant, isTemp: false, publicRoom: true);
                     break;
