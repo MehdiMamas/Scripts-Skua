@@ -1454,7 +1454,7 @@ public class CoreFarms
 
         if (!Bot.Quests.IsAvailable(4667))
         {
-            Core.Logger("Quest not avaible for farm, do Brightoak saga till Elfhame [Unlocking the Guardian's Mouth]");
+            Core.Logger("Quest not available for farm, do Brightoak saga till Elfhame [Unlocking the Guardian's Mouth]");
             return;
         }
 
@@ -1465,13 +1465,15 @@ public class CoreFarms
         Core.RegisterQuests(4667);
         Core.Join("elfhame", "Cut1", "Left");
 
-
         while (!Bot.ShouldExit && FactionRank("Brightoak") < rank)
         {
+            Core.Sleep();
             Bot.Map.GetMapItem(3984);
             Core.Sleep();
             Bot.Wait.ForQuestComplete(4667, 20);
+            Core.Sleep();
         }
+
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
