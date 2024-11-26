@@ -2255,7 +2255,7 @@ public class Core13LoC
         Story.ChainQuest(3779);
 
         //Battle for Chaos in Willowcreek!
-        Story.KillQuest(3781, "newfinale", "Alliance Soldier");
+        Story.KillQuest(3781, "newfinale", "Alliance Virago");
 
         //Defeat the Chaos Challenger
         Story.KillQuest(3788, "newfinale", "Chaos Challenger");
@@ -2272,7 +2272,7 @@ public class Core13LoC
         }
 
         //Battle for Chaos in Darkovia!
-        Story.KillQuest(3785, "newfinale", "Shadow Slayer");
+        Story.KillQuest(3785, "newfinale", "Alliance Virago");
 
         //Defeat the Memory of Vampires
         Story.KillQuest(3790, "newfinale", "Memory of Vampires");
