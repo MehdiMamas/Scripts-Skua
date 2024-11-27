@@ -708,7 +708,7 @@ public class CoreStory
         Monster? targetMonster = Core.InitializeWithRetries(() => Bot.Monsters.MapMonsters.Find(x => x.Name.FormatForCompare() == monster.FormatForCompare()));
         if (targetMonster == null)
         {
-            Core.Logger($"Monster \"{monster}\" not found on the map for \"{itemName}\", Its Probably been renamed, please report this Missing monster to @Tato2 or @bogalj on Discord", $"Missing Monster", stopBot: true);
+            Core.Logger($"Monster \"{monster}\" not found on the map \"{Bot.Map.Name}\" for \"{itemName}\", Its Probably been renamed, please report this Missing monster to @Tato2 or @bogalj on Discord", $"Missing Monster", stopBot: true);
             shouldRepeat = false;
             return;
         }
