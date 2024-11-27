@@ -1238,6 +1238,7 @@ public class CoreArmyLite
             8107,    // downbelow
             9126,    // manacradle
             5915,    // gluttony
+            9814,    // liatarahill
         };
         Bot.Quests.Load(bypasses);
         foreach (int questId in bypasses)
