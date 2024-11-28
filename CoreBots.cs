@@ -4876,6 +4876,9 @@ public class CoreBots
     }
     public void ByPassCheck()
     {
+        // Wait until the player is alive
+        while (!Bot.ShouldExit && !Bot.Player.Alive) { Sleep(); }
+
         // Attempt to get the level from Flash
         string? BypassLevel = Bot.Flash.GetGameObject("world.myAvatar.objData.intLevel");
 
@@ -4889,8 +4892,6 @@ public class CoreBots
         if (flashLevel >= 100 || Bot.Player.Level >= 100)
             return;
 
-        // Wait until the player is alive
-        while (!Bot.ShouldExit && !Bot.Player.Alive) { Sleep(); }
 
         // Check if the current map is one of the locked maps
         var levelLockedMaps = new[]
