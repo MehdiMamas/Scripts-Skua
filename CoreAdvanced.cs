@@ -194,10 +194,23 @@ public class CoreAdvanced
                 }
                 else // Log if the required item is a mob drop, and needs added here.
                 {
-                    Core.Logger($"Required item {req.Name} with ID {req.ID} not found in the shop." +
-                    "Item is is more then likely a mob drop, and needs added to Cadv => _BuyItem's switchcase(req.ID)." +
-                    "Please report this to one of the scripters, using @tato2 or @bogalj, with this information and where it drops from." +
-                    "Wiki links Perfered.", "Item Needs is a Mob Drop!", true, true);
+                    Core.Logger($"Shop: [\"{shopID}\"] Map: [\"{map}\"] - Required item: [\"{req.Name}\"] with ID: [\"{req.ID}\"] could not be aquired\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n",
+                    "STOP FUCKING PINGING US", true, true);
                 }
                 break;
         }
