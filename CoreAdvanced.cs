@@ -380,7 +380,6 @@ public class CoreAdvanced
         {
             foreach (ItemBase req in item.Requirements)
             {
-
                 // Determine the current quantity of the required item in inventory
                 // Check if the item is in the temporary inventory or the permanent inventory
                 int currentQuantity = req.Temp
@@ -442,6 +441,7 @@ public class CoreAdvanced
                 externalQuant = matsOnly
         ? Math.Min(currentQuantity + req.Quantity, maxStack)
         : req.Quantity * craftingQ; // Otherwise, scale by crafting quantity
+                Core.DebugLogger(this, $"{req.Name}: currentQuantity = {currentQuantity}, maxStack = {maxStack}, externalQuant = {externalQuant}");
 
                 // Ensure externalQuant does not exceed the maximum stack size
                 externalQuant = Math.Min(externalQuant, maxStack);
@@ -458,20 +458,23 @@ public class CoreAdvanced
                 if (shopItems.TryFind(x => x != null && x.ID == req.ID, out ShopItem? selectedItem) && selectedItem != null && selectedItem.ShopItemID != 0)
                 {
                     // Warn if the external quantity exceeds the item's maximum stack size
-                    if (externalQuant > selectedItem.MaxStack)
-                        Core.Logger($"{selectedItem.Name}: MaxStack = {selectedItem.MaxStack}, compared to externalQuant ({externalQuant}), the bot will have to farm multiple times.");
-
+                    // if (externalQuant > selectedItem.MaxStack)
+                    // {
+                    //     Core.Logger($"{selectedItem.Name}: MaxStack = {selectedItem.MaxStack}, compared to externalQuant ({externalQuant}), the bot will have to farm multiple times.");
+                    // }
                     // Recursively call getIngredients to fulfill the shop item's requirements
-                    getIngredients(selectedItem, externalQuant > selectedItem.MaxStack ? selectedItem.MaxStack : externalQuant);
+                    getIngredients(selectedItem, externalQuant);
 
                     if (!matsOnly)
                     {
                         // Attempt to purchase the required quantity of the shop item
-                        BuyItem(map, shopID, selectedItem.ID, externalQuant, shopItemID: selectedItem.ShopItemID, Log: Log);
+                        BuyItem(map, shopID, selectedItem.ID, req.Quantity * craftingQ, shopItemID: selectedItem.ShopItemID, Log: Log);
 
                         // If the purchase did not fulfill the requirement, recursively farm and buy more
                         if (!Core.CheckInventory(selectedItem.ID, externalQuant))
+                        {
                             getIngredients(selectedItem, externalQuant > selectedItem.MaxStack ? selectedItem.MaxStack : externalQuant);
+                        }
                     }
                     else
                     {
