@@ -76,10 +76,10 @@ public class TempleDelveMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("templedelve", "Delirious Elemental", "Elemental Study", 6, log: false);
-                        Core.HuntMonster("templedelve", "Infested Nation", "Infestation Study", 6, log: false);
+                        Core.HuntMonster("templedelve", "Delirious Elemental", "Elemental Study", 6);
+                        Core.HuntMonster("templedelve", "Infested Nation", "Infestation Study", 6);
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("templedelve", "Doomed Fiend", "Fiend Worm", log: false);
+                        Core.HuntMonster("templedelve", "Doomed Fiend", "Fiend Worm");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -100,7 +100,7 @@ public class TempleDelveMerge
                 case "Nation Ritualist":
                 case "Void Nation Ritualist":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("templedelve", "Doomed Fiend", req.Name, isTemp: false, log: false);
+                    Core.HuntMonster("templedelve", "Doomed Fiend", req.Name, isTemp: false);
                     break;
 
             }
