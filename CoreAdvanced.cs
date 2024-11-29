@@ -384,7 +384,6 @@ public class CoreAdvanced
         {
             foreach (ItemBase req in item.Requirements)
             {
-                Core.Logger($"Checking {req.Name} [{req.ID}], max stack is {req.MaxStack}");
 
                 // Determine the current quantity of the required item in inventory
                 // Check if the item is in the temporary inventory or the permanent inventory
@@ -395,59 +394,67 @@ public class CoreAdvanced
                 int maxStack = req.MaxStack;
                 if (maxStack == 0)
                 {
-                    InventoryItem? inventoryItem = Core.InitializeWithRetries(() =>
-                        Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == req.ID)
-                    );
+                    // Step 1: Check if the item is in the inventory
+                    InventoryItem? inventoryItem = Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == req.ID);
                     if (inventoryItem != null)
                     {
                         maxStack = inventoryItem.MaxStack;
-                        Core.Logger($"Found {req.Name} [{req.ID}] in inventory with MaxStack: {maxStack}");
                     }
                     else
                     {
-                        // If the MaxStack value is not available, farm one item first
-                        Core.Logger($"MaxStack value for {req.Name} [{req.ID}] is not available. Farming one item to get the MaxStack value.");
-                        Core.AddDrop(req.ID);
-                        externalItem = req;
-                        externalQuant = 1;
-                        // Set the quantity to 1 to farm the item
-                        findIngredients();
-
-                        // Check if the item is now in the inventory
-                        inventoryItem = Core.InitializeWithRetries(() =>
-                        Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == req.ID)
-                    );
+                        // Step 2: Check if the item is in the bank and move it to the inventory
+                        inventoryItem = Bot.Bank.Items.FirstOrDefault(x => x != null && x.ID == req.ID);
                         if (inventoryItem != null)
                         {
+                            Core.Unbank(req.ID);
                             maxStack = inventoryItem.MaxStack;
-                            Core.Logger($"Found {req.Name} [{req.ID}] in inventory with MaxStack: {maxStack} after farming one item");
                         }
                         else
                         {
-                            // If the item is still not in the inventory, log an error and skip the item
-                            Core.Logger($"Failed to obtain {req.Name} [{req.ID}] to get the MaxStack value.");
-                            continue;
+                            // Step 3: Check if the item is available in the shop and try to buy it
+                            if (Core.GetShopItems(map, shopID).TryFind(x => x != null && x.ID == req.ID, out ShopItem? shopItem) && shopItem != null)
+                            {
+                                maxStack = shopItem.MaxStack;
+                            }
+                            else
+                            {
+                                // If the MaxStack value is not available, farm one item first
+                                Core.AddDrop(req.ID);
+                                externalItem = req;
+                                externalQuant = 1;
+                                // Set the quantity to 1 to farm the item
+                                findIngredients();
+
+                                // Check if the item is now in the inventory
+                                inventoryItem = Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == req.ID);
+                                if (inventoryItem != null)
+                                {
+                                    maxStack = inventoryItem.MaxStack;
+                                }
+                                else
+                                {
+                                    // If the item is still not in the inventory, log an error and skip the item
+                                    Core.Logger($"Failed to obtain {req.Name} [{req.ID}] to get the MaxStack value.");
+                                    continue;
+                                }
+                            }
                         }
                     }
                 }
-
                 // Calculate the external quantity needed
                 // If matsOnly is true, limit the quantity to the maximum requirement across all items
                 externalQuant = matsOnly
-    ? Math.Min(currentQuantity + req.Quantity, maxStack)
-    : req.Quantity * craftingQ; // Otherwise, scale by crafting quantity
+        ? Math.Min(currentQuantity + req.Quantity, maxStack)
+        : req.Quantity * craftingQ; // Otherwise, scale by crafting quantity
 
                 // Ensure externalQuant does not exceed the maximum stack size
                 externalQuant = Math.Min(externalQuant, maxStack);
-
-                Core.Logger($"externalQuant: {externalQuant}, req.MaxStack: {maxStack}");
 
                 ItemBase? externalthing = item.Requirements.TryFind(x => x != null && x.ID == req.ID, out ItemBase? item1) ? item1 : null;
 
                 // Skip if the required quantity is already in inventory
                 if (Core.CheckInventory(req.ID, externalQuant))
                 {
-                    Core.Logger($"{req.Name} [{externalQuant}] is already in inventory.");
                     continue;
                 }
 
@@ -489,49 +496,60 @@ public class CoreAdvanced
                         maxStack = externalthing.MaxStack;
                         if (maxStack == 0)
                         {
-                            InventoryItem? inventoryItem = Core.InitializeWithRetries(() =>
-                                Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == externalthing.ID)
-                            );
+                            // Step 1: Check if the item is in the inventory
+                            InventoryItem? inventoryItem = Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == externalthing.ID);
                             if (inventoryItem != null)
                             {
                                 maxStack = inventoryItem.MaxStack;
-                                Core.Logger($"Found {externalthing.Name} [{externalthing.ID}] in inventory with MaxStack: {maxStack}");
                             }
                             else
                             {
-                                // If the MaxStack value is not available, farm one item first
-                                Core.Logger($"MaxStack value for {externalthing.Name} [{externalthing.ID}] is not available. Farming one item to get the MaxStack value.");
-                                Core.AddDrop(externalthing.ID);
-                                externalItem = externalthing;
-                                externalQuant = 1;
-                                // Set the quantity to 1 to farm the item
-                                findIngredients();
-
-                                // Check if the item is now in the inventory
-                                inventoryItem = Core.InitializeWithRetries(() =>
-                                Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == externalthing.ID)
-                            );
+                                // Step 2: Check if the item is in the bank and move it to the inventory
+                                inventoryItem = Bot.Bank.Items.FirstOrDefault(x => x != null && x.ID == externalthing.ID);
                                 if (inventoryItem != null)
                                 {
+                                    Core.Unbank(externalthing.ID);
                                     maxStack = inventoryItem.MaxStack;
-                                    Core.Logger($"Found {externalthing.Name} [{externalthing.ID}] in inventory with MaxStack: {maxStack} after farming one item");
                                 }
                                 else
                                 {
-                                    // If the item is still not in the inventory, log an error and skip the item
-                                    Core.Logger($"Failed to obtain {externalthing.Name} [{externalthing.ID}] to get the MaxStack value.");
-                                    continue;
+                                    // Step 3: Check if the item is available in the shop and try to buy it
+                                    if (Core.GetShopItems(map, shopID).TryFind(x => x != null && x.ID == externalthing.ID, out ShopItem? shopItem) && shopItem != null)
+                                    {
+                                        maxStack = shopItem.MaxStack;
+                                    }
+                                    else
+                                    {
+                                        // If the MaxStack value is not available, farm one item first
+                                        Core.AddDrop(externalthing.ID);
+                                        externalItem = externalthing;
+                                        externalQuant = 1;
+                                        // Set the quantity to 1 to farm the item
+                                        findIngredients();
+
+                                        // Check if the item is now in the inventory
+                                        inventoryItem = Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == externalthing.ID);
+                                        if (inventoryItem != null)
+                                        {
+                                            maxStack = inventoryItem.MaxStack;
+                                        }
+                                        else
+                                        {
+                                            // If the item is still not in the inventory, log an error and skip the item
+                                            Core.Logger($"Failed to obtain {externalthing.Name} [{externalthing.ID}] to get the MaxStack value.");
+                                            continue;
+                                        }
+                                    }
                                 }
                             }
                         }
                         externalItem = externalthing;
                         externalQuant = matsOnly
     ? Math.Min(currentQuantity + externalthing.Quantity, maxStack)
-    : req.Quantity * craftingQ; // Otherwise, scale by crafting quantity
+    : externalthing.Quantity * craftingQ; // Otherwise, scale by crafting quantity
 
                         // Ensure externalQuant does not exceed the maximum stack size
                         externalQuant = Math.Min(externalQuant, maxStack);
-                        Core.Logger($"externalItem: {externalthing.Name}, externalQuant: {externalQuant}");
 
 
                         findIngredients(); // Call a method to handle farming logic
@@ -540,6 +558,7 @@ public class CoreAdvanced
                     {
                         Core.Logger($"externalItem is null for {req.Name}, skipping farming.");
                     }
+
                 }
             }
         }
