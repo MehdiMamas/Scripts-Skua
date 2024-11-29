@@ -1514,7 +1514,7 @@ public class CoreBots
     {
         if (requestedQuant > item.MaxStack)
         {
-            Logger($"Attempting to buy more than {item.MaxStack} of {item.Name}. The developer needs to fix the calling script.", "BuyItem");
+            Logger($"Attempting to buy {requestedQuant - item.MaxStack} more than {item.MaxStack} of {item.Name}. The developer needs to fix the calling script.", "BuyItem");
             Bot.Stop(true);
         }
 
@@ -3282,7 +3282,9 @@ public class CoreBots
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant)))
             return;
 
+        DebugLogger(this);
         Join(map, publicRoom: publicRoom);
+        DebugLogger(this);
 
         //*insurance**
         Bot.Wait.ForMapLoad(map);
@@ -3333,7 +3335,9 @@ public class CoreBots
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant))
                     break;
             }
+            DebugLogger(this);
             JumpWait();
+            DebugLogger(this);
         }
     }
 
@@ -5223,27 +5227,31 @@ public class CoreBots
     /// </summary>
     public void JumpWait()
     {
-        //just do this initialy.. as `InCombat` only counts for having a target.
-        Bot.Map.Jump(Bot.Player.Cell ?? "Enter", Bot.Player.Pad ?? "Spawn", false);
-        Sleep(1000);
-        Bot.Options.AttackWithoutTarget = false;
-
         HashSet<string> blackListedCells = Bot.Monsters.MapMonsters.Select(monster => monster.Cell).ToHashSet();
+        Bot.Options.AttackWithoutTarget = false; // Ensure combat targeting is off
+        ToggleAggro(false); // Disable aggro to avoid interruptions
 
-        // Check if there are more than one cell that starts with "Enter"
-        if (Bot.Map.Cells.Count(cell => cell.Contains("Enter")) != 1)
+        // Initial jump to "Enter" to ensure a predictable starting state
+        Bot.Map.Jump("Enter", "Spawn", false);
+        Sleep(1000); // Allow time for possible auto-transfer to another cell
+
+        // If the player is not in "Enter", add "Enter" cells to the blacklist and proceed to filter cases
+        if (Bot.Player.Cell != "Enter")
         {
             blackListedCells.UnionWith(Bot.Map.Cells.Where(cell => cell.StartsWith("Enter")));
+            ProceedToFilteringCases(blackListedCells);
+            return;
         }
 
-        // This just.. wouldnt jump in some cases?
-        // if (!blackListedCells.Contains(Bot.Player.Cell))
-        //     return;
-
-        ToggleAggro(false);
 
         (string, string) cellPad = (string.Empty, "Left");
         int jumpCount = 1;
+
+        // Check for multiple "Enter" cells and add them to the blacklist
+        if (Bot.Map.Cells.Count(cell => cell.Contains("Enter")) > 1)
+        {
+            blackListedCells.UnionWith(Bot.Map.Cells.Where(cell => cell.StartsWith("Enter")));
+        }
 
         if (!blackListedCells.Contains("Enter"))
         {
@@ -5254,6 +5262,7 @@ public class CoreBots
                        Bot.Map.Cells.FirstOrDefault(x => !x.StartsWith("Wait") && !x.StartsWith("Blank"));
                 if (cell != null)
                     break;
+
                 Logger($"Attempt {i + 1}: Suitable cell not found. Retrying...");
                 Sleep(1000); // Wait for 1 second before retrying
             }
@@ -5268,101 +5277,112 @@ public class CoreBots
         }
         else
         {
-            blackListedCells.UnionWith(new List<string> { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave" /* <-oaklore */ });
-            blackListedCells.UnionWith(Bot.Map.Cells.Where(x => x.StartsWith("Cut")));
-            blackListedCells.UnionWith(Bot.Map.Cells.Where(x => x.StartsWith("moveFrame")));
-            //Matches: "r12", "r5", "r100"
-            // Does Not Match: "r12A", "r100b", "r200c123", "r45d@", "r300x!@#":
-            blackListedCells.UnionWith(Bot.Map.Cells.Where(x => Regex.IsMatch(x, @"^r\d+$")));
-
-
-            #region Maps with issues
-            switch (Bot.Map.Name)
-            {
-                case "oaklore":
-                    blackListedCells.UnionWith(new[] { "Enter", "r1" });
-                    break;
-
-                case "pyrewatch":
-                    blackListedCells.UnionWith(new[] { "r3", "r4", "r5", "r7", "r12" });
-                    break;
-
-                case "shadowfall":
-                    blackListedCells.UnionWith(new[] { "New6" });
-                    break;
-
-                case "bloodmoon":
-                    blackListedCells.UnionWith(new[] { "Enter", "r17" });
-                    break;
-
-                case "wanders":
-                    Bot.Map.Jump("Boss", "left", false);
-                    Bot.Sleep(2500);
-                    blackListedCells.UnionWith(Bot.Player.Cell == "Boss" ? new[] { "r25" } : new[] { "Boss" });
-                    break;
-
-                case "zephyrus":
-                    blackListedCells.UnionWith(new[] { "R1", "Enter" });
-                    break;
-
-                case "portalundead":
-                    blackListedCells.UnionWith(new[] { "Portal", "Gate" });
-                    break;
-
-                case "icestormarena":
-                    blackListedCells.UnionWith(new[] { "r23" });
-                    break;
-
-                case "battlecon":
-                    blackListedCells.UnionWith(new[] { "rFight" });
-                    break;
-
-                case "necroU":
-                    blackListedCells.UnionWith(new[] { "Leave", "r6" });
-                    break;
-
-
-                default:
-                    break;
-            }
-            #endregion Maps with issues
-
-            if (!IsMember)
-                blackListedCells.Add("Eggs");
-
-            var viableCells = Bot.Map.Cells.Except(blackListedCells);
-            if (viableCells.Any())
-            {
-                cellPad.Item1 = viableCells.First();
-            }
-            else
-            {
-                cellPad = (Bot.Player.Cell!, Bot.Player.Pad!);
-                jumpCount = 2;
-            }
+            ProceedToFilteringCases(blackListedCells);
+            return;
         }
 
+        // Handle jump logic for new cellPad
+        PerformJump(cellPad, jumpCount);
+        GC.Collect(); // Clean up resources
+    }
+
+    private void ProceedToFilteringCases(HashSet<string> blackListedCells)
+    {
+        // Add default filtering rules and specific map logic
+        blackListedCells.UnionWith(new List<string> { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave" });
+        blackListedCells.UnionWith(
+            Bot.Map.Cells.Where(x =>
+                // Matches any cell starting with "cut" (case-insensitive),
+                // optionally followed by alphanumeric characters.
+                Regex.IsMatch(x, @"(^cut\w*$)", RegexOptions.IgnoreCase)
+
+                // OR: Matches any cell ending with "cut" (case-insensitive),
+                // optionally preceded by alphanumeric characters.
+                || Regex.IsMatch(x, @"(^\w*cut$)", RegexOptions.IgnoreCase)
+
+                // OR: Matches "cut" as an exact string (case-insensitive).
+                || Regex.IsMatch(x, @"(^cut$)", RegexOptions.IgnoreCase)
+
+                // OR: Matches cells starting with "r" followed by one or more digits,
+                // such as "r12", "r1", etc. (case-insensitive).
+                || Regex.IsMatch(x, @"^r\d+$", RegexOptions.IgnoreCase)
+            ));
+
+
+        switch (Bot.Map.Name)
+        {
+            case "oaklore":
+                blackListedCells.UnionWith(new[] { "Enter", "r1" });
+                break;
+
+            case "pyrewatch":
+                blackListedCells.UnionWith(new[] { "r3", "r4", "r5", "r7", "r12" });
+                break;
+
+            case "shadowfall":
+                blackListedCells.UnionWith(new[] { "New6" });
+                break;
+
+            case "bloodmoon":
+                blackListedCells.UnionWith(new[] { "Enter", "r17" });
+                break;
+
+            case "wanders":
+                Bot.Map.Jump("Boss", "left", false);
+                Bot.Sleep(2500);
+                blackListedCells.UnionWith(Bot.Player.Cell == "Boss" ? new[] { "r25" } : new[] { "Boss" });
+                break;
+
+            case "zephyrus":
+                blackListedCells.UnionWith(new[] { "R1", "Enter" });
+                break;
+
+            case "portalundead":
+                blackListedCells.UnionWith(new[] { "Portal", "Gate" });
+                break;
+
+            case "icestormarena":
+                blackListedCells.UnionWith(new[] { "r23" });
+                break;
+
+            case "battlecon":
+                blackListedCells.UnionWith(new[] { "rFight" });
+                break;
+
+            case "necroU":
+                blackListedCells.UnionWith(new[] { "Leave", "r6" });
+                break;
+
+            default:
+                break;
+        }
+
+        if (!IsMember)
+            blackListedCells.Add("Eggs");
+
+        var viableCells = Bot.Map.Cells.Except(blackListedCells);
+        (string, string) cellPad = viableCells.Any()
+            ? (viableCells.First(), "Left")
+            : (Bot.Player.Cell, Bot.Player.Pad);
+
+        PerformJump(cellPad, viableCells.Any() ? 1 : 2);
+    }
+
+    private void PerformJump((string Cell, string Pad) cellPad, int jumpCount)
+    {
         if (lastMapJW != Bot.Map.Name || lastCellPadJW != cellPad)
         {
-            if (!string.IsNullOrEmpty(cellPad.Item1) && !string.IsNullOrEmpty(cellPad.Item2))
+            for (int i = 0; i < jumpCount; i++)
             {
-                for (int i = 0; i < jumpCount; i++)
-                {
-                    Jump(cellPad.Item1, cellPad.Item2, true);
-                    Bot.Wait.ForTrue(() => Bot.Player.Cell == cellPad.Item1, 20);
-                }
-
-                lastMapJW = Bot.Map.Name;
-                lastCellPadJW = cellPad;
-
-                Sleep(ExitCombatDelay < 200 ? ExitCombatDelay : ExitCombatDelay - 200);
+                Bot.Map.Jump(cellPad.Cell, cellPad.Pad, false);
+                Bot.Wait.ForTrue(() => Bot.Player.Cell == cellPad.Cell, 20);
             }
-            else
-            {
-                Logger("cellPad is null. Cannot perform jump.");
-            }
+
+            lastMapJW = Bot.Map.Name;
+            lastCellPadJW = cellPad;
+
+            Sleep(ExitCombatDelay < 200 ? ExitCombatDelay : ExitCombatDelay - 200);
         }
-        GC.Collect();
     }
 
     private string lastMapJW = string.Empty;
