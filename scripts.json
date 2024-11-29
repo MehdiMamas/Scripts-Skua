@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 300341,
+    "size": 303283,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 138547,
+    "size": 142351,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -3778,7 +3778,7 @@
       "luxuria"
     ],
     "path": "Legion/HeadOfTheLegionBeast.cs",
-    "size": 9007,
+    "size": 9397,
     "fileName": "HeadOfTheLegionBeast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/HeadOfTheLegionBeast.cs"
   },
@@ -21784,7 +21784,7 @@
       "null"
     ],
     "path": "Legion/MergeShops/SevenCirclesWarMerge.cs",
-    "size": 6493,
+    "size": 6730,
     "fileName": "SevenCirclesWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/SevenCirclesWarMerge.cs"
   },
@@ -23520,7 +23520,7 @@
       "enchanted"
     ],
     "path": "Seasonal/Friday13th/MergeShops/ShadowMerge.cs",
-    "size": 5806,
+    "size": 5849,
     "fileName": "ShadowMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/ShadowMerge.cs"
   },
