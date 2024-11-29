@@ -1451,7 +1451,7 @@ public class CoreBots
         dynamic? sItem = null;
         for (int i = 0; i < 5; i++)
         {
-            sItem = GetShopItemData(item.ID, item.ShopItemID);
+            sItem = InitializeWithRetries(() => GetShopItemData(item.ID, item.ShopItemID));
             if (sItem != null)
                 break;
             Sleep(1000); // Wait before retrying
