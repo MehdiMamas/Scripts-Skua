@@ -1644,18 +1644,17 @@ public class CoreNation
     /// </summary>
     public void DragonSlayerReward()
     {
+        if (Core.isCompletedBefore(169))
+            return;
+
         int[] questIds = { 165, 166, 167, 168, 169 };
-        string[] questMonsterNames = { "Water Draconian", "Hole", "Ledge", "Red Dragon", "Hole" };
-        string[] questMonsterItems = { "Dragonslayer Veteran Medal", "Dragonslayer Sergeant Medal", "Dragonslayer Captain Medal", "Dragonslayer Marshal Medal", "Wisp of Dragonspirit" };
-        int[] requiredQuantities = { 8, 8, 8, 8, 12 };
+        string[] questMonsterNames = { "Water Draconian", "Bronze Draconian", "Golden Draconian", "Red Dragon", "Water Draconian" };
         ClassType[] questClasses = { ClassType.Farm, ClassType.Farm, ClassType.Farm, ClassType.Solo, ClassType.Farm };
 
         for (int i = 0; i < questIds.Length; i++)
         {
             int questId = questIds[i];
             string monsterName = questMonsterNames[i];
-            string monsterItem = questMonsterItems[i];
-            int requiredQuantity = requiredQuantities[i];
             ClassType questClass = questClasses[i];
 
             // Check if the quest is already completed
@@ -1664,11 +1663,7 @@ public class CoreNation
 
             // Equip the required class for the quest
             Core.EquipClass(questClass);
-
-            // Accept the quest and hunt the required monster
-            Core.EnsureAccept(questId);
-            Core.HuntMonster("lair", monsterName, monsterItem, requiredQuantity);
-            Core.EnsureComplete(questId);
+            Core.HuntMonsterQuest(questId, "lair", monsterName);
         }
     }
 
