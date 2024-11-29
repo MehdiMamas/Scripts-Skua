@@ -3304,6 +3304,14 @@ public class CoreBots
             return;
         }
 
+        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
+        {
+            Bot.Options.AggroMonsters = true;
+            //hide players to reduce lag (Trust Tato)
+            Bot.Options.HidePlayers = true;
+        }
+        else Bot.Options.AggroMonsters = false;
+
         if (item == null)
         {
             Jump(targetMonster.Cell);
@@ -3335,9 +3343,13 @@ public class CoreBots
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant))
                     break;
             }
-            DebugLogger(this);
+            Bot.Options.AttackWithoutTarget = false;
+            ToggleAggro(false);
+            Jump();
+            Bot.Options.AggroMonsters = false;
             JumpWait();
-            DebugLogger(this);
+            Rest();
+
         }
     }
 
@@ -3520,7 +3532,6 @@ public class CoreBots
 
     }
 
-
     /// <summary>
     /// Kill Escherion for the desired item
     /// </summary>
@@ -3546,6 +3557,13 @@ public class CoreBots
 
         Monster? Staff = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID is 2);
         Monster? Escherion = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID is 3);
+        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
+        {
+            Bot.Options.AggroMonsters = true;
+            //hide players to reduce lag (Trust Tato)
+            Bot.Options.HidePlayers = true;
+        }
+        else Bot.Options.AggroMonsters = false;
 
         if (item is null)
         {
@@ -3559,7 +3577,6 @@ public class CoreBots
             while (!Bot.ShouldExit && isTemp ? !Bot.TempInv.Contains(item, quant) : !Bot.Inventory.Contains(item, quant))
                 _KillEscherion();
 
-            JumpWait();
             Rest();
             if (!isTemp)
                 Bot.Wait.ForPickup(item);
@@ -3600,6 +3617,13 @@ public class CoreBots
             }
             Sleep();
         }
+
+        Bot.Options.AttackWithoutTarget = false;
+        ToggleAggro(false);
+        Jump();
+        Bot.Options.AggroMonsters = false;
+        JumpWait();
+        Rest();
     }
 
     /// <summary>
@@ -3622,7 +3646,13 @@ public class CoreBots
 
         Monster? Vath = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID is 7);
         Monster? Stalagbite = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID is 8);
-
+        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
+        {
+            Bot.Options.AggroMonsters = true;
+            //hide players to reduce lag (Trust Tato)
+            Bot.Options.HidePlayers = true;
+        }
+        else Bot.Options.AggroMonsters = false;
         if (item is null)
         {
             if (log)
@@ -3637,10 +3667,13 @@ public class CoreBots
                 Logger($"Killing Vath for {item} ({dynamicQuant(item, isTemp)}/{quant}) [Temp = {isTemp}]");
             while (!Bot.ShouldExit && !CheckInventory(item, quant))
                 KillVath();
-            JumpWait();
         }
+        Bot.Options.AttackWithoutTarget = false;
+        ToggleAggro(false);
+        Jump();
+        Bot.Options.AggroMonsters = false;
+        JumpWait();
         Rest();
-
         void KillVath()
         {
             if (Bot.Map.Name is not "stalagbite")
@@ -3686,6 +3719,7 @@ public class CoreBots
                 Sleep();
             }
         }
+
     }
 
     /// <summary>
