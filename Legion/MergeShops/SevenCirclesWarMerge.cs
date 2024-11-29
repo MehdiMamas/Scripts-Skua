@@ -56,7 +56,7 @@ public class SevenCirclesWarMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Legion Token", "Indulgence", "Beast Soul", "Souls of Heresy", "Essence of Treachery", "Essence of Wrath", "Essence of Violence" });
+        Core.BankingBlackList.AddRange(new[] { "Legion Token", "Indulgence", "Beast Soul", "Souls of Heresy", "Essence of Treachery", "Essence of Wrath", "Essence of Violence", "Penance", "Stare of Greed", "Gluttony's Maw", "Aspect of Luxuria", "Helms of the Seven Circles" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -116,7 +116,6 @@ public class SevenCirclesWarMerge
                     HeadoftheLegionBeast.Penance(quant);
                     break;
 
-
                 case "Essence of Treachery":
                     HeadoftheLegionBeast.EssenceTreachery(quant);
                     break;
@@ -134,6 +133,10 @@ public class SevenCirclesWarMerge
                 case "Gluttony's Maw":
                 case "Aspect of Luxuria":
                     SevenCirclesMerge.BuyAllMerge(req.Name);
+                    break;
+
+                case "Helms of the Seven Circles":
+                    HeadoftheLegionBeast.HelmSevenCircles();
                     break;
 
             }

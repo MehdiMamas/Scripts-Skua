@@ -1197,46 +1197,35 @@ public class CoreBots
                 return;
             }
         }
-        Sleep();
+        Sleep(1000);
 
-        if (Bot.Options.SafeTimings)
-            Bot.Wait.ForActionCooldown(GameActions.BuyItem);
+        Bot.Wait.ForActionCooldown(GameActions.BuyItem);
         Bot.Flash.CallGameFunction("world.sendBuyItemRequestWithQuantity", JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(sItem))!);
-        if (Bot.Options.SafeTimings)
-            Bot.Wait.ForItemBuy();
+        Bot.Wait.ForTrue(() => Bot.Inventory.Contains(item.ID, quant) || Bot.Bank.Contains(item.ID, quant), 20);
         Sleep();
 
         Bot.Events.ExtensionPacketReceived -= RelogRequieredListener;
 
-        if (buy_quant > quant && CheckInventory(item.Name, buy_quant))
-        {
-            // Sell spares
-            // This only occurs when you buy sth with stack limits, but want less then the stack limit.
-            int sell_quant = buy_quant - quant;
-            SellItem(item.Name, sell_quant);
-            Logger($"Bought {buy_quant} {item.Name}, sold {sell_quant}, now at {quant} {item.Name}", "BuyItem");
-        }
-        else if (CheckInventory(item.Name, quant))
+        if (CheckInventory(item.Name, quant))
         {
             if (Log)
                 Logger($"Bought {buy_quant} {item.Name}, now at {quant} {item.Name}", "BuyItem");
         }
-        else if (retrys < 5)
+        else
         {
-            if (Log)
+            if (retrys < 5)
             {
                 Logger($"Failed at buying {buy_quant}/{quant} {item.Name}, retrying: x{retrys}", "BuyItem");
                 retrys++;
                 JumpWait();
-                _BuyItem(map, shopID, item, quant, Log);
+                _BuyItem(map, shopID, item, buy_quant, Log);
+            }
+            else
+            {
+                retrys = 0;
+                Logger($"Failed at buying {buy_quant}/{quant} {item.Name}", "BuyItem");
             }
         }
-        else
-        {
-            retrys = 0;
-            Logger($"Failed at buying {buy_quant}/{quant} {item.Name}", "BuyItem");
-        }
-
 
         void RelogRequieredListener(dynamic packet)
         {
@@ -1418,6 +1407,95 @@ public class CoreBots
             }
             return true;
         }
+    }
+
+    /// <summary>
+    /// Determines the maximum quantity of an item that can be purchased from a specified shop.
+    /// </summary>
+    /// <param name="map">The name of the map to join.</param>
+    /// <param name="shopID">The ID of the shop to load.</param>
+    /// <param name="item">The shop item to check. If <c>null</c>, the method returns 0.</param>
+    /// <returns>
+    /// The maximum quantity of the item that can be purchased, or 0 if the item is not found or an error occurs.
+    /// </returns>
+    /// <remarks>
+    ///This method joins the specified map, ensures the player is out of combat, loads the shop, and retrieves the item's maximum buy quantity. 
+    /// Ensure the shop and map names are correct before calling this method.
+    /// Example:
+    /// <code>
+    /// int maxQuantity = Core.MaxBuyQuant("map", shopID, Bot.Shops.Items.FirstOrDefault(x => x.ShopItemID == ShopItemID));
+    /// </code>
+    /// </remarks>
+    public int MaxBuyQuant(string map, int shopID, ShopItem? item)
+    {
+        if (item == null)
+            return 0; // Return early if no item provided.
+
+        Join(map);
+        Bot.Wait.ForMapLoad(map);
+
+        // Ensure player is out of combat
+        while (!Bot.ShouldExit && Bot.Player.InCombat)
+        {
+            if (Bot.Player.HasTarget)
+                Bot.Combat.CancelTarget();
+            JumpWait();
+            Sleep();
+        }
+
+        // Load shop and wait for cooldown
+        Bot.Shops.Load(shopID);
+        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+
+        // Try to fetch shop item data with retries
+        dynamic? sItem = null;
+        for (int i = 0; i < 5; i++)
+        {
+            sItem = GetShopItemData(item.ID, item.ShopItemID);
+            if (sItem != null)
+                break;
+            Sleep(1000); // Wait before retrying
+        }
+
+        if (sItem == null)
+        {
+            Logger($"Failed to load shop item data for ItemID {item.ID} in ShopID {shopID}.", "MaxBuyQuant");
+            return 0;
+        }
+
+        Sleep(1000); // Extra delay to prevent race conditions
+
+        // Wait for BuyItem cooldown and fetch maximum buy quantity
+        Bot.Wait.ForActionCooldown(GameActions.BuyItem);
+        return Bot.Flash.CallGameFunction<int>(
+            "world.maximumShopBuys",
+            JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(sItem))!
+        );
+    }
+
+    /// <summary>
+    /// Fetches the shop item data from the game's shop information.
+    /// </summary>
+    private dynamic? GetShopItemData(int itemID, int shopItemID = 0)
+    {
+        dynamic[]? shopItems = Bot.Flash.GetGameObject<dynamic[]>("world.shopinfo.items");
+        if (shopItems == null)
+        {
+            Logger("Shop items data could not be retrieved.", "GetShopItemData");
+            return null;
+        }
+
+        foreach (dynamic item in shopItems)
+        {
+            if (item?.ItemID == itemID &&
+                (shopItemID == 0 || item?.ShopItemID == shopItemID))
+            {
+                return item;
+            }
+        }
+
+        Logger($"Shop item data not found for ItemID {itemID}, ShopItemID {shopItemID}.", "GetShopItemData");
+        return null;
     }
 
     private void _CheckInventorySpace()
@@ -2880,8 +2958,12 @@ public class CoreBots
 
         Bot.Options.AggroAllMonsters = false;
         //fuck it lets test it.
-        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Count > 1)
+        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
+        {
             Bot.Options.AggroMonsters = true;
+            //hide players to reduce lag (Trust Tato)
+            Bot.Options.HidePlayers = true;
+        }
         else Bot.Options.AggroMonsters = false;
 
         List<Monster> targetMonsters = FindMonsters();

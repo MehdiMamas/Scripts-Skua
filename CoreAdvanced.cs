@@ -140,7 +140,7 @@ public class CoreAdvanced
 
                 // Specific handling for certain requirements 
                 // Most items wont be in the initial shop from merge scripts, so we have to add them here, if this gets bloaded, we can move it to a separate function).
-                HandleSubItems(map, shopID, req, quant, bundlesToBuy, Log);
+                // HandleSubItems(map, shopID, req, quant, bundlesToBuy, Log);
             }
 
             // Attempt to purchase the main item after ensuring required items are available
@@ -162,59 +162,59 @@ public class CoreAdvanced
     /// <param name="quant">The quantity of the item required.</param>
     /// <param name="bundlesToBuy">The number of bundles to be bought (multiplies the required quantity).</param>
     /// <param name="Log">A boolean flag indicating whether logging should be enabled during item purchase.</param>
-    public void HandleSubItems(string map, int shopID, ItemBase req, int quant, int bundlesToBuy, bool Log)
-    {
-        switch (req.ID)
-        {
-            case 7132: // Dragon Runestone
-                Farm.DragonRunestone(req.Quantity * bundlesToBuy);
-                break;
+    // public void HandleSubItems(string map, int shopID, ItemBase req, int quant, int bundlesToBuy, bool Log)
+    // {
+    //     switch (req.ID)
+    //     {
+    //         case 7132: // Dragon Runestone
+    //             Farm.DragonRunestone(req.Quantity * bundlesToBuy);
+    //             break;
 
-            // case 32004: // Khopesh Seal
-            //     Core.HuntMonster("cruxship", "Apephryx", req.Name, quant, false);
-            //     break;
+    // case 32004: // Khopesh Seal
+    //     Core.HuntMonster("cruxship", "Apephryx", req.Name, quant, false);
+    //     break;
 
-            // case 80694: // A Whisper
-            //     Core.FarmingLogger(req.Name, quant);
-            //     Core.EquipClass(ClassType.Farm);
-            //     Core.RegisterQuests(9421, 9422);
-            //     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
-            //         Core.KillMonster("shadowbattleon", "r7", "Left", "*", log: false);
-            //     Bot.Wait.ForPickup(req.Name);
-            //     Core.CancelRegisteredQuests();
-            //     break;
+    // case 80694: // A Whisper
+    //     Core.FarmingLogger(req.Name, quant);
+    //     Core.EquipClass(ClassType.Farm);
+    //     Core.RegisterQuests(9421, 9422);
+    //     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+    //         Core.KillMonster("shadowbattleon", "r7", "Left", "*", log: false);
+    //     Bot.Wait.ForPickup(req.Name);
+    //     Core.CancelRegisteredQuests();
+    //     break;
 
-            // Check if the required item is available in the shop and buy it if necessary
-            default:
-                // Find the required item from the shop
-                if (Core.GetShopItems(map, shopID).TryFind(x => x != null && x.ID == req.ID, out ShopItem? SubItem) && SubItem != null && SubItem.ShopItemID != 0)
-                {
-                    GetItemReq(SubItem, req.Quantity * bundlesToBuy);
-                    BuyItem(map, shopID, req.Name, req.Quantity * bundlesToBuy, Log: Log);
-                }
-                else // Log if the required item is a mob drop, and needs added here.
-                {
-                    Core.Logger($"Shop: [\"{shopID}\"] Map: [\"{map}\"] - Required item: [\"{req.Name}\"] with ID: [\"{req.ID}\"] could not be aquired\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-                    "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n",
-                    "STOP FUCKING PINGING US", true, true);
-                }
-                break;
-        }
-    }
+    // Check if the required item is available in the shop and buy it if necessary
+    // default:
+    // Find the required item from the shop
+    // if (Core.GetShopItems(map, shopID).TryFind(x => x != null && x.ID == req.ID, out ShopItem? SubItem) && SubItem != null && SubItem.ShopItemID != 0)
+    // {
+    //     GetItemReq(SubItem, req.Quantity * bundlesToBuy);
+    //     BuyItem(map, shopID, req.Name, req.Quantity * bundlesToBuy, Log: Log);
+    // }
+    // else // Log if the required item is a mob drop, and needs added here.
+    // {
+    //     Core.Logger($"Shop: [\"{shopID}\"] Map: [\"{map}\"] - Required item: [\"{req.Name}\"] with ID: [\"{req.ID}\"] could not be aquired\n" +
+    //     "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //     "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //     "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
+    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n",
+    //                 "STOP FUCKING PINGING US", true, true);
+    //             }
+    //             break;
+    //     }
+    // }
 
     /// <summary>
     /// Will make sure you have every requierment (XP, Rep and Gold) to buy the item.
@@ -384,17 +384,65 @@ public class CoreAdvanced
         {
             foreach (ItemBase req in item.Requirements)
             {
+                Core.Logger($"Checking {req.Name} [{req.ID}], max stack is {req.MaxStack}");
+
                 // Determine the current quantity of the required item in inventory
                 // Check if the item is in the temporary inventory or the permanent inventory
                 int currentQuantity = req.Temp
                     ? Bot.TempInv.GetQuantity(req.ID) // Temporary inventory
                     : Bot.Inventory.GetQuantity(req.ID); // Permanent inventory
 
+                int maxStack = req.MaxStack;
+                if (maxStack == 0)
+                {
+                    InventoryItem? inventoryItem = Core.InitializeWithRetries(() =>
+                        Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == req.ID)
+                    );
+                    if (inventoryItem != null)
+                    {
+                        maxStack = inventoryItem.MaxStack;
+                        Core.Logger($"Found {req.Name} [{req.ID}] in inventory with MaxStack: {maxStack}");
+                    }
+                    else
+                    {
+                        // If the MaxStack value is not available, farm one item first
+                        Core.Logger($"MaxStack value for {req.Name} [{req.ID}] is not available. Farming one item to get the MaxStack value.");
+                        Core.AddDrop(req.ID);
+                        externalItem = req;
+                        externalQuant = 1;
+                        // Set the quantity to 1 to farm the item
+                        findIngredients();
+
+                        // Check if the item is now in the inventory
+                        inventoryItem = Core.InitializeWithRetries(() =>
+                        Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == req.ID)
+                    );
+                        if (inventoryItem != null)
+                        {
+                            maxStack = inventoryItem.MaxStack;
+                            Core.Logger($"Found {req.Name} [{req.ID}] in inventory with MaxStack: {maxStack} after farming one item");
+                        }
+                        else
+                        {
+                            // If the item is still not in the inventory, log an error and skip the item
+                            Core.Logger($"Failed to obtain {req.Name} [{req.ID}] to get the MaxStack value.");
+                            continue;
+                        }
+                    }
+                }
+
                 // Calculate the external quantity needed
                 // If matsOnly is true, limit the quantity to the maximum requirement across all items
                 externalQuant = matsOnly
-                    ? currentQuantity + req.Quantity
-                    : req.Quantity * craftingQ; // Otherwise, scale by crafting quantity
+    ? Math.Min(currentQuantity + req.Quantity, maxStack)
+    : req.Quantity * craftingQ; // Otherwise, scale by crafting quantity
+
+                // Ensure externalQuant does not exceed the maximum stack size
+                externalQuant = Math.Min(externalQuant, maxStack);
+
+                Core.Logger($"externalQuant: {externalQuant}, req.MaxStack: {maxStack}");
+
+                ItemBase? externalthing = item.Requirements.TryFind(x => x != null && x.ID == req.ID, out ItemBase? item1) ? item1 : null;
 
                 // Skip if the required quantity is already in inventory
                 if (Core.CheckInventory(req.ID, externalQuant))
@@ -430,44 +478,68 @@ public class CoreAdvanced
                 }
                 else
                 {
-                    // // For non-shop requirements, prepare to farm the required item externally
-                    // Core.AddDrop(req.ID); // Add the item to the drop list
-                    // externalItem = req; // Assign the requirement to externalItem for farming
-                    // findIngredients(); // Call a method to handle farming logic
-                    // Retrieve the MaxStack value from the inventory
-                    int maxStack = req.MaxStack;
-                    ItemBase? inventoryItem = Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == req.ID);
-                    if (maxStack <= 0 || !Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.TempInv.Items).TryFind(x => x != null && x.ID == req.ID, out inventoryItem))
-                    {
-                        if (inventoryItem != null)
-                        {
-                            maxStack = inventoryItem.MaxStack;
-                        }
-                        else
-                        {
-                            // If the MaxStack value is not available, farm one item first
-                            Core.Logger($"MaxStack value for {req.Name} [{req.ID}] is not available. Farming one item.");
-                            Core.AddDrop(req.ID);
-                            externalItem = req;
-                            externalQuant = 1;
-                            findIngredients();
 
-                            // Check if the item is now in the inventory
-                            inventoryItem = Bot.Inventory.Items.FirstOrDefault(x => x.ID == req.ID);
+                    // Check if externalthing is not null before logging and farming
+                    if (externalthing != null)
+                    {
+                        currentQuantity = externalthing.Temp
+                                            ? Bot.TempInv.GetQuantity(externalthing.ID) // Temporary inventory
+                                            : Bot.Inventory.GetQuantity(externalthing.ID); // Permanent inventory
+
+                        maxStack = externalthing.MaxStack;
+                        if (maxStack == 0)
+                        {
+                            InventoryItem? inventoryItem = Core.InitializeWithRetries(() =>
+                                Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == externalthing.ID)
+                            );
                             if (inventoryItem != null)
                             {
                                 maxStack = inventoryItem.MaxStack;
+                                Core.Logger($"Found {externalthing.Name} [{externalthing.ID}] in inventory with MaxStack: {maxStack}");
+                            }
+                            else
+                            {
+                                // If the MaxStack value is not available, farm one item first
+                                Core.Logger($"MaxStack value for {externalthing.Name} [{externalthing.ID}] is not available. Farming one item to get the MaxStack value.");
+                                Core.AddDrop(externalthing.ID);
+                                externalItem = externalthing;
+                                externalQuant = 1;
+                                // Set the quantity to 1 to farm the item
+                                findIngredients();
+
+                                // Check if the item is now in the inventory
+                                inventoryItem = Core.InitializeWithRetries(() =>
+                                Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == externalthing.ID)
+                            );
+                                if (inventoryItem != null)
+                                {
+                                    maxStack = inventoryItem.MaxStack;
+                                    Core.Logger($"Found {externalthing.Name} [{externalthing.ID}] in inventory with MaxStack: {maxStack} after farming one item");
+                                }
+                                else
+                                {
+                                    // If the item is still not in the inventory, log an error and skip the item
+                                    Core.Logger($"Failed to obtain {externalthing.Name} [{externalthing.ID}] to get the MaxStack value.");
+                                    continue;
+                                }
                             }
                         }
+                        externalItem = externalthing;
+                        externalQuant = matsOnly
+    ? Math.Min(currentQuantity + externalthing.Quantity, maxStack)
+    : req.Quantity * craftingQ; // Otherwise, scale by crafting quantity
+
+                        // Ensure externalQuant does not exceed the maximum stack size
+                        externalQuant = Math.Min(externalQuant, maxStack);
+                        Core.Logger($"externalItem: {externalthing.Name}, externalQuant: {externalQuant}");
+
+
+                        findIngredients(); // Call a method to handle farming logic
                     }
-                    Core.AddDrop(req.ID);
-                    externalItem = req;
-                    externalQuant = req.Quantity;
-                    if (inventoryItem != null && externalQuant > inventoryItem.MaxStack)
+                    else
                     {
-                        externalQuant = inventoryItem.MaxStack;
+                        Core.Logger($"externalItem is null for {req.Name}, skipping farming.");
                     }
-                    findIngredients();
                 }
             }
         }

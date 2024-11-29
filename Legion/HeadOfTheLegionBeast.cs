@@ -103,7 +103,10 @@ public class HeadoftheLegionBeast
 
         Core.RegisterQuests(7979);
         while (!Bot.ShouldExit && !Core.CheckInventory("Essence of Wrath", quant))
+        {
             Core.KillMonster("sevencircleswar", "Enter", "Spawn", "*", log: false);
+            Core.Sleep(500); // Add a short delay to ensure the item is collected
+        }
         Core.CancelRegisteredQuests();
     }
 
@@ -147,7 +150,10 @@ public class HeadoftheLegionBeast
 
         Core.RegisterQuests(7985);
         while (!Bot.ShouldExit && !Core.CheckInventory("Essence of Violence", quant))
+        {
             Core.KillMonster("sevencircleswar", "r9", "Left", "Violence Guard", log: false);
+            Core.Sleep(500); // Add a short delay to ensure the item is collected
+        }
         Core.CancelRegisteredQuests();
     }
 
@@ -166,7 +172,10 @@ public class HeadoftheLegionBeast
 
         Core.RegisterQuests(7988);
         while (!Bot.ShouldExit && !Core.CheckInventory("Essence of Treachery", quant))
+        {
             Core.KillMonster("sevencircleswar", "r13", "Left", "Treachery Guard", log: false);
+            Core.Sleep(500); // Add a short delay to ensure the item is collected
+        }
         Core.CancelRegisteredQuests();
     }
 
@@ -185,7 +194,10 @@ public class HeadoftheLegionBeast
         Core.FarmingLogger("Souls of Heresy", quant);
         Core.RegisterQuests(7983, 7980, 7981); // Blasphemy? Blasphe-you! ID:7983 | War Medals ID:7980 | Mega War Medals ID:7981
         while (!Bot.ShouldExit && !Core.CheckInventory("Souls of Heresy", quant))
+        {
             Core.KillMonster("sevencircleswar", "r7", "Left", "*", log: false);
+            Bot.Wait.ForDrop("Souls of Heresy");
+        }
         Core.CancelRegisteredQuests();
     }
 
@@ -195,8 +207,8 @@ public class HeadoftheLegionBeast
     /// <param name="quant">The target quantity of "Penance" items to collect. Default is 30.</param>
     public void Penance(int quant = 300)
     {
-        if (Core.CheckInventory(60137, quant)) return;
-
+        if (Core.CheckInventory("Penance", quant))
+            return;
         Core.AddDrop(HeadLegionBeast);
         Core.FarmingLogger("Penance", quant);
         Core.EquipClass(ClassType.Farm);
