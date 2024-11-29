@@ -60,11 +60,7 @@ public class DageRecruitStory
         {
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(8560);
-            while (!Bot.ShouldExit && Bot.Player.Cell != "r3")
-            {
-                Core.Join("dagerecruit", "r3", "Left");
-                Core.Sleep();
-            }
+            // Core.CutSceneFixer("dagerecruit", "r3", "Cut1", "Left");
             Core.KillMonster("dagerecruit", "r3", "Left", "Graython", "Graython Defeated");
             Core.EnsureComplete(8560);
         }
