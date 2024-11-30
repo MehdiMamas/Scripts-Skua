@@ -618,8 +618,8 @@ public class CoreFarms
         if (Core.CheckInventory(item, quant))
             return;
 
-        canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool _canSoloBoss);
-        Core.Logger($"Kill Additional mobs (more trophies - slower depending on gear): {_canSoloBoss}");
+        canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool KillAds);
+        Core.Logger($"Kill Additional mobs (more trophies - slower depending on gear): {KillAds}");
         int ExitAttempt = 1;
         int Death = 1;
 
@@ -642,8 +642,8 @@ public class CoreFarms
             Core.PvPMove(7, "Morale0A", random.Next(783, 857), random.Next(263, 293));
             Core.PvPMove(9, "Crosslower", random.Next(777, 857), random.Next(254, 290));
 
-            // If CBO setting for `canSoloBoss` is enabled do:
-            if (!_canSoloBoss)
+            // If CBO setting for `Kill ads before boss` is enabled do:
+            if (KillAds == true)
             {
                 Core.PvPMove(14, "Crossupper", random.Next(399, 545), random.Next(255, 256));
                 Core.PvPMove(18, "Resource1A", random.Next(786, 860), random.Next(255, 274));
@@ -662,36 +662,33 @@ public class CoreFarms
                 Core.PvPMove(19, "Crossupper", random.Next(122, 189), random.Next(258, 282));
                 Core.PvPMove(17, "Crosslower", random.Next(439, 536), random.Next(467, 470));
             }
-            else Core.Logger("CanSolo Set to True, Skipping Additional mobs...");
+          
             Core.PvPMove(15, "Morale1A", random.Next(781, 858), random.Next(258, 290));
 
-            if (!_canSoloBoss)
+            if (KillAds == true)
             {
                 Core.PVPKilling();
                 if (!Bot.Player.Alive)
                     goto RestartOnDeath;
             }
-            else Core.Logger("CanSolo Set to True, Skipping Additional mobs...");
 
             Core.PvPMove(23, "Morale1B", random.Next(782, 850), random.Next(259, 276));
 
-            if (!_canSoloBoss)
+            if (KillAds == true)
             {
                 Core.PVPKilling();
                 if (!Bot.Player.Alive)
                     goto RestartOnDeath;
             }
-            else Core.Logger("CanSolo Set to True, Skipping Additional mobs...");
 
             Core.PvPMove(25, "Morale1C", random.Next(802, 865), random.Next(264, 286));
 
-            if (!_canSoloBoss)
+            if (KillAds == true)
             {
                 Core.PVPKilling();
                 if (!Bot.Player.Alive)
                     goto RestartOnDeath;
             }
-            else Core.Logger("CanSolo Set to True, Skipping Additional mobs...");
 
             Core.PvPMove(28, "Captain1", random.Next(430, 537), random.Next(254, 255));
             Core.PVPKilling();
