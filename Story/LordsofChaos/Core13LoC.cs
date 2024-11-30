@@ -2397,19 +2397,41 @@ public class Core13LoC
             Core.Join("whitemap");
         }
 
-        //Defeat the 13th Lord of Chaos
+        // Defeat the 13th Lord of Chaos
         if (!Story.QuestProgression(3881))
         {
-            if (!Core.isCompletedBefore(3881))
+            if (!Core.isCompletedBefore(3880))
             {
-                Core.EnsureAccept(3880);
-                Core.HuntMonsterMapID("chaoslord", 1, "13th Lord of Chaos Defeated");
-                Bot.Wait.ForQuestComplete(3880);
-                // Insurance
-                Core.Join("whitemap");
+                int retries = 5;
+                while (retries > 0 && !Core.isCompletedBefore(3880))
+                {
+                    Core.EnsureAccept(3880);
+                    Core.HuntMonsterMapID("chaoslord", 1, "13th Lord of Chaos Defeated");
+                    Core.Sleep();
+                    if (Bot.Quests.CanComplete(3880))
+                        Core.EnsureComplete(3880);
+                    Core.Join("whitemap");
+
+                    // Check if the quest is completed
+                    if (Core.isCompletedBefore(3880))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Core.Logger("Quest 3880 not completed, retrying...");
+                        retries--;
+                    }
+                }
+
+                // If the quest is still not completed after retries, log an error
+                if (!Core.isCompletedBefore(3880))
+                {
+                    Core.Logger("Failed to complete quest 3880 after multiple attempts.");
+                }
             }
 
-            //The Final Showdown!
+            // The Final Showdown!
             Core.EnsureAccept(3881);
             while (!Bot.ShouldExit && !Core.CheckInventory("Prince Drakath Defeated"))
                 Core.HuntMonsterMapID("finalshowdown", 1);
