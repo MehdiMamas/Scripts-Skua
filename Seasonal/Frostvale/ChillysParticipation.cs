@@ -10,7 +10,7 @@ public class ChillysQuest
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-
+    public static int questID = 9988;
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
@@ -22,7 +22,7 @@ public class ChillysQuest
 
     public void ChillysParticipation()
     {
-        if (Core.isCompletedBefore(9988))
+        if (Core.isCompletedBefore(questID))
         {
             Core.Logger("Quest already complete");
             return;
@@ -33,8 +33,8 @@ public class ChillysQuest
         if (Bot.Player.Level < 30)
             Core.Logger("Level 30+ required.", messageBox: true, stopBot: true);
 
-        Core.EnsureAccept(9988);
+        Core.EnsureAccept(questID);
         Core.HuntMonsterMapID("battleontown", 1, "Reminder Delivered");
-        Core.EnsureComplete(9988);
+        Core.EnsureComplete(questID);
     }
 }

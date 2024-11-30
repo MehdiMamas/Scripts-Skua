@@ -92,10 +92,10 @@ public class CheckForDonatedACs
             // Verified Email
             if (Bot.Flash.CallGameFunction<bool>("world.myAvatar.isEmailVerified"))
             {
-                //Edit for future years quests vv
-                // Participation Quest 9493
+                //Edit for future years quests vv <- No need to edit now, just edit the quest ID in ChillysParticipation.cs
+                // Participation Quest 9988
                 CQ.ChillysParticipation();
-                Bot.Wait.ForQuestComplete(9493);
+                Bot.Wait.ForQuestComplete(ChillysQuest.questID);
             }
             else
             {
