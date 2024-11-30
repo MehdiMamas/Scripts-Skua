@@ -4,12 +4,14 @@ description: This will finish the quest that is required to get free acs through
 tags: chillys-participation, seasonal, frostvale
 */
 //cs_include Scripts/CoreBots.cs
+//cs_include Scripts/CoreFarms.cs
 using Skua.Core.Interfaces;
 
 public class ChillysQuest
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
+    private readonly CoreFarms Farm = new();
     public static int questID = 9988;
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -30,8 +32,7 @@ public class ChillysQuest
 
         if (!Bot.Flash.CallGameFunction<bool>("world.myAvatar.isEmailVerified"))
             Core.Logger("Your email adres is not verified!", messageBox: true, stopBot: true);
-        if (Bot.Player.Level < 30)
-            Core.Logger("Level 30+ required.", messageBox: true, stopBot: true);
+        Farm.Experience(30);
 
         Core.EnsureAccept(questID);
         Core.HuntMonsterMapID("battleontown", 1, "Reminder Delivered");
