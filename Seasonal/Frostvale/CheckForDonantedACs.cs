@@ -52,7 +52,7 @@ public class CheckForDonatedACs
             Core.Sleep(2000);
             Bot.Wait.ForMapLoad("battleon");
 
-            //just adding all the checks sometimes u still get your char as a flame.. and unlaoded ._.
+            //just adding all the checks sometimes u still get your char as a flame.. and unloaded ._.
             while (!Bot.ShouldExit && Bot.Player.LoggedIn && !Bot.Player.Loaded && Bot.Player.Playing && Bot.Map.Loaded)
                 Core.Sleep(1500);
 
