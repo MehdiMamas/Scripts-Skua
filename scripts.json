@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 128401,
+    "size": 128836,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -6379,7 +6379,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/ChillysParticipation.cs",
-    "size": 1202,
+    "size": 1194,
     "fileName": "ChillysParticipation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/ChillysParticipation.cs"
   },
