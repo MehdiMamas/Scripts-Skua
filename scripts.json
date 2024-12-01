@@ -1704,24 +1704,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/SevenCirclesWarXP+Gold.cs"
   },
   {
-    "name": "IceStorm Arena XP [1-100]",
-    "description": "This script will farm XP in /icestormarena.",
-    "tags": [
-      "experience",
-      "xp",
-      "level",
-      "leveling",
-      "farm",
-      "icestormarena",
-      "icestorm",
-      "arena"
-    ],
-    "path": "Farm/IcestormArenaXP[1-100].cs",
-    "size": 888,
-    "fileName": "IcestormArenaXP[1-100].cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/IcestormArenaXP[1-100].cs"
-  },
-  {
     "name": "Paladin (Class)",
     "description": "This bot farms the Paladin class for you.",
     "tags": [
