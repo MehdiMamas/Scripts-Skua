@@ -2400,34 +2400,26 @@ public class Core13LoC
         // Defeat the 13th Lord of Chaos
         if (!Story.QuestProgression(3881))
         {
-            if (!Core.isCompletedBefore(3880))
+            if (!Bot.Quests.IsUnlocked(3881))
             {
-                int retries = 5;
-                while (retries > 0 && !Core.isCompletedBefore(3880))
+                while (!Bot.ShouldExit && !Bot.Quests.IsUnlocked(3881))
                 {
                     Core.EnsureAccept(3880);
-                    Core.HuntMonsterMapID("chaoslord", 1, "13th Lord of Chaos Defeated");
+
+                    while (!Bot.ShouldExit && !Bot.Quests.CanComplete(3880))
+                    {
+                        if (Bot.Map.Name != "chaoslord")
+                            Core.Join("chaoslord");
+                        if (Bot.Player.Cell != "r2")
+                            Core.Jump("r2", "Left");
+                        Bot.Combat.Attack("*");
+                        Core.Sleep();
+                        if (Bot.Quests.CanComplete(3880))
+                            break;
+                    }
                     Core.Sleep();
-                    if (Bot.Quests.CanComplete(3880))
-                        Core.EnsureComplete(3880);
+                    Core.EnsureComplete(3880);
                     Core.Join("whitemap");
-
-                    // Check if the quest is completed
-                    if (Core.isCompletedBefore(3880))
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        Core.Logger("Quest 3880 not completed, retrying...");
-                        retries--;
-                    }
-                }
-
-                // If the quest is still not completed after retries, log an error
-                if (!Core.isCompletedBefore(3880))
-                {
-                    Core.Logger("Failed to complete quest 3880 after multiple attempts.");
                 }
             }
 
