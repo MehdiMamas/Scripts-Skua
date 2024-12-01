@@ -2400,33 +2400,41 @@ public class Core13LoC
         // Defeat the 13th Lord of Chaos
         if (!Story.QuestProgression(3881))
         {
-            if (!Bot.Quests.IsUnlocked(3881))
-            {
-                while (!Bot.ShouldExit && !Bot.Quests.IsUnlocked(3881))
-                {
-                    Core.EnsureAccept(3880);
 
-                    while (!Bot.ShouldExit && !Bot.Quests.CanComplete(3880))
-                    {
-                        if (Bot.Map.Name != "chaoslord")
-                            Core.Join("chaoslord");
-                        if (Bot.Player.Cell != "r2")
-                            Core.Jump("r2", "Left");
-                        Bot.Combat.Attack("*");
-                        Core.Sleep();
-                        if (Bot.Quests.CanComplete(3880))
-                            break;
-                    }
-                    Core.Sleep();
-                    Core.EnsureComplete(3880);
-                    Core.Join("whitemap");
-                }
+            Core.EnsureAccept(3880);
+
+            while (!Bot.ShouldExit && !Bot.TempInv.Contains(26880))
+            {
+                if (Bot.Map.Name != "finalshowdown")
+                    Core.Join("finalshowdown");
+                if (Bot.Player.Cell != "r2")
+                    Core.Jump("r2", "Left");
+                Bot.Combat.Attack("*");
+                Core.Sleep();
+                if (Bot.TempInv.Contains(26880))
+                    break;
             }
+            Bot.Wait.ForPickup(26880);
+            Core.Sleep();
+            Core.EnsureComplete(3880);
+            Core.Join("whitemap");
 
             // The Final Showdown!
             Core.EnsureAccept(3881);
-            while (!Bot.ShouldExit && !Core.CheckInventory("Prince Drakath Defeated"))
-                Core.HuntMonsterMapID("finalshowdown", 1);
+            
+            while (!Bot.ShouldExit && !Bot.TempInv.Contains(26881))
+            {
+                if (Bot.Map.Name != "finalshowdown")
+                    Core.Join("finalshowdown");
+                if (Bot.Player.Cell != "r2")
+                    Core.Jump("r2", "Left");
+                Bot.Combat.Attack("*");
+                Core.Sleep();
+                if (Bot.TempInv.Contains(26881))
+                    break;
+            }
+            Bot.Wait.ForPickup(26881);
+            Core.Sleep();
             Core.EnsureComplete(3881);
             Core.Join("whitemap");
         }
