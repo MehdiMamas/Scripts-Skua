@@ -2398,36 +2398,36 @@ public class Core13LoC
         }
 
         // Defeat the 13th Lord of Chaos
-        if (!Story.QuestProgression(3881))
+        if (!Bot.Quests.IsAvailable(3881))
         {
 
             Core.EnsureAccept(3880);
-
+            Core.Join("chaoslord");
+            if (Bot.Player.Cell != "r2")
+                Core.Jump("r2", "Left");
             while (!Bot.ShouldExit && !Bot.TempInv.Contains(26880))
             {
-                if (Bot.Map.Name != "finalshowdown")
-                    Core.Join("finalshowdown");
-                if (Bot.Player.Cell != "r2")
-                    Core.Jump("r2", "Left");
                 Bot.Combat.Attack("*");
                 Core.Sleep();
+
+                // Check if the item is in the temporary inventory
                 if (Bot.TempInv.Contains(26880))
+                {
+                    Core.Logger("Item 26880 found in temporary inventory.");
                     break;
+                }
             }
-            Bot.Wait.ForPickup(26880);
             Core.Sleep();
             Core.EnsureComplete(3880);
             Core.Join("whitemap");
 
             // The Final Showdown!
             Core.EnsureAccept(3881);
-            
+            Core.Join("finalshowdown");
+            if (Bot.Player.Cell != "r2")
+                Core.Jump("r2", "Left");
             while (!Bot.ShouldExit && !Bot.TempInv.Contains(26881))
             {
-                if (Bot.Map.Name != "finalshowdown")
-                    Core.Join("finalshowdown");
-                if (Bot.Player.Cell != "r2")
-                    Core.Jump("r2", "Left");
                 Bot.Combat.Attack("*");
                 Core.Sleep();
                 if (Bot.TempInv.Contains(26881))
