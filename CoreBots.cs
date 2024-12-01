@@ -1111,6 +1111,7 @@ public class CoreBots
                 Logger($"Failed to bank {item}, skipping it");
                 continue;
             }
+            Logger($"{item} moved to bank");
 
 
         }
