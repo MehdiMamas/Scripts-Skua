@@ -2008,11 +2008,9 @@ public class CoreBots
         if (!Bot.Quests.IsInProgress(questID))
         {
             Bot.Quests.Accept(questID);
-            await Task.Delay(ActionDelay); // Wait for the action delay to ensure the quest is accepted
+            await Task.Delay(ActionDelay * 2); // Wait for the action delay to ensure the quest is accepted
         }
     }
-
-
 
     /// <summary>
     /// This will register quests to be completed while doing something else, i.e. while in combat.
@@ -2077,6 +2075,7 @@ public class CoreBots
 
 
         questCTS = new();
+        int TriesTillAbandon = 0;
         Task.Run(async () =>
         {
             while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
@@ -2119,10 +2118,17 @@ public class CoreBots
                         if (Bot.Quests.IsInProgress(quest.ID))
                         {
                             Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%");
+                            if (!Bot.Quests.CanComplete(quest.ID) && TriesTillAbandon >= 20)
+                            {
+                                await Task.Delay(ActionDelay);
+                                Bot.Flash.CallGameFunction("world.abandonQuest", q.ID);
+                                TriesTillAbandon = 0;
+                            }
+                            else TriesTillAbandon++;
                             // Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, false, turnIns);
-                            await Task.Delay(ActionDelay); // Wait for half a second to ensure the quest is completed
+                            await Task.Delay(ActionDelay * 2); // Wait for half a second to ensure the quest is completed
                             Bot.Quests.EnsureAccept(quest.ID); // Reaccept the quest after completion
-                            await Task.Delay(ActionDelay); // Wait for half a second to ensure the quest is reaccepted
+                            await Task.Delay(ActionDelay * 2); // Wait for half a second to ensure the quest is reaccepted
                         }
                         await Task.Delay(ActionDelay);
                     }
@@ -2726,7 +2732,7 @@ public class CoreBots
             {
                 try
                 {
-                    await Task.Delay(ActionDelay);
+                    await Task.Delay(ActionDelay * 2);
 
                     // Quests that dont need a choice
                     foreach (KeyValuePair<Quest, int> kvp in nonChooseQuests)
@@ -2736,7 +2742,7 @@ public class CoreBots
                             int amountTurnedIn = EnsureCompleteMultiOld(kvp.Key.ID);
                             if (amountTurnedIn == 0)
                                 continue;
-                            await Task.Delay(ActionDelay);
+                            await Task.Delay(ActionDelay * 2);
                             EnsureAcceptOld(kvp.Key.ID);
                             Logger($"Quest completed x{nonChooseQuests[kvp.Key] + amountTurnedIn} times: [{kvp.Key.ID}] \"{kvp.Key.Name}\"");
                         }
@@ -2754,14 +2760,14 @@ public class CoreBots
                                                                             !(Bot.Bank.TryGetItem(r.Name, out InventoryItem? item) && item != null && item.Quantity >= r.MaxStack))).ToList(); if (simpleRewards.Count == 0)
                             {
                                 EnsureCompleteOld(kvp.Key.ID);
-                                await Task.Delay(ActionDelay);
+                                await Task.Delay(ActionDelay * 2);
                                 EnsureAcceptOld(kvp.Key.ID);
                                 continue;
                             }
 
                             Bot.Drops.Add(kvp.Key.Rewards.Where(x => simpleRewards.Any(t => t.ID == x.ID)).Select(i => i.Name).ToArray());
                             EnsureCompleteOld(kvp.Key.ID, simpleRewards.First().ID);
-                            await Task.Delay(ActionDelay);
+                            await Task.Delay(ActionDelay * 2);
                             EnsureAcceptOld(kvp.Key.ID);
                             Logger($"Quest completed x{chooseQuests[kvp.Key]++} times: [{kvp.Key.ID} \"{kvp.Key.Name}\" (got {kvp.Key.Rewards.First(x => x.ID == simpleRewards.First().ID).Name}])");
 
