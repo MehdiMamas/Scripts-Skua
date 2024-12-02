@@ -46,7 +46,7 @@ public class VoidShogun
     {
         Core.AddDrop(Nation.bagDrops);
         Core.AddDrop(Rewards);
-        Core.AddDrop("Void Voucher", "DaiTengu Blade of Wind", "Orochi's Shadow");
+        Core.AddDrop("Void Voucher", "Dai Tengu Blade of Wind", "Orochi's Shadow");
 
         if (!Core.CheckInventory("Void Monk of Nulgath"))
         {
