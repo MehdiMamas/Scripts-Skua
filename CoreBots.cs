@@ -2088,6 +2088,11 @@ public class CoreBots
                         continue;
 
                     Quest? q = InitializeWithRetries(() => EnsureLoad(quest.ID));
+                    if (q == null)
+                    {
+                        Logger($"Failed to initialize quest with ID {quest.ID}.");
+                        continue;
+                    }
 
                     if (quest == null || Bot.Quests.IsInProgress(quest.ID) && !Bot.Quests.CanComplete(quest.ID))
                         continue;
