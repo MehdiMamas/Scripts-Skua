@@ -2085,14 +2085,7 @@ public class CoreBots
                 {
                     // Ensure player is alive so it can load the quest.
                     if (!Bot.Player.Alive)
-                        continue;
-
-                    Quest? q = InitializeWithRetries(() => EnsureLoad(quest.ID));
-                    if (q == null)
-                    {
-                        Logger($"Failed to initialize quest with ID {quest.ID}.");
-                        continue;
-                    }
+                       continue;
 
                     if (quest == null || Bot.Quests.IsInProgress(quest.ID) && !Bot.Quests.CanComplete(quest.ID))
                         continue;
@@ -2100,7 +2093,7 @@ public class CoreBots
                     if (!Bot.Quests.IsInProgress(quest.ID))
                     {
                         Bot.Quests.EnsureAccept(quest.ID);
-                        await Task.Delay(ActionDelay);
+                        await Task.Delay(ActionDelay * 2);
                     }
                     else await Task.Delay(ActionDelay);
 
@@ -2126,7 +2119,7 @@ public class CoreBots
                             if (!Bot.Quests.CanComplete(quest.ID) && TriesTillAbandon >= 20)
                             {
                                 await Task.Delay(ActionDelay);
-                                Bot.Flash.CallGameFunction("world.abandonQuest", q.ID);
+                                Bot.Flash.CallGameFunction("world.abandonQuest", quest.ID);
                                 TriesTillAbandon = 0;
                             }
                             else TriesTillAbandon++;
