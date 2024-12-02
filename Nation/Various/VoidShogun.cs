@@ -69,7 +69,7 @@ public class VoidShogun
             Nation.TheAssistant("Unidentified 24");
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("hachiko", "Dai Tengu", "DaiTengu Blade of Wind");
+            Core.HuntMonster("hachiko", "Dai Tengu", "Dai Tengu Blade of Wind");
             Core.HuntMonster("shogunwar", "Orochi", "Orochi's Shadow");
             Core.HuntMonster("necrocavern", "Shadowstone Support", "ShadowStone Rune");
 
