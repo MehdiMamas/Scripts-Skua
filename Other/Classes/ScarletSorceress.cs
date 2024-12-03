@@ -38,26 +38,20 @@ public class ScarletSorceress
                 Adv.RankUpClass("Scarlet Sorceress");
             return;
         }
-        Core.DL_Enable();
         Core.AddDrop("Scarlet Sorceress", "Blood Sorceress");
 
-        ItemBase? BloodSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i != null && i.Name == "Blood Sorceress" && i.Category == ItemCategory.Class);
-        ItemBase? ScarletSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i != null && i.Name == "Scarlet Sorceress" && i.Category == ItemCategory.Class);
+        InventoryItem? BloodSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(i => i != null && i.Name == "Blood Sorceress" && i.Category == ItemCategory.Class);
 
         if (!Core.CheckInventory("Blood Sorceress"))
         {
             TOD.TowerofMirrors();
             BS.GetBSorc();
-
-            if (BloodSorceress == null)
-            {
-                Core.Logger("Blood Sorceress not found in inventory, returning.");
-                return;
-            }
+            Bot.Wait.ForPickup("Blood Sorceress");
         }
+        BloodSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(i => i != null && i.Name == "Blood Sorceress" && i.Category == ItemCategory.Class);
 
         // Check if R10, soemtimes the game can get it stuck at r9 with 100% Cxp
-        if (BloodSorceress.Quantity < 302500) //now requires it to be rank 10?
+        if (BloodSorceress != null && BloodSorceress.Quantity < 302500) //now requires it to be rank 10?
         {
             Core.Relogin();
             Adv.RankUpClass("Blood Sorceress");
@@ -67,17 +61,13 @@ public class ScarletSorceress
         {
             Farm.Experience(50);
             Bot.Options.AggroMonsters = false;
-            if (!Core.CheckInventory("Scarlet Sorceress"))
+
+            Core.ChainComplete(6236);
+            Bot.Wait.ForPickup("Scarlet Sorceress");
+
+            if (rankUpClass)
             {
-                Core.ChainComplete(6236);
-                Bot.Wait.ForPickup("Scarlet Sorceress");
-            }
-            if (ScarletSorceress != null && ScarletSorceress.Quantity < 302500)
-            {
-                if (rankUpClass)
-                {
-                    Adv.RankUpClass("Scarlet Sorceress");
-                }
+                Adv.RankUpClass("Scarlet Sorceress");
             }
         }
     }
