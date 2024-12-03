@@ -2636,6 +2636,7 @@ public class CoreAdvanced
                 #region Lucky - Vainglory - Valiance / Dauntless - Anima
                 case "glacial warlord":
                 case "glaceran warlord":
+                case "Dark Glaceran Warlord":
                     if (!uVainglory() || !uValiance() || !uAnima())
                         goto default;
 
@@ -2969,6 +2970,7 @@ public class CoreAdvanced
                 case "exalted harbinger":
                 case "exalted soul cleaver":
                 case "glaceran warlord":
+                case "Dark Glaceran Warlord":
                 case "glacial warlord":
                 case "great thief":
                 case "immortal chronomancer":
