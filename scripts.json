@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 306048,
+    "size": 305982,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -1212,7 +1212,7 @@
       "lair"
     ],
     "path": "Story/Lair.cs",
-    "size": 2793,
+    "size": 2895,
     "fileName": "Lair.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lair.cs"
   },
