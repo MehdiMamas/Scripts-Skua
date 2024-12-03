@@ -300,7 +300,7 @@ public class CoreFarms
                 Core.Logger("Doing swordhavenundead \"Undead Giant\" Quest till 20");
                 Core.RegisterQuests(178);
                 while (!Bot.ShouldExit && Bot.Player.Level < 20)
-                    Core.HuntMonster("swordhavenundead", "Undead Giant", log: false);
+                    Core.KillMonster("swordhavenundead", "Gates", "Left", "Undead Giant", log: false);
                 Core.CancelRegisteredQuests();
             }
         }
@@ -314,46 +314,225 @@ public class CoreFarms
     }
 
 
+    // /// <summary>
+    // /// Farms level in Ice Storm Arena
+    // /// </summary>
+    // /// <param name="level">Desired level</param>
+    // /// <param name="rankUpClass"></param>
+    // public void IcestormArena(int level = 100, bool rankUpClass = false)
+    // {
+    //     if (Bot.Player.Level >= level && !rankUpClass)
+    //         return;
+
+    //     if (!rankUpClass)
+    //         Core.EquipClass(ClassType.Farm);
+    //     if (rankUpClass)
+    //         ToggleBoost(BoostType.Class);
+    //     Core.ToggleAggro(true);
+    //     Core.SavedState();
+    //     if (NotYetLevel(level) && Bot.Player.Level < 100)
+    //         ToggleBoost(BoostType.Experience, true);
+    //     //Between level 1 and 5
+    //     while (!Bot.ShouldExit && NotYetLevel(5))
+    //     {
+    //         Core.ByPassCheck();
+    //         Core.KillMonster("icestormarena", "r4", "Bottom", "*", log: false, publicRoom: true);
+    //     }
+
+    //     //Between level 5 and 10
+    //     while (!Bot.ShouldExit && NotYetLevel(10))
+    //     {
+    //         Core.ByPassCheck();
+    //         Core.KillMonster("icestormarena", "r5", "Left", "*", log: false, publicRoom: true);
+    //     }
+
+    //     //Between level 10 and 20
+    //     while (!Bot.ShouldExit && NotYetLevel(20))
+    //     {
+    //         Core.ByPassCheck();
+    //         Core.KillMonster("icestormarena", "r6", "Left", "*", log: false, publicRoom: true);
+    //     }
+
+    //     //Between level 20 and 25
+    //     if (NotYetLevel(25))
+    //     {
+    //         Core.RegisterQuests(6628);
+    //         while (!Bot.ShouldExit && NotYetLevel(25))
+    //         {
+    //             Core.ByPassCheck();
+    //             Core.KillMonster("icestormarena", "r7", "Left", "*", log: false, publicRoom: true);
+    //         }
+    //         Core.CancelRegisteredQuests();
+    //     }
+
+    //     //Between level 25 and 30
+    //     while (!Bot.ShouldExit && NotYetLevel(30))
+    //     {
+    //         Core.ByPassCheck();
+    //         Core.KillMonster("icestormarena", "r10", "Left", "*", log: false, publicRoom: true);
+    //     }
+
+    //     //Between level 30 and 35
+    //     if (NotYetLevel(35))
+    //     {
+    //         if (!rankUpClass)
+    //             Core.EquipClass(ClassType.Solo);
+
+    //         Core.RegisterQuests(6629);
+    //         while (!Bot.ShouldExit && NotYetLevel(35))
+    //         {
+    //             Core.ByPassCheck();
+    //             Core.KillMonster("icestormarena", "r11", "Left", "*", log: false, publicRoom: true);
+    //         }
+    //         Core.CancelRegisteredQuests();
+    //     }
+
+    //     if (!rankUpClass)
+    //         Core.EquipClass(ClassType.Farm);
+
+    //     //Between level 35 and 50
+    //     while (!Bot.ShouldExit && NotYetLevel(50))
+    //     {
+    //         Core.ByPassCheck();
+    //         Core.KillMonster("icestormarena", "r14", "Left", "*", log: false, publicRoom: true);
+    //     }
+
+    //     //Between level 50 and 61(for BGE)
+    //     while (!Bot.ShouldExit && NotYetLevel(61))
+    //     {
+    //         Core.ByPassCheck();
+    //         Core.KillMonster("icestormarena", "r16", "Left", "*", log: false, publicRoom: true);
+    //     }
+
+    //     //Between level 61 and 75
+    //     if (NotYetLevel(75))
+    //     {
+    //         if (rankUpClass)
+    //         {
+    //             while (!Bot.ShouldExit && NotYetLevel(75))
+    //             {
+    //                 Core.ByPassCheck();
+    //                 Core.KillMonster("icestormarena", NotYetLevel(65) ? "r17" : NotYetLevel(70) ? "r18" : "r20", "Left", "*", log: false, publicRoom: true);
+    //             }
+    //         }
+    //         else
+    //         {
+    //             ToggleBoost(BoostType.Gold);
+    //             Core.RegisterQuests(3991, 3992);
+    //             while (!Bot.ShouldExit && NotYetLevel(75))
+    //                 Core.KillMonster("battlegrounde", "r2", "Center", "*", log: false, publicRoom: true);
+    //             Core.CancelRegisteredQuests();
+    //             ToggleBoost(BoostType.Gold, false);
+    //         }
+    //     }
+
+    //     //Between level 75 and 100
+    //     while (!Bot.ShouldExit && NotYetLevel(level))
+    //     {
+    //         if (!Bot.Player.IsMember)
+    //             Core.ByPassCheck();
+
+    //         Core.KillMonster(
+    //             Core.IsMember
+    //             ? "nightmare"
+    //             : "icestormunder",
+
+    //             Core.IsMember
+    //             ? "r13"
+    //             : "r2",
+
+    //             Core.IsMember
+    //             ? "Left"
+    //             : "Top",
+
+    //             Core.IsMember
+    //             ? "*"
+    //             : "*",
+
+    //             log: false);
+    //     }
+    //     Core.ToggleAggro(false);
+    //     Core.JumpWait();
+    //     Core.Rest();
+
+    //     if (rankUpClass)
+    //         ToggleBoost(BoostType.Class, false);
+    //     ToggleBoost(BoostType.Experience, false);
+
+    //     bool NotYetLevel(int _level)
+    //     {
+    //         // Check for an equipped class item in the inventory.
+    //         InventoryItem? item = Bot.Inventory.Items
+    //             .FirstOrDefault(x => x != null && x.Equipped && x.Category == ItemCategory.Class);
+
+    //         // If no class item is found, log and return level comparison.
+    //         if (item == null)
+    //         {
+    //             Core.Logger("Class not found.");
+    //             return !rankUpClass
+    //                 ? Bot.Player.Level < _level && Bot.Player.Level < level
+    //                 : Bot.Player.Level <= _level;
+    //         }
+
+    //         // Return level comparison based on class item conditions.
+    //         return !rankUpClass
+    //             ? Bot.Player.Level < _level && Bot.Player.Level < level
+    //             : Bot.Player.Level <= _level && Bot.Player.Level <= level && item.Quantity < 302500;
+    //     }
+
+    // }
+
+
+
+
     /// <summary>
     /// Farms level in Ice Storm Arena
     /// </summary>
     /// <param name="level">Desired level</param>
-    /// <param name="rankUpClass"></param>
+    /// <param name="rankUpClass">Whether to rank up the class (true or false)</param>
     public void IcestormArena(int level = 100, bool rankUpClass = false)
     {
+        // Exit if the player's level has already reached the desired level and we are not ranking up the class
         if (Bot.Player.Level >= level && !rankUpClass)
             return;
 
+        #region  level checks
+        // Equip the class for farming or rank up boost as needed
         if (!rankUpClass)
             Core.EquipClass(ClassType.Farm);
         if (rankUpClass)
             ToggleBoost(BoostType.Class);
+
+        // Enable aggro for the farm
         Core.ToggleAggro(true);
         Core.SavedState();
+
+        // Toggle experience boost if we are farming for experience
         if (NotYetLevel(level) && Bot.Player.Level < 100)
             ToggleBoost(BoostType.Experience, true);
-        //Between level 1 and 5
+
+        // Farming between levels 1-5
         while (!Bot.ShouldExit && NotYetLevel(5))
         {
             Core.ByPassCheck();
             Core.KillMonster("icestormarena", "r4", "Bottom", "*", log: false, publicRoom: true);
         }
 
-        //Between level 5 and 10
+        // Farming between levels 5-10
         while (!Bot.ShouldExit && NotYetLevel(10))
         {
             Core.ByPassCheck();
             Core.KillMonster("icestormarena", "r5", "Left", "*", log: false, publicRoom: true);
         }
 
-        //Between level 10 and 20
+        // Farming between levels 10-20
         while (!Bot.ShouldExit && NotYetLevel(20))
         {
             Core.ByPassCheck();
             Core.KillMonster("icestormarena", "r6", "Left", "*", log: false, publicRoom: true);
         }
 
-        //Between level 20 and 25
+        // Farming between levels 20-25
         if (NotYetLevel(25))
         {
             Core.RegisterQuests(6628);
@@ -365,14 +544,14 @@ public class CoreFarms
             Core.CancelRegisteredQuests();
         }
 
-        //Between level 25 and 30
+        // Farming between levels 25-30
         while (!Bot.ShouldExit && NotYetLevel(30))
         {
             Core.ByPassCheck();
             Core.KillMonster("icestormarena", "r10", "Left", "*", log: false, publicRoom: true);
         }
 
-        //Between level 30 and 35
+        // Farming between levels 30-35 (and switching to solo class if needed)
         if (NotYetLevel(35))
         {
             if (!rankUpClass)
@@ -390,21 +569,21 @@ public class CoreFarms
         if (!rankUpClass)
             Core.EquipClass(ClassType.Farm);
 
-        //Between level 35 and 50
+        // Farming between levels 35-50
         while (!Bot.ShouldExit && NotYetLevel(50))
         {
             Core.ByPassCheck();
             Core.KillMonster("icestormarena", "r14", "Left", "*", log: false, publicRoom: true);
         }
 
-        //Between level 50 and 61(for BGE)
+        // Farming between levels 50-61
         while (!Bot.ShouldExit && NotYetLevel(61))
         {
             Core.ByPassCheck();
             Core.KillMonster("icestormarena", "r16", "Left", "*", log: false, publicRoom: true);
         }
 
-        //Between level 61 and 75
+        // Farming between levels 61-75 with BattleGroundE for non-rank-up class
         if (NotYetLevel(75))
         {
             if (rankUpClass)
@@ -426,7 +605,7 @@ public class CoreFarms
             }
         }
 
-        //Between level 75 and 100
+        // Farming between levels 75-100
         while (!Bot.ShouldExit && NotYetLevel(level))
         {
             if (!Bot.Player.IsMember)
@@ -451,36 +630,45 @@ public class CoreFarms
 
                 log: false);
         }
+        #endregion  level checks
+
+        // Disable aggro and finalize the farm
         Core.ToggleAggro(false);
         Core.JumpWait();
         Core.Rest();
 
+        // Disable any active boosts
         if (rankUpClass)
             ToggleBoost(BoostType.Class, false);
         ToggleBoost(BoostType.Experience, false);
 
+        // NotYetLevel method inside the void
         bool NotYetLevel(int _level)
         {
-            // Check for an equipped class item in the inventory.
-            InventoryItem? item = Bot.Inventory.Items
-                .FirstOrDefault(x => x != null && x.Equipped && x.Category == ItemCategory.Class);
+            if (_level < 100 && Bot.Player.Level >= _level)
+                return false;
 
-            // If no class item is found, log and return level comparison.
-            if (item == null)
-            {
-                Core.Logger("Class not found.");
-                return !rankUpClass
-                    ? Bot.Player.Level < _level && Bot.Player.Level < level
-                    : Bot.Player.Level <= _level;
-            }
+                // Retrieve the equipped class item (assumed to always exist)
+                ItemBase item = Bot.Inventory.Items
+                    .FirstOrDefault(x => x != null && x.Equipped && x.Category == ItemCategory.Class);
 
-            // Return level comparison based on class item conditions.
-            return !rankUpClass
-                ? Bot.Player.Level < _level && Bot.Player.Level < level
-                : Bot.Player.Level <= _level && Bot.Player.Level <= level && item.Quantity < 302500;
+            // If rankUpClass is false, the farm continues until the player reaches the target level
+            if (!rankUpClass && Bot.Player.Level < _level)
+                return true;
+
+            // If rankUpClass is true, both conditions must be true: 
+            // The player level must be less than the target level and 
+            // the class rank must be less than rank 10 (302500 XP)
+            if (rankUpClass && (Bot.Player.Level < _level && item.Quantity < 302500))
+                return true;
+
+            // If neither condition is met, farming is complete
+            return false;
         }
-
     }
+
+
+
 
     /// <summary>
     /// Farms in Seven Circles War for level and items
@@ -662,7 +850,7 @@ public class CoreFarms
                 Core.PvPMove(19, "Crossupper", random.Next(122, 189), random.Next(258, 282));
                 Core.PvPMove(17, "Crosslower", random.Next(439, 536), random.Next(467, 470));
             }
-          
+
             Core.PvPMove(15, "Morale1A", random.Next(781, 858), random.Next(258, 290));
 
             if (KillAds == true)
