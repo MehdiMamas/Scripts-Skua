@@ -41,14 +41,13 @@ public class ScarletSorceress
 
         Core.AddDrop("Scarlet Sorceress", "Blood Sorceress");
 
-        if (!Core.CheckInventory("Blood Sorceress") && (!Bot.Inventory.TryGetItem("Blood Sorceress", out InventoryItem? _Blood) || _Blood == null))
+        if (!Core.CheckInventory("Blood Sorceress"))
         {
             TOD.TowerofMirrors();
-            BS.GetBSorc(true);
+            BS.GetBSorc();
 
-            ItemBase? BloodSorceress = Core.InitializeWithRetries(() =>
-                Bot.Inventory.Items.FirstOrDefault(i => i != null && i.Name == "Blood Sorceress" && i.Category == ItemCategory.Class)
-            );
+            Core.JumpWait();
+            InventoryItem? BloodSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(i => i != null && i.Name == "Blood Sorceress" && i.Category == ItemCategory.Class);
 
             if (BloodSorceress == null)
             {
@@ -56,25 +55,26 @@ public class ScarletSorceress
                 return;
             }
 
-            Core.JumpWait();
+            if (BloodSorceress.EnhancementLevel == 0)
+                Adv.SmartEnhance("Blood Sorceress");
 
             // Check if R10, soemtimes the game can get it stuck at r9 with 100% Cxp
             if (BloodSorceress.Quantity < 302500) //now requires it to be rank 10?
             {
                 Core.Relogin();
-                Adv.RankUpClass(BloodSorceress.Name);
+                Adv.RankUpClass("Blood Sorceress");
             }
         }
 
         Farm.Experience(50);
+        Bot.Options.AggroMonsters = false;
+        Core.Jump();
+        Core.JumpWait();
 
         Core.ChainComplete(6236);
         Bot.Wait.ForPickup("Scarlet Sorceress");
 
-
-        InventoryItem? ScarletSorceress = Core.InitializeWithRetries(() =>
-            Bot.Inventory.Items.Find(i => i.Name == "Scarlet Sorceress" && i.Category == ItemCategory.Class)
-        );
+        InventoryItem? ScarletSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name == "Scarlet Sorceress" && i.Category == ItemCategory.Class);
 
         if (ScarletSorceress == null)
         {
@@ -83,9 +83,9 @@ public class ScarletSorceress
         }
 
         if (ScarletSorceress.EnhancementLevel == 0)
-            Adv.SmartEnhance(ScarletSorceress.Name);
+            Adv.SmartEnhance("Scarlet Sorceress");
 
         if (rankUpClass)
-            Adv.RankUpClass(ScarletSorceress.Name);
+            Adv.RankUpClass("Scarlet Sorceress");
     }
 }
