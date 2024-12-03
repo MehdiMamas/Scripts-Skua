@@ -38,54 +38,47 @@ public class ScarletSorceress
                 Adv.RankUpClass("Scarlet Sorceress");
             return;
         }
-
+        Core.DL_Enable();
         Core.AddDrop("Scarlet Sorceress", "Blood Sorceress");
+
+        ItemBase? BloodSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i != null && i.Name == "Blood Sorceress" && i.Category == ItemCategory.Class);
+        ItemBase? ScarletSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i != null && i.Name == "Scarlet Sorceress" && i.Category == ItemCategory.Class);
 
         if (!Core.CheckInventory("Blood Sorceress"))
         {
             TOD.TowerofMirrors();
             BS.GetBSorc();
 
-            Core.JumpWait();
-            InventoryItem? BloodSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(i => i != null && i.Name == "Blood Sorceress" && i.Category == ItemCategory.Class);
-
             if (BloodSorceress == null)
             {
                 Core.Logger("Blood Sorceress not found in inventory, returning.");
                 return;
             }
+        }
 
-            if (BloodSorceress.EnhancementLevel == 0)
-                Adv.SmartEnhance("Blood Sorceress");
+        // Check if R10, soemtimes the game can get it stuck at r9 with 100% Cxp
+        if (BloodSorceress.Quantity < 302500) //now requires it to be rank 10?
+        {
+            Core.Relogin();
+            Adv.RankUpClass("Blood Sorceress");
+        }
 
-            // Check if R10, soemtimes the game can get it stuck at r9 with 100% Cxp
-            if (BloodSorceress.Quantity < 302500) //now requires it to be rank 10?
+        if (!Core.CheckInventory("Scarlet Sorceress"))
+        {
+            Farm.Experience(50);
+            Bot.Options.AggroMonsters = false;
+            if (!Core.CheckInventory("Scarlet Sorceress"))
             {
-                Core.Relogin();
-                Adv.RankUpClass("Blood Sorceress");
+                Core.ChainComplete(6236);
+                Bot.Wait.ForPickup("Scarlet Sorceress");
+            }
+            if (ScarletSorceress != null && ScarletSorceress.Quantity < 302500)
+            {
+                if (rankUpClass)
+                {
+                    Adv.RankUpClass("Scarlet Sorceress");
+                }
             }
         }
-
-        Farm.Experience(50);
-        Bot.Options.AggroMonsters = false;
-        Core.Jump();
-        Core.JumpWait();
-
-        Core.ChainComplete(6236);
-        Bot.Wait.ForPickup("Scarlet Sorceress");
-
-        InventoryItem? ScarletSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name == "Scarlet Sorceress" && i.Category == ItemCategory.Class);
-
-        if (ScarletSorceress == null)
-        {
-            Core.Logger("Scarlet Sorceress not found in inventory, returning.");
-            return;
-        }
-
-        if (ScarletSorceress.EnhancementLevel == 0)
-            Adv.SmartEnhance("Scarlet Sorceress");
-
-        if (rankUpClass)
-            Adv.RankUpClass("Scarlet Sorceress");
     }
 }
