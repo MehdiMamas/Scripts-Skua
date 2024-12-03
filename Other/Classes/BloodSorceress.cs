@@ -35,6 +35,7 @@ public class BloodSorceress
 
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("towerofmirrors", "Scarletta", "Blood Sorceress", isTemp: false);
+        Core.JumpWait();
         Bot.Wait.ForPickup("Blood Sorceress");
         
         if (rankUpClass)
