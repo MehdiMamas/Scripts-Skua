@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 128526,
+    "size": 135210,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -1469,7 +1469,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 65365,
+    "size": 65606,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -14876,7 +14876,7 @@
       "null"
     ],
     "path": "Other/Classes/ScarletSorceress.cs",
-    "size": 2718,
+    "size": 2604,
     "fileName": "ScarletSorceress.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ScarletSorceress.cs"
   },
