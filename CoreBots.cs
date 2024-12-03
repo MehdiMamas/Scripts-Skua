@@ -2097,7 +2097,7 @@ public class CoreBots
                         Bot.Quests.EnsureAccept(quest.ID);
                         await Task.Delay(ActionDelay * 2);
                     }
-                    else await Task.Delay(ActionDelay *2);
+                    else await Task.Delay(ActionDelay * 2);
 
                     if (Bot.Quests.CanComplete(quest.ID))
                     {
@@ -6567,6 +6567,10 @@ public class CoreBots
 
                     case "Yami no Ronin":
                         Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Solo);
+                        break;
+
+                    case "Chaos Avenger":
+                        Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Base);
                         break;
 
                     default:
