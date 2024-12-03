@@ -1569,7 +1569,7 @@ public class CoreAdvanced
     private void AutoEnhance(List<InventoryItem> ItemList, EnhancementType type, CapeSpecial cSpecial, HelmSpecial hSpecial, WeaponSpecial wSpecial)
     {
         // In case the 'CurrentEnhancement()' failed and returned 0
-        if ((int)type == 0)
+        if (type == 0)
             return;
 
         // Empty check
@@ -1915,7 +1915,9 @@ public class CoreAdvanced
             {
                 // Remove enhancments that you dont have access to
                 if ((!Core.IsMember && enh.Upgrade) || (enh.Level > Bot.Player.Level))
+                {
                     continue;
+                }
 
                 string enhName = enh.Name.Replace(" ", "").Replace("\'", "").ToLower();
 
@@ -1967,7 +1969,7 @@ public class CoreAdvanced
             }
 
             // Compare with current enhancement
-            if (bestEnhancement.ID == getEnhID(item))
+            if (bestEnhancement.ID == getEnhID(item) && item.EnhancementLevel > 0)
             {
                 Core.Logger($"Enhancement Canceled:\tBest enhancement is already applied for \"{item.Name}\"");
                 return;
@@ -2096,8 +2098,10 @@ public class CoreAdvanced
 
         // If the class isn't enhanced yet, enhance it with the enhancement type
         if (SelectedClass.EnhancementLevel <= 0)
+        {
             EnhanceItem(SelectedClass.Name ?? className, (EnhancementType)type);
-        Core.Equip(className);
+        }
+        Core.Equip(SelectedClass.Name ?? className);
         Bot.Wait.ForTrue(() => Bot.Player.CurrentClass?.Name == className, 40);
         EnhanceEquipped((EnhancementType)type, cSpecial, hSpecial, wSpecial);
 
