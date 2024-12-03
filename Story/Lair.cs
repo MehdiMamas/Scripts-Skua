@@ -35,15 +35,19 @@ public class Lair
             return;
 
         Story.PreLoad(this);
+        #region no longer needed
+        // // Dragonbane 109
+        // Story.KillQuest(109, "lair", "Wyvern");
 
-        // Dragonbane 109
-        Story.KillQuest(109, "lair", "Wyvern");
+        // // Dragon Scales 110
+        // Story.KillQuest(110, "lair", "Wyvern");
 
-        // Dragon Scales 110
-        Story.KillQuest(110, "lair", "Wyvern");
+        // // Dragon Souvenirs 111
+        // Story.KillQuest(111, "lair", "Wyvern");
 
-        // Dragon Souvenirs 111
-        Story.KillQuest(111, "lair", "Wyvern");
+        // // Dragonslayer Reward 169
+        // Story.KillQuest(169, "lair", "Wyvern");
+        #endregion no longer needed
 
         // Dragonslayer Veteran 165
         Story.KillQuest(165, "lair", "Wyvern");
@@ -57,8 +61,7 @@ public class Lair
         // Dragonslayer Marshal 168
         Story.KillQuest(168, "lair", "Red Dragon");
 
-        // Dragonslayer Reward 169
-        Story.KillQuest(169, "lair", "Wyvern");
+        
     }
 
     public void Duncan()
