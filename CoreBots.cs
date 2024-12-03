@@ -2088,8 +2088,6 @@ public class CoreBots
                         continue;
 
                     Quest? q = InitializeWithRetries(() => EnsureLoad(quest.ID));
-                    if (q == null)
-                        continue;
 
                     if (quest == null || Bot.Quests.IsInProgress(quest.ID) && !Bot.Quests.CanComplete(quest.ID))
                         continue;
@@ -2099,7 +2097,7 @@ public class CoreBots
                         Bot.Quests.EnsureAccept(quest.ID);
                         await Task.Delay(ActionDelay * 2);
                     }
-                    else await Task.Delay(ActionDelay);
+                    else await Task.Delay(ActionDelay *2);
 
                     if (Bot.Quests.CanComplete(quest.ID))
                     {
