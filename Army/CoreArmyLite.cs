@@ -1195,6 +1195,7 @@ public class CoreArmyLite
     #region Butler
     public void Butler(string playerName, bool LockedMaps = true, string? LockedMapsList = null, ClassType classType = ClassType.Farm, bool CopyWalk = false, int roomNr = 1, bool rejectDrops = true, string? attackPriority = null, int hibernateTimer = 0)
     {
+        Bot.Events.PlayerAFK += PlayerAFK;
         #region no need to read
         // Double checking the playername and assigning it so all functions can read it
         if (playerName == "Insert Name" || string.IsNullOrEmpty(playerName))
@@ -1353,8 +1354,14 @@ public class CoreArmyLite
             #endregion Combat Area
         }
         ButlerStop();
-    }
 
+    }
+    public void PlayerAFK()
+    {
+        Core.Logger("Anti-AFK engaged");
+        Core.Sleep(1500);
+        Bot.Send.Packet("%xt%zm%afk%1%false%");
+    }
     private string? b_playerName = null;
     private bool b_doLockedMaps = true;
     private bool b_doCopyWalk = false;
@@ -1799,6 +1806,7 @@ public class CoreArmyLite
         // Delete communication files
         if (File.Exists(commFile()))
             File.Delete(commFile());
+        Bot.Events.PlayerAFK -= PlayerAFK;
     }
 
     private string commFile() => Path.Combine(CoreBots.ButlerLogDir, $"{Core.Username().ToLower()}~!{b_playerName}.txt");
