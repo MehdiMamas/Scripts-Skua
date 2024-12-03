@@ -1,7 +1,7 @@
 /*
 name: Arkaries Merge
 description: This bot will farm the items belonging to the selected mode for the Arkaries Merge [2510] in /hbchallenge
-tags: arkaries, merge, hbchallenge, hollowborn, wyvernslayer, noble, dragonknight, dragonlord, dragonberserker, dragonbulwark, plumed, armet, fury, plated, rage, dragons, curse, scythe, drake, halberd, masterblade
+tags: arkaries, merge, hbchallenge, hollowborn, wyvernslayer, noble, dragonknight, dragonlord, dragonberserker, dragonbulwark, plumed, armet, fury, plated, rage, dragons, curse, scythe, drake, halberd, masterblade, sapphire, dragon, statue, emerald, topaz, tourmaline, amethyst, ruby, turquoise, diamond, tiger, eye
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -28,7 +28,7 @@ public class ArkariesMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Hollowborn Dragon Heart", "Hollowborn Wyvern Heart", "Hollowborn Dragonknight Armet", "Hollowborn DragonBerserker Helm" });
+        Core.BankingBlackList.AddRange(new[] { "Hollowborn Dragon Heart", "Hollowborn Wyvern Heart", "Hollowborn Dragonknight Armet", "Hollowborn DragonBerserker Helm", "Hollow Soul", "Obsidian Hollowborn Dragon Statue" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -59,6 +59,27 @@ public class ArkariesMerge
                     Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
                     break;
                 #endregion
+
+                case "Hollow Soul":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.EnsureAcceptmultiple(new[] { 7553, 7555 });
+                        Core.KillMonster("shadowrealm", "r2", "Left", "Gargrowl", "Darkseed", 8, log: false);
+                        Core.KillMonster("shadowrealm", "r2", "Left", "Shadow Guardian", "Shadow Medallion", 5, log: false);
+                        Core.EnsureComplete(7553);
+                        Core.EnsureComplete(7555);
+                    }
+                    Bot.Wait.ForPickup(req.Name);
+                    break; ;
+
+                case "Obsidian Hollowborn Dragon Statue":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.HuntMonster("hbchallenge", "Nameless Dragonlord", req.Name, quant, req.Temp, false);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
 
                 case "Hollowborn Dragon Heart":
                     Core.FarmingLogger(req.Name, quant);
@@ -111,5 +132,14 @@ public class ArkariesMerge
         new Option<bool>("90126", "Hollowborn Dragonknight Scythe", "Mode: [select] only\nShould the bot buy \"Hollowborn Dragonknight Scythe\" ?", false),
         new Option<bool>("90127", "Hollowborn Drake Halberd", "Mode: [select] only\nShould the bot buy \"Hollowborn Drake Halberd\" ?", false),
         new Option<bool>("90128", "Hollowborn Dragonlord MasterBlade", "Mode: [select] only\nShould the bot buy \"Hollowborn Dragonlord MasterBlade\" ?", false),
+        new Option<bool>("90297", "Sapphire Hollowborn Dragon Statue", "Mode: [select] only\nShould the bot buy \"Sapphire Hollowborn Dragon Statue\" ?", false),
+        new Option<bool>("90298", "Emerald Hollowborn Dragon Statue", "Mode: [select] only\nShould the bot buy \"Emerald Hollowborn Dragon Statue\" ?", false),
+        new Option<bool>("90299", "Topaz Hollowborn Dragon Statue", "Mode: [select] only\nShould the bot buy \"Topaz Hollowborn Dragon Statue\" ?", false),
+        new Option<bool>("90300", "Tourmaline Hollowborn Dragon Statue", "Mode: [select] only\nShould the bot buy \"Tourmaline Hollowborn Dragon Statue\" ?", false),
+        new Option<bool>("90301", "Amethyst Hollowborn Dragon Statue", "Mode: [select] only\nShould the bot buy \"Amethyst Hollowborn Dragon Statue\" ?", false),
+        new Option<bool>("90302", "Ruby Hollowborn Dragon Statue", "Mode: [select] only\nShould the bot buy \"Ruby Hollowborn Dragon Statue\" ?", false),
+        new Option<bool>("90303", "Turquoise Hollowborn Dragon Statue", "Mode: [select] only\nShould the bot buy \"Turquoise Hollowborn Dragon Statue\" ?", false),
+        new Option<bool>("90304", "Diamond Hollowborn Dragon", "Mode: [select] only\nShould the bot buy \"Diamond Hollowborn Dragon\" ?", false),
+        new Option<bool>("90305", "Tiger Eye Hollowborn Dragon", "Mode: [select] only\nShould the bot buy \"Tiger Eye Hollowborn Dragon\" ?", false),
     };
 }
