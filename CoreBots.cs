@@ -1067,9 +1067,8 @@ public class CoreBots
     /// they are equipped or set as zero.
     /// </param>
     /// <remarks>
-    /// This method checks if each item ID exists in the inventory and is not
-    /// currently equipped. Items are retried up to 20 times if an initial move
-    /// attempt fails. After each successful transfer, the item ID is logged.
+    /// Retries each item transfer up to 20 times if an attempt fails.
+    /// Logs the status of each item transfer.
     /// </remarks>
     public void ToBank(params int[] items)
     {
@@ -1078,44 +1077,41 @@ public class CoreBots
 
         JumpWait();
 
-        foreach (int item in items)
+        foreach (int itemID in items)
         {
-            if (item == 0 || (!Bot.Inventory.Contains(item) && !Bot.House.Contains(item) && !Bot.Bank.Contains(item)))
+            if (itemID == 0 || Bot.Inventory.IsEquipped(itemID) || Bot.House.IsEquipped(itemID))
                 continue;
 
-            if (Bot.Inventory.IsEquipped(item) || Bot.House.IsEquipped(item))
+            ItemBase item = Bot.Inventory.Items?.FirstOrDefault(x => x?.ID == itemID)
+                 ?? Bot.House.Items?.FirstOrDefault(x => x?.ID == itemID);
+
+            if (item == null)
             {
-                Logger("Can't bank an equipped item");
-                continue;
+                Logger($"Item with ID {itemID} not found in Inventory or House.");
+                return;
             }
-            else if ((!Bot.Inventory.Contains(item) || !Bot.House.Contains(item)) && Bot.Bank.Contains(item))
-            {
-                Logger($"Item {item} is already in the bank, skipping it");
-                continue;
-            }
+
 
             bool success = false;
-            for (int i = 0; i < 20; i++) // Retry up to 20 times
+            for (int attempt = 0; attempt < 20; attempt++)
             {
-                Bot.Inventory.EnsureToBank(item);
-                Sleep(); // Wait for a short period before checking
-                if (Bot.Bank.Contains(item))
+                Bot.Inventory.EnsureToBank(itemID);
+                Sleep(); // Pause briefly between attempts
+
+                if (Bot.Bank.Contains(itemID))
                 {
                     success = true;
                     break;
                 }
             }
 
-            if (!success)
-            {
-                Logger($"Failed to bank {item}, skipping it");
-                continue;
-            }
-            Logger($"{item} moved to bank");
-
-
+            if (success)
+                Logger($"{item.Name} moved to bank.");
+            else
+                Logger($"Failed to bank {item.Name} after multiple attempts.");
         }
     }
+
 
     /// <summary>
     /// Buys a item till you have the desired quantity
