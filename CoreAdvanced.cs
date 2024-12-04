@@ -765,7 +765,7 @@ public class CoreAdvanced
 
             Core.JumpWait();
 
-            SmartEnhance(itemInv.Name ?? className);
+            SmartEnhance(className);
             InventoryItem? classItem = Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == className.ToLower().Trim() && i.Category == ItemCategory.Class);
             if (classItem == null)
             {

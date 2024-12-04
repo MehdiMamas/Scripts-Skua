@@ -5338,7 +5338,7 @@ public class CoreBots
     private void ProceedToFilteringCases(HashSet<string> blackListedCells)
     {
         // Add default filtering rules and specific map logic
-        blackListedCells.UnionWith(new List<string> { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave" });
+        blackListedCells.UnionWith(new List<string> { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame" });
         blackListedCells.UnionWith(
             Bot.Map.Cells.Where(x =>
                 // Matches any cell starting with "cut" (case-insensitive),

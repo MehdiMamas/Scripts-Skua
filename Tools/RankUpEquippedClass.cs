@@ -27,7 +27,7 @@ public class RankUpEquippedClass
 
     public void DoRankUpEquippedClass()
     {
-        InventoryItem? currentClass = Bot.Player.CurrentClass;
+        ItemBase currentClass = Bot.Inventory.Items.FirstOrDefault(i => i != null && i.Equipped && i.Category == ItemCategory.Class);
         if (currentClass == null)
         {
             Core.Logger("No class is currently equipped.");

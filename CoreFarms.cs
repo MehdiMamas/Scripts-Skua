@@ -642,27 +642,37 @@ public class CoreFarms
             ToggleBoost(BoostType.Class, false);
         ToggleBoost(BoostType.Experience, false);
 
-        // NotYetLevel method inside the void
         bool NotYetLevel(int _level)
         {
-            if (_level < 100 && Bot.Player.Level >= _level)
+            // Retrieve the equipped class item (null-safe)
+            ItemBase item = Bot.Inventory.Items
+                .FirstOrDefault(x => x != null && x.Equipped && x.Category == ItemCategory.Class);
+
+            // Skip the current area if the player's level is >= _level and less than 100
+            if (Bot.Player.Level >= _level && _level < 100)
                 return false;
 
-                // Retrieve the equipped class item (assumed to always exist)
-                ItemBase item = Bot.Inventory.Items
-                    .FirstOrDefault(x => x != null && x.Equipped && x.Category == ItemCategory.Class);
+            // Handle Level 100 special case: stop farming for non-rank-up or continue for rank-up if class isn't maxed
+            if (Bot.Player.Level >= 100)
+            {
+                // For rank-up, continue farming if class rank is below max (302500 XP)
+                if (rankUpClass && item.Quantity < 302500)
+                    return true;
 
-            // If rankUpClass is false, the farm continues until the player reaches the target level
+                // For non-rank-up, stop farming at level 100
+                if (!rankUpClass)
+                    return false;
+            }
+
+            // Handle Rank-Up Farming: both level and class rank conditions must be met
+            if (rankUpClass && Bot.Player.Level >= _level && item.Quantity < 302500 || rankUpClass && Bot.Player.Level < _level && item.Quantity < 302500)
+                return true;
+
+            // Handle Level Farming: Continue farming if the player has not yet reached the target level
             if (!rankUpClass && Bot.Player.Level < _level)
                 return true;
 
-            // If rankUpClass is true, both conditions must be true: 
-            // The player level must be less than the target level and 
-            // the class rank must be less than rank 10 (302500 XP)
-            if (rankUpClass && (Bot.Player.Level < _level && item.Quantity < 302500))
-                return true;
-
-            // If neither condition is met, farming is complete
+            // If neither condition is met, farming should stop
             return false;
         }
     }
