@@ -201,7 +201,7 @@ public class ArmyLR
             // //Army.waitForParty("revenant");
             ArmyHunt("revenant", "Tethered Soul", ClassType.Farm, 300);
             // //Army.waitForParty("shadowrealmpast");
-            ArmyHunt("shadowrealmpast", "Darkened Essence", ClassType.Farm, 500);
+            ArmyHunt("shadowrealmpast", "Darkened Essence", ClassType.Farm, 400);
             // //Army.waitForParty("necrodungeon");
             ArmyHunt("necrodungeon", "Dracolich Contract", ClassType.Farm, 1000);
             // //Army.waitForParty("judgement");
@@ -230,25 +230,25 @@ public class ArmyLR
         while (!Bot.ShouldExit)
         {
             Core.EnsureAccept(6898);
-            ArmyHunt("doomvault", "Grim Cohort Conquered", ClassType.Farm, 500);
+            ArmyHunt("doomvault", "Grim Cohort Conquered", ClassType.Farm, 400);
             // //Army.waitForParty("mummies");
-            ArmyHunt("mummies", "Ancient Cohort Conquered", ClassType.Farm, 500);
+            ArmyHunt("mummies", "Ancient Cohort Conquered", ClassType.Farm, 400);
             // //Army.waitForParty("wrath");
-            ArmyHunt("wrath", "Pirate Cohort Conquered", ClassType.Farm, 500);
+            ArmyHunt("wrath", "Pirate Cohort Conquered", ClassType.Farm, 400);
             // //Army.waitForParty("doomwar");
-            ArmyHunt("doomwar", "Battleon Cohort Conquered", ClassType.Farm, 500);
+            ArmyHunt("doomwar", "Battleon Cohort Conquered", ClassType.Farm, 400);
             // //Army.waitForParty("overworld");
-            ArmyHunt("overworld", "Mirror Cohort Conquered", ClassType.Farm, 500);
+            ArmyHunt("overworld", "Mirror Cohort Conquered", ClassType.Farm, 400);
             // //Army.waitForParty("deathpits");
-            ArmyHunt("deathpits", "Darkblood Cohort Conquered", ClassType.Farm, 500);
+            ArmyHunt("deathpits", "Darkblood Cohort Conquered", ClassType.Farm, 400);
             // //Army.waitForParty("maxius");
-            ArmyHunt("maxius", "Vampire Cohort Conquered", ClassType.Farm, 500);
+            ArmyHunt("maxius", "Vampire Cohort Conquered", ClassType.Farm, 400);
             // //Army.waitForParty("curseshore");
-            ArmyHunt("curseshore", "Spirit Cohort Conquered", ClassType.Farm, 500);
+            ArmyHunt("curseshore", "Spirit Cohort Conquered", ClassType.Farm, 400);
             // //Army.waitForParty("dragonbone");
-            ArmyHunt("dragonbone", "Dragon Cohort Conquered", ClassType.Farm, 500);
+            ArmyHunt("dragonbone", "Dragon Cohort Conquered", ClassType.Farm, 400);
             // //Army.waitForParty("doomwood");
-            ArmyHunt("doomwood", "Doomwood Cohort Conquered", ClassType.Farm, 500);
+            ArmyHunt("doomwood", "Doomwood Cohort Conquered", ClassType.Farm, 400);
             // //Army.waitForParty("doomvault");
             if (Bot.Quests.CanComplete(6898)) Bot.Quests.Complete(6898);
 

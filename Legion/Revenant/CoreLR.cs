@@ -163,20 +163,20 @@ public class CoreLR
         {
             Core.EnsureAccept(6898);
             //Adv.BestGear(RacialGearBoost.Undead);
-            Core.KillMonster("mummies", "Enter", "Spawn", "*", "Ancient Cohort Conquered", 500, false);
-            Core.KillMonster("doomvault", "r1", "Right", "*", "Grim Cohort Conquered", 500, false);
+            Core.KillMonster("mummies", "Enter", "Spawn", "*", "Ancient Cohort Conquered", 400, false);
+            Core.KillMonster("doomvault", "r1", "Right", "*", "Grim Cohort Conquered", 400, false);
             //Adv.BestGear(RacialGearBoost.Human);
-            Core.KillMonster("wrath", "r5", "Left", "*", "Pirate Cohort Conquered", 500, false);
+            Core.KillMonster("wrath", "r5", "Left", "*", "Pirate Cohort Conquered", 400, false);
             //Adv.BestGear(RacialGearBoost.Undead);
-            Core.KillMonster("doomwar", "r6", "Left", "*", "Battleon Cohort Conquered", 500, false);
-            Core.KillMonster("overworld", "Enter", "Spawn", "*", "Mirror Cohort Conquered", 500, false);
-            Core.KillMonster("deathpits", "r1", "Left", "*", "Darkblood Cohort Conquered", 500, false);
-            Core.KillMonster("maxius", "r2", "Left", "*", "Vampire Cohort Conquered", 500, false);
-            Core.KillMonster("curseshore", "Enter", "Spawn", "*", "Spirit Cohort Conquered", 500, false);
+            Core.KillMonster("doomwar", "r6", "Left", "*", "Battleon Cohort Conquered", 400, false);
+            Core.KillMonster("overworld", "Enter", "Spawn", "*", "Mirror Cohort Conquered", 400, false);
+            Core.KillMonster("deathpits", "r1", "Left", "*", "Darkblood Cohort Conquered", 400, false);
+            Core.KillMonster("maxius", "r2", "Left", "*", "Vampire Cohort Conquered", 400, false);
+            Core.KillMonster("curseshore", "Enter", "Spawn", "*", "Spirit Cohort Conquered", 400, false);
             //Adv.BestGear(RacialGearBoost.Dragonkin);
-            Core.KillMonster("dragonbone", "Enter", "Spawn", "*", "Dragon Cohort Conquered", 500, false);
+            Core.KillMonster("dragonbone", "Enter", "Spawn", "*", "Dragon Cohort Conquered", 400, false);
             //Adv.BestGear(RacialGearBoost.Undead);
-            Core.KillMonster("doomwood", "r6", "Right", "*", "Doomwood Cohort Conquered", 500, false);
+            Core.KillMonster("doomwood", "r6", "Right", "*", "Doomwood Cohort Conquered", 400, false);
 
             Core.EnsureComplete(6898);
             Bot.Wait.ForPickup("Conquest Wreath");
