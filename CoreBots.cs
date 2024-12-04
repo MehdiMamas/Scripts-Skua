@@ -819,6 +819,18 @@ public class CoreBots
         int RequiredSpaces = itemIDs.Count();
         foreach (int item in itemIDs)
         {
+            if (item == 0 || Bot.Inventory.IsEquipped(item) || Bot.House.IsEquipped(item))
+                continue;
+
+            ItemBase Item = Bot.Inventory.Items?.FirstOrDefault(x => x?.ID == item)
+                 ?? Bot.House.Items?.FirstOrDefault(x => x?.ID == item);
+
+            if (Item == null)
+            {
+                Logger($"Item with ID {item} not found in Inventory or House.");
+                return;
+            }
+
             if (Bot.House.Contains(item) || Bot.Inventory.Contains(item)
                 || !Bot.Inventory.Contains(item) && !Bot.House.Contains(item) && !Bot.Bank.Contains(item))
             {
@@ -879,7 +891,7 @@ public class CoreBots
                     }
                 }
 
-                Logger($"{item} moved from bank");
+                Logger($"{Item.Name} moved from bank");
             }
         }
 
@@ -1108,7 +1120,7 @@ public class CoreBots
             if (success)
                 Logger($"{item.Name} moved to bank.");
             else
-                Logger($"Failed to bank {item.Name} after multiple attempts.");
+                Logger($"Failed to bank {item} after multiple attempts.");
         }
     }
 
