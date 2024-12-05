@@ -1082,7 +1082,7 @@ public class CoreBots
             if (itemID == 0 || Bot.Inventory.IsEquipped(itemID) || Bot.House.IsEquipped(itemID))
                 continue;
 
-            ItemBase item = Bot.Inventory.Items?.FirstOrDefault(x => x?.ID == itemID)
+            ItemBase? item = Bot.Inventory.Items?.FirstOrDefault(x => x?.ID == itemID)
                  ?? Bot.House.Items?.FirstOrDefault(x => x?.ID == itemID);
 
             if (item == null)
@@ -2117,7 +2117,7 @@ public class CoreBots
                             if (!Bot.Quests.CanComplete(quest.ID) && TriesTillAbandon >= 20)
                             {
                                 await Task.Delay(ActionDelay);
-                                Bot.Flash.CallGameFunction("world.abandonQuest", q.ID);
+                                Bot.Flash.CallGameFunction("world.abandonQuest", quest.ID);
                                 TriesTillAbandon = 0;
                             }
                             else TriesTillAbandon++;
