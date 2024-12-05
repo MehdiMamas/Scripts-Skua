@@ -26,6 +26,8 @@ public class ArmySmartVoidAuras
     public List<IOption> Options = new()
     {
         new Option<bool>("sellToSync", "Sell to Sync", "Sell items to make sure the army stays syncronized.\nIf off, there is a higher chance your army might desyncornize", false),
+        new Option<bool>("MemberMethod", "use member method", "Use the member method?", false),
+       
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -75,7 +77,7 @@ public class ArmySmartVoidAuras
         Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
 
         Bot.Events.PlayerAFK += PlayerAFK;
-        if (Core.CheckInventory(14474))
+        if (Bot.Config!.Get<bool>("MemberMethod") && Core.CheckInventory(14474))
             CommandingShadowEssences(7500);
         else
         {
