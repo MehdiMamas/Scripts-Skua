@@ -645,8 +645,13 @@ public class CoreFarms
         bool NotYetLevel(int _level)
         {
             // Retrieve the equipped class item (null-safe)
-            ItemBase item = Bot.Inventory.Items
+            ItemBase? item = Bot.Inventory.Items
                 .FirstOrDefault(x => x != null && x.Equipped && x.Category == ItemCategory.Class);
+            if (item == null)
+            {
+                Core.Logger("Class not found.");
+                return false;
+            }
 
             // Skip the current area if the player's level is >= _level and less than 100
             if (Bot.Player.Level >= _level && _level < 100)
