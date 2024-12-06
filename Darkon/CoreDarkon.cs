@@ -25,7 +25,7 @@ public class CoreDarkon
         Core.RunCore();
     }
 
-    public void FarmReceipt(int Quantity = 222, bool MaxStack = false) => FirstErrand(Quantity, MaxStack: MaxStack);
+    public void FarmReceipt(int Quantity = 222, bool MaxStack = false) => FirstErrand(Quantity, MaxStack);
 
     public void FirstErrand(int Quantity = 222, bool MaxStack = false)
     {
@@ -42,7 +42,7 @@ public class CoreDarkon
 
         Core.RegisterQuests(7324);
         while (!Bot.ShouldExit && !Core.CheckInventory("Darkon's Receipt", Quantity))
-            Core.KillMonster("arcangrove", "LeftBack", "Left", "Gorillaphant", "Banana", 22, false, false);
+            Core.KillMonster("arcangrove", "LeftBack", "Left", "Gorillaphant", isTemp: false, log: false);
         Core.CancelRegisteredQuests();
     }
 
@@ -344,5 +344,6 @@ public class CoreDarkon
         Core.EquipClass(ClassType.Solo);
 
         Core.HuntMonster("theworld", "Encore Darkon", "Unfinished Musical Score", Quantity, false);
+        Bot.Wait.ForPickup("Unfinished Musical Score");
     }
 }
