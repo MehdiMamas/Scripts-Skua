@@ -143,7 +143,8 @@ public class ArmySmartVoidAuras
         Core.AddDrop(item);
 
         Core.EquipClass(classType);
-        //Army.waitForParty(map, item);
+        Core.Join(map);
+        Army.waitForPartyCell("Enter", "Spawn", 4);
         Core.FarmingLogger(item, quant);
 
         Army.SmartAggroMonStart(map, monsters);
