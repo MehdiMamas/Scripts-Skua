@@ -27,7 +27,7 @@ public class ArmySmartVoidAuras
     {
         new Option<bool>("sellToSync", "Sell to Sync", "Sell items to make sure the army stays syncronized.\nIf off, there is a higher chance your army might desyncornize", false),
         new Option<bool>("MemberMethod", "use member method", "Use the member method?", false),
-       
+
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -76,13 +76,16 @@ public class ArmySmartVoidAuras
     {
         Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
 
+        Core.PrivateRooms = true;
+        Core.PrivateRoomNumber = Army.getRoomNr();
+
         Bot.Events.PlayerAFK += PlayerAFK;
         if (Bot.Config!.Get<bool>("MemberMethod") && Core.CheckInventory(14474))
-            CommandingShadowEssences(7500);
+            CommandingShadowEssences(7501);
         else
         {
             Farm.EvilREP();
-            RetrieveVoidAurasArmy(7500);
+            RetrieveVoidAurasArmy(7501);
         }
         Bot.Events.PlayerAFK -= PlayerAFK;
     }
@@ -99,8 +102,8 @@ public class ArmySmartVoidAuras
         while (!Bot.ShouldExit && !Core.CheckInventory("Void Aura", Quantity))
         {
             Core.EnsureAccept(4439);
-            ArmyHunt("shadowrealmpast", new[] { "Pure Shadowscythe", "Shadow Guardian", "Shadow Warrior" }, "Empowered Essence", ClassType.Farm, isTemp: false, 50);
-            ArmyHunt("shadowrealmpast", new[] { "Shadow Lord" }, "Malignant Essence", ClassType.Solo, isTemp: false, 3);
+            ArmyHunt("shadowrealmpast", Core.FromTo(1, 10), new[] { "Enter", "r2", "r3" }, "Empowered Essence", ClassType.Farm, isTemp: false, 50);
+            ArmyHunt("shadowrealmpast", new[] { 11 }, new[] { "r4" }, "Malignant Essence", ClassType.Solo, isTemp: false, 3);
             Core.EnsureComplete(4439);
         }
     }
@@ -117,26 +120,23 @@ public class ArmySmartVoidAuras
         while (!Bot.ShouldExit && !Core.CheckInventory("Void Aura", Quantity))
         {
             Core.EnsureAccept(4432);
-            ArmyHunt("timespace", new[] { "Astral Ephemerite" }, "Astral Ephemerite Essence", ClassType.Farm, isTemp: false, 100);
-            ArmyHunt("citadel", new[] { "Belrot the Fiend" }, "Belrot the Fiend Essence", ClassType.Farm, isTemp: false, 100);
-            ArmyHunt("greenguardwest", new[] { "Black Knight" }, "Black Knight Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("mudluk", new[] { "Tiger Leech" }, "Tiger Leech Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("aqlesson", new[] { "Carnax" }, "Carnax Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("necrocavern", new[] { "Chaos Vordred" }, "Chaos Vordred Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("hachiko", new[] { "Dai Tengu" }, "Dai Tengu Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("timevoid", new[] { "Unending Avatar" }, "Unending Avatar Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("dragonchallenge", new[] { "Void Dragon" }, "Void Dragon Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("maul", new[] { "Creature Creation" }, "Creature Creation Essence", ClassType.Solo, isTemp: false, 100);
+            ArmyHunt("timespace", new[] { 1, 2, 3, 4, 5 }, new[] { "Enter", "Frame1" }, "Astral Ephemerite Essence", ClassType.Farm, isTemp: false, 100);
+            ArmyHunt("citadel", new[] { 21 }, new[] { "m13" }, "Belrot the Fiend Essence", ClassType.Farm, isTemp: false, 100);
+            ArmyHunt("greenguardwest", new[] { 22 }, new[] { "BKWest15" }, "Black Knight Essence", ClassType.Solo, isTemp: false, 100);
+            ArmyHunt("mudluk", new[] { 18 }, new[] { " Boss" }, "Tiger Leech Essence", ClassType.Solo, isTemp: false, 100);
+            ArmyHunt("aqlesson", new[] { 17 }, new[] { "Frame9" }, "Carnax Essence", ClassType.Solo, isTemp: false, 100);
+            ArmyHunt("necrocavern", new[] { 5 }, new[] { "r16" }, "Chaos Vordred Essence", ClassType.Solo, isTemp: false, 100);
+            ArmyHunt("hachiko", new[] { 10 }, new[] { "Roof" }, "Dai Tengu Essence", ClassType.Solo, isTemp: false, 100);
+            ArmyHunt("timevoid", new[] { 12 }, new[] { "Frame8" }, "Unending Avatar Essence", ClassType.Solo, isTemp: false, 100);
+            ArmyHunt("dragonchallenge", new[] { 4 }, new[] { "r4" }, "Void Dragon Essence", ClassType.Solo, isTemp: false, 100);
+            ArmyHunt("maul", new[] { 17 }, new[] { "r3" }, "Creature Creation Essence", ClassType.Solo, isTemp: false, 100);
             Core.EnsureCompleteMulti(4432);
         }
         Core.ConfigureAggro(false);
     }
 
-    void ArmyHunt(string map, string[] monsters, string item, ClassType classType, bool isTemp = false, int quant = 1)
+    void ArmyHunt(string map, int[] MIDs, string[] Cells, string item, ClassType classType, bool isTemp = false, int quant = 1)
     {
-        Core.PrivateRooms = true;
-        Core.PrivateRoomNumber = Army.getRoomNr();
-
         if (Bot.Config!.Get<bool>("sellToSync"))
             Army.SellToSync(item, quant);
 
@@ -144,15 +144,18 @@ public class ArmySmartVoidAuras
 
         Core.EquipClass(classType);
         Core.Join(map);
-        Army.waitForPartyCell("Enter", "Spawn", 4);
+        Army.waitForParty(map, item, Army.PartySize());
         Core.FarmingLogger(item, quant);
 
-        Army.SmartAggroMonStart(map, monsters);
-
-        
+        Army.AggroMonMIDs(MIDs);
+        Army.AggroMonStart(map);
+        Army.DivideOnCells(Cells);
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
+        {
             Bot.Combat.Attack("*");
+            Core.Sleep();
+        }
 
         Army.AggroMonStop(true);
         Core.JumpWait();

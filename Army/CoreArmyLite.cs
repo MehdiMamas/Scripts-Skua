@@ -880,7 +880,7 @@ public class CoreArmyLite
 
         return players.ToArray();
     }
-
+    public int PartySize() => Players() == null ? 0 : Players().Length;
 
     // public void waitForParty(string map, string? item = null, int playerMax = -1)
     // {
@@ -957,7 +957,7 @@ public class CoreArmyLite
 
         // Join the specified map and set the target party size
         Core.Join(map);
-        int dynamicPartySize = playerMax == -1 ? partySize : playerMax;
+        int dynamicPartySize = PartySize();
 
         // Main waiting loop
         while (playerCount < dynamicPartySize)
@@ -968,9 +968,9 @@ public class CoreArmyLite
                 foreach (var name in Bot.Map.PlayerNames)
                 {
                     if (!playersWhoHaveBeenHere.Contains(name) &&
-                        players.Select(x => x.ToLower().Trim()).Contains(name.ToLower()))
+                        players.Select(x => x.ToLower().Trim()).Contains(name.ToLower().Trim()))
                     {
-                        playersWhoHaveBeenHere.Add(name);
+                        playersWhoHaveBeenHere.Add(name.ToLower().Trim());
                     }
                 }
             }
@@ -989,7 +989,7 @@ public class CoreArmyLite
             Core.Sleep(1000);
 
             // Butler invocation if only one player is missing
-            if (playersWhoHaveBeenHere.Count == (dynamicPartySize - 1))
+            if (playersWhoHaveBeenHere.Count <= (dynamicPartySize - 1)) // If only one player is missing (you)
             {
                 butlerTimer++;
                 if (butlerTimer >= 30)
