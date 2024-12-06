@@ -828,6 +828,13 @@ public class CoreBots
 
             if (Bot.Bank.Contains(item) && (!Bot.Inventory.Contains(item) || !Bot.House.Contains(item)))
             {
+                ItemBase? itemString = Bot.Inventory.Items?.FirstOrDefault(x => x?.ID == item)
+                                     ?? Bot.House.Items?.FirstOrDefault(x => x?.ID == item);
+                if (itemString == null)
+                {
+                    Logger($"Failed to find item with ID {item}, skipping it");
+                    continue;
+                }
                 if (Bot.Inventory.FreeSlots <= 0 && Bot.Inventory.Slots != 0 && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots)
                 {
                     Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please Make {RequiredSpaces} space(s), and restart the bot", messageBox: true, stopBot: true);
@@ -854,7 +861,7 @@ public class CoreBots
 
                     if (!success)
                     {
-                        Logger($"Failed to unbank {item}, skipping it");
+                        Logger($"Failed to unbank {itemString.Name}, skipping it");
                         continue;
                     }
                 }
@@ -874,12 +881,12 @@ public class CoreBots
 
                     if (!success)
                     {
-                        Logger($"Failed to unbank {item}, skipping it");
+                        Logger($"Failed to unbank {itemString.Name}, skipping it");
                         continue;
                     }
                 }
 
-                Logger($"{item} moved from bank");
+                Logger($"{itemString.Name} moved from bank");
             }
         }
 
