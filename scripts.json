@@ -23679,6 +23679,34 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/NightmareHarvestMerge.cs"
   },
   {
+    "name": "Autumn Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Autumn Merge [2368] in /eventhub",
+    "tags": [
+      "autumn",
+      "merge",
+      "eventhub",
+      "spirit",
+      "breath",
+      "wind",
+      "falls",
+      "whisper",
+      "whispers",
+      "tree",
+      "scattered",
+      "leaves",
+      "fallen",
+      "forest",
+      "log",
+      "owl",
+      "guest",
+      "friend"
+    ],
+    "path": "Seasonal/HarvestDay/MergeShops/AutumnMerge.cs",
+    "size": 4957,
+    "fileName": "AutumnMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HarvestDay/MergeShops/AutumnMerge.cs"
+  },
+  {
     "name": "Robinas Harvest Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Robinas Harvest Merge [2366] in /blightharvest",
     "tags": [
