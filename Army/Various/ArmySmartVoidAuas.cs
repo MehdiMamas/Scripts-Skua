@@ -123,7 +123,7 @@ public class ArmySmartVoidAuras
             ArmyHunt("timespace", new[] { 1, 2, 3, 4, 5 }, new[] { "Enter", "Frame1" }, "Astral Ephemerite Essence", ClassType.Farm, isTemp: false, 100);
             ArmyHunt("citadel", new[] { 21 }, new[] { "m13" }, "Belrot the Fiend Essence", ClassType.Farm, isTemp: false, 100);
             ArmyHunt("greenguardwest", new[] { 22 }, new[] { "BKWest15" }, "Black Knight Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("mudluk", new[] { 18 }, new[] { " Boss" }, "Tiger Leech Essence", ClassType.Solo, isTemp: false, 100);
+            ArmyHunt("mudluk", new[] { 18 }, new[] { "Boss" }, "Tiger Leech Essence", ClassType.Solo, isTemp: false, 100);
             ArmyHunt("aqlesson", new[] { 17 }, new[] { "Frame9" }, "Carnax Essence", ClassType.Solo, isTemp: false, 100);
             ArmyHunt("necrocavern", new[] { 5 }, new[] { "r16" }, "Chaos Vordred Essence", ClassType.Solo, isTemp: false, 100);
             ArmyHunt("hachiko", new[] { 10 }, new[] { "Roof" }, "Dai Tengu Essence", ClassType.Solo, isTemp: false, 100);
@@ -151,10 +151,12 @@ public class ArmySmartVoidAuras
         Army.AggroMonStart(map);
         Army.DivideOnCells(Cells);
 
-        while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
+        while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant)))
         {
             Bot.Combat.Attack("*");
             Core.Sleep();
+            if (isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant))
+                break;
         }
 
         Army.AggroMonStop(true);
