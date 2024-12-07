@@ -828,8 +828,7 @@ public class CoreBots
 
             if (Bot.Bank.Contains(item) && (!Bot.Inventory.Contains(item) || !Bot.House.Contains(item)))
             {
-                ItemBase? itemString = Bot.Inventory.Items?.FirstOrDefault(x => x?.ID == item)
-                                     ?? Bot.House.Items?.FirstOrDefault(x => x?.ID == item);
+                ItemBase? itemString = Bot.Bank.Items?.FirstOrDefault(x => x?.ID == item);
                 if (itemString == null)
                 {
                     Logger($"Failed to find item with ID {item}, skipping it");
