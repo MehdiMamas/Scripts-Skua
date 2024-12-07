@@ -19425,6 +19425,36 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/AprilFools2019WarMerge.cs"
   },
   {
+    "name": "Argentos Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Argentos Merge [2517] in /frozenbalemorale",
+    "tags": [
+      "argentos",
+      "merge",
+      "frozenbalemorale",
+      "sterling",
+      "dragonlord",
+      "noble",
+      "dragonberserker",
+      "dragonbulwark",
+      "armet",
+      "plumed",
+      "fury",
+      "plated",
+      "rage",
+      "dragons",
+      "blessing",
+      "dragonknight",
+      "scythe",
+      "drake",
+      "halberd",
+      "masterblade"
+    ],
+    "path": "Other/MergeShops/ArgentosMerge.cs",
+    "size": 5367,
+    "fileName": "ArgentosMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ArgentosMerge.cs"
+  },
+  {
     "name": "Termina Temple Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Termina Temple Merge [2259] in /terminatemple",
     "tags": [
