@@ -662,6 +662,9 @@ public class CoreDailies
 
     public void WheelofDoom()
     {
+        if (!CheckDailyv2(3075) || !Core.CheckInventory("Gear of Doom", 3))
+            return;
+            
         Core.Logger($"{(Core.IsMember ? "Daily" : "Weekly")}: Wheel of Doom");
         List<string> PreQuestInv = Bot.Inventory.Items.Select(x => x.Name).ToList();
 
