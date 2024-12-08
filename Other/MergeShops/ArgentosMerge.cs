@@ -63,9 +63,10 @@ public class ArgentosMerge
                 case "Sterling Silver":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
+                    Core.RegisterQuests(9991);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(9991, "frozenbalemorale", "Kall Haxa");
+                        Core.HuntMonster("frozenbalemorale", "Kall Haxa", req.Name, quant);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
