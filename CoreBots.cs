@@ -2078,21 +2078,34 @@ public class CoreBots
 
         questCTS = new();
         int TriesTillAbandon = 0;
+        //no initializationwithretries in asyncs as init has sleeps in it.
         Task.Run(async () =>
         {
             while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
             {
-                await Task.Delay(ActionDelay);
+                await Task.Delay(ActionDelay * 2);
                 foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest? _quest) && _quest != null))
                 {
                     // Ensure player is alive so it can load the quest.
                     if (!Bot.Player.Alive)
+                    {
+                        await Task.Delay(ActionDelay);
                         continue;
+                    }
 
-                    Quest? q = InitializeWithRetries(() => EnsureLoad(quest.ID));
+                    Quest? q = EnsureLoad(quest.ID);
 
-                    if (quest == null || Bot.Quests.IsInProgress(quest.ID) && !Bot.Quests.CanComplete(quest.ID))
+                    if (q == null || quest == null)
+                    {
+                        await Task.Delay(ActionDelay);
                         continue;
+                    }
+
+                    if (Bot.Quests.IsInProgress(quest.ID) && !Bot.Quests.CanComplete(quest.ID))
+                    {
+                        await Task.Delay(ActionDelay);
+                        continue;
+                    }
 
                     if (!Bot.Quests.IsInProgress(quest.ID))
                     {
@@ -2108,10 +2121,10 @@ public class CoreBots
 
                         if (chooseQuests.ContainsKey(quest))
                         {
-                            Quest? activeQuest = InitializeWithRetries(() => Bot.Quests.Active.FirstOrDefault(q => q.ID == quest.ID));
+                            Quest? activeQuest = Bot.Quests.Active.FirstOrDefault(q => q.ID == quest.ID);
                             if (activeQuest != null)
                             {
-                                ItemBase? reward = InitializeWithRetries(() => activeQuest.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack));
+                                ItemBase? reward = activeQuest.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack);
                                 rewardId = reward?.ID ?? -1;
                             }
                         }
@@ -2120,9 +2133,9 @@ public class CoreBots
                         if (Bot.Quests.IsInProgress(quest.ID))
                         {
                             Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%");
-                            if (!Bot.Quests.CanComplete(quest.ID) && TriesTillAbandon >= 20)
+                            if (Bot.Quests.IsInProgress(quest.ID) && TriesTillAbandon >= 20)
                             {
-                                await Task.Delay(ActionDelay);
+                                await Task.Delay(ActionDelay * 2);
                                 Bot.Flash.CallGameFunction("world.abandonQuest", quest.ID);
                                 TriesTillAbandon = 0;
                             }
@@ -2132,7 +2145,7 @@ public class CoreBots
                             Bot.Quests.EnsureAccept(quest.ID); // Reaccept the quest after completion
                             await Task.Delay(ActionDelay * 2); // Wait for half a second to ensure the quest is reaccepted
                         }
-                        await Task.Delay(ActionDelay);
+                        await Task.Delay(ActionDelay * 2);
                     }
                 }
                 GC.Collect();
