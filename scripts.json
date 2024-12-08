@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 50810,
+    "size": 50919,
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreDailies.cs"
   },
@@ -9146,7 +9146,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/CheckForDonatedACs.cs",
-    "size": 6636,
+    "size": 6483,
     "fileName": "CheckForDonatedACs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/CheckForDonatedACs.cs"
   },
