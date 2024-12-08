@@ -3502,7 +3502,7 @@ public class CoreBots
         }
 
         if (!Bot.Quests.EnsureComplete(questId))
-            EnsureComplete(questId);
+            EnsureCompleteMulti(questId);
     }
 
     /// <summary>
@@ -3550,8 +3550,7 @@ public class CoreBots
         }
 
         if (Bot.Quests.CanCompleteFullCheck(questId))
-            EnsureComplete(questId);
-
+            EnsureCompleteMulti(questId);
     }
 
     /// <summary>
