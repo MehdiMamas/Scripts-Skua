@@ -1655,7 +1655,7 @@ public class Core13LoC
             Story.KillQuest(2520, "ultravoid", "Ultra Kathool");
 
             //Defeat Ultra Iadoa 2521 (Badge)
-            Story.KillQuest(2521, "ultracarnax", "Ultra Iadoa");
+            Story.KillQuest(2521, "ultravoid", "Ultra Iadoa");
 
             // Ultra Carnax Challenge Fight! 2388  (Not in Story Slo but Badge relevant to thi)
             Story.KillQuest(2388, "ultracarnax", "Ultra-Carnax");
