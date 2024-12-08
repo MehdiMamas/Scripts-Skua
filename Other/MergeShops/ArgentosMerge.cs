@@ -66,7 +66,7 @@ public class ArgentosMerge
                     Core.RegisterQuests(9991);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("frozenbalemorale", "Kall Haxa", req.Name, quant);
+                        Core.HuntMonster("frozenbalemorale", "Kall Haxa", req.Name, quant, req.Temp);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
