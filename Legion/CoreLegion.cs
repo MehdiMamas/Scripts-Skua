@@ -754,7 +754,7 @@ public class CoreLegion
         if (!Story.QuestProgression(789))
         {
             Core.EnsureAccept(789);
-            Core.HuntMonster("greenguardwest", "Black Knight", "Black Knight's Eternal Contract", isTemp: false, log: false);
+            Core.HuntMonster("greenguardwest", "Black Knight", "Black Knight's Eternal Contract", log: false);
             Core.EnsureComplete(789);
         }
 
