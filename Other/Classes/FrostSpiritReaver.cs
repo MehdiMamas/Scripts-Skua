@@ -37,13 +37,13 @@ public class FrostSpiritReaver
 
         Glacera.DoAll();
         Farm.GlaceraREP();
-
         Dailies.Cryomancer();
         if (!Core.CheckInventory("Cryomancer"))
         {
             Core.Logger("Cryomancer Required for \"Frost Sigil\" for \"IceNinth\", Comeback tomarrow.");
             return;
         }
+        Farm.Experience(60);
 
 
         if (!Core.CheckInventory("Envoy of Kyanos"))
@@ -160,20 +160,18 @@ public class FrostSpiritReaver
         }
 
         Farm.GlaceraREP();
-        if (!Core.CheckInventory(new[] { 38915, 39011 }))
+        if (!Core.CheckInventory(39011))
         {
-            //IceBreaker Mage & FrostSlayer
-            Core.Logger("Getting the quest items required to start \"Cold Blooded\"");
-            Core.AddDrop(38915, 39011);
+            //FrostSlayer
+            Core.Logger("Getting the quest item required to start \"Cold Blooded\"");
+            Core.AddDrop(39011);
             Core.EquipClass(ClassType.Solo);
-            while (!Bot.ShouldExit && !Core.CheckInventory(new[] { 38915, 39011 }))
+            while (!Bot.ShouldExit && !Core.CheckInventory(39011))
             {
-                Core.HuntMonster("iceplane", "Enfield", "IceBreaker Mage", 1, false, false);
                 Core.HuntMonster("iceplane", "Enfield", "FrostSlayer", 1, false, false);
             }
         }
-
-        else Core.Logger("Got the Item requirements for \"Cold Blooded\"");
+        else Core.Logger("Got the Item requirement for \"Cold Blooded\"");
 
         Core.AddDrop(59216);
         Core.FarmingLogger("Glaceran Attunement", quant);
@@ -182,7 +180,7 @@ public class FrostSpiritReaver
         {
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("cryowar", "Super-Charged Karok", "Glacial Crystal", 100, isTemp: false, log: false);
-            Core.HuntMonster("frozenlair", "Legion Lich Lord", "Sapphire Orb", 2, isTemp: false, log: false);
+            Core.HuntMonster("frozenlair", "Legion Lich Lord", "Necrotic Orb", 2, isTemp: false, log: false);
 
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("frozenlair", "Frozen Legionnaire", "Ice Spike", 20, isTemp: false, log: false);
