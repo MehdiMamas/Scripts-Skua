@@ -142,6 +142,7 @@ public class CoreStory
         }
 
         Core.EnsureAccept(QuestID);
+        Core.Join(MapName);
         Core.GetMapItem(MapItemID, Amount, MapName);
         TryComplete(QuestData, AutoCompleteQuest);
     }
@@ -166,6 +167,7 @@ public class CoreStory
         }
 
         Core.EnsureAccept(QuestID);
+        Core.Join(MapName);
         foreach (int MapItemID in MapItemIDs)
         {
             Core.GetMapItem(MapItemID, Amount, MapName);
@@ -193,6 +195,7 @@ public class CoreStory
         Core.EnsureAccept(QuestID);
         foreach (var (MapItemID, Amount, MapName) in MapItems)
         {
+            Core.Join(MapName);
             Core.GetMapItem(MapItemID, Amount, MapName);
         }
         TryComplete(QuestData, AutoCompleteQuest);
