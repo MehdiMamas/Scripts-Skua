@@ -380,6 +380,8 @@ public class CoreAdvanced
         {
             foreach (ItemBase req in item.Requirements)
             {
+                if (matsOnly && req.Name.StartsWith("Gold Voucher"))
+                    continue;
                 // Determine the current quantity of the required item in inventory
                 // Check if the item is in the temporary inventory or the permanent inventory
                 int currentQuantity = req.Temp
