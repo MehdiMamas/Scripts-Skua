@@ -2005,7 +2005,7 @@ public class CoreFarms
             Core.Logger("Doing daily first.");
             Core.EnsureAccept(3299);
             foreach (var element in elementalItems)
-                Core.HuntMonster("gilead", $"{element.Key} Elemental", element.Value.Item1, 6); // Use the second item
+                Core.HuntMonster("gilead", $"{element.Key} Elemental", element.Value.Item1, 6, log: false); // Use the second item
             Core.EnsureComplete(3299);
         }
 
@@ -2017,8 +2017,8 @@ public class CoreFarms
             Core.EquipClass(ClassType.Farm);
             foreach (var element in elementalItems)
             {
-                Core.HuntMonster("gilead", $"{element.Key} Elemental", element.Value.Item2); // Use the second item
-                Core.HuntMonster("gilead", $"{element.Key} Elemental", element.Value.Item1, 5); // Use the second item
+                Core.HuntMonster("gilead", $"{element.Key} Elemental", element.Value.Item2, log: false); // Use the second item
+                Core.HuntMonster("gilead", $"{element.Key} Elemental", element.Value.Item1, 5, log: false); // Use the second item
             }
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("gilead", "Mana Elemental", "Mana Core");
