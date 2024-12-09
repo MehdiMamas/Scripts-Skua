@@ -45,11 +45,11 @@ public class TinselGifts
 
         Core.AddDrop(rewards);
 
-        while (!Bot.ShouldExit && !(Core.CheckInventory(rewards)))
+        while (!Bot.ShouldExit && !Core.CheckInventory(rewards))
         {
             Core.EnsureAccept(questId);
             Core.HuntMonster(mapName, monsterName, itemBow, log: false);
-            Core.EnsureCompleteChoose(questId);
+            Core.EnsureComplete(questId);
         }
         Core.ToBank(rewards);
     }
