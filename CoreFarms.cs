@@ -2021,7 +2021,7 @@ public class CoreFarms
                 Core.HuntMonster("gilead", $"{element.Key} Elemental", element.Value.Item1, 5, log: false); // Use the second item
             }
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("gilead", "Mana Elemental", "Mana Core");
+            Core.HuntMonster("gilead", "Mana Elemental", "Mana Core", log: false);
             Core.EnsureComplete(new[] { 3050, 3298 });
         }
 
