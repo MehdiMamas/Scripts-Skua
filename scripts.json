@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 143480,
+    "size": 143481,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -28,7 +28,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 135866,
+    "size": 140619,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 306585,
+    "size": 311470,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -2702,7 +2702,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 65712,
+    "size": 66202,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -2980,7 +2980,7 @@
       "null"
     ],
     "path": "Tools/RankUpEquippedClass.cs",
-    "size": 987,
+    "size": 898,
     "fileName": "RankUpEquippedClass.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/RankUpEquippedClass.cs"
   },
@@ -19568,7 +19568,7 @@
       "null"
     ],
     "path": "Other/MergeShops/DreadspaceReplicatorMerge.cs",
-    "size": 9715,
+    "size": 9714,
     "fileName": "DreadspaceReplicatorMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DreadspaceReplicatorMerge.cs"
   },
@@ -21312,7 +21312,7 @@
       "null"
     ],
     "path": "Other/Classes/BloodSorceress.cs",
-    "size": 1069,
+    "size": 1089,
     "fileName": "BloodSorceress.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/BloodSorceress.cs"
   },
@@ -21323,7 +21323,7 @@
       "null"
     ],
     "path": "Other/Classes/ScarletSorceress.cs",
-    "size": 2273,
+    "size": 2339,
     "fileName": "ScarletSorceress.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ScarletSorceress.cs"
   },
