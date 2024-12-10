@@ -27,13 +27,8 @@ public class RankUpEquippedClass
 
     public void DoRankUpEquippedClass()
     {
-        ItemBase? currentClass = Bot.Inventory.Items.FirstOrDefault(i => i != null && i.Equipped && i.Category == ItemCategory.Class);
-        if (currentClass == null)
-        {
-            Core.Logger("No class is currently equipped.");
-            return;
-        }
-
-        Adv.RankUpClass(currentClass.Name);
+        if (Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank < 10)
+            Adv.RankUpClass(Bot.Player.CurrentClass.Name);
+        else Core.Logger($"{Bot.Player.CurrentClass.Name} is already at max rank.");
     }
 }
