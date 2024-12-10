@@ -29,7 +29,9 @@ public class BloodSorceress
         if (Core.CheckInventory("Blood Sorceress"))
         {
             if (rankUpClass)
+            {
                 Adv.RankUpClass("Blood Sorceress");
+            }
             return;
         }
 
@@ -37,7 +39,7 @@ public class BloodSorceress
         Core.HuntMonster("towerofmirrors", "Scarletta", "Blood Sorceress", isTemp: false);
         Core.JumpWait();
         Bot.Wait.ForPickup("Blood Sorceress");
-        
+
         if (rankUpClass)
             Adv.RankUpClass("Blood Sorceress");
     }

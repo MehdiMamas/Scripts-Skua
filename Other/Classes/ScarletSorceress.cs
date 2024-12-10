@@ -42,18 +42,19 @@ public class ScarletSorceress
 
         InventoryItem? BloodSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(i => i != null && i.Name == "Blood Sorceress" && i.Category == ItemCategory.Class);
 
-        if (!Core.CheckInventory("Blood Sorceress"))
+        if (!Core.CheckInventory("Blood Sorceress") || BloodSorceress != null && BloodSorceress.Quantity < 302500)
         {
             TOD.TowerofMirrors();
             BS.GetBSorc();
             Bot.Wait.ForPickup("Blood Sorceress");
         }
+
         BloodSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(i => i != null && i.Name == "Blood Sorceress" && i.Category == ItemCategory.Class);
 
         // Check if R10, soemtimes the game can get it stuck at r9 with 100% Cxp
         if (BloodSorceress != null && BloodSorceress.Quantity < 302500) //now requires it to be rank 10?
         {
-            Core.Relogin();
+            // Core.Relogin();
             Adv.RankUpClass("Blood Sorceress");
         }
 
