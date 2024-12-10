@@ -2638,6 +2638,7 @@ public class CoreBots
                 continue;
             Bot.Flash.CallGameFunction("world.abandonQuest", q.ID);
             Bot.Wait.ForTrue(() => !EnsureLoad(q.ID).Active, 20);
+            Bot.Quests.UnregisterQuests(q.ID);
         }
     }
 
@@ -2988,6 +2989,7 @@ public class CoreBots
         }
         else Bot.Options.AggroMonsters = false;
 
+        Bot.Options.AttackWithoutTarget = true;
         List<Monster> targetMonsters = FindMonsters();
         if (item == null)
         {
@@ -3015,22 +3017,26 @@ public class CoreBots
                 }
                 return;
             }
+
         }
         else
         {
 
             if (monster == "*")
+            {
+                Bot.Options.AttackWithoutTarget = true;
                 _KillForItem("*", item, quant, isTemp, log: log, cell: cell);
+            }
             else
                 _KillForItem(monster, item, quant, isTemp, log: log, cell: cell);
-
-            Bot.Options.AttackWithoutTarget = false;
-            ToggleAggro(false);
-            Jump();
-            Bot.Options.AggroMonsters = false;
-            JumpWait();
-            Rest();
         }
+
+        Bot.Options.AttackWithoutTarget = false;
+        ToggleAggro(false);
+        Jump();
+        Bot.Options.AggroMonsters = false;
+        JumpWait();
+        Rest();
     }
 
     /// <summary>
@@ -3359,7 +3365,8 @@ public class CoreBots
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                     Sleep();
-                Jump(targetMonster.Cell);
+                if (Bot.Player.Cell != targetMonster.Cell)
+                    Jump(targetMonster.Cell);
                 Bot.Combat.Attack(targetMonster);
                 Sleep();
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant))
@@ -4566,6 +4573,109 @@ public class CoreBots
     }
 
     /// <summary>
+    /// Determines whether the bot should aggro monsters based on the presence of other players in the current map.
+    /// </summary>
+    /// <remarks>
+    /// The method checks if there are any players on the current map other than the bot. 
+    /// If other players are found, aggroing monsters is enabled, and players are hidden to reduce lag. 
+    /// If no other players are found, aggroing monsters is disabled.
+    /// </remarks>
+    public void CanWeAggro()
+    {
+        Bot.Options.AggroAllMonsters = false;
+        // Check if there are any other players in the cell
+        if (Bot.Map.PlayerNames.Any(x => x != Bot.Player.Username))
+        {
+            if(!Bot.Options.AggroMonsters)
+            Bot.Options.AggroMonsters = true;
+            Bot.Options.HidePlayers = true;  // Hide players to reduce lag
+        }
+        else
+        {
+            Bot.Options.AggroMonsters = false;
+            Bot.Options.HidePlayers = false;
+        }
+    }
+
+
+
+
+    /// <summary>
+    /// Checks the current class rank of the player or a specified class based on the class name.
+    /// </summary>
+    /// <param name="CurrentClass">
+    /// A boolean flag indicating whether to check the rank of the current class equipped by the player. Default is <c>false</c>.
+    /// </param>
+    /// <param name="ClassName">
+    /// The name of the class to check if <paramref name="CurrentClass"/> is <c>false</c>. Default is <c>null</c>.
+    /// </param>
+    /// <returns>
+    /// The class rank of the player or specified class.
+    /// If the player is not found or the class is not in inventory or bank, <c>1</c> is returned by default.
+    /// </returns>
+    /// <remarks>
+    /// The method first checks if the player is available. If <paramref name="CurrentClass"/> is set to <c>true</c>,
+    /// the rank of the current equipped class is returned. Otherwise, it searches for the specified class in the player's
+    /// inventory and bank, and calculates the rank based on the class quantity (Class Xp).
+    /// </remarks>
+    public int CheckClassRank(bool CurrentClass = false, string? ClassName = null)
+    {
+        if (Bot.Player == null)
+        {
+            Logger("Bot.Player is null.");
+            return 1;
+        }
+
+        if (CurrentClass && Bot.Player.CurrentClass != null)
+        {
+            Logger($"Current Class: {Bot.Player.CurrentClass} | Current Rank: {Bot.Player.CurrentClassRank}");
+            return Bot.Player.CurrentClassRank;
+        }
+        else
+        {
+            // Find the class item from the inventory or bank
+            InventoryItem Class = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+                .Find(i => i.Name == ClassName && i.Category == ItemCategory.Class);
+
+            if (ClassName != null && Class != null)
+            {
+                Logger($"Class: {Class.Name} | Rank: {Class.Quantity}");
+
+                // Define CP thresholds and corresponding ranks in a dictionary
+                var ClassPointRanks = new Dictionary<int, int>
+            {
+                { 900, 1 },        // Rank 1 (CP < 900)
+                { 3600, 2 },       // Rank 2 (900 <= CP < 3600)
+                { 10000, 3 },      // Rank 3 (3600 <= CP < 10000)
+                { 22500, 4 },      // Rank 4 (10000 <= CP < 22500)
+                { 44100, 5 },      // Rank 5 (22500 <= CP < 44100)
+                { 78400, 6 },      // Rank 6 (44100 <= CP < 78400)
+                { 129600, 7 },     // Rank 7 (78400 <= CP < 129600)
+                { 202500, 8 },     // Rank 8 (129600 <= CP < 202500)
+                { 302500, 9 }      // Rank 9 (202500 <= CP < 302500)
+            };
+
+                // Determine the class rank based on quantity using the dictionary
+                int classRank = 1; // Default rank
+                foreach (var threshold in ClassPointRanks.OrderBy(t => t.Key))
+                {
+                    if (Class.Quantity >= threshold.Key)
+                        classRank = threshold.Value;
+                    else
+                        break;
+                }
+
+                Logger($"Class Rank (based on ClassXP): {classRank}");
+                return classRank;
+            }
+        }
+
+        return 1; // Default return value if class is not found
+    }
+
+
+
+    /// <summary>
     /// Initiates resting for the bot's player character if conditions allow.
     /// </summary>
     public void Rest()
@@ -4578,14 +4688,21 @@ public class CoreBots
                 return;
             }
 
-            if (ShouldRest)
-                Bot.Player.Rest(true);
+            // Rest if the player is alive, should rest, and health is below 2% of max health
+            int healthThreshold = (int)Math.Ceiling((double)Bot.Player.MaxHealth / 50); // 50% threshold
+
+            if (ShouldRest && Bot.Player.Alive && Bot.Player.Health < healthThreshold)
+            {
+                Bot.Player.Rest(false);
+                Logger($"Resting initiated: Health below threshold ({Bot.Player.Health}/{Bot.Player.MaxHealth}).");
+            }
         }
         catch (Exception ex)
         {
             Logger($"An error occurred: {ex.Message}\n{ex.StackTrace}");
         }
     }
+
 
 
     /// <summary>
