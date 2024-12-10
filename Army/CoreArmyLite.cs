@@ -1373,10 +1373,13 @@ public class CoreArmyLite
     private bool tryGoto(string userName)
     {
         // If you're in the same map and same cell, don't do anything
-        if (Bot.Map.PlayerExists(userName) && Bot.Map.TryGetPlayer(userName, out PlayerInfo? playerObject) && playerObject != null && playerObject.Cell != Bot.Player.Cell)
+        if (Bot.Map.PlayerNames.Count > 0 && Bot.Map.PlayerNames.Contains(userName) && Bot.Map.TryGetPlayer(userName, out PlayerInfo? playerObject) && playerObject != null)
         {
             Bot.Player.Goto(userName);
-            return true;
+            Bot.Wait.ForMapLoad(Bot.Map.Name);
+            Core.Sleep(1500);
+            if (playerObject != null && playerObject.Cell == Bot.Player.Cell)
+                return true;
         }
 
         if (b_doLockedMaps)
@@ -1385,24 +1388,29 @@ public class CoreArmyLite
         // Try 3 times
         for (int i = 0; i < 3; i++)
         {
-            // If the followed player is not in the map, go to a save space
-            if (!Bot.Map.PlayerExists(userName))
+            // If the followed player is not in the map, go to a safe space
+            if (Bot.Map.PlayerNames.Count > 0 && !Bot.Map.PlayerNames.Contains(userName))
+            {
+                Bot.Options.AttackWithoutTarget = false;
+                Core.ToggleAggro(false);
+                Core.Jump();
+                Bot.Options.AggroMonsters = false;
                 Core.JumpWait();
 
-            Core.ToggleAggro(false);
-
-            Bot.Player.Goto(userName);
-            Core.Sleep();
+                Bot.Player.Goto(userName);
+                Bot.Wait.ForMapLoad(Bot.Map.Name);
+                Core.Sleep();
+            }
 
             if (LockedZoneWarning)
                 break;
 
-            if (Bot.Map.PlayerExists(userName))
+            if (Bot.Map.PlayerNames.Count > 0 && Bot.Map.PlayerNames.Contains(userName))
             {
                 if (Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null)
                 {
                     if (playerObject.Cell != Bot.Player.Cell)
-                        Bot.Player.Goto(userName);
+                        Core.Jump(playerObject.Cell, playerObject.Pad);
                     Bot.Player.SetSpawnPoint();
                 }
                 Core.ToggleAggro(true);
