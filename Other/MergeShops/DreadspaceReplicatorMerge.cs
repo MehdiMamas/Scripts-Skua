@@ -32,7 +32,7 @@ public class DreadspaceReplicatorMerge
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Red Space Fabric", "Blue Space Fabric", "Yellow Space Fabric", "Star Scrap Metal", "Daimyo", "Antimatter dye", "Cyber Brain Core", "Blinding Light of Dread Space", "Unstable Isotope " });
+        Core.BankingBlackList.AddRange(new[] { "Red Space Fabric", "Blue Space Fabric", "Yellow Space Fabric", "Star Scrap Metal", "Daimyo", "Antimatter dye", "Cyber Brain Core", "Blinding Light of Dread Space", "Unstable Isotope" });
         Core.SetOptions();
 
         BuyAllMerge();
