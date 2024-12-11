@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 311507,
+    "size": 311419,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -9146,7 +9146,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/CheckForDonatedACs.cs",
-    "size": 6483,
+    "size": 6636,
     "fileName": "CheckForDonatedACs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/CheckForDonatedACs.cs"
   },
