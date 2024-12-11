@@ -4584,10 +4584,10 @@ public class CoreBots
     {
         Bot.Options.AggroAllMonsters = false;
         // Check if there are any other players in the cell
-        if (Bot.Map.PlayerNames.Any(x => x != Bot.Player.Username))
+        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Any(x => x != Bot.Player.Username))
         {
-            if(!Bot.Options.AggroMonsters)
-            Bot.Options.AggroMonsters = true;
+            if (!Bot.Options.AggroMonsters)
+                Bot.Options.AggroMonsters = true;
             Bot.Options.HidePlayers = true;  // Hide players to reduce lag
         }
         else
@@ -4634,7 +4634,7 @@ public class CoreBots
         else
         {
             // Find the class item from the inventory or bank
-            InventoryItem Class = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+            InventoryItem? Class = Bot.Inventory.Items.Concat(Bot.Bank.Items)
                 .Find(i => i.Name == ClassName && i.Category == ItemCategory.Class);
 
             if (ClassName != null && Class != null)
