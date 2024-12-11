@@ -35,149 +35,134 @@ public class CheckForDonatedACs
     {
         string logPath = Path.Combine(ClientFileSources.SkuaOptionsDIR, "FrostvaleDonationLog.txt");
         bool firstTime = !File.Exists(logPath);
-        var oldACs = firstTime ? new List<string>() : File.ReadAllLines(logPath).ToList();
-        var newACs = new List<string>();
-        var warnings = new List<string>();
+        List<string> ACs = new();
+        List<string> oldACs = new();
+        List<string> newACs = new();
+        List<string> warnings = new();
 
-        if (firstTime) File.WriteAllText(logPath, string.Empty);
+        if (firstTime)
+            File.WriteAllText(logPath, string.Empty);
+        else
+            oldACs = File.ReadAllLines(logPath).ToList();
 
         Bot.Events.ExtensionPacketReceived += ACsListener;
 
         while (Army.doForAll())
         {
-            if (!EnsurePlayerReady()) continue;
+            Core.Sleep(2000);
+            Bot.Wait.ForMapLoad("battleon");
+
+            //just adding all the checks sometimes u still get your char as a flame.. and unloaded ._.
+            while (!Bot.ShouldExit && Bot.Player.LoggedIn && !Bot.Player.Loaded && Bot.Player.Playing && Bot.Map.Loaded)
+                Core.Sleep(1500);
 
             Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
             Bot.Wait.ForMapLoad("house");
 
-            ProcessDailyRewards();
+            Daily.WheelofDoom();
+            Daily.MonthlyTreasureChestKeys();
 
-            if (!ValidateAccountAge(out double accountAgeInDays))
+            //Requierments:
+            // Level 30
+            Farm.Experience(30);
+
+            // Two week old account
+            string _output = Bot.Flash.GetGameObject("world.myAvatar.objData.dCreated")!;
+            //"Fri Dec 3 08:32:00 GMT+0100 2021"
+            string[] output = _output[1..^1].Split(' ');
+            string[] time = output[3].Split(':');
+            var creationDate = new DateTime(
+                int.Parse(output[5]),
+                Months.First(x => x.Key == output[1]).Value,
+                int.Parse(output[2]),
+                int.Parse(time[0]),
+                int.Parse(time[1]),
+                int.Parse(time[2]),
+                DateTimeKind.Unspecified
+                );
+            double accountAgeInDays = DateTime.Now.Subtract(creationDate).TotalDays;
+            if (accountAgeInDays < (double)14)
             {
-                AddWarning($"{Bot.Player.Username}: account too young ({accountAgeInDays:F1}/14 days)");
+                Core.Logger($"Account too young: {Core.Username()} ({accountAgeInDays}/14 days) - Skipping");
+                warnings.Add($"- {Core.Username()}: account is too young ({accountAgeInDays}/14 days)");
                 continue;
             }
 
-            if (!Bot.Flash.CallGameFunction<bool>("world.myAvatar.isEmailVerified"))
+            // Verified Email
+            if (Bot.Flash.CallGameFunction<bool>("world.myAvatar.isEmailVerified"))
             {
-                string email = Bot.Flash.GetGameObject("world.myAvatar.objData.strEmail")?[1..^1] ?? "unknown email";
-                AddWarning($"{Bot.Player.Username}: email unverified ({email})");
+                //Edit for future years quests vv <- No need to edit now, just edit the quest ID in ChillysParticipation.cs
+                // Participation Quest 9988
+                CQ.ChillysParticipation();
+                Bot.Wait.ForQuestComplete(ChillysQuest.questID);
+            }
+            else
+            {
+                Core.Logger($"Unverified Email: {Core.Username()} - Skipping");
+                warnings.Add($"- {Core.Username()}: email is unverified ({Bot.Flash.GetGameObject("world.myAvatar.objData.strEmail")?[1..^1]})");
                 continue;
             }
-
-            ProcessParticipation();
         }
-
         Bot.Events.ExtensionPacketReceived -= ACsListener;
 
-        WriteResults(logPath, oldACs, newACs, warnings);
-
-        // Local Helper Methods
-        void AddWarning(string message)
+        List<string> writeACs = new();
+        writeACs.AddRange(newACs);
+        foreach (var p in oldACs)
         {
-            warnings.Add($"- {message}");
-            Core.Logger(message);
+            string name = p.Split(':').First();
+            if (!writeACs.Any(x => x.StartsWith(name)))
+                writeACs.Add(p);
         }
+        Core.WriteFile(logPath, writeACs);
+
+        if (newACs.Count == 0)
+            Bot.ShowMessageBox($"We checked {Army.doForAllAccountDetails!.Length} accounts, but none of them have gained any {(firstTime ? "ACs" : "more ACs since last time")}." +
+            $"{(warnings.Count > 0 ? "\n\nPlease be aware of the following things:\n" + string.Join('\n', warnings) : "")}",
+            Bot.Random.Next(1, 100) == 100 ? "No Maidens" : "No ACs");
+        else
+            Bot.ShowMessageBox($"{newACs.Count} out of {Army.doForAllAccountDetails!.Length} accounts received ACs! Below you will find more details:\n\n" + string.Join('\n', ACs) +
+            $"{(warnings.Count > 0 ? "\n\nPlease be aware of the following things:\n" + string.Join('\n', warnings) : "")}", "Got ACs!");
 
         void ACsListener(dynamic packet)
         {
-            if (packet["params"].type != "str") return;
-
-            string cmd = packet["params"].dataObj[0];
-            if (cmd != "server") return;
-
-            string text = packet["params"].dataObj[2]?.ToString() ?? string.Empty;
-            if (text.Contains("AdventureCoins from other players. Happy Frostval!"))
+            string type = packet["params"].type;
+            dynamic data = packet["params"].dataObj;
+            if (type is not null and "str")
             {
-                int ac = int.Parse(text.Split(' ')[2]);
-                int totalACs = int.Parse((oldACs.Find(x => x.StartsWith(Bot.Player.Username)) ?? "a:0").Split(':').Last()) + ac;
-                newACs.Add($"{Bot.Player.Username}:{totalACs}");
+                string cmd = data[0];
+                switch (cmd)
+                {
+                    case "server":
+                        if (data[2] == null)
+                            break;
+                        string text = data[2].ToString();
+                        if (text.Contains("AdventureCoins from other players. Happy Frostval!"))
+                        {
+                            int ac = int.Parse(text.Split(' ')[2]);
+                            Core.Logger($"{Core.Username()} has received {ac} ACs!");
+                            int acLog = int.Parse((oldACs.Find(x => x.StartsWith(Core.Username())) ?? "a:0").Split(':').Last()) + ac;
+
+                            ACs.Add($"{Core.Username()}: +{ac} (received {acLog} ACs total)");
+                            newACs.Add($"{Core.Username()}:{acLog}");
+                        }
+                        break;
+                }
             }
         }
     }
-
-    // Supporting Methods
-    private bool EnsurePlayerReady()
-    {
-        Bot.Wait.ForTrue(() => Bot.Player.LoggedIn, 20);
-        Core.Sleep(2000);
-        Bot.Wait.ForMapLoad("battleon");
-        return Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
-    }
-
-    private void ProcessDailyRewards()
-    {
-        Daily.WheelofDoom();
-        Daily.MonthlyTreasureChestKeys();
-        Farm.Experience(30); // Ensure level requirement
-    }
-
-    private bool ValidateAccountAge(out double accountAgeInDays)
-    {
-        try
+    private readonly Dictionary<string, int> Months = new()
         {
-            var creationDate = ParseCreationDate(Bot.Flash.GetGameObject("world.myAvatar.objData.dCreated")!);
-            accountAgeInDays = (DateTime.Now - creationDate).TotalDays;
-            return accountAgeInDays >= 14;
-        }
-        catch (Exception ex)
-        {
-            Core.Logger($"Error validating account age: {ex.Message}");
-            accountAgeInDays = 0;
-            return false;
-        }
-    }
-
-    private DateTime ParseCreationDate(string creationData)
-    {
-        if (string.IsNullOrWhiteSpace(creationData))
-            throw new ArgumentException("Invalid creation data provided.", nameof(creationData));
-
-        var parts = creationData[1..^1].Split(' ');
-        if (parts.Length < 6)
-            throw new FormatException("Unexpected format in creation data.");
-
-        if (!Months.TryGetValue(parts[1], out int month))
-            throw new ArgumentException($"Invalid month abbreviation: {parts[1]}", nameof(creationData));
-
-        var timeParts = parts[3].Split(':');
-        if (timeParts.Length < 3)
-            throw new FormatException("Unexpected time format in creation data.");
-
-        return new DateTime(
-            int.Parse(parts[5]),      // Year
-            month,                    // Month
-            int.Parse(parts[2]),      // Day
-            int.Parse(timeParts[0]),  // Hour
-            int.Parse(timeParts[1]),  // Minute
-            int.Parse(timeParts[2]),  // Second
-            DateTimeKind.Unspecified
-        );
-    }
-
-    private static readonly Dictionary<string, int> Months = new(StringComparer.OrdinalIgnoreCase)
-    {
-        { "Jan", 1 }, { "Feb", 2 }, { "Mar", 3 }, { "Apr", 4 },
-        { "May", 5 }, { "Jun", 6 }, { "Jul", 7 }, { "Aug", 8 },
-        { "Sep", 9 }, { "Oct", 10 }, { "Nov", 11 }, { "Dec", 12 }
-    };
-
-
-    private void ProcessParticipation()
-    {
-        if (Core.isCompletedBefore(ChillysQuest.questID)) return;
-        CQ.ChillysParticipation();
-        Bot.Wait.ForQuestComplete(ChillysQuest.questID);
-    }
-
-    private void WriteResults(string logPath, List<string> oldACs, List<string> newACs, List<string> warnings)
-    {
-        var allACs = newACs.Concat(oldACs.ExceptBy(newACs.Select(ac => ac.Split(':')[0]), ac => ac.Split(':')[0])).ToList();
-        Core.WriteFile(logPath, allACs);
-
-        string resultMessage = newACs.Count > 0
-            ? $"{newACs.Count} accounts received ACs:\n\n{string.Join('\n', newACs)}"
-            : $"No ACs gained.{(warnings.Count > 0 ? "\nWarnings:\n" + string.Join('\n', warnings) : "")}";
-        Bot.ShowMessageBox(resultMessage, newACs.Count > 0 ? "Got ACs!" : "No ACs");
-    }
+            { "Jan", 1 },
+            { "Feb", 2 },
+            { "Mar", 3 },
+            { "Apr", 4 },
+            { "May", 5 },
+            { "Jun", 6 },
+            { "Jul", 7 },
+            { "Aug", 8 },
+            { "Sep", 9 },
+            { "Oct", 10 },
+            { "Nov", 11 },
+            { "Dec", 12 }
+        };
 }
