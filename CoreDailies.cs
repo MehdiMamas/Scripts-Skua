@@ -633,7 +633,7 @@ public class CoreDailies
 
     public void MonthlyTreasureChestKeys()
     {
-        if (!Core.IsMember || !Core.CheckInventory("Treasure Chest"))
+        if (!Core.IsMember || Bot.Quests.IsDailyComplete(1239) || !Core.CheckInventory("Treasure Chest"))
             return;
 
         Core.Logger("Montly: Treasure Chest Keys");
@@ -662,7 +662,7 @@ public class CoreDailies
 
     public void WheelofDoom()
     {
-        if (!CheckDailyv2(3075) || !Core.CheckInventory("Gear of Doom", 3))
+        if (!Core.IsMember || Bot.Quests.IsDailyComplete(3075) || !Core.CheckInventory("Gear of Doom", 3))
             return;
             
         Core.Logger($"{(Core.IsMember ? "Daily" : "Weekly")}: Wheel of Doom");
