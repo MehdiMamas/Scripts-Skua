@@ -158,8 +158,9 @@ public class CoreNSOD
 
             Core.EquipClass(ClassType.Farm);
             Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Empowered Essence", 50, false);
+            Bot.Wait.ForPickup("Void Aura");
         }
-        Core.CancelRegisteredQuests();
+        Core.AbandonQuest(4439);
     }
 
     public void GatheringUnstableEssences(int quant = 7500)
@@ -182,7 +183,7 @@ public class CoreNSOD
             Bot.Wait.ForPickup("Void Aura");
             Core.Logger($"Void Auras: ({Bot.Inventory.GetQuantity("Void Aura")}/{quant})");
         }
-        Core.CancelRegisteredQuests();
+        Core.AbandonQuest(4438);
     }
 
     public void RetrieveVoidAuras(int quant = 7500)
@@ -399,7 +400,7 @@ public class CoreNSOD
     {
         if (Core.CheckInventory("Bones from the Void Realm", quant))
             return;
-
+        Core.FarmingLogger("Bones from the Void Realm", quant);
         Core.AddDrop("Undead Energy");
         Farm.BattleUnderB("Bone Dust", quant * 50);
         VoidAuras(quant * 50);
@@ -410,7 +411,7 @@ public class CoreNSOD
     {
         if (Core.CheckInventory("Time Lord's Necronomicon", quant))
             return;
-
+        Core.FarmingLogger("Time Lord's Necronomicon", quant);
         CHourglass(quant * 10);
         ScrollDarkArts(quant);
         VoidAuras(quant * 100);
