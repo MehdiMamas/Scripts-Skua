@@ -27,8 +27,20 @@ public class RankUpEquippedClass
 
     public void DoRankUpEquippedClass()
     {
-        if (Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank < 10)
-            Adv.RankUpClass(Bot.Player.CurrentClass.Name);
-        else Core.Logger($"{Bot.Player.CurrentClass.Name} is already at max rank.");
+        if (Bot.Player.CurrentClass != null)
+        {
+            if (Bot.Player.CurrentClassRank < 10)
+            {
+                Adv.RankUpClass(Bot.Player.CurrentClass.Name);
+            }
+            else
+            {
+                Core.Logger($"{Bot.Player.CurrentClass.Name} is already at max rank.");
+            }
+        }
+        else
+        {
+            Core.Logger("No class is currently equipped.");
+        }
     }
 }
