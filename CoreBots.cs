@@ -3005,7 +3005,7 @@ public class CoreBots
                         Bot.Map.Jump(cell, pad, autoCorrect: false);
                         Bot.Wait.ForCellChange(cell);
                     }
-                    Bot.Wait.ForTrue(() => Bot.Player.HasTarget, 20);
+                    
                     if (!Bot.Combat.StopAttacking)
                         Bot.Combat.Attack(monster);
                     if (targetMonster.MaxHP == 1)
