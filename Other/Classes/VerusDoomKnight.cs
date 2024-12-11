@@ -169,14 +169,28 @@ public class VerusDoomKnightClass
                 VoTSSolo();
             }
 
-            if (!Core.CheckInventory("Xyfrag's Slimy Tooth", 5) || !Core.CheckInventory("Nerfkitten's Fang", 3))
-            {
-                Core.Logger("You will need to manually kill the following to proceed with the quest:\n" +
-                            "1. Xyfrag - in /join voidxyfrag\n" +
-                            "2. Sarah the Nerfkitten - in /join voidnerfkitten\n" +
-                            "Once done, you can continue with the quest by running the bot again.", stopBot: true);
-            }
-            else Core.EnsureComplete(9418);
+            int energyNeeded = 0;
+
+            // Calculate energy based on missing items
+            if (!Core.CheckInventory("Xyfrag's Slimy Tooth", 5))
+                energyNeeded += 250;
+
+            if (!Core.CheckInventory("Nerfkitten's Fang", 3))
+                energyNeeded += 150;
+
+            // Hunt for Void Energy if required
+            if (energyNeeded > 0)
+                Core.HuntMonster("thevoid", "Void Dragon", "Void Energy", energyNeeded, isTemp: false);
+
+            // Prefarm Gold for 8x 500k vouchers (4,000,000 total).
+            if (!Core.CheckInventory("Gold Voucher 500k", 8))
+                Farm.Gold(4000000);
+
+            // Purchase required items.
+            Adv.BuyItem("thevoid", 1406, "Xyfrag's Slimy Tooth", 5);
+            Adv.BuyItem("thevoid", 1406, "Nerfkitten's Fang", 3);
+
+            Core.EnsureComplete(9418);
         }
 
         // Necrotic Blade (9414)
