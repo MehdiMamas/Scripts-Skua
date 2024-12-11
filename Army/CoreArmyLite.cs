@@ -1373,7 +1373,7 @@ public class CoreArmyLite
     private bool tryGoto(string userName)
     {
         // If you're in the same map and same cell, don't do anything
-        if (Bot.Map.PlayerNames.Count > 0 && Bot.Map.PlayerNames.Contains(userName) && Bot.Map.TryGetPlayer(userName, out PlayerInfo? playerObject) && playerObject != null)
+        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Count > 0 && Bot.Map.PlayerNames.Contains(userName) && Bot.Map.TryGetPlayer(userName, out PlayerInfo? playerObject) && playerObject != null)
         {
             Bot.Player.Goto(userName);
             Bot.Wait.ForMapLoad(Bot.Map.Name);
@@ -1389,7 +1389,7 @@ public class CoreArmyLite
         for (int i = 0; i < 3; i++)
         {
             // If the followed player is not in the map, go to a safe space
-            if (Bot.Map.PlayerNames.Count > 0 && !Bot.Map.PlayerNames.Contains(userName))
+            if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Count > 0 && !Bot.Map.PlayerNames.Contains(userName))
             {
                 Bot.Options.AttackWithoutTarget = false;
                 Core.ToggleAggro(false);
@@ -1405,7 +1405,7 @@ public class CoreArmyLite
             if (LockedZoneWarning)
                 break;
 
-            if (Bot.Map.PlayerNames.Count > 0 && Bot.Map.PlayerNames.Contains(userName))
+            if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Count > 0 && Bot.Map.PlayerNames.Contains(userName))
             {
                 if (Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null)
                 {
