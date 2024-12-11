@@ -2989,7 +2989,6 @@ public class CoreBots
         }
         else Bot.Options.AggroMonsters = false;
 
-        Bot.Options.AttackWithoutTarget = true;
         List<Monster> targetMonsters = FindMonsters();
         if (item == null)
         {
@@ -3006,6 +3005,7 @@ public class CoreBots
                         Bot.Map.Jump(cell, pad, autoCorrect: false);
                         Bot.Wait.ForCellChange(cell);
                     }
+                    Bot.Wait.ForTrue(() => Bot.Player.HasTarget, 20);
                     if (!Bot.Combat.StopAttacking)
                         Bot.Combat.Attack(monster);
                     if (targetMonster.MaxHP == 1)
@@ -3015,16 +3015,14 @@ public class CoreBots
                     }
                     Sleep();
                 }
-                return;
             }
-
+            return;
         }
         else
         {
 
             if (monster == "*")
             {
-                Bot.Options.AttackWithoutTarget = true;
                 _KillForItem("*", item, quant, isTemp, log: log, cell: cell);
             }
             else
@@ -4586,8 +4584,8 @@ public class CoreBots
         // Check if there are any other players in the cell
         if (Bot.Map.PlayerNames.Any(x => x != Bot.Player.Username))
         {
-            if(!Bot.Options.AggroMonsters)
-            Bot.Options.AggroMonsters = true;
+            if (!Bot.Options.AggroMonsters)
+                Bot.Options.AggroMonsters = true;
             Bot.Options.HidePlayers = true;  // Hide players to reduce lag
         }
         else
