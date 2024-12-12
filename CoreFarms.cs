@@ -806,7 +806,9 @@ public class CoreFarms
             if (Bot.Player.Cell != (Core.IsMember
                 ? "r13"
                 : "r2"))
-                Core.Jump("r2", "Left");
+                Core.Jump(Core.IsMember
+                ? "r13"
+                : "r2", "Left");
             Core.CanWeAggro();
 
             Bot.Combat.Attack("*");
