@@ -107,7 +107,7 @@ public class UndeadLegionMerge
                         return;
                     }
 
-                    Core.Logger("\"DarkBirthday\" is a seasonal map aviable during dage's birthday");
+                    Core.Logger("\"DarkBirthday\" is a seasonal map available during dage's birthday");
                     Adv.BuyItem("DarkBirthday", 376, req.Name);
                     break;
 
