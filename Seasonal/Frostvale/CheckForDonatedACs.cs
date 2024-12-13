@@ -33,6 +33,8 @@ public class CheckForDonatedACs
 
     public void CheckACs()
     {
+        Core.OneTimeMessage("Donated ACs Checker", "*Warning* this will (wether started from the manager, or from an already logged in account ingame), 100% miss the first acc. as from the manager it will log you into the game, before it compiles and starts the script (non-changeable), or from an already logged in account, well that parts obvious.\n\n" +
+           "TLDR: First Acc's checked acs will 99% of the time be missed and theres nothing we can do about it.");
         string logPath = Path.Combine(ClientFileSources.SkuaOptionsDIR, "FrostvaleDonationLog.txt");
         bool firstTime = !File.Exists(logPath);
         List<string> ACs = new();
