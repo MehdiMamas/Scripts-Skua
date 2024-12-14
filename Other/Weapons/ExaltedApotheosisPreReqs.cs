@@ -39,17 +39,19 @@ public class ExaltedApotheosisPreReqs
     {
         // Ensure shop is loaded:
         Core.Join("timeinn");
-        while (!Bot.ShouldExit && Bot.Shops.Name != "Exaltia Merge")
+        while (!Bot.ShouldExit && (Bot.Shops?.Name != "Exaltia Merge"))
         {
-            Bot.Shops.Load(2010);
-            Bot.Wait.ForTrue(() => Bot.Shops.Name == "Exaltia Merge", 20);
+            Bot.Shops?.Load(2010);
+            Bot.Wait.ForTrue(() => Bot.Shops?.Name == "Exaltia Merge", 20);
             Core.Sleep();
         }
 
         Bot.Wait.ForActionCooldown(Skua.Core.Models.GameActions.LoadShop);
-        ShopItem? exaltedApo = Bot.Shops.Items.Find(x => x.Name == "Exalted Apotheosis");
+        ShopItem? exaltedApo = Bot.Shops?.Items?.Find(x => x.Name == "Exalted Apotheosis");
 
         Core.EquipClass(ClassType.Farm);
+        Dictionary<string, int> missingMaterials = new();
+
         while (!Bot.ShouldExit && !Core.CheckInventory("Exalted Apotheosis"))
         {
             // Define the weapon pairs in each tier
@@ -61,20 +63,32 @@ public class ExaltedApotheosisPreReqs
             new[] { "Exalted Penultima", "Exalted Unity" }
         };
 
+            bool obtained = false;
+
             foreach (string[] pair in weaponPairs)
             {
-                bool hasPairInInventory = pair.All(wep => Bot.Inventory.Contains(wep));
+                bool hasPairInInventory = pair.All(wep => Bot.Inventory?.Contains(wep) == true);
 
                 // Check if the pair is already in the inventory
                 if (hasPairInInventory)
+                {
+                    Core.Logger($"Pair already owned: {string.Join(", ", pair)}");
                     continue;
+                }
 
                 foreach (string wep in pair)
                 {
-                    ShopItem? wepData = Bot.Shops.Items.FirstOrDefault(x => x.Name == wep);
+                    if (Core.CheckInventory(wep))
+                    {
+                        Core.Logger($"Already owned: {wep}");
+                        continue;
+                    }
+
+                    Core.Logger($"Working on: {wep}");
+                    ShopItem? wepData = Bot.Shops?.Items?.FirstOrDefault(x => x.Name == wep);
 
                     // Check if the weapon has any requirements before buying
-                    if (wepData != null && wepData.Requirements.Count > 0)
+                    if (wepData != null && wepData.Requirements?.Count > 0)
                     {
                         bool canBuy = true;
                         foreach (ItemBase req in wepData.Requirements)
@@ -86,22 +100,28 @@ public class ExaltedApotheosisPreReqs
                                     Core.KillMonster("timeinn", "r3", "Bottom", "*", "Exalted Node", req.Quantity, isTemp: false);
                                 else
                                 {
-                                    Core.Logger($"Missing {req.Name} x{req.Quantity}, Bot Cannot farm this.");
+                                    missingMaterials[req.Name] = req.Quantity - Bot.Inventory?.GetQuantity(req.ID) ?? 0;
                                     canBuy = false;
                                 }
                             }
                         }
+
+                        string status = canBuy ? "\u2713" : "\u274C"; // Checkmark or red X
+                        Core.Logger($"Can complete: {status}");
 
                         // Buy the weapon after fulfilling requirements
                         if (canBuy && wepData.Requirements.All(req => Core.CheckInventory(req.ID, req.Quantity)))
                             Adv.BuyItem("timeinn", 2010, wep);
 
                         if (Core.CheckInventory("Exalted Apotheosis"))
+                        {
+                            obtained = true;
                             break;
+                        }
                     }
                 }
 
-                if (Core.CheckInventory("Exalted Apotheosis"))
+                if (obtained || Core.CheckInventory("Exalted Apotheosis"))
                     break;
             }
 
@@ -110,18 +130,26 @@ public class ExaltedApotheosisPreReqs
                 Core.Logger("Congratulations on completing the Exalted Apotheosis weapon!");
                 break;
             }
-            else if (exaltedApo != null)
+            else if (!obtained && exaltedApo?.Requirements != null)
             {
                 foreach (ItemBase item in exaltedApo.Requirements)
                 {
-                    if (!Core.CheckInventory(item.ID, item.Quantity))
-                        Core.Logger($"Missing {item.Name}, x{item.Quantity}");
+                    int missingQuantity = item.Quantity - Bot.Inventory?.GetQuantity(item.ID) ?? 0;
+                    if (missingQuantity > 0)
+                        missingMaterials[item.Name] = missingQuantity;
                 }
+                break; // Exit the loop if the item cannot be obtained
             }
-            else
+            else if (!obtained)
             {
                 Core.Logger("Exalted Apotheosis item not found in shop.");
+                break;
             }
+        }
+
+        if (missingMaterials.Count > 0)
+        {
+            Bot.Log("Missing materials:\n" + string.Join("\n", missingMaterials.Select(mat => $"\t{mat.Key}: x {mat.Value}")));
         }
 
         Bot.Wait.ForPickup("Exalted Apotheosis");
