@@ -3032,8 +3032,8 @@ public class CoreBots
         Bot.Options.AttackWithoutTarget = false;
         ToggleAggro(false);
 
-        Jump(Bot.Map.Cells.FirstOrDefault(c => c.Contains("Enter"))?? Bot.Map.Cells.First(), "Spawn" );
-        
+        Jump(Bot.Map.Cells.FirstOrDefault(c => c.Contains("Enter")) ?? Bot.Map.Cells.First(), "Spawn");
+
         Bot.Options.AggroMonsters = false;
         JumpWait();
         Rest();
@@ -3374,7 +3374,7 @@ public class CoreBots
             }
             Bot.Options.AttackWithoutTarget = false;
             ToggleAggro(false);
-            Jump();
+            Jump(Bot.Map.Cells.FirstOrDefault(c => c.Contains("Enter")) ?? Bot.Map.Cells.First(), "Spawn");
             Bot.Options.AggroMonsters = false;
             JumpWait();
             Rest();
