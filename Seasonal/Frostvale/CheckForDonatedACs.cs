@@ -95,8 +95,11 @@ public class CheckForDonatedACs
             {
                 //Edit for future years quests vv <- No need to edit now, just edit the quest ID in ChillysParticipation.cs
                 // Participation Quest 9988
-                CQ.ChillysParticipation();
-                Bot.Wait.ForQuestComplete(ChillysQuest.questID);
+                if (!Core.isCompletedBefore(ChillysQuest.questID))
+                {
+                    CQ.ChillysParticipation();
+                    Bot.Wait.ForQuestComplete(ChillysQuest.questID);
+                }
             }
             else
             {
