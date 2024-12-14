@@ -105,14 +105,14 @@ public class CoreDailies
         // Check if the daily quest is complete
         if (Bot.Quests.IsDailyComplete(quest))
         {
-            Core.Logger("Daily/Weekly/Monthly quest not available right now");
+            Quest Q = Bot.Quests.EnsureLoad(quest);
+            Core.Logger($"{Q.Name}[{Q.ID}] is not available right now");
             return false;
         }
 
         // Handle the item checks and drop additions
         if (items == null || items.Length == 0)
         {
-            Core.Logger("No items provided to check or add to drops.");
             return true;
         }
 
@@ -633,7 +633,7 @@ public class CoreDailies
 
     public void MonthlyTreasureChestKeys()
     {
-        if (!Core.IsMember || Bot.Quests.IsDailyComplete(1239) || !Core.CheckInventory("Treasure Chest"))
+        if (!Core.IsMember || !CheckDailyv2(1239) || !Core.CheckInventory("Treasure Chest"))
             return;
 
         Core.Logger("Montly: Treasure Chest Keys");
@@ -662,11 +662,11 @@ public class CoreDailies
 
     public void WheelofDoom()
     {
-        if (!Core.IsMember || Bot.Quests.IsDailyComplete(3075) || !Core.CheckInventory("Gear of Doom", 3))
+        if (!Core.IsMember || !CheckDailyv2(3075) || !Core.CheckInventory("Gear of Doom", 3))
             return;
-            
+
         Core.Logger($"{(Core.IsMember ? "Daily" : "Weekly")}: Wheel of Doom");
-        List<string> PreQuestInv = Bot.Inventory.Items.Select(x => x.Name).ToList();
+        List<string> PreQuestInv = Bot.Inventory.Items.Where(x => x != null && x.Name != null).Select(x => x.Name).ToList();
 
         if (Core.IsMember && CheckDailyv2(3075))
             Core.ChainComplete(3075);
@@ -676,7 +676,7 @@ public class CoreDailies
 
         Bot.Wait.ForPickup("*");
 
-        string[] Array = Bot.Inventory.Items.Select(x => x.Name).ToList().Except(PreQuestInv).ToArray();
+        string[] Array = Bot.Inventory.Items.Where(x => x != null && x.Name != null).Select(x => x.Name).ToList().Except(PreQuestInv).ToArray();
         if (Array.Length == 0)
             return;
 
