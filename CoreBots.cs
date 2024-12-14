@@ -3031,14 +3031,9 @@ public class CoreBots
 
         Bot.Options.AttackWithoutTarget = false;
         ToggleAggro(false);
-        if (Bot.Map.Name == "wanders")
-        {
-            Jump("Enter2");
-        }
-        else
-        {
-            Jump();
-        }
+
+        Jump(Bot.Map.Cells.FirstOrDefault(c => c.Contains("Enter"))?? Bot.Map.Cells.First(), "Spawn" );
+        
         Bot.Options.AggroMonsters = false;
         JumpWait();
         Rest();
