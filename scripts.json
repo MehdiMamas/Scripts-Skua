@@ -9222,6 +9222,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/FrostvaleBadges.cs"
   },
   {
+    "name": "Mockingbird Quest Rewards",
+    "description": "farms quest rewards from `Mockingbird` in /holidayhotel",
+    "tags": [
+      "holidayhotel",
+      "aria",
+      "quest rewards",
+      "frostvale",
+      "mockingbird"
+    ],
+    "path": "Seasonal/Frostvale/Mockingbird.cs",
+    "size": 2276,
+    "fileName": "Mockingbird.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Mockingbird.cs"
+  },
+  {
     "name": "Refreshment Retrieval",
     "description": "This will obtain all of the reward items on Refreshment Retrieval quest.",
     "tags": [
