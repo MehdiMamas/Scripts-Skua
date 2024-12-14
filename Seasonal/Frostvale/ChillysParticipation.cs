@@ -25,10 +25,7 @@ public class ChillysQuest
     public void ChillysParticipation()
     {
         if (Core.isCompletedBefore(questID))
-        {
-            Core.Logger("Quest already complete");
             return;
-        }
 
         if (!Bot.Flash.CallGameFunction<bool>("world.myAvatar.isEmailVerified"))
             Core.Logger("Your email adres is not verified!", messageBox: true, stopBot: true);
