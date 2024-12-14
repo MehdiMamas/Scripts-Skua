@@ -56,6 +56,7 @@ public class Frostvale
         Fimbultomb();
         MountOtzi();
         Otziwar();
+        HolidayHotel();
     }
 
     public void IceCave()
@@ -1049,10 +1050,9 @@ public class Frostvale
 
     public void MountOtzi()
     {
-        if (!Core.isSeasonalMapActive("MountOtzi"))
+        if (Core.isCompletedBefore(8444) || !Core.isSeasonalMapActive("MountOtzi"))
             return;
-        if (Core.isCompletedBefore(8444))
-            return;
+
 
         Fimbultomb();
 
@@ -1152,6 +1152,87 @@ public class Frostvale
 
         // Powder Snow 8451         
         Story.KillQuest(8451, "otziwar", "Huntress Valais");
+    }
+
+    public void HolidayHotel()
+    {
+        if (Core.isCompletedBefore(10003) || !Core.isSeasonalMapActive("holidayhotel"))
+            return;
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Hydrochloric Acid", // UseableMonsters[0],
+	"Lost Giftbox", // UseableMonsters[1],
+	"Cold Apparition", // UseableMonsters[2],
+	"Hotel Guest", // UseableMonsters[3],
+	"Memory Leech", // UseableMonsters[4]
+};
+        #endregion Useable Monsters
+
+        // 9993 | Mouth of a Home
+        if (!Story.QuestProgression(9993))
+        {
+            Core.HuntMonsterQuest(9993,
+                ("holidayhotel", UseableMonsters[0], ClassType.Farm));
+        }
+
+
+        // 9994 | Windpipe Hallway
+        Story.MapItemQuest(
+            9994, new[]
+        {
+                (13977, 5, "holidayhotel"),
+                (13967, 1, "holidayhotel"),
+                (13968, 1, "holidayhotel")
+            }
+        );
+
+        // 9995 | Foreign Body Aspiration
+        if (!Story.QuestProgression(9995))
+        {
+            Core.HuntMonsterQuest(9995,
+                ("holidayhotel", UseableMonsters[1], ClassType.Farm));
+        }
+
+
+        // 9996 | Left Arm Vein
+        Story.MapItemQuest(9996, "holidayhotel", new[] { 13969, 13970 });
+        Story.KillQuest(9996, "holidayhotel", UseableMonsters[2]);
+
+
+        // 9997 | Left Arm Artery
+        Story.MapItemQuest(9997, "holidayhotel", new[] { 13971, 13972 });
+        Story.KillQuest(9997, "holidayhotel", UseableMonsters[2]);
+
+
+        // 9998 | Right Arm Vein
+        Story.MapItemQuest(9998, "holidayhotel", new[] { 13973, 13974, 13975 });
+
+
+        // 10001 | Right Arm Artery
+        if (!Story.QuestProgression(10001))
+        {
+            Core.HuntMonsterQuest(10001,
+                ("holidayhotel", UseableMonsters[3], ClassType.Farm));
+        }
+
+
+        // 10002 | Cryophobia
+        Story.MapItemQuest(10002, "holidayhotel", 13976);
+
+
+
+        // 10003 | Maceration
+        if (!Story.QuestProgression(10003))
+        {
+            Core.HuntMonsterQuest(10003,
+                ("holidayhotel", UseableMonsters[4], ClassType.Solo));
+        }
+
+
     }
 
 
