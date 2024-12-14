@@ -3005,7 +3005,7 @@ public class CoreBots
                         Bot.Map.Jump(cell, pad, autoCorrect: false);
                         Bot.Wait.ForCellChange(cell);
                     }
-                    
+
                     if (!Bot.Combat.StopAttacking)
                         Bot.Combat.Attack(monster);
                     if (targetMonster.MaxHP == 1)
@@ -3031,7 +3031,14 @@ public class CoreBots
 
         Bot.Options.AttackWithoutTarget = false;
         ToggleAggro(false);
-        Jump();
+        if (Bot.Map.Name == "wanders")
+        {
+            Jump("Enter2");
+        }
+        else
+        {
+            Jump();
+        }
         Bot.Options.AggroMonsters = false;
         JumpWait();
         Rest();
