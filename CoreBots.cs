@@ -3457,6 +3457,8 @@ public class CoreBots
         }
     }
 
+    //Non-Choose Variants
+
     /// <summary>
     /// Hunts monsters based on the requirements of a specified quest and an optional array of map and monster names.
     /// </summary>
@@ -3468,20 +3470,23 @@ public class CoreBots
         if (quest == null)
         {
             Logger($"Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
+            return;
         }
 
-        int[] itemsToUnbank = quest!.AcceptRequirements
-                               .Concat(quest.Requirements)
-                               .Select(x => x.ID)
-                               .Distinct()
-                               .ToArray();
+        var itemsToUnbank = quest.AcceptRequirements
+                                .Concat(quest.Requirements)
+                                .Select(x => x.ID)
+                                .Distinct()
+                                .ToArray();
 
         Unbank(itemsToUnbank);
 
         // Add the non-temp items to the drop pickup list
         Bot.Drops.Add(quest.AcceptRequirements.Concat(quest.Requirements)
-                .Where(x => x != null && !x.Temp)
-                .Select(x => x.Name).ToArray());
+                                .Where(x => x != null && !x.Temp)
+                                .Select(x => x.Name)
+                                .Distinct()
+                                .ToArray());
 
         if (!Bot.Quests.IsInProgress(questId))
             EnsureAccept(questId);
@@ -3490,14 +3495,14 @@ public class CoreBots
         if (MapMonsterClassPairs.Length == 0)
         {
             MapMonsterClassPairs = quest.Requirements
-                .Select(_ => ("Fill ME", "Fill ME", ClassType.Solo))  // Default values for mapName, monsterName, and classType
+                .Select(_ => ("Fill ME", "Fill ME", ClassType.Solo))
                 .ToArray();
         }
 
         for (int i = 0; i < MapMonsterClassPairs.Length && i < quest.Requirements.Count; i++)
         {
             ItemBase requirement = quest.Requirements[i];
-            (string mapName, string monsterName, ClassType classType) = MapMonsterClassPairs[i];
+            var (mapName, monsterName, classType) = MapMonsterClassPairs[i];
 
             if (CheckInventory(requirement.ID, requirement.Quantity))
                 continue;
@@ -3531,34 +3536,429 @@ public class CoreBots
         if (!Bot.Quests.EnsureAccept(questId))
             EnsureAccept(questId);
 
-        int[] itemsToUnbank = quest.AcceptRequirements
-                                       .Concat(quest.Requirements)
-                                       .Select(x => x.ID)
-                                       .Distinct()
-                                       .ToArray();
+        // Combine all requirements into one list for reusability
+        var allRequirements = quest.AcceptRequirements.Concat(quest.Requirements).ToList();
 
-        Unbank(itemsToUnbank);
-
-        // Add the non-temp items to the drop pickup list
-        foreach (ItemBase item in quest.AcceptRequirements.Concat(quest.Requirements).Where(x => !x.Temp))
+        // Ensure that there are requirements to hunt
+        if (allRequirements.Count == 0)
         {
-            Bot.Drops.Add(item.ID);
+            Logger($"Quest {questId} has no requirements.");
+            return;
         }
 
-        for (int i = 0; i < quest.Requirements.Count; i++)
-        {
-            ItemBase requirement = quest.Requirements[i];
+        // Unbank the required items
+        var itemsToUnbank = allRequirements.Select(x => x.ID).Distinct().ToArray();
+        Unbank(itemsToUnbank);
 
+        // Add non-temp items to the drop list
+        Bot.Drops.Add(allRequirements
+            .Where(x => !x.Temp)
+            .Select(x => x.ID)
+            .Distinct()
+            .ToArray());
+
+        // Process each requirement for hunting
+        foreach (var requirement in quest.Requirements)
+        {
             // Use the provided map and monster names, or fall back to default values
             string huntMapName = mapName ?? Bot.Map.Name;
             string huntMonsterName = monsterName ?? "*";
 
-            HuntMonster(huntMapName, huntMonsterName, requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp, log);
+            HuntMonster(huntMapName, huntMonsterName, requirement.Name ?? "", requirement.Quantity, requirement.Temp, log);
         }
 
+        // Ensure quest completion if possible
         if (Bot.Quests.CanCompleteFullCheck(questId))
+        {
             EnsureCompleteMulti(questId);
+        }
     }
+
+    //Choose Variants - String
+
+    /// <summary>
+    /// Hunts monsters based on the requirements of a specified quest and an optional array of map and monster names. 
+    /// Always chooses a reward upon quest completion.
+    /// </summary>
+    /// <param name="questId">The ID of the quest to load requirements from.</param>
+    /// <param name="reward">The name of the reward to choose (if applicable).</param>
+    /// <param name="mapMonsterClassPairs">Array of tuples specifying map names, monster names, and class types.</param>
+    public void HuntMonsterQuestChoose(int questId, string? reward = null, params (string mapName, string monsterName, ClassType classType)[] mapMonsterClassPairs)
+    {
+        Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
+        if (quest == null)
+        {
+            Logger($"Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
+            return;
+        }
+
+        // Ensure quest.Requirements and quest.Rewards are not null or empty
+        if (quest.Requirements == null || quest.Requirements.Count == 0)
+        {
+            Logger($"Quest with ID [{questId}] has no requirements.", stopBot: true);
+            return;
+        }
+
+        if (quest.Rewards == null || quest.Rewards.Count == 0)
+        {
+            Logger($"Quest with ID [{questId}] has no rewards.", stopBot: true);
+            return;
+        }
+
+        // Combine quest.AcceptRequirements and quest.Requirements
+        var allRequirements = quest.AcceptRequirements.Concat(quest.Requirements).ToList();
+
+        // Add reward to itemsToUnbank if specified
+        if (!string.IsNullOrEmpty(reward))
+        {
+            allRequirements.AddRange(quest.Rewards
+                .Where(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase)));
+        }
+
+        // Unbank required items
+        var itemsToUnbank = allRequirements.Select(x => x.ID).Distinct().ToArray();
+        Unbank(itemsToUnbank);
+
+        // Add non-temp items to the drop pickup list
+        Bot.Drops.Add(allRequirements
+            .Where(x => x != null && !x.Temp)
+            .Select(x => x.Name)
+            .Distinct()
+            .ToArray());
+
+        // Ensure the quest is accepted if not in progress
+        if (!Bot.Quests.IsInProgress(questId))
+            EnsureAccept(questId);
+
+        // Auto-generate default map-monster-class pairs if not provided
+        if (mapMonsterClassPairs.Length == 0)
+        {
+            mapMonsterClassPairs = quest.Requirements
+                .Select(_ => ("default_map", "default_monster", ClassType.Solo))
+                .ToArray();
+        }
+        else if (mapMonsterClassPairs.Length > quest.Requirements.Count)
+        {
+            Logger($"Warning: More map-monster-class pairs provided than quest requirements. Extra pairs will be ignored.", stopBot: false);
+        }
+
+        // Process each map-monster-class pair
+        for (int i = 0; i < mapMonsterClassPairs.Length && i < quest.Requirements.Count; i++)
+        {
+            ItemBase requirement = quest.Requirements[i];
+            (string mapName, string monsterName, ClassType classType) = mapMonsterClassPairs[i];
+
+            if (CheckInventory(requirement.ID, requirement.Quantity))
+                continue;
+
+            // Equip the appropriate class and hunt the monster
+            EquipClass(classType);
+            HuntMonster(mapName ?? "default_map", monsterName ?? "*", requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp, log: false);
+        }
+
+        // Complete the quest, retrying if necessary
+        if (!Bot.Quests.EnsureComplete(questId))
+        {
+            EnsureCompleteMulti(
+                questId,
+                reward != null
+                    ? quest.Rewards.FirstOrDefault(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase))?.ID ?? -1
+                    : -1
+            );
+        }
+    }
+
+    /// <summary>
+    /// Hunts monsters based on the requirements of a specified quest with optional map, monster names, and class types. 
+    /// Always chooses a reward upon quest completion.
+    /// </summary>
+    /// <param name="questId">The ID of the quest to load requirements from.</param>
+    /// <param name="reward">The name of the reward to choose (if applicable).</param>
+    /// <param name="mapName">An optional map name for the hunt.</param>
+    /// <param name="monsterName">An optional monster name for the hunt.</param>
+    /// <param name="log">Whether to log the hunting process.</param>
+    public void HuntMonsterQuestChoose(int questId, string? reward = null, string? mapName = null, string? monsterName = null, bool log = false)
+    {
+        Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
+        if (quest == null)
+        {
+            Logger($"Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
+            return;
+        }
+
+        // Ensure quest.Requirements and quest.Rewards are not null or empty
+        if (quest.Requirements == null || quest.Requirements.Count == 0)
+        {
+            Logger($"Quest with ID [{questId}] has no requirements.", stopBot: true);
+            return;
+        }
+
+        if (quest.Rewards == null || quest.Rewards.Count == 0)
+        {
+            Logger($"Quest with ID [{questId}] has no rewards.", stopBot: true);
+            return;
+        }
+
+        // Combine quest.AcceptRequirements and quest.Requirements
+        var allRequirements = quest.AcceptRequirements.Concat(quest.Requirements).ToList();
+
+        // Add reward to itemsToUnbank if specified
+        if (!string.IsNullOrEmpty(reward))
+        {
+            allRequirements.AddRange(quest.Rewards
+                .Where(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase)));
+        }
+
+        // Unbank required items
+        var itemsToUnbank = allRequirements.Select(x => x.ID).Distinct().ToArray();
+        Unbank(itemsToUnbank);
+
+        // Add non-temp items to the drop pickup list
+        Bot.Drops.Add(allRequirements
+            .Where(x => x != null && !x.Temp)
+            .Select(x => x.Name)
+            .Distinct()
+            .ToArray());
+
+        // Ensure the quest is accepted if not in progress
+        if (!Bot.Quests.IsInProgress(questId))
+            EnsureAccept(questId);
+
+        // Auto-generate default map-monster-class pairs if not provided
+        if (string.IsNullOrEmpty(mapName) || string.IsNullOrEmpty(monsterName))
+        {
+            mapName ??= "default_map";
+            monsterName ??= "*";
+        }
+
+        // Process each requirement
+        for (int i = 0; i < quest.Requirements.Count; i++)
+        {
+            ItemBase requirement = quest.Requirements[i];
+
+            // Skip if the required item is already in inventory
+            if (CheckInventory(requirement.ID, requirement.Quantity))
+                continue;
+
+            // Equip the appropriate class and hunt the monster
+            EquipClass(ClassType.Solo); // Default class, can be adjusted if needed
+            HuntMonster(mapName, monsterName, requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp, log);
+        }
+
+        // Complete the quest, retrying if necessary
+        if (!Bot.Quests.EnsureComplete(questId))
+        {
+            EnsureCompleteMulti(
+                questId,
+                reward != null
+                    ? quest.Rewards.FirstOrDefault(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase))?.ID ?? -1
+                    : -1
+            );
+        }
+    }
+
+    //Choose Variants - Int
+
+    /// <summary>
+    /// Hunts monsters based on the requirements of a specified quest and an optional array of map and monster names. 
+    /// Always chooses a reward by its ID upon quest completion.
+    /// </summary>
+    /// <param name="questId">The ID of the quest to load requirements from.</param>
+    /// <param name="rewardId">The ID of the reward to choose (if applicable).</param>
+    /// <param name="mapMonsterClassPairs">Array of tuples specifying map names, monster names, and class types.</param>
+    public void HuntMonsterQuestChoose(int questId, int rewardId, params (string mapName, string monsterName, ClassType classType)[] mapMonsterClassPairs)
+    {
+        Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
+        if (quest == null)
+        {
+            Logger($"Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
+            return;
+        }
+
+        // Ensure quest.Requirements and quest.Rewards are not null or empty
+        if (quest.Requirements == null || quest.Requirements.Count == 0)
+        {
+            Logger($"Quest with ID [{questId}] has no requirements.", stopBot: true);
+            return;
+        }
+
+        if (quest.Rewards == null || quest.Rewards.Count == 0)
+        {
+            Logger($"Quest with ID [{questId}] has no rewards.", stopBot: true);
+            return;
+        }
+
+        // Combine quest.AcceptRequirements and quest.Requirements
+        var allRequirements = quest.AcceptRequirements.Concat(quest.Requirements).ToList();
+
+        // Add reward to itemsToUnbank if specified
+        if (rewardId > 0)
+        {
+            allRequirements.AddRange(quest.Rewards
+                .Where(x => x.ID == rewardId));
+        }
+
+        // Unbank required items
+        var itemsToUnbank = allRequirements.Select(x => x.ID).Distinct().ToArray();
+        Unbank(itemsToUnbank);
+
+        // Add non-temp items to the drop pickup list
+        Bot.Drops.Add(allRequirements
+            .Where(x => x != null && !x.Temp)
+            .Select(x => x.Name)
+            .Distinct()
+            .ToArray());
+
+        // Ensure the quest is accepted if not in progress
+        if (!Bot.Quests.IsInProgress(questId))
+            EnsureAccept(questId);
+
+        // Auto-generate default map-monster-class pairs if not provided
+        if (mapMonsterClassPairs.Length == 0)
+        {
+            mapMonsterClassPairs = quest.Requirements
+                .Select(_ => ("default_map", "default_monster", ClassType.Solo))
+                .ToArray();
+        }
+        else if (mapMonsterClassPairs.Length > quest.Requirements.Count)
+        {
+            Logger($"Warning: More map-monster-class pairs provided than quest requirements. Extra pairs will be ignored.", stopBot: false);
+        }
+
+        // Process each map-monster-class pair
+        for (int i = 0; i < mapMonsterClassPairs.Length && i < quest.Requirements.Count; i++)
+        {
+            ItemBase requirement = quest.Requirements[i];
+            (string mapName, string monsterName, ClassType classType) = mapMonsterClassPairs[i];
+
+            if (CheckInventory(requirement.ID, requirement.Quantity))
+                continue;
+
+            // Equip the appropriate class and hunt the monster
+            EquipClass(classType);
+            HuntMonster(mapName ?? "default_map", monsterName ?? "*", requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp, log: false);
+        }
+
+        // Complete the quest, retrying if necessary
+        if (!Bot.Quests.EnsureComplete(questId))
+        {
+            EnsureCompleteMulti(
+                questId,
+                rewardId > 0
+                    ? quest.Rewards.FirstOrDefault(x => x.ID == rewardId)?.ID ?? -1
+                    : -1
+            );
+        }
+    }
+
+    /// <summary>
+    /// Hunts monsters based on the requirements of a specified quest with optional map, monster names, and class types. 
+    /// Always chooses a reward by its ID upon quest completion.
+    /// </summary>
+    /// <param name="questId">The ID of the quest to load requirements from.</param>
+    /// <param name="rewardId">The ID of the reward to choose (if applicable).</param>
+    /// <param name="mapName">An optional map name for the hunt.</param>
+    /// <param name="monsterName">An optional monster name for the hunt.</param>
+    /// <param name="log">Whether to log the hunting process.</param>
+    public void HuntMonsterQuestChoose(int questId, int rewardId, string? mapName = null, string? monsterName = null, bool log = false)
+    {
+        Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
+        if (quest == null)
+        {
+            Logger($"Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
+            return;
+        }
+
+        // Ensure quest.Requirements and quest.Rewards are not null or empty
+        if (quest.Requirements == null || quest.Requirements.Count == 0)
+        {
+            Logger($"Quest with ID [{questId}] has no requirements.", stopBot: true);
+            return;
+        }
+
+        if (quest.Rewards == null || quest.Rewards.Count == 0)
+        {
+            Logger($"Quest with ID [{questId}] has no rewards.", stopBot: true);
+            return;
+        }
+
+        // Combine quest.AcceptRequirements and quest.Requirements
+        var allRequirements = quest.AcceptRequirements.Concat(quest.Requirements).ToList();
+
+        // Add reward to itemsToUnbank if specified
+        if (rewardId > 0)
+        {
+            allRequirements.AddRange(quest.Rewards
+                .Where(x => x.ID == rewardId));
+        }
+
+        // Unbank required items
+        var itemsToUnbank = allRequirements.Select(x => x.ID).Distinct().ToArray();
+        Unbank(itemsToUnbank);
+
+        // Add non-temp items to the drop pickup list
+        Bot.Drops.Add(allRequirements
+            .Where(x => x != null && !x.Temp)
+            .Select(x => x.Name)
+            .Distinct()
+            .ToArray());
+
+        // Ensure the quest is accepted if not in progress
+        if (!Bot.Quests.IsInProgress(questId))
+            EnsureAccept(questId);
+
+        // Auto-generate default map-monster-class pairs if not provided
+        if (string.IsNullOrEmpty(mapName) || string.IsNullOrEmpty(monsterName))
+        {
+            mapName ??= "default_map";
+            monsterName ??= "*";
+        }
+
+        // Process each requirement
+        for (int i = 0; i < quest.Requirements.Count; i++)
+        {
+            ItemBase requirement = quest.Requirements[i];
+
+            // Skip if the required item is already in inventory
+            if (CheckInventory(requirement.ID, requirement.Quantity))
+                continue;
+
+            // Equip the appropriate class and hunt the monster
+            EquipClass(ClassType.Solo); // Default class, can be adjusted if needed
+            HuntMonster(mapName, monsterName, requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp, log);
+        }
+
+        // Complete the quest, retrying if necessary
+        if (!Bot.Quests.EnsureComplete(questId))
+        {
+            EnsureCompleteMulti(
+                questId,
+                rewardId > 0
+                    ? quest.Rewards.FirstOrDefault(x => x.ID == rewardId)?.ID ?? -1
+                    : -1
+            );
+        }
+    }
+
+    /* Examples:
+        HuntMonsterQuest (with params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs):
+            HuntMonsterQuest(101, ("Map1", "MonsterA", ClassType.Solo), ("Map2", "MonsterB", ClassType.Solo));
+
+        HuntMonsterQuest (with optional mapName, monsterName, and log):
+            HuntMonsterQuest(102, mapName: "Map3", monsterName: "MonsterC", log: true);
+
+        HuntMonsterQuestChoose (with reward and params (string mapName, string monsterName, ClassType classType)[] mapMonsterClassPairs):
+            HuntMonsterQuestChoose(103, "RewardA", ("Map1", "MonsterA", ClassType.Solo), ("Map2", "MonsterB", ClassType.Solo));
+
+        HuntMonsterQuestChoose (with optional mapName, monsterName, and log):
+            HuntMonsterQuestChoose(104, "RewardB", mapName: "Map4", monsterName: "MonsterD", log: false);
+
+        HuntMonsterQuestChoose (with rewardId and params (string mapName, string monsterName, ClassType classType)[] mapMonsterClassPairs):
+            HuntMonsterQuestChoose(105, 201, ("Map1", "MonsterA", ClassType.Solo), ("Map2", "MonsterB", ClassType.Solo));
+
+        HuntMonsterQuestChoose (with rewardId, mapName, monsterName, and log):
+            HuntMonsterQuestChoose(106, 202, mapName: "Map5", monsterName: "MonsterE", log: true);
+    */
 
     /// <summary>
     /// Kill Escherion for the desired item
