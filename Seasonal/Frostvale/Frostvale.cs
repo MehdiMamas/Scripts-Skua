@@ -312,13 +312,13 @@ public class Frostvale
         Story.KillQuest(2578, "icerise", "Polar Golem");
 
         // Uncovering Pages Of The Past
-        Story.KillQuest(2579, "icerise", new[] { "Polar Golem", "Polar Elemental", "Arctic Direwolf" });
+        Story.KillQuest(2579, "icerise", new[] { "Polar Golem", "Polar Elemental", "Arctic DireWolf" });
 
         // We Know Where To Look
-        Story.KillQuest(2580, "icerise", new[] { "Polar Golem", "Polar Elemental", "Arctic Direwolf" });
+        Story.KillQuest(2580, "icerise", new[] { "Polar Golem", "Polar Elemental", "Arctic DireWolf" });
 
         // A Terrible Hiding Place
-        Story.KillQuest(2581, "icerise", "Arctic Direwolf");
+        Story.KillQuest(2581, "icerise", "Arctic DireWolf");
 
         // Face Kezeroth!
         Story.KillQuest(2582, "icerise", "Kezeroth");
@@ -559,7 +559,7 @@ public class Frostvale
         // Monster Gems  7856 && Mega Monster Gems 7857
         if (!Bot.Quests.IsUnlocked(7858))
         {
-            Core.EnsureAcceptmultiple( new[] { 7856, 7857 });
+            Core.EnsureAcceptmultiple(new[] { 7856, 7857 });
             Core.KillMonster("winterhorror", "Enter", "Spawn", "*", "Monster Gem", 5);
             Core.EnsureComplete(7856);
             Core.KillMonster("winterhorror", "Enter", "Spawn", "*", "Mega Monster Gem", 3);
@@ -1133,7 +1133,7 @@ public class Frostvale
         // 8446 and 8447 => Sluagh Medals && Mega Sluagh Medals
         if (!Core.isCompletedBefore(8448))
         {
-            Core.EnsureAcceptmultiple( new[] { 8446, 8447 });
+            Core.EnsureAcceptmultiple(new[] { 8446, 8447 });
             Core.HuntMonster("otziwar", "Sluagh Warrior", "Sluagh Medals", 5);
             Core.EnsureComplete(8446);
             Core.HuntMonster("otziwar", "Sluagh Warrior", "Mega Sluagh Medals", 3);
