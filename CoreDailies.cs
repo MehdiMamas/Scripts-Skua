@@ -105,8 +105,10 @@ public class CoreDailies
         // Check if the daily quest is complete
         if (Bot.Quests.IsDailyComplete(quest))
         {
-            Quest Q = Bot.Quests.EnsureLoad(quest);
-            Core.Logger($"{Q.Name}[{Q.ID}] is not available right now");
+            Quest? Q = Bot.Quests.EnsureLoad(quest);
+            if (Q != null)
+                Core.Logger($"{Q.Name}[{Q.ID}] is already completed");
+            Core.Logger($"Quest {quest} can't be loaded");
             return false;
         }
 
