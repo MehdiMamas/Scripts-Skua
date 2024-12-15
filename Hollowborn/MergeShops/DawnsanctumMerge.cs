@@ -132,8 +132,7 @@ public class DawnsanctumMerge
                 case "Vindicator Beast Tamer":
                 case "Vindicator Assassin":
                     VindicatorCrest(20);
-                    // Adv.BuyItem("dawnsanctum", 2505, "Gold Voucher 25k", 4);
-                    Adv.BuyItem("dawnsanctum", 2505, req.Name);
+                    Adv.BuyItem("dawnsanctum", 2474, req.Name);
                     break;
 
                 case "Vindicator Assassin Mask":
