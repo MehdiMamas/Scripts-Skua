@@ -71,51 +71,34 @@ public class CoreDailies
 
 
     /// <summary>
-    /// Checks if a daily, weekly, or monthly quest is complete, manages items, and updates the drop list.
+    /// Manages the state of a specified quest by checking completion status, inventory, and bank items,
+    /// handling item unbanking, and updating the drop list accordingly.
     /// </summary>
     /// <param name="quest">The ID of the quest to check.</param>
     /// <param name="any">
-    /// If true, the method stops and returns false after the first item at max stack is found. 
-    /// If false, the method checks all items before returning.
+    /// If true, stops processing as soon as any item reaches its maximum stack. Otherwise, processes all items.
     /// </param>
     /// <param name="shouldUnBank">
-    /// Indicates whether items should be unbanked. If true, items missing from the inventory 
-    /// but present in the bank will be moved from the bank.
+    /// If true, attempts to retrieve missing items from the bank to the inventory.
     /// </param>
-    /// <param name="items">
-    /// A list of item names to check for in the inventory or bank. Items will also be added to 
-    /// the drop grabber if not already at max stack.
-    /// </param>
+    /// <param name="items">The list of item names to verify or add to the drop list.</param>
     /// <returns>
-    /// Returns true if the quest is not completed and the items have been added to the drop list. 
-    /// Returns false if the quest is complete or if all the provided items are already at max stack 
-    /// (when <paramref name="any"/> is set to true).
+    /// True if the quest is incomplete and relevant items are added to the drop list; 
+    /// false if the quest is already complete or all items are at max stack (when <paramref name="any"/> is true).
     /// </returns>
-    /// <remarks>
-    /// This method checks whether a daily, weekly, or monthly quest is already completed. If it is, 
-    /// it logs a message and returns false. If the quest is not completed, it checks for the specified 
-    /// items in the inventory and bank. Items at max stack are skipped, and if <paramref name="any"/> 
-    /// is true, the method stops checking after finding the first such item. If <paramref name="shouldUnBank"/> 
-    /// is true, items missing from the inventory but present in the bank are unbanked. Finally, the method 
-    /// handles special quests such as LOO dailies and Doom Spins by adding relevant rewards to the drop list, 
-    /// and it also ensures that quest requirements are added to the drop list.
-    /// </remarks>
     public bool CheckDailyv2(int quest, bool any = true, bool shouldUnBank = true, params string[] items)
     {
         // Check if the daily quest is complete
         if (Bot.Quests.IsDailyComplete(quest))
         {
-            Quest? Q = Bot.Quests.EnsureLoad(quest);
-            if (Q != null)
-                Core.Logger($"{Q.Name}[{Q.ID}] is already completed");
-            Core.Logger($"Quest {quest} can't be loaded");
+            Core.Logger("Daily/Weekly/Monthly quest not available right now");
             return false;
         }
-
+        
         // Handle the item checks and drop additions
-        if (items == null || items.Length == 0)
         {
-            return true;
+            if (items == null || items.Length == 0)
+                return true;
         }
 
         var invBank = Bot.Inventory.Items.Concat(Bot.Bank.Items)
@@ -137,10 +120,7 @@ public class CoreDailies
 
             // Unbanking logic if shouldUnBank is true
             if (shouldUnBank && _item == null)
-            {
                 Core.Unbank(item);
-                Core.Logger($"Unbanked item: {item}");
-            }
         }
 
         if (!any && maxCount == items.Length)
@@ -635,7 +615,7 @@ public class CoreDailies
 
     public void MonthlyTreasureChestKeys()
     {
-        if (!Core.IsMember || !CheckDailyv2(1239) || !Core.CheckInventory("Treasure Chest"))
+        if (!Core.IsMember || !Core.CheckInventory("Treasure Chest"))
             return;
 
         Core.Logger("Montly: Treasure Chest Keys");
@@ -664,9 +644,6 @@ public class CoreDailies
 
     public void WheelofDoom()
     {
-        if (!Core.IsMember || !CheckDailyv2(3075) || !Core.CheckInventory("Gear of Doom", 3))
-            return;
-
         Core.Logger($"{(Core.IsMember ? "Daily" : "Weekly")}: Wheel of Doom");
         List<string> PreQuestInv = Bot.Inventory.Items.Where(x => x != null && x.Name != null).Select(x => x.Name).ToList();
 
@@ -679,7 +656,7 @@ public class CoreDailies
         Bot.Wait.ForPickup("*");
 
         string[] Array = Bot.Inventory.Items.Where(x => x != null && x.Name != null).Select(x => x.Name).ToList().Except(PreQuestInv).ToArray();
-        if (Array.Length == 0)
+        if (Array.Length <= 0)
             return;
 
         Core.Logger("New items: " + string.Join(" | ", Array));
