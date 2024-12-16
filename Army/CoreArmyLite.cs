@@ -1077,6 +1077,10 @@ public class CoreArmyLite
 
         Bot.Send.Packet($"%xt%zm%house%1%{Core.Username()}%");
         Bot.Wait.ForMapLoad("house");
+        Core.Sleep();
+        if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
+            Bot.Bank.Open();
+        Bot.Bank.Load();
 
         Core.ReadCBO();
         Core.IsMember = Bot.Player.IsMember;
