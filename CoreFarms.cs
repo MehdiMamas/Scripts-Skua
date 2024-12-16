@@ -2495,7 +2495,7 @@ public class CoreFarms
         Core.ToggleAggro(true);
     }
 
-    void RunDeathPitBrawl(string item = "Death Pit Token", int quant = 1, int rank = 10)
+    void RunDeathPitBrawl(string item = "Death Pit Token", int quant = 1, int rank = 10, bool canSoloBoss = true)
     {
         foreach (int QID in new[] { 5156, 5157, 5165 })
         {
@@ -2503,6 +2503,8 @@ public class CoreFarms
                 Core.RegisterQuests(QID);
         }
 
+        canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool KillAds);
+        Core.Logger($"Kill Additional mobs (more trophies - slower depending on gear): {KillAds}");
         int ExitAttempt = 1;
         int Death = 1;
 
@@ -2522,214 +2524,66 @@ public class CoreFarms
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
             Core.PvPMove(4, "Morale0B", 936, 397);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.Logger($"Move: {Move++}");
             Core.PvPMove(7, "Morale0A", 946, 394);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.Logger($"Move: {Move++}");
             Core.PvPMove(9, "Crosslower", 948, 400);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.Logger($"Move: {Move++}");
             Core.PvPMove(14, "Crossupper", 903, 324);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.Logger($"Move: {Move++}");
             Core.PvPMove(18, "Resource1A", 482, 295);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.Logger($"Move: {Move++}, Restorers");
 
-
-            foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
+            if (KillAds == true)
             {
-                bool ded = false;
-                Bot.Events.MonsterKilled += b => ded = true;
-                while (!Bot.ShouldExit && !ded)
-                {
-                    if (!Bot.Player.Alive)
-                        goto RestartOnDeath;
-                    if (!Bot.Combat.StopAttacking)
-                        Bot.Combat.Attack(MID);
-                    Core.Sleep();
-                }
-                Bot.Combat.CancelTarget();
-
-                if (Core.CheckInventory(item, quant) && FactionRank("Death Pit Brawl") >= rank)
-                {
-                    Core.Join("battleon");
-                    return;
-                }
-
+                Core.PVPKilling();
                 if (!Bot.Player.Alive)
                     goto RestartOnDeath;
             }
 
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
             Core.PvPMove(20, "Resource1B", 938, 400);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.Logger($"Move: {Move++}, Restorers room 2");
 
-            foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
+            if (KillAds == true)
             {
-                bool ded = false;
-                Bot.Events.MonsterKilled += b => ded = true;
-                while (!Bot.ShouldExit && !ded)
-                {
-                    if (!Bot.Player.Alive)
-                        goto RestartOnDeath;
-                    if (!Bot.Combat.StopAttacking)
-                        Bot.Combat.Attack(MID);
-                    Core.Sleep();
-                }
-
-                if (Core.CheckInventory(item, quant) && FactionRank("Death Pit Brawl") >= rank)
-                {
-                    Core.Join("battleon");
-                    return;
-                }
+                Core.PVPKilling();
                 if (!Bot.Player.Alive)
                     goto RestartOnDeath;
             }
 
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
             Core.PvPMove(21, "Resource1A", 9, 435);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.Logger($"Move: {Move++}");
             Core.PvPMove(19, "Crossupper", 461, 315);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.Logger($"Move: {Move++}");
             Core.PvPMove(17, "Crosslower", 54, 339);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.Logger($"Move: {Move++}");
             Core.PvPMove(15, "Morale1A", 522, 286);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.Logger($"Move: {Move++}, Velm's Brawler");
 
-            foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
+            if (KillAds == true)
             {
-                bool ded = false;
-                Bot.Events.MonsterKilled += b => ded = true;
-                while (!Bot.ShouldExit && !ded)
-                {
-                    if (!Bot.Player.Alive)
-                        goto RestartOnDeath;
-                    if (!Bot.Combat.StopAttacking)
-                        Bot.Combat.Attack(MID);
-                    Core.Sleep();
-                }
-                Bot.Combat.CancelTarget();
-
-                if (Core.CheckInventory(item, quant) && FactionRank("Death Pit Brawl") >= rank)
-                {
-                    Core.Join("battleon");
-                    return;
-                }
+                Core.PVPKilling();
                 if (!Bot.Player.Alive)
                     goto RestartOnDeath;
             }
 
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
             Core.PvPMove(23, "Morale1B", 948, 403);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.Logger($"Move: {Move++}, Velm's Brawler");
 
-            foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
+            if (KillAds == true)
             {
-                bool ded = false;
-                Bot.Events.MonsterKilled += b => ded = true;
-                while (!Bot.ShouldExit && !ded)
-                {
-                    if (!Bot.Player.Alive)
-                        goto RestartOnDeath;
-                    if (!Bot.Combat.StopAttacking)
-                        Bot.Combat.Attack(MID);
-                    Core.Sleep();
-                }
-                Bot.Combat.CancelTarget();
-
-                if (Core.CheckInventory(item, quant) && FactionRank("Death Pit Brawl") >= rank)
-                {
-                    Core.Join("battleon");
-                    return;
-                }
+                Core.PVPKilling();
                 if (!Bot.Player.Alive)
                     goto RestartOnDeath;
             }
 
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
             Core.PvPMove(25, "Morale1C", 945, 397);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.Logger($"Move: {Move++}, Velm's Brawler");
 
-            foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
+            if (KillAds == true)
             {
-                bool ded = false;
-                Bot.Events.MonsterKilled += b => ded = true;
-                while (!Bot.ShouldExit && !ded)
-                {
-                    if (!Bot.Player.Alive)
-                        goto RestartOnDeath;
-                    if (!Bot.Combat.StopAttacking)
-                        Bot.Combat.Attack(MID);
-                    Core.Sleep();
-                }
-                Bot.Combat.CancelTarget();
-
-                if (Core.CheckInventory(item, quant) && FactionRank("Death Pit Brawl") >= rank)
-                {
-                    Core.Join("battleon");
-                    return;
-                }
+                Core.PVPKilling();
                 if (!Bot.Player.Alive)
                     goto RestartOnDeath;
             }
 
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
             Core.PvPMove(28, "Captain1", 943, 404);
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            Core.Logger($"Move: {Move++}, General Velm (B)");
 
-            foreach (Monster MID in Bot.Monsters.CurrentAvailableMonsters.Where(x => Core.IsMonsterAlive(x)))
+            if (KillAds == true)
             {
-                bool ded = false;
-                Bot.Events.MonsterKilled += b => ded = true;
-                while (!Bot.ShouldExit && !ded)
-                {
-                    if (!Bot.Player.Alive)
-                        goto RestartOnDeath;
-                    if (!Bot.Combat.StopAttacking)
-                        Bot.Combat.Attack(MID);
-                    Core.Sleep();
-                }
-                Bot.Combat.CancelTarget();
-
-                if (Core.CheckInventory(item, quant) && FactionRank("Death Pit Brawl") >= rank)
-                {
-                    Core.Join("battleon");
-                    return;
-                }
+                Core.PVPKilling();
                 if (!Bot.Player.Alive)
                     goto RestartOnDeath;
             }
 
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
             Core.Sleep(5000);
 
             Bot.Wait.ForDrop(item, 40);
@@ -2744,26 +2598,31 @@ public class CoreFarms
 
 
             Exit:
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
                 Core.Logger($"Attempting Exit {ExitAttempt++}.");
-                Bot.Map.Join("battleon-999999");
                 Bot.Combat.CancelTarget();
                 Bot.Wait.ForCombatExit();
+                Core.Jump(Bot.Player.Cell, Bot.Player.Pad);
+                Bot.Map.Join("battleon-999999", autoCorrect: false);
                 Core.Sleep(1500);
                 if (Bot.Map.Name != "battleon")
                     Core.Logger("Failed!? HOW.. try agian");
-                else Core.Logger("Successful!");
-                goto Start;
+                else
+                {
+                    Core.Logger("Successful!");
+                    ExitAttempt = 0;
+                    goto Start;
+                }
             }
 
         RestartOnDeath:
-            Core.Logger($"Death: {Death++}, resetting");
-            while (!Bot.ShouldExit && !Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
+            Core.Logger($"Death Exit Attempt: {Death++}, resetting");
+            while (!Bot.ShouldExit)
             {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
-                Bot.Wait.ForCellChange("Enter0");
-                Core.Logger($"Attempting Exit {ExitAttempt++}.");
+                Core.Logger($"Attempting Death Exit {Death++}.");
                 Bot.Map.Join("battleon-999999");
                 Bot.Wait.ForMapLoad("battleon");
                 Core.Sleep(1500);
@@ -2772,6 +2631,7 @@ public class CoreFarms
                 else
                 {
                     Core.Logger("Successful!");
+                    Death = 0;
                     goto Start;
                 }
             }
