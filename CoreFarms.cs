@@ -2577,12 +2577,9 @@ public class CoreFarms
 
             Core.PvPMove(28, "Captain1", 943, 404);
 
-            if (KillAds == true)
-            {
-                Core.PVPKilling();
-                if (!Bot.Player.Alive)
-                    goto RestartOnDeath;
-            }
+            Core.PVPKilling();
+            if (!Bot.Player.Alive)
+                goto RestartOnDeath;
 
             Core.Sleep(5000);
 
