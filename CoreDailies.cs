@@ -94,7 +94,7 @@ public class CoreDailies
             Core.Logger("Daily/Weekly/Monthly quest not available right now");
             return false;
         }
-        
+
         // Handle the item checks and drop additions
         {
             if (items == null || items.Length == 0)
@@ -646,12 +646,12 @@ public class CoreDailies
     {
         Core.Logger($"{(Core.IsMember ? "Daily" : "Weekly")}: Wheel of Doom");
         List<string> PreQuestInv = Bot.Inventory.Items.Where(x => x != null && x.Name != null).Select(x => x.Name).ToList();
-
+        ItemBase GoD = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == "Gear of Doom");
         if (Core.IsMember && CheckDailyv2(3075))
             Core.ChainComplete(3075);
-
-        if (Core.CheckInventory("Gear of Doom", 3))
-            Core.ChainComplete(3076);
+        if (GoD == null || GoD.Quantity < 3)
+            Core.Logger($"Gear of Doom: {(GoD?.Quantity > 0 ? GoD?.Quantity : 0)}/3");
+        else Core.ChainComplete(3076);
 
         Bot.Wait.ForPickup("*");
 
