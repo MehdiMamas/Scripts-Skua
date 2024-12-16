@@ -646,7 +646,7 @@ public class CoreDailies
     {
         Core.Logger($"{(Core.IsMember ? "Daily" : "Weekly")}: Wheel of Doom");
         List<string> PreQuestInv = Bot.Inventory.Items.Where(x => x != null && x.Name != null).Select(x => x.Name).ToList();
-        ItemBase GoD = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == "Gear of Doom");
+        ItemBase? GoD = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == "Gear of Doom");
         if (Core.IsMember && CheckDailyv2(3075))
             Core.ChainComplete(3075);
         if (GoD == null || GoD.Quantity < 3)
