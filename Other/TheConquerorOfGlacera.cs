@@ -39,7 +39,9 @@ public class TheConquerorOfGlacera
         Core.EnsureAccept(9492);
 
         Core.AddDrop("Rime Token", "Glaceran Gem", "Ice Chunk", "Glaceran Attunement");
-
+        
+        Core.EquipClass(ClassType.Farm);
+        
         // Rime Token
         Core.KillMonster("battlegroundd", "r2", "Left", "*", "Rime Token", 200, false);
 
@@ -76,11 +78,12 @@ public class TheConquerorOfGlacera
         }
 
         // Ice Chunk
-        Core.HuntMonster("northmountain", "Ice Elemental", "Ice Chunk", 600, false);
+        Core.KillMonster("northmountain", "r3", "Left", "*", "Ice Chunk", 600, false);
 
         // Glaceran Attunement
         FSR.GlaceranAttunement(10);
 
+        Core.EquipClass(ClassType.Farm);
         Core.Unbank("Rime Token", "Glaceran Gem", "Ice Chunk", "Glaceran Attunement");
 
         Core.EnsureComplete(9492);
