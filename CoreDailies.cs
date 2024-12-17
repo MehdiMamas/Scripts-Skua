@@ -647,13 +647,16 @@ public class CoreDailies
         // Fetch Gear of Doom from Inventory and Bank
         ItemBase? GoD = Bot.Inventory.Items.Concat(Bot.Bank.Items)
             .FirstOrDefault(x => x?.Name == "Gear of Doom");
+            
+        ItemBase? TP = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+            .FirstOrDefault(x => x?.Name == "Treasure Potion");
 
         // Log Gear of Doom progress
-        Core.Logger($"Gear of Doom: {GoD?.Quantity ?? 0}/3 | " +
+        Bot.Log($"Wheel of Doom\n" +
+            $"Gear of Doom: {GoD?.Quantity ?? 0}/3 | Treasure Potion: {TP?.Quantity ?? 0}\n" +
             $"{(Core.IsMember
                 ? $"Daily: {(CheckDailyv2(3075) ? "✅" : "❌")} | Weekly: {(CheckDailyv2(3076) ? "✅" : "❌")}"
-                : $"Weekly: {(CheckDailyv2(3076) ? "✅" : "❌")}")}",
-            "Wheel of Doom");
+                : $"Weekly: {(CheckDailyv2(3076) ? "✅" : "❌")}")}");
 
 
         // Snapshot inventory before completing quests
