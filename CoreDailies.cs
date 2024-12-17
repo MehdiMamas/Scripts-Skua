@@ -644,24 +644,47 @@ public class CoreDailies
 
     public void WheelofDoom()
     {
-        Core.Logger($"{(Core.IsMember ? "Daily" : "Weekly")}: Wheel of Doom");
-        List<string> PreQuestInv = Bot.Inventory.Items.Where(x => x != null && x.Name != null).Select(x => x.Name).ToList();
-        ItemBase? GoD = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == "Gear of Doom");
+        // Fetch Gear of Doom from Inventory and Bank
+        ItemBase? GoD = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+            .FirstOrDefault(x => x?.Name == "Gear of Doom");
+
+        // Log Gear of Doom progress
+        Core.Logger($"Gear of Doom: {GoD?.Quantity ?? 0}/3 | " +
+            $"{(Core.IsMember
+                ? $"Daily: {(CheckDailyv2(3075) ? "✅" : "❌")} | Weekly: {(CheckDailyv2(3076) ? "✅" : "❌")}"
+                : $"Weekly: {(CheckDailyv2(3076) ? "✅" : "❌")}")}",
+            "Wheel of Doom");
+
+
+        // Snapshot inventory before completing quests
+        List<int> PreQuestInv = Bot.Inventory.Items
+            .Where(x => x != null && x.ID > 0)
+            .Select(x => x.ID)
+            .ToList();
+
+        // Complete Daily Quest (3075) if eligible
         if (Core.IsMember && CheckDailyv2(3075))
             Core.ChainComplete(3075);
-        if (GoD == null || GoD.Quantity < 3)
-            Core.Logger($"Gear of Doom: {(GoD?.Quantity > 0 ? GoD?.Quantity : 0)}/3");
-        else Core.ChainComplete(3076);
+
+        // Complete Weekly Quest (3076) if eligible
+        if (Core.CheckInventory("Gear of Doom", 3) && CheckDailyv2(3076))
+            Core.ChainComplete(3076);
 
         Bot.Wait.ForPickup("*");
 
-        string[] Array = Bot.Inventory.Items.Where(x => x != null && x.Name != null).Select(x => x.Name).ToList().Except(PreQuestInv).ToArray();
-        if (Array.Length <= 0)
+        // Check for new items added to the inventory
+        List<InventoryItem> NewItems = Bot.Inventory.Items
+            .Where(x => x != null && x.ID > 0 && !PreQuestInv.Contains(x.ID))
+            .ToList();
+
+        if (NewItems.Count <= 0)
             return;
 
-        Core.Logger("New items: " + string.Join(" | ", Array));
-        Core.ToBank(Array);
+        // Log and move new items to bank
+        Core.Logger("New items: " + string.Join(" | ", NewItems.Select(x => x.Name)));
+        Core.ToBank(NewItems.Select(x => x.ID).ToArray());
     }
+
 
     public void NSoDDaily(bool IgnoreSwords = true)
     {
