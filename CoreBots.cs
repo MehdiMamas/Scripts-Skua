@@ -2392,8 +2392,10 @@ public class CoreBots
             return false;
         }
 
-        // Bot.Wait.ForTrue(() => questData != null, 20);
+        if (!Bot.Drops.ToPickupIDs.Contains(itemID) && itemID > 0)
+            Bot.Drops.Add(itemID);
 
+        // Bot.Wait.ForTrue(() => questData != null, 20);
         if (questData != null && questData.Requirements != null
                         && (!questData.Requirements.Any()
                         || questData.Requirements.All(r => r != null && r.ID > 0)
