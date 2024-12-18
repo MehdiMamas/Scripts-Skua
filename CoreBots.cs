@@ -908,8 +908,13 @@ public class CoreBots
     /// </remarks>
     public void ToBank(params string[] items)
     {
-        if (items == null || !items.Any(x => x != null))
+        if (items == null ||
+        !items.Any(x => !string.IsNullOrEmpty(x)) ||
+        Bot.Inventory.Items.Any(item => Bot.Inventory.IsEquipped(item.Name)) ||
+        Bot.House.Items.Any(item => Bot.House.IsEquipped(item.Name)))
+        {
             return;
+        }
 
         JumpWait();
 
@@ -1045,8 +1050,9 @@ public class CoreBots
 
         foreach (int item in items)
         {
-            if (item == 0)
+            if (item == 0 || Bot.House.Items.Any(x => x.ID == item && x.Equipped))
                 continue;
+
             if (Bot.House.IsEquipped(item))
             {
                 Logger("Can't bank an equipped item");
@@ -1079,8 +1085,14 @@ public class CoreBots
     /// </remarks>
     public void ToBank(params int[] items)
     {
-        if (items == null || !items.Any(x => x > 0))
+        if (items == null ||
+        !items.Any(x => x > 0) ||
+        Bot.Inventory.Items.Any(item => Bot.Inventory.IsEquipped(item.ID)) ||
+        Bot.House.Items.Any(item => Bot.House.IsEquipped(item.ID)))
+        {
             return;
+        }
+
 
         JumpWait();
 
@@ -1090,7 +1102,7 @@ public class CoreBots
 
         foreach (int itemID in items)
         {
-            if (itemID == 0)
+            if (itemID == 0 || Extras.Contains(itemID) || Bot.Inventory.IsEquipped(itemID) || Bot.House.IsEquipped(itemID))
                 continue;
 
             // Check if the item exists in Inventory or House
