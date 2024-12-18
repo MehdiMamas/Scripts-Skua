@@ -908,10 +908,7 @@ public class CoreBots
     /// </remarks>
     public void ToBank(params string[] items)
     {
-        if (items == null ||
-        !items.Any(x => !string.IsNullOrEmpty(x)) ||
-        Bot.Inventory.Items.Any(item => Bot.Inventory.IsEquipped(item.Name)) ||
-        Bot.House.Items.Any(item => Bot.House.IsEquipped(item.Name)))
+        if (items == null || !items.Any(x => !string.IsNullOrEmpty(x)))
         {
             return;
         }
@@ -983,6 +980,110 @@ public class CoreBots
                 }
 
                 Logger($"{item} moved to bank");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Transfers specified items from the inventory to the bank by item ID.
+    /// </summary>
+    /// <param name="items">
+    /// An array of item IDs to move to the bank. Items are ignored if they are
+    /// equipped, excluded by the blacklist, or do not exist in the inventory.
+    /// </param>
+    /// <remarks>
+    /// Ensures only items from whitelisted categories or items marked as "Coins" are moved.
+    /// Retries each item transfer up to 20 times if an attempt fails and logs unsuccessful attempts.
+    /// House items are transferred separately to the house bank.
+    /// </remarks>
+    public void ToBank(params int[] items)
+    {
+        if (items == null || !items.Any(x => x > 0))
+        {
+            return;
+        }
+
+        JumpWait();
+
+        // Whitelist categories and items
+        List<ItemCategory> whiteList = new() { ItemCategory.Note, ItemCategory.Item, ItemCategory.Resource, ItemCategory.QuestItem };
+        int?[] Extras = { 18927, 38575 }; // Items that shouldn't be banked
+
+        foreach (int itemID in items)
+        {
+            if (itemID <= 0 || Extras.Contains(itemID) || Bot.Inventory.IsEquipped(itemID) || Bot.House.IsEquipped(itemID))
+                continue;
+
+            // Check if the item exists in Inventory or House
+            ItemBase? inventoryItem = Bot.Inventory.Items?.Concat(Bot.House.Items ?? Enumerable.Empty<ItemBase>())
+                                         .FirstOrDefault(x => x != null && x.ID == itemID);
+
+            if (inventoryItem == null)
+            {
+                Logger($"Item with ID {itemID} not found in Inventory or House.");
+                continue;
+            }
+
+            // Check if the item is equipped
+            if (Bot.Inventory.IsEquipped(itemID) || Bot.House.IsEquipped(itemID))
+            {
+                Logger($"Can't bank an equipped item: {inventoryItem?.Name ?? $"ID: {itemID}"}");
+                continue;
+            }
+
+            // Determine if it's a House item
+            bool itemIsForHouse = Bot.House.Items?.Any(x => x?.ID == itemID &&
+                                                           (x.CategoryString == "House" ||
+                                                            x.CategoryString == "Wall Item" ||
+                                                            x.CategoryString == "Floor Item")) ?? false;
+
+            // Whitelist and Blacklist checks
+            if ((inventoryItem?.Category != null && whiteList.Contains(inventoryItem.Category)) ||
+                inventoryItem?.Coins == true &&
+                !BankingBlackList.Contains(inventoryItem.Name))
+            {
+                if (!itemIsForHouse)
+                {
+                    bool success = false;
+                    for (int attempt = 0; attempt < 20; attempt++)
+                    {
+                        Bot.Inventory.EnsureToBank(itemID);
+                        Sleep();
+
+                        if (Bot.Bank?.Contains(itemID) == true)
+                        {
+                            success = true;
+                            break;
+                        }
+                    }
+
+                    if (success)
+                        Logger($"{inventoryItem.Name ?? $"ID: {itemID}"} moved to bank.");
+                    else
+                        Logger($"Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} after 20 attempts.");
+                }
+                else
+                {
+                    // Handle House Items
+                    InventoryItem? houseItem = Bot.House.Items?.FirstOrDefault(x => x?.ID == itemID);
+                    if (houseItem != null)
+                    {
+                        SendPackets($"%xt%zm%bankFromInv%{Bot.Map.RoomID}%{houseItem.ID}%{houseItem.CharItemID}%");
+                        Bot.Wait.ForTrue(() => !(Bot.House?.Contains(itemID) ?? true), 20);
+
+                        if (Bot.House?.Items?.Any(x => x?.ID == itemID) == true)
+                        {
+                            Logger($"Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} in house bank.");
+                            continue;
+                        }
+
+                        Logger($"{inventoryItem.Name ?? $"ID: {itemID}"} moved to house bank.");
+                    }
+                }
+            }
+            else
+            {
+                Logger($"Item {inventoryItem.Name ?? $"ID: {itemID}"} is blacklisted or excluded.");
             }
         }
     }
@@ -1070,116 +1171,6 @@ public class CoreBots
             }
         }
     }
-
-    /// <summary>
-    /// Transfers specified items from the inventory to the bank by item ID.
-    /// </summary>
-    /// <param name="items">
-    /// An array of item IDs to move to the bank. Items are ignored if they are
-    /// equipped, excluded by the blacklist, or do not exist in the inventory.
-    /// </param>
-    /// <remarks>
-    /// Ensures only items from whitelisted categories or items marked as "Coins" are moved.
-    /// Retries each item transfer up to 20 times if an attempt fails and logs unsuccessful attempts.
-    /// House items are transferred separately to the house bank.
-    /// </remarks>
-    public void ToBank(params int[] items)
-    {
-        if (items == null ||
-        !items.Any(x => x > 0) ||
-        Bot.Inventory.Items.Any(item => Bot.Inventory.IsEquipped(item.ID)) ||
-        Bot.House.Items.Any(item => Bot.House.IsEquipped(item.ID)))
-        {
-            return;
-        }
-
-
-        JumpWait();
-
-        // Whitelist categories and items
-        List<ItemCategory> whiteList = new() { ItemCategory.Note, ItemCategory.Item, ItemCategory.Resource, ItemCategory.QuestItem };
-        int?[] Extras = { 18927, 38575 }; // Items that shouldn't be banked
-
-        foreach (int itemID in items)
-        {
-            if (itemID == 0 || Extras.Contains(itemID) || Bot.Inventory.IsEquipped(itemID) || Bot.House.IsEquipped(itemID))
-                continue;
-
-            // Check if the item exists in Inventory or House
-            ItemBase? inventoryItem = Bot.Inventory.Items?.Concat(Bot.House.Items ?? Enumerable.Empty<ItemBase>())
-                                         .FirstOrDefault(x => x != null && x.ID == itemID);
-
-            if (inventoryItem == null)
-            {
-                Logger($"Item with ID {itemID} not found in Inventory or House.");
-                continue;
-            }
-
-            // Check if the item is equipped
-            if (Bot.Inventory.IsEquipped(itemID) || Bot.House.IsEquipped(itemID))
-            {
-                Logger($"Can't bank an equipped item: {inventoryItem?.Name ?? $"ID: {itemID}"}");
-                continue;
-            }
-
-            // Determine if it's a House item
-            bool itemIsForHouse = Bot.House.Items?.Any(x => x?.ID == itemID &&
-                                                           (x.CategoryString == "House" ||
-                                                            x.CategoryString == "Wall Item" ||
-                                                            x.CategoryString == "Floor Item")) ?? false;
-
-            // Whitelist and Blacklist checks
-            if ((inventoryItem?.Category != null && whiteList.Contains(inventoryItem.Category)) ||
-                inventoryItem?.Coins == true &&
-                !BankingBlackList.Contains(inventoryItem.Name) &&
-                !Extras.Contains(inventoryItem.ID))
-            {
-                if (!itemIsForHouse)
-                {
-                    bool success = false;
-                    for (int attempt = 0; attempt < 20; attempt++)
-                    {
-                        Bot.Inventory.EnsureToBank(itemID);
-                        Sleep();
-
-                        if (Bot.Bank?.Contains(itemID) == true)
-                        {
-                            success = true;
-                            break;
-                        }
-                    }
-
-                    if (success)
-                        Logger($"{inventoryItem.Name ?? $"ID: {itemID}"} moved to bank.");
-                    else
-                        Logger($"Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} after 20 attempts.");
-                }
-                else
-                {
-                    // Handle House Items
-                    InventoryItem? houseItem = Bot.House.Items?.FirstOrDefault(x => x?.ID == itemID);
-                    if (houseItem != null)
-                    {
-                        SendPackets($"%xt%zm%bankFromInv%{Bot.Map.RoomID}%{houseItem.ID}%{houseItem.CharItemID}%");
-                        Bot.Wait.ForTrue(() => !(Bot.House?.Contains(itemID) ?? true), 20);
-
-                        if (Bot.House?.Items?.Any(x => x?.ID == itemID) == true)
-                        {
-                            Logger($"Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} in house bank.");
-                            continue;
-                        }
-
-                        Logger($"{inventoryItem.Name ?? $"ID: {itemID}"} moved to house bank.");
-                    }
-                }
-            }
-            else
-            {
-                Logger($"Item {inventoryItem.Name ?? $"ID: {itemID}"} is blacklisted or excluded.");
-            }
-        }
-    }
-
 
     /// <summary>
     /// Buys a item till you have the desired quantity
