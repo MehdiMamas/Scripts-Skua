@@ -3397,7 +3397,12 @@ public class CoreBots
 
         if (item == null)
         {
-            Jump(targetMonster.Cell);
+            while (!Bot.ShouldExit && Bot.Player.Cell != targetMonster.Cell)
+            {
+                Jump(targetMonster.Cell, "Left");
+                Bot.Wait.ForCellChange(targetMonster.Cell);
+                Bot.Player.SetSpawnPoint();
+            }
             Bot.Kill.Monster(targetMonster);
             JumpWait();
             Rest();
@@ -4444,32 +4449,42 @@ public class CoreBots
 
         void _KillFiendShard()
         {
-            if (Bot.Player.Cell != "r9")
-            {
-                Jump("r9", "Left");
-                Sleep();
-            }
-
             // Initialize combat (to set hp)
             if (!PreFarmKill)
             {
+                CheckCell(monster?.Cell ?? "r9");
                 Logger("PreFarm kill to set Hp");
-                Bot.Kill.Monster(monster!.MapID);
+                Bot.Kill.Monster(monster.MapID);
                 Bot.Wait.ForMonsterSpawn(monster.MapID);
                 PreFarmKill = true;
             }
-
+            CheckCell(monster?.Cell ?? "r9");
             monster = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID == 15);
 
-            if (monster?.State == 1 || monster!.State == 2)
+            if (monster?.State == 1 || monster?.State == 2)
             {
-                Bot.Kill.Monster(monster!.MapID);
+                CheckCell(monster?.Cell ?? "r9");
+                Bot.Kill.Monster(monster.MapID);
                 Bot.Combat.CancelTarget();
             }
             else if (monster?.State == 0)
             {
+                CheckCell(monster?.Cell ?? "r9");
                 Bot.Combat.Attack("*");
                 Sleep();
+            }
+        }
+
+        void CheckCell(string cell = null, string pad = "left")
+        {
+            if (Bot.Player.Cell == cell)
+                return;
+
+            if (Bot.Player.Cell != cell)
+            {
+                Bot.Map.Jump(cell, pad, false);
+                Bot.Wait.ForCellChange(cell);
+                Bot.Player.SetSpawnPoint();
             }
         }
     }
