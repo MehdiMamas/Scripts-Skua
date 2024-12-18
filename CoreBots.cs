@@ -4449,10 +4449,16 @@ public class CoreBots
 
         void _KillFiendShard()
         {
+            if (monster == null)
+            {
+                Logger("Monster with MapID 15 not found.");
+                return;
+            }
             // Initialize combat (to set hp)
             if (!PreFarmKill)
             {
-                CheckCell(monster?.Cell ?? "r9");
+
+                CheckCell(monster.Cell ?? "r9");
                 Logger("PreFarm kill to set Hp");
                 Bot.Kill.Monster(monster.MapID);
                 Bot.Wait.ForMonsterSpawn(monster.MapID);
@@ -4460,10 +4466,15 @@ public class CoreBots
             }
             CheckCell(monster?.Cell ?? "r9");
             monster = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID == 15);
+            if (monster == null)
+            {
+                Logger("Monster with MapID 15 not found after respawn.");
+                return;
+            }
 
             if (monster?.State == 1 || monster?.State == 2)
             {
-                CheckCell(monster?.Cell ?? "r9");
+                CheckCell(monster.Cell ?? "r9");
                 Bot.Kill.Monster(monster.MapID);
                 Bot.Combat.CancelTarget();
             }
@@ -4475,15 +4486,15 @@ public class CoreBots
             }
         }
 
-        void CheckCell(string cell = null, string pad = "left")
+        void CheckCell(string? cell = null, string pad = "left")
         {
             if (Bot.Player.Cell == cell)
                 return;
 
             if (Bot.Player.Cell != cell)
             {
-                Bot.Map.Jump(cell, pad, false);
-                Bot.Wait.ForCellChange(cell);
+                Bot.Map.Jump(cell ?? "r9", pad, false);
+                Bot.Wait.ForCellChange(cell ?? "r9");
                 Bot.Player.SetSpawnPoint();
             }
         }
