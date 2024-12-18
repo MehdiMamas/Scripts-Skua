@@ -1011,11 +1011,11 @@ public class CoreBots
 
         foreach (int itemID in items)
         {
-            if (itemID <= 0 || Extras.Contains(itemID) || Bot.Inventory.IsEquipped(itemID) || Bot.House.IsEquipped(itemID))
+            if (itemID <= 0 || Extras.Contains(itemID) || Bot.Inventory.IsEquipped(itemID) || (Bot.House != null && Bot.House.IsEquipped(itemID)))
                 continue;
 
             // Check if the item exists in Inventory or House
-            ItemBase? inventoryItem = Bot.Inventory.Items?.Concat(Bot.House.Items ?? Enumerable.Empty<ItemBase>())
+            ItemBase? inventoryItem = Bot.Inventory.Items?.Concat(Bot.House?.Items ?? Enumerable.Empty<ItemBase>())
                                          .FirstOrDefault(x => x != null && x.ID == itemID);
 
             if (inventoryItem == null)
@@ -1025,14 +1025,14 @@ public class CoreBots
             }
 
             // Check if the item is equipped
-            if (Bot.Inventory.IsEquipped(itemID) || Bot.House.IsEquipped(itemID))
+            if (Bot.Inventory.IsEquipped(itemID) || (Bot.House != null && Bot.House.IsEquipped(itemID)))
             {
                 Logger($"Can't bank an equipped item: {inventoryItem?.Name ?? $"ID: {itemID}"}");
                 continue;
             }
 
             // Determine if it's a House item
-            bool itemIsForHouse = Bot.House.Items?.Any(x => x?.ID == itemID &&
+            bool itemIsForHouse = Bot.House?.Items?.Any(x => x?.ID == itemID &&
                                                            (x.CategoryString == "House" ||
                                                             x.CategoryString == "Wall Item" ||
                                                             x.CategoryString == "Floor Item")) ?? false;
@@ -1065,7 +1065,7 @@ public class CoreBots
                 else
                 {
                     // Handle House Items
-                    InventoryItem? houseItem = Bot.House.Items?.FirstOrDefault(x => x?.ID == itemID);
+                    InventoryItem? houseItem = Bot.House?.Items?.FirstOrDefault(x => x?.ID == itemID);
                     if (houseItem != null)
                     {
                         SendPackets($"%xt%zm%bankFromInv%{Bot.Map.RoomID}%{houseItem.ID}%{houseItem.CharItemID}%");
@@ -1083,7 +1083,7 @@ public class CoreBots
             }
             else
             {
-                Logger($"Item {inventoryItem.Name ?? $"ID: {itemID}"} is blacklisted or excluded.");
+                Logger($"Item {inventoryItem?.Name ?? $"ID: {itemID}"} is blacklisted or excluded.");
             }
         }
     }
