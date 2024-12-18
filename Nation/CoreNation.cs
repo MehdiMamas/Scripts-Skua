@@ -791,6 +791,9 @@ public class CoreNation
                 // Add quest rewards from quest ID 9542
                 .Concat(Core.QuestRewards(9542))
 
+                // Add supplies item
+                .Concat(ReturnItem != null ? new string[] { ReturnItem } : Enumerable.Empty<string>())
+
                 // Concatenate supplies rewards, including 'Voucher of Nulgath' if 'sellMemVoucher' is true
                 .Concat(SuppliesRewards
                     .Concat(sellMemVoucher ? new string[] { "Voucher of Nulgath" } : Enumerable.Empty<string>())
