@@ -3481,7 +3481,7 @@ public class CoreBots
                 Bot.Wait.ForCellChange(targetMonster.Cell);
                 Bot.Player.SetSpawnPoint();
             }
-            Bot.Combat.Attack(targetMonster);
+            Bot.Kill.Monster(targetMonster);
             JumpWait();
             Rest();
         }

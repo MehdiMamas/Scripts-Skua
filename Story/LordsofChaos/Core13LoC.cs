@@ -2392,7 +2392,7 @@ public class Core13LoC
         if (!Story.QuestProgression(3879))
         {
             Core.EnsureAccept(3879);
-            Core.HuntMonsterMapID("chaosrealm", 13, "Alteon");
+            Core.HuntMonsterMapID("chaosrealm", 13);
             Core.EnsureComplete(3879);
             Core.Join("whitemap");
         }
