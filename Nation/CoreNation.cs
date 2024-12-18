@@ -785,20 +785,19 @@ public class CoreNation
         );
 
         Core.AddDrop(
-            // Include 'item' if it's not null
-            (item != null ? new string[] { item } : Enumerable.Empty<string>())
+                // Add Supplies Item if it's not null
+                (item != null ? new string[] { item } : Enumerable.Empty<string>())
+
+                // Add ReturnItem if it's not null
+                .Concat(ReturnItem != null ? new string[] { ReturnItem } : Enumerable.Empty<string>())
 
                 // Add quest rewards from quest ID 9542
                 .Concat(Core.QuestRewards(9542))
 
-                // Add supplies item
-                .Concat(ReturnItem != null ? new string[] { ReturnItem } : Enumerable.Empty<string>())
-
                 // Concatenate supplies rewards, including 'Voucher of Nulgath' if 'sellMemVoucher' is true
                 .Concat(SuppliesRewards
                     .Concat(sellMemVoucher ? new string[] { "Voucher of Nulgath" } : Enumerable.Empty<string>())
-                    .Append("Relic of Chaos")
-                )
+                    .Append("Relic of Chaos"))
 
                 // Add extra items if 'returnPolicyDuringSupplies' is true, including 'Receipt of Swindle'
                 .Concat(returnPolicyDuringSupplies
