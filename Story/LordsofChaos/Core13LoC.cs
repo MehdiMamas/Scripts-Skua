@@ -668,7 +668,7 @@ public class Core13LoC
         if (!Story.QuestProgression(661))
         {
             Core.Join("beehive");
-            Core.ChainComplete(661);
+            Story.ChainQuest(661);
         }
 
         //Bad Moon Rising
@@ -683,7 +683,8 @@ public class Core13LoC
         if (!Story.QuestProgression(676))
         {
             Core.EnsureAccept(676);
-            Core.KillMonster("orchestra", "R4", "Down", "*", "Cannon Powder");
+            //yes there's a space...
+            Core.KillMonster("orchestra", "R4", "Down", "Pachelbel's Cannon ", "Cannon Powder");
             Core.EnsureComplete(676);
         }
 
