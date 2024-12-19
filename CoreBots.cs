@@ -123,6 +123,9 @@ public class CoreBots
             Bot.Events.ScriptStopping += CrashDetector;
             SkuaVersionChecker("1.2.4.0");
 
+            if (File.Exists(ClientFileSources.SkuaScriptsDIR + "/z_CompiledScript.cs"))
+                File.Delete(ClientFileSources.SkuaScriptsDIR + "/z_CompiledScript.cs");
+
             loadedBot = Bot.Manager.LoadedScript.Replace("\\", "/").Split("/Scripts/").Last().Replace(".cs", "");
             Logger($"Bot Started [{loadedBot}]");
             if (Bot.Config != null && Bot.Config.Options.Contains(SkipOptions) && !Bot.Config.Get<bool>(SkipOptions))
@@ -2126,18 +2129,24 @@ public class CoreBots
                 .Where(x => x != null && !x.Temp)
                 .Select(x => x.Name).ToArray());
         }
-        Bot.Events.ExtensionPacketReceived += QuestDataFixer;
+        GC.Collect();
 
 
         questCTS = new();
-        int TriesTillAbandon = 0;
+        int i = 0;
         //no initializationwithretries in asyncs as init has sleeps in it.
         Task.Run(async () =>
         {
             while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
             {
+                if (Bot.ShouldExit)
+                {
+                    questCTS.Cancel();
+                    return;
+                }
                 await Task.Delay(ActionDelay * 2);
-                foreach (Quest quest in chooseQuests.Keys.Concat(nonChooseQuests.Keys).Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest? _quest) && _quest != null))
+                List<Quest> Quests = chooseQuests.Keys.Concat(nonChooseQuests.Keys).Distinct().Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest? _quest) && _quest != null).ToList();
+                foreach (Quest quest in Quests)
                 {
                     // Ensure player is alive so it can load the quest.
                     if (!Bot.Player.Alive)
@@ -2147,25 +2156,22 @@ public class CoreBots
                     }
 
                     Quest? q = EnsureLoad(quest.ID);
+                    await Task.Delay(ActionDelay);
 
                     if (q == null || quest == null)
                     {
-                        await Task.Delay(ActionDelay);
+                        Bot.Quests.Load(Quests.Where(x => x != null && x.ID > 0).Select(x => x.ID).ToArray());
+                        await Task.Delay(ActionDelay * 2);
+                        GC.Collect();
                         continue;
                     }
 
                     if (Bot.Quests.IsInProgress(quest.ID) && !Bot.Quests.CanComplete(quest.ID))
-                    {
-                        await Task.Delay(ActionDelay);
                         continue;
-                    }
 
-                    if (!Bot.Quests.IsInProgress(quest.ID))
-                    {
-                        Bot.Quests.EnsureAccept(quest.ID);
-                        await Task.Delay(ActionDelay * 2);
-                    }
-                    else await Task.Delay(ActionDelay * 2);
+                    Bot.Quests.Accept(Quests.Where(x => x != null && !Bot.Quests.IsInProgress(x.ID)).Select(x => x.ID).ToArray());
+
+                    await Task.Delay(ActionDelay * 2);
 
                     if (Bot.Quests.CanComplete(quest.ID))
                     {
@@ -2174,7 +2180,7 @@ public class CoreBots
 
                         if (chooseQuests.ContainsKey(quest))
                         {
-                            Quest? activeQuest = Bot.Quests.Active.FirstOrDefault(q => q.ID == quest.ID);
+                            Quest? activeQuest = Bot.Quests.Active.FirstOrDefault(q => q?.ID == quest.ID);
                             if (activeQuest != null)
                             {
                                 ItemBase? reward = activeQuest.Rewards.FirstOrDefault(r => r != null && r.Quantity < r.MaxStack);
@@ -2185,48 +2191,39 @@ public class CoreBots
                         // Ensure quest is loaded, and is entirely completable.
                         if (Bot.Quests.IsInProgress(quest.ID))
                         {
-                            Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%");
-                            if (Bot.Quests.IsInProgress(quest.ID) && TriesTillAbandon >= 20)
+                            // Send the quest completion packet
+                            Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest?.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest?.ID))}%wvz%");
+
+                            // Check if the quest is still in progress
+                            await Task.Delay(ActionDelay * 2);
+                            if (Bot.Quests.IsInProgress(quest.ID))
                             {
-                                await Task.Delay(ActionDelay * 2);
-                                Bot.Flash.CallGameFunction("world.abandonQuest", quest.ID);
-                                TriesTillAbandon = 0;
+                                if (i < 20)
+                                    Console.Write($"Quest Failed to turn in {i++}");
+
+                                if (i >= 20)
+                                {
+                                    await Task.Delay(ActionDelay * 2);
+                                    Bot.Flash.CallGameFunction("world.abandonQuest", quest.ID);
+                                    await Task.Delay(ActionDelay * 2);
+                                    Bot.Quests.Load(Quests.Where(x => x != null).Select(x => x.ID).ToArray());
+                                    await Task.Delay(ActionDelay * 2);
+                                    Bot.Quests.Accept(Quests.Where(x => x != null && !Bot.Quests.IsInProgress(x.ID)).Select(x => x.ID).ToArray());
+                                    await Task.Delay(ActionDelay * 2);
+                                    i = 0;
+                                    GC.Collect();
+                                    continue;
+                                }
                             }
-                            else TriesTillAbandon++;
-                            // Bot.Flash.CallGameFunction("world.tryQuestComplete", quest.ID, false, turnIns);
-                            await Task.Delay(ActionDelay * 2); // Wait for half a second to ensure the quest is completed
-                            Bot.Quests.EnsureAccept(quest.ID); // Reaccept the quest after completion
-                            await Task.Delay(ActionDelay * 2); // Wait for half a second to ensure the quest is reaccepted
                         }
                         await Task.Delay(ActionDelay * 2);
+                        Bot.Quests.Accept(Quests.Where(x => x != null && !Bot.Quests.IsInProgress(x.ID)).Select(x => x.ID).ToArray());
+                        GC.Collect();
                     }
                 }
-                GC.Collect();
             }
         });
         questCTS = new();
-        Bot.Events.ExtensionPacketReceived -= QuestDataFixer;
-
-        void QuestDataFixer(dynamic packet)
-        {
-            string type = packet["params"].type;
-            dynamic data = packet["params"].dataObj;
-            if (type == "json")
-            {
-                string str = data.strMessage;
-                int QID = data.strQuestID;
-                switch (str)
-                {
-                    case "Quest Complete Failed: Missing Required Item":
-                        Logger("Quest de-sync (AE Issue) detected, Abandoning and re-accepting quest");
-
-                        Bot.Log("Abandoning and re-accepting quest.");
-                        Bot.Flash.CallGameFunction("world.abandonQuest", QID);
-                        Bot.Quests.EnsureAccept(QID);
-                        break;
-                }
-            }
-        }
     }
 
     /// <summary>
@@ -3087,7 +3084,14 @@ public class CoreBots
         Bot.Options.AttackWithoutTarget = false;
         ToggleAggro(false);
 
-        Jump(Bot.Map.Cells.FirstOrDefault(c => c.Contains("Enter")) ?? Bot.Map.Cells.First(), "Spawn");
+        string targetCell = (Bot.Map.Cells.Count(c => c.Contains("Enter")) > 1
+    ? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"))
+    : Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank")))
+        ?? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"));
+
+        Bot.Map.Jump(targetCell, "Spawn", false);
+
+        Sleep();
 
         Bot.Options.AggroMonsters = false;
         JumpWait();
@@ -5885,7 +5889,12 @@ public class CoreBots
         ToggleAggro(false); // Disable aggro to avoid interruptions
 
         // Initial jump to "Enter" to ensure a predictable starting state
-        Bot.Map.Jump("Enter", "Spawn", false);
+        string targetCell = (Bot.Map.Cells.Count(c => c.Contains("Enter")) > 1
+   ? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"))
+   : Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank")))
+       ?? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"));
+
+        Bot.Map.Jump(targetCell, "Spawn", false);
         Sleep(1000); // Allow time for possible auto-transfer to another cell
 
         // If the player is not in "Enter", add "Enter" cells to the blacklist and proceed to filter cases
@@ -5983,7 +5992,7 @@ public class CoreBots
             case "wanders":
                 Bot.Map.Jump("Boss", "left", false);
                 Bot.Sleep(2500);
-                blackListedCells.UnionWith(Bot.Player.Cell == "Boss" ? new[] { "r25" } : new[] { "Boss" });
+                blackListedCells.UnionWith(Bot.Player.Cell == "Boss" ? new[] { "r25", "Enter", "Enter2" } : new[] { "Boss", "Enter", "Enter2" });
                 break;
 
             case "zephyrus":
@@ -6051,14 +6060,29 @@ public class CoreBots
     /// <param name="ignoreCheck">If set to true, the bot will not check if the player is already in the given room</param>
     public void Join(string? map, string? cell = "Enter", string pad = "Spawn", bool publicRoom = false, bool ignoreCheck = false)
     {
+        Bot.Map.Join(map.ToLower(), cell, pad, false, false);
+        Bot.Wait.ForMapLoad(map);
+
         // If cell is null, determine its value
         if (cell == null && map != null && map != "oaklore")
         {
-            var nonEnterCells = Bot.Map.Cells.Where(x => !x.ToLower().StartsWith("Enter") && !x.ToLower().Contains("Wait") && !x.ToLower().Contains("Blank")).ToList();
-            cell = Bot.Map.Cells.Count(x => x.StartsWith("Enter")) > 1
-                ? nonEnterCells.FirstOrDefault() ?? "Enter"
-                : Bot.Map.Cells.FirstOrDefault(x => x.StartsWith("Enter")) ?? "Enter";
+            // Filter for cells that do not start with "Enter" or contain "Wait" or "Blank"
+            var nonEnterCells = Bot.Map.Cells
+                .Where(x => x != null && !x.ToLower().StartsWith("enter") && !x.ToLower().Contains("wait") && !x.ToLower().Contains("blank"))
+                .ToList();
+
+            // Choose the first valid non-"Enter" cell if there are multiple "Enter" cells, otherwise pick the first valid cell
+            if (Bot.Map.Cells.Count(x => x != null && x.Contains("Enter")) > 1)
+            {
+                cell = nonEnterCells.FirstOrDefault();
+            }
+            else
+            {
+                cell = Bot.Map.Cells
+                    .FirstOrDefault(x => x != null && !x.ToLower().Contains("wait") && !x.ToLower().Contains("blank") && !x.ToLower().Contains("cut")) ?? "Enter";
+            }
         }
+
 
         map = map!.Replace(" ", "").Replace('I', 'i');
         map = map.ToLower() == "tercess" ? "tercessuinotlim" : map.ToLower();

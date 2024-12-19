@@ -1814,17 +1814,21 @@ public class CoreFarms
         Core.Logger($"Farming rank {rank}");
 
         Core.RegisterQuests(4667);
-        Core.Join("elfhame", "Cut1", "Left");
-
+        Core.Join("elfhame");
+        Bot.Options.SkipCutscenes = false;
         while (!Bot.ShouldExit && FactionRank("Brightoak") < rank)
         {
-            Core.Sleep();
+            if (Bot.Map.Name != "elfhame")
+            {
+                Core.Join("elfhame");
+                Bot.Wait.ForMapLoad("elfhame");
+            }
+            Bot.Wait.ForQuestAccept(4667);
             Bot.Map.GetMapItem(3984);
-            Core.Sleep();
-            Bot.Wait.ForQuestComplete(4667, 20);
-            Core.Sleep();
+            Bot.Wait.ForQuestComplete(4667);
         }
-
+        Core.Jump("Enter", "Spawn");
+        Bot.Options.SkipCutscenes = true;
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
