@@ -2298,7 +2298,7 @@ public class CoreBots
         Sleep(ActionDelay * 2);
         // Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
         // Bot.Send.Packet($"%xt%zm%acceptQuest%{Bot.Map.RoomID}%{questID}%");
-        if (Bot.Quests.Active.Any(x => x.ID == questID))
+        if (Bot.Quests.IsInProgress(questID))
             return true;
         else
         {
@@ -5973,6 +5973,17 @@ public class CoreBots
 
         switch (Bot.Map.Name)
         {
+
+            case "darkoviaforest":
+            case "safiria":
+            case "lycan":
+                blackListedCells.UnionWith(new[] { "Quest" });
+                break;
+
+            case "beehive":
+                blackListedCells.UnionWith(new[] { "Dance" });
+                break;
+
             case "oaklore":
                 blackListedCells.UnionWith(new[] { "Enter", "r1" });
                 break;
