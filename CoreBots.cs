@@ -2192,7 +2192,7 @@ public class CoreBots
                         if (Bot.Quests.IsInProgress(quest.ID))
                         {
                             // Send the quest completion packet
-                            Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest?.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest?.ID))}%wvz%");
+                            Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest?.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest!.ID))}%wvz%");
 
                             // Check if the quest is still in progress
                             await Task.Delay(ActionDelay * 2);
@@ -3084,12 +3084,16 @@ public class CoreBots
         Bot.Options.AttackWithoutTarget = false;
         ToggleAggro(false);
 
-        string targetCell = (Bot.Map.Cells.Count(c => c.Contains("Enter")) > 1
+        string? targetCell = (Bot.Map.Cells.Count(c => c.Contains("Enter")) > 1
     ? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"))
     : Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank")))
         ?? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"));
 
-        Bot.Map.Jump(targetCell, "Spawn", false);
+        if (targetCell == null)
+        {
+            Logger("No cell found to jump to after killing the monster. Trying Enter cell...");
+        }
+        Bot.Map.Jump(targetCell ?? "Enter", "Spawn", false);
 
         Sleep();
 
@@ -5889,12 +5893,12 @@ public class CoreBots
         ToggleAggro(false); // Disable aggro to avoid interruptions
 
         // Initial jump to "Enter" to ensure a predictable starting state
-        string targetCell = (Bot.Map.Cells.Count(c => c.Contains("Enter")) > 1
+        string? targetCell = (Bot.Map.Cells.Count(c => c.Contains("Enter")) > 1
    ? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"))
    : Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank")))
        ?? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"));
 
-        Bot.Map.Jump(targetCell, "Spawn", false);
+        Bot.Map.Jump(targetCell ?? "Enter", "Spawn", false);
         Sleep(1000); // Allow time for possible auto-transfer to another cell
 
         // If the player is not in "Enter", add "Enter" cells to the blacklist and proceed to filter cases
@@ -6071,6 +6075,11 @@ public class CoreBots
     /// <param name="ignoreCheck">If set to true, the bot will not check if the player is already in the given room</param>
     public void Join(string? map, string? cell = "Enter", string pad = "Spawn", bool publicRoom = false, bool ignoreCheck = false)
     {
+        if (map == null)
+        {
+            Logger("Map is null, cannot join.");
+            return;
+        }
         Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", pad, false, false);
 
         Bot.Wait.ForMapLoad(map);
