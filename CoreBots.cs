@@ -6060,7 +6060,8 @@ public class CoreBots
     /// <param name="ignoreCheck">If set to true, the bot will not check if the player is already in the given room</param>
     public void Join(string? map, string? cell = "Enter", string pad = "Spawn", bool publicRoom = false, bool ignoreCheck = false)
     {
-        Bot.Map.Join(map.ToLower(), cell, pad, false, false);
+        Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", pad, false, false);
+
         Bot.Wait.ForMapLoad(map);
 
         // If cell is null, determine its value
