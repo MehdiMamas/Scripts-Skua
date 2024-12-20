@@ -2156,20 +2156,21 @@ public class CoreBots
                     }
 
                     Quest? q = EnsureLoad(quest.ID);
-                    await Task.Delay(ActionDelay);
+
+                    await Task.Delay(ActionDelay * 2);
 
                     if (q == null || quest == null)
                     {
-                        Bot.Quests.Load(Quests.Where(x => x != null && x.ID > 0).Select(x => x.ID).ToArray());
-                        await Task.Delay(ActionDelay * 2);
-                        GC.Collect();
+                        Bot.Quests.Load(quest.ID);
+                        await Task.Delay(ActionDelay);
                         continue;
                     }
 
                     if (Bot.Quests.IsInProgress(quest.ID) && !Bot.Quests.CanComplete(quest.ID))
                         continue;
 
-                    Bot.Quests.Accept(Quests.Where(x => x != null && !Bot.Quests.IsInProgress(x.ID)).Select(x => x.ID).ToArray());
+                    if (!Bot.Quests.IsInProgress(quest.ID))
+                        Bot.Quests.Accept(quest.ID);
 
                     await Task.Delay(ActionDelay * 2);
 
@@ -2198,29 +2199,25 @@ public class CoreBots
                             await Task.Delay(ActionDelay * 2);
                             if (Bot.Quests.IsInProgress(quest.ID))
                             {
-                                if (i < 20)
-                                    Console.Write($"Quest Failed to turn in {i++}");
-
+                                i++;
                                 if (i >= 20)
                                 {
                                     await Task.Delay(ActionDelay * 2);
                                     Bot.Flash.CallGameFunction("world.abandonQuest", quest.ID);
                                     await Task.Delay(ActionDelay * 2);
-                                    Bot.Quests.Load(Quests.Where(x => x != null).Select(x => x.ID).ToArray());
+                                    Bot.Quests.Load(quest.ID);
                                     await Task.Delay(ActionDelay * 2);
-                                    Bot.Quests.Accept(Quests.Where(x => x != null && !Bot.Quests.IsInProgress(x.ID)).Select(x => x.ID).ToArray());
-                                    await Task.Delay(ActionDelay * 2);
+                                    Bot.Quests.Accept(quest.ID);
                                     i = 0;
-                                    GC.Collect();
                                     continue;
                                 }
                             }
                         }
                         await Task.Delay(ActionDelay * 2);
-                        Bot.Quests.Accept(Quests.Where(x => x != null && !Bot.Quests.IsInProgress(x.ID)).Select(x => x.ID).ToArray());
-                        GC.Collect();
+                        Bot.Quests.Accept(quest.ID);
                     }
                 }
+                GC.Collect();
             }
         });
         questCTS = new();
