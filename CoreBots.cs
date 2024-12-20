@@ -2156,11 +2156,12 @@ public class CoreBots
 
                     Quest? q = Bot.Quests.EnsureLoad(quest.ID);
 
+                    await Task.Delay(ActionDelay * 2);
+
                     if (q == null || quest == null)
                     {
-                        Bot.Quests.EnsureLoad(quest.ID);
                         Bot.Quests.Load(quest!.ID);
-                        await Task.Delay(ActionDelay);
+                        await Task.Delay(ActionDelay * 2);
                     }
 
                     if (Bot.Quests.IsInProgress(quest.ID) && !Bot.Quests.CanComplete(quest.ID))
