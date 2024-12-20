@@ -3430,8 +3430,13 @@ public class CoreBots
             }
             Bot.Options.AttackWithoutTarget = false;
             ToggleAggro(false);
-            Bot.Map.Jump(Bot.Map.Cells.FirstOrDefault(c => c.ToLower().Contains("enter")) ?? Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank") && !c.ToLower().Contains("enter")), "Spawn", false);
-            Bot.Options.AggroMonsters = false;
+            Bot.Map.Jump(
+                Bot.Map.Cells.FirstOrDefault(c => c.ToLower().Contains("enter"))
+                ?? Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank") && !c.ToLower().Contains("enter"))
+                ?? "Enter",
+                "Spawn",
+                false
+            ); Bot.Options.AggroMonsters = false;
             JumpWait();
             Rest();
 
@@ -5860,15 +5865,15 @@ public class CoreBots
         while (!Bot.ShouldExit && Bot.Player.Cell != cell)
         {
             // Bot.Send.Packet($"%xt%zm%moveToCell%{Bot.Map.RoomID}%{cell}%{pad}%");
-            if (cell != null && Bot.Player.Cell != cell)
+            if (!string.IsNullOrEmpty(cell) && Bot.Player.Cell != cell)
                 Bot.Map.Jump(cell, pad, false);
-            Bot.Wait.ForCellChange(cell);
+            Bot.Wait.ForCellChange(cell ?? "Enter");
             Sleep();
 
             if (Bot.Player.Cell == cell)
                 break;
         }
-        Bot.Player.SetSpawnPoint(cell, pad);
+        Bot.Player.SetSpawnPoint(cell ?? "Enter", pad);
         GC.Collect();
     }
 
@@ -6071,7 +6076,7 @@ public class CoreBots
     /// <param name="ignoreCheck">If set to true, the bot will not check if the player is already in the given room</param>
     public void Join(string? map, string? cell = "Enter", string pad = "Spawn", bool publicRoom = false, bool ignoreCheck = false)
     {
-        if (map == null)
+        if (string.IsNullOrEmpty(map))
         {
             Logger("Map is null, cannot join.");
             return;
@@ -6660,7 +6665,7 @@ public class CoreBots
                 for (int i = 0; i < 20; i++)
                 {
                     Bot.Wait.ForActionCooldown(GameActions.Transfer);
-                    if (Bot.Map.Name != map)
+                    if (!string.IsNullOrEmpty(map) && Bot.Map.Name != map)
                     {
                         Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", pad, false, false);
                         Bot.Wait.ForMapLoad(strippedMap);
@@ -6680,12 +6685,12 @@ public class CoreBots
                         }
                         else
                         {
-                            string cell = Bot.Map.Cells
+                            string? cell = Bot.Map.Cells
                             .FirstOrDefault(x => x != null && !BLackListedJumptoCells.Any(bc => x.ToLower().Contains(bc)));
                         }
                         if (cell != null && Bot.Player.Cell != cell)
                             Bot.Map.Jump(cell, pad, false);
-                        Bot.Wait.ForCellChange(cell);
+                        Bot.Wait.ForCellChange(cell ?? "Enter");
 
                     }
 
@@ -6694,7 +6699,7 @@ public class CoreBots
                     {
                         if (Bot.Options.SafeTimings)
                         {
-                            if (!Bot.Wait.ForMapLoad(map, 20))
+                            if (!string.IsNullOrEmpty(map) && !Bot.Wait.ForMapLoad(map, 20))
                             {
                                 if (cell != null && Bot.Player.Cell != cell)
                                     Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad, false);
@@ -6705,7 +6710,7 @@ public class CoreBots
                                     Bot.Map.Jump(cell, pad, false);
                             }
                             Sleep();
-                            Bot.Wait.ForCellChange(cell);
+                            Bot.Wait.ForCellChange(cell ?? "Enter");
                         }
                         break;
                     }
@@ -6878,7 +6883,7 @@ public class CoreBots
             {
                 if (!string.IsNullOrEmpty(cell))
                     Bot.Map.Jump(cell, pad, false);
-                Bot.Wait.ForCellChange(cell);
+                Bot.Wait.ForCellChange(cell ?? "Enter");
 
 
                 Sleep();
