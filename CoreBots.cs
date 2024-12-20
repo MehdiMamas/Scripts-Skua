@@ -2188,35 +2188,32 @@ public class CoreBots
                         }
 
                         // Ensure quest is loaded, and is entirely completable.
-                        if (Bot.Quests.IsInProgress(quest.ID))
-                            // {
-                            // Send the quest completion packet
-                            Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest?.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest!.ID))}%wvz%");
+
+                        // Send the quest completion packet
+                        Bot.Send.Packet($"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest?.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest!.ID))}%wvz%");
 
                         // Check if the quest is still in progress
-                        // await Task.Delay(ActionDelay * 2);
-                        // if (Bot.Quests.IsInProgress(quest.ID))
-                        // {
-                        //     i++;
-                        //     if (i >= 20 && Bot.Quests.IsInProgress(quest.ID))
-                        //     {
-                        //         await Task.Delay(ActionDelay * 2);
-                        //         Bot.Flash.CallGameFunction("world.abandonQuest", quest.ID);
-                        //         await Task.Delay(ActionDelay * 2);
-                        //         Bot.Quests.Load(quest.ID);
-                        //         await Task.Delay(ActionDelay * 2);
-                        //         Bot.Quests.Accept(quest.ID);
-                        //         i = 0;
-                        //         continue;
-                        //     }
-                        // }
-                        // }
                         await Task.Delay(ActionDelay * 2);
+                        if (Bot.Quests.IsInProgress(quest.ID))
+                            i++;
+
+                        if (i >= 20 && Bot.Quests.IsInProgress(quest.ID))
+                        {
+                            await Task.Delay(ActionDelay * 2);
+                            Bot.Flash.CallGameFunction("world.abandonQuest", quest.ID);
+                            await Task.Delay(ActionDelay * 2);
+                            Bot.Quests.Load(quest.ID);
+                            await Task.Delay(ActionDelay * 2);
+                            Bot.Quests.Accept(quest.ID);
+                            i = 0;
+                            continue;
+                        }
+                        // await Task.Delay(ActionDelay * 2);
                         Bot.Quests.Accept(quest.ID);
                     }
                 }
-                GC.Collect();
             }
+            GC.Collect();
         });
         questCTS = new();
     }
@@ -5890,8 +5887,8 @@ public class CoreBots
 
         // Initial jump to "Enter" to ensure a predictable starting state
         string? targetCell = (Bot.Map.Cells.Count(c => c.Contains("Enter")) > 1
-   ? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"))
-   : Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank")))
+    ? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"))
+    : Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank")))
        ?? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"));
 
         Bot.Map.Jump(targetCell ?? "Enter", "Spawn", false);
