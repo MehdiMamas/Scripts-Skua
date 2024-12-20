@@ -647,7 +647,7 @@ public class CoreDailies
         // Fetch Gear of Doom from Inventory and Bank
         ItemBase? GoD = Bot.Inventory.Items.Concat(Bot.Bank.Items)
             .FirstOrDefault(x => x?.Name == "Gear of Doom");
-            
+
         ItemBase? TP = Bot.Inventory.Items.Concat(Bot.Bank.Items)
             .FirstOrDefault(x => x?.Name == "Treasure Potion");
 

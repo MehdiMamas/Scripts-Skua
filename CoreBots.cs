@@ -2161,7 +2161,10 @@ public class CoreBots
 
                     if (q == null || quest == null)
                     {
-                        Bot.Quests.Load(quest.ID);
+                        if (quest != null)
+                        {
+                            Bot.Quests.Load(quest.ID);
+                        }
                         await Task.Delay(ActionDelay);
                         continue;
                     }
