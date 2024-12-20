@@ -6667,7 +6667,17 @@ public class CoreBots
                     Bot.Wait.ForActionCooldown(GameActions.Transfer);
                     if (!string.IsNullOrEmpty(map) && Bot.Map.Name != map)
                     {
-                        Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", pad, false, false);
+                        Bot.Wait.ForActionCooldown(GameActions.Transfer);
+                        if (hasMapNumber)
+                        {
+                            Bot.Map.Join(map, cell ?? "Enter", pad, false, false);
+                            Bot.Wait.ForActionCooldown(GameActions.Transfer);
+                        }
+                        else
+                        {
+                            Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", pad, false, false);
+                            Bot.Wait.ForActionCooldown(GameActions.Transfer);
+                        }
                         Bot.Wait.ForMapLoad(strippedMap);
                         // Exponential Backoff
                         Sleep(Math.Max(1, 100 * rnd.Next((int)Math.Pow(2, i / 2.0))));
