@@ -9085,6 +9085,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/MeateorHuntMerge(UnoriginalRecipe).cs"
   },
   {
+    "name": "BallyCool's Generosity Coins",
+    "description": "This will complete the quest that gets you 2 free Generosity Coins.",
+    "tags": [
+      "ballyhoo",
+      "bally-hoo",
+      "ballycool",
+      "generosity",
+      "gc",
+      "generositycoin",
+      "generosity coin",
+      "coins",
+      "seasonal",
+      "frostvale"
+    ],
+    "path": "Seasonal/Frostvale/BallyhooGenerosityCoins.cs",
+    "size": 1083,
+    "fileName": "BallyhooGenerosityCoins.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/BallyhooGenerosityCoins.cs"
+  },
+  {
     "name": "Fimbul Tomb Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Fimbul Tomb Merge [2378] in /fimbultomb",
     "tags": [
@@ -9332,7 +9352,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/Frostvale.cs",
-    "size": 39770,
+    "size": 42676,
     "fileName": "Frostvale.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Frostvale.cs"
   },
@@ -17548,6 +17568,40 @@
     "size": 7262,
     "fileName": "CrulonsWeddingMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CrulonsWeddingMerge.cs"
+  },
+  {
+    "name": "Doom Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Doom Merge [423] in /necropolis",
+    "tags": [
+      "doom",
+      "merge",
+      "necropolis",
+      "dark",
+      "armored",
+      "daimyo",
+      "spirit",
+      "orb",
+      "destruction",
+      "shade",
+      "broadsword",
+      "bane",
+      "scythe",
+      "scourge",
+      "mace",
+      "misery",
+      "bow",
+      "to",
+      "shadows",
+      "shadowbow",
+      "shadow",
+      "shadowscythe",
+      "necrotic",
+      "legion"
+    ],
+    "path": "Other/MergeShops/DoomMerge.cs",
+    "size": 9371,
+    "fileName": "DoomMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DoomMerge.cs"
   },
   {
     "name": "BlackHoleSunMerge",

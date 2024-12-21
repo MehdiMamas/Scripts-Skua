@@ -57,6 +57,7 @@ public class Frostvale
         MountOtzi();
         Otziwar();
         HolidayHotel();
+        HolidayHorror();
     }
 
     public void IceCave()
@@ -1235,6 +1236,103 @@ public class Frostvale
 
     }
 
+
+    public void HolidayHorror()
+    {
+        if (Core.isCompletedBefore(10014) || !Core.isSeasonalMapActive("holidayhorror"))
+            return;
+
+        HolidayHotel();
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Trey Simulacrum", // UseableMonsters[0],
+	"Hydrochloric Acid", // UseableMonsters[1],
+	"Alteon Simulacrum", // UseableMonsters[2],
+	"Lynaria Simulacrum", // UseableMonsters[3],
+	"Brittany Simulacrum", // UseableMonsters[4],
+	"Brentan Simulacrum", // UseableMonsters[5],
+	"La Simulacrum", // UseableMonsters[6],
+	"Re Simulacrum", // UseableMonsters[7],
+	"Cold Apparition", // UseableMonsters[8],
+	"Hotel Guest", // UseableMonsters[9],
+	"Yaga", // UseableMonsters[10],
+	"Mockingbird", // UseableMonsters[11],
+	"Cold Grudge", // UseableMonsters[12]
+};
+        #endregion Useable Monsters
+
+        // 10005 | Chilblain
+        if (!Story.QuestProgression(10005))
+        {
+            Core.HuntMonsterQuest(10005,
+                ("holidayhorror", UseableMonsters[8], ClassType.Farm));
+        }
+
+
+        // 10006 | Fool's Gold
+        Story.KillQuest(10006, "holidayhorror", UseableMonsters[0]);
+        Story.MapItemQuest(10006, "holidayhorror", 13994);
+
+
+
+        // 10007 | Acid Reflux
+        Story.KillQuest(10007, "holidayhorror", UseableMonsters[1]);
+        Story.MapItemQuest(10007, "holidayhorror", 13995, 4);
+
+
+        // 10008 | Sour Notes
+        if (!Story.QuestProgression(10008))
+        {
+            Core.HuntMonsterQuest(10008,
+                ("holidayhorror", UseableMonsters[2], ClassType.Solo),
+                ("holidayhorror", UseableMonsters[3], ClassType.Solo));
+        }
+
+
+        // 10009 | Phantom Pain
+        if (!Story.QuestProgression(10009))
+        {
+            Core.HuntMonsterQuest(10009,
+                ("holidayhorror", UseableMonsters[4], ClassType.Solo),
+                ("holidayhorror", UseableMonsters[5], ClassType.Solo));
+        }
+
+
+        // 10010 | Kleptothermy
+        Story.KillQuest(10010, "holidayhorror", new[] { UseableMonsters[6], UseableMonsters[7] });
+        Story.MapItemQuest(10010, "holidayhorror", 13996);
+
+        // 10011 | Fie Fie
+        Story.MapItemQuest(10011, new[] {
+            (13997, 1, "holidayhorror"),
+            (13998, 5, "holidayhorror") });
+
+
+
+        // 10012 | Here of Free Will?
+        Story.MapItemQuest(10012, "holidayhorror", 14000);
+        Story.KillQuest(10012, "holidayhorror", UseableMonsters[9]);
+
+
+        // 10013 | Arrived by Compulsion?
+        Story.KillQuest(10013, "holidayhorror", UseableMonsters[10]);
+        Story.MapItemQuest(10013, "holidayhorror", 13999);
+
+
+        // 10014 | Empty Nest
+        if (!Story.QuestProgression(10014))
+        {
+            Core.HuntMonsterQuest(10014,
+                ("holidayhorror", UseableMonsters[11], ClassType.Solo));
+        }
+
+
+
+    }
 
 
     // --------------------------------------------------------------------------------------------------------------------------
