@@ -17550,6 +17550,40 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CrulonsWeddingMerge.cs"
   },
   {
+    "name": "Doom Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Doom Merge [423] in /necropolis",
+    "tags": [
+      "doom",
+      "merge",
+      "necropolis",
+      "dark",
+      "armored",
+      "daimyo",
+      "spirit",
+      "orb",
+      "destruction",
+      "shade",
+      "broadsword",
+      "bane",
+      "scythe",
+      "scourge",
+      "mace",
+      "misery",
+      "bow",
+      "to",
+      "shadows",
+      "shadowbow",
+      "shadow",
+      "shadowscythe",
+      "necrotic",
+      "legion"
+    ],
+    "path": "Other/MergeShops/DoomMerge.cs",
+    "size": 9371,
+    "fileName": "DoomMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DoomMerge.cs"
+  },
+  {
     "name": "BlackHoleSunMerge",
     "description": "null",
     "tags": [
