@@ -38,7 +38,7 @@ public class FrostSpiritReaver
         Glacera.DoAll();
         Farm.GlaceraREP();
         Dailies.Cryomancer();
-        if (!Core.CheckInventory("Cryomancer"))
+        if (!Core.CheckInventory("Cryomancer") && !Core.CheckInventory("Frost Sigil"))
         {
             Core.Logger("Cryomancer Required for \"Frost Sigil\" for \"IceNinth\", Comeback tomarrow.");
             return;
