@@ -2810,7 +2810,7 @@
       "seasonal"
     ],
     "path": "Tools/EvaluateAccount.cs",
-    "size": 12244,
+    "size": 12245,
     "fileName": "EvaluateAccount.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/EvaluateAccount.cs"
   },
@@ -21658,6 +21658,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/Potions.cs"
   },
   {
+    "name": "Generosity Coin",
+    "description": "Donates 250 Acs to get the Generosity Coin.",
+    "tags": [
+      "generosity",
+      "coin",
+      "generosity coin",
+      "generositycoin",
+      "acs",
+      "ac"
+    ],
+    "path": "Other/Various/GenerosityCoin.cs",
+    "size": 1888,
+    "fileName": "GenerosityCoin.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/GenerosityCoin.cs"
+  },
+  {
     "name": "DecorateYourSpace",
     "description": "null",
     "tags": [
@@ -22496,6 +22512,17 @@
     "size": 4716,
     "fileName": "MergeExample.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Templates/Examples/Other/MergeExample.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Templates/Examples/Other/FlashCMDStorage.cs",
+    "size": 874,
+    "fileName": "FlashCMDStorage.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Templates/Examples/Other/FlashCMDStorage.cs"
   },
   {
     "name": "null",
