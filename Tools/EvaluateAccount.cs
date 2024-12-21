@@ -70,7 +70,7 @@ public class EvalAcc
 
         // Joining Legion will use up at least 120 AC
         if (Core.isCompletedBefore(793))
-            usedACs += 120;
+            usedACs += 1200;
 
         // The actual output
         Bot.ShowMessageBox(
