@@ -19,7 +19,7 @@ public class SnowviewMerge
     private CoreBots Core => CoreBots.Instance;
     private CoreFarms Farm = new();
     private CoreAdvanced Adv = new();
-    public Frostvale Frostvale = new();
+    public CoreFrostvale Frostvale = new();
     private static CoreAdvanced sAdv = new();
 
     public bool DontPreconfigure = true;

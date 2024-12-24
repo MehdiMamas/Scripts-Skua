@@ -13,7 +13,7 @@ public class FrostvaleBadges
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public Frostvale Frostvale = new();
+    public CoreFrostvale Frostvale = new();
 
     public void ScriptMain(IScriptInterface bot)
     {

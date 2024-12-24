@@ -20,7 +20,7 @@ public class SnowviewRaceMerge
     private CoreFarms Farm = new();
     private CoreAdvanced Adv = new();
     private static CoreAdvanced sAdv = new();
-    public Frostvale FV = new();
+    public CoreFrostvale FV = new();
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

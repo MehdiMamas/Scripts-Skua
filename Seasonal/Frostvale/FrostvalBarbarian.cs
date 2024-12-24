@@ -19,7 +19,7 @@ public class FrostvalBarbarian
     public CoreBots Core => CoreBots.Instance;
     public CoreFarms Farm = new();
     public CoreAdvanced Adv = new();
-    public Frostvale Frostvale = new();
+    public CoreFrostvale Frostvale = new();
     public GlaceraStory Glacera = new();
     public CoreDailies Daily = new();
 
