@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 335005,
+    "size": 335156,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -1162,7 +1162,7 @@
       "khasaanda"
     ],
     "path": "Dailies/LordOfOrder.cs",
-    "size": 10151,
+    "size": 10296,
     "fileName": "LordOfOrder.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Dailies/LordOfOrder.cs"
   },
@@ -2702,7 +2702,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 67005,
+    "size": 66991,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -21168,7 +21168,7 @@
       "stubborn"
     ],
     "path": "Other/Badges/Stubborn.cs",
-    "size": 932,
+    "size": 1012,
     "fileName": "Stubborn.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Badges/Stubborn.cs"
   },
