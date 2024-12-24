@@ -2606,7 +2606,7 @@ public class CoreFarms
                 Bot.Combat.CancelTarget();
                 Bot.Wait.ForCombatExit();
                 Core.Jump(Bot.Player.Cell, Bot.Player.Pad);
-                Bot.Map.Join("battleon-999999", autoCorrect: false);
+                Bot.Map.Join("battleon-999999");
                 Core.Sleep(1500);
                 if (Bot.Map.Name != "battleon")
                     Core.Logger("Failed!? HOW.. try agian");

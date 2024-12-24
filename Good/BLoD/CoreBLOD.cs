@@ -402,7 +402,7 @@ public class CoreBLOD
 
         Core.AddDrop("Ultimate Weapon Kit", "Blinding Light Fragments", "Bright Aura", "Spirit Orb", "Loyal Spirit Orb");
         Core.FarmingLogger(item, quant);
-
+        Bot.Quests.UpdateQuest(999);
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
             Core.EnsureAccept(2163);

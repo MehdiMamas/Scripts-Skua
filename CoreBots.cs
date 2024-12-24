@@ -4594,7 +4594,7 @@ public class CoreBots
                     while (!Bot.ShouldExit && !ded || isTemp ? !Bot.TempInv.Contains(item, quantity) : !Bot.Inventory.Contains(item, quantity))
                     {
                         if (cell != null && Bot.Player.Cell != cell)
-                            Jump(cell);
+                            Jump(cell, "Left");
 
                         if (!Bot.Combat.StopAttacking)
                             Bot.Combat.Attack(monster);
@@ -5974,6 +5974,11 @@ public class CoreBots
         switch (Bot.Map.Name)
         {
 
+            case "hbchallenge":
+                // Monster animations make you lag like hell...
+                blackListedCells.UnionWith(new[] { "r7" });
+                break;
+
             case "darkoviaforest":
             case "safiria":
             case "lycan":
@@ -6477,7 +6482,7 @@ public class CoreBots
             case "icestormarena":
                 JumpWait();
                 if (Bot.Map.Name != null && Bot.Map.Name != map)
-                    Bot.Map.Join(PrivateRooms ? $"{map}-" + PrivateRoomNumber : map, autoCorrect: false);
+                    Bot.Map.Join(PrivateRooms ? $"{map}-" + PrivateRoomNumber : map);
                 Bot.Wait.ForMapLoad("icestormarena");
                 Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
                 Sleep();
@@ -6531,7 +6536,7 @@ public class CoreBots
                 Logger("This is a public map.. and non-privateable, so blame ae for that.. tho its required for some things so this will be forced public");
                 JumpWait();
                 if (Bot.Map.Name != null && Bot.Map.Name != map)
-                    Bot.Map.Join(map, autoCorrect: false);
+                    Bot.Map.Join(map);
                 Bot.Wait.ForMapLoad(map);
                 break;
             #endregion BuyHouse (for a merge)
@@ -6564,7 +6569,7 @@ public class CoreBots
                     Logger("You've Chosen to bot publicly... good luck in this *public only* map.");
                     JumpWait();
                     if (Bot.Map.Name != null && Bot.Map.Name != map)
-                        Bot.Map.Join(map, autoCorrect: false);
+                        Bot.Map.Join(map);
                     Bot.Wait.ForMapLoad(map);
                 }
                 break;
@@ -7142,7 +7147,7 @@ public class CoreBots
         for (int i = 0; i < 20; i++)
         {
             if (Bot.Map.Name != null && Bot.Map.Name != map)
-                Bot.Map.Join(!PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", autoCorrect: false);
+                Bot.Map.Join(!PrivateRooms ? map : $"{map}-{PrivateRoomNumber}");
             Bot.Wait.ForMapLoad(map);
 
             string? currentMap = Bot.Map.Name;

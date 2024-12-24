@@ -310,6 +310,7 @@ public class CoreSDKA
         Core.AddDrop("DoomKnight Weapon Kit", "Dark Spirit Orb", "Corrupt Spirit Orb", "Ominous Aura", "Grumpy Warhammer");
         Core.EquipClass(ClassType.Solo);
         Core.FarmingLogger(item, quant);
+        Bot.Quests.UpdateQuest(999);
         Core.RegisterQuests(2165);
         while (!Bot.ShouldExit && (!Core.CheckInventory(item, quant)))
         {
