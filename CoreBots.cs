@@ -3003,7 +3003,7 @@ public class CoreBots
         ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.Name == item);
 
         if (Bot.Player.Cell != cell)
-            Bot.Map.Jump(cell, pad, false);
+            Bot.Map.Jump(cell, pad);
         Bot.Wait.ForCellChange(cell);
 
         List<Monster> FindMonsters()
@@ -3044,7 +3044,7 @@ public class CoreBots
                 {
                     while (!Bot.ShouldExit && Bot.Player.Cell != cell)
                     {
-                        Bot.Map.Jump(cell, pad, false);
+                        Bot.Map.Jump(cell, pad);
                         Bot.Wait.ForCellChange(cell);
                     }
 
@@ -3084,7 +3084,7 @@ public class CoreBots
             Logger("No cell found to jump to after killing the monster. Trying Enter cell...");
         }
         if (targetCell == null && Bot.Player.Cell != "Enter")
-            Bot.Map.Jump(targetCell ?? "Enter", "Spawn", false);
+            Bot.Map.Jump(targetCell ?? "Enter", "Spawn");
         Bot.Wait.ForCellChange(targetCell ?? "Enter");
 
         Sleep();
@@ -3130,7 +3130,7 @@ public class CoreBots
 
         // Ensure the player is in the correct cell
         if (Bot.Player.Cell != cell)
-            Bot.Map.Jump(cell, pad, false);
+            Bot.Map.Jump(cell, pad);
         Bot.Wait.ForCellChange(cell);
 
         // Set bot options for monster aggression
@@ -3260,7 +3260,7 @@ public class CoreBots
 
         // Ensure the player is in the correct cell
         if (Bot.Player.Cell != cell)
-            Bot.Map.Jump(cell, pad, false);
+            Bot.Map.Jump(cell, pad);
         Bot.Wait.ForCellChange(cell);
 
         // Set bot options for monster aggression
@@ -3434,8 +3434,7 @@ public class CoreBots
                 Bot.Map.Cells.FirstOrDefault(c => c.ToLower().Contains("enter"))
                 ?? Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank") && !c.ToLower().Contains("enter"))
                 ?? "Enter",
-                "Spawn",
-                false
+                "Spawn"
             ); Bot.Options.AggroMonsters = false;
             JumpWait();
             Rest();
@@ -4493,7 +4492,7 @@ public class CoreBots
                 return;
 
             if (Bot.Player.Cell != cell)
-                Bot.Map.Jump(cell ?? "r9", pad, false);
+                Bot.Map.Jump(cell ?? "r9", pad);
             Bot.Wait.ForCellChange(cell ?? "r9");
             Bot.Player.SetSpawnPoint();
         }
@@ -5866,7 +5865,7 @@ public class CoreBots
         {
             // Bot.Send.Packet($"%xt%zm%moveToCell%{Bot.Map.RoomID}%{cell}%{pad}%");
             if (!string.IsNullOrEmpty(cell) && Bot.Player.Cell != cell)
-                Bot.Map.Jump(cell, pad, false);
+                Bot.Map.Jump(cell, pad);
             Bot.Wait.ForCellChange(cell ?? "Enter");
             Sleep();
 
@@ -5891,22 +5890,21 @@ public class CoreBots
         Bot.Options.AggroMonsters = false;
 
         // Initial jump to "Enter" to ensure a predictable starting state
-        string? targetCell = (Bot.Map.Cells.Count(c => c.Contains("Enter")) > 1
-    ? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"))
-    : Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank")))
-       ?? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"));
+        string? targetCell = (Bot.Map.Cells.Count(c => c.ToLower().Contains("enter")) > 1
+    ? Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("enter") && !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank"))
+    : Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("enter") && !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank")))
+       ?? Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("enter") && !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank"));
 
-        Bot.Map.Jump(targetCell ?? "Enter", "Spawn", false);
+        Bot.Map.Jump(targetCell.ToLower() ?? "Enter", targetCell.ToLower() == "enter" ? "Spawn" : "Left");
         Sleep(1000); // Allow time for possible auto-transfer to another cell
 
         // If the player is not in "Enter", add "Enter" cells to the blacklist and proceed to filter cases
         if (Bot.Player.Cell != "Enter")
         {
-            blackListedCells.UnionWith(Bot.Map.Cells.Where(cell => cell.ToLower().Contains("Enter")));
-            ProceedToFilteringCases(blackListedCells);
+            blackListedCells.UnionWith(Bot.Map.Cells.Where(cell => cell.ToLower().Contains("enter")));
+            ProceedToFilteringCases(blackListedCells.Concat(BLackListedJumptoCells).Distinct().ToHashSet());
             return;
         }
-
 
         (string, string) cellPad = (string.Empty, "Left");
         int jumpCount = 1;
@@ -5953,7 +5951,7 @@ public class CoreBots
     private void ProceedToFilteringCases(HashSet<string> blackListedCells)
     {
         // Add default filtering rules and specific map logic
-        blackListedCells.UnionWith(new List<string> { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame" });
+        // blackListedCells.UnionWith(new List<string> { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame" });
         blackListedCells.UnionWith(
             Bot.Map.Cells.Where(x =>
                 // Matches any cell starting with "cut" (case-insensitive),
@@ -6003,7 +6001,7 @@ public class CoreBots
                 break;
 
             case "wanders":
-                Bot.Map.Jump("Boss", "left", false);
+                Bot.Map.Jump("Boss", "left");
                 Bot.Sleep(2500);
                 blackListedCells.UnionWith(Bot.Player.Cell == "Boss" ? new[] { "r25", "Enter", "Enter2" } : new[] { "Boss", "Enter", "Enter2" });
                 break;
@@ -6049,7 +6047,7 @@ public class CoreBots
         {
             for (int i = 0; i < jumpCount; i++)
             {
-                Bot.Map.Jump(cellPad.Cell, cellPad.Pad, false);
+                Bot.Map.Jump(cellPad.Cell, cellPad.Pad);
                 Bot.Wait.ForTrue(() => Bot.Player.Cell == cellPad.Cell, 20);
             }
 
@@ -6484,7 +6482,7 @@ public class CoreBots
                 Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
                 Sleep();
                 if (cell != null && Bot.Player.Cell != cell)
-                    Bot.Map.Jump(cell ?? "Enter", pad, false);
+                    Bot.Map.Jump(cell ?? "Enter", pad);
                 Bot.Wait.ForCellChange(cell ?? "Enter");
                 break;
 
@@ -6618,7 +6616,7 @@ public class CoreBots
             }
 
             if (cell != null && Bot.Player.Cell != cell)
-                Bot.Map.Jump(cell, pad, false);
+                Bot.Map.Jump(cell, pad);
 
             Sleep(1500);
         }
@@ -6670,12 +6668,12 @@ public class CoreBots
                         Bot.Wait.ForActionCooldown(GameActions.Transfer);
                         if (hasMapNumber)
                         {
-                            Bot.Map.Join(map, cell ?? "Enter", pad, false, false);
-                            Bot.Wait.ForActionCooldown(GameActions.Transfer);
+                            Bot.Map.Join(map, cell ?? "Enter", cell == null ? pad : "Left", false, false);
+                            Sleep();
                         }
                         else
                         {
-                            Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", pad, false, false);
+                            Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", cell == null ? pad : "Left", false, false);
                             Bot.Wait.ForActionCooldown(GameActions.Transfer);
                         }
                         Bot.Wait.ForMapLoad(strippedMap);
@@ -6691,7 +6689,7 @@ public class CoreBots
 
                         if (Bot.Map.Cells.Count(x => x != null && x.ToLower().Contains("enter")) > 1)
                         {
-                            cell = nonEnterCells.FirstOrDefault();
+                            cell = nonEnterCells.FirstOrDefault(c => c != null && !BLackListedJumptoCells.Any(bc => c.ToLower().Contains(bc)));
                         }
                         else
                         {
@@ -6699,7 +6697,7 @@ public class CoreBots
                             .FirstOrDefault(x => x != null && !BLackListedJumptoCells.Any(bc => x.ToLower().Contains(bc)));
                         }
                         if (cell != null && Bot.Player.Cell != cell)
-                            Bot.Map.Jump(cell, pad, false);
+                            Bot.Map.Jump(cell, pad);
                         Bot.Wait.ForCellChange(cell ?? "Enter");
 
                     }
@@ -6712,12 +6710,12 @@ public class CoreBots
                             if (!string.IsNullOrEmpty(map) && !Bot.Wait.ForMapLoad(map, 20))
                             {
                                 if (cell != null && Bot.Player.Cell != cell)
-                                    Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad, false);
+                                    Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad);
                             }
                             else
                             {
                                 if (cell != null && Bot.Player.Cell != cell)
-                                    Bot.Map.Jump(cell, pad, false);
+                                    Bot.Map.Jump(cell, pad);
                             }
                             Sleep();
                             Bot.Wait.ForCellChange(cell ?? "Enter");
@@ -6892,7 +6890,7 @@ public class CoreBots
             while (!Bot.ShouldExit && (Bot.Player.Cell != cell || Bot.Player.Cell == cutsceneCell))
             {
                 if (!string.IsNullOrEmpty(cell))
-                    Bot.Map.Jump(cell, pad, false);
+                    Bot.Map.Jump(cell, pad);
                 Bot.Wait.ForCellChange(cell ?? "Enter");
 
 
@@ -6928,7 +6926,7 @@ public class CoreBots
             string targetPad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
 
             if (cell != null && Bot.Player.Cell != targetCell)
-                Bot.Map.Jump(targetCell, targetPad, false);
+                Bot.Map.Jump(targetCell, targetPad);
             Bot.Wait.ForCellChange(targetCell);
         }
         else goto retry;

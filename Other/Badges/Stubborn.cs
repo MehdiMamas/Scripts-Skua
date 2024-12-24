@@ -34,7 +34,9 @@ public class Stubborn
         for (int i = 0; i < 100; i++)
         {
             //leave autocorrect enabled as it double jumps and gets it done quicker.
-            Bot.Map.Jump("r2", "left");
+            Bot.Map.Jump("r2", "left", false);
+            Core.Sleep();
+            Core.Logger($"Jumping {i} times");
         }
 
     }
