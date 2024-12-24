@@ -5851,7 +5851,7 @@ public class CoreBots
     {
         if (Bot.Player.Cell != null && Bot.Player.Cell.Equals(cell, StringComparison.OrdinalIgnoreCase))
         {
-            Bot.Player.SetSpawnPoint(cell, pad);
+            Bot.Player.SetSpawnPoint();
             return;
         }
 
@@ -5872,7 +5872,7 @@ public class CoreBots
             if (Bot.Player.Cell == cell)
                 break;
         }
-        Bot.Player.SetSpawnPoint(cell ?? "Enter", pad);
+        Bot.Player.SetSpawnPoint();
         GC.Collect();
     }
 
