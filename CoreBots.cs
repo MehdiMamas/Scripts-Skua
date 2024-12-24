@@ -5890,12 +5890,12 @@ public class CoreBots
         Bot.Options.AggroMonsters = false;
 
         // Initial jump to "Enter" to ensure a predictable starting state
-        string? targetCell = (Bot.Map.Cells.Count(c => c.ToLower().Contains("enter")) > 1
-    ? Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("enter") && !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank"))
-    : Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("enter") && !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank")))
-       ?? Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("enter") && !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank"));
+        string? targetCell = (Bot.Map.Cells.Count(c => c.Contains("Enter")) > 1
+    ? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"))
+    : Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank")))
+       ?? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"));
 
-        Bot.Map.Jump(targetCell.ToLower() ?? "Enter", targetCell.ToLower() == "enter" ? "Spawn" : "Left");
+        Bot.Map.Jump(targetCell ?? "Enter", targetCell == "Enter" ? "Spawn" : "Left");
         Sleep(1000); // Allow time for possible auto-transfer to another cell
 
         // If the player is not in "Enter", add "Enter" cells to the blacklist and proceed to filter cases
