@@ -8,7 +8,7 @@ tags: glacial, tomb, merge, glacetomb, arctic, necrodraugr, scholar, nether, mor
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Story/Glacera.cs
-//cs_include Scripts/Seasonal/Frostvale/Frostvale.cs
+//cs_include Scripts/Seasonal\Frostvale\Story\CoreFrostvale.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -19,7 +19,7 @@ public class GlacialTombMerge
     private CoreBots Core => CoreBots.Instance;
     private CoreFarms Farm = new();
     private CoreAdvanced Adv = new();
-    private Frostvale Frostvale = new();
+    private CoreFrostvale Frostvale = new();
     private static CoreAdvanced sAdv = new();
 
     public bool DontPreconfigure = true;

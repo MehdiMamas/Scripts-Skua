@@ -8,7 +8,7 @@ tags: frostvale-story, seasonal, frostvale
 //cs_include Scripts/Story/Glacera.cs
 using Skua.Core.Interfaces;
 
-public class Frostvale
+public class CoreFrostvale
 {
     public CoreBots Core => CoreBots.Instance;
     public IScriptInterface Bot => IScriptInterface.Instance;
@@ -16,11 +16,7 @@ public class Frostvale
     public GlaceraStory GlaceraStory = new();
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.SetOptions();
-
-        DoAll();
-
-        Core.SetOptions(false);
+        Core.RunCore();
     }
 
     public void DoAll()

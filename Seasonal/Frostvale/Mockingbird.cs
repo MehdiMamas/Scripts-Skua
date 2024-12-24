@@ -6,7 +6,7 @@ tags: holidayhotel, aria, quest rewards,frostvale,mockingbird
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/Seasonal\Frostvale\Frostvale.cs
+//cs_include Scripts/Seasonal\Frostvale\Story\CoreFrostvale.cs
 //cs_include Scripts/Story/Glacera.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
@@ -15,7 +15,7 @@ public class Mockingbird
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private Frostvale Frost = new Frostvale();
+    private CoreFrostvale Frost = new Frostvale();
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();

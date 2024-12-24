@@ -6,7 +6,7 @@ tags: frost-defanged-badge, world-savior-badge, frostvale, seasonal
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/Glacera.cs
-//cs_include Scripts/Seasonal/Frostvale/Frostvale.cs
+//cs_include Scripts/Seasonal\Frostvale\Story\CoreFrostvale.cs
 using Skua.Core.Interfaces;
 
 public class FrostvaleBadges

@@ -7,7 +7,7 @@ tags: frostval, fimbul, tomb, merge, fimbultomb, cursed, fimbulventr, witch, ven
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/Seasonal/Frostvale/Frostvale.cs
+//cs_include Scripts/Seasonal\Frostvale\Story\CoreFrostvale.cs
 //cs_include Scripts/Story/Glacera.cs
 
 using Skua.Core.Interfaces;
@@ -21,7 +21,7 @@ public class FimbulTombMerge
     private CoreFarms Farm = new();
     private CoreAdvanced Adv = new();
     private static CoreAdvanced sAdv = new();
-    private Frostvale FV = new();
+    private CoreFrostvale FV = new();
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

@@ -7,7 +7,7 @@ tags: manaharvest, merge, manaharvest, shadowslayer, leathers, leather, cap, rit
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/Seasonal\HarvestDay\CoreHarvestDay.cs
+//cs_include Scripts/Seasonal/HarvestDay/CoreHarvestDay.cs
 using System.Globalization;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;

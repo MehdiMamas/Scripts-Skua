@@ -12,7 +12,7 @@ tags: seasonal, story, complete, all
 //cs_include Scripts/Seasonal/AprilFools/SuperSLAYIN'Badge(GardenQuest).cs
 //cs_include Scripts/Seasonal/AprilFools/Mmmm,Meaty(or)(MeatyShard).cs
 //cs_include Scripts/Story/Glacera.cs
-//cs_include Scripts/Seasonal/Frostvale/Frostvale.cs
+//cs_include Scripts/Seasonal\Frostvale\Story\CoreFrostvale.cs
 //cs_include Scripts/Seasonal/HerosHeartDay/Fezzini.cs
 //cs_include Scripts/Seasonal/HerosHeartDay/LoveSpellStory.cs
 //cs_include Scripts/Seasonal/HerosHeartDay/WheelOfLove.cs
@@ -54,7 +54,7 @@ public class AllSeasonal
     public DERPBadge Derp = new();
     public MeateorHunt MeateorHunt = new();
     public SuperSLAYINBadge SSB = new();
-    public Frostvale Frostvale = new();
+    public CoreFrostvale Frostvale = new();
     public FezziniStory Fezzini = new();
     public LoveSpell LoveSpell = new();
     public WheeleOfLove WheeleOfLove = new();

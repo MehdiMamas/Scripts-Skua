@@ -8,7 +8,7 @@ tags: huntress-merge, seasonal, frostvale
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/Glacera.cs
-//cs_include Scripts/Seasonal/Frostvale/Frostvale.cs
+//cs_include Scripts/Seasonal\Frostvale\Story\CoreFrostvale.cs
 
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
@@ -20,7 +20,7 @@ public class HuntressMerge
     private CoreBots Core => CoreBots.Instance;
     private CoreFarms Farm = new();
     private CoreAdvanced Adv = new();
-    private Frostvale Frostvale = new();
+    private CoreFrostvale Frostvale = new();
     private static CoreAdvanced sAdv = new();
 
     public bool DontPreconfigure = true;
@@ -45,7 +45,7 @@ public class HuntressMerge
     {
 
         Frostvale.Otziwar();
-        
+
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("otziwar", 2088, findIngredients, buyOnlyThis, buyMode: buyMode);
 

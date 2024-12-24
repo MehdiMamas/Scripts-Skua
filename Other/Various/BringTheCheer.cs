@@ -7,7 +7,7 @@ tags: null
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Seasonal/Frostvale/Frostvale.cs
+//cs_include Scripts/Seasonal\Frostvale\Story\CoreFrostvale.cs
 //cs_include Scripts/Story/Glacera.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
@@ -20,7 +20,7 @@ public class BringTheCheer
     public CoreStory Story = new();
     public CoreFarms Farm = new();
     public CoreAdvanced Adv => new();
-    public Frostvale Frostvale = new();
+    public CoreFrostvale Frostvale = new();
 
     public bool DontPreconfigure = true;
 

@@ -5,7 +5,7 @@ tags: ballyhoo,bally-hoo,ballycool,generosity,gc,generositycoin,generosity coin,
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
-//cs_include Scripts/Seasonal\Frostvale\ChillysParticipation.cs
+//cs_include Scripts/Seasonal/Frostvale/ChillysParticipation.cs
 using Skua.Core.Interfaces;
 
 public class BallyhooGC
