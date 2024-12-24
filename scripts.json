@@ -9139,7 +9139,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/WinterHorrorWarRewardsMerge.cs",
-    "size": 4811,
+    "size": 4815,
     "fileName": "WinterHorrorWarRewardsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/WinterHorrorWarRewardsMerge.cs"
   },
@@ -9237,7 +9237,7 @@
       "seasonal"
     ],
     "path": "Seasonal/Frostvale/FrostvaleBadges.cs",
-    "size": 1346,
+    "size": 1350,
     "fileName": "FrostvaleBadges.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/FrostvaleBadges.cs"
   },
@@ -9279,7 +9279,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/FrostvalBarbarian.cs",
-    "size": 3796,
+    "size": 3800,
     "fileName": "FrostvalBarbarian.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/FrostvalBarbarian.cs"
   },
@@ -9292,7 +9292,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/SnowviewMerge.cs",
-    "size": 5396,
+    "size": 5400,
     "fileName": "SnowviewMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/SnowviewMerge.cs"
   },
@@ -9352,7 +9352,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/SnowviewRaceMerge.cs",
-    "size": 4442,
+    "size": 4446,
     "fileName": "SnowviewRaceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/SnowviewRaceMerge.cs"
   },
@@ -9443,7 +9443,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/GundaharsStashMerge.cs",
-    "size": 5098,
+    "size": 5102,
     "fileName": "GundaharsStashMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/GundaharsStashMerge.cs"
   },
@@ -21055,7 +21055,7 @@
       "all"
     ],
     "path": "Other/Badges/AllBadges.cs",
-    "size": 5112,
+    "size": 5116,
     "fileName": "AllBadges.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Badges/AllBadges.cs"
   },
