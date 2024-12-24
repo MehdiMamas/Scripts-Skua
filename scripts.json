@@ -623,7 +623,7 @@
       "all"
     ],
     "path": "Seasonal/AllSeasonal.cs",
-    "size": 9287,
+    "size": 9301,
     "fileName": "AllSeasonal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AllSeasonal.cs"
   },
@@ -9126,7 +9126,7 @@
       "crystals"
     ],
     "path": "Seasonal/Frostvale/FimbulTombMerge.cs",
-    "size": 5591,
+    "size": 5605,
     "fileName": "FimbulTombMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/FimbulTombMerge.cs"
   },
@@ -9139,7 +9139,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/WinterHorrorWarRewardsMerge.cs",
-    "size": 4801,
+    "size": 4811,
     "fileName": "WinterHorrorWarRewardsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/WinterHorrorWarRewardsMerge.cs"
   },
@@ -9237,7 +9237,7 @@
       "seasonal"
     ],
     "path": "Seasonal/Frostvale/FrostvaleBadges.cs",
-    "size": 1336,
+    "size": 1346,
     "fileName": "FrostvaleBadges.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/FrostvaleBadges.cs"
   },
@@ -9252,7 +9252,7 @@
       "mockingbird"
     ],
     "path": "Seasonal/Frostvale/Mockingbird.cs",
-    "size": 2276,
+    "size": 2290,
     "fileName": "Mockingbird.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Mockingbird.cs"
   },
@@ -9279,7 +9279,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/FrostvalBarbarian.cs",
-    "size": 3786,
+    "size": 3796,
     "fileName": "FrostvalBarbarian.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/FrostvalBarbarian.cs"
   },
@@ -9292,7 +9292,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/SnowviewMerge.cs",
-    "size": 5386,
+    "size": 5396,
     "fileName": "SnowviewMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/SnowviewMerge.cs"
   },
@@ -9326,7 +9326,7 @@
       "shillelagh"
     ],
     "path": "Seasonal/Frostvale/GlacialTombMerge.cs",
-    "size": 5610,
+    "size": 5624,
     "fileName": "GlacialTombMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/GlacialTombMerge.cs"
   },
@@ -9344,19 +9344,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Yulecat.cs"
   },
   {
-    "name": "Frostvale All Stories",
-    "description": "This will finish the entire frostvale storylines.",
-    "tags": [
-      "frostvale-story",
-      "seasonal",
-      "frostvale"
-    ],
-    "path": "Seasonal/Frostvale/Frostvale.cs",
-    "size": 42676,
-    "fileName": "Frostvale.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Frostvale.cs"
-  },
-  {
     "name": "Snowview Race Merge",
     "description": "This will get all or selected items on this merge shop.",
     "tags": [
@@ -9365,7 +9352,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/SnowviewRaceMerge.cs",
-    "size": 4432,
+    "size": 4442,
     "fileName": "SnowviewRaceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/SnowviewRaceMerge.cs"
   },
@@ -9378,7 +9365,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/BowJanglesMerge.cs",
-    "size": 5372,
+    "size": 5386,
     "fileName": "BowJanglesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/BowJanglesMerge.cs"
   },
@@ -9430,7 +9417,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/HuntressMerge.cs",
-    "size": 8090,
+    "size": 8096,
     "fileName": "HuntressMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/HuntressMerge.cs"
   },
@@ -9456,7 +9443,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/GundaharsStashMerge.cs",
-    "size": 5088,
+    "size": 5098,
     "fileName": "GundaharsStashMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/GundaharsStashMerge.cs"
   },
@@ -21068,7 +21055,7 @@
       "all"
     ],
     "path": "Other/Badges/AllBadges.cs",
-    "size": 5102,
+    "size": 5112,
     "fileName": "AllBadges.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Badges/AllBadges.cs"
   },
@@ -21542,7 +21529,7 @@
       "all"
     ],
     "path": "Other/Classes/0AllClasses.cs",
-    "size": 27773,
+    "size": 27783,
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
@@ -21691,7 +21678,7 @@
       "null"
     ],
     "path": "Other/Various/BringTheCheer.cs",
-    "size": 4055,
+    "size": 4069,
     "fileName": "BringTheCheer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/BringTheCheer.cs"
   },
@@ -23098,6 +23085,531 @@
     "size": 5397,
     "fileName": "HeadlessHorsemanGear.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/GearSets/HeadlessHorsemanGear.cs"
+  },
+  {
+    "name": "Deer Hunt Story",
+    "description": "This script completes the DeerHunt quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "deerhunt"
+    ],
+    "path": "Seasonal/Frostvale/Story/19DeerHunt.cs",
+    "size": 677,
+    "fileName": "19DeerHunt.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/19DeerHunt.cs"
+  },
+  {
+    "name": "Alpine Story",
+    "description": "This script completes the Alpine quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "alpine"
+    ],
+    "path": "Seasonal/Frostvale/Story/03Alpine.cs",
+    "size": 666,
+    "fileName": "03Alpine.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/03Alpine.cs"
+  },
+  {
+    "name": "Winter Horror Story",
+    "description": "This script completes the Winterhorror quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "winterhorror"
+    ],
+    "path": "Seasonal/Frostvale/Story/12Winterhorror.cs",
+    "size": 697,
+    "fileName": "12Winterhorror.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/12Winterhorror.cs"
+  },
+  {
+    "name": "Glace Tomb Story",
+    "description": "This script completes the GlaceTomb quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "glacetomb"
+    ],
+    "path": "Seasonal/Frostvale/Story/21GlaceTomb.cs",
+    "size": 682,
+    "fileName": "21GlaceTomb.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/21GlaceTomb.cs"
+  },
+  {
+    "name": "Snowy Vale Story",
+    "description": "This script completes the SnowyVale quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "snowyvale"
+    ],
+    "path": "Seasonal/Frostvale/Story/04SnowyVale.cs",
+    "size": 682,
+    "fileName": "04SnowyVale.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/04SnowyVale.cs"
+  },
+  {
+    "name": "Battlefield Story",
+    "description": "This script completes the Battlefield quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "battlefield"
+    ],
+    "path": "Seasonal/Frostvale/Story/07Battlefield.cs",
+    "size": 691,
+    "fileName": "07Battlefield.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/07Battlefield.cs"
+  },
+  {
+    "name": "Icewind Pass Story",
+    "description": "This script completes the Icewindpass quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "icewindpass"
+    ],
+    "path": "Seasonal/Frostvale/Story/14Icewindpass.cs",
+    "size": 692,
+    "fileName": "14Icewindpass.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/14Icewindpass.cs"
+  },
+  {
+    "name": "Mount Otzi Story",
+    "description": "This script completes the MountOtzi quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "mountotzi"
+    ],
+    "path": "Seasonal/Frostvale/Story/23MountOtzi.cs",
+    "size": 682,
+    "fileName": "23MountOtzi.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/23MountOtzi.cs"
+  },
+  {
+    "name": "Cold Wind Valley Story",
+    "description": "This script completes the ColdWindValley quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "coldwindvalley"
+    ],
+    "path": "Seasonal/Frostvale/Story/06ColdWindValley.cs",
+    "size": 708,
+    "fileName": "06ColdWindValley.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/06ColdWindValley.cs"
+  },
+  {
+    "name": "Ice Rise Story",
+    "description": "This script completes the IceRise quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "icerise"
+    ],
+    "path": "Seasonal/Frostvale/Story/05IceRise.cs",
+    "size": 672,
+    "fileName": "05IceRise.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/05IceRise.cs"
+  },
+  {
+    "name": "Icepike Story",
+    "description": "This script completes the Icepike quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "icepike"
+    ],
+    "path": "Seasonal/Frostvale/Story/15Icepike.cs",
+    "size": 671,
+    "fileName": "15Icepike.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/15Icepike.cs"
+  },
+  {
+    "name": "Bow Jangles Story",
+    "description": "This script completes the BowJangles quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "bowjangles"
+    ],
+    "path": "Seasonal/Frostvale/Story/20BowJangles.cs",
+    "size": 687,
+    "fileName": "20BowJangles.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/20BowJangles.cs"
+  },
+  {
+    "name": "Snowview Race Story",
+    "description": "This script completes the SnowviewRace quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "snowviewrace"
+    ],
+    "path": "Seasonal/Frostvale/Story/18SnowviewRace.cs",
+    "size": 697,
+    "fileName": "18SnowviewRace.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/18SnowviewRace.cs"
+  },
+  {
+    "name": "Frozensoul Story",
+    "description": "This script completes the Frozensoul quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "frozensoul"
+    ],
+    "path": "Seasonal/Frostvale/Story/09Frozensoul.cs",
+    "size": 686,
+    "fileName": "09Frozensoul.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/09Frozensoul.cs"
+  },
+  {
+    "name": "Frostvale All Stories",
+    "description": "This will finish the entire frostvale storylines.",
+    "tags": [
+      "frostvale-story",
+      "seasonal",
+      "frostvale"
+    ],
+    "path": "Seasonal/Frostvale/Story/CoreFrostvale.cs",
+    "size": 42626,
+    "fileName": "CoreFrostvale.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/CoreFrostvale.cs"
+  },
+  {
+    "name": "Holiday Hotel Story",
+    "description": "This script completes the HolidayHotel quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "holidayhotel"
+    ],
+    "path": "Seasonal/Frostvale/Story/25HolidayHotel.cs",
+    "size": 697,
+    "fileName": "25HolidayHotel.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/25HolidayHotel.cs"
+  },
+  {
+    "name": "Fimbultomb Story",
+    "description": "This script completes the Fimbultomb quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "fimbultomb"
+    ],
+    "path": "Seasonal/Frostvale/Story/22Fimbultomb.cs",
+    "size": 686,
+    "fileName": "22Fimbultomb.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/22Fimbultomb.cs"
+  },
+  {
+    "name": "Holiday Horror Story",
+    "description": "This script completes the HolidayHorror quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "holidayhorror"
+    ],
+    "path": "Seasonal/Frostvale/Story/26HolidayHorror.cs",
+    "size": 702,
+    "fileName": "26HolidayHorror.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/26HolidayHorror.cs"
+  },
+  {
+    "name": "Snow Globe Story",
+    "description": "This script completes the SnowGlobe quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "snowglobe"
+    ],
+    "path": "Seasonal/Frostvale/Story/02SnowGlobe.cs",
+    "size": 682,
+    "fileName": "02SnowGlobe.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/02SnowGlobe.cs"
+  },
+  {
+    "name": "Icerise Past Story",
+    "description": "This script completes the Icerisepast quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "icerisepast"
+    ],
+    "path": "Seasonal/Frostvale/Story/11Icerisepast.cs",
+    "size": 692,
+    "fileName": "11Icerisepast.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/11Icerisepast.cs"
+  },
+  {
+    "name": "Darkwinter Story",
+    "description": "This script completes the Darkwinter quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "darkwinter"
+    ],
+    "path": "Seasonal/Frostvale/Story/08Darkwinter.cs",
+    "size": 686,
+    "fileName": "08Darkwinter.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/08Darkwinter.cs"
+  },
+  {
+    "name": "Cryostorm Story",
+    "description": "This script completes the Cryostorm quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "cryostorm"
+    ],
+    "path": "Seasonal/Frostvale/Story/13Cryostorm.cs",
+    "size": 681,
+    "fileName": "13Cryostorm.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/13Cryostorm.cs"
+  },
+  {
+    "name": "Howard's Hill Story",
+    "description": "This script completes the Howardshill quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "howardshill"
+    ],
+    "path": "Seasonal/Frostvale/Story/10Howardshill.cs",
+    "size": 693,
+    "fileName": "10Howardshill.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/10Howardshill.cs"
+  },
+  {
+    "name": "Ice Cave Story",
+    "description": "This script completes the IceCave quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "icecave"
+    ],
+    "path": "Seasonal/Frostvale/Story/01IceCave.cs",
+    "size": 672,
+    "fileName": "01IceCave.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/01IceCave.cs"
+  },
+  {
+    "name": "Otzi War Story",
+    "description": "This script completes the Otziwar quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "otziwar"
+    ],
+    "path": "Seasonal/Frostvale/Story/24Otziwar.cs",
+    "size": 672,
+    "fileName": "24Otziwar.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/24Otziwar.cs"
+  },
+  {
+    "name": "Frostvale (All)",
+    "description": "This script completes the full Frostvale saga.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "icecave",
+      "snowglobe",
+      "alpine",
+      "snowyvale",
+      "icerise",
+      "coldwindvalley",
+      "battlefield",
+      "darkwinter",
+      "frozensoul",
+      "howardshill",
+      "icerisepast",
+      "winterhorror",
+      "cryostorm",
+      "icewindpass",
+      "icepike",
+      "frostvalpastpresentandfuture",
+      "snowview",
+      "snowviewrace",
+      "deerhunt",
+      "bowjangles",
+      "glacetomb",
+      "fimbultomb",
+      "mountotzi",
+      "otziwar",
+      "holidayhotel",
+      "holidayhorror",
+      "doall"
+    ],
+    "path": "Seasonal/Frostvale/Story/00DoAll.cs",
+    "size": 974,
+    "fileName": "00DoAll.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/00DoAll.cs"
+  },
+  {
+    "name": "Frostval Past, Present, and Future Story",
+    "description": "This script completes the FrostvalPastPresentandFuture quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "frostvalpastpresentandfuture"
+    ],
+    "path": "Seasonal/Frostvale/Story/16FrostvalPastPresentandFuture.cs",
+    "size": 782,
+    "fileName": "16FrostvalPastPresentandFuture.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/16FrostvalPastPresentandFuture.cs"
+  },
+  {
+    "name": "Snowview Story",
+    "description": "This script completes the Snowview quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "snowview"
+    ],
+    "path": "Seasonal/Frostvale/Story/17Snowview.cs",
+    "size": 676,
+    "fileName": "17Snowview.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/17Snowview.cs"
   },
   {
     "name": "Chrono Phoenix Story",
