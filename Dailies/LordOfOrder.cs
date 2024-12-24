@@ -46,6 +46,7 @@ public class LordOfOrder
 
         Story.PreLoad(this);
         Core.Logger("Daily: Lord Of Order Class");
+        Core.Logger("For the idoits that keep complaining its not continuing, this is a *daily* Quest, upto the LOO Quest [7165] (10 dailies)");
 
         Farm.Experience(50);
         // Heart of Servitude
