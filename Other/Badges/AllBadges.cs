@@ -94,7 +94,7 @@ public class AllBadges
     public ThiefofChaosBadge ToC = new();
     public UltraCarnaxBadge UC = new();
     public GoalBadge G = new();
-    public CoreFrostvaleBadges FV = new();
+    public FrostvaleBadges FV = new();
     private YokaiAscension YA = new();
 
     public void ScriptMain(IScriptInterface bot)

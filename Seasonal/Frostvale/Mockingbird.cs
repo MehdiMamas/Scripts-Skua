@@ -15,7 +15,7 @@ public class Mockingbird
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFrostvale Frost = new Frostvale();
+    private CoreFrostvale Frost = new();
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();

@@ -102,7 +102,6 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/DarkCarnax.cs
 //cs_include Scripts/Story/DarkDungeon.cs
 //cs_include Scripts/Story/DeathsRealm.cs
-//cs_include Scripts/Story/DeerHunt.cs
 //cs_include Scripts/Story/DjinnGate.cs
 //cs_include Scripts/Story/DjinnGuard.cs
 //cs_include Scripts/Story/DoomVault.cs
@@ -700,9 +699,6 @@ public class AllStories
 
         DeathsRealm.StoryLine();
         Core.Logger($"Story: Death's Realm - Complete");
-
-        DeerHunt.StoryLine();
-        Core.Logger($"Story: Deer Hunt - Complete");
 
         DjinnGateStory.DjinnGate();
         Core.Logger($"Story: Djinn Gate - Complete");

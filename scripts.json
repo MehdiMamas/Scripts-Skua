@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 335115,
+    "size": 336020,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -1872,7 +1872,7 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 28708,
+    "size": 28585,
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -2386,19 +2386,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Yokai.cs"
   },
   {
-    "name": "Deer Hunt Story",
-    "description": "This will finish the Deer Hunt story.",
-    "tags": [
-      "story",
-      "quest",
-      "deer-hunt"
-    ],
-    "path": "Story/DeerHunt.cs",
-    "size": 1731,
-    "fileName": "DeerHunt.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/DeerHunt.cs"
-  },
-  {
     "name": "Ubear Story",
     "description": "This will finish the Ubear Story.",
     "tags": [
@@ -2702,7 +2689,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 66991,
+    "size": 67189,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -9252,7 +9239,7 @@
       "mockingbird"
     ],
     "path": "Seasonal/Frostvale/Mockingbird.cs",
-    "size": 2290,
+    "size": 2280,
     "fileName": "Mockingbird.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Mockingbird.cs"
   },
@@ -16855,7 +16842,7 @@
       "null"
     ],
     "path": "Other/MergeShops/DeerHuntMerge.cs",
-    "size": 4898,
+    "size": 4959,
     "fileName": "DeerHuntMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DeerHuntMerge.cs"
   },
@@ -21055,7 +21042,7 @@
       "all"
     ],
     "path": "Other/Badges/AllBadges.cs",
-    "size": 5116,
+    "size": 5112,
     "fileName": "AllBadges.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Badges/AllBadges.cs"
   },
