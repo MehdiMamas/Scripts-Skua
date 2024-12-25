@@ -14,6 +14,7 @@ tags: void, warlock, tools, job, corrupted, touch, quest, rewards, tools for the
 //cs_include Scripts/CoreAdvanced.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+using Skua.Core.Utils;
 
 public class VoidWarlock
 {
@@ -49,11 +50,9 @@ public class VoidWarlock
         List<ItemBase> TouchRewards = LoadRewards(6684, singleTouchReward);
 
         // Add items to drop
-        ToolsRewards.ForEach(item => Bot.Drops.Add(item.Name));
-        TouchRewards.ForEach(item => Bot.Drops.Add(item.Name));
+        ToolsRewards.Concat(TouchRewards).ForEach(item => Bot.Drops.Add(item.Name));
 
-        Bot.Drops.Add(Nation.bagDrops);
-        Bot.Drops.Add("Brittney's Winter Diamond");
+        Bot.Drops.Add(Nation.bagDrops.Concat(new[] { "Brittney's Winter Diamond" }).ToArray());
 
         // Handle [Tools for the Job] Quest
         Core.Logger("Starting [Tools for the Job] Quest");
@@ -72,6 +71,9 @@ public class VoidWarlock
             Core.EnsureComplete(6683, reward.ID);
             Bot.Wait.ForQuestComplete(6683);
             Core.ToBank(reward.ID);
+            // Collect garbage after a large amount of drops
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
         Core.Logger("All drops acquired from [Tools for the Job] Quest");
 
@@ -94,6 +96,9 @@ public class VoidWarlock
             Core.EnsureComplete(6684, reward.ID);
             Bot.Wait.ForQuestComplete(6684);
             Core.ToBank(reward.ID);
+            // Collect garbage after a large amount of drops
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
         Core.Logger("All drops acquired from [Corrupted Touch] Quest");
     }
