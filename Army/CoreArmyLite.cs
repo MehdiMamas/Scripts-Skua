@@ -1370,6 +1370,7 @@ public class CoreArmyLite
                 }
                 else
                 {
+                    Bot.Wait.ForActionCooldown(GameActions.Transfer);
                     Core.JumpWait();
                     Core.Logger("Player Moved Cells/maps");
                     break;
@@ -1401,8 +1402,9 @@ public class CoreArmyLite
         if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Count > 0 && Bot.Map.PlayerNames.Contains(userName) && Bot.Map.TryGetPlayer(userName, out PlayerInfo? playerObject) && playerObject != null)
         {
             Bot.Player.Goto(userName);
+            Bot.Wait.ForActionCooldown(GameActions.Transfer);
             Bot.Wait.ForMapLoad(Bot.Map.Name);
-            Core.Sleep(1500);
+            Core.Sleep(2500);
             if (playerObject != null && playerObject.Cell == Bot.Player.Cell)
                 return true;
         }
@@ -1424,6 +1426,7 @@ public class CoreArmyLite
 
                 Bot.Player.Goto(userName);
                 Bot.Wait.ForMapLoad(Bot.Map.Name);
+                Bot.Wait.ForActionCooldown(GameActions.Transfer);
                 Core.Sleep();
             }
 
