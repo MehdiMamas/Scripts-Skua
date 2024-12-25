@@ -6688,7 +6688,7 @@ public class CoreBots
                         if (cell != null && Bot.Player.Cell != cell)
                         {
                             Logger($"Selected cell: {cell}");
-                            Bot.Map.Jump(cell, pad);
+                            Bot.Map.Jump(cell, pad ?? "Spawn");
                             Bot.Wait.ForCellChange(cell);
                         }
                     }
@@ -6707,7 +6707,7 @@ public class CoreBots
                             }
                             else if (cell != null && Bot.Player.Cell != cell)
                             {
-                                Bot.Map.Jump(cell, pad);
+                                Bot.Map.Jump(cell, pad ?? "Spawn");
                             }
 
                             // Sleep and wait for the player's cell change
