@@ -1872,7 +1872,7 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 28708,
+    "size": 28585,
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -2384,19 +2384,6 @@
     "size": 9340,
     "fileName": "Yokai.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Yokai.cs"
-  },
-  {
-    "name": "Deer Hunt Story",
-    "description": "This will finish the Deer Hunt story.",
-    "tags": [
-      "story",
-      "quest",
-      "deer-hunt"
-    ],
-    "path": "Story/DeerHunt.cs",
-    "size": 1731,
-    "fileName": "DeerHunt.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/DeerHunt.cs"
   },
   {
     "name": "Ubear Story",
@@ -21055,7 +21042,7 @@
       "all"
     ],
     "path": "Other/Badges/AllBadges.cs",
-    "size": 5116,
+    "size": 5112,
     "fileName": "AllBadges.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Badges/AllBadges.cs"
   },
