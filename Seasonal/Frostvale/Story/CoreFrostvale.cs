@@ -1322,6 +1322,7 @@ public class CoreFrostvale
         // 10014 | Empty Nest
         if (!Story.QuestProgression(10014))
         {
+            Core.CutSceneFixer("holidayhorror", "r12", "Cut3");
             Core.HuntMonsterQuest(10014,
                 ("holidayhorror", UseableMonsters[11], ClassType.Solo));
         }
