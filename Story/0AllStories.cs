@@ -319,7 +319,6 @@ public class AllStories
     public DarkCarnaxStory DarkCarnax = new();
     public DarkDungeon DarkDungeon = new();
     public DeathsRealm DeathsRealm = new();
-    public DeerHunt DeerHunt = new();
     public DjinnGateStory DjinnGateStory = new();
     public DjinnGuard DjinnGuard = new();
     public DoomVaultA DoomVaultA = new();
