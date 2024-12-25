@@ -7,7 +7,8 @@ tags: null
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Story/DeerHunt.cs
+//cs_include Scripts/Seasonal\Frostvale\Story\CoreFrostvale.cs
+//cs_include Scripts/Story/Glacera.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -20,7 +21,7 @@ public class DeerHuntMerge
     public CoreStory Story = new();
     public CoreAdvanced Adv = new();
     public static CoreAdvanced sAdv = new();
-    public DeerHunt DeerHunt = new();
+    private CoreFrostvale Frost = new();
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -42,7 +43,7 @@ public class DeerHuntMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
-        DeerHunt.StoryLine();
+        Frost.DeerHunt();
 
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("deerhunt", 2077, findIngredients, buyOnlyThis, buyMode: buyMode);
