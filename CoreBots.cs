@@ -3042,7 +3042,10 @@ public class CoreBots
                 Bot.Events.MonsterKilled += b => ded = true;
                 while (!Bot.ShouldExit && !ded)
                 {
-                    while (!Bot.ShouldExit && Bot.Player.Cell != cell)
+                    while (!Bot.ShouldExit && !Bot.Player.Alive)
+                        Sleep();
+
+                    if (cell != null && Bot.Player.Cell != cell)
                     {
                         Bot.Map.Jump(cell, pad);
                         Bot.Wait.ForCellChange(cell);
@@ -3050,6 +3053,7 @@ public class CoreBots
 
                     if (!Bot.Combat.StopAttacking)
                         Bot.Combat.Attack(monster);
+
                     if (targetMonster.MaxHP == 1)
                     {
                         ded = true;
@@ -3072,24 +3076,21 @@ public class CoreBots
         }
 
         Bot.Options.AttackWithoutTarget = false;
-        ToggleAggro(false);
-
-        string? targetCell = (Bot.Map.Cells.Count(c => c.Contains("Enter")) > 1
-    ? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"))
-    : Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank")))
-        ?? Bot.Map.Cells.FirstOrDefault(c => !c.Contains("Enter") && !c.Contains("Wait") && !c.Contains("Blank"));
-
-        if (targetCell == null)
-        {
-            Logger("No cell found to jump to after killing the monster. Trying Enter cell...");
-        }
-        if (targetCell == null && Bot.Player.Cell != "Enter")
-            Bot.Map.Jump(targetCell ?? "Enter", "Spawn");
-        Bot.Wait.ForCellChange(targetCell ?? "Enter");
-
-        Sleep();
-
+        Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
+
+        // Filter out blacklisted cells, cells with monsters, and prioritize based on conditions
+        string? targetCell = Bot.Map.Cells
+            .Where(c => c != null &&
+                        !BlackListedJumptoCells.Contains(c) &&
+                        !Bot.Monsters.MapMonsters.Any(monster => monster != null && monster.Cell == c))
+            .FirstOrDefault(c => c != null &&
+                                 (Bot.Map.Cells.Count(cell => cell.Contains("Enter")) > 1 || !c.Contains("Enter")))
+            ?? "Enter";
+
+        Bot.Map.Jump(targetCell, targetCell == "Enter" ? "Spawn" : "Left");
+        Bot.Wait.ForCellChange(targetCell);
+        Sleep();
         JumpWait();
         Rest();
     }
@@ -4578,7 +4579,7 @@ public class CoreBots
             if (name != "*")
                 Logger($"Attacking Monster: {name}, for {item}  {dynamicQuant(item, isTemp)}/{quantity}");
 
-        while (!Bot.ShouldExit && item != null && (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
+        while (!Bot.ShouldExit && item != null && (isTemp ? !Bot.TempInv.Contains(item, quantity) : !CheckInventory(item, quantity)))
         {
             if (name == "*")
             {
@@ -4589,7 +4590,7 @@ public class CoreBots
 
                     bool ded = false;
                     Bot.Events.MonsterKilled += b => ded = true;
-                    while (!Bot.ShouldExit && !ded || isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
+                    while (!Bot.ShouldExit && !ded || isTemp ? !Bot.TempInv.Contains(item, quantity) : !CheckInventory(item, quantity))
                     {
                         if (cell != null && Bot.Player.Cell != cell)
                             Jump(cell, "Left");
@@ -4617,7 +4618,7 @@ public class CoreBots
 
                         bool ded = false;
                         Bot.Events.MonsterKilled += b => ded = true;
-                        while (!Bot.ShouldExit && !ded || isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
+                        while (!Bot.ShouldExit && !ded || isTemp ? !Bot.TempInv.Contains(item, quantity) : !CheckInventory(item, quantity))
                         {
                             if (cell != null && Bot.Player.Cell != cell)
                             {
@@ -5882,107 +5883,74 @@ public class CoreBots
     /// </summary>
     public void JumpWait()
     {
-        HashSet<string> blackListedCells = Bot.Monsters.MapMonsters.Select(monster => monster.Cell).ToHashSet();
+        // Initialize blacklisted cells and bot options
         Bot.Options.AttackWithoutTarget = false;
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
 
-        // Combine regex patterns into a single match
-        string combinedPattern = @"(^cut\w*$)|(^\w*cut$)|(^cut$)|(^r\d+$)|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$";
+        HashSet<string> blackListedCells = Bot.Monsters.MapMonsters
+     .Select(monster => monster.Cell)
+     .Union(
+         Bot.Map.Cells
+             .Where(cell => cell != null
+                 && (Regex.IsMatch(cell, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|(^r\d+$)|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$", RegexOptions.IgnoreCase)
+                 || BlackListedJumptoCells.Contains(cell)
+                 || (Bot.Player.Cell != "Enter" && cell.Contains("Enter"))
+             ))
+     )
+     .ToHashSet();
 
-        BlackListedJumptoCells = BlackListedJumptoCells.Union(
-            Bot.Map.Cells.Where(x => x != null && Regex.IsMatch(x, combinedPattern, RegexOptions.IgnoreCase))
-        ).Distinct().ToArray();
+        // Proceed to filtering cases based on the blacklisted cells
+        ProceedToFilteringCases(blackListedCells.Distinct().ToHashSet());
+    }
 
-        // Determine the target cell, prioritize non-blacklisted "Enter" cells or default to "Enter"
-        string? targetCell = Bot.Map.Cells.FirstOrDefault(c => !BlackListedJumptoCells.Any(bl => c.Contains(bl)) && c.Contains("Enter"))
-                            ?? Bot.Map.Cells.FirstOrDefault(c => !BlackListedJumptoCells.Any(bl => c.Contains(bl)))
-                            ?? "Enter";
+    private (string Cell, string Pad) TryFindSuitableCell(HashSet<string> blackListedCells)
+    {
+        string? cell = null;
+        blackListedCells.UnionWith(BlackListedJumptoCells);
 
-        Bot.Map.Jump(targetCell, targetCell == "Enter" ? "Spawn" : "Left");
-        Sleep(1000); // Allow time for possible auto-transfer to another cell
-
-        // If not in "Enter", blacklist "Enter" cells and proceed to filtering cases
-        if (Bot.Player.Cell != "Enter")
+        // Try to find a valid cell, up to 5 attempts
+        for (int i = 0; i < 5; i++)
         {
-            blackListedCells.UnionWith(Bot.Map.Cells.Where(cell => cell.ToLower().Contains("enter")));
-            ProceedToFilteringCases(blackListedCells.Concat(BlackListedJumptoCells).Distinct().ToHashSet());
-            return;
+            // First try to find a cell with "Enter", then try a non-blacklisted cell
+            cell = Bot.Map.Cells.FirstOrDefault(x => x.Contains("Enter")) ??
+                   Bot.Map.Cells.FirstOrDefault(x => !blackListedCells.Contains(x));
+
+            if (cell != null) // If a valid cell is found
+                break;
+
+            Logger($"Attempt {i + 1}: Suitable cell not found. Retrying...");
+            Sleep(1000); // Wait for 1 second before retrying
         }
 
-
-        (string, string) cellPad = (string.Empty, "Left");
-        int jumpCount = 1;
-
-        // Check for multiple "Enter" cells and add them to the blacklist
-        if (Bot.Map.Cells.Count(cell => cell.Contains("Enter")) > 1)
+        // If no suitable cell is found, return a default value
+        if (cell == null)
         {
-            blackListedCells.UnionWith(Bot.Map.Cells.Where(cell => cell.StartsWith("Enter")));
+            return (string.Empty, "Left");
         }
 
-        if (!blackListedCells.Contains("Enter"))
-        {
-            string? cell = null;
-            for (int i = 0; i < 5; i++)
-            {
-                cell = Bot.Map.Cells.FirstOrDefault(x => x.Contains("Enter")) ??
-                       Bot.Map.Cells.FirstOrDefault(x => !x.StartsWith("Wait") && !x.StartsWith("Blank"));
-                if (cell != null)
-                    break;
-
-                Logger($"Attempt {i + 1}: Suitable cell not found. Retrying...");
-                Sleep(1000); // Wait for 1 second before retrying
-            }
-
-            if (cell == null)
-            {
-                Logger("Suitable cell not found after 5 attempts.");
-                return;
-            }
-
-            cellPad = (cell, Bot.Map.Cells.Any(x => x.Contains("Enter")) ? "Spawn" : "Left");
-        }
-        else
-        {
-            ProceedToFilteringCases(blackListedCells);
-            return;
-        }
-
-        // Handle jump logic for new cellPad
-        PerformJump(cellPad, jumpCount);
-        GC.Collect(); // Clean up resources
+        // Determine the pad for the found cell
+        string pad = Bot.Map.Cells.Any(x => x.Contains("Enter")) ? "Spawn" : "Left";
+        return (cell, pad);
     }
 
     private void ProceedToFilteringCases(HashSet<string> blackListedCells)
     {
-        // Add default filtering rules and specific map logic
-        // blackListedCells.UnionWith(new List<string> { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame" });
-        // Add dynamically filtered cells and specific patterns to the blacklist
-        blackListedCells.UnionWith(
-            Bot.Map.Cells.Where(x =>
-                // Matches any cell starting with "cut" (case-insensitive)
-                Regex.IsMatch(x, @"(^cut\w*$)", RegexOptions.IgnoreCase)
-
-                // OR: Matches any cell ending with "cut" (case-insensitive)
-                || Regex.IsMatch(x, @"(^\w*cut$)", RegexOptions.IgnoreCase)
-
-                // OR: Matches "cut" as an exact string (case-insensitive)
-                || Regex.IsMatch(x, @"(^cut$)", RegexOptions.IgnoreCase)
-
-                // OR: Matches cells starting with "r" followed by one or more digits
-                || Regex.IsMatch(x, @"^r\d+$", RegexOptions.IgnoreCase)
-
-                // OR: Matches cells following specific prefixes or patterns
-                || Regex.IsMatch(x, @"^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$", RegexOptions.IgnoreCase)
-            ));
-
-
+        blackListedCells = Bot.Monsters.MapMonsters
+        .Select(monster => monster.Cell)
+        .Union(
+            Bot.Map.Cells
+                .Where(cell => cell != null
+                    && (Regex.IsMatch(cell, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|(^r\d+$)|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$", RegexOptions.IgnoreCase)
+                    || BlackListedJumptoCells.Contains(cell)
+                    || (Bot.Player.Cell != "Enter" && cell.Contains("Enter"))
+                ))
+        )
+        .ToHashSet();
 
         switch (Bot.Map.Name)
         {
-
             case "hbchallenge":
-                // Monster animations make you lag like hell...
                 blackListedCells.UnionWith(new[] { "r7" });
                 break;
 
@@ -6045,7 +6013,8 @@ public class CoreBots
         if (!IsMember)
             blackListedCells.Add("Eggs");
 
-        var viableCells = Bot.Map.Cells.Except(blackListedCells);
+        // Jump to a viable cell (or retry)
+        var viableCells = Bot.Map.Cells.Except(BlackListedJumptoCells);
         (string, string) cellPad = viableCells.Any()
             ? (viableCells.First(), "Left")
             : (Bot.Player.Cell, Bot.Player.Pad);
@@ -6073,13 +6042,9 @@ public class CoreBots
     private string lastMapJW = string.Empty;
     private (string, string) lastCellPadJW = (string.Empty, string.Empty);
 
-
     // Combined static and dynamic blacklist
     string[] BlackListedJumptoCells = new[]
-    {
-    "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom",
-    "Video", "Leave", "moveFrame", "Fall"};
-
+    { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame", "Fall" };
 
     /// <summary>
     /// Joins a map and does bonus steps for said map if needed
@@ -6685,73 +6650,73 @@ public class CoreBots
                         Bot.Wait.ForActionCooldown(GameActions.Transfer);
                         if (hasMapNumber)
                         {
-                            Bot.Map.Join(map, cell ?? "Enter", cell == null ? pad : "Left", false, false);
+                            if (map != null && Bot.Map.Name != map)
+                                Bot.Map.Join(map, cell ?? "Enter", cell == null ? "Spawn" : pad ?? "Left");
                             Sleep();
                         }
                         else
                         {
-                            Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", cell == null ? pad : "Left", false, false);
-                            Bot.Wait.ForActionCooldown(GameActions.Transfer);
+                            if (map != null && Bot.Map.Name != map)
+                                Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", cell == null ? "Spawn" : pad ?? "Left");
                         }
                         Bot.Wait.ForMapLoad(strippedMap);
                         // Exponential Backoff
                         Sleep(Math.Max(1, 100 * rnd.Next((int)Math.Pow(2, i / 2.0))));
                     }
 
-                    // Add new blacklisted cells
-                    BlackListedJumptoCells = BlackListedJumptoCells.Union(
-                        Bot.Map.Cells.Where(x => x != null &&
-                            Regex.IsMatch(x, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|^r\d+$|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$", RegexOptions.IgnoreCase)
-                        )
-                    ).Distinct().ToArray();
+                    // Update BlackListedJumptoCells with the regex pattern
+                    BlackListedJumptoCells = BlackListedJumptoCells
+                        .Union(Bot.Map.Cells.Where(x => x != null
+                            && Regex.IsMatch(x, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|^r\d+$|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$", RegexOptions.IgnoreCase)))
+                        .Distinct()
+                        .ToArray();
 
-                    // Check for "oaklore" map and manage cell jumping
+                    // Check if map is not "oaklore" and filtering is needed
                     if (map != null && map != "oaklore" && (cell == null || cell == "Enter"))
                     {
-                        // Filter out blacklisted cells and "Enter" cells
-                        var nonEnterCells = Bot.Map.Cells
-                            .Where(x => x != null && !BlackListedJumptoCells.Any(bc => x.ToLower().Contains(bc)) && !x.ToLower().Contains("enter"))
+                        // Filter cells excluding blacklisted and "Enter" cells
+                        var validCells = Bot.Map.Cells
+                            .Where(x => x != null &&
+                                        !BlackListedJumptoCells.Contains(x, StringComparer.OrdinalIgnoreCase) &&
+                                        !x.ToLower().Contains("enter"))
                             .ToList();
 
-                        // If there are multiple "Enter" cells, prioritize non-blacklisted cells
-                        if (Bot.Map.Cells.Count(x => x != null && x.ToLower().Contains("enter")) > 1)
-                        {
-                            cell = nonEnterCells.FirstOrDefault();
-                        }
-                        else
-                        {
-                            // Otherwise, use the first available non-blacklisted cell
-                            cell = nonEnterCells.FirstOrDefault() ?? "Enter";
-                        }
+                        // Prioritize non-"Enter" cells or fall back to "Enter"
+                        cell = validCells.FirstOrDefault() ?? "Enter";
 
-                        // Jump to the selected cell if it’s different from the current cell
+                        // Log and perform the jump if a valid cell is found and it's different from the current one
                         if (cell != null && Bot.Player.Cell != cell)
                         {
+                            Logger($"Selected cell: {cell}");
                             Bot.Map.Jump(cell, pad);
                             Bot.Wait.ForCellChange(cell);
                         }
                     }
 
-                    string? currentMap = Bot.Map.Name;
-                    if (!string.IsNullOrEmpty(currentMap) && currentMap.ToLower() == strippedMap)
+                    // Check if the current map matches the desired map and proceed accordingly
+                    if (Bot.Map.Name?.ToLower() == strippedMap)
                     {
+                        // If SafeTimings option is enabled
                         if (Bot.Options.SafeTimings)
                         {
+                            // Handle map load check and jump logic
                             if (!string.IsNullOrEmpty(map) && !Bot.Wait.ForMapLoad(map, 20))
                             {
                                 if (cell != null && Bot.Player.Cell != cell)
                                     Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad);
                             }
-                            else
+                            else if (cell != null && Bot.Player.Cell != cell)
                             {
-                                if (cell != null && Bot.Player.Cell != cell)
-                                    Bot.Map.Jump(cell, pad);
+                                Bot.Map.Jump(cell, pad);
                             }
+
+                            // Sleep and wait for the player's cell change
                             Sleep();
                             Bot.Wait.ForCellChange(cell ?? "Enter");
                         }
                         break;
                     }
+
 
                     if (i == 19)
                         Logger($"Failed to join {map}");
@@ -6919,7 +6884,7 @@ public class CoreBots
             // Ensure the player is in the correct cell
             while (!Bot.ShouldExit && (Bot.Player.Cell != cell || Bot.Player.Cell == cutsceneCell))
             {
-                if (!string.IsNullOrEmpty(cell))
+                if (!string.IsNullOrEmpty(cell) && Bot.Player.Cell != cell)
                     Bot.Map.Jump(cell, pad);
                 Bot.Wait.ForCellChange(cell ?? "Enter");
 
@@ -6936,16 +6901,30 @@ public class CoreBots
     public void JoinSWF(string map, string swfPath, string cell = "Enter", string pad = "Spawn", bool ignoreCheck = false)
     {
     retry:
+        // Attempt to join the map and load SWF
         Join(map, cell, pad, ignoreCheck: ignoreCheck, publicRoom: false);
         Bot.Wait.ForMapLoad(map);
         Bot.Flash.CallGameFunction("world.loadMap", swfPath);
-        while (!Bot.ShouldExit && !Bot.Player.Loaded)
-            Sleep();
+
+        // Wait until the player is fully loaded or exit condition is met
+        while (!Bot.ShouldExit && !Bot.Player.Loaded) Sleep();
+
+        // If the map is loaded, proceed with cell filtering and jumping
         if (Bot.Map != null)
         {
+            // Filter out blacklisted cells (add logic similar to previous examples)
+            var blackListedCells = Bot.Monsters.MapMonsters.Select(monster => monster.Cell).ToHashSet();
+            string combinedPattern = @"(^cut\w*$)|(^\w*cut$)|(^cut$)|(^r\d+$)|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$";
+            var filteredCells = Bot.Map.Cells
+                .Where(cell => cell != null && !blackListedCells.Contains(cell)
+                    && !Regex.IsMatch(cell, combinedPattern, RegexOptions.IgnoreCase)
+                    && !cell.ToLower().Contains("enter"))
+                .ToList();
+
+            // Filter for cells excluding any that match blacklisted or "Enter"
             string? targetCell = InitializeWithRetries(() =>
-            Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase))
-        );
+                filteredCells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase))
+            );
 
             if (targetCell == null)
             {
@@ -6953,14 +6932,22 @@ public class CoreBots
                 return;
             }
 
+            // Format the pad to match the player's expected format
             string targetPad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
 
-            if (cell != null && Bot.Player.Cell != targetCell)
+            // Jump to the target cell if not already there
+            if (Bot.Player.Cell != targetCell)
                 Bot.Map.Jump(targetCell, targetPad);
+
             Bot.Wait.ForCellChange(targetCell);
         }
-        else goto retry;
+        else
+        {
+            // Retry if the map isn't loaded yet
+            goto retry;
+        }
     }
+
 
     /// <summary>
     /// Sends a getMapItem packet for the specified item
