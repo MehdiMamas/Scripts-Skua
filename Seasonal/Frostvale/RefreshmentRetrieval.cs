@@ -39,7 +39,7 @@ public class RefreshmentRetrieval
 
         string[] QuestRewards = RewardOptions.Select(x => x.Name).ToArray();
 
-        Core.EquipClass(ClassType.Solo);
+        Core.EquipClass(ClassType.Farm);
         Core.RegisterQuests(questID);
         foreach (ItemBase Reward in RewardOptions)
         {
@@ -51,7 +51,7 @@ public class RefreshmentRetrieval
                 while (!Bot.ShouldExit && !Core.CheckInventory(Reward.Name, toInv: false))
                 {
 
-                    Core.HuntMonster("carolinn", "Frostval Deer", "Frostval Refreshments", 10);
+                    Core.HuntMonster("caroltown", "Frostval Deer", "Frostval Refreshments", 10);
 
                     i++;
 
@@ -71,6 +71,22 @@ public class RefreshmentRetrieval
             return;
 
         Core.AddDrop("Red Ribbon");
-        Story.KillQuest(9028, "caroling", "Frostval Tree");
+
+        Core.EquipClass(ClassType.Solo);
+        Core.EnsureAccept(9028);
+        while (!Bot.ShouldExit && !Bot.Quests.CanComplete(9028))
+        {
+            Core.Join("whitemap");
+            Core.Join("caroling");
+
+            for (int killCount = 0; killCount < 3 && !Bot.ShouldExit; killCount++)
+            {
+                Bot.Kill.Monster(1);
+
+                Core.Logger($"Kill: {killCount + 1}/3, {(killCount < 2 ? "Swapping Map at 3" : "Swapping map to respawn mob")}");
+                Bot.Wait.ForMonsterSpawn(1);
+            }
+        }
+        Core.EnsureComplete(9028);
     }
 }
