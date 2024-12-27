@@ -841,80 +841,60 @@ public class CoreLegion
         Start:
         while (!Bot.ShouldExit && !FarmComplete)
         {
-            Core.DebugLogger(this);
             LogFarmingProgress();
 
-            Core.DebugLogger(this);
             Core.Join("dagepvp-999999", "Enter0", "Spawn");
 
-            Core.DebugLogger(this);
             Core.PvPMove(1, "r2", 475, 269);
-            Core.DebugLogger(this);
             Core.PvPMove(4, "r4", 963, 351);
-            Core.DebugLogger(this);
             Core.PvPMove(7, "r5", 843, 189);
-            Core.DebugLogger(this);
             Core.PvPMove(9, "r6", 937, 389);
 
-            Core.DebugLogger(this);
             //if scroll quant > 0, farm scroll, then return to r6 to cotniue
             if (scrollQuant > 0)
                 FarmScrollArea();
 
-            Core.DebugLogger(this);
             if (trophyQuant == 0 && techniqueQuant == 0)
             {
                 Exit("Enter0", exitAttempt: ref exitAttempt);
                 goto Start;
             }
 
-            Core.DebugLogger(this);
             Core.PvPMove(12, "r12", 758, 338);
 
-            Core.DebugLogger(this);
             Core.PVPKilling();
 
-            Core.DebugLogger(this);
             if (!Bot.Player.Alive || Bot.Player.Cell == "Enter0")
             {
                 Core.DebugLogger(this, "You're dead stupid");
                 Exit("Enter0", exitAttempt: ref exitAttempt);
                 goto Start;
             }
-            Core.DebugLogger(this);
             Core.PvPMove(23, "r13", 933, 394);
 
-            // Core.DebugLogger(this);
             Core.PVPKilling();
 
-            Core.DebugLogger(this);
             if (!Bot.Player.Alive || Bot.Player.Cell == "Enter0")
             {
                 Core.DebugLogger(this, "You're dead stupid");
                 Exit("Enter0", exitAttempt: ref exitAttempt);
                 goto Start;
             }
-            Core.DebugLogger(this);
             Core.PvPMove(25, "r14", 846, 181);
 
-            Core.DebugLogger(this);
             Core.PVPKilling();
 
-            Core.DebugLogger(this);
             if (!Bot.Player.Alive || Bot.Player.Cell == "Enter0")
             {
                 Core.DebugLogger(this, "You're dead stupid");
                 Exit("Enter0", exitAttempt: ref exitAttempt);
                 goto Start;
             }
-            Core.DebugLogger(this);
             Core.PvPMove(28, "r15", 941, 348);
 
-            Core.DebugLogger(this);
             // Boss kill... GL without the debuff
             Bot.Kill.Monster(27);
 
-            Core.DebugLogger(this);
             if (!Bot.Player.Alive || Bot.Player.Cell == "Enter0")
             {
                 Core.DebugLogger(this, "You're dead stupid");
@@ -922,42 +902,25 @@ public class CoreLegion
                 goto Start;
             }
 
-            Core.DebugLogger(this);
             Bot.Wait.ForDrop("Legion Combat Trophy", 40);
-            Core.DebugLogger(this);
-            Core.Sleep();
-            Core.DebugLogger(this);
             Bot.Wait.ForPickup("Legion Combat Trophy");
 
-            Core.DebugLogger(this);
-            Core.Logger("Delaying exit");
-            Core.DebugLogger(this);
-            Core.Sleep(7500);
-
-            Core.DebugLogger(this);
             Exit("Enter0", exitAttempt: ref exitAttempt);
-
-            Core.DebugLogger(this);
             FarmComplete = CheckInventoryCompletion();
         }
 
         void LogFarmingProgress()
         {
-            Core.DebugLogger(this);
             if (trophyQuant > 0)
                 Core.FarmingLogger("Legion Combat Trophy", trophyQuant);
-            Core.DebugLogger(this);
             if (techniqueQuant > 0)
                 Core.FarmingLogger("Technique Observed", techniqueQuant);
-            Core.DebugLogger(this);
             if (scrollQuant > 0)
                 Core.FarmingLogger("Sword Scroll Fragment", scrollQuant);
-            Core.DebugLogger(this);
         }
 
         bool CheckInventoryCompletion()
         {
-            Core.DebugLogger(this);
             return Core.CheckInventory("Legion Combat Trophy", trophyQuant) &&
                    Core.CheckInventory("Technique Observed", techniqueQuant) &&
                    Core.CheckInventory("Sword Scroll Fragment", scrollQuant);
@@ -969,12 +932,9 @@ public class CoreLegion
                 return;
 
             Core.PvPMove(11, "r7", 513, 286);
-            Core.DebugLogger(this);
             Core.PvPMove(15, "r10", 832, 347);
-            Core.DebugLogger(this);
 
             Core.PVPKilling();
-            Core.DebugLogger(this);
 
             if (!Bot.Player.Alive)
             {
@@ -983,31 +943,24 @@ public class CoreLegion
             }
 
             Core.PvPMove(20, "r11", 943, 391);
-            Core.DebugLogger(this);
 
             Core.PVPKilling();
-            Core.DebugLogger(this);
 
-            Core.DebugLogger(this);
             if (!Bot.Player.Alive || Bot.Player.Cell == "Enter0")
             {
                 Core.DebugLogger(this, "You're dead stupid");
                 Exit("Enter0", exitAttempt: ref exitAttempt);
             }
 
-            Core.DebugLogger(this);
             Core.PvPMove(21, "r10", 9, 397);
 
-            Core.DebugLogger(this);
             if (!Bot.Player.Alive || Bot.Player.Cell == "Enter0")
             {
                 Core.DebugLogger(this, "You're dead stupid");
                 Exit("Enter0", exitAttempt: ref exitAttempt);
             }
 
-            Core.DebugLogger(this);
             Core.PvPMove(19, "r7", 7, 392);
-            Core.DebugLogger(this);
             Core.PvPMove(14, "r6", 482, 483);
         }
 
@@ -1020,31 +973,24 @@ public class CoreLegion
                 {
                     Core.Sleep();
                 }
-                Core.DebugLogger(this);
 
                 if (cell != string.Empty && cell != null)
                     Bot.Wait.ForCellChange(cell);
 
-                Core.DebugLogger(this);
             }
 
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
                 if (Bot.Player.HasTarget)
                     Bot.Combat.CancelTarget();
-                Core.DebugLogger(this);
 
                 Core.Join("battleon-999999");
-                Core.DebugLogger(this);
                 Bot.Wait.ForMapLoad("battleon");
 
-                Core.DebugLogger(this);
                 if (Bot.Map.Name != "battleon")
                     Core.Logger("Failed!? HOW.. try again");
-                Core.DebugLogger(this);
             }
 
-            Core.DebugLogger(this);
             exitAttempt++;
         }
 

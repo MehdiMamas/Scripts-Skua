@@ -6044,7 +6044,7 @@ public class CoreBots
 
     // Combined static and dynamic blacklist
     string[] BlackListedJumptoCells = new[]
-    { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame", "Fall" };
+    { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame", "Fall", "Move", "Cut", "Movie" };
 
     /// <summary>
     /// Joins a map and does bonus steps for said map if needed
@@ -6676,19 +6676,20 @@ public class CoreBots
                     {
                         // Filter cells excluding blacklisted and "Enter" cells
                         var validCells = Bot.Map.Cells
-                            .Where(x => x != null &&
-                                        !BlackListedJumptoCells.Contains(x, StringComparer.OrdinalIgnoreCase) &&
-                                        !x.ToLower().Contains("enter"))
+                            .Where(x => !string.IsNullOrEmpty(x) && // Ensure the cell isn't null or empty
+                                        !BlackListedJumptoCells.Any(blacklisted =>
+                                            x.Contains(blacklisted, StringComparison.OrdinalIgnoreCase))) // Case-insensitive match
                             .ToList();
 
                         // Prioritize non-"Enter" cells or fall back to "Enter"
-                        cell = validCells.FirstOrDefault() ?? "Enter";
+                        cell = Bot.Map.Cells.Count(x => x.Contains("Enter", StringComparison.OrdinalIgnoreCase)) > 1
+                        ? validCells.FirstOrDefault()
+                        : "Enter";
 
                         // Log and perform the jump if a valid cell is found and it's different from the current one
                         if (cell != null && Bot.Player.Cell != cell)
                         {
-                            Logger($"Selected cell: {cell}");
-                            Bot.Map.Jump(cell, pad ?? "Spawn");
+                            Bot.Map.Jump(cell ?? "Enter", pad ?? "Spawn");
                             Bot.Wait.ForCellChange(cell);
                         }
                     }

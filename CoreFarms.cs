@@ -970,11 +970,8 @@ public class CoreFarms
             return;
 
         canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool KillAds);
-        Core.Logger($"Kill Additional mobs (more trophies - slower depending on gear): {KillAds}");
-        int ExitAttempt = 1;
-        int Death = 1;
-
-        Core.AddDrop(item, "The Secret 4", "Yoshino's Citrine");
+        Core.Logger($"`Kill Ads` Enabled? {KillAds}");
+        Core.AddDrop(new[] { item } ?? new[] { "The Secret 4", "Yoshino's Citrine" });
 
         Core.EquipClass(ClassType.Solo);
         Core.FarmingLogger(item, quant);
@@ -994,8 +991,11 @@ public class CoreFarms
             Core.PvPMove(9, "Crosslower", random.Next(777, 857), random.Next(254, 290));
 
             // If CBO setting for `Kill ads before boss` is enabled do:
-            if (KillAds == true)
+            if (KillAds == true || !Core.CheckInventory(AcceptablePvPAmulets, any: true) || !Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true) && x.Equipped))
             {
+                if (!Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true) && x.Equipped))
+                    Core.OneTimeMessage("Wheres your amulet retard?", "Hey ChuckleFuck, you forgot your amulet! So now you get to kill the minions.");
+
                 Core.PvPMove(14, "Crossupper", random.Next(399, 545), random.Next(255, 256));
                 Core.PvPMove(18, "Resource1A", random.Next(786, 860), random.Next(255, 274));
 
@@ -1016,77 +1016,55 @@ public class CoreFarms
 
             Core.PvPMove(15, "Morale1A", random.Next(781, 858), random.Next(258, 290));
 
-            if (KillAds == true)
-            {
-                Core.PVPKilling();
-                if (!Bot.Player.Alive)
-                    goto RestartOnDeath;
-            }
+            Bot.Kill.Monster(13);
+            if (!Bot.Player.Alive)
+                goto RestartOnDeath;
 
             Core.PvPMove(23, "Morale1B", random.Next(782, 850), random.Next(259, 276));
 
-            if (KillAds == true)
-            {
-                Core.PVPKilling();
-                if (!Bot.Player.Alive)
-                    goto RestartOnDeath;
-            }
+            // regardless of CBO setting, kill these for extra trohpies. (Timed and tested) 
+            Bot.Kill.Monster(14);
+            if (!Bot.Player.Alive)
+                goto RestartOnDeath;
 
             Core.PvPMove(25, "Morale1C", random.Next(802, 865), random.Next(264, 286));
 
-            if (KillAds == true)
-            {
-                Core.PVPKilling();
-                if (!Bot.Player.Alive)
-                    goto RestartOnDeath;
-            }
+            // regardless of CBO setting, kill these for extra trohpies. (Timed and tested) 
+            Bot.Kill.Monster(15);
+            if (!Bot.Player.Alive)
+                goto RestartOnDeath;
 
             Core.PvPMove(28, "Captain1", random.Next(430, 537), random.Next(254, 255));
-            Core.PVPKilling();
+            Bot.Kill.Monster(16);
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
             Bot.Wait.ForDrop(item, 40);
-            Core.Sleep(1500);
             Bot.Wait.ForPickup(item, 40);
-
-            Core.Logger("Delaying exit");
-            Core.Sleep(7500);
             goto Exit;
 
         Exit:
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
-                Core.Logger($"Attempting Exit {ExitAttempt++}.");
-                Bot.Combat.CancelTarget();
+                if (Bot.Player.HasTarget)
+                    Bot.Combat.CancelTarget();
                 Bot.Wait.ForCombatExit();
                 Bot.Map.Join("battleon-999999");
-                Core.Sleep(1500);
-                if (Bot.Map.Name != "battleon")
-                    Core.Logger("Failed!? HOW.. try agian");
-                else
-                {
-                    Core.Logger("Successful!");
+                Bot.Wait.ForMapLoad("battleon");
+                Core.Sleep();
+                if (Bot.Map.Name == "battleon")
                     goto Start;
-                }
             }
 
         RestartOnDeath:
-            Core.Logger($"Death: {Death++}, resetting");
             while (!Bot.ShouldExit)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
-                Core.Logger($"Attempting Death Exit {ExitAttempt++}.");
                 Bot.Map.Join("battleon-999999");
                 Bot.Wait.ForMapLoad("battleon");
-                Core.Sleep(1500);
-                if (Bot.Map.Name != "battleon")
-                    Core.Logger("Failed!? HOW.. try agian");
-                else
-                {
-                    Core.Logger("Successful!");
+                Core.Sleep();
+                if (Bot.Map.Name == "battleon")
                     goto Start;
-                }
             }
         }
 
@@ -1095,10 +1073,6 @@ public class CoreFarms
             if (item != reward && Bot.Inventory.Contains(reward))
                 Core.ToBank(reward);
         }
-
-        Core.Logger($"Deaths:[{Death}]");
-        Death = 0;
-        ExitAttempt = 0;
     }
 
     public void BattleUnderB(string item = "Bone Dust", int quant = 10000, bool isTemp = false)
@@ -2457,7 +2431,7 @@ public class CoreFarms
             }
         }
     }
-
+    string[] AcceptablePvPAmulets = { "Mithril PvP Amulet +15000", "Diamond PvP Amulet +5500", "Platinum PvP Amulet +5000" };
     public void DeathPitBrawlREP(int rank = 10)
     {
         if (FactionRank("Death Pit Brawl") >= rank)
@@ -2509,8 +2483,6 @@ public class CoreFarms
 
         canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool KillAds);
         Core.Logger($"Kill Additional mobs (more trophies - slower depending on gear): {KillAds}");
-        int ExitAttempt = 1;
-        int Death = 1;
 
     Start:
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant) || FactionRank("Death Pit Brawl") < rank)
@@ -2518,7 +2490,7 @@ public class CoreFarms
             while (!Bot.ShouldExit && Bot.Map.Name != "deathpitbrawl")
             {
                 Core.Logger("Joining Brawl");
-                Core.Join("deathpitbrawl-9999999", "Enter0", "Spawn");
+                Core.Join("deathpitbrawl-999999", "Enter0", "Spawn");
                 Core.Sleep();
             }
 
@@ -2533,8 +2505,11 @@ public class CoreFarms
             Core.PvPMove(14, "Crossupper", 903, 324);
             Core.PvPMove(18, "Resource1A", 482, 295);
 
-            if (KillAds == true)
+            if (KillAds == true || !Core.CheckInventory(AcceptablePvPAmulets, any: true) || !Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true) && x.Equipped))
             {
+                if (!Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true) && x.Equipped))
+                    Core.OneTimeMessage("Wheres your amulet retard?", "Hey ChuckleFuck, you forgot your amulet! So now you get to kill the minions.");
+
                 Core.PVPKilling();
                 if (!Bot.Player.Alive)
                     goto RestartOnDeath;
@@ -2542,8 +2517,11 @@ public class CoreFarms
 
             Core.PvPMove(20, "Resource1B", 938, 400);
 
-            if (KillAds == true)
+            if (KillAds == true || !Core.CheckInventory(AcceptablePvPAmulets, any: true) || !Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true) && x.Equipped))
             {
+                if (!Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true) && x.Equipped))
+                    Core.OneTimeMessage("Wheres your amulet retard?", "Hey ChuckleFuck, you forgot your amulet! So now you get to kill the minions.");
+
                 Core.PVPKilling();
                 if (!Bot.Player.Alive)
                     goto RestartOnDeath;
@@ -2554,87 +2532,55 @@ public class CoreFarms
             Core.PvPMove(17, "Crosslower", 54, 339);
             Core.PvPMove(15, "Morale1A", 522, 286);
 
-            if (KillAds == true)
-            {
-                Core.PVPKilling();
-                if (!Bot.Player.Alive)
-                    goto RestartOnDeath;
-            }
+            Bot.Kill.Monster(13);
+            if (!Bot.Player.Alive)
+                goto RestartOnDeath;
 
             Core.PvPMove(23, "Morale1B", 948, 403);
 
-            if (KillAds == true)
-            {
-                Core.PVPKilling();
-                if (!Bot.Player.Alive)
-                    goto RestartOnDeath;
-            }
+            Bot.Kill.Monster(14);
+            if (!Bot.Player.Alive)
+                goto RestartOnDeath;
 
             Core.PvPMove(25, "Morale1C", 945, 397);
 
-            if (KillAds == true)
-            {
-                Core.PVPKilling();
-                if (!Bot.Player.Alive)
-                    goto RestartOnDeath;
-            }
+            Bot.Kill.Monster(15);
+            if (!Bot.Player.Alive)
+                goto RestartOnDeath;
 
             Core.PvPMove(28, "Captain1", 943, 404);
 
-            Core.PVPKilling();
+            Bot.Kill.Monster(16);
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
-
-            Core.Sleep(5000);
 
             Bot.Wait.ForDrop(item, 40);
-            Bot.Wait.ForPickup(item);
-
-            Core.Logger("Delaying exit");
-            Core.Sleep();
-
-            if (!Bot.Player.Alive)
-                goto RestartOnDeath;
-            else goto Exit;
+            Bot.Wait.ForPickup(item, 40);
+            goto Exit;
 
 
-            Exit:
+        Exit:
             Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
-                Core.Logger($"Attempting Exit {ExitAttempt++}.");
                 Bot.Combat.CancelTarget();
                 Bot.Wait.ForCombatExit();
                 Core.Jump(Bot.Player.Cell, Bot.Player.Pad);
                 Bot.Map.Join("battleon-999999");
-                Core.Sleep(1500);
-                if (Bot.Map.Name != "battleon")
-                    Core.Logger("Failed!? HOW.. try agian");
-                else
-                {
-                    Core.Logger("Successful!");
-                    ExitAttempt = 0;
+                Core.Sleep();
+                if (Bot.Map.Name == "battleon")
                     goto Start;
-                }
             }
 
         RestartOnDeath:
             Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
-            Core.Logger($"Death Exit Attempt: {Death++}, resetting");
             while (!Bot.ShouldExit)
             {
-                Core.Logger($"Attempting Death Exit {Death++}.");
                 Bot.Map.Join("battleon-999999");
                 Bot.Wait.ForMapLoad("battleon");
-                Core.Sleep(1500);
-                if (Bot.Map.Name != "battleon")
-                    Core.Logger("Failed!? HOW.. try agian");
-                else
-                {
-                    Core.Logger("Successful!");
-                    Death = 0;
+                Core.Sleep();
+                if (Bot.Map.Name == "battleon")
                     goto Start;
-                }
             }
         }
 
@@ -2643,10 +2589,6 @@ public class CoreFarms
             if (item != reward && Bot.Inventory.Contains(reward))
                 Core.ToBank(reward);
         }
-
-        Core.Logger($"Deaths:[{Death}]");
-        Death = 0;
-        ExitAttempt = 0;
     }
 
     public void DeathPitToken(string item = "Death Pit Token", int quant = 30, bool isTemp = false)
