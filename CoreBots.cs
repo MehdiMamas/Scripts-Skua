@@ -7036,7 +7036,7 @@ public class CoreBots
         if (Bot.Map.Name == "legionpvp")
         {
             Join("dagepvp-999999", "Enter0", "Spawn");
-            Bot.Wait.ForMapLoad("davepvp");
+            Bot.Wait.ForMapLoad("dagepvp");
             return;
         }
 
@@ -7055,7 +7055,7 @@ public class CoreBots
             if (Bot.Map.Name == "legionpvp")
             {
                 Join("dagepvp-999999", "Enter0", "Spawn");
-                Bot.Wait.ForMapLoad("davepvp");
+                Bot.Wait.ForMapLoad("dagepvp");
                 return;
             }
         }
@@ -7082,7 +7082,7 @@ public class CoreBots
                     if (Bot.Map.Name == "legionpvp")
                     {
                         Join("dagepvp-999999", "Enter0", "Spawn");
-                        Bot.Wait.ForMapLoad("davepvp");
+                        Bot.Wait.ForMapLoad("dagepvp");
                         return;
                     }
                     return;
