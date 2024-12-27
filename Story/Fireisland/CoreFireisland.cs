@@ -435,7 +435,7 @@ public class CoreFireIsland
         {
             Core.EnsureAccept(4112);
             Core.HuntMonster("Brimstone", "Brimstone Bandit", "Talmin's Propoganda", 6);
-            Core.HuntMonster("Brimstone", "Brimstone Bandit", "Talmins Doctrine", 3);
+            Core.HuntMonster("Brimstone", "Brimstone Bandit", "Talmin's Doctrine", 3);
             Core.EnsureComplete(4112);
         }
 
