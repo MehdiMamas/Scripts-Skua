@@ -9207,10 +9207,18 @@
       "holly",
       "twilly",
       "twig",
-      "zorbak"
+      "zorbak",
+      "elf",
+      "drago",
+      "j",
+      "maya",
+      "iona",
+      "greataxe",
+      "castillonnais",
+      "greataxes"
     ],
     "path": "Seasonal/Frostvale/CarolingMerge.cs",
-    "size": 9701,
+    "size": 10569,
     "fileName": "CarolingMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/CarolingMerge.cs"
   },
