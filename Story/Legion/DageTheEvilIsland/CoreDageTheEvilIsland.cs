@@ -324,9 +324,9 @@ public class CoreDageTheEvilIsland
                 Core.Jump("r11");
             Core.KillMonster("Laken", "r11", "Left", "Ada", "Spar Again");
             Bot.Wait.ForQuestComplete(5657);
-            // Core.EnsureComplete(5657);
             //Wait and Exit Cut Scene cell
             Core.JumpWait();
+            Core.EnsureComplete(5657);
         }
 
         //Third Time's A Charm 5658
