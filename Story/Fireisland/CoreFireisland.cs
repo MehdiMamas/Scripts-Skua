@@ -425,7 +425,7 @@ public class CoreFireIsland
         if (!Story.QuestProgression(4111))
         {
             Core.EnsureAccept(4111);
-            Core.HuntMonster("Brimstone", "Brimstone Bandit", "Bags of Mercantile Goods ", 3);
+            Core.HuntMonster("Brimstone", "Brimstone Bandit", "Bags of Mercantile Goods", 3);
             Core.HuntMonster("Brimstone", "Brimstone Bandit", "Boxes of Raw Materials", 3);
             Core.EnsureComplete(4111);
         }
