@@ -1,7 +1,7 @@
 /*
 name: Caroling Merge
 description: This bot will farm the items belonging to the selected mode for the Caroling Merge [2197] in /caroltown
-tags: caroling, merge, caroltown, midwinter, cheermaker, cutie, antlered, beanie, snowflakes, snowy, nimbo, licorice, candy, cane, darkwood, carved, armaments, northlands, paladin, frozen, paladins, glacial, light, destiny, ascended, aurum, wings, noble, leo, scion, scions, requiem, heraldic, lion, companion, frostval, party, favor, gifts, holiday, hoodie, , morph, holly, twilly, twig, zorbak
+tags: caroling, merge, caroltown, midwinter, cheermaker, cutie, antlered, beanie, snowflakes, snowy, nimbo, licorice, candy, cane, darkwood, carved, armaments, northlands, paladin, frozen, paladins, glacial, light, destiny, ascended, aurum, wings, noble, leo, scion, scions, requiem, heraldic, lion, companion, frostval, party, favor, gifts, holiday, hoodie, , morph, holly, twilly, twig, zorbak, elf, drago, j, maya, iona, greataxe, castillonnais, greataxes
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -117,7 +117,7 @@ public class CarolingMerge
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("75005", "Midwinter Cheermaker", "Mode: [select] only\nShould the bot buy \"Midwinter Cheermaker\" ?", false),
+         new Option<bool>("75005", "Midwinter Cheermaker", "Mode: [select] only\nShould the bot buy \"Midwinter Cheermaker\" ?", false),
         new Option<bool>("75006", "Midwinter Cutie Hat", "Mode: [select] only\nShould the bot buy \"Midwinter Cutie Hat\" ?", false),
         new Option<bool>("75007", "Midwinter Cutie Hat and Locks", "Mode: [select] only\nShould the bot buy \"Midwinter Cutie Hat and Locks\" ?", false),
         new Option<bool>("75008", "Midwinter Antlered Hat", "Mode: [select] only\nShould the bot buy \"Midwinter Antlered Hat\" ?", false),
@@ -149,5 +149,11 @@ public class CarolingMerge
         new Option<bool>("82788", "Holly Holiday Twilly", "Mode: [select] only\nShould the bot buy \"Holly Holiday Twilly\" ?", false),
         new Option<bool>("82789", "Holly Holiday Twig", "Mode: [select] only\nShould the bot buy \"Holly Holiday Twig\" ?", false),
         new Option<bool>("82790", "Holly Holiday Zorbak", "Mode: [select] only\nShould the bot buy \"Holly Holiday Zorbak\" ?", false),
+        new Option<bool>("90589", "Holiday Elf Drago", "Mode: [select] only\nShould the bot buy \"Holiday Elf Drago\" ?", false),
+        new Option<bool>("90591", "Holiday Elf J6", "Mode: [select] only\nShould the bot buy \"Holiday Elf J6\" ?", false),
+        new Option<bool>("90592", "Holiday Elf Maya", "Mode: [select] only\nShould the bot buy \"Holiday Elf Maya\" ?", false),
+        new Option<bool>("90593", "Holiday Elf Iona", "Mode: [select] only\nShould the bot buy \"Holiday Elf Iona\" ?", false),
+        new Option<bool>("90461", "Greataxe of Castillonnais", "Mode: [select] only\nShould the bot buy \"Greataxe of Castillonnais\" ?", false),
+        new Option<bool>("90462", "Greataxes of Castillonnais", "Mode: [select] only\nShould the bot buy \"Greataxes of Castillonnais\" ?", false),
     };
 }
