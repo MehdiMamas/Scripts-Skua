@@ -904,7 +904,7 @@ public class CoreLegion
 
             Bot.Wait.ForDrop("Legion Combat Trophy", 40);
             Bot.Wait.ForPickup("Legion Combat Trophy");
-
+            LogFarmingProgress();
             Exit("Enter0", exitAttempt: ref exitAttempt);
             FarmComplete = CheckInventoryCompletion();
         }

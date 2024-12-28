@@ -1041,6 +1041,8 @@ public class CoreFarms
 
             Bot.Wait.ForDrop(item, 40);
             Bot.Wait.ForPickup(item, 40);
+            if (!string.IsNullOrEmpty(item))
+                Core.FarmingLogger(item, quant);
             goto Exit;
 
         Exit:
@@ -2556,6 +2558,8 @@ public class CoreFarms
 
             Bot.Wait.ForDrop(item, 40);
             Bot.Wait.ForPickup(item, 40);
+            if (!string.IsNullOrEmpty(item))
+                Core.FarmingLogger(item, quant);
             goto Exit;
 
 
