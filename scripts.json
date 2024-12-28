@@ -5936,6 +5936,36 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/HBJudgementMerge.cs"
   },
   {
+    "name": "Magicians Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Magicians Merge [2519] in /magician",
+    "tags": [
+      "magicians",
+      "merge",
+      "magician",
+      "human",
+      "clock",
+      "oscillator",
+      "decay",
+      "erosion",
+      "nostalgia",
+      "face",
+      "countdown",
+      "scalpula",
+      "debris",
+      "scythe",
+      "creature",
+      "",
+      "wings",
+      "amp",
+      "tail",
+      "morph"
+    ],
+    "path": "Hollowborn/MergeShops/MagiciansMerge.cs",
+    "size": 5494,
+    "fileName": "MagiciansMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/MagiciansMerge.cs"
+  },
+  {
     "name": "Dawnsanctum Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Dawnsanctum Merge [2505] in /dawnsanctum",
     "tags": [
