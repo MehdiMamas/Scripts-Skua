@@ -8,7 +8,7 @@ tags: doom, merge, necropolis, dark, armored, daimyo, spirit, orb, destruction, 
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreDailies.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/Evil/SDKA/SDKA.cs
+//cs_include Scripts/Evil/SDKA/CoreSDKA.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
