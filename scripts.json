@@ -2649,7 +2649,7 @@
       "glacera"
     ],
     "path": "Story/Glacera.cs",
-    "size": 12485,
+    "size": 13038,
     "fileName": "Glacera.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Glacera.cs"
   },
@@ -9304,7 +9304,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/FrostvalBarbarian.cs",
-    "size": 3800,
+    "size": 4058,
     "fileName": "FrostvalBarbarian.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/FrostvalBarbarian.cs"
   },
@@ -23372,7 +23372,7 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/Story/CoreFrostvale.cs",
-    "size": 42887,
+    "size": 44669,
     "fileName": "CoreFrostvale.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Frostvale/Story/CoreFrostvale.cs"
   },
