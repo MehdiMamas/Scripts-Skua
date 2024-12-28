@@ -28,7 +28,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 134707,
+    "size": 134895,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 335703,
+    "size": 335714,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -769,7 +769,7 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 36755,
+    "size": 36788,
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -5125,6 +5125,36 @@
     "size": 4962,
     "fileName": "AstraviaPastMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/AstraviaPastMerge.cs"
+  },
+  {
+    "name": "Magicians Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Magicians Merge [2519] in /magician",
+    "tags": [
+      "magicians",
+      "merge",
+      "magician",
+      "human",
+      "clock",
+      "oscillator",
+      "decay",
+      "erosion",
+      "nostalgia",
+      "face",
+      "countdown",
+      "scalpula",
+      "debris",
+      "scythe",
+      "creature",
+      "",
+      "wings",
+      "amp",
+      "tail",
+      "morph"
+    ],
+    "path": "Darkon/MergeShops/MagiciansMerge.cs",
+    "size": 5494,
+    "fileName": "MagiciansMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/MagiciansMerge.cs"
   },
   {
     "name": "Genesis Garden Merge",
