@@ -1299,8 +1299,13 @@ public class CoreFrostvale
 
 
         // 10010 | Kleptothermy
-        Story.KillQuest(10010, "holidayhorror", new[] { UseableMonsters[6], UseableMonsters[7] });
-        Story.MapItemQuest(10010, "holidayhorror", 13996);
+        if (!Story.QuestProgression(10010))
+        {
+            Core.EnsureAccept(10010);
+            Core.KillMonster("holidayhorror", "r7", "Left", UseableMonsters[6], "La's Shard");
+            Core.KillMonster("holidayhorror", "r7", "Left", UseableMonsters[7], "Re's Shard");
+            Story.MapItemQuest(10010, "holidayhorror", 13996);
+        }
 
         // 10011 | Fie Fie
         Story.MapItemQuest(10011, new[] {
