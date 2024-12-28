@@ -163,8 +163,10 @@ public class GlaceraStory
         if (Core.isCompletedBefore(3946))
             return;
 
-        Story.PreLoad(this);
+        if (!Core.isCompletedBefore(3937))
+            FrozenTower();
 
+        Story.PreLoad(this);
         // FrozenRuins
 
         // FangBeast Bash-up
@@ -198,6 +200,8 @@ public class GlaceraStory
         if (Core.isCompletedBefore(3950))
             return;
 
+        if (!Core.isCompletedBefore(3946))
+            FrozenRuins();
         // Glaera     
 
         //A Frost Welcome
@@ -225,6 +229,9 @@ public class GlaceraStory
         if (Core.isCompletedBefore(3954))
             return;
 
+        if (!Core.isCompletedBefore(3047))
+            Glacera();
+
         // FrozenRuins encore
 
         // Rescue the Refugees
@@ -245,6 +252,9 @@ public class GlaceraStory
     {
         if (Core.isCompletedBefore(3971))
             return;
+
+        if (!Core.isCompletedBefore(3954))
+            FrozenRuins2();
 
         // Northstar
 
@@ -284,6 +294,8 @@ public class GlaceraStory
     {
         if (Core.isCompletedBefore(3950))
             return;
+        if (!Core.isCompletedBefore(3971))
+            Northstar();
 
         // Key to the Fortress
         Story.KillQuest(3948, "Glacera", "Frost Invader");
@@ -297,6 +309,8 @@ public class GlaceraStory
     {
         if (Core.isCompletedBefore(3954))
             return;
+        if (!Core.isCompletedBefore(3950))
+            Glacera1();
 
         // Rescue the Refugees
         Story.KillQuest(3951, "frozenruins", "Frost Invader");
@@ -315,6 +329,8 @@ public class GlaceraStory
     {
         if (Core.isCompletedBefore(5601))
             return;
+        if (!Core.isCompletedBefore(3954))
+            FrostRuins1();
 
         // Where is Karok?
         Story.MapItemQuest(5587, "IceWindPass", 5074, 5);
@@ -350,7 +366,7 @@ public class GlaceraStory
         if (!Bot.Quests.IsUnlocked(5601))
         {
             //Fight For Kezeroth! && (Mega) Fight For Kezeroth!
-            Core.EnsureAcceptmultiple( new[] { 5597, 5598, 5599, 5600 });
+            Core.EnsureAcceptmultiple(new[] { 5597, 5598, 5599, 5600 });
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("icewindwar", "Glaceran Defender", "FrostSpawn Medal", 10);
             Core.HuntMonster("icewindwar", "Glaceran Defender", "Mega Frostspawn Medal", 5);
@@ -369,6 +385,8 @@ public class GlaceraStory
     {
         if (Core.isCompletedBefore(7841))
             return;
+        if (!Core.isCompletedBefore(5601))
+            IceWindPass();
 
         // Cold Open
         Story.KillQuest(7832, "IceDungeon", new[] { "Frosted Banshee", "Frozen Undead", "Ice Symbiote" });

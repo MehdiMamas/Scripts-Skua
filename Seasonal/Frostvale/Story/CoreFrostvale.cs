@@ -19,7 +19,7 @@ public class CoreFrostvale
         Core.RunCore();
     }
 
-    public void DoAll()
+    public void DoAll(bool SwordofHope = false, bool IcyHolly = false)
     {
         if (!Core.isSeasonalMapActive("frostvale"))
         {
@@ -34,6 +34,7 @@ public class CoreFrostvale
         IceRise();
         ColdWindValley();
         Battlefield();
+        //Frsotval Barb ends here
         Darkwinter();
         Frozensoul();
         Howardshill();
@@ -122,6 +123,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(1508) || !Core.isSeasonalMapActive("snowglobe"))
             return;
+        if (!Core.isCompletedBefore(905))
+            IceCave();
 
         Story.PreLoad(this);
 
@@ -157,6 +160,9 @@ public class CoreFrostvale
         if (Core.isCompletedBefore(1521) || !Core.isSeasonalMapActive("alpine"))
             return;
 
+        if (!Core.isCompletedBefore(913))
+            SnowGlobe();
+
         Story.PreLoad(this);
 
         // Snow Way to Know Where to Go
@@ -191,10 +197,12 @@ public class CoreFrostvale
         Story.KillQuest(1521, "icevolcano", "Dead Morice");
     }
 
-    public void SnowyVale()
+    public void SnowyVale(bool SwordofHope = false)
     {
         if (Core.isCompletedBefore(2576) || !Core.isSeasonalMapActive("snowyvale"))
             return;
+        if (!Core.isCompletedBefore(1521))
+            Alpine();
 
         Story.PreLoad(this);
 
@@ -297,6 +305,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(2582) || !Core.isSeasonalMapActive("icerise"))
             return;
+        if (!Core.isCompletedBefore(2547))
+            SnowyVale();
 
         Story.PreLoad(this);
 
@@ -326,6 +336,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(6132) || !Core.isSeasonalMapActive("coldwindvalley"))
             return;
+        if (!Core.isCompletedBefore(2582))
+            IceRise();
 
         Story.PreLoad(this);
 
@@ -372,15 +384,18 @@ public class CoreFrostvale
         Story.MapItemQuest(6132, "coldwindvalley", 5557, 8);
     }
 
-    public void Battlefield()
+    public void Battlefield(bool ReturnEarly = false)
     {
         if (Core.isCompletedBefore(2575) || !Core.isSeasonalMapActive("battlefield"))
             return;
+        if (!Core.isCompletedBefore(6132))
+            ColdWindValley();
 
         Story.PreLoad(this);
 
         // Mana for the Magi 2570
         Story.KillQuest(2570, "newbie", "Slime", GetReward: false);
+        if(ReturnEarly) return;
 
         // Gathering Spell Components 2571
         Story.KillQuest(2571, "hydra", "Fire Imp", GetReward: false);
@@ -402,6 +417,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(3260) || !Core.isSeasonalMapActive("darkwinter"))
             return;
+        if (!Core.isCompletedBefore(2575))
+            Battlefield();
 
         //Good way | Yorumi & Einyuki Questline
         Core.ChangeAlignment(Alignment.Good);
@@ -454,6 +471,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(7264) || !Core.isSeasonalMapActive("frozensoul"))
             return;
+        if (!Core.isCompletedBefore(3260))
+            Darkwinter();
 
         Story.PreLoad(this);
 
@@ -472,6 +491,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(7854) || !Core.isSeasonalMapActive("howardshill"))
             return;
+        if (!Core.isCompletedBefore(7264))
+            Frozensoul();
 
         Story.PreLoad(this);
 
@@ -520,6 +541,8 @@ public class CoreFrostvale
     {
         if (!Core.IsMember || Core.isCompletedBefore(3904) || !Core.isSeasonalMapActive("Icerisepast"))
             return;
+        if (!Core.isCompletedBefore(7854))
+            Howardshill();
 
         Story.PreLoad(this);
 
@@ -551,6 +574,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(7859) || !Core.isSeasonalMapActive("winterhorror"))
             return;
+        if (!Core.isCompletedBefore(3904))
+            Icerisepast();
 
         Story.PreLoad(this);
 
@@ -641,6 +666,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(5596) || !Core.isSeasonalMapActive("icewindpass"))
             return;
+        if (!Core.isCompletedBefore(4716))
+            Cryostorm();
 
         Story.PreLoad(this);
 
@@ -680,8 +707,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(5617) || !Core.isSeasonalMapActive("icepike"))
             return;
-
-        Icewindpass();
+        if (!Core.isCompletedBefore(5596))
+            Icewindpass();
 
         Story.PreLoad(this);
 
@@ -736,6 +763,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(6651) || !Core.isSeasonalMapActive("frostvalperil"))
             return;
+        if (!Core.isCompletedBefore(5617))
+            Icepike();
 
         Story.PreLoad(this);
 
@@ -789,6 +818,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(9015) || !Core.isSeasonalMapActive("snowview"))
             return;
+        if (!Core.isCompletedBefore(6651))
+            FrostvalPastPresentandFuture();
 
         Story.PreLoad(this);
 
@@ -831,6 +862,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(9026) || !Core.isSeasonalMapActive("snowviewrace"))
             return;
+        if (!Core.isCompletedBefore(9015))
+            Snowview();
 
         Story.PreLoad(this);
 
@@ -873,6 +906,8 @@ public class CoreFrostvale
     {
         if (Bot.Quests.IsUnlocked(8433) || !Core.isSeasonalMapActive("deerhunt"))
             return;
+        if (!Core.isCompletedBefore(9026))
+            SnowviewRace();
 
         Story.PreLoad(this);
 
@@ -914,6 +949,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(7828) || !Core.isSeasonalMapActive("frostvale"))
             return;
+        if (!Core.isCompletedBefore(8432))
+            DeerHunt();
 
         Story.PreLoad(this);
         Core.EquipClass(ClassType.Solo);
@@ -962,6 +999,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(9506) || !Core.isSeasonalMapActive("frostvale"))
             return;
+        if (!Core.isCompletedBefore(7828))
+            BowJangles();
 
         Story.PreLoad(this);
         Core.EquipClass(ClassType.Farm);
@@ -1006,8 +1045,9 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(9518) || !Core.isSeasonalMapActive("fimbultomb"))
             return;
+        if (!Core.isCompletedBefore(9506))
+            GlaceTomb();
 
-        GlaceTomb();
 
         // Hold the Door 9509
         Story.MapItemQuest(9509, "fimbultomb", new[] { 12490, 12491 });
@@ -1049,9 +1089,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(8444) || !Core.isSeasonalMapActive("MountOtzi"))
             return;
-
-
-        Fimbultomb();
+        if (!Core.isCompletedBefore(9518))
+            Fimbultomb();
 
         Story.PreLoad(this);
 
@@ -1123,7 +1162,8 @@ public class CoreFrostvale
         if (Core.isCompletedBefore(8451))
             return;
 
-        MountOtzi();
+        if (!Core.isCompletedBefore(8444))
+            MountOtzi();
 
         Story.PreLoad(this);
 
@@ -1155,6 +1195,8 @@ public class CoreFrostvale
     {
         if (Core.isCompletedBefore(10003) || !Core.isSeasonalMapActive("holidayhotel"))
             return;
+        if (!Core.isCompletedBefore(8451))
+            Otziwar();
 
         Story.PreLoad(this);
 
@@ -1228,17 +1270,14 @@ public class CoreFrostvale
             Core.HuntMonsterQuest(10003,
                 ("holidayhotel", UseableMonsters[4], ClassType.Solo));
         }
-
-
     }
-
 
     public void HolidayHorror()
     {
         if (Core.isCompletedBefore(10014) || !Core.isSeasonalMapActive("holidayhorror"))
             return;
-
-        HolidayHotel();
+        if (!Core.isCompletedBefore(10003))
+            HolidayHotel();
 
         Story.PreLoad(this);
 
@@ -1332,11 +1371,12 @@ public class CoreFrostvale
                 ("holidayhorror", UseableMonsters[11], ClassType.Solo));
         }
 
-
-
     }
 
 
+
+        // if (!Core.isCompletedBefore(10003))
+        //     HolidayHorror();
     // --------------------------------------------------------------------------------------------------------------------------
 
     // The rest of the Frostval quests are not necessary for Frostval Barbarian. Can skip and farm Frozen Orb directly using jump.

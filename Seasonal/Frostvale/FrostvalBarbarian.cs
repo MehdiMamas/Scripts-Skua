@@ -40,8 +40,8 @@ public class FrostvalBarbarian
         if (!Core.isSeasonalMapActive("frostvale"))
             return;
 
-        Glacera.DoAll();
-        Frostvale.DoAll();
+        Glacera.Northstar();
+        Frostvale.Battlefield(true);
 
         if (!Core.CheckInventory("Infernal Ice Heart") && !Core.CheckInventory("Crypto Token", 5))
         {
@@ -52,7 +52,7 @@ public class FrostvalBarbarian
 
         Core.AddDrop("Frostval Barbarian", "Frosty Barbarian's Helm", "Frosty Barbarian's Horns", "Bearded Barbarian Helm", "Frostval Barbarian Cape", "Frostval Barbarian Sword");
         Core.EnsureAccept(6649);
-        Core.BuyItem("frostdeep", 520, "Sword Of Hope");
+        Adv.BuyItem("frostdeep", 520, "Sword Of Hope");
         if (!Core.CheckInventory("Sassafras' War Helm"))
         {
             Core.AddDrop("Sassafras' War Helm");
@@ -63,6 +63,7 @@ public class FrostvalBarbarian
                 Core.HuntMonster("newbie", "Slime", "Potent Dried Slime", 6);
                 Core.EnsureComplete(2570);
             }
+            Bot.Wait.ForPickup("Sassafras' War Helm");
         }
         if (!Core.CheckInventory("Fur Tuft"))
         {
@@ -71,6 +72,7 @@ public class FrostvalBarbarian
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("alpine", "Wendigo", "Woebegone Wendigo");
             Core.EnsureComplete(1513);
+            Bot.Wait.ForPickup("Fur Tuft");
         }
         if (!Core.CheckInventory("Icy Holly"))
         {
@@ -80,6 +82,7 @@ public class FrostvalBarbarian
             Core.HuntMonster("coldwindvalley", "Snow Golem", "Elemental Ice", 5);
             Core.GetMapItem(5557, 8, "coldwindvalley");
             Core.EnsureComplete(6132);
+            Bot.Wait.ForPickup("Icy Holly");
         }
         if (!Core.CheckInventory("Glaceran Key"))
         {
@@ -88,12 +91,14 @@ public class FrostvalBarbarian
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("northstar", "Karok The Fallen", "Karok defeated", 1);
             Core.EnsureComplete(3971);
+            Bot.Wait.ForPickup("Glaceran Key");
         }
         if (!Core.CheckInventory("Infernal Ice Heart"))
         {
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("frostvalfuture", "Wargoth the Frozen", "Frozen Orb", 5, false);
-            Core.BuyItem("curio", 1539, "Infernal Ice Heart");
+            Adv.BuyItem("curio", 1539, "Infernal Ice Heart");
+            Bot.Wait.ForPickup("Infernal Ice Heart");
         }
         Core.EnsureComplete(6649);
 
