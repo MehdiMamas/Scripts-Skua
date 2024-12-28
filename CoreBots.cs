@@ -6690,7 +6690,7 @@ public class CoreBots
                         if (cell != null && Bot.Player.Cell != cell)
                         {
                             Bot.Map.Jump(cell ?? "Enter", pad ?? "Spawn");
-                            Bot.Wait.ForCellChange(cell);
+                            Bot.Wait.ForCellChange(cell ?? "Enter");
                         }
                     }
 
