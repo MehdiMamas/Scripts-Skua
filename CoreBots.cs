@@ -2387,6 +2387,9 @@ public class CoreBots
         if (!Bot.Drops.ToPickupIDs.Contains(itemID) && itemID > 0)
             Bot.Drops.Add(itemID);
 
+        if (!Bot.Quests.IsInProgress(questID))
+            EnsureAccept(questID);
+
         // Bot.Wait.ForTrue(() => questData != null, 20);
         if (questData != null && questData.Requirements != null
                         && (!questData.Requirements.Any()
@@ -3093,7 +3096,7 @@ public class CoreBots
         Sleep();
         JumpWait();
         Rest();
-            Bot.Options.HidePlayers = false;
+        Bot.Options.HidePlayers = false;
     }
 
     /// <summary>
@@ -4116,7 +4119,7 @@ public class CoreBots
         Bot.Options.AggroMonsters = false;
         JumpWait();
         Rest();
-            Bot.Options.HidePlayers = false;
+        Bot.Options.HidePlayers = false;
     }
 
     /// <summary>
@@ -4167,7 +4170,7 @@ public class CoreBots
         Bot.Options.AggroMonsters = false;
         JumpWait();
         Rest();
-            Bot.Options.HidePlayers = false;
+        Bot.Options.HidePlayers = false;
         void KillVath()
         {
             if (Bot.Map.Name is not "stalagbite")
