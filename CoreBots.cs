@@ -3093,6 +3093,7 @@ public class CoreBots
         Sleep();
         JumpWait();
         Rest();
+            Bot.Options.HidePlayers = false;
     }
 
     /// <summary>
@@ -3437,6 +3438,7 @@ public class CoreBots
             ); Bot.Options.AggroMonsters = false;
             JumpWait();
             Rest();
+            Bot.Options.HidePlayers = false;
 
         }
     }
@@ -3504,7 +3506,10 @@ public class CoreBots
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                     Sleep();
-                Jump(targetMonster.Cell);
+                if (Bot.Map.Name != map)
+                    Join(map);
+                if (Bot.Player.Cell != targetMonster.Cell)
+                    Jump(targetMonster.Cell);
                 Bot.Combat.Attack(targetMonster);
                 Sleep();
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
@@ -4111,6 +4116,7 @@ public class CoreBots
         Bot.Options.AggroMonsters = false;
         JumpWait();
         Rest();
+            Bot.Options.HidePlayers = false;
     }
 
     /// <summary>
@@ -4161,6 +4167,7 @@ public class CoreBots
         Bot.Options.AggroMonsters = false;
         JumpWait();
         Rest();
+            Bot.Options.HidePlayers = false;
         void KillVath()
         {
             if (Bot.Map.Name is not "stalagbite")
