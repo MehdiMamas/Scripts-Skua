@@ -146,73 +146,6 @@ public class CoreAdvanced
     }
 
     /// <summary>
-    /// Handles cases when the _BuyItem function fails to find the item in the shop and requires it to be hunted. 
-    /// It checks the item ID and performs specific actions:
-    /// - For certain items (e.g., Dragon Runestone, Khopesh Seal), it triggers farming actions.
-    /// - For other items, it attempts to buy them from the specified shop.
-    /// - If the item is not found in the shop, a log is generated, indicating that it might be a mob drop.
-    /// </summary>
-    /// <param name="map">The map where the item may be hunted or bought.</param>
-    /// <param name="shopID">The ID of the shop from which the item might be purchased.</param>
-    /// <param name="req">The required item, containing its ID, name, and quantity needed.</param>
-    /// <param name="quant">The quantity of the item required.</param>
-    /// <param name="bundlesToBuy">The number of bundles to be bought (multiplies the required quantity).</param>
-    /// <param name="Log">A boolean flag indicating whether logging should be enabled during item purchase.</param>
-    // public void HandleSubItems(string map, int shopID, ItemBase req, int quant, int bundlesToBuy, bool Log)
-    // {
-    //     switch (req.ID)
-    //     {
-    //         case 7132: // Dragon Runestone
-    //             Farm.DragonRunestone(req.Quantity * bundlesToBuy);
-    //             break;
-
-    // case 32004: // Khopesh Seal
-    //     Core.HuntMonster("cruxship", "Apephryx", req.Name, quant, false);
-    //     break;
-
-    // case 80694: // A Whisper
-    //     Core.FarmingLogger(req.Name, quant);
-    //     Core.EquipClass(ClassType.Farm);
-    //     Core.RegisterQuests(9421, 9422);
-    //     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
-    //         Core.KillMonster("shadowbattleon", "r7", "Left", "*", log: false);
-    //     Bot.Wait.ForPickup(req.Name);
-    //     Core.CancelRegisteredQuests();
-    //     break;
-
-    // Check if the required item is available in the shop and buy it if necessary
-    // default:
-    // Find the required item from the shop
-    // if (Core.GetShopItems(map, shopID).TryFind(x => x != null && x.ID == req.ID, out ShopItem? SubItem) && SubItem != null && SubItem.ShopItemID != 0)
-    // {
-    //     GetItemReq(SubItem, req.Quantity * bundlesToBuy);
-    //     BuyItem(map, shopID, req.Name, req.Quantity * bundlesToBuy, Log: Log);
-    // }
-    // else // Log if the required item is a mob drop, and needs added here.
-    // {
-    //     Core.Logger($"Shop: [\"{shopID}\"] Map: [\"{map}\"] - Required item: [\"{req.Name}\"] with ID: [\"{req.ID}\"] could not be aquired\n" +
-    //     "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //     "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //     "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n" +
-    //                 "WE ARE AWARE OF THE ISSUE PLEASE STOP PINGING US TO FIX IT! ( ping = 1 day temp retard role, **NO EXCEPTIONS!!**.)\n",
-    //                 "STOP FUCKING PINGING US", true, true);
-    //             }
-    //             break;
-    //     }
-    // }
-
-    /// <summary>
     /// Will make sure you have every requierment (XP, Rep and Gold) to buy the item.
     /// </summary>
     /// <param name="item">The ShopItem object containing all the information</param>
@@ -380,7 +313,7 @@ public class CoreAdvanced
         {
             foreach (ItemBase req in item.Requirements)
             {
-                if (matsOnly && req.Name.StartsWith("Gold Voucher"))
+                if (matsOnly && req.Name.Contains("Gold Voucher"))
                     continue;
                 // Determine the current quantity of the required item in inventory
                 // Check if the item is in the temporary inventory or the permanent inventory
@@ -423,7 +356,10 @@ public class CoreAdvanced
                                 findIngredients();
 
                                 // Check if the item is now in the inventory
-                                inventoryItem = Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == req.ID);
+                                inventoryItem = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == req.ID);
+                                if (req != null && req.ID != 0 && Bot.Bank.Contains(req.ID))
+                                    Core.Unbank(req.ID);
+
                                 if (inventoryItem != null)
                                 {
                                     maxStack = inventoryItem.MaxStack;
