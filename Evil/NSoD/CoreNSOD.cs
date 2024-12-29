@@ -13,6 +13,7 @@ tags: null
 //cs_include Scripts/Story/BattleUnder.cs
 //cs_include Scripts/Other/Classes/Necromancer.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Monsters;
 using Skua.Core.Options;
 
 public class CoreNSOD
@@ -191,7 +192,7 @@ public class CoreNSOD
         if (Core.CheckInventory("Void Aura", quant))
             return;
 
-        int Essencequant = Bot.Config!.Get<bool>("MaxStack") ? 100 : 20;
+        int Essencequant = Bot.Config.Get<bool>("MaxStack") ? 100 : 20;
 
         Farm.EvilREP();
         Core.AddDrop("Void Aura");
@@ -228,8 +229,7 @@ public class CoreNSOD
     private void HuntMonsterBatch(int quant, bool isTemp, bool publicRoom, bool log, params (string map, int monster, string essence)[] monsters)
     {
         Core.EquipClass(ClassType.Solo);
-
-        foreach (var monster in monsters.Where(x => x.monster > 0))
+        foreach (var monster in monsters.Where(x => x.essence != null && x.monster > 0 && !Core.CheckInventory(x.essence, quant)))
             Core.HuntMonsterMapID(monster.map, monster.monster, monster.essence, quant, isTemp, log, publicRoom);
     }
 
