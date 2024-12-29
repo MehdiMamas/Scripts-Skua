@@ -21,6 +21,7 @@ public class DoomMerge
     private CoreAdvanced Adv = new();
     private CoreSDKA SDKA = new();
     public CoreDailies Daily = new();
+    public CoreStory Story = new();
     private static CoreAdvanced sAdv = new();
 
     public bool DontPreconfigure = true;
@@ -44,7 +45,13 @@ public class DoomMerge
     {
         if (!Core.IsMember)
             Core.Logger("Membership Required for any item here...", stopBot: true);
-
+        if (!Story.QuestProgression(2137))
+        {
+            Core.Logger("Unlocking Weapon Kit quests");
+            Core.EnsureAccept(2137);
+            Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat", "Forge Key", isTemp: false, log: false);
+            Core.EnsureComplete(2137);
+        }
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("necropolis", 423, findIngredients, buyOnlyThis, buyMode: buyMode);
 
@@ -53,6 +60,9 @@ public class DoomMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
+            int DSOquant = Bot.Inventory.GetQuantity("Dark Spirit Orb");
+            int CSOQuantity = Bot.Inventory.GetQuantity("Corrupt Spirit Orb");
+            int OminousAuraQuant = Bot.Inventory.GetQuantity("Ominous Aura");
             int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
@@ -69,29 +79,32 @@ public class DoomMerge
                 #endregion
 
                 case "Accursed Arsenic of Doom":
-                    Daily.HardCoreMetals(new[] { "Arsenic" });
-                    break;
                 case "Baneful Beryllium of Doom":
-                    Daily.HardCoreMetals(new[] { "Beryllium" });
-                    break;
                 case "Calamitous Chromium of Doom":
-                    Daily.HardCoreMetals(new[] { "Chromium" });
-                    break;
                 case "Pernicious Palladium of Doom":
-                    Daily.HardCoreMetals(new[] { "Palladium" });
-                    break;
                 case "Reprehensible Rhodium of Doom":
-                    Daily.HardCoreMetals(new[] { "Rhodium" });
+                    SDKA.UpgradeMetal((HardCoreMetalsEnum)Enum.Parse(typeof(HardCoreMetalsEnum), req.Name.Split(' ')[1]));
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
+                case "Diabolical Aura":
+                    SDKA.PinpointBroadsword(quant);
+                    break;
+
+                case "Corrupt Spirit Orb":
+                case "Ominous Aura":
+                    SDKA.DoomKnightWK(req.Name, quant);
+                    break;
+
+                case "Dark Spirit Orb":
+                    SDKA.DSO(quant);
+                    break;
 
                 case "Dark Energy":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("bludrut4", "Shadow Serpent", req.Name, quant, false, false);
-                    Bot.Wait.ForPickup(req.Name);
-                    Core.CancelRegisteredQuests();
+                    Core.HuntMonster("bludrut4", "Shadow Serpent", req.Name, quant, false);
                     break;
+
                 case "Undead Energy":
                     Farm.BattleUnderB("Undead Energy", quant);
                     break;
@@ -99,9 +112,11 @@ public class DoomMerge
                 case "DoomKnight Weapon Kit":
                     SDKA.DoomKnightWK(quant: quant);
                     break;
+
                 case "DoomSoldier Weapon Kit":
                     SDKA.DoomSoldierWK(quant);
                     break;
+
                 case "DoomSquire Weapon Kit":
                     SDKA.DoomSquireWK(quant);
                     break;
@@ -121,7 +136,7 @@ public class DoomMerge
                     Core.CancelRegisteredQuests();
                     break;
                 case "Dark Daimyo Armor":
-                                  Core.AddDrop(req.Name);
+                    Core.AddDrop(req.Name);
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(2080);

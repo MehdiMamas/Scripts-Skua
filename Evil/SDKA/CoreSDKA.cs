@@ -10,6 +10,7 @@ tags: null
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
+using Skua.Core.Utils;
 
 public class CoreSDKA
 {
@@ -627,7 +628,97 @@ public class CoreSDKA
         Core.JumpWait();
     }
 
+    public void UpgradeMetal(HardCoreMetalsEnum metal)
+    {
+        string fullMetalName = string.Empty;
+        int upgradeMetalQuest = 0;
+        int forgeKeyQuest = 0;
+        switch (metal)
+        {
+            case HardCoreMetalsEnum.Arsenic:
+                fullMetalName = "Accursed Arsenic of Doom";
+                upgradeMetalQuest = 2110;
+                forgeKeyQuest = 2137;
+                break;
+            case HardCoreMetalsEnum.Beryllium:
+                fullMetalName = "Baneful Beryllium of Doom";
+                upgradeMetalQuest = 2111;
+                forgeKeyQuest = 2138;
+                break;
+            case HardCoreMetalsEnum.Chromium:
+                fullMetalName = "Calamitous Chromium of Doom";
+                upgradeMetalQuest = 2112;
+                forgeKeyQuest = 2139;
+                break;
+            case HardCoreMetalsEnum.Palladium:
+                fullMetalName = "Pernicious Palladium of Doom";
+                upgradeMetalQuest = 2113;
+                forgeKeyQuest = 2140;
+                break;
+            case HardCoreMetalsEnum.Rhodium:
+                fullMetalName = "Reprehensible Rhodium of Doom";
+                upgradeMetalQuest = 2114;
+                forgeKeyQuest = 2141;
+                break;
+            case HardCoreMetalsEnum.Thorium:
+                fullMetalName = "Treacherous Thorium of Doom";
+                upgradeMetalQuest = 2115;
+                forgeKeyQuest = 2142;
+                break;
+            case HardCoreMetalsEnum.Mercury:
+                fullMetalName = "Malefic Mercury of Doom";
+                upgradeMetalQuest = 2116;
+                forgeKeyQuest = 2143;
+                break;
+        };
+
+        if (Core.CheckInventory(fullMetalName))
+            return;
+
+        string upgradeMetalName = string.Join(' ', fullMetalName.Split(' ')[..2]);
+        Core.FarmingLogger(fullMetalName, 1);
+
+        // Getting the partially upgraded metal
+        if (!Core.CheckInventory(upgradeMetalName))
+        {
+            Core.AddDrop(upgradeMetalName);
+            Core.FarmingLogger(upgradeMetalName, 1);
+            Core.EnsureAccept(upgradeMetalQuest);
+
+            if (!Core.CheckInventory((int)metal))
+                Daily.MineCrafting(new[] { metal.ToString() });
+            if (!Core.CheckInventory((int)metal))
+                Core.Logger($"Can't complete {fullMetalName.Split(' ')[..2].Join(' ')} Enchantment (missing {metal}).\n" +
+                            "This requires a daily, please run the bot again after the daily reset has occurred.", messageBox: true, stopBot: true);
+
+            DSO(6);
+            Core.HuntMonster("arcangrove", "Seed Spitter", "Deadly Knightshade", 16);
+            Core.HuntMonster("bludrut4", "Shadow Serpent", "Dark Energy", 26, isTemp: false);
+
+            Core.EnsureComplete(upgradeMetalQuest);
+            Bot.Wait.ForPickup(upgradeMetalName);
+        }
+
+        // Getting the fully upgraded metal
+        DoomKnightWK("Corrupt Spirit Orb", 5);
+        DoomKnightWK("Ominous Aura", 2);
+        Core.BuyItem("dwarfhold", 434, fullMetalName);
+
+        // Unlocking "Basic Weapon Kit Construction" [Quest ID 2136]
+        if (!Core.isCompletedBefore(forgeKeyQuest))
+        {
+            Core.AddDrop(fullMetalName);
+            Core.EnsureAccept(forgeKeyQuest);
+            Core.HuntMonster("dwarfhold", "Albino Bat", "Forge Key", isTemp: false);
+            Core.EnsureComplete(forgeKeyQuest);
+            Bot.Wait.ForPickup(fullMetalName);
+        }
+    }
+
+
 }
+
+
 
 public enum SDKAQuest
 {
