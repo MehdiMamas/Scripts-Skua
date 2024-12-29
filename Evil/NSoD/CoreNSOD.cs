@@ -192,8 +192,15 @@ public class CoreNSOD
         if (Core.CheckInventory("Void Aura", quant))
             return;
 
-        int Essencequant = Bot.Config.Get<bool>("MaxStack") ? 100 : 20;
-
+        int Essencequant = 20;
+        if (Bot.Config != null)
+        {
+            Essencequant = Bot.Config.Get<bool>("MaxStack") ? 100 : 20;
+        }
+        else
+        {
+            Core.Logger("Bot.Config is null, defaulting Essencequant to 20.");
+        }
         Farm.EvilREP();
         Core.AddDrop("Void Aura");
         Core.AddDrop(Essences);
