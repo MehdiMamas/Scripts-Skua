@@ -44,14 +44,8 @@ public class DoomMerge
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
         if (!Core.IsMember)
-            Core.Logger("Membership Required for any item here...", stopBot: true);
-        if (!Story.QuestProgression(2137))
-        {
-            Core.Logger("Unlocking Weapon Kit quests");
-            Core.EnsureAccept(2137);
-            Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat", "Forge Key", isTemp: false, log: false);
-            Core.EnsureComplete(2137);
-        }
+            Core.Logger("Membership Required for any item here...", "Membership Warning", stopBot: true);
+        
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("necropolis", 423, findIngredients, buyOnlyThis, buyMode: buyMode);
 
@@ -60,10 +54,6 @@ public class DoomMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int DSOquant = Bot.Inventory.GetQuantity("Dark Spirit Orb");
-            int CSOQuantity = Bot.Inventory.GetQuantity("Corrupt Spirit Orb");
-            int OminousAuraQuant = Bot.Inventory.GetQuantity("Ominous Aura");
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -135,6 +125,7 @@ public class DoomMerge
                     }
                     Core.CancelRegisteredQuests();
                     break;
+                    
                 case "Dark Daimyo Armor":
                     Core.AddDrop(req.Name);
                     Core.FarmingLogger(req.Name, quant);
@@ -156,7 +147,6 @@ public class DoomMerge
     public List<IOption> Select = new()
     {
         new Option<bool>("12287", "Dark Armored Daimyo", "Mode: [select] only\nShould the bot buy \"Dark Armored Daimyo\" ?", false),
-        new Option<bool>("12185", "Dark Spirit Orb", "Mode: [select] only\nShould the bot buy \"Dark Spirit Orb\" ?", false),
         new Option<bool>("12514", "Daggers of Destruction", "Mode: [select] only\nShould the bot buy \"Daggers of Destruction\" ?", false),
         new Option<bool>("12518", "Blade of Shade", "Mode: [select] only\nShould the bot buy \"Blade of Shade\" ?", false),
         new Option<bool>("12519", "Broadsword of Bane", "Mode: [select] only\nShould the bot buy \"Broadsword of Bane\" ?", false),
