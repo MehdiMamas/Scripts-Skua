@@ -71,7 +71,7 @@ public class ColdThunderMerge
                     // 9834 | Eilean a' Cheò
                     Core.RegisterQuests(9834);
                     CoreAOR.ColdThunderBoss(req.Name, quant, req.Temp);
-                    Core.CancelRegisteredQuests();
+                    Bot.Wait.ForPickup("Skye's Lightning");
                     break;
 
                 case "Electrifying Zilla Tail":
