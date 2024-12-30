@@ -1661,9 +1661,10 @@ public class CoreBots
             Bot.Wait.ForItemSell();
         }
 
-        if (!all && Bot.Inventory.Contains(itemName))
+        if (!all && (Bot.Inventory.Contains(itemName) || Bot.Inventory.GetQuantity(itemName) == QuantAfterSale))
         {
-            Logger($"Sold x{sell_count} \"{itemName}\"");
+            if (Bot.Inventory.GetQuantity(itemName) == QuantAfterSale)
+                Logger($"Sold x{sell_count} \"{itemName}\"");
             return;
         }
         else if (all && !Bot.Inventory.Contains(itemName))
