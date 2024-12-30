@@ -986,7 +986,7 @@ public class CoreLegion
 
                 Core.Join("battleon-999999");
                 Bot.Wait.ForMapLoad("battleon");
-
+                Core.Sleep();
                 if (Bot.Map.Name != "battleon")
                     Core.Logger("Failed!? HOW.. try again");
             }
