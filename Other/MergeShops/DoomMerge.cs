@@ -45,7 +45,7 @@ public class DoomMerge
     {
         if (!Core.IsMember)
             Core.Logger("Membership Required for any item here...", "Membership Warning", stopBot: true);
-        
+
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("necropolis", 423, findIngredients, buyOnlyThis, buyMode: buyMode);
 
@@ -91,9 +91,23 @@ public class DoomMerge
                     break;
 
                 case "Dark Energy":
+                    Core.FarmingLogger(req.Name, quant);  // Log the farming request
+
+                    // Ensure no negative values when calculating the sell amount
+                    int sellAmount = Math.Max(0, Bot.Inventory.GetQuantity("Dark Energy") - quant);
+
+                    // Proceed if there’s at least one item to sell
+                    if (sellAmount > 0)
+                    {
+                        Core.Logger($"Selling {sellAmount} Dark Energy to prevent errors... Hopefully.", "Sell");
+                        Core.SellItem("Dark Energy", sellAmount);
+                    }
+
+                    // Equip the farming class and start killing monsters
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("bludrut4", "Shadow Serpent", req.Name, quant, false);
+                    Core.KillMonster("dwarfhold", "r2", "Left", "Chaos Drow", req.Name, quant, false);
                     break;
+
 
                 case "Undead Energy":
                     Farm.BattleUnderB("Undead Energy", quant);
@@ -125,7 +139,7 @@ public class DoomMerge
                     }
                     Core.CancelRegisteredQuests();
                     break;
-                    
+
                 case "Dark Daimyo Armor":
                     Core.AddDrop(req.Name);
                     Core.FarmingLogger(req.Name, quant);
