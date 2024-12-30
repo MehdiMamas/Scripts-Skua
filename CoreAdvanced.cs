@@ -356,18 +356,27 @@ public class CoreAdvanced
                                 findIngredients();
 
                                 // Check if the item is now in the inventory
-                                inventoryItem = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == req.ID);
-                                if (req != null && req.ID != 0 && Bot.Bank.Contains(req.ID))
-                                    Core.Unbank(req.ID);
-
-                                if (inventoryItem != null)
+                                if (req != null)
                                 {
-                                    maxStack = inventoryItem.MaxStack;
+                                    inventoryItem = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == req.ID);
+                                    if (req.ID != 0 && Bot.Bank.Contains(req.ID))
+                                        Core.Unbank(req.ID);
+
+                                    if (inventoryItem != null)
+                                    {
+                                        maxStack = inventoryItem.MaxStack;
+                                    }
+                                    else
+                                    {
+                                        // If the item is still not in the inventory, log an error and skip the item
+                                        Core.Logger($"Failed to obtain {req.Name} [{req.ID}] to get the MaxStack value.");
+                                        continue;
+                                    }
                                 }
                                 else
                                 {
-                                    // If the item is still not in the inventory, log an error and skip the item
-                                    Core.Logger($"Failed to obtain {req.Name} [{req.ID}] to get the MaxStack value.");
+                                    // Log an error if req is null
+                                    Core.Logger("Failed to obtain the required item because 'req' is null.");
                                     continue;
                                 }
                             }

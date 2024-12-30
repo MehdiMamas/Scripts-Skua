@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 138774,
+    "size": 139256,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -5840,7 +5840,7 @@
       "null"
     ],
     "path": "Evil/NSoD/CoreNSOD.cs",
-    "size": 17060,
+    "size": 17261,
     "fileName": "CoreNSOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Evil/NSoD/CoreNSOD.cs"
   },
@@ -16926,7 +16926,7 @@
       "greatswords"
     ],
     "path": "Other/MergeShops/ColdThunderMerge.cs",
-    "size": 7536,
+    "size": 7545,
     "fileName": "ColdThunderMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ColdThunderMerge.cs"
   },
@@ -17611,7 +17611,7 @@
       "legion"
     ],
     "path": "Other/MergeShops/DoomMerge.cs",
-    "size": 9907,
+    "size": 9178,
     "fileName": "DoomMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DoomMerge.cs"
   },
