@@ -1043,6 +1043,7 @@ public class CoreFarms
             Bot.Wait.ForPickup(item, 40);
             if (!string.IsNullOrEmpty(item))
                 Core.FarmingLogger(item, quant);
+            Core.Sleep(1500);
             goto Exit;
 
         Exit:
@@ -1053,7 +1054,7 @@ public class CoreFarms
                 Bot.Wait.ForCombatExit();
                 Bot.Map.Join("battleon-999999");
                 Bot.Wait.ForMapLoad("battleon");
-                Core.Sleep();
+                Core.Sleep(1500);
                 if (Bot.Map.Name == "battleon")
                     goto Start;
             }
@@ -1064,7 +1065,7 @@ public class CoreFarms
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
                 Bot.Map.Join("battleon-999999");
                 Bot.Wait.ForMapLoad("battleon");
-                Core.Sleep();
+                Core.Sleep(1500);
                 if (Bot.Map.Name == "battleon")
                     goto Start;
             }
@@ -2560,6 +2561,7 @@ public class CoreFarms
             Bot.Wait.ForPickup(item, 40);
             if (!string.IsNullOrEmpty(item))
                 Core.FarmingLogger(item, quant);
+            Core.Sleep(1500);
             goto Exit;
 
 
@@ -2571,7 +2573,7 @@ public class CoreFarms
                 Bot.Wait.ForCombatExit();
                 Core.Jump(Bot.Player.Cell, Bot.Player.Pad);
                 Bot.Map.Join("battleon-999999");
-                Core.Sleep();
+                Core.Sleep(1500);
                 if (Bot.Map.Name == "battleon")
                     goto Start;
             }
@@ -2582,7 +2584,7 @@ public class CoreFarms
             {
                 Bot.Map.Join("battleon-999999");
                 Bot.Wait.ForMapLoad("battleon");
-                Core.Sleep();
+                Core.Sleep(1500);
                 if (Bot.Map.Name == "battleon")
                     goto Start;
             }
