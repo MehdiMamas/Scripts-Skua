@@ -833,30 +833,6 @@ public class CoreLegion
         Core.EquipClass(ClassType.Solo);
 
 
-        if (Core.CheckInventory(Farm.AcceptablePvPAmulets, any: true) && !Farm.AcceptablePvPAmulets.Any(Bot.Inventory.IsEquipped) ||
-               !Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(Farm.AcceptablePvPAmulets, any: true)))
-        {
-            // Unbank and equip the first acceptable PvP amulet if owned
-            if (Farm.AcceptablePvPAmulets.Any(item => Bot.Bank.Contains(item)))
-            {
-                Core.Unbank(Farm.AcceptablePvPAmulets);
-                Core.Sleep(); // Sleep if necessary to account for server-side inventory updates
-            }
-
-            if (Farm.AcceptablePvPAmulets.Any(item => Bot.Inventory.Contains(item)))
-            {
-                Core.Equip(Farm.AcceptablePvPAmulets.First());
-                Core.Sleep(); // Sleep if necessary to allow equip to process
-            }
-
-            // Enable Kill Ads if no amulet is found
-            if (!Core.CheckInventory(Farm.AcceptablePvPAmulets, any: true))
-            {
-                Core.Logger("No amulet owned, enabling `Kill Ads`");
-                _canSoloBoss = true;
-            }
-        }
-
         int exitAttempt = 0;
         bool FarmComplete = false;
 
