@@ -229,7 +229,7 @@ public class GlaceraStory
         if (Core.isCompletedBefore(3954))
             return;
 
-        if (!Core.isCompletedBefore(3047))
+        if (!Core.isCompletedBefore(3950))
             Glacera();
 
         // FrozenRuins encore
