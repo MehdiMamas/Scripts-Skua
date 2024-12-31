@@ -331,8 +331,8 @@ public class CoreBots
                     }
 
                     // Identity Protection
-                    Bot.Options.CustomName = "SKUA BOT";
-                    Bot.Options.CustomGuild = "HTTPS://AUQW.TK/";
+                    // Bot.Options.CustomName = "SKUA BOT";
+                    // Bot.Options.CustomGuild = "HTTPS://AUQW.TK/";
 
                     // Holiday Handlers
                     AprilFools();
@@ -7025,11 +7025,10 @@ public class CoreBots
         Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%{moveX}%{moveY}%{(Bot.Map.Name == "dagepvp" ? "10%" : "8%")}");
         Sleep(2500);
         Bot.Send.Packet($"%xt%zm%mtcid%{Bot.Map.RoomID}%{mtcid}%");
-        Bot.Wait.ForCellChange(cell);
+        Sleep(2500);
 
-        if (Bot.Player.Cell != cell)
+        if (Bot.Player.Cell != null && Bot.Player.Cell != cell)
         {
-            Logger($"Failed to move to cell {cell}, retrying after a short delay (1.5s)");
             Sleep(1500);
             goto retry;
         }
