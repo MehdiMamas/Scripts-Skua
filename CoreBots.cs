@@ -2492,7 +2492,7 @@ public class CoreBots
             return 0;
         }
 
-        if (quest != null && !Bot.Quests.Active.Contains(quest))
+        if (quest != null && !Bot.Quests.IsInProgress(questID))
             EnsureAccept(questID);
         Bot.Wait.ForTrue(() => Bot.Quests.IsInProgress(questID), 20);
 
