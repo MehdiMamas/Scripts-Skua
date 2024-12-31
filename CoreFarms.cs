@@ -978,7 +978,34 @@ public class CoreFarms
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
 
+        if (Core.CheckInventory(AcceptablePvPAmulets, any: true) && !AcceptablePvPAmulets.Any(Bot.Inventory.IsEquipped) ||
+        !Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true)))
+        {
+            // Unbank and equip the first acceptable PvP amulet if owned
+            if (AcceptablePvPAmulets.Any(item => Bot.Bank.Contains(item)))
+            {
+                Core.Unbank(AcceptablePvPAmulets);
+                Core.Sleep(); // Sleep if necessary to account for server-side inventory updates
+            }
+
+            if (AcceptablePvPAmulets.Any(item => Bot.Inventory.Contains(item)))
+            {
+                Core.Equip(AcceptablePvPAmulets.First());
+                Core.Sleep(); // Sleep if necessary to allow equip to process
+            }
+
+            // Enable Kill Ads if no amulet is found
+            if (!Core.CheckInventory(AcceptablePvPAmulets, any: true))
+            {
+                Core.Logger("No amulet owned, enabling `Kill Ads`");
+                KillAds = true;
+            }
+        }
+
+
     Start:
+        int ExitAttempt = 0;
+        int Death = 0;
         Random random = new();
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
@@ -991,7 +1018,7 @@ public class CoreFarms
             Core.PvPMove(9, "Crosslower", random.Next(777, 857), random.Next(254, 290));
 
             // If CBO setting for `Kill ads before boss` is enabled do:
-            if (KillAds == true || !Core.CheckInventory(AcceptablePvPAmulets, any: true) || !Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true) && x.Equipped))
+            if (KillAds)
             {
                 if (!Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true) && x.Equipped))
                     Core.OneTimeMessage("Wheres your amulet retard?", "Hey ChuckleFuck, you forgot your amulet! So now you get to kill the minions.");
@@ -1022,14 +1049,12 @@ public class CoreFarms
 
             Core.PvPMove(23, "Morale1B", random.Next(782, 850), random.Next(259, 276));
 
-            // regardless of CBO setting, kill these for extra trohpies. (Timed and tested) 
             Bot.Kill.Monster(14);
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
             Core.PvPMove(25, "Morale1C", random.Next(802, 865), random.Next(264, 286));
 
-            // regardless of CBO setting, kill these for extra trohpies. (Timed and tested) 
             Bot.Kill.Monster(15);
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
@@ -1040,6 +1065,7 @@ public class CoreFarms
                 goto RestartOnDeath;
 
             Bot.Wait.ForDrop(item, 40);
+            Core.Sleep(1500);
             Bot.Wait.ForPickup(item, 40);
             if (!string.IsNullOrEmpty(item))
                 Core.FarmingLogger(item, quant);
@@ -1049,25 +1075,36 @@ public class CoreFarms
         Exit:
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
-                if (Bot.Player.HasTarget)
-                    Bot.Combat.CancelTarget();
+                Core.Logger($"Attempting Exit {ExitAttempt++}.");
+                Bot.Combat.CancelTarget();
                 Bot.Wait.ForCombatExit();
                 Bot.Map.Join("battleon-999999");
-                Bot.Wait.ForMapLoad("battleon");
                 Core.Sleep(1500);
-                if (Bot.Map.Name == "battleon")
+                if (Bot.Map.Name != "battleon")
+                    Core.Logger("Failed!? HOW.. try agian");
+                else
+                {
+                    Core.Logger("Successful!");
                     goto Start;
+                }
             }
 
         RestartOnDeath:
+            Core.Logger($"Death: {Death++}, resetting");
             while (!Bot.ShouldExit)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
+                Core.Logger($"Attempting Death Exit {ExitAttempt++}.");
                 Bot.Map.Join("battleon-999999");
                 Bot.Wait.ForMapLoad("battleon");
                 Core.Sleep(1500);
-                if (Bot.Map.Name == "battleon")
+                if (Bot.Map.Name != "battleon")
+                    Core.Logger("Failed!? HOW.. try agian");
+                else
+                {
+                    Core.Logger("Successful!");
                     goto Start;
+                }
             }
         }
 
@@ -2434,7 +2471,7 @@ public class CoreFarms
             }
         }
     }
-    string[] AcceptablePvPAmulets = { "Mithril PvP Amulet +15000", "Diamond PvP Amulet +5500", "Platinum PvP Amulet +5000" };
+    public string[] AcceptablePvPAmulets = { "Mithril PvP Amulet +15000", "Diamond PvP Amulet +5500", "Platinum PvP Amulet +5000" };
     public void DeathPitBrawlREP(int rank = 10)
     {
         if (FactionRank("Death Pit Brawl") >= rank)
@@ -2485,7 +2522,37 @@ public class CoreFarms
         }
 
         canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool KillAds);
+
+        if (Core.CheckInventory(AcceptablePvPAmulets, any: true) && !AcceptablePvPAmulets.Any(Bot.Inventory.IsEquipped) ||
+     !Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true)))
+        {
+            // Unbank and equip the first acceptable PvP amulet if owned
+            if (AcceptablePvPAmulets.Any(item => Bot.Bank.Contains(item)))
+            {
+                Core.Unbank(AcceptablePvPAmulets);
+                Core.Sleep(); // Sleep if necessary to account for server-side inventory updates
+            }
+
+            if (AcceptablePvPAmulets.Any(item => Bot.Inventory.Contains(item)))
+            {
+                Core.Equip(AcceptablePvPAmulets.First());
+                Core.Sleep(); // Sleep if necessary to allow equip to process
+            }
+
+            // Enable Kill Ads if no amulet is found
+            if (!Core.CheckInventory(AcceptablePvPAmulets, any: true))
+            {
+                string amuletList = string.Join(Environment.NewLine + "> ", AcceptablePvPAmulets);
+                Bot.Log($"No amulet owned out of:{Environment.NewLine}> {amuletList}{Environment.NewLine}Enabling `Kill Ads`");
+                KillAds = true;
+            }
+        }
+
+
         Core.Logger($"Kill Additional mobs (more trophies - slower depending on gear): {KillAds}");
+
+        int ExitAttempt = 0;
+        int Death = 0;
 
     Start:
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant) || FactionRank("Death Pit Brawl") < rank)
@@ -2508,11 +2575,8 @@ public class CoreFarms
             Core.PvPMove(14, "Crossupper", 903, 324);
             Core.PvPMove(18, "Resource1A", 482, 295);
 
-            if (KillAds == true || !Core.CheckInventory(AcceptablePvPAmulets, any: true) || !Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true) && x.Equipped))
+            if (KillAds)
             {
-                if (!Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true) && x.Equipped))
-                    Core.OneTimeMessage("Wheres your amulet retard?", "Hey ChuckleFuck, you forgot your amulet! So now you get to kill the minions.");
-
                 Core.PVPKilling();
                 if (!Bot.Player.Alive)
                     goto RestartOnDeath;
@@ -2520,11 +2584,8 @@ public class CoreFarms
 
             Core.PvPMove(20, "Resource1B", 938, 400);
 
-            if (KillAds == true || !Core.CheckInventory(AcceptablePvPAmulets, any: true) || !Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true) && x.Equipped))
+            if (KillAds)
             {
-                if (!Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true) && x.Equipped))
-                    Core.OneTimeMessage("Wheres your amulet retard?", "Hey ChuckleFuck, you forgot your amulet! So now you get to kill the minions.");
-
                 Core.PVPKilling();
                 if (!Bot.Player.Alive)
                     goto RestartOnDeath;
@@ -2558,35 +2619,48 @@ public class CoreFarms
                 goto RestartOnDeath;
 
             Bot.Wait.ForDrop(item, 40);
+            Core.Sleep(1500);
             Bot.Wait.ForPickup(item, 40);
             if (!string.IsNullOrEmpty(item))
                 Core.FarmingLogger(item, quant);
             Core.Sleep(1500);
             goto Exit;
 
-
         Exit:
-            Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
+                Core.Logger($"Attempting Exit {ExitAttempt++}.");
                 Bot.Combat.CancelTarget();
                 Bot.Wait.ForCombatExit();
-                Core.Jump(Bot.Player.Cell, Bot.Player.Pad);
                 Bot.Map.Join("battleon-999999");
                 Core.Sleep(1500);
-                if (Bot.Map.Name == "battleon")
+                if (Bot.Map.Name != "battleon")
+                    Core.Logger("Failed!? HOW.. try agian");
+                else
+                {
+                    Core.Logger("Successful!");
+                    ExitAttempt = 0;
                     goto Start;
+                }
             }
 
         RestartOnDeath:
-            Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
+            Core.Logger($"Death: {Death++}, resetting");
             while (!Bot.ShouldExit)
             {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
+                Core.Logger($"Attempting Death Exit {ExitAttempt++}.");
                 Bot.Map.Join("battleon-999999");
                 Bot.Wait.ForMapLoad("battleon");
                 Core.Sleep(1500);
-                if (Bot.Map.Name == "battleon")
+                if (Bot.Map.Name != "battleon")
+                    Core.Logger("Failed!? HOW.. try agian");
+                else
+                {
+                    Core.Logger("Successful!");
+                    ExitAttempt = 0;
                     goto Start;
+                }
             }
         }
 

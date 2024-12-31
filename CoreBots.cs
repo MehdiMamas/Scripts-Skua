@@ -7020,13 +7020,18 @@ public class CoreBots
     /// <param name="moveY">Y position of the door</param>
     public void PvPMove(int mtcid, string cell, int moveX = 0, int moveY = 0)
     {
-        while (!Bot.ShouldExit && Bot.Player.Cell != cell)
+    retry:
+        // Different maps = differnt walk speeds for pvp appearenty
+        Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%{moveX}%{moveY}%{(Bot.Map.Name == "dagepvp" ? "10%" : "8%")}");
+        Sleep(2500);
+        Bot.Send.Packet($"%xt%zm%mtcid%{Bot.Map.RoomID}%{mtcid}%");
+        Bot.Wait.ForCellChange(cell);
+
+        if (Bot.Player.Cell != cell)
         {
-            // Different maps = differnt walk speeds for pvp appearenty
-            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%{moveX}%{moveY}%{(Bot.Map.Name == "dagepvp" ? "10%" : "8%")}");
-            Sleep(2500);
-            Bot.Send.Packet($"%xt%zm%mtcid%{Bot.Map.RoomID}%{mtcid}%");
-            Sleep(2500);
+            Logger($"Failed to move to cell {cell}, retrying after a short delay (1.5s)");
+            Sleep(1500);
+            goto retry;
         }
     }
 

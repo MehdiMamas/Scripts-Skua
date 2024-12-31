@@ -832,6 +832,31 @@ public class CoreLegion
         Core.AddDrop("Legion Combat Trophy", "Technique Observed", "Sword Scroll Fragment");
         Core.EquipClass(ClassType.Solo);
 
+
+        if (Core.CheckInventory(Farm.AcceptablePvPAmulets, any: true) && !Farm.AcceptablePvPAmulets.Any(Bot.Inventory.IsEquipped) ||
+               !Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(Farm.AcceptablePvPAmulets, any: true)))
+        {
+            // Unbank and equip the first acceptable PvP amulet if owned
+            if (Farm.AcceptablePvPAmulets.Any(item => Bot.Bank.Contains(item)))
+            {
+                Core.Unbank(Farm.AcceptablePvPAmulets);
+                Core.Sleep(); // Sleep if necessary to account for server-side inventory updates
+            }
+
+            if (Farm.AcceptablePvPAmulets.Any(item => Bot.Inventory.Contains(item)))
+            {
+                Core.Equip(Farm.AcceptablePvPAmulets.First());
+                Core.Sleep(); // Sleep if necessary to allow equip to process
+            }
+
+            // Enable Kill Ads if no amulet is found
+            if (!Core.CheckInventory(Farm.AcceptablePvPAmulets, any: true))
+            {
+                Core.Logger("No amulet owned, enabling `Kill Ads`");
+                _canSoloBoss = true;
+            }
+        }
+
         int exitAttempt = 0;
         bool FarmComplete = false;
 
@@ -839,6 +864,7 @@ public class CoreLegion
             Core.DL_Enable();
 
         Start:
+        exitAttempt = 0;
         while (!Bot.ShouldExit && !FarmComplete)
         {
             LogFarmingProgress();
@@ -966,32 +992,49 @@ public class CoreLegion
 
         void Exit(string? cell, ref int exitAttempt)
         {
+            int ExitAttempt = exitAttempt;
+            int Death = 0;
             if (!Bot.Player.Alive)
-            {
-                Core.DebugLogger(this, "player's a sleep they'll wake soon");
-                while (!Bot.ShouldExit && !Bot.Player.Alive)
-                {
-                    Core.Sleep();
-                }
+                goto Death;
+            else goto Exit;
 
-                if (cell != string.Empty && cell != null)
-                    Bot.Wait.ForCellChange(cell);
-
-            }
-
+            Exit:
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
-                if (Bot.Player.HasTarget)
-                    Bot.Combat.CancelTarget();
-
-                Core.Join("battleon-999999");
-                Bot.Wait.ForMapLoad("battleon");
-                Core.Sleep();
+                Core.Logger($"Attempting Exit {ExitAttempt++}.");
+                Bot.Combat.CancelTarget();
+                Bot.Wait.ForCombatExit();
+                Bot.Map.Join("battleon-999999");
+                Core.Sleep(1500);
                 if (Bot.Map.Name != "battleon")
-                    Core.Logger("Failed!? HOW.. try again");
+                    Core.Logger("Failed!? HOW.. try agian");
+                else
+                {
+                    Core.Logger("Successful!");
+                    ExitAttempt = 0;
+                    break;
+                }
             }
 
-            exitAttempt++;
+        Death:
+            Core.Logger($"Death: {Death++}, resetting");
+            while (!Bot.ShouldExit)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
+                Core.Logger($"Attempting Death Exit {ExitAttempt++}.");
+                Bot.Map.Join("battleon-999999");
+                Bot.Wait.ForMapLoad("battleon");
+                Core.Sleep(1500);
+                if (Bot.Map.Name != "battleon")
+                    Core.Logger("Failed!? HOW.. try agian");
+                else
+                {
+                    Core.Logger("Successful!");
+                    ExitAttempt = 0;
+                    Death = 0;
+                    break;
+                }
+            }
         }
 
 
