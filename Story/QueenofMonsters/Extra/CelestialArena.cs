@@ -41,53 +41,51 @@ public class CelestialArenaQuests
     {
         if (Core.isCompletedBefore(6022))
             return;
-        //Adv.BestGear(GenericGearBoost.dmgAll);
+
         Core.EquipClass(ClassType.Solo);
-        Story.KillQuest(6013, "CelestialArenaB", "Slork Construct");
-        Story.KillQuest(6014, "CelestialArenaB", "Azkorath Construct");
-        Story.KillQuest(6015, "CelestialArenaB", "Blessed Inquisitor");
-        Story.KillQuest(6016, "CelestialArenaB", "Lich Ravager Construct");
-        Story.KillQuest(6017, "CelestialArenaB", "Ring Guardian Construct");
-        Story.KillQuest(6018, "CelestialArenaB", "Serepthys Construct");
-        Story.KillQuest(6019, "CelestialArenaB", "Yaomo Construct");
-        Story.KillQuest(6020, "CelestialArenaB", "Cerberus Construct");
-        Story.KillQuest(6021, "CelestialArenaB", "Infernal Warrior Construct");
-        Story.KillQuest(6022, "CelestialArenaB", "Infernal Warlord Construct");
+        Story.KillQuest(6013, "celestialarenab", "Slork Construct");
+        Story.KillQuest(6014, "celestialarenab", "Azkorath Construct");
+        Story.KillQuest(6015, "celestialarenab", "Blessed Inquisitor");
+        Story.KillQuest(6016, "celestialarenab", "Lich Ravager Construct");
+        Story.KillQuest(6017, "celestialarenab", "Ring Guardian Construct");
+        Story.KillQuest(6018, "celestialarenab", "Serepthys Construct");
+        Story.KillQuest(6019, "celestialarenab", "Yaomo Construct");
+        Story.KillQuest(6020, "celestialarenab", "Cerberus Construct");
+        Story.KillQuest(6021, "celestialarenab", "Infernal Warrior Construct");
+        Story.KillQuest(6022, "celestialarenab", "Infernal Warlord Construct");
     }
     public void Arena11to20()
     {
         if (Core.isCompletedBefore(6032))
             return;
 
-        //Adv.BestGear(GenericGearBoost.dmgAll);
         Core.EquipClass(ClassType.Solo);
-        Story.KillQuest(6023, "CelestialArenaC", "Conquest Construct");
-        Story.KillQuest(6024, "CelestialArenaC", "War Construct");
-        Story.KillQuest(6025, "CelestialArenaC", "Death Construct");
-        Story.KillQuest(6026, "CelestialArenaC", "Famine Construct");
-        Story.KillQuest(6027, "CelestialArenaC", "Diabolical Warlord Construct");
-        Story.KillQuest(6028, "CelestialArenaC", "Undead Raxgore Construct");
-        Story.KillQuest(6029, "CelestialArenaC", "Blessed Karok");
-        Story.KillQuest(6030, "CelestialArenaC", "Kezeroth Construct");
-        Story.KillQuest(6031, "CelestialArenaC", "Shadow Lord Construct");
-        Story.KillQuest(6032, "CelestialArenaC", "Desolich Construct");
+        Story.KillQuest(6023, "celestialarenac", "Conquest Construct");
+        Story.KillQuest(6024, "celestialarenac", "War Construct");
+        Story.KillQuest(6025, "celestialarenac", "Death Construct");
+        Story.KillQuest(6026, "celestialarenac", "Famine Construct");
+        Story.KillQuest(6027, "celestialarenac", "Diabolical Warlord Construct");
+        Story.KillQuest(6028, "celestialarenac", "Undead Raxgore Construct");
+        Story.KillQuest(6029, "celestialarenac", "Blessed Karok");
+        Story.KillQuest(6030, "celestialarenac", "Kezeroth Construct");
+        Story.KillQuest(6031, "celestialarenac", "Shadow Lord Construct");
+        Story.KillQuest(6032, "celestialarenac", "Desolich Construct");
     }
     public void Arena21to29()
     {
         if (Core.isCompletedBefore(6042))
             return;
 
-        //Adv.BestGear(GenericGearBoost.dmgAll);
         Core.EquipClass(ClassType.Solo);
-        Story.KillQuest(6033, "CelestialArenaD", "Queen of Hope");
-        Story.KillQuest(6034, "CelestialArenaD", "Malxas Construct");
-        Story.KillQuest(6035, "CelestialArenaD", "Blessed Gladius");
-        Story.KillQuest(6036, "CelestialArenaD", "High Celestial Priest");
-        Story.KillQuest(6037, "CelestialArenaD", "Blessed Enfield");
-        Story.KillQuest(6038, "CelestialArenaD", "Avatar of Spirits");
-        Story.KillQuest(6039, "CelestialArenaD", "Avatar of Time");
-        Story.KillQuest(6040, "CelestialArenaD", "Avatar of Life");
-        Story.KillQuest(6041, "CelestialArenaD", "Fallen Abezeth");
-        Story.KillQuest(6042, "CelestialArenaD", "Aranx");
+        Story.KillQuest(6033, "celestialarenad", "Queen of Hope");
+        Story.KillQuest(6034, "celestialarenad", "Malxas Construct");
+        Story.KillQuest(6035, "celestialarenad", "Blessed Gladius");
+        Story.KillQuest(6036, "celestialarenad", "High Celestial Priest");
+        Story.KillQuest(6037, "celestialarenad", "Blessed Enfield");
+        Story.KillQuest(6038, "celestialarenad", "Avatar of Spirits");
+        Story.KillQuest(6039, "celestialarenad", "Avatar of Time");
+        Story.KillQuest(6040, "celestialarenad", "Avatar of Life");
+        Story.KillQuest(6041, "celestialarenad", "Fallen Abezeth");
+        Story.KillQuest(6042, "celestialarenad", "Aranx");
     }
 }
