@@ -108,7 +108,7 @@ public class TheWorldHouseMerge
                     break;
 
                 case "Astravia Castle House":
-                    Core.HuntMonster("astraviajudge", "La", req.Name);
+                    Core.HuntMonster("astraviajudge", "La", req.Name, isTemp: false);
                     break;
             }
         }
