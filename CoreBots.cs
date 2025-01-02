@@ -2197,7 +2197,7 @@ public class CoreBots
                         await Task.Delay(ActionDelay * 2);
                         if (Bot.Quests.IsInProgress(quest.ID))
                             i++;
-
+                       
                         if (i >= 20 && Bot.Quests.IsInProgress(quest.ID))
                         {
                             await Task.Delay(ActionDelay * 2);
@@ -2209,7 +2209,7 @@ public class CoreBots
                             i = 0;
                             continue;
                         }
-                        // await Task.Delay(ActionDelay * 2);
+                        await Task.Delay(ActionDelay * 2);
                         Bot.Quests.Accept(quest.ID);
                     }
                 }
