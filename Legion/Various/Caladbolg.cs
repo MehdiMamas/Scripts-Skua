@@ -66,14 +66,16 @@ public class Caladbolg
 
             Adv.BuyItem("underworld", 238, "Legion Titan");
         }
+        int QuestID = Core.CheckInventory(11953) ? 1960 : 3419;
+        Core.AddDrop(Core.EnsureLoad(QuestID).Rewards.Select(x => x.Name).ToArray());
 
-        Core.AddDrop(Core.EnsureLoad(Core.CheckInventory(11953) ? 1960 : 3419).Rewards.Select(x => x.Name).ToArray());
-
-        Core.RegisterQuests(Core.CheckInventory(11953) ? 1960 : 3419);
+        Core.RegisterQuests(QuestID);
         while (!Bot.ShouldExit && !Core.CheckInventory(target))
         {
             Legion.FarmLegionToken(5);
-            Core.KillMonster("underworld", "r9", "Left", "*", "Soul Shard", log: false);
+            while (!Bot.ShouldExit && !Bot.TempInv.Contains(13148))
+                Core.KillMonster("underworld", "r9", "Left", "Dark Makai");
+            Bot.Wait.ForQuestComplete(QuestID);
         }
         Core.CancelRegisteredQuests();
     }
