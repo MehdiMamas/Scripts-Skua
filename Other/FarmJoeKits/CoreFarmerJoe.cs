@@ -415,7 +415,6 @@ public class CoreFarmerJoe
 
                     if (Bot.Player.Level < Level)
                     {
-                        Core.Logger("Leveling to 65");
                         SetClass(false, true, false);
                         Farm.Experience(Level);
 
