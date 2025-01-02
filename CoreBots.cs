@@ -1265,16 +1265,16 @@ public class CoreBots
 
         Bot.Events.ExtensionPacketReceived -= RelogRequieredListener;
 
-        if (CheckInventory(item.Name, quant))
+        if (CheckInventory(item.ID, quant))
         {
             if (Log)
-                Logger($"Bought {buy_quant} {item.Name}, now at {quant} {item.Name}", "BuyItem");
+                Logger($"Bought {(buy_quant == 302500 ? 1 : buy_quant)} {item.Name}, now at {quant} {item.Name}", "BuyItem");
         }
         else
         {
             if (retrys < 5)
             {
-                Logger($"Failed at buying {buy_quant}/{quant} {item.Name}, retrying: x{retrys}", "BuyItem");
+                Logger($"Failed at buying {(buy_quant == 302500 ? 1 : buy_quant)}/{quant} {item.Name}, retrying: x{retrys}", "BuyItem");
                 retrys++;
                 JumpWait();
                 _BuyItem(map, shopID, item, buy_quant, Log);
@@ -1282,7 +1282,7 @@ public class CoreBots
             else
             {
                 retrys = 0;
-                Logger($"Failed at buying {buy_quant}/{quant} {item.Name}", "BuyItem");
+                Logger($"Failed at buying {(buy_quant == 302500 ? 1 : buy_quant)}/{quant} {item.Name}", "BuyItem");
             }
         }
 
@@ -1391,8 +1391,8 @@ public class CoreBots
             }
 
             //Merge item check
-            int itemCount = item.Quantity == 0 ? 1 : item.Quantity;
-            int buy_count = (int)Math.Ceiling((decimal)buy_quant / (decimal)(itemCount));
+            int itemCount = item.Quantity == 0 || item.Quantity == 302500 ? 1 : item.Quantity;
+            int buy_count = (int)Math.Ceiling(buy_quant / (decimal)itemCount);
             if (item.Requirements.Any())
             {
                 foreach (ItemBase req in item.Requirements)
@@ -1565,7 +1565,7 @@ public class CoreBots
             Logger($"Your inventory is very full [{prefCount}/{Bot.Inventory.Slots}], the bot will now clean it a bit before continuing.", "BuyItem");
             BankACMisc();
             if (Bot.Inventory.FreeSlots <= 0)
-                Logger($"Banked {(prefCount - Bot.Inventory.UsedSlots)} items but it still wasn't enough. Please clean the rest of your inventory manually. Stopping the bot.", "BuyItem", true, true);
+                Logger($"Banked {prefCount - Bot.Inventory.UsedSlots} items but it still wasn't enough. Please clean the rest of your inventory manually. Stopping the bot.", "BuyItem", true, true);
         }
     }
 
@@ -1586,7 +1586,7 @@ public class CoreBots
             SellItem(item.Name, Bot.Inventory.GetQuantity(item.Name) - diff);
             buy_quant += diff;
         }
-        return buy_quant;
+        return buy_quant == 302500 ? 1 : buy_quant;
     }
 
 

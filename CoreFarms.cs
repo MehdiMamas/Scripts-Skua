@@ -1827,9 +1827,6 @@ public class CoreFarms
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank}");
 
-        Core.RegisterQuests(4667);
-        Core.Join("elfhame");
-        Bot.Options.SkipCutscenes = false;
         while (!Bot.ShouldExit && FactionRank("Brightoak") < rank)
         {
             if (Bot.Map.Name != "elfhame")
@@ -1837,11 +1834,21 @@ public class CoreFarms
                 Core.Join("elfhame");
                 Bot.Wait.ForMapLoad("elfhame");
             }
-            Bot.Wait.ForQuestAccept(4667);
+            if (!Bot.Quests.IsInProgress(4667))
+            {
+                Bot.Quests.Accept(4667);
+                Bot.Wait.ForQuestAccept(4667);
+            }
             Bot.Map.GetMapItem(3984);
-            Bot.Wait.ForQuestComplete(4667);
+            while (Bot.ShouldExit && !Bot.TempInv.Contains("Puzzle Completed")) { Core.Sleep(); }
+            if (Bot.Quests.CanComplete(4667))
+            {
+                Bot.Quests.Complete(4667);
+                Bot.Wait.ForQuestComplete(4667);
+            }
+            Core.Sleep();
         }
-        Core.Jump("Enter", "Spawn");
+        // Core.Jump("Enter", "Spawn");
         Bot.Options.SkipCutscenes = true;
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);

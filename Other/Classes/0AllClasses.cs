@@ -349,13 +349,13 @@ public class AllClasses
     {
         Core.Logger("=== Buying `beginner` classes start (will help with forge enhancements later)===");
         Adv.GearStore();
-        Core.BuyItem("trainers", 170, "Warrior");
-        Core.BuyItem("trainers", 174, "Mage");
-        Core.BuyItem("trainers", 176, "Healer");
-        Core.BuyItem("trainers", 172, "Rogue");
-        Core.BuyItem("classhalla", 178, "Ninja");
-        Core.BuyItem(Bot.Map.Name, 299, "Barber");
-        Core.BuyItem(Bot.Map.Name, 299, "Oracle");
+        // Core.BuyItem("trainers", 170, "Warrior");
+        // Core.BuyItem("trainers", 174, "Mage");
+        // Core.BuyItem("trainers", 176, "Healer");
+        // Core.BuyItem("trainers", 172, "Rogue");
+        // Core.BuyItem("classhalla", 178, "Ninja");
+        // Core.BuyItem(Bot.Map.Name, 299, "Barber");
+        // Core.BuyItem(Bot.Map.Name, 299, "Oracle");
         Core.BuyItem(Bot.Map.Name, 222, "Battle Warrior");
         Core.BuyItem(Bot.Map.Name, 222, "Battle Healer");
         Core.BuyItem(Bot.Map.Name, 222, "No Class");
