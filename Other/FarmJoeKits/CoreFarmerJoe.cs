@@ -422,6 +422,7 @@ public class CoreFarmerJoe
 
                     if (!Core.CheckInventory("Glacial Berserker", toInv: false) || !Core.CheckInventory("ArchPaladin", toInv: false))
                     {
+                        Core.Logger("Getting Glacial Berserker");
                         SetClass(true, false, false);
                         GB.GetGB();
                     }
