@@ -6917,41 +6917,20 @@ public class CoreBots
         Join(map, cell, pad, ignoreCheck: ignoreCheck, publicRoom: false);
         Bot.Wait.ForMapLoad(map);
         Bot.Flash.CallGameFunction("world.loadMap", swfPath);
-
+        Sleep(1500);
         // Wait until the player is fully loaded or exit condition is met
         while (!Bot.ShouldExit && !Bot.Player.Loaded) Sleep();
 
         // If the map is loaded, proceed with cell filtering and jumping
         if (Bot.Map != null)
         {
-            // Filter out blacklisted cells (add logic similar to previous examples)
-            var blackListedCells = Bot.Monsters.MapMonsters.Select(monster => monster.Cell).ToHashSet();
-            string combinedPattern = @"(^cut\w*$)|(^\w*cut$)|(^cut$)|(^r\d+$)|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$";
-            var filteredCells = Bot.Map.Cells
-                .Where(cell => cell != null && !blackListedCells.Contains(cell)
-                    && !Regex.IsMatch(cell, combinedPattern, RegexOptions.IgnoreCase)
-                    && !cell.ToLower().Contains("enter"))
-                .ToList();
-
-            // Filter for cells excluding any that match blacklisted or "Enter"
-            string? targetCell = InitializeWithRetries(() =>
-                filteredCells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase))
-            );
-
-            if (targetCell == null)
-            {
-                Logger($"Failed to find cell '{cell}' in map '{map}' after multiple attempts.");
-                return;
-            }
-
-            // Format the pad to match the player's expected format
-            string targetPad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
+            string targetPad = cell == "Enter" ? "Spawn" : "Left";
 
             // Jump to the target cell if not already there
-            if (Bot.Player.Cell != targetCell)
-                Bot.Map.Jump(targetCell, targetPad);
+            if (Bot.Player.Cell != cell)
+                Bot.Map.Jump(cell, targetPad);
 
-            Bot.Wait.ForCellChange(targetCell);
+            Bot.Wait.ForCellChange(cell);
         }
         else
         {
