@@ -324,7 +324,6 @@ public class CoreBots
                     if (AntiLag)
                     {
                         Bot.Options.LagKiller = changeTo;
-                        Bot.Lite.HidePlayers = changeTo;
                         Bot.Flash.SetGameObject("stage.frameRate", 10);
                         if (!Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
                             Bot.Flash.CallGameFunction("world.toggleMonsters");
