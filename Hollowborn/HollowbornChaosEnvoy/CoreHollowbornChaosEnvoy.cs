@@ -114,34 +114,32 @@ public class CoreHollowbornChaosEnvoy
         StirringDiscordRewards discordReward = Bot.Config!.Get<StirringDiscordRewards>("Stirring Discord");
 
         bool shouldReturnEarly =
-    (discordReward == StirringDiscordRewards.None && !completeOnce) || // reward = none, completeOnce is false
-    (discordReward == StirringDiscordRewards.All && Core.CheckInventory(rewards, toInv: false) && Story.QuestProgression(8998)) ||
-    (discordReward != StirringDiscordRewards.None && Core.CheckInventory((int)discordReward, toInv: false) && Story.QuestProgression(8998)
-    );
+            (discordReward == StirringDiscordRewards.None && !completeOnce) || // reward = none, completeOnce is false
+            (discordReward == StirringDiscordRewards.All && Core.CheckInventory(rewards, toInv: false) && Story.QuestProgression(8998)) ||
+            (discordReward != StirringDiscordRewards.None && Core.CheckInventory((int)discordReward, toInv: false) && Story.QuestProgression(8998));
 
         if (shouldReturnEarly)
         {
             if (discordReward == StirringDiscordRewards.None && !completeOnce)
             {
-                Core.Logger("Conditions met: Reward is None and completeOnce is false. Exiting Stirring Discord.");
+                Core.Logger("Conditions met: Reward is None and completeOnce is false. Exiting Stirring Discord quest.");
             }
             else if (discordReward != StirringDiscordRewards.None && Core.CheckInventory((int)discordReward, toInv: false) && Story.QuestProgression(8998))
             {
-                Core.Logger("Conditions met: Reward is present and quest progression is complete. Exiting Stirring Discord.");
+                Core.Logger("Conditions met: Reward is present and quest progression is complete. Exiting Stirring Discord quest.");
             }
 
             return; // Signal to exit
         }
 
         Core.AddDrop(rewards);
-
         HB.HardcoreContract();
         Farm.Experience(75);
 
-        Core.Logger($"Reward Chosen: {Bot.Config!.Get<StirringDiscordRewards>("Stirring Discord")}");
+        Core.Logger($"Reward Chosen: {discordReward}");
         while (!Bot.ShouldExit && !shouldReturnEarly)
         {
-            Core.EnsureAcceptmultiple( new[] { 7158, 8998 });
+            Core.EnsureAcceptmultiple(new[] { 7158, 8998 });
             Core.HuntMonster("lagunabeach", "Heart of Chaos", "Chaos Pirate Crew", isTemp: false);
             Core.HuntMonster("backroom", "Book Wyrm", "Maledictus Magum", isTemp: false);
             Core.HuntMonster("wardwarf", "Chaotic Draconian", "Chaotic Draconian Wings", isTemp: false);
@@ -149,25 +147,39 @@ public class CoreHollowbornChaosEnvoy
             Core.HuntMonster("chaosboss", "Ultra Chaos Warlord", "Chaotic War Essence", 15, false);
             Adv.BuyItem("crownsreach", 1383, "Chaotic Knight Helm");
 
+            // Handle quest completion
             if (completeOnce)
             {
                 Core.EnsureComplete(8998);
                 Core.Logger("Stirring Discord quest completed.");
                 return;
             }
+
+            // Handle reward selection
+            if (rewardSelection == StirringDiscordRewards.All)
+            {
+                foreach (StirringDiscordRewards reward in Enum.GetValues<StirringDiscordRewards>())
+                {
+                    if (reward == StirringDiscordRewards.All || reward == StirringDiscordRewards.None)
+                        continue;
+
+                    if (!Core.CheckInventory((int)reward))
+                    {
+                        Core.EnsureCompleteChoose(8998, new[] { reward.ToString() });
+                        Core.Logger($"Stirring Discord quest completed for reward: {reward}");
+                        break;
+                    }
+                }
+            }
             else
             {
-                if (rewardSelection == StirringDiscordRewards.All && !Core.CheckInventory(rewards))
+                // Complete for the specific reward if not owned
+                if (!Core.CheckInventory((int)discordReward))
                 {
-                    Core.EnsureCompleteChoose(8998, Core.QuestRewards(8998));
-                    Core.Logger("Stirring Discord quest completed.");
+                    Core.EnsureComplete(8998, (int)discordReward);
+                    Core.Logger($"Stirring Discord quest completed for reward: {discordReward}");
                 }
-                else
-                {
-                    Core.EnsureComplete(8998, (int)Bot.Config!.Get<StirringDiscordRewards>("Stirring Discord"));
-                    Core.Logger("Stirring Discord quest completed.");
-                    break;
-                }
+                break;
             }
         }
     }
@@ -211,6 +223,7 @@ public class CoreHollowbornChaosEnvoy
         Farm.Experience(75);
 
         Core.Logger($"Reward Chosen: {beastsShadowReward}");
+
         while (!Bot.ShouldExit && !shouldReturnEarly)
         {
             Core.EnsureAccept(8999);
@@ -226,25 +239,38 @@ public class CoreHollowbornChaosEnvoy
             Core.EquipClass(ClassType.Farm);
             Core.KillMonster("mountdoomskull", "b1", "Left", "*", "Fragment of Mount Doomskull", 1000, isTemp: false);
 
+            // Handle quest completion
             if (completeOnce)
             {
                 Core.EnsureComplete(8999);
                 Core.Logger("In The Beasts Shadow quest completed.");
                 return;
             }
+
+            if (rewardSelection == InTheBeastsShadowRewards.All)
+            {
+                foreach (InTheBeastsShadowRewards reward in Enum.GetValues<InTheBeastsShadowRewards>())
+                {
+                    if (reward == InTheBeastsShadowRewards.All || reward == InTheBeastsShadowRewards.None)
+                        continue;
+
+                    if (!Core.CheckInventory((int)reward))
+                    {
+                        Core.EnsureCompleteChoose(8999, new[] { reward.ToString() });
+                        Core.Logger($"In The Beasts Shadow quest completed for reward: {reward}");
+                        break;
+                    }
+                }
+            }
             else
             {
-                if (rewardSelection == InTheBeastsShadowRewards.All && !Core.CheckInventory(rewards))
-                {
-                    Core.EnsureCompleteChoose(8999, Core.QuestRewards(8999));
-                    Core.Logger("In The Beasts Shadow quest completed.");
-                }
-                else
+                // Complete for the specific reward if not owned
+                if (!Core.CheckInventory((int)beastsShadowReward))
                 {
                     Core.EnsureComplete(8999, (int)beastsShadowReward);
-                    Core.Logger("In The Beasts Shadow quest completed.");
-                    break;
+                    Core.Logger($"In The Beasts Shadow quest completed for reward: {beastsShadowReward}");
                 }
+                break;
             }
         }
     }
@@ -313,25 +339,38 @@ public class CoreHollowbornChaosEnvoy
                 Core.BuyItem("tercessuinotlim", 1951, "Chaoroot", 30);
             }
 
+            // Handle quest completion
             if (completeOnce)
             {
                 Core.EnsureComplete(9000);
                 Core.Logger("Unique Quarry quest completed.");
                 return;
             }
+
+            if (rewardSelection == UniqueQuarryRewards.All)
+            {
+                foreach (UniqueQuarryRewards reward in Enum.GetValues<UniqueQuarryRewards>())
+                {
+                    if (reward == UniqueQuarryRewards.All || reward == UniqueQuarryRewards.None)
+                        continue;
+
+                    if (!Core.CheckInventory((int)reward))
+                    {
+                        Core.EnsureCompleteChoose(9000, new[] { reward.ToString() });
+                        Core.Logger($"Unique Quarry quest completed for reward: {reward}");
+                        break;
+                    }
+                }
+            }
             else
             {
-                if (rewardSelection == UniqueQuarryRewards.All && !Core.CheckInventory(rewards))
-                {
-                    Core.EnsureCompleteChoose(9000, Core.QuestRewards(9000));
-                    Core.Logger("Unique Quarry quest completed.");
-                }
-                else
+                // Complete for the specific reward if not owned
+                if (!Core.CheckInventory((int)quarryReward))
                 {
                     Core.EnsureComplete(9000, (int)quarryReward);
-                    Core.Logger("Unique Quarry quest completed.");
-                    break;
+                    Core.Logger($"Unique Quarry quest completed for reward: {quarryReward}");
                 }
+                break;
             }
         }
     }
@@ -400,25 +439,38 @@ public class CoreHollowbornChaosEnvoy
 
             Core.BuyItem("downbelow", 2004, "Chaos PuppetMaster");
 
+            // Handle quest completion
             if (completeOnce)
             {
                 Core.EnsureComplete(9001);
                 Core.Logger("Wavering Illusions quest completed.");
                 return;
             }
+
+            if (rewardSelection == WaveringIllusionsRewards.All)
+            {
+                foreach (WaveringIllusionsRewards reward in Enum.GetValues<WaveringIllusionsRewards>())
+                {
+                    if (reward == WaveringIllusionsRewards.All || reward == WaveringIllusionsRewards.None)
+                        continue;
+
+                    if (!Core.CheckInventory((int)reward))
+                    {
+                        Core.EnsureCompleteChoose(9001, new[] { reward.ToString() });
+                        Core.Logger($"Wavering Illusions quest completed for reward: {reward}");
+                        break;
+                    }
+                }
+            }
             else
             {
-                if (rewardSelection == WaveringIllusionsRewards.All && !Core.CheckInventory(rewards))
-                {
-                    Core.EnsureCompleteChoose(9001, Core.QuestRewards(9001));
-                    Core.Logger("Wavering Illusions quest completed.");
-                }
-                else
+                // Complete for the specific reward if not owned
+                if (!Core.CheckInventory((int)illusionsReward))
                 {
                     Core.EnsureComplete(9001, (int)illusionsReward);
-                    Core.Logger("Wavering Illusions quest completed.");
-                    break;
+                    Core.Logger($"Wavering Illusions quest completed for reward: {illusionsReward}");
                 }
+                break;
             }
         }
     }
@@ -434,34 +486,23 @@ public class CoreHollowbornChaosEnvoy
         string[] rewards = Core.QuestRewards(9002);
         ShadowsOfDisdainRewards disdainReward = Bot.Config!.Get<ShadowsOfDisdainRewards>("Shadows Of Disdain");
 
-        // Check if we should return early based on inventory conditions and 'completeOnce' flag
+        // Check if quest can be skipped
         bool shouldReturnEarly =
-            (disdainReward == ShadowsOfDisdainRewards.None && !completeOnce) || // Reward is None and completeOnce is false
-            (disdainReward == ShadowsOfDisdainRewards.All && Core.CheckInventory(rewards, toInv: false) && Story.QuestProgression(9002)) || // All rewards present and quest progression is complete
-            (disdainReward != ShadowsOfDisdainRewards.None && Core.CheckInventory((int)disdainReward, toInv: false) && Story.QuestProgression(9002)); // Specific reward present and quest progression is complete
+            (disdainReward == ShadowsOfDisdainRewards.None && !completeOnce) ||
+            (disdainReward == ShadowsOfDisdainRewards.All && Core.CheckInventory(rewards, toInv: false) && Story.QuestProgression(9002)) ||
+            (disdainReward != ShadowsOfDisdainRewards.None && Core.CheckInventory((int)disdainReward, toInv: false) && Story.QuestProgression(9002));
 
         if (shouldReturnEarly)
         {
-            if (disdainReward == ShadowsOfDisdainRewards.None && !completeOnce)
-            {
-                Core.Logger("Conditions met: Reward is None and completeOnce is false. Exiting Shadows Of Disdain quest.");
-            }
-            else if (disdainReward == ShadowsOfDisdainRewards.All && Core.CheckInventory(rewards, toInv: false) && Story.QuestProgression(9002))
-            {
-                Core.Logger("Conditions met: All rewards present and quest progression is complete. Exiting Shadows Of Disdain quest.");
-            }
-            else if (disdainReward != ShadowsOfDisdainRewards.None && Core.CheckInventory((int)disdainReward, toInv: false) && Story.QuestProgression(9002))
-            {
-                Core.Logger("Conditions met: Specific reward present and quest progression is complete. Exiting Shadows Of Disdain quest.");
-            }
-
-            return; // Signal to exit
+            Core.Logger("Skipping Shadows Of Disdain quest due to conditions met.");
+            return;
         }
 
         Core.AddDrop(rewards);
         Farm.Experience(95);
         ED.getSet();
 
+        // Obtain Titan Drakath if not already owned
         if (!Core.CheckInventory("Titan Drakath"))
         {
             Core.Logger("Hunting for Titan Drakath.");
@@ -469,39 +510,60 @@ public class CoreHollowbornChaosEnvoy
         }
 
         Core.Logger($"Reward Chosen: {disdainReward}");
+
+        // Main farming loop
         while (!Bot.ShouldExit && !shouldReturnEarly)
         {
             Core.EnsureAccept(9002);
+
+            // Collect Chaos War Medals
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("mountdoomskull", "Chaos Spider", "Chaos War Medal", 1000, isTemp: false);
 
+            // Defeat Prince Drakath
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("finalshowdown", "Prince Drakath", "Drakath Pet", isTemp: false);
+
+            // Complete additional quest requirements
             CAV.FragmentsoftheLordsA();
             CAV.FragmentsoftheLordsB();
             Core.HuntMonster("ultradrakath", "Champion of Chaos", "Trace of Chaos", 13, isTemp: false, publicRoom: true);
 
+            // Purchase Chaorrupted Usurper
             Adv.BuyItem("transformation", 2002, "Chaorrupted Usurper");
 
+            // Handle quest completion
             if (completeOnce)
             {
                 Core.EnsureComplete(9002);
                 Core.Logger("Shadows Of Disdain quest completed.");
                 return;
             }
+
+            if (rewardSelection == ShadowsOfDisdainRewards.All)
+            {
+                foreach (ShadowsOfDisdainRewards reward in Enum.GetValues<ShadowsOfDisdainRewards>())
+                {
+                    if (reward == ShadowsOfDisdainRewards.All || reward == ShadowsOfDisdainRewards.None)
+                        continue;
+
+                    if (!Core.CheckInventory((int)reward))
+                    {
+                        Core.EnsureCompleteChoose(9002, new[] { reward.ToString() });
+                        Core.Logger($"Shadows Of Disdain quest completed for reward: {reward}");
+                        break;
+                    }
+                }
+            }
             else
             {
-                if (rewardSelection == ShadowsOfDisdainRewards.All && !Core.CheckInventory(rewards))
-                {
-                    Core.EnsureCompleteChoose(9002, Core.QuestRewards(9002));
-                    Core.Logger("Shadows Of Disdain quest completed.");
-                }
-                else
+                // Complete for the specific reward if not owned
+                if (!Core.CheckInventory((int)disdainReward))
                 {
                     Core.EnsureComplete(9002, (int)disdainReward);
-                    Core.Logger("Shadows Of Disdain quest completed.");
-                    break;
+                    Core.Logger($"Shadows Of Disdain quest completed for reward: {disdainReward}");
                 }
+                break;
             }
         }
     }
@@ -548,30 +610,51 @@ public class CoreHollowbornChaosEnvoy
 
         while (!Bot.ShouldExit && !shouldReturnEarly)
         {
+            // Accept the quest
             Core.EnsureAccept(9003);
+
+            // Farm for the required item
             Core.HuntMonster("ultradrakath", "Champion of Chaos", "Trace of Chaos", 13, isTemp: false, publicRoom: true);
 
             if (completeOnce)
             {
+                // Complete the quest and exit if only completing once
                 Core.EnsureComplete(9003);
                 Core.Logger("Persisting Mayhem quest completed.");
                 return;
             }
             else
             {
-                if (rewardSelection == PersistingMayhemRewards.All && !Core.CheckInventory(rewards))
+                if (rewardSelection == PersistingMayhemRewards.All)
                 {
-                    Core.EnsureCompleteChoose(9003, Core.QuestRewards(9003));
-                    Core.Logger("Persisting Mayhem quest completed.");
+                    // Iterate through all rewards and complete the quest for the first unowned one
+                    foreach (PersistingMayhemRewards reward in Enum.GetValues<PersistingMayhemRewards>())
+                    {
+                        if (reward == PersistingMayhemRewards.All || reward == PersistingMayhemRewards.None)
+                            continue; // Skip special enum values
+
+                        if (!Core.CheckInventory((int)reward))
+                        {
+                            Core.EnsureComplete(9003, (int)reward);
+                            Core.Logger($"Persisting Mayhem quest completed for reward: {reward}");
+
+                            // Break after completing for the first unowned reward and start the process again
+                            break;
+                        }
+                    }
                 }
                 else
                 {
-                    Core.EnsureComplete(9003, (int)mayhemReward);
-                    Core.Logger("Persisting Mayhem quest completed.");
-                    break;
+                    // Complete the quest for the specific reward if not owned
+                    if (!Core.CheckInventory((int)rewardSelection))
+                    {
+                        Core.EnsureComplete(9003, (int)rewardSelection);
+                        Core.Logger($"Persisting Mayhem quest completed for reward: {rewardSelection}");
+                    }
                 }
             }
         }
+
     }
 
     public enum StirringDiscordRewards
