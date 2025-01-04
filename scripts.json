@@ -17170,6 +17170,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ArchFiendWarlordMerge.cs"
   },
   {
+    "name": "Frozen Queen Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Frozen Queen Merge [2507] in /frozenqueen",
+    "tags": [
+      "frozen",
+      "queen",
+      "merge",
+      "frozenqueen",
+      "northlands",
+      "lightcaster",
+      "cap",
+      "wings",
+      "dawning",
+      "paradise"
+    ],
+    "path": "Other/MergeShops/FrozenQueenMerge.cs",
+    "size": 3900,
+    "fileName": "FrozenQueenMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FrozenQueenMerge.cs"
+  },
+  {
     "name": "SpoilsofLightMerge",
     "description": "null",
     "tags": [
