@@ -6623,8 +6623,8 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornDoomKnight/ADarkKnightFalls.cs"
   },
   {
-    "name": "Hollowborn DoomKnight - Do all",
-    "description": "does all of hollowborn doomKnight and hollowborn paladin",
+    "name": "Hollowborn Paladin - Do all",
+    "description": "does all of hollowborn paladin",
     "tags": [
       "hollowborn",
       "hollowborn paladin",
@@ -6633,7 +6633,7 @@
       "do all"
     ],
     "path": "Hollowborn/HollowbornDoomKnight/0RunAll.cs",
-    "size": 1801,
+    "size": 1772,
     "fileName": "0RunAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornDoomKnight/0RunAll.cs"
   },
