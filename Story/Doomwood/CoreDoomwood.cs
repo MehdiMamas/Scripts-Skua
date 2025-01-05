@@ -252,9 +252,9 @@ public class CoreDoomwood
         if (!Story.QuestProgression(1123))
         {
             Core.EnsureAccept(1123);
-            Core.KillMonster("temple", "r2", "Up", "SlimeSkull", "Slimeskull Trophy", 5);
-            Core.KillMonster("temple", "r2", "Up", "Doomwood Bonemuncher", "Munched Boneshard", 5);
-            Core.KillMonster("temple", "r2", "Up", "Shelleton", "Shelleton Shrapnel", 5);
+            Core.KillMonster("temple", "r2", "Up", "SlimeSkull", "Slimeskull Trophy", 3);
+            Core.KillMonster("temple", "r2", "Up", "Doomwood Bonemuncher", "Munched Boneshard", 3);
+            Core.KillMonster("temple", "r2", "Up", "Shelleton", "Shelleton Shrapnel", 3);
             Core.EnsureComplete(1123);
         }
 
