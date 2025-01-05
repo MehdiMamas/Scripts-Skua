@@ -1,6 +1,6 @@
 /*
-name: Hollowborn Paladin - Do all
-description: does all of hollowborn paladin
+name: Hollowborn DoomKnight - Do all
+description: does all of hollowborn DoomKnight
 tags: hollowborn, hollowborn paladin, hollowborn doomknight, hollowborn sword of doom, do all
 */
 //cs_include Scripts/CoreBots.cs
