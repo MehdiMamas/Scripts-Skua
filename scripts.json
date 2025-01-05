@@ -6455,15 +6455,15 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornPaladin/ThePostSummoning.cs"
   },
   {
-    "name": "Hollowborn DoomKnight - Do all",
-    "description": "does all of hollowborn doomKnight and hollowborn paladin",
+    "name": "Hollowborn Paladin - Do all",
+    "description": "does all of hollowborn paladin",
     "tags": [
       "hollowborn",
       "hollowborn paladin",
       "do all"
     ],
     "path": "Hollowborn/HollowbornPaladin/0RunAll.cs",
-    "size": 1249,
+    "size": 1220,
     "fileName": "0RunAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornPaladin/0RunAll.cs"
   },
@@ -6623,8 +6623,8 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornDoomKnight/ADarkKnightFalls.cs"
   },
   {
-    "name": "Hollowborn Paladin - Do all",
-    "description": "does all of hollowborn paladin",
+    "name": "Hollowborn DoomKnight - Do all",
+    "description": "does all of hollowborn DoomKnight",
     "tags": [
       "hollowborn",
       "hollowborn paladin",
@@ -6633,7 +6633,7 @@
       "do all"
     ],
     "path": "Hollowborn/HollowbornDoomKnight/0RunAll.cs",
-    "size": 1772,
+    "size": 1778,
     "fileName": "0RunAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornDoomKnight/0RunAll.cs"
   },
