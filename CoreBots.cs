@@ -2196,7 +2196,7 @@ public class CoreBots
                         await Task.Delay(ActionDelay * 2);
                         if (Bot.Quests.IsInProgress(quest.ID))
                             i++;
-                       
+
                         if (i >= 20 && Bot.Quests.IsInProgress(quest.ID))
                         {
                             await Task.Delay(ActionDelay * 2);
@@ -7278,7 +7278,7 @@ public class CoreBots
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
             JumpWait();
 
-        string[] classesToCheck = new[] { "Yami no Ronin", "Chrono Assassin", "Spy", "Rogue" };
+        string[] classesToCheck = new[] { "Yami no Ronin", "Chrono Assassin", "Spy", "Rogue", $"{Bot.Player.CurrentClass.Name}" };
         if (!string.IsNullOrEmpty(additionalClass) && CheckInventory(additionalClass))
         {
             Unbank(additionalClass);
@@ -7303,7 +7303,6 @@ public class CoreBots
                     default:
                         Bot.Skills.StartAdvanced(Class, true, ClassUseMode.Base);
                         break;
-
                 }
 
                 if (!CheckInventory(Class))

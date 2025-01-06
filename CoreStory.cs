@@ -761,7 +761,8 @@ public class CoreStory
             return;
         }
 
-        Core.Logger($"Hunting \"{monster}\" for \"{requirement.Name}\"", "MonsterHunt");
+        Core.Logger($"Hunting \"{monster}\" for \"{requirement.Name}\" x{requirement.Quantity}", "MonsterHunt");
+
 
         // Main loop for hunting the monster until the item is acquired
         while (!Bot.ShouldExit && !itemInInventory)
