@@ -293,8 +293,9 @@ public class CoreNewYear
 
         Story.PreLoad(this);
 
+        Core.EquipClass(ClassType.Farm);
         // Raw Gems (9533)
-        Story.KillQuest(9533, "earthstorm", new[] { "Diamond Golem", "Emerald Golem", "Ruby Golem", "Sapphire Golem" });
+        Story.KillQuest(9533, "earthstorm", new[] { "Ruby Golem", "Sapphire Golem", "Diamond Golem", "Emerald Golem" });
 
         // Rest in Riches (9534)
         Story.KillQuest(9534, "battleunderc", new[] { "Crystalized Jellyfish", "Green Crystalized Undead" });
@@ -305,9 +306,9 @@ public class CoreNewYear
         // Jewel Bug (9536)
         if (!Core.isCompletedBefore(9536))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EquipClass(ClassType.Solo);
             Story.KillQuest(9536, "chronogem", "Gem Forgemaster");
-            Core.EquipClass(ClassType.Farm);
         }
     }
 
