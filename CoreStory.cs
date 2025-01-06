@@ -46,10 +46,10 @@ public class CoreStory
     }
 
     /// <summary>
-    /// Kills a monster for a Quest, and turns in the quest if possible. Automatically checks if the next quest is unlocked. If it is, it will skip this one.
+    /// Kills a monster for a Quest and turns in the quest if possible. Automatically checks if the next quest is unlocked. If it is, it will skip this one.
     /// </summary>
     /// <param name="QuestID">ID of the quest</param>
-    /// <param name="MapName">Map where the <paramref name="MonsterName"/> are</param>
+    /// <param name="MapName">Map where the <paramref name="MonsterName"/> is</param>
     /// <param name="MonsterName">Monster to kill</param>
     /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
     /// <param name="Reward">What item should be added with AddDrop</param>
@@ -58,11 +58,10 @@ public class CoreStory
     {
         Quest QuestData = Core.EnsureLoad(QuestID);
         if (QuestProgression(QuestID, GetReward, Reward))
-        {
             return;
-        }
 
         SmartKillMonster(QuestID, MapName, MonsterName);
+
         if (AutoCompleteQuest)
         {
             foreach (ItemBase item in QuestData.Requirements)
@@ -72,15 +71,33 @@ public class CoreStory
         }
         TryComplete(QuestData, AutoCompleteQuest);
 
+        // Nested method for smarter monster killing
         void SmartKillMonster(int questID, string map, string monster)
         {
             Core.EnsureAccept(questID);
             _AddRequirement(questID);
             Core.Join(map);
-            _SmartKill(monster, 20);
-            CurrentRequirements.Clear();
+
+            // Iterate over each requirement and kill its corresponding monster
+            foreach (ItemBase requirement in CurrentRequirements.ToList())
+            {
+                // Kill the specific monster for the current requirement
+                _SmartKill(monster, requirement);
+
+                // Check if the requirement is complete
+                if (requirement.Temp
+                    ? Bot.TempInv.Contains(requirement.ID, requirement.Quantity)
+                    : Core.CheckInventory(requirement.ID, requirement.Quantity))
+                {
+                    CurrentRequirements.Remove(requirement);
+                    break; // Move to the next requirement
+                }
+            }
+
+            CurrentRequirements.Clear(); // Ensure all requirements are cleared after processing
         }
     }
+
     /// <summary>
     /// Kills an array of monsters for a Quest, and turns in the quest if possible. Automatically checks if the next quest is unlocked. If it is, it will skip this one.
     /// </summary>
@@ -92,14 +109,12 @@ public class CoreStory
     /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
     public void KillQuest(int QuestID, string MapName, string[] MonsterNames, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-
         Quest QuestData = Core.EnsureLoad(QuestID);
         if (QuestProgression(QuestID, GetReward, Reward))
-        {
             return;
-        }
 
         SmartKillMonster(QuestID, MapName, MonsterNames);
+
         if (AutoCompleteQuest)
         {
             foreach (ItemBase item in QuestData.Requirements)
@@ -109,15 +124,35 @@ public class CoreStory
         }
         TryComplete(QuestData, AutoCompleteQuest);
 
+        // Nested method for smarter monster killing
         void SmartKillMonster(int questID, string map, string[] monsters)
         {
             Core.EnsureAccept(questID);
             _AddRequirement(questID);
             Core.Join(map);
-            foreach (string monster in monsters)
+
+            // Pair each monster with its corresponding requirement
+            for (int i = 0; i < monsters.Length; i++)
             {
-                _SmartKill(monster, 20);
+                if (i >= CurrentRequirements.Count)
+                    break; // Exit if there are no more requirements
+
+                ItemBase requirement = CurrentRequirements[i];
+                string monster = monsters[i];
+
+                // Kill the specific monster for its corresponding requirement
+                _SmartKill(monster, requirement);
+
+                // Check if the requirement is complete
+                if (requirement.Temp
+                    ? Bot.TempInv.Contains(requirement.ID, requirement.Quantity)
+                    : Core.CheckInventory(requirement.ID, requirement.Quantity))
+                {
+                    continue;
+                }
             }
+
+            // Ensure all requirements are cleared after processing
             CurrentRequirements.Clear();
         }
     }
@@ -640,81 +675,93 @@ public class CoreStory
     private int PreviousQuestID = 0;
     private bool PreviousQuestState = false;
 
-    private void _SmartKill(string monster, int iterations = 20)
+    private void _SmartKill(string monster, ItemBase requirement)
     {
-        if (monster == null)
+        if (string.IsNullOrWhiteSpace(monster))
         {
-            Core.Logger("ERROR: monster is null, please report", stopBot: true);
+            Core.Logger("ERROR: Monster name is null or empty. Please report this issue.", stopBot: true);
+            return;
+        }
+
+        if (requirement == null)
+        {
+            Core.Logger("ERROR: Requirement is null. Please report this issue.", stopBot: true);
             return;
         }
 
         bool repeat = true;
-        for (int j = 0; j < iterations; j++)
+
+        // Loop to try and get the required item for the requirement
+        while (repeat)
         {
-            if (CurrentRequirements.Count == 0)
+            // Check if the requirement is met (item in inventory)
+            bool itemInInventory = requirement.Temp
+                ? Bot.TempInv.Contains(requirement.ID, requirement.Quantity)
+                : Core.CheckInventory(requirement.ID, requirement.Quantity);
+
+            if (itemInInventory)
             {
-                break;
-            }
-            if (CurrentRequirements.Count == 1)
-            {
-                if (_RepeatCheck(ref repeat, 0))
-                {
-                    break;
-                }
-                _MonsterHunt(ref repeat, monster, CurrentRequirements[0].Name, CurrentRequirements[0].Quantity, CurrentRequirements[0].Temp, 0);
-                break;
-            }
-            else
-            {
-                for (int i = CurrentRequirements.Count - 1; i >= 0; i--)
-                {
-                    if (j == 0 && Core.CheckInventory(CurrentRequirements[i].Name, CurrentRequirements[i].Quantity))
-                    {
-                        CurrentRequirements.RemoveAt(i);
-                        continue;
-                    }
-                    if (j != 0 && Core.CheckInventory(CurrentRequirements[i].Name))
-                    {
-                        if (_RepeatCheck(ref repeat, i))
-                        {
-                            break;
-                        }
-                        _MonsterHunt(ref repeat, monster, CurrentRequirements[i].Name, CurrentRequirements[i].Quantity, CurrentRequirements[i].Temp, i);
-                        break;
-                    }
-                }
-            }
-            if (!repeat)
-            {
-                break;
+                // If requirement is met, no need to repeat
+                repeat = false;
+                continue;
             }
 
-            Bot.Hunt.Monster(monster);
-            Bot.Drops.Pickup(CurrentRequirements.Where(item => !item.Temp).Select(item => item.Name).ToArray());
-            Core.Sleep();
+            // If the item isn't found, hunt for the monster
+            _MonsterHunt(ref repeat, monster, requirement);
+
+            // Recheck if the item has been collected after hunting
+            itemInInventory = requirement.Temp
+                ? Bot.TempInv.Contains(requirement.ID, requirement.Quantity)
+                : Core.CheckInventory(requirement.ID, requirement.Quantity);
+
+            if (itemInInventory)
+            {
+                repeat = false; // Exit the loop if item is collected
+            }
         }
     }
+
     private readonly List<ItemBase> CurrentRequirements = new();
-    private void _MonsterHunt(ref bool shouldRepeat, string monster, string itemName, int quantity, bool isTemp, int index)
+    private void _MonsterHunt(ref bool shouldRepeat, string monster, ItemBase requirement)
     {
+        if (string.IsNullOrWhiteSpace(monster))
+        {
+            Core.Logger("ERROR: Monster name is null or empty. Please report this issue.", stopBot: true);
+            shouldRepeat = false;
+            return;
+        }
+
+        if (requirement == null)
+        {
+            Core.Logger("ERROR: Requirement is null. Please report this issue.", stopBot: true);
+            shouldRepeat = false;
+            return;
+        }
+
         // Check if the item is already in inventory
-        bool itemInInventory = itemName != null && (isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity));
+        bool itemInInventory = requirement.Temp
+            ? Bot.TempInv.Contains(requirement.ID, requirement.Quantity)
+            : Core.CheckInventory(requirement.ID, requirement.Quantity);
+
         if (itemInInventory)
         {
-            CurrentRequirements.RemoveAt(index);
+            // If the item is already in inventory, no need to repeat
             shouldRepeat = false;
             return;
         }
 
+        // Find the target monster in the map
+        Monster? targetMonster = Core.InitializeWithRetries(() =>
+            Bot.Monsters.MapMonsters.Find(x => x.Name.FormatForCompare() == monster.FormatForCompare()));
 
-        // Find the target monster
-        Monster? targetMonster = Core.InitializeWithRetries(() => Bot.Monsters.MapMonsters.Find(x => x.Name.FormatForCompare() == monster.FormatForCompare()));
         if (targetMonster == null)
         {
-            Core.Logger($"Monster \"{monster}\" not found on the map \"{Bot.Map.Name}\" for \"{itemName}\", Its Probably been renamed, please report this Missing monster to @Tato2 or @bogalj on Discord", $"Missing Monster", stopBot: true);
+            Core.Logger($"Monster \"{monster}\" not found on the map \"{Bot.Map.Name}\" for \"{requirement.Name}\", please report this missing monster.", "Missing Monster", stopBot: true);
             shouldRepeat = false;
             return;
         }
+
+        Core.Logger($"Hunting \"{monster}\" for \"{requirement.Name}\"", "MonsterHunt");
 
         // Main loop for hunting the monster until the item is acquired
         while (!Bot.ShouldExit && !itemInInventory)
@@ -724,24 +771,25 @@ public class CoreStory
                 Core.Jump(targetMonster.Cell);
                 Bot.Wait.ForCellChange(targetMonster.Cell);
             }
+
             Bot.Combat.Attack(targetMonster);
             Core.Sleep();
 
-            // Update itemInInventory status after attempting to get the item
-            itemInInventory = itemName != null && (isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity));
-            if (itemInInventory)
-                break;
+            // Re-check if the item has been obtained after attacking the monster
+            itemInInventory = requirement.Temp
+                ? Bot.TempInv.Contains(requirement.ID, requirement.Quantity)
+                : Core.CheckInventory(requirement.ID, requirement.Quantity);
         }
 
-        // Handle item pickup if not temporary
-        if (!isTemp)
-            Bot.Wait.ForPickup(itemName!);
+        // If the item is not temporary, wait for the pickup
+        if (!requirement.Temp)
+        {
+            Bot.Wait.ForPickup(requirement.Name);
+        }
 
-        CurrentRequirements.RemoveAt(index);
+        // Once the item is acquired, no need to repeat the hunt
         shouldRepeat = false;
     }
-
-
     private bool _RepeatCheck(ref bool shouldRepeat, int index)
     {
         if (Core.CheckInventory(CurrentRequirements[index].Name, CurrentRequirements[index].Quantity))
@@ -755,25 +803,26 @@ public class CoreStory
     private int lastQuestID;
     private void _AddRequirement(int questID)
     {
-        if (questID > 0 && questID != lastQuestID)
-        {
-            lastQuestID = questID;
-            Quest quest = Core.EnsureLoad(questID);
+        if (questID <= 0 || questID == lastQuestID)
+            return;
 
-            List<string> reqItems = new();
-            quest.AcceptRequirements.ForEach(item => reqItems.Add(item.Name));
-            quest.Requirements.ForEach(item =>
-            {
-                if (!CurrentRequirements.Where(i => i.Name == item.Name).Any())
-                {
-                    if (!item.Temp)
-                    {
-                        reqItems.Add(item.Name);
-                    }
-                    CurrentRequirements.Add(item);
-                }
-            });
-            Core.AddDrop(reqItems.ToArray());
+        lastQuestID = questID;
+        Quest quest = Core.EnsureLoad(questID);
+
+        if (quest == null || quest.Requirements == null)
+        {
+            Core.Logger($"ERROR: Quest data is null or invalid for QuestID {questID}.", stopBot: true);
+            return;
         }
+
+        // Add new requirements while avoiding duplicates
+        foreach (var req in quest.Requirements)
+        {
+            if (!CurrentRequirements.Any(r => r.Name == req.Name))
+                CurrentRequirements.Add(req);
+        }
+
+        // Add drops for all requirements
+        Core.AddDrop(CurrentRequirements.Select(r => r.Name).ToArray());
     }
 }
