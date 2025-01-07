@@ -50,8 +50,8 @@ public class FreeBoosts
         {
             Core.HuntMonsterQuest(6208,
 ("bloodtusk", "Trollola Plant", ClassType.Solo),
-        ("cloister", "Acornent", ClassType.Solo),
-        ("nibbleon", "Dark Makai", ClassType.Solo)
+        ("cloister", "Acornent", ClassType.Farm),
+        ("nibbleon", "Dark Makai", ClassType.Farm)
 );
 
             if (allQuantitiesMet)
