@@ -20,6 +20,7 @@ using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
 using System.Linq;
+using Skua.Core.Models;
 
 public class ArmyLR
 {
@@ -101,8 +102,11 @@ public class ArmyLR
     {
         Core.BankingBlackList.AddRange(LRMaterials.Concat(LF1).Concat(LF2).Concat(LF3).Concat(legionMedals));
         Core.SetOptions();
-
-        LR();
+        
+        Core.Logger("This script has been disabled by the author as it is not working as intended. " +
+     "Please use the Solo version of this script instead.\n" +
+     $"Location: {Path.Combine(ClientFileSources.SkuaScriptsDIR, @"Legion\Revenant\0LegionRevenant.cs")}");
+        // LR();
 
         Core.SetOptions(false);
     }
@@ -220,7 +224,6 @@ public class ArmyLR
 
         Core.Join("whitemap");
         Army.waitForPartyCell("Enter", "Spawn");
-        Army.waitForSignal("armyLF2ready");
 
         Core.AddDrop(LF2);
 
@@ -312,7 +315,7 @@ public class ArmyLR
         int countCheck = 0;
         while (!Bot.ShouldExit)
         {
-            if ((Farm.FactionRank("Good") >= 4 && Farm.FactionRank("Evil") >= 4) && needSendDone)
+            if (Farm.FactionRank("Good") >= 4 && Farm.FactionRank("Evil") >= 4 && needSendDone)
             {
                 if (Army.sendDone())
                     needSendDone = false;

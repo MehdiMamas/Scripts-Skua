@@ -21,6 +21,7 @@ using Skua.Core.Options;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Quests;
 using Skua.Core.Models.Monsters;
+using Skua.Core.Models;
 
 public class VHLArmy
 {
@@ -85,8 +86,10 @@ public class VHLArmy
         Core.SetOptions();
         Core.BankingBlackList.AddRange(QuestRewards.Concat(ItemsToFarm).ToArray());
 
-        Core.Logger("This script, and any army script that requires more then 1 map is entirely broken, and there is no plan to fix them, for army stuff please use GrimLi");
-        // GetVHL();
+        Core.Logger("This script has been disabled by the author as it is not working as intended. " +
+     "Please use the Solo version of this script instead.\n" +
+     $"Location: {Path.Combine(ClientFileSources.SkuaScriptsDIR, @"Nation\VHL\0VoidHighlord.cs")}"); 
+     // GetVHL();
 
         Core.SetOptions(false);
     }
@@ -281,7 +284,7 @@ public class VHLArmy
         Army.AggroMonStart("evilwarnul");
         Army.DivideOnCells("r2", "r3", "r4", "r5", "r6");
 
-        
+
 
         while (!Bot.ShouldExit
         && !(Core.CheckInventory(itemsToFarm[0], ArchfiendsFavorQuan - (300 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath")))
@@ -323,7 +326,7 @@ public class VHLArmy
         Army.AggroMonStart("shadowblast");
         // SetAggro();
 
-        
+
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quantity - (20 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))))
             Bot.Combat.Attack("*");
@@ -353,7 +356,7 @@ public class VHLArmy
         Army.AggroMonStart("tercessuinotlim");
         Army.DivideOnCells("Enter", "m1", "m2");
 
-        
+
 
         // Attack monsters until the inventory is filled with the specified quantity
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
@@ -443,7 +446,7 @@ public class VHLArmy
         Army.AggroMonStart("sevencircleswar");
         Army.DivideOnCells("Enter", "r2", "r3");
 
-        
+
 
         while (!Bot.ShouldExit && Bot.Player.Gold < goldamount - (900000 * Bot.Inventory.GetQuantity("Blood Gem of the Archfiend")) - (2000000 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath")) && Bot.Player.Level < Level)
             Bot.Combat.Attack("*");

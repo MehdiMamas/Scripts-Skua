@@ -27,6 +27,7 @@ using Skua.Core.Options;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Quests;
 using Skua.Core.Models.Monsters;
+using Skua.Core.Models;
 
 public class DoTArmy
 {
@@ -199,7 +200,10 @@ public class DoTArmy
         Core.BankingBlackList.AddRange(QuestRewards);
         Core.SetOptions(disableClassSwap: true);
 
-        Core.Logger("This script, and any army script that requires more then 1 map is entirely broken, and there is no plan to fix them, for army stuff please use GrimLi");
+        Core.Logger("This script has been disabled by the author as it is not working as intended. " +
+    "Please use the Solo version of this script instead.\n" +
+    $"Location: {Path.Combine(ClientFileSources.SkuaScriptsDIR, @"Other\Classes\DragonOfTime.cs")}");
+
         // DoT(Bot.Config!.Get<bool>("sellToSync"));
 
         Core.SetOptions(false);
@@ -525,12 +529,12 @@ public class DoTArmy
 
     public void DoQuest10()
     {
-    //     if (Core.CheckInventory(QuestRewards[20..21], toInv: false))
-    //         foreach (string reward in QuestRewards[20..21])
-    //             Army.waitForParty("whitemap", reward);
+        //     if (Core.CheckInventory(QuestRewards[20..21], toInv: false))
+        //         foreach (string reward in QuestRewards[20..21])
+        //             Army.waitForParty("whitemap", reward);
 
         // else
-         Core.Logger("Quest already complete / Items owned, butlering[hopefully]");
+        Core.Logger("Quest already complete / Items owned, butlering[hopefully]");
 
         List<string> PreQuestInv = Bot.Inventory.Items.Select(x => x.Name).ToList();
 
@@ -632,7 +636,7 @@ public class DoTArmy
                     if (Core.CheckInventory(Class))
                         Core.Equip(Class);
 
-                
+
                 while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                     Bot.Combat.Attack("*");
                 break;
@@ -643,7 +647,7 @@ public class DoTArmy
                 Core.KillTrigoras(item, quant, 1, isTemp);
                 break;
             }
-            
+
 
             else if (monsters != new[] { "Tigoras" } || monsters != new[] { "Hydra Head 90" })
                 Bot.Combat.Attack("*");
@@ -682,7 +686,7 @@ public class DoTArmy
 
         Army.SmartAggroMonStart(map, monster.Name);
 
-        
+
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             Bot.Combat.Attack("*");
