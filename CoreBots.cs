@@ -7278,7 +7278,10 @@ public class CoreBots
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
             JumpWait();
 
-        string[] classesToCheck = new[] { "Yami no Ronin", "Chrono Assassin", "Spy", "Rogue", $"{Bot.Player.CurrentClass.Name}" };
+        // Check if CurrentClass is not null
+        string currentClassName = Bot.Player.CurrentClass?.Name ?? string.Empty;
+
+        string[] classesToCheck = new[] { "Yami no Ronin", "Chrono Assassin", "Spy", "Rogue", currentClassName };
         if (!string.IsNullOrEmpty(additionalClass) && CheckInventory(additionalClass))
         {
             Unbank(additionalClass);
