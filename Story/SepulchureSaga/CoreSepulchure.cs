@@ -77,15 +77,23 @@ public class CoreSepulchure
         }
 
         // Pass for Real 6338
-        Story.MapItemQuest(6338, "scarsgarde", new[] { 5866, 5867 });
-        Story.KillQuest(6338, "scarsgarde", new[] { "Garde Knight", "Garde Pikeman", "Garde Knight" });
+         if (!Story.QuestProgression(6338))
+        {
+            Core.EnsureAccept(6338);
+            //this cell is required for `Passcode A`, but everything can be goten here.. unlike elsewhere
+            Core.KillMonster("scarsgarde", "r35", "Left", "Garde Knight", "Passcode A");
+            Core.KillMonster("scarsgarde", "r35", "Left", "Garde Knight", "Passcode C");
+            Core.KillMonster("scarsgarde", "r35", "Left", "Garde Pikeman", "Passcode B");
+
+            Story.MapItemQuest(6338, "scarsgarde", new[] { 5866, 5867 });
+        }
 
         // Hidden in Plain Sight 6339
         Story.MapItemQuest(6339, "scarsgarde", 5868, 8);
         Story.MapItemQuest(6339, "scarsgarde", 5869);
 
         // Stay Strong Keep Steady 6340
-        Story.KillQuest(6340, "scarsgarde", new[] { "Garde Knight", "Garde Pikeman" });
+        Story.KillQuest(6340, "scarsgarde", new[] { "Garde Pikeman", "Garde Knight" });
 
         // The Final Fight 6341
         Core.EquipClass(ClassType.Solo);
@@ -142,7 +150,7 @@ public class CoreSepulchure
         Story.MapItemQuest(6350, "scarsgarde", 5869);
 
         // Stay Strong Keep Steady 6351
-        Story.KillQuest(6351, "scarsgarde", new[] { "Garde Knight", "Garde Pikeman" });
+        Story.KillQuest(6351, "scarsgarde", new[] { "Garde Pikeman", "Garde Knight" });
 
         // The Final Fight 6352
         Core.EquipClass(ClassType.Solo);
