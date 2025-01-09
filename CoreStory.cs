@@ -77,7 +77,7 @@ public class CoreStory
             Core.EnsureAccept(questID);
             _AddRequirement(questID);
             Core.Join(map);
-            _SmartKill(monster, 20);
+            _SmartKill(map, monster, 20);
             CurrentRequirements.Clear();
         }
     }
@@ -116,7 +116,7 @@ public class CoreStory
             Core.Join(map);
             foreach (string monster in monsters)
             {
-                _SmartKill(monster, 20);
+                _SmartKill(map, monster, 20);
             }
             CurrentRequirements.Clear();
         }
@@ -640,7 +640,7 @@ public class CoreStory
     private int PreviousQuestID = 0;
     private bool PreviousQuestState = false;
 
-    private void _SmartKill(string monster, int iterations = 20)
+    private void _SmartKill(string map, string monster, int iterations = 20)
     {
         if (monster == null)
         {
@@ -661,7 +661,7 @@ public class CoreStory
                 {
                     break;
                 }
-                _MonsterHunt(ref repeat, monster, CurrentRequirements[0].Name, CurrentRequirements[0].Quantity, CurrentRequirements[0].Temp, 0);
+                _MonsterHunt(map, ref repeat, monster, CurrentRequirements[0].Name, CurrentRequirements[0].Quantity, CurrentRequirements[0].Temp, 0);
                 break;
             }
             else
@@ -679,7 +679,7 @@ public class CoreStory
                         {
                             break;
                         }
-                        _MonsterHunt(ref repeat, monster, CurrentRequirements[i].Name, CurrentRequirements[i].Quantity, CurrentRequirements[i].Temp, i);
+                        _MonsterHunt(map, ref repeat, monster, CurrentRequirements[i].Name, CurrentRequirements[i].Quantity, CurrentRequirements[i].Temp, i);
                         break;
                     }
                 }
@@ -688,14 +688,26 @@ public class CoreStory
             {
                 break;
             }
-
+            // Find the target monster
+            Monster? targetMonster = Core.InitializeWithRetries(() => Bot.Monsters.MapMonsters.Find(x => x.Name.FormatForCompare() == monster.FormatForCompare()));
+            if (targetMonster == null)
+            {
+                Core.Logger($"Monster \"{monster}\" not found on the map \"{Bot.Map.Name}\" after {j} iterations", stopBot: true);
+                return;
+            }
+            if (Bot.Map.Name != map)
+            {
+                Core.Join(map);
+                Bot.Wait.ForMapLoad(map);
+            }
+            
             Bot.Hunt.Monster(monster);
             Bot.Drops.Pickup(CurrentRequirements.Where(item => !item.Temp).Select(item => item.Name).ToArray());
             Core.Sleep();
         }
     }
     private readonly List<ItemBase> CurrentRequirements = new();
-    private void _MonsterHunt(ref bool shouldRepeat, string monster, string itemName, int quantity, bool isTemp, int index)
+    private void _MonsterHunt(string map, ref bool shouldRepeat, string monster, string itemName, int quantity, bool isTemp, int index)
     {
         // Check if the item is already in inventory
         bool itemInInventory = itemName != null && (isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity));
@@ -721,9 +733,14 @@ public class CoreStory
         // Main loop for hunting the monster until the item is acquired
         while (!Bot.ShouldExit && !itemInInventory)
         {
-            if (Bot.Player.Cell != targetMonster.Cell || Bot.Player.Cell.StartsWith("Cut") || Bot.Player.Cell.StartsWith("init"))
+            if (Bot.Map.Name != map)
             {
-                Core.Jump(targetMonster.Cell);
+                Core.Join(map);
+                Bot.Wait.ForMapLoad(map);
+            }
+            if (Bot.Player.Cell != targetMonster.Cell)
+            {
+                Bot.Map.Jump(targetMonster.Cell, targetMonster.Cell == "Enter" ? "Spawn" : "Left");
                 Bot.Wait.ForCellChange(targetMonster.Cell);
             }
             Bot.Combat.Attack(targetMonster);
