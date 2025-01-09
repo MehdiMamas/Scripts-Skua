@@ -19,11 +19,10 @@ public class WillpowerExtraction
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(Nation.bagDrops);
-        Core.BankingBlackList.AddRange(Nation.tercessBags);
-        Core.BankingBlackList.AddRange(new[] {"Unidentified 34", "Unidentified 19", "Necrot", "Chaoroot", "Doomatter",
+        Core.BankingBlackList.AddRange(Nation.bagDrops.Concat(Nation.tercessBags).Concat(new[] {"Unidentified 34", "Unidentified 19", "Necrot", "Chaoroot", "Doomatter",
             "Mortality Cape of Revontheus", "Facebreakers of Nulgath", "SightBlinder Axes of Nulgath", "Mystic Tribal Sword",
-            "King Klunk's Crown", "Golden Shadow Breaker", "Shadow Terror Axe"});
+            "King Klunk's Crown", "Golden Shadow Breaker", "Shadow Terror Axe"}));
+
         Core.SetOptions();
 
         Unidentified34();
@@ -36,11 +35,16 @@ public class WillpowerExtraction
         if (Core.CheckInventory("Unidentified 34", quant))
             return;
 
-        Core.AddDrop(Nation.bagDrops);
-        Core.AddDrop(Nation.tercessBags);
-        Core.AddDrop("Unidentified 34", "Unidentified 19", "Necrot", "Chaoroot", "Doomatter",
-            "Mortality Cape of Revontheus", "Facebreakers of Nulgath", "SightBlinder Axes of Nulgath", "Mystic Tribal Sword",
-            "King Klunk's Crown", "Golden Shadow Breaker", "Shadow Terror Axe");
+        Core.AddDrop(Nation.bagDrops
+            .Concat(Nation.tercessBags)
+            .Concat(new[]
+            {
+                "Unidentified 34", "Unidentified 19", "Necrot", "Chaoroot", "Doomatter",
+                "Mortality Cape of Revontheus", "Facebreakers of Nulgath", "SightBlinder Axes of Nulgath",
+                "Mystic Tribal Sword", "King Klunk's Crown", "Golden Shadow Breaker", "Shadow Terror Axe"
+            })
+            .ToArray());
+
 
         int i = 1;
         while (!Bot.ShouldExit && !Core.CheckInventory("Unidentified 34", quant))
@@ -74,7 +78,7 @@ public class WillpowerExtraction
                 Bot.Wait.ForItemBuy();
             }
 
-            Core.AddDrop("Facebreakers of Nulgath", "SightBlinder Axes of Nulgath");
+            Core.AddDrop(18768);
             while (!Bot.ShouldExit && !Core.CheckInventory(18768)) // "Facebreakers of Nulgath"
             {
                 // "Kindness" of Nulgath
@@ -85,9 +89,9 @@ public class WillpowerExtraction
                 Nation.FarmDarkCrystalShard(5);
                 Nation.SwindleBulk(5);
                 Nation.FarmDiamondofNulgath(1);
-                Core.EnsureComplete(3046);
+                Core.EnsureComplete(3046, 18768);
 
-                Bot.Wait.ForPickup("Facebreakers of Nulgath");
+                Bot.Wait.ForPickup(18768);
 
                 if (Core.CheckInventory(18768))
                     break;
