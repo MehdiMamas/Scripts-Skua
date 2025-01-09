@@ -21,11 +21,9 @@ public class ArchFiendEnchantedOrbs
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(Nation.bagDrops);
-        Core.BankingBlackList.AddRange(Nation.tercessBags);
-        Core.BankingBlackList.AddRange(new[] {"Unidentified 34", "Unidentified 19", "Necrot", "Chaoroot", "Doomatter",
+        Core.BankingBlackList.AddRange(Nation.bagDrops.Concat(Nation.tercessBags).Concat(new[] {"Unidentified 34", "Unidentified 19", "Necrot", "Chaoroot", "Doomatter",
             "Mortality Cape of Revontheus", "Facebreakers of Nulgath", "SightBlinder Axes of Nulgath", "Mystic Tribal Sword",
-            "King Klunk's Crown", "Golden Shadow Breaker", "Shadow Terror Axe"});
+            "King Klunk's Crown", "Golden Shadow Breaker", "Shadow Terror Axe"}));
         Core.SetOptions();
 
         GetAFEO();
