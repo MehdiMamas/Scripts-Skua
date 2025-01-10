@@ -7281,7 +7281,12 @@ public class CoreBots
         // Check if CurrentClass is not null
         string currentClassName = Bot.Player.CurrentClass?.Name ?? string.Empty;
 
-        string[] classesToCheck = new[] { "Yami no Ronin", "Chrono Assassin", "Spy", "Rogue", currentClassName };
+        // Create the list of classes to check
+        List<string> classesToCheck = new List<string> { "Yami no Ronin", "Chrono Assassin", "Spy", "Rogue" };
+        if (!string.IsNullOrEmpty(currentClassName))
+        {
+            classesToCheck.Add(currentClassName);
+        }
         if (!string.IsNullOrEmpty(additionalClass) && CheckInventory(additionalClass))
         {
             Unbank(additionalClass);
