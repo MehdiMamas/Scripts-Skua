@@ -1912,7 +1912,7 @@ public class CoreNation
             Core.HuntMonster("Twilight", "Abaddon", "Balor's Cruelty", isTemp: false);
             Core.EquipClass(ClassType.Farm);
             Core.KillMonster("ShadowfallWar", "Garden1", "Bottom", "*", "Ultimate Darkness Gem", isTemp: false);
-            Core.KillMonster("battleundera", "r3", "Left", "*", "Unidentified Weapon");
+            Core.KillMonster("battleundera", "r3", "Left", "*", "Unidentified Weapon", isTemp: false);
             Core.EnsureComplete(gemstonesForNulgathQuest);
         }
     }
