@@ -2492,7 +2492,7 @@ public class CoreAdvanced
 
 
                 #region Wizard - Vainglory / Forge - Daunt / Ravenous / Forge - Pneuma / Forge       
-                case "Sovereign of Storms":
+                case "sovereign of storms":
                     if (!uVainglory() || !uDauntless() || !uRavenous() || !uPneuma())
                         goto default;
 
@@ -2587,8 +2587,8 @@ public class CoreAdvanced
                 #region Lucky - Vainglory - Valiance / Dauntless - Anima
                 case "glacial warlord":
                 case "glaceran warlord":
-                case "Dark Glaceran Warlord":
-                case "Savage Glaceran Warlord":
+                case "dark glaceran warlord":
+                case "savage glaceran warlord":
                     if (!uVainglory() || !uValiance() || !uAnima())
                         goto default;
 
@@ -2922,8 +2922,8 @@ public class CoreAdvanced
                 case "exalted harbinger":
                 case "exalted soul cleaver":
                 case "glaceran warlord":
-                case "Dark Glaceran Warlord":
-                case "Savage Glaceran Warlord":
+                case "dark glaceran warlord":
+                case "savage glaceran warlord":
                 case "glacial warlord":
                 case "great thief":
                 case "immortal chronomancer":
@@ -2953,7 +2953,7 @@ public class CoreAdvanced
                 case "shadowscythe general":
                 case "skycharged grenadier":
                 case "skyguard grenadier":
-                case "Sovereign of Storms":
+                case "sovereign of storms":
                 case "soul cleaver":
                 case "starlord":
                 case "swordmaster assassin":
