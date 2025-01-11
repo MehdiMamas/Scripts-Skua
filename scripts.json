@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 335516,
+    "size": 335640,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -105,7 +105,7 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 91194,
+    "size": 91193,
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -316,7 +316,7 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 43728,
+    "size": 43785,
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -2939,7 +2939,7 @@
       "me"
     ],
     "path": "Tools/InsertNameHeresUltraPrep.cs",
-    "size": 21975,
+    "size": 22031,
     "fileName": "InsertNameHeresUltraPrep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/InsertNameHeresUltraPrep.cs"
   },
@@ -3859,6 +3859,9 @@
       "horned",
       "worshipper",
       "face",
+      "wartorn",
+      "memorabilia",
+      "star",
       "ranger",
       "sheath",
       "bow",
@@ -3866,15 +3869,23 @@
       "quiver",
       "storm",
       "knight",
-      "molten",
-      "dragonspear",
+      "ebony",
+      "dragonblade",
       "formal",
       "suit",
       "circlet",
-      "cane"
+      "cane",
+      "dark",
+      "archfiend",
+      "warlord",
+      "sin",
+      "cleaver",
+      "cleavers",
+      "warmonger",
+      "armaments"
     ],
     "path": "Nation/MergeShops/NulgathDiamondMerge.cs",
-    "size": 14165,
+    "size": 15969,
     "fileName": "NulgathDiamondMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/NulgathDiamondMerge.cs"
   },
@@ -3927,7 +3938,7 @@
       "shard"
     ],
     "path": "Nation/MergeShops/VoidChasmMerge.cs",
-    "size": 8475,
+    "size": 8531,
     "fileName": "VoidChasmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/VoidChasmMerge.cs"
   },
@@ -3977,13 +3988,43 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/NationMerge.cs"
   },
   {
-    "name": "NulgathWarMerge",
-    "description": "null",
+    "name": "Nulgath War Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Nulgath War Merge [452] in /evilwarnul",
     "tags": [
-      "null"
+      "nulgath",
+      "war",
+      "merge",
+      "evilwarnul",
+      "redemption",
+      "barbarian",
+      "dilligaf",
+      "deathfiend",
+      "cloak",
+      "giant",
+      "treetunk",
+      "klunk",
+      "mortality",
+      "revontheus",
+      "sage",
+      "neofiend",
+      "oblivion",
+      "wings",
+      "genesis",
+      "spear",
+      "mini",
+      "golden",
+      "hanzo",
+      "void",
+      "katana",
+      "katanas",
+      "horns",
+      "nulgaths",
+      "bloodsucker",
+      "larvae",
+      "warmonger"
     ],
     "path": "Nation/MergeShops/NulgathWarMerge.cs",
-    "size": 8005,
+    "size": 8519,
     "fileName": "NulgathWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/NulgathWarMerge.cs"
   },
@@ -4578,6 +4619,23 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/Archfiend.cs"
   },
   {
+    "name": "Image of Nulgath",
+    "description": "This script will farm the \"Image of Nulgath\" quest rewards.",
+    "tags": [
+      "image of nulgath",
+      "nulgath gifts",
+      "fiendish zweihander blade",
+      "fiendish",
+      "zweihandler",
+      "fiendish zweihander of bhamud",
+      "bhamud"
+    ],
+    "path": "Nation/Various/ImageOfNulgath.cs",
+    "size": 3557,
+    "fileName": "ImageOfNulgath.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/ImageOfNulgath.cs"
+  },
+  {
     "name": "VoidShogun",
     "description": "null",
     "tags": [
@@ -4632,6 +4690,20 @@
     "size": 895,
     "fileName": "PurifiedClaymoreOfDestiny.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/PurifiedClaymoreOfDestiny.cs"
+  },
+  {
+    "name": "Maw of the Void",
+    "description": "This script will farm Maw of the Void quest items.",
+    "tags": [
+      "fiend's creed blade",
+      "fiend's creed blades",
+      "maw",
+      "nulgath gifts"
+    ],
+    "path": "Nation/Various/MawOfTheVoid.cs",
+    "size": 3230,
+    "fileName": "MawOfTheVoid.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/MawOfTheVoid.cs"
   },
   {
     "name": "DemandingApprovalFromNulgath[Member]",
@@ -4887,7 +4959,7 @@
       "void chasm"
     ],
     "path": "Nation/Various/PrimeFiendShard.cs",
-    "size": 10090,
+    "size": 10146,
     "fileName": "PrimeFiendShard.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/PrimeFiendShard.cs"
   },
@@ -17422,7 +17494,7 @@
       "revontheus"
     ],
     "path": "Other/MergeShops/YulgarsDualWieldDropOffMerge.cs",
-    "size": 21056,
+    "size": 21112,
     "fileName": "YulgarsDualWieldDropOffMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/YulgarsDualWieldDropOffMerge.cs"
   },
@@ -19487,7 +19559,7 @@
       "katanas"
     ],
     "path": "Other/MergeShops/YulgarsDualWieldMerge.cs",
-    "size": 46098,
+    "size": 46154,
     "fileName": "YulgarsDualWieldMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/YulgarsDualWieldMerge.cs"
   },
@@ -20945,7 +21017,7 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/0FarmerJoeDoAll.cs",
-    "size": 7934,
+    "size": 7990,
     "fileName": "0FarmerJoeDoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/0FarmerJoeDoAll.cs"
   },
@@ -20959,7 +21031,7 @@
       "legend"
     ],
     "path": "Other/FarmJoeKits/1MemberFarmsKit.cs",
-    "size": 27121,
+    "size": 27177,
     "fileName": "1MemberFarmsKit.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/1MemberFarmsKit.cs"
   },
@@ -20970,7 +21042,7 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 49020,
+    "size": 49076,
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
