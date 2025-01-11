@@ -4037,11 +4037,13 @@ public class CoreBots
     /// <param name="publicRoom"></param>
     public void KillEscherion(string? item = null, int quant = 1, bool isTemp = false, bool log = true, bool publicRoom = false)
     {
-        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant)))
+        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
-        Join("escherion", publicRoom: publicRoom);
-        Jump("Boss", "Left");
+        if (Bot.Map.Name != "escherion")
+            Join("escherion", publicRoom: publicRoom);
+        if (Bot.Player.Cell != "Boss")
+            Jump("Boss", "Left");
 
         if (item is not null && log)
             FarmingLogger(item, quant);
@@ -4069,7 +4071,7 @@ public class CoreBots
         }
         else
         {
-            while (!Bot.ShouldExit && isTemp ? !Bot.TempInv.Contains(item, quant) : !Bot.Inventory.Contains(item, quant))
+            while (!Bot.ShouldExit && isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))
                 _KillEscherion();
 
             Rest();
@@ -4983,7 +4985,7 @@ public class CoreBots
     /// <param name="item">The name or identifier of the item to query.</param>
     /// <param name="isTemp">Specifies whether to check temporary inventory (<c>true</c>) or regular inventory (<c>false</c>).</param>
     /// <returns>The quantity of the specified item in the chosen inventory.</returns>
-    public int dynamicQuant(string item, bool isTemp) => isTemp ? Bot.TempInv.GetQuantity(item) : Bot.Inventory.GetQuantity(item);
+    public int dynamicQuant(string item, bool isTemp) => isTemp ? Bot.TempInv.GetQuantity(item) : Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault( x => x.Name == item)?.Quantity ?? 0;
 
     /// <summary>
     /// Configures the aggro mode.
@@ -7282,7 +7284,7 @@ public class CoreBots
         string currentClassName = Bot.Player.CurrentClass?.Name ?? string.Empty;
 
         // Create the list of classes to check
-        List<string> classesToCheck = new List<string> { "Yami no Ronin", "Chrono Assassin", "Spy", "Rogue" };
+        List<string> classesToCheck = new() { "Yami no Ronin", "Chrono Assassin", "Spy", "Rogue" };
         if (!string.IsNullOrEmpty(currentClassName))
         {
             classesToCheck.Add(currentClassName);
