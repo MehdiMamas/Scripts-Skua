@@ -1,7 +1,7 @@
 /*
-name: NulgathWarMerge
-description: null
-tags: null
+name: Nulgath War Merge
+description: This bot will farm the items belonging to the selected mode for the Nulgath War Merge [452] in /evilwarnul
+tags: nulgath, war, merge, evilwarnul, redemption, barbarian, dilligaf, deathfiend, cloak, giant, treetunk, klunk, mortality, revontheus, sage, neofiend, oblivion, wings, genesis, spear, mini, golden, hanzo, void, katana, katanas, horns, nulgaths, bloodsucker, larvae, warmonger
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -155,5 +155,6 @@ public class NulgathWarMerge
         new Option<bool>("27848", "Golden Hanzo Void Cape", "Mode: [select] only\nShould the bot buy \"Golden Hanzo Void Cape\" ?", false),
         new Option<bool>("42716", "Nulgath's Bloodsucker Larvae", "Mode: [select] only\nShould the bot buy \"Nulgath's Bloodsucker Larvae\" ?", false),
         new Option<bool>("42717", "Bloodsucker of Nulgath", "Mode: [select] only\nShould the bot buy \"Bloodsucker of Nulgath\" ?", false),
+        new Option<bool>("84617", "Void Warmonger Gauntlet", "Mode: [select] only\nShould the bot buy \"Void Warmonger Gauntlet\" ?", false),
     };
 }
