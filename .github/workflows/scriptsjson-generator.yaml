@@ -1,69 +1,53 @@
 # name: Run Auto Generate JSON with C# File
 
-# # === Workflow Trigger ===
 # on:
 #   push:
 #     branches:
-#       - main
-#       - master
-#       - Skua
-#       - dev
-#       - 'feature/*'
+#         - main
+#         - master
+#         - Skua
+#         - dev
+#         - 'feature/*'
 
-# # === Job Definition ===
 # jobs:
 #   run-csharp-file:
-#     runs-on: ubuntu-latest  # The job will run on the latest version of Ubuntu
+#     runs-on: ubuntu-latest
 
 #     steps:
-#     # === Step: Checkout Code ===
 #     - name: Checkout code
-#       uses: actions/checkout@v4.2.2  # Checks out the repository code
+#       uses: actions/checkout@v4
 
-#     # === Step: Cache NuGet Packages ===
-#     - name: Cache NuGet packages
-#       uses: actions/cache@v4.2.0  # Caches NuGet packages to speed up builds
-#       with:
-#         path: ~/.nuget/packages  # Path to the NuGet package cache
-#         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.cs') }}  # Cache key based on OS and project files
-#         restore-keys: |
-#           ${{ runner.os }}-nuget-  # Restore keys for cache
-
-#     # === Step: Setup .NET ===
 #     - name: Setup .NET
-#       uses: actions/setup-dotnet@v4  # Sets up the .NET environment
+#       uses: actions/setup-dotnet@v4
 #       with:
-#         dotnet-version: '6.0.x'  # Specifies the .NET version to use
+#         dotnet-version: '6.0.x'
 
-#     # === Step: Build the Project ===
-#     - name: Build the project
-#       run: dotnet build --configuration Release SkuaScriptsGenerator/SkuaScriptsGenerator.csproj  # Builds the project in Release mode
-
-#     # === Step: Run C# File ===
 #     - name: Run C# file
-#       run: dotnet run --project SkuaScriptsGenerator/SkuaScriptsGenerator.csproj > scripts.json  # Runs the C# program and outputs to scripts.json
+#       run: dotnet run Program.cs --project SkuaScriptsGenerator/SkuaScriptsGenerator.csproj > scripts.json
 
-#     # === Step: Upload Artifact ===
 #     - name: Upload artifact
-#       uses: actions/upload-artifact@v4  # Uploads the generated artifact
+#       uses: actions/upload-artifact@v4
 #       with:
-#         name: scripts-${{ github.run_id }}.json  # Names the artifact with the run ID for uniqueness
-#         path: scripts.json  # Path to the file to upload
-#         retention-days: 30  # Keeps the artifact for 30 days
+#         name: scripts.json
+#         path: scripts.json
 
-#     # === Step: Commit and Push Changes ===
 #     - name: Commit and push changes
-#       uses: stefanzweifel/git-auto-commit-action@v5  # Automatically commits changes
+#       uses: stefanzweifel/git-auto-commit-action@v5
 #       with:
-#         commit_message: 'Automatic commit by GitHub Actions'  # Commit message for the auto-commit
-#         files: 'scripts.json'  # Specifies the file to commit
-#         push: true  # Pushes the changes to the repository
-#         push_options: '--force'  # Force push to override remote changes
-# -----------------------------------------------------------------------------------------------------
-# ^^^^^^^ Old Above ^^^^^^^
-# -----------------------------------------------------------------------------------------------------
+#         commit_message: 'Automatic commit by GitHub Actions'
+#         files: 'scripts.json'
+#         push: true
+#         push_options: '--force'
+
+#     - name: Delete artifact
+#       uses: geekyeggo/delete-artifact@v5
+#       with:
+#         name: scripts.json
+# ================== Old Above ===============================
+
 name: Run Auto Generate JSON with C# File
 
+# === Workflow Trigger ===
 on:
   push:
     branches:
@@ -73,53 +57,52 @@ on:
       - dev
       - 'feature/*'
 
+# === Job Definition ===
 jobs:
   run-csharp-file:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # The job will run on the latest version of Ubuntu
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4.2.2
+    # === Step: Checkout Code ===
+    - name: Checkout code
+      uses: actions/checkout@v4  # Checks out the repository code
 
-      - name: Cache NuGet packages
-        uses: actions/cache@v4.2.0
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.cs') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-          fail-on-cache-miss: false
+    # === Step: Cache NuGet Packages ===
+    - name: Cache NuGet packages
+      uses: actions/cache@v4  # Caches NuGet packages to speed up builds
+      with:
+        path: ~/.nuget/packages  # Path to the NuGet package cache
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.cs') }}  # Cache key based on OS and project files
+        restore-keys: |
+          ${{ runner.os }}-nuget-  # Restore keys for cache
 
-      - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v4.2.0
-        with:
-          dotnet-version: '6.0.x'
-          dotnet-quality: 'ga'
-          cache: true
+    # === Step: Setup .NET ===
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4  # Sets up the .NET environment
+      with:
+        dotnet-version: '6.0.x'  # Specifies the .NET version to use
 
-      - name: Build the project
-        run: dotnet build --configuration Release SkuaScriptsGenerator/SkuaScriptsGenerator.csproj
+    # === Step: Build the Project ===
+    - name: Build the project
+      run: dotnet build --configuration Release SkuaScriptsGenerator/SkuaScriptsGenerator.csproj  # Builds the project in Release mode
 
-      - name: Run C# file
-        run: dotnet run --project SkuaScriptsGenerator/SkuaScriptsGenerator.csproj > scripts.json
+    # === Step: Run C# File ===
+    - name: Run C# file
+      run: dotnet run --project SkuaScriptsGenerator/SkuaScriptsGenerator.csproj > scripts.json  # Runs the C# program and outputs to scripts.json
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4.2.0
-        with:
-          name: scripts-${{ github.run_id }}.json
-          path: scripts.json
-          retention-days: 30
+    # === Step: Upload Artifact ===
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4  # Uploads the generated artifact
+      with:
+        name: scripts-${{ github.run_id }}.json  # Names the artifact with the run ID for uniqueness
+        path: scripts.json  # Path to the file to upload
+        retention-days: 30  # Keeps the artifact for 30 days
 
-      - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v5.1.0
-        with:
-          commit_message: 'Automatic commit by GitHub Actions'
-          files: 'scripts.json'
-          push: true
-          push_options: '--force'
-
-      - name: Send Discord notification
-        run: |
-          curl -X POST -H "Content-Type: application/json" \
-          -d '{"content": "The JSON file has been successfully generated and committed!"}' \
-          ${{ secrets.DISCORD_WEBHOOK }}
+    # === Step: Commit and Push Changes ===
+    - name: Commit and push changes
+      uses: stefanzweifel/git-auto-commit-action@v5  # Automatically commits changes
+      with:
+        commit_message: 'Automatic commit by GitHub Actions'  # Commit message for the auto-commit
+        files: 'scripts.json'  # Specifies the file to commit
+        push: true  # Pushes the changes to the repository
+        push_options: '--force'  # Force push to override remote changes
