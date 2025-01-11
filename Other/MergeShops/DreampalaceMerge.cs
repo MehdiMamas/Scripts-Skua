@@ -1,7 +1,7 @@
 /*
-name: DreampalaceMerge
-description: null
-tags: null
+name: Dreampalace Merge
+description: This bot will farm the items belonging to the selected mode for the Dreampalace Merge [1961] in /dreampalace
+tags: dreampalace, merge, dreampalace, strong, golmoth, vibrant, awakened, scythe, gazeroth, bow, zelkur, scimitar, zal, djinn, realm, techsuit, polycrystalline, tactical, solarcore, battering, shield, silicon, visor, backup, amplified, techguard
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -32,7 +32,7 @@ public class DreampalaceMerge
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Axe of Golmoth", "Scales of Golmoth", "Token of Fire", "Zahad's Ancient Gem", "Scythe of Gazeroth", "Souls of Gazeroth", "Token of Earth", "Bow of Zelkur", "Claws of Zelkur", "Token of Water", "Scimitar of Zal", "Feathers of Zal", "Token of Air " });
+        Core.BankingBlackList.AddRange(new[] { "Axe of Golmoth", "Scales of Golmoth", "Token of Fire", "Zahad's Ancient Gem", "Scythe of Gazeroth", "Souls of Gazeroth", "Token of Earth", "Bow of Zelkur", "Claws of Zelkur", "Token of Water", "Scimitar of Zal", "Feathers of Zal", "Token of Air" });
         Core.SetOptions();
 
         dreamPalace.StoryLine();
@@ -133,5 +133,13 @@ public class DreampalaceMerge
         new Option<bool>("58697", "Strong Scimitar of Zal", "Mode: [select] only\nShould the bot buy \"Strong Scimitar of Zal\" ?", false),
         new Option<bool>("58698", "Vibrant Scimitar of Zal", "Mode: [select] only\nShould the bot buy \"Vibrant Scimitar of Zal\" ?", false),
         new Option<bool>("58699", "Awakened Scimitar of Zal", "Mode: [select] only\nShould the bot buy \"Awakened Scimitar of Zal\" ?", false),
+        new Option<bool>("91066", "Djinn Realm TechSuit", "Mode: [select] only\nShould the bot buy \"Djinn Realm TechSuit\" ?", false),
+        new Option<bool>("91067", "Polycrystalline Tactical Helm", "Mode: [select] only\nShould the bot buy \"Polycrystalline Tactical Helm\" ?", false),
+        new Option<bool>("91071", "Solarcore Battering Shield", "Mode: [select] only\nShould the bot buy \"Solarcore Battering Shield\" ?", false),
+        new Option<bool>("91068", "Polycrystalline Silicon Helm", "Mode: [select] only\nShould the bot buy \"Polycrystalline Silicon Helm\" ?", false),
+        new Option<bool>("91069", "Polycrystalline Silicon Visor", "Mode: [select] only\nShould the bot buy \"Polycrystalline Silicon Visor\" ?", false),
+        new Option<bool>("91070", "Back-Up Solarcore Shield", "Mode: [select] only\nShould the bot buy \"Back-Up Solarcore Shield\" ?", false),
+        new Option<bool>("91073", "Amplified Djinn Realm TechGuard", "Mode: [select] only\nShould the bot buy \"Amplified Djinn Realm TechGuard\" ?", false),
+        new Option<bool>("91072", "Djinn Realm TechGuard", "Mode: [select] only\nShould the bot buy \"Djinn Realm TechGuard\" ?", false),
     };
 }
