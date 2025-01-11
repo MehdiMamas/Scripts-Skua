@@ -1,7 +1,7 @@
 /*
 name: Nulgath Diamond Merge
 description: This bot will farm the items belonging to the selected mode for the Nulgath Diamond Merge [456] in /evilwarnul
-tags: nulgath, diamond, merge, evilwarnul, abyssal, priest, loyalty, nation, oversoul, witch, witchs, soulstealing, paladin, bearded, dire, monk, cleric, head, golden, hanzo, void, katana, katanas, horns, cyber, crystal, phoenix, blood, cloak, horned, worshipper, face, ranger, sheath, bow, morph, quiver, storm, knight, molten, dragonspear, formal, suit, circlet, cane
+tags: nulgath, diamond, merge, evilwarnul, abyssal, priest, loyalty, nation, oversoul, witch, witchs, soulstealing, paladin, bearded, dire, monk, cleric, head, golden, hanzo, void, katana, katanas, horns, cyber, crystal, phoenix, blood, cloak, horned, worshipper, face, wartorn, memorabilia, star, ranger, sheath, bow, morph, quiver, storm, knight, ebony, dragonblade, formal, suit, circlet, cane, dark, archfiend, warlord, sin, cleaver, cleavers, warmonger, armaments
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -13,6 +13,7 @@ tags: nulgath, diamond, merge, evilwarnul, abyssal, priest, loyalty, nation, ove
 //cs_include Scripts/Good/BLoD/CoreBLOD.cs
 //cs_include Scripts/Nation/Various/TarosManslayer.cs
 //cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
+//cs_include Scripts/Nation\Various\DragonBlade[mem].cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -28,6 +29,7 @@ public class NulgathDiamondMerge
     public CoreNation Nation = new();
     public TarosManslayer Taro = new();
     public CoreBLOD BLOD = new();
+    private DragonBladeofNulgath DBoN = new();
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -39,6 +41,7 @@ public class NulgathDiamondMerge
 
     public void ScriptMain(IScriptInterface bot)
     {
+        Core.BankingBlackList.AddRange(new[] { "Diamond of Nulgath", "Archfiend's Favor", "Nulgath's Approval", "Taro's Manslayer", "Dark Crystal Shard", "Tainted Gem", "Blade of Holy Might", "Blood Gem of the Archfiend", "Unidentified 13", "Iron", "Gem of Nulgath", "Totem of Nulgath", "Bone Dust", "Cloak of Nulgath", "Staff of Imp Fire", "Cool Head", "Primal Dread Fang", "Random Weapon of Nulgath", "Voucher of Nulgath (non-mem)", "Unidentified 27", "Crystal Phoenix Blade of Nulgath", "DragonBlade of Nulgath", "Gold Star of Avarice", "Fiend Cloak of Nulgath" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -176,16 +179,17 @@ public class NulgathDiamondMerge
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
-                case "Dragon Scale":
-                    Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(11475, quant))
-                        Core.KillMonster("lair", "Hole", "Center", "*", isTemp: false, log: false);
+                case "DragonBlade of Nulgath":
+                    DBoN.GetDragonBlade();
                     break;
 
                 case "Gold Star of Avarice":
                     Core.FarmingLogger(req.Name, quant);
-                    Adv.BuyItem("tercessuinotlim", 1951, "Gold Star of Avarice");
+                    Adv.BuyItem("tercessuinotlim", 1951, req.Name);
+                    break;
+
+                case "Fiend Cloak of Nulgath":
+                    Adv.BuyItem("tercessuinotlim", 68, req.Name);
                     break;
             }
         }
@@ -193,7 +197,7 @@ public class NulgathDiamondMerge
 
     public List<IOption> Select = new()
     {
-       new Option<bool>("13347", "Abyssal Priest of Nulgath", "Mode: [select] only\nShould the bot buy \"Abyssal Priest of Nulgath\" ?", false),
+        new Option<bool>("13347", "Abyssal Priest of Nulgath", "Mode: [select] only\nShould the bot buy \"Abyssal Priest of Nulgath\" ?", false),
         new Option<bool>("25215", "Loyalty Blade of the Nation", "Mode: [select] only\nShould the bot buy \"Loyalty Blade of the Nation\" ?", false),
         new Option<bool>("25239", "Oversoul Witch of Nulgath", "Mode: [select] only\nShould the bot buy \"Oversoul Witch of Nulgath\" ?", false),
         new Option<bool>("25240", "OverSoul Witch's Hat", "Mode: [select] only\nShould the bot buy \"OverSoul Witch's Hat\" ?", false),
@@ -219,6 +223,8 @@ public class NulgathDiamondMerge
         new Option<bool>("344", "Blood Cloak", "Mode: [select] only\nShould the bot buy \"Blood Cloak\" ?", false),
         new Option<bool>("52883", "Horned Worshipper Face of Nulgath", "Mode: [select] only\nShould the bot buy \"Horned Worshipper Face of Nulgath\" ?", false),
         new Option<bool>("52884", "Horned Worshipper Visage of Nulgath", "Mode: [select] only\nShould the bot buy \"Horned Worshipper Visage of Nulgath\" ?", false),
+        new Option<bool>("52824", "War-Torn Memorabilia", "Mode: [select] only\nShould the bot buy \"War-Torn Memorabilia\" ?", false),
+        new Option<bool>("67267", "Abyssal Star", "Mode: [select] only\nShould the bot buy \"Abyssal Star\" ?", false),
         new Option<bool>("69968", "Blood Ranger", "Mode: [select] only\nShould the bot buy \"Blood Ranger\" ?", false),
         new Option<bool>("69973", "Blood Ranger Sword and Sheath", "Mode: [select] only\nShould the bot buy \"Blood Ranger Sword and Sheath\" ?", false),
         new Option<bool>("69972", "Blood Ranger Bow", "Mode: [select] only\nShould the bot buy \"Blood Ranger Bow\" ?", false),
@@ -227,7 +233,7 @@ public class NulgathDiamondMerge
         new Option<bool>("69970", "Blood Ranger Quiver", "Mode: [select] only\nShould the bot buy \"Blood Ranger Quiver\" ?", false),
         new Option<bool>("70001", "Storm Knight", "Mode: [select] only\nShould the bot buy \"Storm Knight\" ?", false),
         new Option<bool>("70002", "Storm Knight Helm", "Mode: [select] only\nShould the bot buy \"Storm Knight Helm\" ?", false),
-        new Option<bool>("69152", "Molten DragonSpear of Nulgath", "Mode: [select] only\nShould the bot buy \"Molten DragonSpear of Nulgath\" ?", false),
+        new Option<bool>("65397", "Ebony DragonBlade of Nulgath", "Mode: [select] only\nShould the bot buy \"Ebony DragonBlade of Nulgath\" ?", false),
         new Option<bool>("83410", "Formal Nation Suit", "Mode: [select] only\nShould the bot buy \"Formal Nation Suit\" ?", false),
         new Option<bool>("83411", "Formal Nation Hair", "Mode: [select] only\nShould the bot buy \"Formal Nation Hair\" ?", false),
         new Option<bool>("83412", "Formal Nation Locks", "Mode: [select] only\nShould the bot buy \"Formal Nation Locks\" ?", false),
@@ -241,5 +247,11 @@ public class NulgathDiamondMerge
         new Option<bool>("83420", "Formal Nation Blades", "Mode: [select] only\nShould the bot buy \"Formal Nation Blades\" ?", false),
         new Option<bool>("83421", "Formal Nation Cane", "Mode: [select] only\nShould the bot buy \"Formal Nation Cane\" ?", false),
         new Option<bool>("83422", "Formal Nation Cane Sheath", "Mode: [select] only\nShould the bot buy \"Formal Nation Cane Sheath\" ?", false),
+        new Option<bool>("89606", "Dark Archfiend Cloak of Nulgath", "Mode: [select] only\nShould the bot buy \"Dark Archfiend Cloak of Nulgath\" ?", false),
+        new Option<bool>("84612", "Warlord of Nulgath Blade", "Mode: [select] only\nShould the bot buy \"Warlord of Nulgath Blade\" ?", false),
+        new Option<bool>("84613", "Warlord of Nulgath Blades", "Mode: [select] only\nShould the bot buy \"Warlord of Nulgath Blades\" ?", false),
+        new Option<bool>("84614", "Sin of the Warlord Cleaver", "Mode: [select] only\nShould the bot buy \"Sin of the Warlord Cleaver\" ?", false),
+        new Option<bool>("84615", "Sin of the Warlord Cleavers", "Mode: [select] only\nShould the bot buy \"Sin of the Warlord Cleavers\" ?", false),
+        new Option<bool>("84616", "Void Warmonger Armaments", "Mode: [select] only\nShould the bot buy \"Void Warmonger Armaments\" ?", false),
     };
 }
