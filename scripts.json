@@ -316,7 +316,7 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 43728,
+    "size": 43785,
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -2939,7 +2939,7 @@
       "me"
     ],
     "path": "Tools/InsertNameHeresUltraPrep.cs",
-    "size": 21975,
+    "size": 22031,
     "fileName": "InsertNameHeresUltraPrep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/InsertNameHeresUltraPrep.cs"
   },
@@ -3938,7 +3938,7 @@
       "shard"
     ],
     "path": "Nation/MergeShops/VoidChasmMerge.cs",
-    "size": 8475,
+    "size": 8531,
     "fileName": "VoidChasmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/VoidChasmMerge.cs"
   },
@@ -4959,7 +4959,7 @@
       "void chasm"
     ],
     "path": "Nation/Various/PrimeFiendShard.cs",
-    "size": 10090,
+    "size": 10146,
     "fileName": "PrimeFiendShard.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/PrimeFiendShard.cs"
   },
@@ -17494,7 +17494,7 @@
       "revontheus"
     ],
     "path": "Other/MergeShops/YulgarsDualWieldDropOffMerge.cs",
-    "size": 21056,
+    "size": 21112,
     "fileName": "YulgarsDualWieldDropOffMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/YulgarsDualWieldDropOffMerge.cs"
   },
@@ -19559,7 +19559,7 @@
       "katanas"
     ],
     "path": "Other/MergeShops/YulgarsDualWieldMerge.cs",
-    "size": 46098,
+    "size": 46154,
     "fileName": "YulgarsDualWieldMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/YulgarsDualWieldMerge.cs"
   },
@@ -21017,7 +21017,7 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/0FarmerJoeDoAll.cs",
-    "size": 7934,
+    "size": 7990,
     "fileName": "0FarmerJoeDoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/0FarmerJoeDoAll.cs"
   },
@@ -21031,7 +21031,7 @@
       "legend"
     ],
     "path": "Other/FarmJoeKits/1MemberFarmsKit.cs",
-    "size": 27121,
+    "size": 27177,
     "fileName": "1MemberFarmsKit.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/1MemberFarmsKit.cs"
   },
@@ -21042,7 +21042,7 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 49020,
+    "size": 49076,
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
