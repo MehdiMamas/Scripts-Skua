@@ -31,7 +31,7 @@ jobs:
 
     # === Step: Setup .NET ===
     - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@4.2.0  # Sets up the .NET environment
+      uses: actions/setup-dotnet@v4.2.0  # Sets up the .NET environment
       with:
         dotnet-version: '6.0.x'  # Specifies the .NET version to use
 
