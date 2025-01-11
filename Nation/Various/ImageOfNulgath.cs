@@ -44,7 +44,7 @@ public class ImageOfNulgath
         string[] acceptReqs = Core.EnsureLoad(10019).AcceptRequirements.Select(req => req.Name).ToArray();
         string[] reqs = Core.EnsureLoad(10019).Requirements.Select(req => req.Name).ToArray();
 
-        Core.AddDrop(Core.QuestRewards(10019).Concat(acceptReqs).Concat(reqs).ToArray());
+        Core.AddDrop((acceptReqs).Concat(reqs).ToArray());
 
         if (!Core.CheckInventory(acceptReqs))
         {
