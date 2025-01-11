@@ -88,7 +88,7 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.cs') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
-          fail-on-cache-miss: true
+          fail-on-cache-miss: false
 
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v4.2.0
