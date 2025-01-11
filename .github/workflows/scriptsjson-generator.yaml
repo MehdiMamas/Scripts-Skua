@@ -53,17 +53,9 @@ jobs:
 
     # === Step: Commit and Push Changes ===
     - name: Git Auto Commit
-      # You may pin to the exact commit or the version.
-      # uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79
       uses: stefanzweifel/git-auto-commit-action@v5.1.0
       with:
         commit_message: 'Automatic commit by GitHub Actions'  # Commit message for the auto-commit
-        files: 'scripts.json'  # Specifies the file to commit
-        push: true  # Pushes the changes to the repository
+        file_pattern: 'scripts.json'  # Specifies the file to commit
         push_options: '--force'  # Force push to override remote changes
 
-    # - name: Send Discord notification
-    #   run: |
-    #     curl -X POST -H "Content-Type: application/json" \
-    #     -d '{"content": "The JSON file has been successfully generated and committed!"}' \
-    #     ${{ secrets.DISCORD_WEBHOOK }}
