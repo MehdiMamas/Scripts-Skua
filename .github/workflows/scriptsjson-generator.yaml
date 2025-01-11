@@ -61,3 +61,9 @@ jobs:
         files: 'scripts.json'  # Specifies the file to commit
         push: true  # Pushes the changes to the repository
         push_options: '--force'  # Force push to override remote changes
+
+    # - name: Send Discord notification
+    #   run: |
+    #     curl -X POST -H "Content-Type: application/json" \
+    #     -d '{"content": "The JSON file has been successfully generated and committed!"}' \
+    #     ${{ secrets.DISCORD_WEBHOOK }}
