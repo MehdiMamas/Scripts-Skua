@@ -4651,6 +4651,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/PurifiedClaymoreOfDestiny.cs"
   },
   {
+    "name": "Maw of the Void",
+    "description": "This script will farm Maw of the Void quest items.",
+    "tags": [
+      "fiend's creed blade",
+      "fiend's creed blades",
+      "maw",
+      "nulgath gifts"
+    ],
+    "path": "Nation/Various/MawOfTheVoid.cs",
+    "size": 3230,
+    "fileName": "MawOfTheVoid.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/MawOfTheVoid.cs"
+  },
+  {
     "name": "DemandingApprovalFromNulgath[Member]",
     "description": "null",
     "tags": [
