@@ -2588,6 +2588,7 @@ public class CoreAdvanced
                 case "glacial warlord":
                 case "glaceran warlord":
                 case "Dark Glaceran Warlord":
+                case "Savage Glaceran Warlord":
                     if (!uVainglory() || !uValiance() || !uAnima())
                         goto default;
 
@@ -2922,6 +2923,7 @@ public class CoreAdvanced
                 case "exalted soul cleaver":
                 case "glaceran warlord":
                 case "Dark Glaceran Warlord":
+                case "Savage Glaceran Warlord":
                 case "glacial warlord":
                 case "great thief":
                 case "immortal chronomancer":
@@ -2951,6 +2953,7 @@ public class CoreAdvanced
                 case "shadowscythe general":
                 case "skycharged grenadier":
                 case "skyguard grenadier":
+                case "Sovereign of Storms":
                 case "soul cleaver":
                 case "starlord":
                 case "swordmaster assassin":
