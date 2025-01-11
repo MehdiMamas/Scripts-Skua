@@ -4578,6 +4578,23 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/Archfiend.cs"
   },
   {
+    "name": "Image of Nulgath",
+    "description": "This script will farm the \"Image of Nulgath\" quest rewards.",
+    "tags": [
+      "image of nulgath",
+      "nulgath gifts",
+      "fiendish zweihander blade",
+      "fiendish",
+      "zweihandler",
+      "fiendish zweihander of bhamud",
+      "bhamud"
+    ],
+    "path": "Nation/Various/ImageOfNulgath.cs",
+    "size": 3557,
+    "fileName": "ImageOfNulgath.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/ImageOfNulgath.cs"
+  },
+  {
     "name": "VoidShogun",
     "description": "null",
     "tags": [
