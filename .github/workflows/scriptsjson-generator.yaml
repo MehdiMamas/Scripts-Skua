@@ -1,6 +1,72 @@
+# name: Run Auto Generate JSON with C# File
+
+# # === Workflow Trigger ===
+# on:
+#   push:
+#     branches:
+#       - main
+#       - master
+#       - Skua
+#       - dev
+#       - 'feature/*'
+
+# # === Job Definition ===
+# jobs:
+#   run-csharp-file:
+#     runs-on: ubuntu-latest  # The job will run on the latest version of Ubuntu
+
+#     steps:
+#     # === Step: Checkout Code ===
+#     - name: Checkout code
+#       uses: actions/checkout@v4.2.2  # Checks out the repository code
+
+#     # === Step: Cache NuGet Packages ===
+#     - name: Cache NuGet packages
+#       uses: actions/cache@v4.2.0  # Caches NuGet packages to speed up builds
+#       with:
+#         path: ~/.nuget/packages  # Path to the NuGet package cache
+#         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.cs') }}  # Cache key based on OS and project files
+#         restore-keys: |
+#           ${{ runner.os }}-nuget-  # Restore keys for cache
+
+#     # === Step: Setup .NET ===
+#     - name: Setup .NET Core SDK
+#       uses: actions/setup-dotnet@v4.2.0  # Sets up the .NET environment
+#       with:
+#         dotnet-version: '6.0.x'  # Specifies the .NET version to use
+
+#     # === Step: Build the Project ===
+#     - name: Build the project
+#       run: dotnet build --configuration Release SkuaScriptsGenerator/SkuaScriptsGenerator.csproj  # Builds the project in Release mode
+
+#     # === Step: Run C# File ===
+#     - name: Run C# file
+#       run: dotnet run --project SkuaScriptsGenerator/SkuaScriptsGenerator.csproj > scripts.json  # Runs the C# program and outputs to scripts.json
+
+#     # === Step: Upload Artifact ===
+#     - name: Upload artifact
+#       uses: actions/upload-artifact@v4.6.0  # Uploads the generated artifact
+#       with:
+#         name: scripts-${{ github.run_id }}.json  # Names the artifact with the run ID for uniqueness
+#         path: scripts.json  # Path to the file to upload
+#         retention-days: 30  # Keeps the artifact for 30 days
+
+#     # === Step: Commit and Push Changes ===
+#     - name: Git Auto Commit
+#       uses: stefanzweifel/git-auto-commit-action@v5.1.0
+#       with:
+#         commit_message: 'Automatic commit by GitHub Actions' # Custom commit message
+#         file_pattern: 'scripts.json'                         # File(s) to include in the commit
+#         push_options: '--force'                              # Force push to override remote changes
+#         branch: '${{ github.ref_name }}'                     # Dynamically use the current branch
+#         skip_dirty_check: true                               # Skip the dirty check to always commit
+# old ^^
+
+
+
 name: Run Auto Generate JSON with C# File
 
-# === Workflow Trigger ===
+# === Workflow Triggers ===
 on:
   push:
     branches:
@@ -13,49 +79,58 @@ on:
 # === Job Definition ===
 jobs:
   run-csharp-file:
-    runs-on: ubuntu-latest  # The job will run on the latest version of Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
     # === Step: Checkout Code ===
     - name: Checkout code
-      uses: actions/checkout@v4.2.2  # Checks out the repository code
+      uses: actions/checkout@v4.2.2
 
     # === Step: Cache NuGet Packages ===
     - name: Cache NuGet packages
-      uses: actions/cache@v4.2.0  # Caches NuGet packages to speed up builds
+      uses: actions/cache@v4.2.0
       with:
-        path: ~/.nuget/packages  # Path to the NuGet package cache
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.cs') }}  # Cache key based on OS and project files
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.cs') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-  # Restore keys for cache
+          ${{ runner.os }}-nuget-
 
     # === Step: Setup .NET ===
     - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v4.2.0  # Sets up the .NET environment
+      uses: actions/setup-dotnet@v4.2.0
       with:
-        dotnet-version: '6.0.x'  # Specifies the .NET version to use
+        dotnet-version: '6.0.x'
 
     # === Step: Build the Project ===
     - name: Build the project
-      run: dotnet build --configuration Release SkuaScriptsGenerator/SkuaScriptsGenerator.csproj  # Builds the project in Release mode
+      run: dotnet build --configuration Release SkuaScriptsGenerator/SkuaScriptsGenerator.csproj
 
     # === Step: Run C# File ===
     - name: Run C# file
-      run: dotnet run --project SkuaScriptsGenerator/SkuaScriptsGenerator.csproj > scripts.json  # Runs the C# program and outputs to scripts.json
+      run: dotnet run --project SkuaScriptsGenerator/SkuaScriptsGenerator.csproj > scripts.json
 
-    # === Step: Upload Artifact ===
+    # === Step: Check for Changes ===
+    - name: Check for changes
+      id: check_for_changes
+      run: |
+        git diff --exit-code -- scripts.json || echo "changes detected"
+      continue-on-error: true
+
+    # === Step: Upload Artifact (only if changes are detected) ===
     - name: Upload artifact
-      uses: actions/upload-artifact@v4.6.0  # Uploads the generated artifact
+      if: steps.check_for_changes.outcome == 'failure'  # Run only if changes are detected
+      uses: actions/upload-artifact@v4.6.0
       with:
-        name: scripts-${{ github.run_id }}.json  # Names the artifact with the run ID for uniqueness
-        path: scripts.json  # Path to the file to upload
-        retention-days: 30  # Keeps the artifact for 30 days
+        name: scripts-${{ github.run_id }}.json
+        path: scripts.json
+        retention-days: 60
 
-    # === Step: Commit and Push Changes ===
+    # === Step: Commit and Push Changes (only if changes are detected) ===
     - name: Git Auto Commit
+      if: steps.check_for_changes.outcome == 'failure'  # Run only if changes are detected
       uses: stefanzweifel/git-auto-commit-action@v5.1.0
       with:
-        commit_message: 'Automatic commit by GitHub Actions'  # Commit message for the auto-commit
-        file_pattern: 'scripts.json'  # Specifies the file to commit
-        push_options: '--force'  # Force push to override remote changes
-
+        commit_message: 'Automatic commit by GitHub Actions'
+        file_pattern: 'scripts.json'
+        push_options: '--force'
+        branch: '${{ github.ref_name }}'
