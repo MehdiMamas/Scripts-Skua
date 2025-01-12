@@ -1801,6 +1801,7 @@ public class CoreNation
             Core.HuntMonster("Extinction", "Control Panel", "Coal", 15, isTemp: false, log: false);
             DwoboCoin(10);
             EssenceofNulgath(10);
+            Farm.Gold(1500000);
             Core.BuyItem("Tercessuinotlim", 68, "Blade of Affliction");
             Core.EnsureComplete(receiptOfNulgathQuest);
             Bot.Wait.ForPickup("Receipt of Nulgath");
