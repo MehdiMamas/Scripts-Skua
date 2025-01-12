@@ -55,7 +55,7 @@ public class ClassicBladeOfAwe
             return;
 
         Core.Logger("Getting Original Treasure Chest");
-        Core.AddDrop("Original Treasure Chest");
+        Core.AddDrop("Original Treasure Chest", "Wall Awe Plaque");
 
         Core.EquipClass(ClassType.Solo);
         if (!Bot.Quests.IsUnlocked(9704))
