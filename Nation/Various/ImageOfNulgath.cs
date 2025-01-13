@@ -87,15 +87,14 @@ public class ImageOfNulgath
                 return;
 
             Core.FarmingLogger(Reward.Name, 1);
-            Core.HuntMonsterQuestChoose(10019, Reward.Name, new[]
-            {
-        ("fiendshard", "Dirtlicker", ClassType.Solo),
-        ("shadowblast", "Crag and Bamboozle", ClassType.Solo),
-        ("citadel", "Death's Head", ClassType.Solo),
-        ("underlair", "ArchFiend DragonKnight", ClassType.Solo),
-        ("evilwardage", "Klunk", ClassType.Solo)
-    });
-            Core.JumpWait();
+
+            Core.EnsureAccept(10019);
+            Core.HuntMonster("fiendshard", "Dirtlicker", "Dirtlicker's Reward", isTemp: false);
+            Core.HuntMonster("shadowblast", "Crag and Bamboozle", "Crag and Bamboozle's Reward", isTemp: false);
+            Core.HuntMonster("citadel", "Death's Head", "Death's Head Reward", isTemp: false);
+            Core.HuntMonster("underlair", "ArchFiend DragonKnight", "ArchFiend DragonKnight's Reward", isTemp: false);
+            Core.HuntMonster("evilwardage", "Klunk", "Klunk's Reward", isTemp: false);
+            Core.EnsureComplete(10019, Reward.ID);
             Core.ToBank(Reward.Name);
         }
 
