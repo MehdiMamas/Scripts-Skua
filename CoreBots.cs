@@ -3720,7 +3720,7 @@ public class CoreBots
 
             // Equip the appropriate class and hunt the monster
             EquipClass(classType);
-            HuntMonster(mapName ?? "default_map", monsterName ?? "*", requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp, log: false);
+            HuntMonster(mapName, monsterName, requirement.Name, requirement.Quantity, requirement.Temp);
         }
 
         // Complete the quest, retrying if necessary
@@ -4985,7 +4985,7 @@ public class CoreBots
     /// <param name="item">The name or identifier of the item to query.</param>
     /// <param name="isTemp">Specifies whether to check temporary inventory (<c>true</c>) or regular inventory (<c>false</c>).</param>
     /// <returns>The quantity of the specified item in the chosen inventory.</returns>
-    public int dynamicQuant(string item, bool isTemp) => isTemp ? Bot.TempInv.GetQuantity(item) : Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault( x => x.Name == item)?.Quantity ?? 0;
+    public int dynamicQuant(string item, bool isTemp) => isTemp ? Bot.TempInv.GetQuantity(item) : Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == item)?.Quantity ?? 0;
 
     /// <summary>
     /// Configures the aggro mode.
