@@ -3438,7 +3438,8 @@ public class CoreBots
                 ?? Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank") && !c.ToLower().Contains("enter"))
                 ?? "Enter",
                 "Spawn"
-            ); Bot.Options.AggroMonsters = false;
+            ); 
+            Bot.Options.AggroMonsters = false;
             JumpWait();
             Rest();
             Bot.Options.HidePlayers = false;
