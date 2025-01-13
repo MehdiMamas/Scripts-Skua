@@ -841,10 +841,12 @@ public class CoreNation
                                     if (Bot.Player.Cell == "Enter")
                                         break;
                                 }
-
-                                Bot.Wait.ForPickup("Voucher of Nulgath");
-                                Core.SellItem("Voucher of Nulgath", KeepVoucher ? 1 : 0, !KeepVoucher);
-                                Bot.Wait.ForItemSell();
+                                if (Bot.Player.Gold < 100000000)
+                                {
+                                    Bot.Wait.ForPickup("Voucher of Nulgath");
+                                    Core.SellItem("Voucher of Nulgath", KeepVoucher ? 1 : 0, !KeepVoucher);
+                                    Bot.Wait.ForItemSell();
+                                }
 
                                 if (Bot.Player.Gold >= 1000000 && AssistantDuring)
                                 {
@@ -918,10 +920,12 @@ public class CoreNation
                             Core.JumpWait();
                             Core.Sleep();
                         }
-
-                        Bot.Wait.ForPickup("Voucher of Nulgath");
-                        Core.SellItem("Voucher of Nulgath", KeepVoucher ? 1 : 0, !KeepVoucher);
-                        Bot.Wait.ForItemSell();
+                        if (Bot.Player.Gold < 100000000)
+                        {
+                            Bot.Wait.ForPickup("Voucher of Nulgath");
+                            Core.SellItem("Voucher of Nulgath", KeepVoucher ? 1 : 0, !KeepVoucher);
+                            Bot.Wait.ForItemSell();
+                        }
                     }
 
                     DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
@@ -1249,7 +1253,7 @@ public class CoreNation
         {
             Core.KillMonster("evilmarsh", "End", "Left", "Tainted Elemental", log: false);
 
-            if (item != "Voucher of Nulgath" && sellMemVoucher == true && Core.CheckInventory("Voucher of Nulgath"))
+            if (item != "Voucher of Nulgath" && sellMemVoucher == true && Core.CheckInventory("Voucher of Nulgath") && Bot.Player.Gold < 100000000)
             {
                 Core.Jump("Enter", "Spawn");
 
