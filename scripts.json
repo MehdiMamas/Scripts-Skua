@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 335640,
+    "size": 335600,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -105,7 +105,7 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 91225,
+    "size": 91520,
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -4631,7 +4631,7 @@
       "bhamud"
     ],
     "path": "Nation/Various/ImageOfNulgath.cs",
-    "size": 3526,
+    "size": 3725,
     "fileName": "ImageOfNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/ImageOfNulgath.cs"
   },
@@ -22394,7 +22394,7 @@
       "unlocking the chest"
     ],
     "path": "Good/GearOfAwe/ClassicBladeOfAwe.cs",
-    "size": 2481,
+    "size": 2500,
     "fileName": "ClassicBladeOfAwe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Good/GearOfAwe/ClassicBladeOfAwe.cs"
   },
