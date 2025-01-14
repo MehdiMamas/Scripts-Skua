@@ -60,9 +60,9 @@ public class ImageOfNulgath
             // Doomed Extract
             TD.Storyline();
             Core.HuntMonsterQuest(9090, new[] {
-                ("templedelve", "Delirious Elemental", ClassType.Farm),
                 ("templedelve", "Infested Nation", ClassType.Farm),
                 ("templedelve", "Doomed Fiend", ClassType.Solo),
+                ("templedelve", "Delirious Elemental", ClassType.Farm),
                  });
 
             // Void Remnant
