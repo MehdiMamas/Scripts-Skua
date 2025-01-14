@@ -109,16 +109,8 @@ jobs:
     - name: Run C# file
       run: dotnet run --project SkuaScriptsGenerator/SkuaScriptsGenerator.csproj > scripts.json
 
-    # === Step: Check for Changes ===
-    - name: Check for changes
-      id: check_for_changes
-      run: |
-        git diff --exit-code -- scripts.json || echo "changes detected"
-      continue-on-error: true
-
     # === Step: Upload Artifact (only if changes are detected) ===
     - name: Upload artifact
-      if: steps.check_for_changes.outcome == 'failure'  # Run only if changes are detected
       uses: actions/upload-artifact@v4.6.0
       with:
         name: scripts-${{ github.run_id }}.json
@@ -127,7 +119,6 @@ jobs:
 
     # === Step: Commit and Push Changes (only if changes are detected) ===
     - name: Git Auto Commit
-      if: steps.check_for_changes.outcome == 'failure'  # Run only if changes are detected
       uses: stefanzweifel/git-auto-commit-action@v5.1.0
       with:
         commit_message: 'Automatic commit by GitHub Actions'
