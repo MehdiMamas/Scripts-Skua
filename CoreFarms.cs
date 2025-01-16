@@ -652,7 +652,7 @@ public class CoreFarms
             if (!rankUpClass)
                 Core.EquipClass(ClassType.Solo);
             Core.RegisterQuests(6629);
-            while (!Bot.ShouldExit && Bot.Player.Level > 30 && Bot.Player.Level < 35)
+            while (!Bot.ShouldExit && Bot.Player.Level >= 30 && Bot.Player.Level < 35)
             {
                 if (!Bot.Player.Alive)
                     Core.Sleep();
@@ -737,7 +737,7 @@ public class CoreFarms
         {
             if (rankUpClass)
             {
-                while (!Bot.ShouldExit && Bot.Player.Level < 75)
+                while (!Bot.ShouldExit && Bot.Player.Level >= 61 && Bot.Player.Level < 75)
                 {
                     if (!Bot.Player.Alive)
                         Core.Sleep();
@@ -761,7 +761,7 @@ public class CoreFarms
                     ToggleBoost(BoostType.Gold);
 
                 Core.RegisterQuests(3991, 3992);
-                while (!Bot.ShouldExit && Bot.Player.Level < 75)
+                while (!Bot.ShouldExit && Bot.Player.Level >= 61 && Bot.Player.Level < 75)
                 {
                     if (!Bot.Player.Alive)
                         Core.Sleep();
