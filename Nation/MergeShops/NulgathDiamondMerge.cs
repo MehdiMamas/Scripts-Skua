@@ -153,6 +153,10 @@ public class NulgathDiamondMerge
                     Nation.FarmVoucher(false);
                     break;
 
+                case "Voucher of Nulgath":
+                    Nation.FarmVoucher(true);
+                    break;
+
                 case "Unidentified 27":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EnsureAccept(584);
