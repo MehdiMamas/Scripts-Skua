@@ -24,7 +24,6 @@ tags: yulgar, dual, wield, merge, nostalgiaquest, boom, went, dynamite, thewicke
 //cs_include Scripts/Nation/Various/TarosManslayer.cs
 //cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
 //cs_include Scripts/Nation/MergeShops/NulgathDiamondMerge.cs
-//cs_include Scripts/Nation\Various\DragonBlade[mem].cs
 //cs_include Scripts/Other/MergeShops/SpiritHunterMerge[Mem].cs
 //cs_include Scripts/Story/Bludrut.cs
 using Skua.Core.Interfaces;
