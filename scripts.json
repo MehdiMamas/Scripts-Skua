@@ -1408,6 +1408,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Borgars.cs"
   },
   {
+    "name": "deleuzetundra Story",
+    "description": "This will finish the deleuzetundra Story.",
+    "tags": [
+      "story",
+      "quest",
+      "deleuzetundra"
+    ],
+    "path": "Story/DeleuzeTundra.cs",
+    "size": 3042,
+    "fileName": "DeleuzeTundra.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/DeleuzeTundra.cs"
+  },
+  {
     "name": "Lair Story",
     "description": "This will finish the Lair Story.",
     "tags": [
@@ -18771,6 +18784,35 @@
     "size": 4844,
     "fileName": "BloodMoonLycanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BloodMoonLycanMerge.cs"
+  },
+  {
+    "name": "Deleuze Tundra Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Deleuze Tundra Merge [2520] in /deleuzetundra",
+    "tags": [
+      "deleuze",
+      "tundra",
+      "merge",
+      "deleuzetundra",
+      "fiendish",
+      "bloodhunter",
+      "bow",
+      "oblivions",
+      "final",
+      "call",
+      "abyss",
+      "boiling",
+      "blood",
+      "awakened",
+      "fiend",
+      "naginata",
+      "bloodhunt",
+      "nul",
+      "contract"
+    ],
+    "path": "Other/MergeShops/DeleuzeTundraMerge.cs",
+    "size": 5236,
+    "fileName": "DeleuzeTundraMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DeleuzeTundraMerge.cs"
   },
   {
     "name": "Djinn Gate Merge",
