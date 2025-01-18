@@ -23,27 +23,45 @@ public class ArmyFreeAcs
     {
         Core.SetOptions();
 
-        Core.Logger("Quest has been Removed, blame AE");
-        // FreeAcs();
+        // Core.Logger("Quest has been Removed, blame AE");
+        FreeAcs();
 
         Core.SetOptions(false);
     }
 
+    #region 2024
     private void FreeAcs()
     {
-        List<string> warnings = new();
         Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
 
         while (!Bot.ShouldExit && Army.doForAll())
         {
-            if (!Story.QuestProgression(9937))
+            if (Bot.Quests.IsAvailable(10035))
             {
-                Core.EnsureAccept(9937);
-                Core.HuntMonster("yulgar", "Agitated Orb", "Free ACs... and Yogurt");
-                Core.EnsureComplete(9937);
+                Core.EquipClass(ClassType.Solo);
+                Core.EnsureAccept(10035);
+                Core.KillMonster("borgars", "r2", "Left", "*", "Cookie Dough");
+                Core.EnsureComplete(10035);
+                Bot.Wait.ForQuestComplete(10035);
             }
         }
     }
+
+    // private void FreeAcs()
+    // {
+    //     List<string> warnings = new();
+    //     Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+
+    //     while (!Bot.ShouldExit && Army.doForAll())
+    //     {
+    //         if (!Story.QuestProgression(9937))
+    //         {
+    //             Core.EnsureAccept(9937);
+    //             Core.HuntMonster("yulgar", "Agitated Orb", "Free ACs... and Yogurt");
+    //             Core.EnsureComplete(9937);
+    //         }
+    //     }
+    // }
 
     // public void FreeAcs()
     // {
@@ -73,7 +91,7 @@ public class ArmyFreeAcs
 
     //     }
     // }
-
+    #endregion 2024
 }
 
 
