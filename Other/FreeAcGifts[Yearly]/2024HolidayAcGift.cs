@@ -23,6 +23,7 @@ public class HoldiayAcGift2024
     {
         if (Bot.Quests.IsAvailable(10035))
         {
+            Bot.Quests.UpdateQuest(7522);
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(10035);
             Core.KillMonster("borgars", "r2", "Left", "*", "Cookie Dough");
