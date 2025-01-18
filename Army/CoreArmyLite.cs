@@ -1255,16 +1255,17 @@ public class CoreArmyLite
 
         // Bypasses
         int[] bypasses = {
-            598,    // lycan
-            3004,   // doomvaultb
-            3008,   // doomvault
-            3484,   // towerofdoom
-            3799,   // shadowattack
-            4616,   // mummies
+            598,     // lycan
+            3004,    // doomvaultb
+            3008,    // doomvault
+            3484,    // towerofdoom
+            3799,    // shadowattack
+            4616,    // mummies
             8107,    // downbelow
             9126,    // manacradle
             5915,    // gluttony
             9814,    // liatarahill
+            7522,    // borgars
         };
         Bot.Quests.Load(bypasses);
         foreach (int questId in bypasses)
