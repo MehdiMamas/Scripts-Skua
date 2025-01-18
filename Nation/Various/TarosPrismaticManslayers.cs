@@ -9,6 +9,8 @@ tags: null
 //cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
 //cs_include Scripts/Nation/Various/TarosManslayer.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
+using Skua.Core.Models.Quests;
 public class TarosPrismaticManslayers
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
@@ -30,28 +32,49 @@ public class TarosPrismaticManslayers
 
     public void TemptationTest()
     {
-        if (Core.CheckInventory(Rewards) || !Core.IsMember)
+        Quest Q = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(8496));
+        if (Q == null)
+        {
+            Core.Logger("Failed to load the quest `A Test of Temptation`");
+            return;
+        }
+
+        if (Core.CheckInventory(Q.Rewards.Select(x => x.ID).ToArray()) || !Core.IsMember)
         {
             Core.Logger(!Core.IsMember ? "Membership required for the quest `A Test of Temptation`" : "Rewards already in inventory");
             return;
         }
 
-        Core.AddDrop(Rewards);
+        Core.AddDrop(Q.Rewards.Select(x => x.ID).ToArray());
 
         Farm.Experience(80);
         Farm.GoodREP();
-        Taro.GuardianTaro();
 
-        while (!Bot.ShouldExit && !Core.CheckInventory(Rewards))
+        // Aquire the accept requirement
+        if (!Core.CheckInventory("Taro's Manslayer"))
+            Taro.GuardianTaro();
+
+        // Reverse the array so the battlepet is last
+        foreach (ItemBase reward in Q.Rewards.ToArray().Reverse())
         {
+            if (Core.CheckInventory(reward.Name, toInv: false))
+            {
+                Core.Logger($"{reward.Name} obtained.");
+                continue;
+            }
+            else
+            {
+                Core.AddDrop(reward.ID);
+                Core.FarmingLogger(reward.Name, 1);
+            }
+
             Core.EnsureAccept(8496);
             Nation.SwindleBulk(200);
             Nation.FarmDarkCrystalShard(125);
             Nation.FarmDiamondofNulgath(300);
             Nation.FarmGemofNulgath(75);
             Nation.FarmBloodGem(35);
-            Core.EnsureCompleteChoose(8496, Rewards);
-            Core.Sleep();
+            Core.EnsureComplete(8496, reward.ID);
         }
     }
 }
