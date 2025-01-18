@@ -5,7 +5,8 @@ tags: story, quest, deleuzetundra
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
-
+//cs_include Scripts/Story/Nation/VoidRefuge.cs
+//cs_include Scripts/Story\Nation\VoidChasm.cs
 using Skua.Core.Interfaces;
 
 public class DeleuzeTundraStory
@@ -13,6 +14,7 @@ public class DeleuzeTundraStory
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public CoreStory Story = new();
+    private VoidChasm VC = new();
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -28,8 +30,9 @@ public class DeleuzeTundraStory
         if (Core.isCompletedBefore(10031))
             return;
 
-        Story.PreLoad(this);
+        VC.Storyline();
 
+        Story.PreLoad(this);
         #region Useable Monsters
         string[] UseableMonsters = new[]
         {
