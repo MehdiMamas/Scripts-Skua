@@ -32,7 +32,7 @@ public class TarosPrismaticManslayers
 
     public void TemptationTest()
     {
-        Quest Q = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(8496));
+        Quest? Q = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(8496));
         if (Q == null)
         {
             Core.Logger("Failed to load the quest `A Test of Temptation`");
