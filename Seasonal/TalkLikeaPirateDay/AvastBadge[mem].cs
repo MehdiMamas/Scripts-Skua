@@ -118,7 +118,10 @@ public class AvastBadge
         }
 
         // 2394|Thee Seven C's!
-        Bot.Quests.UpdateQuest(1395);
+        // Update quest to acess the `Wind` map.
+        if (!Core.isCompletedBefore(1403))
+            Bot.Quests.UpdateQuest(1403);
+            
         if (!Story.QuestProgression(2394))
         {
             Core.EnsureAccept(2394);
