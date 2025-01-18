@@ -83,6 +83,8 @@ public class CoreBots
     public string[] FarmGear { get; set; } = Array.Empty<string>();
     // [Can Change] Some Sagas use the hero alignment to give extra reputation, change to your desired rep (Alignment.Evil or Alignment.Good).
     public int HeroAlignment { get; set; } = (int)Alignment.Evil;
+    // [Can Change] Member Status
+    public bool IsMember { get; set; }
 
     // Thousand-level Constants
     const int OneK = 1000;        // 1k
@@ -153,6 +155,10 @@ public class CoreBots
             ReadCBO();
         }
 
+
+        // Set the member status
+        IsMember = isUpgraded();
+
         // Common Options
         Bot.Options.PrivateRooms = false;
         Bot.Options.AttackWithoutTarget = false;
@@ -184,10 +190,7 @@ public class CoreBots
                 Bot.Bank.Open();
             Bot.Bank.Load();
             Bot.Bank.Loaded = true;
-
-            // Set the IsMember bool
-            IsMember = Bot.Player.IsMember;
-
+            
             // Oaklore is Broke as fffff. So we'll move you somewhere else to start the script.
             if (Bot.Map.Name != null && Bot.Map.Name == "oaklore")
             {
@@ -343,6 +346,25 @@ public class CoreBots
         }
 
     }
+
+    // Whether the player is a Member (set to true if necessary during setOptions)
+    public bool isUpgraded()
+    {
+        // Get membership days left as a string
+        string membershipDaysLeftString = Bot.Flash.GetGameObject("world.myAvatar.objData.iUpgDays");
+
+        // Attempt to parse the string into an integer
+        if (int.TryParse(membershipDaysLeftString, out int membershipDaysLeft))
+        {
+            // Return true if membership days are greater than 0
+            return membershipDaysLeft > 0;
+        }
+
+        // If parsing fails, return false (not a member)
+        return false;
+    }
+
+
 
     public List<string> BankingBlackList = new();
     private readonly List<string> EquipmentBeforeBot = new();
@@ -3438,7 +3460,7 @@ public class CoreBots
                 ?? Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank") && !c.ToLower().Contains("enter"))
                 ?? "Enter",
                 "Spawn"
-            ); 
+            );
             Bot.Options.AggroMonsters = false;
             JumpWait();
             Rest();
@@ -4776,10 +4798,7 @@ public class CoreBots
     #endregion
     #endregion IsMonsterAlive
 
-    #region Utility
-
-    // Whether the player is Member (set to true if neccessary during setOptions)
-    public bool IsMember = false;
+    #region Utility    
 
     /// <summary>
     /// Checks whether the player is an Upholder
