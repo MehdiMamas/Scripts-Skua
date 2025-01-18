@@ -13,7 +13,7 @@ tags: nulgath, diamond, merge, evilwarnul, abyssal, priest, loyalty, nation, ove
 //cs_include Scripts/Good/BLoD/CoreBLOD.cs
 //cs_include Scripts/Nation/Various/TarosManslayer.cs
 //cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
-//cs_include Scripts/Nation\Various\DragonBlade[mem].cs
+//cs_include Scripts/Nation/Various/DragonBlade[mem].cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;

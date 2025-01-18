@@ -8,7 +8,7 @@ tags: glacial, tomb, merge, glacetomb, arctic, necrodraugr, scholar, nether, mor
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Story/Glacera.cs
-//cs_include Scripts/Seasonal\Frostvale\Story\CoreFrostvale.cs
+//cs_include Scripts/Seasonal/Frostvale/Story/CoreFrostvale.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;

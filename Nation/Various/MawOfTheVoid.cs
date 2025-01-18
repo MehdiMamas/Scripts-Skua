@@ -8,10 +8,10 @@ tags: fiend's creed blade,fiend's creed blades,maw,nulgath gifts
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Nation/CoreNation.cs
-//cs_include Scripts/Nation\Various\JuggernautItems.cs
+//cs_include Scripts/Nation/Various/JuggernautItems.cs
 //cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleSiege.cs
 //cs_include Scripts/Nation/Various/DragonBlade[mem].cs
-//cs_include Scripts/Seasonal\StaffBirthdays\Nulgath\TempleSiegeMerge.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleSiegeMerge.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 public class MawOfTheVoid

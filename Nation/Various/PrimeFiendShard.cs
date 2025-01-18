@@ -26,7 +26,7 @@ tags: prime fiend shard, nation, ravenous, fiend shard, nulgath, voidchasm, void
 //cs_include Scripts/Evil/SDKA/CoreSDKA.cs
 //cs_include Scripts/Other/Classes/Necromancer.cs
 //cs_include Scripts/Nation/MergeShops/NulgathDiamondMerge.cs
-//cs_include Scripts/Nation\Various\DragonBlade[mem].cs
+//cs_include Scripts/Nation/Various/DragonBlade[mem].cs
 //cs_include Scripts/Nation/Various/TarosManslayer.cs
 //cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
 //cs_include Scripts/Nation/Various/VoidSpartan.cs

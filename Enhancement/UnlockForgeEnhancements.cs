@@ -91,7 +91,7 @@ tags: lacerate, smite, herosvaliance, arcanasconcerto, elysium, acheron, absolut
 //cs_include Scripts/Nation/Various/JuggernautItems.cs
 //cs_include Scripts/Nation/Various/VoidPaladin.cs
 //cs_include Scripts/Nation/MergeShops/NulgathDiamondMerge.cs
-//cs_include Scripts/Nation\Various\DragonBlade[mem].cs
+//cs_include Scripts/Nation/Various/DragonBlade[mem].cs
 //cs_include Scripts/Nation/Various/TarosManslayer.cs
 //cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
 //cs_include Scripts/Nation/Various/VoidSpartan.cs

@@ -12,7 +12,7 @@ tags: seasonal, story, complete, all
 //cs_include Scripts/Seasonal/AprilFools/SuperSLAYIN'Badge(GardenQuest).cs
 //cs_include Scripts/Seasonal/AprilFools/Mmmm,Meaty(or)(MeatyShard).cs
 //cs_include Scripts/Story/Glacera.cs
-//cs_include Scripts/Seasonal\Frostvale\Story\CoreFrostvale.cs
+//cs_include Scripts/Seasonal/Frostvale/Story/CoreFrostvale.cs
 //cs_include Scripts/Seasonal/HerosHeartDay/Fezzini.cs
 //cs_include Scripts/Seasonal/HerosHeartDay/LoveSpellStory.cs
 //cs_include Scripts/Seasonal/HerosHeartDay/WheelOfLove.cs

@@ -55,7 +55,7 @@ tags: badge, complete, all
 //cs_include Scripts/Other/Badges/YokaiAscension.cs
 //cs_include Scripts/Story/MagicThief.cs
 //cs_include Scripts/Story/Glacera.cs
-//cs_include Scripts/Seasonal\Frostvale\Story\CoreFrostvale.cs
+//cs_include Scripts/Seasonal/Frostvale/Story/CoreFrostvale.cs
 //cs_include Scripts/Seasonal/Frostvale/FrostvaleBadges.cs
 using Skua.Core.Interfaces;
 

@@ -6,7 +6,7 @@ tags: story, quest, deleuzetundra
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/Nation/VoidRefuge.cs
-//cs_include Scripts/Story\Nation\VoidChasm.cs
+//cs_include Scripts/Story/Nation/VoidChasm.cs
 using Skua.Core.Interfaces;
 
 public class DeleuzeTundraStory
