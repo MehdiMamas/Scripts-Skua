@@ -190,7 +190,7 @@ public class CoreBots
                 Bot.Bank.Open();
             Bot.Bank.Load();
             Bot.Bank.Loaded = true;
-            
+
             // Oaklore is Broke as fffff. So we'll move you somewhere else to start the script.
             if (Bot.Map.Name != null && Bot.Map.Name == "oaklore")
             {
@@ -351,7 +351,7 @@ public class CoreBots
     public bool isUpgraded()
     {
         // Get membership days left as a string
-        string membershipDaysLeftString = Bot.Flash.GetGameObject("world.myAvatar.objData.iUpgDays");
+        string? membershipDaysLeftString = Bot.Flash.GetGameObject("world.myAvatar.objData.iUpgDays");
 
         // Attempt to parse the string into an integer
         if (int.TryParse(membershipDaysLeftString, out int membershipDaysLeft))
