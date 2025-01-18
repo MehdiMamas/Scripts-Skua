@@ -15546,7 +15546,7 @@
       "army."
     ],
     "path": "Army/OneClient/AccsForAll.cs",
-    "size": 2825,
+    "size": 3465,
     "fileName": "AccsForAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/OneClient/AccsForAll.cs"
   },
@@ -22113,6 +22113,20 @@
     "size": 2212,
     "fileName": "SerpentineLarvae.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Pets/SerpentineLarvae.cs"
+  },
+  {
+    "name": "Holdiay Ac Gift 2024",
+    "description": "This script will kill burlingster in /borgars to get free 500 AC.",
+    "tags": [
+      "ac",
+      "free",
+      "500",
+      "2024"
+    ],
+    "path": "Other/FreeAcGifts[Yearly]/2024HolidayAcGift.cs",
+    "size": 840,
+    "fileName": "2024HolidayAcGift.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeAcGifts[Yearly]/2024HolidayAcGift.cs"
   },
   {
     "name": "Free Holiday AC Gift 2023",
