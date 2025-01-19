@@ -36,7 +36,7 @@ public class ArmyFreeAcs
 
         while (!Bot.ShouldExit && Army.doForAll())
         {
-            if (Bot.Quests.IsAvailable(10035))
+            if (Bot.Quests.IsAvailable(10035) && !Core.isCompletedBefore(10035))
             {
                 Bot.Quests.UpdateQuest(7522);
                 Core.EquipClass(ClassType.Solo);
