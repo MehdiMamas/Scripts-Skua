@@ -48,12 +48,14 @@ tags: story, quest, complete, all
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Story/Nation/Bamboozle.cs
 //cs_include Scripts/Story/Nation/CitadelRuins.cs
+//cs_include Scripts/Story/Nation/DeleuzeTundra.cs
 //cs_include Scripts/Story/Nation/Fiendshard.cs
 //cs_include Scripts/Story/Nation/FiendPast.cs
 //cs_include Scripts/Story/Nation/Originul.cs
 //cs_include Scripts/Story/Nation/ShadowBlastArena.cs
 //cs_include Scripts/Story/Nation/Tercessuinotlim.cs
 //cs_include Scripts/Story/Nation/VoidRefuge.cs
+//cs_include Scripts/Story/Nation/VoidChasm.cs
 
 //cs_include Scripts/Story/QueenofMonsters/CoreQoM.cs
 //cs_include Scripts/Story/QueenofMonsters/Extra/BrightOak.cs
@@ -253,12 +255,14 @@ public class AllStories
     // Nation
     public Bamboozle Bamboozle = new();
     public CitadelRuins CitadelRuins = new();
+    public DeleuzeTundraStory DeleuzeTundra = new();
     public FiendPast FiendPast = new();
     public Fiendshard_Story Fiendshard_Story = new();
     public Originul_Story Originul_Story = new();
     public ShadowBlastArena ShadowBlastArena = new();
     public Tercessuinotlim Tercessuinotlim = new();
     public VoidRefuge VoidRefuge = new();
+    public VoidChasm VoidChasm = new();
 
     // Queen of Monsters
     public CoreQOM QOM => new();
@@ -526,6 +530,9 @@ public class AllStories
         CitadelRuins.DoAll();
         Core.Logger($"Story: Citadel Ruins - Complete");
 
+        DeleuzeTundra.DeleuzeTundra();
+        Core.Logger($"Story: Deleuze Tundra - Complete");
+
         Fiendshard_Story.Fiendshard_QuestlineP1();
         Core.Logger($"Story: Fiendshard - Complete");
 
@@ -543,6 +550,9 @@ public class AllStories
 
         VoidRefuge.Storyline();
         Core.Logger($"Story: Void Refuge - Complete");
+
+        VoidChasm.Storyline();
+        Core.Logger($"Story: Void Chasm - Complete");
         #endregion
 
         #region QoM

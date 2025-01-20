@@ -1408,19 +1408,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Borgars.cs"
   },
   {
-    "name": "deleuzetundra Story",
-    "description": "This will finish the deleuzetundra Story.",
-    "tags": [
-      "story",
-      "quest",
-      "deleuzetundra"
-    ],
-    "path": "Story/DeleuzeTundra.cs",
-    "size": 3194,
-    "fileName": "DeleuzeTundra.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/DeleuzeTundra.cs"
-  },
-  {
     "name": "Lair Story",
     "description": "This will finish the Lair Story.",
     "tags": [
@@ -1885,7 +1872,7 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 28547,
+    "size": 28922,
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -3920,6 +3907,35 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/ShadowscytheMerge.cs"
   },
   {
+    "name": "Deleuze Tundra Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Deleuze Tundra Merge [2520] in /deleuzetundra",
+    "tags": [
+      "deleuze",
+      "tundra",
+      "merge",
+      "deleuzetundra",
+      "fiendish",
+      "bloodhunter",
+      "bow",
+      "oblivions",
+      "final",
+      "call",
+      "abyss",
+      "boiling",
+      "blood",
+      "awakened",
+      "fiend",
+      "naginata",
+      "bloodhunt",
+      "nul",
+      "contract"
+    ],
+    "path": "Nation/MergeShops/DeleuzeTundraMerge.cs",
+    "size": 5366,
+    "fileName": "DeleuzeTundraMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/DeleuzeTundraMerge.cs"
+  },
+  {
     "name": "Void Chasm Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Void Chasm Merge [2410] in /voidchasm",
     "tags": [
@@ -4868,7 +4884,7 @@
       "evovled void armor"
     ],
     "path": "Nation/Various/EmpoweredNationItem.cs",
-    "size": 11093,
+    "size": 11130,
     "fileName": "EmpoweredNationItem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/EmpoweredNationItem.cs"
   },
@@ -12154,6 +12170,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Nation/Fiendshard.cs"
   },
   {
+    "name": "deleuzetundra Story",
+    "description": "This will finish the deleuzetundra Story.",
+    "tags": [
+      "story",
+      "quest",
+      "deleuzetundra"
+    ],
+    "path": "Story/Nation/DeleuzeTundra.cs",
+    "size": 3194,
+    "fileName": "DeleuzeTundra.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Nation/DeleuzeTundra.cs"
+  },
+  {
     "name": "ShadowBlast Arena",
     "description": "This will finish the ShadowBlast Arena quest.",
     "tags": [
@@ -18784,35 +18813,6 @@
     "size": 4844,
     "fileName": "BloodMoonLycanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BloodMoonLycanMerge.cs"
-  },
-  {
-    "name": "Deleuze Tundra Merge",
-    "description": "This bot will farm the items belonging to the selected mode for the Deleuze Tundra Merge [2520] in /deleuzetundra",
-    "tags": [
-      "deleuze",
-      "tundra",
-      "merge",
-      "deleuzetundra",
-      "fiendish",
-      "bloodhunter",
-      "bow",
-      "oblivions",
-      "final",
-      "call",
-      "abyss",
-      "boiling",
-      "blood",
-      "awakened",
-      "fiend",
-      "naginata",
-      "bloodhunt",
-      "nul",
-      "contract"
-    ],
-    "path": "Other/MergeShops/DeleuzeTundraMerge.cs",
-    "size": 5366,
-    "fileName": "DeleuzeTundraMerge.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DeleuzeTundraMerge.cs"
   },
   {
     "name": "Djinn Gate Merge",
