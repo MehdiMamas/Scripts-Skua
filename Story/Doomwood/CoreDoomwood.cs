@@ -263,7 +263,7 @@ public class CoreDoomwood
         {
             Core.EnsureAccept(1124);
             Core.GetMapItem(456, 6, "temple");
-            Core.KillMonster("temple", "r3", "Up", "Undead Mage", "Necrotic Rune", 10);
+            Core.KillMonster("temple", "r3", "Up", "Undead Mage", "Necrotic Rune", 3);
             Core.KillMonster("temple", "r3", "Up", "Doomwood Ectomancer", "Ecto-Covered Rune", 3);
             Core.EnsureComplete(1124);
         }
@@ -282,7 +282,7 @@ public class CoreDoomwood
         {
             Core.EnsureAccept(1126);
             Core.GetMapItem(457, 8, "temple");
-            Core.KillMonster("temple", "r5", "Up", "Skeletal Fire Mage", "Flame Extinguished", 10);
+            Core.KillMonster("temple", "r5", "Up", "Skeletal Fire Mage", "Flame Extinguished", 6);
             Core.EnsureComplete(1126);
         }
 
