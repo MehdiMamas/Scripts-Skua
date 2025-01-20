@@ -5987,7 +5987,11 @@ public class CoreBots
                 break;
 
             case "xantown":
-                blackListedCells.UnionWith(Bot.Map.Cells?.Where(x => x != "r3").ToArray());
+                string[]? cells = Bot.Map.Cells?.Where(x => x != "r3").ToArray();
+                if (cells != null)
+                {
+                    blackListedCells.UnionWith(cells);
+                }
                 break;
 
             case "darkoviaforest":
@@ -6050,7 +6054,7 @@ public class CoreBots
             blackListedCells.Add("Eggs");
 
         // Jump to a viable cell (or retry)
-        var viableCells = Bot.Map.Cells.Except(BlackListedJumptoCells.Concat(blackListedCells));
+        IEnumerable<string> viableCells = Bot.Map.Cells?.Except(BlackListedJumptoCells.Concat(blackListedCells)) ?? Enumerable.Empty<string>();
         (string, string) cellPad = viableCells.Any()
             ? (viableCells.First(), "Left")
             : (Bot.Player.Cell, Bot.Player.Pad);
