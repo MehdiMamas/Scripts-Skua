@@ -95,10 +95,10 @@ public class CoreDoomwood
         if (!Story.QuestProgression(1069))
         {
             Core.EnsureAccept(1069);
-            Core.HuntMonster("doomwood", "Doomwood Bonemuncher", "Muncher Mandibles", 5);
-            Core.HuntMonster("doomwood", "Doomwood Bonemuncher", "Stained Skulls", 5);
-            Core.HuntMonster("doomwood", "Doomwood Ectomancer", "Ecto-Coated Cloth Scraps", 10);
-            Core.HuntMonster("doomwood", "Doomwood Soldier", "Fractured Tibia", 10);
+            Core.HuntMonster("doomwood", "Doomwood Bonemuncher", "Muncher Mandibles", 3);
+            Core.HuntMonster("doomwood", "Doomwood Bonemuncher", "Stained Skulls", 3);
+            Core.HuntMonster("doomwood", "Doomwood Ectomancer", "Ecto-Coated Cloth Scraps", 3);
+            Core.HuntMonster("doomwood", "Doomwood Soldier", "Fractured Tibia", 3);
             Core.EnsureComplete(1069);
         }
 
