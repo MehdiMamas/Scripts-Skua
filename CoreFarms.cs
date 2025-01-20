@@ -1674,10 +1674,10 @@ public class CoreFarms
         // Core.AbandonQuest(2777);
 
         Core.RegisterQuests(8736);
+        Core.EquipClass(ClassType.Solo);
         while (!Bot.ShouldExit && FactionRank("Blacksmithing") < rank && !UseGold)
         {
             // Core.EnsureAccept(8736);
-            Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("hydrachallenge", "Hydra Head 25", "Hydra Scale Piece", 75, isTemp: false, log: false);
             Core.HuntMonster("maul", "Creature Creation", "Creature Shard", isTemp: false, log: false);
             Core.HuntMonster("towerofdoom", "Dread Klunk", "Monster Trophy", 15, isTemp: false, log: false);
