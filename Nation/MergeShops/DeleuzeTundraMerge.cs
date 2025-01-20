@@ -7,7 +7,7 @@ tags: deleuze, tundra, merge, deleuzetundra, fiendish, bloodhunter, bow, oblivio
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/Story/DeleuzeTundra.cs
+//cs_include Scripts/Story/Nation/DeleuzeTundra.cs
 //cs_include Scripts/Story/Nation/VoidRefuge.cs
 //cs_include Scripts/Story/Nation/VoidChasm.cs
 using Skua.Core.Interfaces;
