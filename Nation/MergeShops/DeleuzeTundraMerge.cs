@@ -84,7 +84,7 @@ public class DeleuzeTundraMerge
 
                 case "Outrider's Broken Blade":
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster("deleuzetundra", "r2", "Left", "Nation Outrider", req.Name, isTemp: false);
+                    Core.KillMonster("deleuzetundra", "r2", "Left", "Nation Outrider", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
