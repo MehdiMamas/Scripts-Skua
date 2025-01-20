@@ -87,6 +87,8 @@ public class EmpoweredWeaponsofNulgath
             if (Core.CheckInventory(itemName, toInv: false))
                 return;
 
+            Core.AddDrop(itemName);
+
             switch (Bot.Config?.Get<EmpoweredItems>("EmpoweredWep"))
             {
                 //Empowered Bloodletter 8696
