@@ -20,12 +20,12 @@ public class DeleuzeTundraStory
     {
         Core.SetOptions();
 
-        deleuzetundra();
+        DeleuzeTundra();
 
         Core.SetOptions(false);
     }
 
-    public void deleuzetundra()
+    public void DeleuzeTundra()
     {
         if (Core.isCompletedBefore(10031))
             return;

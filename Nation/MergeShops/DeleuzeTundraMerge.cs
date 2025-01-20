@@ -42,7 +42,7 @@ public class DeleuzeTundraMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
-        DT.deleuzetundra();
+        DT.DeleuzeTundra();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("deleuzetundra", 2520, findIngredients, buyOnlyThis, buyMode: buyMode);
 
@@ -69,7 +69,7 @@ public class DeleuzeTundraMerge
                 case "Geode of Oblivion":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.RegisterQuests(0000);
+                    Core.RegisterQuests(10033);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
