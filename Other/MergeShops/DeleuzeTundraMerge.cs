@@ -69,7 +69,7 @@ public class DeleuzeTundraMerge
                 case "Geode of Oblivion":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.RegisterQuests(0000);
+                    Core.RegisterQuests(10013);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
