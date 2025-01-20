@@ -80,8 +80,13 @@ public class EmpoweredWeaponsofNulgath
                 continue;
             }
 
+            // if the item is not the selected item, continue to the next item
+            if (item != selectedItem)
+                continue;
+
             if (Core.CheckInventory(itemName, toInv: false))
                 return;
+
             switch (Bot.Config?.Get<EmpoweredItems>("EmpoweredWep"))
             {
                 //Empowered Bloodletter 8696
