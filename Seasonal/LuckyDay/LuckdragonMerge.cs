@@ -66,13 +66,7 @@ public class LuckdragonMerge
                 case "Golden Coupon":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.RegisterQuests(0000);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonsterMapID("luckdragon", 2, req.Name, quant, isTemp: false, log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
-                    Core.CancelRegisteredQuests();
+                    Core.HuntMonsterMapID("luckdragon", 2, req.Name, quant, isTemp: false, log: false);
                     break;
 
             }
