@@ -773,7 +773,13 @@ public class CoreNation
         bool returnPolicyDuringSupplies = Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies == true;
 
         Core.Logger($"Do Return Policy?: {returnPolicyDuringSupplies}");
-        Core.Logger($"Sell Voucher(Mem)?: {sellMemVoucher}");
+        Core.Logger(Bot.Player.Gold >= 100000000 && sellMemVoucher
+            ? $"Your Gold is Capped, SellMemvouchers will be disabled"
+            : $"Sell Voucher of Nulgath: {sellMemVoucher}");
+
+        if (Bot.Player.Gold >= 100000000 && sellMemVoucher)
+            sellMemVoucher = false;
+
 
         // Register quests based on item check and inventory status
         Core.RegisterQuests(
@@ -1205,9 +1211,14 @@ public class CoreNation
         bool HasLogged = false;
         if (!CamefromSupplies)
         {
-            Core.Logger($"Keep Voucher set to: {KeepVoucher}");
-            Core.Logger($"Sell Voucher of Nulgath: {sellMemVoucher}");
+            Core.Logger(Bot.Player.Gold >= 100000000 && sellMemVoucher
+            ? $"Your Gold is Capped, SellMemvouchers will be disabled"
+            : $"Sell Voucher of Nulgath: {sellMemVoucher}");
+
         }
+
+        if (sellMemVoucher && Bot.Player.Gold >= 100000000)
+            sellMemVoucher = false;
 
         if (returnPolicyDuringSupplies)
             Core.AddDrop(Uni(1), Uni(6), Uni(9), Uni(16), Uni(20));
@@ -1252,7 +1263,6 @@ public class CoreNation
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
             Core.KillMonster("evilmarsh", "End", "Left", "Tainted Elemental", log: false);
-
             if (item != "Voucher of Nulgath" && sellMemVoucher == true && Core.CheckInventory("Voucher of Nulgath") && Bot.Player.Gold < 100000000)
             {
                 Core.Jump("Enter", "Spawn");
