@@ -772,14 +772,14 @@ public class CoreNation
         bool sellMemVoucher = Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher) && _sellMemVoucher == true;
         bool returnPolicyDuringSupplies = Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies == true;
 
-        Core.Logger($"Do Return Policy?: {returnPolicyDuringSupplies}");
-        Core.Logger(Bot.Player.Gold >= 100000000 && sellMemVoucher
-            ? $"Your Gold is Capped, SellMemvouchers will be disabled"
-            : $"Sell Voucher of Nulgath: {sellMemVoucher}");
-
-        if (Bot.Player.Gold >= 100000000 && sellMemVoucher)
+        if (sellMemVoucher == true && Bot.Player.Gold >= 100000000)
+        {
+            Core.Logger("Gold is capped, no reason to sell Vouchers");
             sellMemVoucher = false;
+        }
 
+        Core.Logger($"Do Return Policy?: {returnPolicyDuringSupplies}\n" +
+                       $"Sell Voucher of Nulgath: {sellMemVoucher}");
 
         // Register quests based on item check and inventory status
         Core.RegisterQuests(
@@ -869,7 +869,7 @@ public class CoreNation
                                 }
                             }
                             DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
-                            if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
+                            if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Item.Name != "Voucher of Nulgath (non-mem)" && Core.CheckInventory("Essence of Nulgath", 60))
                                 Core.EnsureCompleteMulti(4778);
                         }
                     }
@@ -879,7 +879,7 @@ public class CoreNation
         else // Handle the case when item is not null
         {
             if (Core.CheckInventory(CragName) && !UltraAlteon)
-                BambloozevsDrudgen(item, quant, KeepVoucher, AssistantDuring, ReturnItem, ReturnItemQuant);
+                BambloozevsDrudgen(item, quant, KeepVoucher, AssistantDuring, ReturnItem, ReturnItemQuant, true);
             else
             {
                 List<ItemBase> rewards = Core.EnsureLoad(2857).Rewards;
@@ -936,7 +936,7 @@ public class CoreNation
 
                     DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
-                    if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
+                    if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && item != "Voucher of Nulgath (non-mem)" && Core.CheckInventory("Essence of Nulgath", 60))
                         Core.EnsureCompleteMulti(4778);
                 }
             }
@@ -1210,15 +1210,14 @@ public class CoreNation
         bool sellMemVoucher = Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher) && _sellMemVoucher == true;
         bool HasLogged = false;
         if (!CamefromSupplies)
+            Core.Logger($"Do Return Policy?: {returnPolicyDuringSupplies}\n" +
+                        $"Sell Voucher of Nulgath: {sellMemVoucher}");
+
+        if (sellMemVoucher == true && Bot.Player.Gold >= 100000000)
         {
-            Core.Logger(Bot.Player.Gold >= 100000000 && sellMemVoucher
-            ? $"Your Gold is Capped, SellMemvouchers will be disabled"
-            : $"Sell Voucher of Nulgath: {sellMemVoucher}");
-
-        }
-
-        if (sellMemVoucher && Bot.Player.Gold >= 100000000)
+            Core.Logger($"Your gold is capped, SellMemvouchers will be disabled");
             sellMemVoucher = false;
+        }
 
         if (returnPolicyDuringSupplies)
             Core.AddDrop(Uni(1), Uni(6), Uni(9), Uni(16), Uni(20));
