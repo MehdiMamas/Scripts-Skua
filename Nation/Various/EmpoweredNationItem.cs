@@ -75,7 +75,12 @@ public class EmpoweredWeaponsofNulgath
         Core.AddDrop(Nation.bagDrops);
         foreach (int Quest in Core.FromTo(8694, 8701))
         {
-            Quest q = Core.InitializeWithRetries(() => Core.EnsureLoad(Quest));
+            Quest? q = Core.InitializeWithRetries(() => Core.EnsureLoad(Quest));
+            if (q == null)
+            {
+                Core.Logger($"Failed to load quest with ID {Quest}");
+                continue;
+            }
             Core.AddDrop(q.Rewards.Select(x => x.ID).ToArray());
         }
 
