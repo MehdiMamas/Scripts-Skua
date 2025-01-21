@@ -4058,7 +4058,11 @@ public class CoreBots
     /// <param name="isTemp">Whether the item is temporary</param>
     /// <param name="log"></param>
     /// <param name="publicRoom"></param>
-    public void KillEscherion(string? item = null, int quant = 1, bool isTemp = false, bool log = true, bool publicRoom = false)
+    /// <param name="FromSupplies"></param>
+    /// <param name="SellVoucher"></param>
+    /// <param name="ReturnDuring"></param>
+    /// <param name="ReturnItem"></param>
+    public void KillEscherion(string? item = null, int quant = 1, bool isTemp = false, bool log = true, bool publicRoom = false, bool FromSupplies = false, bool SellVoucher = false, bool ReturnDuring = false, string? ReturnItem = null)
     {
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
@@ -4068,8 +4072,10 @@ public class CoreBots
         if (Bot.Player.Cell != "Boss")
             Jump("Boss", "Left");
 
-        if (item is not null && log)
-            FarmingLogger(item, quant);
+        if (!FromSupplies)
+            if (item is not null && log)
+                FarmingLogger(item, quant);
+
         if (item is not null && !isTemp)
             AddDrop(item);
 
@@ -4095,7 +4101,7 @@ public class CoreBots
         else
         {
             while (!Bot.ShouldExit && isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))
-                _KillEscherion();
+                _KillEscherion(item, isTemp);
 
             Rest();
             if (!isTemp)
@@ -4136,6 +4142,27 @@ public class CoreBots
                     Bot.Combat.Attack(target);
             }
             Sleep();
+
+            // Sell voucher area
+            if (item != "Voucher of Nulgath" && SellVoucher && CheckInventory("Voucher of Nulgath"))
+            {
+                while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
+                {
+                    Bot.Combat.CancelTarget();
+                    Bot.Wait.ForCombatExit();
+                    JumpWait();
+                    Sleep();
+                }
+
+                if (Bot.Player.Gold < 100000000)
+                {
+                    Bot.Wait.ForPickup("Voucher of Nulgath");
+                    SellItem("Voucher of Nulgath", all: true);
+                    Bot.Wait.ForItemSell();
+                }
+            }
+            DoSwindlesReturnArea(ReturnDuring, ReturnItem);
+
         }
 
         Bot.Options.AttackWithoutTarget = false;
@@ -4145,7 +4172,58 @@ public class CoreBots
         JumpWait();
         Rest();
         Bot.Options.HidePlayers = false;
+
+        void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
+        {
+            // Return if the policy isn't active or required items are missing
+            if (!returnPolicyActive || !CheckInventory(new[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20) }))
+                return;
+
+            bool retry = true;
+
+            while (!Bot.ShouldExit && retry)
+            {
+                retry = false; // Reset retry flag
+                ResetQuest(7551);
+                DarkMakaiItem("Dark Makai Rune");
+
+                // Load quest and find rewards
+                Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
+                if (quest == null)
+                {
+                    Logger("Failed to load quest 7551, retrying...");
+                    Sleep();
+                    retry = true;
+                    continue;
+                }
+
+                // Handle null `item` by skipping directly to reward selection
+                ItemBase? targetReward = item == null
+                    ? null
+                    : quest.Rewards.FirstOrDefault(r => r.Name == item && r.Name != "Receipt of Swindle");
+
+                int rewardID = targetReward?.ID ??
+                               quest.Rewards.FirstOrDefault(r => !CheckInventory(r.ID, r.MaxStack))?.ID ?? -1;
+
+                if (rewardID != -1 && Bot.Quests.CanCompleteFullCheck(7551))
+                {
+                    Logger($"Completing with: {quest.Rewards.First(r => r.ID == rewardID).Name} [ID: {rewardID}]");
+                    EnsureComplete(7551, rewardID);
+                }
+                else
+                {
+                    Logger("All rewards maxed. Completing with fallback reward ID: -1 (\"Receipt of Swindle\").");
+                    EnsureComplete(7551);
+                }
+            }
+        }
+
+
+        string Uni(int nr)
+            => $"Unidentified {nr}";
+
     }
+
 
     /// <summary>
     /// Kill Vath for the desired item

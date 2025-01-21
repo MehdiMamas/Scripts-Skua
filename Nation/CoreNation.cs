@@ -835,7 +835,7 @@ public class CoreNation
                             if (UltraAlteon)
                                 Core.KillMonster("ultraalteon", "r10", "Left", "Ultra Alteon", log: false);
                             else
-                                Core.KillEscherion(log: false);
+                                Core.KillEscherion(item, quant, log: false, FromSupplies: true, SellVoucher: sellMemVoucher, ReturnDuring: returnPolicyDuringSupplies, ReturnItem: ReturnItem);
                             Core.Sleep();
 
                             if (item != "Voucher of Nulgath" && sellMemVoucher && Core.CheckInventory("Voucher of Nulgath"))
@@ -914,7 +914,7 @@ public class CoreNation
                     if (UltraAlteon)
                         Core.KillMonster("ultraalteon", "r10", "Left", "*", log: false);
                     else
-                        Core.KillEscherion(item, quant, log: false);
+                        Core.KillEscherion(item, quant, log: false, FromSupplies: true, SellVoucher: sellMemVoucher, ReturnDuring: returnPolicyDuringSupplies, ReturnItem: ReturnItem);
 
                     // Sell voucher area
                     if (item != "Voucher of Nulgath" && sellMemVoucher && Core.CheckInventory("Voucher of Nulgath"))
@@ -950,40 +950,48 @@ public class CoreNation
     /// </summary>
     /// <param name="returnPolicyActive">Indicates if the return policy is active.</param>
     /// <param name="item">The name of the specific reward item to prioritize.</param>
-    private void DoSwindlesReturnArea(bool returnPolicyActive, string? item)
+    void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
     {
         // Return if the policy isn't active or required items are missing
         if (!returnPolicyActive || !Core.CheckInventory(new[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20) }))
             return;
 
-        Retry:
-        Core.ResetQuest(7551);
-        Core.DarkMakaiItem("Dark Makai Rune");
+        bool retry = true;
 
-        // Try to find the specified reward item, skipping "Receipt of Swindle"
-        Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
-        ItemBase? targetReward = quest?.Rewards.FirstOrDefault(r => r.Name == item && r.Name != "Receipt of Swindle");
-
-        // Complete with targetReward if found, otherwise find a non-maxed reward or use -1 as fallback
-        int rewardID = targetReward?.ID ??
-                       quest?.Rewards.FirstOrDefault(r => !Core.CheckInventory(r.ID, r.MaxStack))?.ID ?? -1;
-
-        if (rewardID != -1 && Bot.Quests.CanCompleteFullCheck(7551))
+        while (!Bot.ShouldExit && retry)
         {
-            if (quest != null)
+            retry = false; // Reset retry flag
+            Core.ResetQuest(7551);
+            Core.DarkMakaiItem("Dark Makai Rune");
+
+            // Load quest and find rewards
+            Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
+            if (quest == null)
+            {
+                Core.Logger("Failed to load quest 7551, retrying...");
+                Core.Sleep();
+                retry = true;
+                continue;
+            }
+
+            // Handle null `item` by skipping directly to reward selection
+            ItemBase? targetReward = item == null
+                ? null
+                : quest.Rewards.FirstOrDefault(r => r.Name == item && r.Name != "Receipt of Swindle");
+
+            int rewardID = targetReward?.ID ??
+                           quest.Rewards.FirstOrDefault(r => !Core.CheckInventory(r.ID, r.MaxStack))?.ID ?? -1;
+
+            if (rewardID != -1 && Bot.Quests.CanCompleteFullCheck(7551))
+            {
                 Core.Logger($"Completing with: {quest.Rewards.First(r => r.ID == rewardID).Name} [ID: {rewardID}]");
-            Core.EnsureComplete(7551, rewardID);
-        }
-        else if (quest == null)
-        {
-            Core.Logger("Failed to load quest 7551, retrying...");
-            Core.Sleep();
-            goto Retry;
-        }
-        else
-        {
-            Core.Logger("All rewards maxed. Completing with fallback reward ID: -1 (\"Receipt of Swindle\").");
-            Core.EnsureComplete(7551);
+                Core.EnsureComplete(7551, rewardID);
+            }
+            else
+            {
+                Core.Logger("All rewards maxed. Completing with fallback reward ID: -1 (\"Receipt of Swindle\").");
+                Core.EnsureComplete(7551);
+            }
         }
     }
 
