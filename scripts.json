@@ -105,7 +105,7 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 91920,
+    "size": 92023,
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -4884,7 +4884,7 @@
       "evovled void armor"
     ],
     "path": "Nation/Various/EmpoweredNationItem.cs",
-    "size": 11130,
+    "size": 10120,
     "fileName": "EmpoweredNationItem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/EmpoweredNationItem.cs"
   },
