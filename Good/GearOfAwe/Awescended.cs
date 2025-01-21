@@ -78,7 +78,7 @@ public class Awescended
             Bot.Quests.UpdateQuest(567);
             Core.KillMonster("lycanwar", "Boss", "Left", "Edvard", "Stone Mask");
             Core.HuntMonster("odokuro", "O-dokuro", "Ancient Bone", 6);
-            Core.HuntMonster("cornelis", "Stone Golem", "Block Head", 1);
+            Core.HuntMonster("cornelis", "Stone Golem", "Block Head", isTemp: false);
             Core.EnsureComplete(8035);
         }
 
