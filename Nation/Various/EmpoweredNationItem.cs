@@ -8,6 +8,7 @@ tags: empowered, nulgath, reavers, bloodletter, overfiend blade, shadow spear, p
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Nation/CoreNation.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Quests;
 using Skua.Core.Options;
 
 public class EmpoweredWeaponsofNulgath
@@ -41,202 +42,196 @@ public class EmpoweredWeaponsofNulgath
         if (!Core.CheckInventory("Nulgath Insignia", 25))
             Core.Logger("Could not find 25x Nulgath Insignia, stopping.", messageBox: true, stopBot: true);
 
-        // Add list to drop table.
-        new[] { "Empowered Overfiend Blade", "Empowered Ungodly Reavers", "Empowered Shadow Spear",
-         "Empowered Bloodletter", "Empowered Prismatic Manslayer", "Empowered Prismatic Manslayers",
-          "Empowered Legacy of Nulgath", "Empowered Worshipper of Nulgath",
-           "Empowered Evolved Void", "Empowered Evolved Fiend", "Empowered Evolved Blood",
-            "Empowered Evolved Hex", "Empowered Evolved Shadow" }.ToList().ForEach(item => Bot.Drops.Add(item));
+        #region  nullcheck
+        // Retry mechanism to get the selected item from config
+        EmpoweredItems? selectedItem = null;
+        for (int i = 0; i < 5; i++)
+        {
+            selectedItem = Bot.Config?.Get<EmpoweredItems>("EmpoweredWep");
+            if (selectedItem != null)
+                break;
+            Core.Logger($"Attempt {i + 1}: EmpoweredWep not found in config. Retrying...");
+            Core.Sleep(1000); // Wait for 1 second before retrying
+        }
+
+        // Ensure we have a valid item selection from the config
+        if (selectedItem == null)
+        {
+            Core.Logger("EmpoweredWep not found in config after 5 attempts.");
+            return;
+        }
+
+        // Convert the enum value to a string for checking in the inventory
+        string? itemName = selectedItem?.ToString()?.Replace('_', ' ');
+
+        if (string.IsNullOrEmpty(itemName))
+        {
+            Core.Logger("Item name is null or empty after conversion.");
+            return;
+        }
+        #endregion  nullcheck
 
         Farm.Experience(80);
         Core.AddDrop(Nation.bagDrops);
-
-        foreach (EmpoweredItems item in (EmpoweredItems[])Enum.GetValues(typeof(EmpoweredItems)))
+        foreach (int Quest in Core.FromTo(8694, 8701))
         {
-            // Retry mechanism to get the selected item from config
-            EmpoweredItems? selectedItem = null;
-            for (int i = 0; i < 5; i++)
-            {
-                selectedItem = Bot.Config?.Get<EmpoweredItems>("EmpoweredWep");
-                if (selectedItem != null)
-                    break;
-                Core.Logger($"Attempt {i + 1}: EmpoweredWep not found in config. Retrying...");
-                Core.Sleep(1000); // Wait for 1 second before retrying
-            }
+            Quest q = Core.InitializeWithRetries(() => Core.EnsureLoad(Quest));
+            Core.AddDrop(q.Rewards.Select(x => x.ID).ToArray());
+        }
 
-            // Ensure we have a valid item selection from the config
-            if (selectedItem == null)
-            {
-                Core.Logger("EmpoweredWep not found in config after 5 attempts.");
-                continue;
-            }
+        if (Core.CheckInventory(itemName, toInv: false))
+            return;
 
-            // Convert the enum value to a string for checking in the inventory
-            string? itemName = selectedItem?.ToString()?.Replace('_', ' ');
+        Core.AddDrop(itemName);
 
-            if (string.IsNullOrEmpty(itemName))
-            {
-                Core.Logger("Item name is null or empty after conversion.");
-                continue;
-            }
+        switch (Bot.Config?.Get<EmpoweredItems>("EmpoweredWep"))
+        {
+            //Empowered Bloodletter 8696
+            case EmpoweredItems.Empowered_Bloodletter:
+                if (!Core.CheckInventory("Bloodletter of Nulgath"))
+                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
 
-            // if the item is not the selected item, continue to the next item
-            if (item != selectedItem)
-                continue;
+                Core.EnsureAccept(8696);
+                Nation.SwindleBulk(350);
+                Nation.FarmDarkCrystalShard(200);
+                Nation.FarmDiamondofNulgath(500);
+                Nation.FarmVoucher(false);
+                Core.EnsureComplete(8696);
+                Bot.Wait.ForPickup((int)Bot.Config.Get<EmpoweredItems>("EmpoweredWep"));
+                break;
 
-            if (Core.CheckInventory(itemName, toInv: false))
-                return;
+            //Empowered Evolved Void Armors 1 8700
+            case EmpoweredItems.Empowered_Evolved_Fiend:
+            case EmpoweredItems.Empowered_Evolved_Void:
+                if (!Core.CheckInventory(new[] { "Evolved Fiend Of Nulgath", "Evolved Void Of Nulgath" }))
+                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
 
-            Core.AddDrop(itemName);
+                Core.EnsureAccept(8700);
+                Core.EquipClass(ClassType.Solo);
+                Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
+                Core.HuntMonster("Marsh2", "Soulseeker", "Soul Scythe", isTemp: false);
+                Core.HuntMonster("superdeath", "Super Death", "Chaos Tentacles", isTemp: false);
+                Nation.FarmDiamondofNulgath(1000);
+                Nation.FarmTotemofNulgath(30);
+                Farm.ChronoSpanREP(4);
+                Adv.BuyItem("thespan", 435, "Shadow Warrior");
+                Adv.BuyItem("tercessuinotlim", 1951, "Unmoulded Fiend Essence");
+                Core.EnsureComplete(8700);
+                break;
 
-            switch (Bot.Config?.Get<EmpoweredItems>("EmpoweredWep"))
-            {
-                //Empowered Bloodletter 8696
-                case EmpoweredItems.Empowered_Bloodletter:
-                    if (!Core.CheckInventory("Bloodletter of Nulgath"))
-                        Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
+            //Empowered Evolved Void Armors 2 8701
+            case EmpoweredItems.Empowered_Evolved_Blood:
+            case EmpoweredItems.Empowered_Evolved_Shadow:
+            case EmpoweredItems.Empowered_Evolved_Hex:
+                if (!Core.CheckInventory(new[] { "Evolved Hex of Nulgath", "Evolved Shadow of Nulgath", "Evolved Blood of Nulgath" }))
+                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
 
-                    Core.EnsureAccept(8696);
-                    Nation.SwindleBulk(350);
-                    Nation.FarmDarkCrystalShard(200);
-                    Nation.FarmDiamondofNulgath(500);
-                    Nation.FarmVoucher(false);
-                    Core.EnsureComplete(8696);
-                    break;
+                Core.EnsureAccept(8701);
+                Core.EquipClass(ClassType.Solo);
+                Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
+                Core.HuntMonster("Marsh2", "Soulseeker", "Soul Scythe", isTemp: false);
+                Core.HuntMonster("superdeath", "Super Death", "Chaos Tentacles", isTemp: false);
+                Nation.FarmDiamondofNulgath(1000);
+                Nation.FarmTotemofNulgath(30);
+                Farm.ChronoSpanREP(4);
+                Adv.BuyItem("thespan", 435, "Shadow Warrior");
+                Adv.BuyItem("tercessuinotlim", 1951, "Unmoulded Fiend Essence");
+                Core.EnsureComplete(8701);
+                break;
 
-                //Empowered Evolved Void Armors 1 8700
-                case EmpoweredItems.Empowered_Evolved_Fiend:
-                case EmpoweredItems.Empowered_Evolved_Void:
-                    if (!Core.CheckInventory(new[] { "Evolved Fiend Of Nulgath", "Evolved Void Of Nulgath" }))
-                        Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
+            //Empowered Legacy of Nulgath 8698
+            case EmpoweredItems.Empowered_Legacy_of_Nulgath:
+                if (!Core.CheckInventory("Legacy of Nulgath"))
+                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
 
-                    Core.EnsureAccept(8700);
-                    Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
-                    Core.HuntMonster("Marsh2", "Soulseeker", "Soul Scythe", isTemp: false);
-                    Core.HuntMonster("superdeath", "Super Death", "Chaos Tentacles", isTemp: false);
-                    Nation.FarmDiamondofNulgath(1000);
-                    Nation.FarmTotemofNulgath(30);
-                    Farm.ChronoSpanREP(4);
-                    Adv.BuyItem("thespan", 435, "Shadow Warrior");
-                    Adv.BuyItem("tercessuinotlim", 1951, "Unmoulded Fiend Essence");
-                    Core.EnsureComplete(8700);
-                    break;
+                Core.EnsureAccept(8698);
+                Nation.FarmDiamondofNulgath();
+                Core.EnsureComplete(8698);
+                break;
 
-                //Empowered Evolved Void Armors 2 8701
-                case EmpoweredItems.Empowered_Evolved_Blood:
-                case EmpoweredItems.Empowered_Evolved_Shadow:
-                case EmpoweredItems.Empowered_Evolved_Hex:
-                    if (!Core.CheckInventory(new[] { "Evolved Hex of Nulgath", "Evolved Shadow of Nulgath", "Evolved Blood of Nulgath" }))
-                        Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
+            //Empowered Overfiend Blade 8693
+            case EmpoweredItems.Empowered_Overfiend_Blade:
+                if (!Core.CheckInventory("Overfiend Blade of Nulgath"))
+                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
 
-                    Core.EnsureAccept(8701);
-                    Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
-                    Core.HuntMonster("Marsh2", "Soulseeker", "Soul Scythe", isTemp: false);
-                    Core.HuntMonster("superdeath", "Super Death", "Chaos Tentacles", isTemp: false);
-                    Nation.FarmDiamondofNulgath(1000);
-                    Nation.FarmTotemofNulgath(30);
-                    Farm.ChronoSpanREP(4);
-                    Adv.BuyItem("thespan", 435, "Shadow Warrior");
-                    Adv.BuyItem("tercessuinotlim", 1951, "Unmoulded Fiend Essence");
-                    Core.EnsureComplete(8701);
-                    break;
+                Core.EnsureAccept(8693);
+                Nation.SwindleBulk(200);
+                Nation.FarmDarkCrystalShard(100);
+                Nation.FarmDiamondofNulgath(400);
+                Nation.FarmVoucher(false);
+                Nation.FarmTotemofNulgath(30);
+                Nation.FarmGemofNulgath(80);
+                Core.EnsureComplete(8693);
+                break;
 
-                //Empowered Legacy of Nulgath 8698
-                case EmpoweredItems.Empowered_Legacy_of_Nulgath:
-                    if (!Core.CheckInventory("Legacy of Nulgath"))
-                        Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
+            //Empowered Prismatic Manslayers 8697
+            case EmpoweredItems.Empowered_Prismatic_Manslayer:
+            case EmpoweredItems.Empowered_Prismatic_Manslayers:
+                if (!Core.CheckInventory(new[] { "Taro's Prismatic Manslayer", "Taro's Dual Prismatic Manslayers" }) || !Core.IsMember)
+                    Core.Logger($"Missing required items or your not a member. Bot cannot continue", messageBox: true, stopBot: true);
 
-                    Core.EnsureAccept(8698);
-                    Nation.FarmDiamondofNulgath();
-                    Core.EnsureComplete(8698);
-                    break;
+                Core.EnsureAccept(8697);
+                Nation.SwindleBulk(400);
+                Nation.FarmDarkCrystalShard(250);
+                Nation.FarmDiamondofNulgath(600);
+                Nation.FarmGemofNulgath(150);
+                Nation.FarmBloodGem(70);
+                Core.EnsureComplete(8697);
+                break;
 
-                //Empowered Overfiend Blade 8693
-                case EmpoweredItems.Empowered_Overfiend_Blade:
-                    if (!Core.CheckInventory("Overfiend Blade of Nulgath"))
-                        Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
+            //Empowered Shadow Spear 8695
+            case EmpoweredItems.Empowered_Shadow_Spear:
+                if (!Core.CheckInventory("Shadow Spear of Nulgath"))
+                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
 
-                    Core.EnsureAccept(8693);
-                    Nation.SwindleBulk(200);
-                    Nation.FarmDarkCrystalShard(100);
-                    Nation.FarmDiamondofNulgath(400);
-                    Nation.FarmVoucher(false);
-                    Nation.FarmTotemofNulgath(30);
-                    Nation.FarmGemofNulgath(80);
-                    Core.EnsureComplete(8693);
-                    break;
+                Core.EnsureAccept(8695);
+                Nation.SwindleBulk(350);
+                Nation.FarmDarkCrystalShard(200);
+                Nation.FarmDiamondofNulgath(500);
+                Nation.FarmVoucher(false);
+                break;
 
-                //Empowered Prismatic Manslayers 8697
-                case EmpoweredItems.Empowered_Prismatic_Manslayer:
-                case EmpoweredItems.Empowered_Prismatic_Manslayers:
-                    if (!Core.CheckInventory(new[] { "Taro's Prismatic Manslayer", "Taro's Dual Prismatic Manslayers" }) || !Core.IsMember)
-                        Core.Logger($"Missing required items or your not a member. Bot cannot continue", messageBox: true, stopBot: true);
+            //Empowered Ungodly Reavers 8694
+            case EmpoweredItems.Empowered_Ungodly_Reavers:
+                if (!Core.CheckInventory("Ungodly Reavers of Nulgath"))
+                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
 
-                    Core.EnsureAccept(8697);
-                    Nation.SwindleBulk(400);
-                    Nation.FarmDarkCrystalShard(250);
-                    Nation.FarmDiamondofNulgath(600);
-                    Nation.FarmGemofNulgath(150);
-                    Nation.FarmBloodGem(70);
-                    Core.EnsureComplete(8697);
-                    break;
+                Core.EnsureAccept(8694);
+                Nation.SwindleBulk(200);
+                Nation.FarmDarkCrystalShard(100);
+                Nation.FarmDiamondofNulgath(400);
+                Nation.FarmVoucher(false);
+                Nation.FarmTotemofNulgath(30);
+                Nation.FarmGemofNulgath(80);
+                Core.EnsureComplete(8694);
+                break;
 
-                //Empowered Shadow Spear 8695
-                case EmpoweredItems.Empowered_Shadow_Spear:
-                    if (!Core.CheckInventory("Shadow Spear of Nulgath"))
-                        Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
+            //Empowered Worshipper of Nulgath 8699
+            case EmpoweredItems.Empowered_Worshipper_of_Nulgath:
+                if (!Core.CheckInventory("Worshipper of Nulgath"))
+                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
 
-                    Core.EnsureAccept(8695);
-                    Nation.SwindleBulk(350);
-                    Nation.FarmDarkCrystalShard(200);
-                    Nation.FarmDiamondofNulgath(500);
-                    Nation.FarmVoucher(false);
-                    break;
-
-                //Empowered Ungodly Reavers 8694
-                case EmpoweredItems.Empowered_Ungodly_Reavers:
-                    if (!Core.CheckInventory("Ungodly Reavers of Nulgath"))
-                        Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
-
-                    Core.EnsureAccept(8694);
-                    Nation.SwindleBulk(200);
-                    Nation.FarmDarkCrystalShard(100);
-                    Nation.FarmDiamondofNulgath(400);
-                    Nation.FarmVoucher(false);
-                    Nation.FarmTotemofNulgath(30);
-                    Nation.FarmGemofNulgath(80);
-                    Core.EnsureComplete(8694);
-                    break;
-
-                //Empowered Worshipper of Nulgath 8699
-                case EmpoweredItems.Empowered_Worshipper_of_Nulgath:
-                    if (!Core.CheckInventory("Worshipper of Nulgath"))
-                        Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
-
-                    Core.EnsureAccept(8699);
-                    Nation.FarmDiamondofNulgath();
-                    Core.EnsureComplete(8699);
-                    break;
-            }
+                Core.EnsureAccept(8699);
+                Nation.FarmDiamondofNulgath();
+                Core.EnsureComplete(8699);
+                break;
         }
     }
-
-    public enum EmpoweredItems
-    {
-        Empowered_Overfiend_Blade,
-        Empowered_Ungodly_Reavers,
-        Empowered_Shadow_Spear,
-        Empowered_Bloodletter,
-        Empowered_Prismatic_Manslayer,
-        Empowered_Prismatic_Manslayers,
-        Empowered_Legacy_of_Nulgath,
-        Empowered_Worshipper_of_Nulgath,
-        Empowered_Evolved_Void,
-        Empowered_Evolved_Fiend,
-        Empowered_Evolved_Blood,
-        Empowered_Evolved_Hex,
-        Empowered_Evolved_Shadow,
-    };
 }
+
+public enum EmpoweredItems
+{
+    Empowered_Overfiend_Blade,
+    Empowered_Ungodly_Reavers,
+    Empowered_Shadow_Spear,
+    Empowered_Bloodletter,
+    Empowered_Prismatic_Manslayer,
+    Empowered_Prismatic_Manslayers,
+    Empowered_Legacy_of_Nulgath,
+    Empowered_Worshipper_of_Nulgath,
+    Empowered_Evolved_Void,
+    Empowered_Evolved_Fiend,
+    Empowered_Evolved_Blood,
+    Empowered_Evolved_Hex,
+    Empowered_Evolved_Shadow,
+};
