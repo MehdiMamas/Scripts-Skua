@@ -1,5 +1,5 @@
 /*
-name: deleuzetundra Story
+name: Deleuze Tundra Story
 description: This will finish the deleuzetundra Story.
 tags: story, quest, deleuzetundra
 */
