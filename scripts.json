@@ -24415,6 +24415,28 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DarkBirthdayTokenMerge.cs"
   },
   {
+    "name": "Vanquish The Betrayers Quest Rewards",
+    "description": "Farms quest rewards from `Vanquish The Betrayers` [9932] in /voidrefuge, /fiendpast and /darkalliance.",
+    "tags": [
+      "voidrefuge",
+      "seasonal",
+      "nulgath",
+      "birthday",
+      "quest rewards",
+      "vanquish the betrayers",
+      "fiend's trophy",
+      "fiends trophy",
+      "fiend trophy",
+      "fiend's draconic",
+      "fiends draconic",
+      "fiend draconic"
+    ],
+    "path": "Seasonal/StaffBirthdays/Nulgath/VanquishTheBetrayers.cs",
+    "size": 1513,
+    "fileName": "VanquishTheBetrayers.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/Nulgath/VanquishTheBetrayers.cs"
+  },
+  {
     "name": "Temple Siege",
     "description": "Completes the Temple Siege storyline.",
     "tags": [
