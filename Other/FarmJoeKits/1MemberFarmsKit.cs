@@ -150,7 +150,6 @@ tags: member, kit, expire, legend
 //cs_include Scripts/Seasonal/Friday13th/TheLostKnightAndBackupBlade[Mem].cs
 //cs_include Scripts/Seasonal/Friday13th/SpellRaiser[Mem].cs
 //cs_include Scripts/Nation/Various/ArchfiendDragonEgg[Mem].cs
-//cs_include Scripts/Nation/Various/DragonBlade[mem].cs
 //cs_include Scripts/Other/MergeShops/BonecastleTowerMerge.cs
 //cs_include Scripts/Other/Classes/Curio-Classes/LegendaryElementalWarrior[mem].cs
 //cs_include Scripts/Other/Classes/Members-CLasses/ChronoAssassin[Mem].cs
