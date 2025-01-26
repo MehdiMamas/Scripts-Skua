@@ -104,9 +104,10 @@ public class OblivionTundraMerge
                     Core.RegisterQuests(10046);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(10046, new[] { ("obliviontundra", UseableMonsters[1], ClassType.Farm),
-                         ("obliviontundra", UseableMonsters[4], ClassType.Farm),
-                          ("obliviontundra", UseableMonsters[5], ClassType.Solo)
+                        Core.HuntMonsterQuest(10046, new[] {
+                            ("obliviontundra", UseableMonsters[1], ClassType.Farm),
+                            ("obliviontundra", UseableMonsters[4], ClassType.Farm),
+                            ("obliviontundra", UseableMonsters[5], ClassType.Solo)
                         });
                         Bot.Wait.ForPickup(req.Name);
                     }
