@@ -580,6 +580,22 @@ public class CoreDailies
         Bot.Wait.ForPickup("Sparrow's Blood");
     }
 
+    public void PearlOfNulgath()
+    {
+        Core.Logger("Daily: Pearl of Nulgath");
+        if (!CheckDailyv2(10047, true, true, "Pearl of Nulgath") || Core.CheckInventory("Pearl of Nulgath", 20))
+            return;
+        Core.Unbank("Unidentified 10");
+        if (!Core.CheckInventory("Unidentified 10", 25))
+        {
+            Core.Logger($"You don't have enough Unidentified 10 ({Bot.Inventory.GetItem("Unidentified10")?.Quantity ?? 0}/25). Skipped");
+            return;
+        }
+        Core.ChainComplete(10047);
+        Bot.Wait.ForPickup("Pearl of Nulgath");
+        Core.ToBank("Unidentified 10");
+    }
+
     public void ShadowShroud()
     {
         Core.Logger("Daily: Shadow Shroud");

@@ -1,7 +1,7 @@
 /*
-name: ArchfiendDeathLord
-description: null
-tags: null
+name: Archfiend DeathLord
+description: This script will farm the "Archfiend DeathLord" armor.
+tags: archfiend,afdl2,afdl,deathlord,armor,nulgath
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
