@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 50767,
+    "size": 51392,
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreDailies.cs"
   },
@@ -9793,13 +9793,18 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/ArchFiendSpear.cs"
   },
   {
-    "name": "ArchfiendDeathLord",
-    "description": "null",
+    "name": "Archfiend DeathLord",
+    "description": "This script will farm the \"Archfiend DeathLord\" armor.",
     "tags": [
-      "null"
+      "archfiend",
+      "afdl2",
+      "afdl",
+      "deathlord",
+      "armor",
+      "nulgath"
     ],
     "path": "Nation/Various/ArchfiendDeathLord.cs",
-    "size": 4414,
+    "size": 4505,
     "fileName": "ArchfiendDeathLord.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/ArchfiendDeathLord.cs"
   },
