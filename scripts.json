@@ -17511,6 +17511,23 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Nation/DeleuzeTundra.cs"
   },
   {
+    "name": "Oblivion Tundra Story",
+    "description": "This script will complete the storyline in /obliviontundra.",
+    "tags": [
+      "obliviontundra",
+      "oblivion",
+      "tundra",
+      "nation",
+      "nulgath",
+      "story",
+      "the hushed"
+    ],
+    "path": "Story/Nation/OblivionTundra.cs",
+    "size": 3555,
+    "fileName": "OblivionTundra.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Nation/OblivionTundra.cs"
+  },
+  {
     "name": "ShadowBlast Arena",
     "description": "This will finish the ShadowBlast Arena quest.",
     "tags": [
