@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 51392,
+    "size": 51440,
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreDailies.cs"
   },
@@ -3508,6 +3508,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Dailies/SparrowsBlood.cs"
   },
   {
+    "name": "Pearl of Nulgath Daily",
+    "description": "Gets the pearl of nulgath from the daily quest.",
+    "tags": [
+      "daily",
+      "pearl of nulgath",
+      "pearl",
+      "malakai",
+      "contract enforcer"
+    ],
+    "path": "Dailies/PearlOfNulgath.cs",
+    "size": 590,
+    "fileName": "PearlOfNulgath.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Dailies/PearlOfNulgath.cs"
+  },
+  {
     "name": "Shadow Scythe Class Daily",
     "description": "Shadow Scythe Class",
     "tags": [
@@ -3768,7 +3783,7 @@
       "all"
     ],
     "path": "Dailies/0AllDailies.cs",
-    "size": 4367,
+    "size": 4404,
     "fileName": "0AllDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Dailies/0AllDailies.cs"
   },
