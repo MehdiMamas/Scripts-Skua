@@ -583,7 +583,7 @@ public class CoreDailies
     public void PearlOfNulgath()
     {
         Core.Logger("Daily: Pearl of Nulgath");
-        if (!CheckDailyv2(10047, true, true, "Pearl of Nulgath") || Core.CheckInventory("Pearl of Nulgath", 20))
+        if (!CheckDailyv2(10047, true, true, "Pearl of Nulgath") || Core.CheckInventory("Pearl of Nulgath", 20) || !Core.CheckInventory("Malakai's Katana Pet"))
             return;
         Core.Unbank("Unidentified 10");
         if (!Core.CheckInventory("Unidentified 10", 25))

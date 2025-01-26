@@ -91,6 +91,7 @@ public class FarmAllDailies
             Glac.FrozenTower();
             Daily.Cryomancer();
             Daily.EldersBlood();
+            Daily.PearlOfNulgath();
             Daily.CryptoToken();
             Daily.ShadowShroud();
             MineCrafting.DoMinecrafting();
