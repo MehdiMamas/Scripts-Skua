@@ -588,7 +588,7 @@ public class CoreDailies
         Core.Unbank("Unidentified 10");
         if (!Core.CheckInventory("Unidentified 10", 25))
         {
-            Core.Logger($"You don't have enough Unidentified 10 ({Bot.Inventory.GetItem("Unidentified10")?.Quantity ?? 0}/25). Skipped");
+            Core.Logger($"You don't have enough Unidentified 10 ({Bot.Inventory.GetItem("Unidentified 10")?.Quantity ?? 0}/25). Skipped");
             return;
         }
         Core.ChainComplete(10047);
