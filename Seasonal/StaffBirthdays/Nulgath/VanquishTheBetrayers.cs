@@ -46,6 +46,7 @@ public class VanquishTheBetrayers
 ("darkalliance","Shadowblade",ClassType.Farm)
 });
             Core.JumpWait();
+            Bot.Wait.ForPickup(Reward.Name);
             Core.ToBank(Reward.Name);
         }
     }
