@@ -3751,7 +3751,7 @@ public class CoreBots
         {
             EnsureCompleteMulti(
                 questId,
-                reward != null
+                itemID: reward != null
                     ? quest.Rewards.FirstOrDefault(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase))?.ID ?? -1
                     : -1
             );
@@ -3840,7 +3840,7 @@ public class CoreBots
         {
             EnsureCompleteMulti(
                 questId,
-                reward != null
+                itemID: reward != null
                     ? quest.Rewards.FirstOrDefault(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase))?.ID ?? -1
                     : -1
             );
@@ -3934,7 +3934,7 @@ public class CoreBots
         {
             EnsureCompleteMulti(
                 questId,
-                rewardId > 0
+                itemID: rewardId > 0
                     ? quest.Rewards.FirstOrDefault(x => x.ID == rewardId)?.ID ?? -1
                     : -1
             );
@@ -4023,7 +4023,7 @@ public class CoreBots
         {
             EnsureCompleteMulti(
                 questId,
-                rewardId > 0
+                itemID: rewardId > 0
                     ? quest.Rewards.FirstOrDefault(x => x.ID == rewardId)?.ID ?? -1
                     : -1
             );
