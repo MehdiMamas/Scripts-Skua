@@ -3747,7 +3747,9 @@ public class CoreBots
         }
 
         // Complete the quest, retrying if necessary
-        if (!Bot.Quests.EnsureComplete(questId))
+        if (!Bot.Quests.EnsureComplete(questId, reward != null
+                    ? quest.Rewards.FirstOrDefault(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase))?.ID ?? -1
+                    : -1))
         {
             EnsureCompleteMulti(
                 questId,
@@ -3836,7 +3838,9 @@ public class CoreBots
         }
 
         // Complete the quest, retrying if necessary
-        if (!Bot.Quests.EnsureComplete(questId))
+        if (!Bot.Quests.EnsureComplete(questId, reward != null
+                    ? quest.Rewards.FirstOrDefault(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase))?.ID ?? -1
+                    : -1))
         {
             EnsureCompleteMulti(
                 questId,
@@ -3930,7 +3934,9 @@ public class CoreBots
         }
 
         // Complete the quest, retrying if necessary
-        if (!Bot.Quests.EnsureComplete(questId))
+        if (!Bot.Quests.EnsureComplete(questId, rewardId > 0
+                    ? quest.Rewards.FirstOrDefault(x => x.ID == rewardId)?.ID ?? -1
+                    : -1))
         {
             EnsureCompleteMulti(
                 questId,
@@ -4019,7 +4025,9 @@ public class CoreBots
         }
 
         // Complete the quest, retrying if necessary
-        if (!Bot.Quests.EnsureComplete(questId))
+        if (!Bot.Quests.EnsureComplete(questId, rewardId > 0
+                    ? quest.Rewards.FirstOrDefault(x => x.ID == rewardId)?.ID ?? -1
+                    : -1))
         {
             EnsureCompleteMulti(
                 questId,
