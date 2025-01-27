@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 51440,
+    "size": 51441,
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreDailies.cs"
   },
@@ -9723,6 +9723,23 @@
     "size": 2810,
     "fileName": "VoidSpartan.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/VoidSpartan.cs"
+  },
+  {
+    "name": "Contract Enforcer of Nulgath",
+    "description": "This script will farm the \"Contract Enforcer of Nulgath\" armor.",
+    "tags": [
+      "malakai",
+      "pearl of nulgath",
+      "contract enforcer",
+      "katana",
+      "renunciation",
+      "the contract enforcer",
+      "armor"
+    ],
+    "path": "Nation/Various/ContractEnforcer.cs",
+    "size": 4736,
+    "fileName": "ContractEnforcer.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/ContractEnforcer.cs"
   },
   {
     "name": "Tainted Claymore",
