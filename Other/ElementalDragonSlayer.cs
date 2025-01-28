@@ -1,5 +1,5 @@
 /*
-name: Elementa Dragon Slayer set
+name: Elemental Dragon Slayer set
 description: farms the "Elemental Dragon Slayer" set from Quest: "Mysterious Chest".
 tags: elemental dragon slayer, set
 */
