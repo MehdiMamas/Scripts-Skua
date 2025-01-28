@@ -958,14 +958,14 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/RevontheusSet.cs"
   },
   {
-    "name": "Elementa Dragon Slayer set",
+    "name": "Elemental Dragon Slayer set",
     "description": "farms the \"Elemental Dragon Slayer\" set from Quest",
     "tags": [
       "elemental dragon slayer",
       "set"
     ],
     "path": "Other/ElementalDragonSlayer.cs",
-    "size": 2298,
+    "size": 2299,
     "fileName": "ElementalDragonSlayer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/ElementalDragonSlayer.cs"
   },
