@@ -38,7 +38,7 @@ public class OblivionTundraMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Unidentified 13", "Tainted Gem", "Dark Crystal Shard", "Diamond of Nulgath", "Null Contract", "Withered Archfiend's Essence", "ArchFiend Healer Staff", "ArchFiend Healer Hood", "ArchFiend Rogue Knives", "ArchFiend Rogue Knife", "ArchFiend Rogue Backwards Knives", "ArchFiend Rogue Backwards Knife", "ArchFiend Mage Book + Wand", "ArchFiend Mage's Tome", "ArchFiend Mage's Wand", "ArchFiend Mage Hood", "ArchFiend Mage Hat", "Dual ArchFiend Warrior Champion Swords", "Dual ArchFiend Warrior Swords", "ArchFiend Warrior Helm", "ArchFiend Warrior Armet" });
+        Core.BankingBlackList.AddRange(new[] { "Unidentified 13", "Tainted Gem", "Dark Crystal Shard", "Diamond of Nulgath", "Null Contract", "Withered Archfiend's Essence", "ArchFiend Healer Staff", "ArchFiend Healer Hood", "ArchFiend Healer", "ArchFiend Rogue Knives", "ArchFiend Rogue Knife", "ArchFiend Rogue Backwards Knives", "ArchFiend Rogue Backwards Knife", "ArchFiend Rogue", "ArchFiend Mage Book + Wand", "ArchFiend Mage's Tome", "ArchFiend Mage's Wand", "ArchFiend Mage Hood", "ArchFiend Mage Hat", "ArchFiend Mage", "Dual ArchFiend Warrior Champion Swords", "ArchFiend Warrior Champion Sword", "Dual ArchFiend Warrior Swords", "ArchFiend Warrior Sword", "ArchFiend Warrior", "ArchFiend Warrior Helm", "ArchFiend Warrior Armet" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -133,6 +133,10 @@ public class OblivionTundraMerge
                 case "Dual ArchFiend Warrior Swords":
                 case "ArchFiend Warrior Helm":
                 case "ArchFiend Warrior Armet":
+                case "ArchFiend Healer":
+                case "ArchFiend Rogue":
+                case "ArchFiend Mage":
+                case "ArchFiend Warrior":
                     FLM.BuyAllMerge(req.Name);
                     break;
 
