@@ -106,6 +106,7 @@ public class MergeTemplateHelper
                              .ToList();
 
         string output = string.Empty;
+        HashSet<string> processedRequirements = new();
         List<string> itemsToLearn = new();
         string scriptName = Bot.Shops.Name.Replace("Merge", "").Replace("merge", "").Replace(",", "").Replace("’", "").Replace("shop", "").Replace("-", "").Replace("_", "").Replace("Shop", "").Replace("'", "").Trim() + " Merge";
         string className = scriptName.Replace(" ", "");
@@ -137,8 +138,8 @@ public class MergeTemplateHelper
 
             foreach (ItemBase req in item.Requirements)
             {
-                //if shop doesnt contain requirement, and output (whats generated already) doesnt contain name
-                if (!shopItems.Any(_item => _item.ID == req.ID) && !output.Contains(req.Name))
+                // Check if the requirement has already been processed
+                if (!shopItems.Any(_item => _item.ID == req.ID) && !processedRequirements.Contains(req.Name))
                 {
                     if (!genFile)
                     {
@@ -163,8 +164,9 @@ public class MergeTemplateHelper
                         output += "                    Core.CancelRegisteredQuests();\n";
                         output += "                    break;\n";
                         itemsToLearn.Add(req.Name);
-                        //tags.AddRange(req.Name.ToLower().Split(' ').Except(tags));
                     }
+                    // Add the requirement name to the processed set
+                    processedRequirements.Add(req.Name);
                 }
             }
         }
