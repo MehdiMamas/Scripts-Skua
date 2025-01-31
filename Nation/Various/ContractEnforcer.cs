@@ -117,6 +117,7 @@ public class ContractEnforcer
         Nation.FarmTaintedGem(150);
         Nation.Supplies("Random Weapon of Nulgath");
         Nation.FarmGemofNulgath(35);
+        Bot.Quests.UpdateQuest(9531);
         Core.HuntMonster("voidrefuge", "Carnage", "Bloodletter Katana", isTemp: false);
         if (!Core.CheckInventory("Pearl of Nulgath", 3))
         {
