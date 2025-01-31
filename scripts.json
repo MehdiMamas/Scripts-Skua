@@ -19292,10 +19292,11 @@
       "mana cradle",
       "ultra speaker",
       "ultraspeaker",
-      "malgor"
+      "malgor",
+      "manacradle"
     ],
     "path": "Story/ShadowsOfWar/21ManaCradle.cs",
-    "size": 692,
+    "size": 703,
     "fileName": "21ManaCradle.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ShadowsOfWar/21ManaCradle.cs"
   },
