@@ -3008,6 +3008,11 @@ public class CoreBots
     /// <param name="publicRoom"></param>
     public void KillMonster(string map, string cell, string pad, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
     {
+        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+        {
+            return;
+        }
+
         if (Bot.Map.Name != map)
         {
             Join(map, publicRoom: publicRoom);
@@ -3017,11 +3022,6 @@ public class CoreBots
         if (!Bot.Map.Cells.Any(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)))
             cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell;
         pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
-
-        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
-        {
-            return;
-        }
 
         if (item != null && !isTemp)
             AddDrop(item);
@@ -3578,8 +3578,7 @@ public class CoreBots
                                 .Distinct()
                                 .ToArray());
 
-        if (!Bot.Quests.IsInProgress(questId))
-            EnsureAccept(questId);
+
 
         // If no MapMonsterClassPairs are provided, auto-generate default values
         if (MapMonsterClassPairs.Length == 0)
@@ -3599,6 +3598,9 @@ public class CoreBots
 
             // Equip the class before hunting
             EquipClass(classType);
+
+            if (!Bot.Quests.IsInProgress(questId))
+                EnsureAccept(questId);
 
             HuntMonster(mapName ?? Bot.Map.Name, monsterName ?? "*", requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp, log: false);
         }
@@ -3622,9 +3624,6 @@ public class CoreBots
             Logger($"Quest {questId} not found");
             return;
         }
-
-        if (!Bot.Quests.EnsureAccept(questId))
-            EnsureAccept(questId);
 
         // Combine all requirements into one list for reusability
         var allRequirements = quest.AcceptRequirements.Concat(quest.Requirements).ToList();
@@ -3653,6 +3652,9 @@ public class CoreBots
             // Use the provided map and monster names, or fall back to default values
             string huntMapName = mapName ?? Bot.Map.Name;
             string huntMonsterName = monsterName ?? "*";
+
+            if (!Bot.Quests.EnsureAccept(questId))
+                EnsureAccept(questId);
 
             HuntMonster(huntMapName, huntMonsterName, requirement.Name ?? "", requirement.Quantity, requirement.Temp, log);
         }
@@ -3716,9 +3718,6 @@ public class CoreBots
             .Distinct()
             .ToArray());
 
-        // Ensure the quest is accepted if not in progress
-        if (!Bot.Quests.IsInProgress(questId))
-            EnsureAccept(questId);
 
         // Auto-generate default map-monster-class pairs if not provided
         if (mapMonsterClassPairs.Length == 0)
@@ -3740,6 +3739,10 @@ public class CoreBots
 
             if (CheckInventory(requirement.ID, requirement.Quantity))
                 continue;
+
+            // Ensure the quest is accepted if not in progress
+            if (!Bot.Quests.IsInProgress(questId))
+                EnsureAccept(questId);
 
             // Equip the appropriate class and hunt the monster
             EquipClass(classType);
@@ -3812,9 +3815,7 @@ public class CoreBots
             .Distinct()
             .ToArray());
 
-        // Ensure the quest is accepted if not in progress
-        if (!Bot.Quests.IsInProgress(questId))
-            EnsureAccept(questId);
+
 
         // Auto-generate default map-monster-class pairs if not provided
         if (string.IsNullOrEmpty(mapName) || string.IsNullOrEmpty(monsterName))
@@ -3831,6 +3832,10 @@ public class CoreBots
             // Skip if the required item is already in inventory
             if (CheckInventory(requirement.ID, requirement.Quantity))
                 continue;
+
+            // Ensure the quest is accepted if not in progress
+            if (!Bot.Quests.IsInProgress(questId))
+                EnsureAccept(questId);
 
             // Equip the appropriate class and hunt the monster
             EquipClass(ClassType.Solo); // Default class, can be adjusted if needed
@@ -3903,9 +3908,7 @@ public class CoreBots
             .Distinct()
             .ToArray());
 
-        // Ensure the quest is accepted if not in progress
-        if (!Bot.Quests.IsInProgress(questId))
-            EnsureAccept(questId);
+
 
         // Auto-generate default map-monster-class pairs if not provided
         if (mapMonsterClassPairs.Length == 0)
@@ -3927,6 +3930,10 @@ public class CoreBots
 
             if (CheckInventory(requirement.ID, requirement.Quantity))
                 continue;
+
+            // Ensure the quest is accepted if not in progress
+            if (!Bot.Quests.IsInProgress(questId))
+                EnsureAccept(questId);
 
             // Equip the appropriate class and hunt the monster
             EquipClass(classType);
@@ -3999,9 +4006,7 @@ public class CoreBots
             .Distinct()
             .ToArray());
 
-        // Ensure the quest is accepted if not in progress
-        if (!Bot.Quests.IsInProgress(questId))
-            EnsureAccept(questId);
+
 
         // Auto-generate default map-monster-class pairs if not provided
         if (string.IsNullOrEmpty(mapName) || string.IsNullOrEmpty(monsterName))
@@ -4018,6 +4023,10 @@ public class CoreBots
             // Skip if the required item is already in inventory
             if (CheckInventory(requirement.ID, requirement.Quantity))
                 continue;
+
+            // Ensure the quest is accepted if not in progress
+            if (!Bot.Quests.IsInProgress(questId))
+                EnsureAccept(questId);
 
             // Equip the appropriate class and hunt the monster
             EquipClass(ClassType.Solo); // Default class, can be adjusted if needed
