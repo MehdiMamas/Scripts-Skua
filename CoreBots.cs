@@ -3057,6 +3057,13 @@ public class CoreBots
         else Bot.Options.AggroMonsters = false;
 
         List<Monster> targetMonsters = FindMonsters();
+
+        if (targetMonsters == null || !targetMonsters.Any())
+        {
+            Logger($"Monster {monster} not found in cell {cell}, pad {pad} in /{map}");
+            return;
+        }
+
         if (item == null)
         {
             foreach (Monster targetMonster in targetMonsters)
@@ -3405,6 +3412,7 @@ public class CoreBots
 
         if (targetMonster == null)
         {
+            Logger($"Monster {monster} not found in /{map}.");
             return;
         }
 
@@ -3502,6 +3510,7 @@ public class CoreBots
 
         if (targetMonster == null)
         {
+            Logger($"Monster with MapID {monsterMapID} not found in /{map}.");
             return;
         }
 
