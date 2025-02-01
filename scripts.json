@@ -13175,6 +13175,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/EternalChaosMerge.cs"
   },
   {
+    "name": "Astro Seer Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Astro Seer Merge [2557] in /extinction",
+    "tags": [
+      "astro",
+      "seer",
+      "merge",
+      "extinction",
+      "flame",
+      "morph",
+      "stellar",
+      "quasar"
+    ],
+    "path": "Other/MergeShops/AstroSeerMerge.cs",
+    "size": 3855,
+    "fileName": "AstroSeerMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/AstroSeerMerge.cs"
+  },
+  {
     "name": "KagesMerge[mem-non-ac]",
     "description": "null",
     "tags": [
