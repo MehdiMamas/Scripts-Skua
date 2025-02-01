@@ -1,7 +1,7 @@
 /*
 name: Nulgath Diamond Merge
 description: This bot will farm the items belonging to the selected mode for the Nulgath Diamond Merge [456] in /evilwarnul
-tags: nulgath, diamond, merge, evilwarnul, abyssal, priest, loyalty, nation, oversoul, witch, witchs, soulstealing, paladin, bearded, dire, monk, cleric, head, golden, hanzo, void, katana, katanas, horns, cyber, crystal, phoenix, blood, cloak, horned, worshipper, face, wartorn, memorabilia, star, ranger, sheath, bow, morph, quiver, storm, knight, formal, suit, circlet, cane, warlord, sin, cleaver, cleavers, warmonger, armaments, malakais, pet
+tags: nulgath, diamond, merge, evilwarnul, abyssal, priest, loyalty, nation, oversoul, witch, witchs, soulstealing, paladin, bearded, dire, monk, cleric, head, golden, hanzo, void, katana, katanas, horns, cyber, crystal, phoenix, blood, cloak, horned, worshipper, face, wartorn, memorabilia, star, ranger, sheath, bow, morph, quiver, storm, knight, formal, suit, circlet, cane, warlord, sin, cleaver, cleavers, warmonger, armaments, malakais, pet, fiendish, arachnomancers, whips, whip, archfiend, claymores, claymore, balors, hunger, arachnid, gestalt, arachnomancer
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -41,7 +41,7 @@ public class NulgathDiamondMerge
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Diamond of Nulgath", "Archfiend's Favor", "Nulgath's Approval", "Taro's Manslayer", "Dark Crystal Shard", "Tainted Gem", "Blade of Holy Might", "Blood Gem of the Archfiend", "Unidentified 13", "Iron", "Gem of Nulgath", "Totem of Nulgath", "Bone Dust", "Cloak of Nulgath", "Staff of Imp Fire", "Cool Head", "Primal Dread Fang", "Random Weapon of Nulgath", "Voucher of Nulgath (non-mem)", "Unidentified 27", "Crystal Phoenix Blade of Nulgath", "DragonBlade of Nulgath", "Gold Star of Avarice", "Fiend Cloak of Nulgath" });
+        Core.BankingBlackList.AddRange(new[] { "Diamond of Nulgath", "Archfiend's Favor", "Nulgath's Approval", "Taro's Manslayer", "Dark Crystal Shard", "Tainted Gem", "Blade of Holy Might", "Blood Gem of the Archfiend", "Unidentified 13", "Iron", "Gem of Nulgath", "Totem of Nulgath", "Bone Dust", "Cloak of Nulgath", "Staff of Imp Fire", "Cool Head", "Primal Dread Fang", "Random Weapon of Nulgath", "Voucher of Nulgath (non-mem)", "Unidentified 27", "Crystal Phoenix Blade of Nulgath", "Gold Star of Avarice" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -179,17 +179,9 @@ public class NulgathDiamondMerge
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
-                case "DragonBlade of Nulgath":
-                    DBoN.GetDragonBlade();
-                    break;
-
                 case "Gold Star of Avarice":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem("tercessuinotlim", 1951, req.Name);
-                    break;
-
-                case "Fiend Cloak of Nulgath":
-                    Adv.BuyItem("tercessuinotlim", 68, req.Name);
                     break;
             }
         }
@@ -252,5 +244,14 @@ public class NulgathDiamondMerge
         new Option<bool>("84615", "Sin of the Warlord Cleavers", "Mode: [select] only\nShould the bot buy \"Sin of the Warlord Cleavers\" ?", false),
         new Option<bool>("84616", "Void Warmonger Armaments", "Mode: [select] only\nShould the bot buy \"Void Warmonger Armaments\" ?", false),
         new Option<bool>("91496", "Malakai's Katana Pet", "Mode: [select] only\nShould the bot buy \"Malakai's Katana Pet\" ?", false),
+        new Option<bool>("91442", "Fiendish Arachnomancer's Whips", "Mode: [select] only\nShould the bot buy \"Fiendish Arachnomancer's Whips\" ?", false),
+        new Option<bool>("91441", "Fiendish Arachnomancer's Whip", "Mode: [select] only\nShould the bot buy \"Fiendish Arachnomancer's Whip\" ?", false),
+        new Option<bool>("91435", "Archfiend Arachnomancer's Claymores", "Mode: [select] only\nShould the bot buy \"Archfiend Arachnomancer's Claymores\" ?", false),
+        new Option<bool>("91434", "Archfiend Arachnomancer's Claymore", "Mode: [select] only\nShould the bot buy \"Archfiend Arachnomancer's Claymore\" ?", false),
+        new Option<bool>("91433", "Dual Balor's Hunger", "Mode: [select] only\nShould the bot buy \"Dual Balor's Hunger\" ?", false),
+        new Option<bool>("91432", "Balor's Hunger", "Mode: [select] only\nShould the bot buy \"Balor's Hunger\" ?", false),
+        new Option<bool>("91426", "Arachnid Gestalt Cloak of Nulgath", "Mode: [select] only\nShould the bot buy \"Arachnid Gestalt Cloak of Nulgath\" ?", false),
+        new Option<bool>("91421", "Fiendish Arachnomancer Mask", "Mode: [select] only\nShould the bot buy \"Fiendish Arachnomancer Mask\" ?", false),
+        new Option<bool>("91418", "Fiendish Arachnomancer", "Mode: [select] only\nShould the bot buy \"Fiendish Arachnomancer\" ?", false),
     };
 }
