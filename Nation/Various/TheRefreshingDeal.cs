@@ -58,7 +58,7 @@ public class TheRefreshingDeal
             while (!Bot.ShouldExit && !Core.CheckInventory("Gem of Nulgath", GemQuant))
             {
                 Core.EnsureAccept(4777);
-                Core.HuntMonster("graveyard", "Big Jack Sprat", "Bone Axe", isTemp: false);
+                Nation.Supplies("Unidentified 3");
                 Nation.FarmBloodGem(2);
                 Nation.FarmUni10(30);
                 Core.EnsureComplete(4777, 6136);
@@ -73,7 +73,7 @@ public class TheRefreshingDeal
             while (!Bot.ShouldExit && !Core.CheckInventory("Totem of Nulgath", TotemQuant))
             {
                 Core.EnsureAccept(4777);
-                Core.HuntMonster("graveyard", "Big Jack Sprat", "Bone Axe", isTemp: false);
+                Nation.Supplies("Unidentified 3");
                 Nation.FarmBloodGem(2);
                 Nation.FarmUni10(30);
                 Core.EnsureComplete(4777, 5357);
