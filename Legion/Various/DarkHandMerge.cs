@@ -1,18 +1,20 @@
 /*
-name: DarkHandMerge
-description: null
-tags: null
+name: Dark Hand Merge
+description: This bot will farm the items belonging to the selected mode for the Dark Hand Merge [1693] in /legionarena
+tags: dark, hand, merge, legionarena, assassin, hands, shag, masked, chains, cyclone, cyclones, claws, claw, double, edge, kusarigama, axeros, moult, mandibles, torn, shroud, moon, airstrike, pet, behemoth, horns, morph, sheathed, slaughter, battle, cloak, slaughters, darkblood, ashura, armaments
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Legion/CoreLegion.cs
+//cs_include Scripts/Nation/CoreNation.cs
+//cs_include Scripts/Legion\Various\WorthyOfTheBlade.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
-public class DarkHandMerge1
+public class DarkHandMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
@@ -21,6 +23,7 @@ public class DarkHandMerge1
     public CoreAdvanced Adv = new();
     public CoreLegion Legion = new();
     public static CoreAdvanced sAdv = new();
+    private WorthyBlade WB = new();
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -32,6 +35,7 @@ public class DarkHandMerge1
 
     public void ScriptMain(IScriptInterface bot)
     {
+        Core.BankingBlackList.AddRange(new[] { "Death Badge", "Bone Sigil", "Legion Token", "Essence of Blade Master", "Primarch's Trophy" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -41,6 +45,7 @@ public class DarkHandMerge1
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        WB.WorthyOfTheBlade();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("legionarena", 1693, findIngredients, buyOnlyThis, buyMode: buyMode);
 
@@ -110,6 +115,16 @@ public class DarkHandMerge1
                     Core.HuntMonster("underworld", "Blade Master", "Essence of Blade Master", quant, false);
                     break;
 
+                case "Primarch's Trophy":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.HuntMonsterQuest(10052, "bosschallenge", "Colossal Primarch");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+
             }
         }
     }
@@ -133,5 +148,18 @@ public class DarkHandMerge1
         new Option<bool>("74004", "Axeros Mandibles", "Mode: [select] only\nShould the bot buy \"Axeros Mandibles\" ?", false),
         new Option<bool>("74005", "Axeros Torn Shroud", "Mode: [select] only\nShould the bot buy \"Axeros Torn Shroud\" ?", false),
         new Option<bool>("74006", "Moon Airstrike Pet", "Mode: [select] only\nShould the bot buy \"Moon Airstrike Pet\" ?", false),
+        new Option<bool>("91607", "Dark Hand Behemoth", "Mode: [select] only\nShould the bot buy \"Dark Hand Behemoth\" ?", false),
+        new Option<bool>("91608", "Dark Hand Behemoth Horns", "Mode: [select] only\nShould the bot buy \"Dark Hand Behemoth Horns\" ?", false),
+        new Option<bool>("91609", "Dark Hand Behemoth Morph", "Mode: [select] only\nShould the bot buy \"Dark Hand Behemoth Morph\" ?", false),
+        new Option<bool>("91610", "Dark Hand Behemoth Visage", "Mode: [select] only\nShould the bot buy \"Dark Hand Behemoth Visage\" ?", false),
+        new Option<bool>("91611", "Dark Hand Behemoth Hood", "Mode: [select] only\nShould the bot buy \"Dark Hand Behemoth Hood\" ?", false),
+        new Option<bool>("91612", "Sheathed Dark Hand's Slaughter", "Mode: [select] only\nShould the bot buy \"Sheathed Dark Hand's Slaughter\" ?", false),
+        new Option<bool>("91613", "Dark Hand Behemoth Battle Cloak", "Mode: [select] only\nShould the bot buy \"Dark Hand Behemoth Battle Cloak\" ?", false),
+        new Option<bool>("91614", "Dark Hand Behemoth Cloak", "Mode: [select] only\nShould the bot buy \"Dark Hand Behemoth Cloak\" ?", false),
+        new Option<bool>("91615", "Dark Hand's Slaughter", "Mode: [select] only\nShould the bot buy \"Dark Hand's Slaughter\" ?", false),
+        new Option<bool>("91616", "Dark Hand's Slaughters", "Mode: [select] only\nShould the bot buy \"Dark Hand's Slaughters\" ?", false),
+        new Option<bool>("91617", "Darkblood Ashura", "Mode: [select] only\nShould the bot buy \"Darkblood Ashura\" ?", false),
+        new Option<bool>("91618", "Dual Darkblood Ashura", "Mode: [select] only\nShould the bot buy \"Dual Darkblood Ashura\" ?", false),
+        new Option<bool>("91619", "Dual Dark Hand's Armaments", "Mode: [select] only\nShould the bot buy \"Dual Dark Hand's Armaments\" ?", false),
     };
 }
