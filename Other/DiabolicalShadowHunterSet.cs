@@ -52,8 +52,8 @@ public class DiabolicalShadowHunterSet
             Core.FarmingLogger(Reward.Name, 1);
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.ID))
                 Core.HuntMonsterQuest(10053, new[] {
-    ("lostvilla", "Eldritch Amalgamation",ClassType.Solo),
-    ("lostvilla", "Book Wyrm",ClassType.Solo),
+    ("brokenwoods", "Eldritch Amalgamation",ClassType.Solo),
+    ("backroom", "Book Wyrm",ClassType.Solo),
     ("lostvilla", "Eldritch Parasite",ClassType.Solo),
     ("lostvilla", "Covetous Disgrace",ClassType.Solo),
     ("lostvilla", "Mutilated Atrocity",ClassType.Farm)
