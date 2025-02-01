@@ -47,7 +47,7 @@ public class ThePoisonousDeal
             return;
         }
 
-       Nation.DragonSlayerReward();
+        Nation.DragonSlayerReward();
         TC.DoAll();
 
         Core.AddDrop("Tainted Gem", "Dark Crystal Shard");
@@ -57,7 +57,7 @@ public class ThePoisonousDeal
         while (!Bot.ShouldExit && !Core.CheckInventory("Tainted Gem", TaintedQuant))
         {
             Core.EnsureAccept(4776);
-            Core.HuntMonster("graveyard", "Big Jack Sprat", "Bone Axe", isTemp: false);
+            Nation.Supplies("Unidentified 3");
             Nation.FarmBloodGem(2);
             Nation.FarmUni10(30);
             Core.EnsureComplete(4776, 4769);
@@ -69,7 +69,7 @@ public class ThePoisonousDeal
         while (!Bot.ShouldExit && !Core.CheckInventory("Dark Crystal Shard", ShardQuant))
         {
             Core.EnsureAccept(4776);
-            Core.HuntMonster("graveyard", "Big Jack Sprat", "Bone Axe", isTemp: false);
+            Nation.Supplies("Unidentified 3");
             Nation.FarmBloodGem(2);
             Nation.FarmUni10(30);
             Core.EnsureComplete(4776, 4770);
