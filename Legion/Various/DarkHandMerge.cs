@@ -9,7 +9,7 @@ tags: dark, hand, merge, legionarena, assassin, hands, shag, masked, chains, cyc
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Legion/CoreLegion.cs
 //cs_include Scripts/Nation/CoreNation.cs
-//cs_include Scripts/Legion\Various\WorthyOfTheBlade.cs
+//cs_include Scripts/Legion/Various/WorthyOfTheBlade.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;

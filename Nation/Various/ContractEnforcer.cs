@@ -14,10 +14,10 @@ tags: malakai,pearl of nulgath,contract enforcer,katana,renunciation,the contrac
 //cs_include Scripts/Nation/Various/TarosManslayer.cs
 //cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
 //cs_include Scripts/Nation/Various/DragonBlade[mem].cs
-//cs_include Scripts/Nation\MergeShops\NulgathDiamondMerge.cs
+//cs_include Scripts/Nation/MergeShops/NulgathDiamondMerge.cs
 //cs_include Scripts/Nation/Various/TheLeeryContract[Member].cs
 //cs_include Scripts/Nation/Various/JuggernautItems.cs
-//cs_include Scripts/Nation\MergeShops\DirtlickersMerge.cs
+//cs_include Scripts/Nation/MergeShops/DirtlickersMerge.cs
 using Skua.Core.Interfaces;
 
 public class ContractEnforcer

@@ -8,7 +8,7 @@ tags: oblivion, tundra, merge, obliviontundra, envenomed, spear, nulgath, fiend,
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Nation/CoreNation.cs
-//cs_include Scripts/Nation\MergeShops\FiendishLoreMasterMerge.cs
+//cs_include Scripts/Nation/MergeShops/FiendishLoreMasterMerge.cs
 //cs_include Scripts/Story/Nation/OblivionTundra.cs
 //cs_include Scripts/Story/Nation/DeleuzeTundra.cs
 //cs_include Scripts/Story/Nation/VoidRefuge.cs
