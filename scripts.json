@@ -809,6 +809,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/TreasureHuntQuestRewards.cs"
   },
   {
+    "name": "Hikaru Quest Rewards",
+    "description": "farms quest rewards from `Hit List` in /lostvilla",
+    "tags": [
+      "lostvilla",
+      "hikaru",
+      "quest rewards",
+      "diabolical shadowhunter",
+      "diabolical",
+      "shadow hunter",
+      "hit list",
+      "hitlist"
+    ],
+    "path": "Other/DiabolicalShadowHunterSet.cs",
+    "size": 1994,
+    "fileName": "DiabolicalShadowHunterSet.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/DiabolicalShadowHunterSet.cs"
+  },
+  {
     "name": "Seven Deadly Dragons Saga Drops",
     "description": "get drops from all monsters from this saga.",
     "tags": [
