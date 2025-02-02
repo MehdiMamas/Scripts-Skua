@@ -24,6 +24,7 @@ public class DiabolicalShadowHunterSet
     {
         Core.SetOptions();
 
+        LV.Storyline();
         GetRewards();
 
         Core.SetOptions(false);
@@ -34,33 +35,33 @@ public class DiabolicalShadowHunterSet
     public void GetRewards()
     {
 
-        LV.Storyline();
         List<ItemBase> RewardOptions = Core.EnsureLoad(QuestID).Rewards;
 
         foreach (ItemBase item in RewardOptions)
-            Core.AddDrop(item.Name);
+            Core.AddDrop(item.ID);
 
         Core.EquipClass(ClassType.Farm);
 
         foreach (ItemBase Reward in RewardOptions)
         {
-            if (Core.CheckInventory(Reward.Name, toInv: false))
-                return;
-
             Core.Logger(Core.CheckInventory(Reward.ID, toInv: false) ? $"{Reward.Name}: ✅" : $"{Reward.Name} ❌");
+          
+            if (Core.CheckInventory(Reward.ID, toInv: false))
+                continue;
+
 
             Core.FarmingLogger(Reward.Name, 1);
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.ID))
                 Core.HuntMonsterQuest(10053, new[] {
-    ("brokenwoods", "Eldritch Amalgamation",ClassType.Solo),
-    ("backroom", "Book Wyrm",ClassType.Solo),
-    ("lostvilla", "Eldritch Parasite",ClassType.Solo),
-    ("lostvilla", "Covetous Disgrace",ClassType.Solo),
-    ("lostvilla", "Mutilated Atrocity",ClassType.Farm)
-});
+                ("brokenwoods", "Eldritch Amalgamation",ClassType.Solo),
+                ("backroom", "Book Wyrm",ClassType.Solo),
+                ("lostvilla", "Eldritch Parasite",ClassType.Solo),
+                ("lostvilla", "Covetous Disgrace",ClassType.Solo),
+                ("lostvilla", "Mutilated Atrocity",ClassType.Farm)
+            });
 
             Core.JumpWait();
-            Core.ToBank(Reward.Name);
+            Core.ToBank(Reward.ID);
         }
     }
 }
