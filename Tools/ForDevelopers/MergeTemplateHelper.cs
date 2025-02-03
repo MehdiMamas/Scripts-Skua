@@ -107,7 +107,7 @@ public class MergeTemplateHelper
 
         string output = string.Empty;
         HashSet<string> processedRequirements = new();
-        List<string> itemsToLearn = new();
+        HashSet<string> itemsToLearn = new();
         string scriptName = Bot.Shops.Name.Replace("Merge", "").Replace("merge", "").Replace(",", "").Replace("’", "").Replace("shop", "").Replace("-", "").Replace("_", "").Replace("Shop", "").Replace("'", "").Trim() + " Merge";
         string className = scriptName.Replace(" ", "");
         string[] multipliedTagsBlacklist = tagsBlacklist.Select(x => x + 's').ToArray();
