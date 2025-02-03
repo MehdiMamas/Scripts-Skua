@@ -98,16 +98,32 @@ public class SuppliesToSpinTheWheelofChance
             Core.FarmingLogger(item.Name, item.MaxStack);
 
             // Determine the SwindlesReturnItem if it's null
+            if (SwindlesReturn == null || SwindlesReturn.Rewards == null)
+            {
+                Core.Logger("SwindlesReturn or SwindlesReturn.Rewards is null");
+                return;
+            }
+
             SwindlesReturnItem ??= SwindlesReturn.Rewards
                 .Where(r => r != null && !Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i => i.ID == r.ID) && r.Quantity < r.MaxStack && Nation.SwindlesReturnRewards.Contains(r.Name))
                 .Select(r => r.Name)
                 .FirstOrDefault();
 
+            Core.Logger($"SwindlesReturnItem: {SwindlesReturnItem}");
+
             // Determine the SuppliesItem if it's null
+            if (Supplies == null || Supplies.Rewards == null)
+            {
+                Core.Logger("Supplies or Supplies.Rewards is null");
+                return;
+            }
+
             SuppliesItem ??= Supplies.Rewards
                 .Where(r => r != null && !Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i => i.ID == r.ID) && r.Quantity < r.MaxStack && Nation.SuppliesRewards.Contains(r.Name))
                 .Select(r => r.Name)
                 .FirstOrDefault();
+
+            Core.Logger($"SuppliesItem: {SuppliesItem}");
 
             // Determine the max stack values directly without null checks
             ItemBase? suppliesReward = SuppliesItem == null
@@ -115,12 +131,14 @@ public class SuppliesToSpinTheWheelofChance
                 : Supplies.Rewards.FirstOrDefault(x => x != null && x.Name == SuppliesItem);
 
             int suppliesMaxStack = suppliesReward != null ? suppliesReward.MaxStack : 0;
+            Core.Logger($"suppliesMaxStack: {suppliesMaxStack}");
 
             ItemBase? swindlesReward = SwindlesReturnItem == null
                 ? SwindlesReturn.Rewards.FirstOrDefault(x => x != null && x.Name == item.Name)
                 : SwindlesReturn.Rewards.FirstOrDefault(x => x != null && x.Name == SwindlesReturnItem);
 
             int swindlesMaxStack = swindlesReward != null ? swindlesReward.MaxStack : 0;
+            Core.Logger($"swindlesMaxStack: {swindlesMaxStack}");
 
             // Call the Nation.Supplies method with the correct parameters
             Nation.Supplies(
