@@ -1,12 +1,13 @@
 /*
-name: FiendishLoreMasterMerge
-description: null
-tags: null
+name: Fiendish LoreMaster Merge
+description: This bot will farm the items belonging to the selected mode for the Fiendish LoreMaster Merge [2103] in /tercessuinotlim
+tags: fiendish, loremaster, merge, tercessuinotlim, archfiend, warrior, armet, champion, mage, book, , rogue, backwards, knife, knives, healer, librarian, glasses, archvoid, horn
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/Story\Nation\Tercessuinotlim.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -21,6 +22,7 @@ public class FiendishLoreMasterMerge
     public CoreStory Story = new();
     public CoreAdvanced Adv = new();
     public static CoreAdvanced sAdv = new();
+    private Tercessuinotlim Terc = new();
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -32,7 +34,7 @@ public class FiendishLoreMasterMerge
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Abyssal Lore Scrap", "ArchFiend Mage's Wand", "ArchFiend Mage's Tome " });
+        Core.BankingBlackList.AddRange(new[] { "Abyssal Lore Scrap", "ArchFiend Mage's Wand", "ArchFiend Mage's Tome" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -42,6 +44,7 @@ public class FiendishLoreMasterMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        Terc.JadziaQuests();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("tercessuinotlim", 2103, findIngredients, buyOnlyThis, buyMode: buyMode);
 
