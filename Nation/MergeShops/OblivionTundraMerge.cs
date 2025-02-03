@@ -131,6 +131,7 @@ public class OblivionTundraMerge
                 case "ArchFiend Mage Hood":
                 case "ArchFiend Mage Hat":
                 case "Dual ArchFiend Warrior Champion Swords":
+                case "ArchFiend Warrior Champion Sword":
                 case "Dual ArchFiend Warrior Swords":
                 case "ArchFiend Warrior Helm":
                 case "ArchFiend Warrior Armet":
