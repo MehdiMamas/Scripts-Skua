@@ -59,7 +59,11 @@ public class ContractEnforcer
         Nation.FarmBloodGem(25);
         DLM.BuyAllMerge("Shadow Legacy of Nulgath");
         Adv.BuyItem("tercessuinotlim", 1951, "Unmoulded Fiend Essence");
-        //PUT THE DAGE'S CONTRACT HERE
+
+        // Quest must be acepted for contrac to drop, droprate is not 100%.
+        Core.EnsureAccept(10050);
+        Core.HuntMonster("dage", "Dage the Evil", "Dage's Contract", isTemp: false);
+
         if (!Core.CheckInventory("Pearl of Nulgath", 4))
         {
             Daily.PearlOfNulgath();
@@ -77,7 +81,7 @@ public class ContractEnforcer
 
         }
 
-        Core.ChainComplete(10050);
+        Core.EnsureComplete(10050);
         Core.ToBank(Core.QuestRewards(10048).Concat(Core.QuestRewards(10049)).ToArray());
     }
 
