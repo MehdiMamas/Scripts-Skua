@@ -10468,13 +10468,32 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/NulgathDiamondMerge.cs"
   },
   {
-    "name": "FiendishLoreMasterMerge",
-    "description": "null",
+    "name": "Fiendish LoreMaster Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Fiendish LoreMaster Merge [2103] in /tercessuinotlim",
     "tags": [
-      "null"
+      "fiendish",
+      "loremaster",
+      "merge",
+      "tercessuinotlim",
+      "archfiend",
+      "warrior",
+      "armet",
+      "champion",
+      "mage",
+      "book",
+      "",
+      "rogue",
+      "backwards",
+      "knife",
+      "knives",
+      "healer",
+      "librarian",
+      "glasses",
+      "archvoid",
+      "horn"
     ],
     "path": "Nation/MergeShops/FiendishLoreMasterMerge.cs",
-    "size": 8301,
+    "size": 8710,
     "fileName": "FiendishLoreMasterMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/FiendishLoreMasterMerge.cs"
   },
@@ -10573,7 +10592,7 @@
       "armet"
     ],
     "path": "Nation/MergeShops/OblivionTundraMerge.cs",
-    "size": 10529,
+    "size": 10582,
     "fileName": "OblivionTundraMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/OblivionTundraMerge.cs"
   },
