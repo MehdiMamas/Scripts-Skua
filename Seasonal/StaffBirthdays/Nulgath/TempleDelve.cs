@@ -44,8 +44,13 @@ public class TempleDelve
         Story.MapItemQuest(9082, "templedelve", 11162, 4);
 
         //...Begets the Glare of the Light (9083)
-        Story.KillQuest(9083, "templedelve", new[] { "Delirious Elemental", "Infested Nation" });
-        Story.MapItemQuest(9083, "templedelve", 11163);
+        if (!Core.isCompletedBefore(9083))
+        {
+            Core.EnsureAccept(9083);
+            Core.HuntMonster("templedelve", "Delirious Elemental", "Fractured Light Shard", 4);
+            Core.HuntMonster("templedelve", "Infested Nation", "Nation Eliminated", 4);
+            Story.MapItemQuest(9083, "templedelve", 11163);
+        }
 
         //Death Over Defeat (9084)
         Story.KillQuest(9084, "templedelve", "Infested Nation");
