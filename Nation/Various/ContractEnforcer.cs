@@ -62,7 +62,7 @@ public class ContractEnforcer
 
         // Quest must be acepted for contrac to drop, droprate is not 100%.
         Core.EnsureAccept(10050);
-        Core.HuntMonster("dage", "Dage the Evil", "Dage's Contract", isTemp: false);
+        Core.HuntMonster("ebilcorphq", "Dage the Evil", "Dage's Contract", isTemp: false);
 
         if (!Core.CheckInventory("Pearl of Nulgath", 4))
         {
