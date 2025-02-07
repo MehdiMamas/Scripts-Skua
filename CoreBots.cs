@@ -2456,44 +2456,69 @@ public class CoreBots
         }
     }
 
+    public bool HasSpace => Bot.Inventory.FreeSlots > 0;
+
     /// <summary>
-    /// Completes a quest and choose any item from it that you don't have (automatically accepts the drop)
+    /// Completes a quest and chooses any item from it that you don't have (automatically accepts the drop).
     /// </summary>
     /// <param name="questID">ID of the quest</param>
-    /// <param name="itemList">List of the items to get, if you want all just let it be null</param>
+    /// <param name="itemList">List of the items to get; if you want all, just let it be null.</param>
     public bool EnsureCompleteChoose(int questID, string[]? itemList = null)
     {
         Quest? quest = InitializeWithRetries(() => EnsureLoad(questID));
         if (quest == null)
         {
-            Logger($"Failed to load quest with ID {questID} after multiple attempts.");
+            Logger($"Failed to load quest [{questID}] after multiple attempts.");
             return false;
         }
 
-        if (quest is not null)
+        bool hasAllItems = true;
+        bool questCompleted = false;
+
+        foreach (ItemBase item in quest.Rewards)
         {
-            foreach (ItemBase item in quest.Rewards)
+            // Check if no space in inventory and item isn't in the inventory
+            if (!HasSpace && !CheckInventory(item.ID, toInv: false))
             {
-                if (!CheckInventory(item.Name, toInv: false)
-                    && (itemList == null || (itemList != null && itemList.Contains(item.Name))))
-                {
-                    bool completed = Bot.Quests.EnsureComplete(questID, item.ID);
-                    if (Bot.Drops.Exists(item.ID))
-                        Bot.Drops.Pickup(item.Name);
-                    Bot.Wait.ForPickup(item.Name);
-                    Bot.Wait.ForQuestComplete(questID);
-                    return completed;
-                }
+                Logger($"Skipping item \"{item.Name}\" from quest [{questID}] due to not having space, and it's not being in the inventory.");
+                continue;
             }
 
-            Logger($"Could not complete the quest {questID}. Maybe all items are already in your inventory");
-            return false;
+            hasAllItems = false;
+
+            if (!Bot.Quests.EnsureComplete(questID, item.ID))
+                continue;
+
+            Bot.Wait.ForQuestComplete(questID);
+
+            if (!Bot.Drops.ToPickup.Contains(item.Name))
+                Bot.Drops.Add(item.Name);
+
+            if (Bot.Drops.Exists(item.ID))
+                Bot.Drops.Pickup(item.ID);
+            else if (Bot.Drops.Exists(item.Name))
+                Bot.Drops.Pickup(item.Name);
+
+            Bot.Wait.ForPickup(item.ID);
+            questCompleted = true;
         }
-        else
+
+        if (hasAllItems)
         {
-            Logger($"Failed to load Quest {questID}, EnsureCompleteChoose failed");
+            Logger($"Quest [{questID}] not completed. All rewards already owned.");
             return false;
         }
+
+        if (!questCompleted)
+        {
+            Logger($"Could not complete quest [{questID}]. Some items may be missing or unavailable.\n" +
+                string.Join("\n", quest.Rewards
+                    .Where(x => x.Temp ? Bot.TempInv.Contains(x.ID) : !Bot.Inventory.Contains(x.ID))
+                    .Select(x => $"\"{x.Name}\"")));
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>
