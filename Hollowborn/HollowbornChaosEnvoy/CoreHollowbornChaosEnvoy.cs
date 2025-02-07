@@ -136,7 +136,7 @@ public class CoreHollowbornChaosEnvoy
         HB.HardcoreContract();
         Farm.Experience(75);
 
-        Core.Logger($"Reward Chosen: {discordReward}");
+        Core.Logger($"Reward Chosen: {discordReward.ToString().Replace("_", " ")}");
         while (!Bot.ShouldExit && !shouldReturnEarly)
         {
             Core.EnsureAcceptmultiple(new[] { 7158, 8998 });
@@ -222,7 +222,7 @@ public class CoreHollowbornChaosEnvoy
         Core.AddDrop(rewards);
         Farm.Experience(75);
 
-        Core.Logger($"Reward Chosen: {beastsShadowReward}");
+        Core.Logger($"Reward Chosen: {beastsShadowReward.ToString().Replace("_", " ")}");
 
         while (!Bot.ShouldExit && !shouldReturnEarly)
         {
@@ -314,7 +314,7 @@ public class CoreHollowbornChaosEnvoy
         Farm.Experience(75);
         ADG.AscendedGear("Ascended Face of Chaos");
 
-        Core.Logger($"Reward Chosen: {quarryReward}");
+        Core.Logger($"Reward Chosen: {quarryReward.ToString().Replace("_", " ")}");
         Bot.Quests.UpdateQuest(2804);
         while (!Bot.ShouldExit && !shouldReturnEarly)
         {
@@ -509,7 +509,7 @@ public class CoreHollowbornChaosEnvoy
             TGM.BuyAllMerge("Titan Drakath");
         }
 
-        Core.Logger($"Reward Chosen: {disdainReward}");
+        Core.Logger($"Reward Chosen: {disdainReward.ToString().Replace("_", " ")}");
 
         // Main farming loop
         while (!Bot.ShouldExit && !shouldReturnEarly)
@@ -579,7 +579,7 @@ public class CoreHollowbornChaosEnvoy
         string[] rewards = Core.QuestRewards(9003);
         PersistingMayhemRewards mayhemReward = Bot.Config!.Get<PersistingMayhemRewards>("Persisting Mayhem");
 
-        Core.Logger($"Reward Chosen: {mayhemReward}");
+        Core.Logger($"Reward Chosen: {mayhemReward.ToString().Replace("_", " ")}");
 
         // Check if we should return early based on inventory conditions and 'completeOnce' flag
         bool shouldReturnEarly =
