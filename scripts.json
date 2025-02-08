@@ -7324,6 +7324,39 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AkibaNewYear/Bingwen.cs"
   },
   {
+    "name": "Yokai Hunt 2025 Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Yokai Hunt 2025 Merge [2559] in /yokaihunt",
+    "tags": [
+      "yokai",
+      "hunt",
+      "2025",
+      "merge",
+      "yokaihunt",
+      "serpents",
+      "refinement",
+      "fans",
+      "fan",
+      "silver",
+      "serpent",
+      "qi",
+      "pao",
+      "favor",
+      "gold",
+      "rap",
+      "artist",
+      "urban",
+      "cap",
+      "morph",
+      "glasses",
+      "streetwear",
+      "royal"
+    ],
+    "path": "Seasonal/AkibaNewYear/YokaiHunt2025Merge.cs",
+    "size": 6014,
+    "fileName": "YokaiHunt2025Merge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AkibaNewYear/YokaiHunt2025Merge.cs"
+  },
+  {
     "name": "Descendants Design Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Descendants Design Merge [2233] in /yokaihunt",
     "tags": [
