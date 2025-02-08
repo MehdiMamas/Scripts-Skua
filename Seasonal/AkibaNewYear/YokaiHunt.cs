@@ -26,7 +26,7 @@ public class YokaiHunt
         AiNoMiko();
         YueHuang();
         BaoyuLin();
-
+        AiNoMiko2();
     }
 
     public void AiNoMiko()
@@ -118,5 +118,70 @@ public class YokaiHunt
 
         // Baihong Guan Ri (9575)
         Story.KillQuest(9575, "yokaihunt", "Mutou Hong");
+    }
+
+    public void AiNoMiko2()
+    {
+        if (Core.isCompletedBefore(10060) || !Core.isSeasonalMapActive("yokaihunt"))
+            return;
+
+        BaoyuLin();
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Ox Nopperabo", // UseableMonsters[0],
+	"Golden Ox Guard", // UseableMonsters[1],
+	"Ox Yokai Spirit", // UseableMonsters[2],
+	"Etokoun", // UseableMonsters[3],
+	"Elixir Etokoun", // UseableMonsters[4],
+	"Mutou Hong", // UseableMonsters[5],
+	"Zhenzhu Shé", // UseableMonsters[6]
+};
+        #endregion Useable Monsters
+
+        // 10056 | Xionghuang Remedy
+        if (!Story.QuestProgression(10056))
+        {
+            Core.HuntMonsterQuest(10056,
+                ("yokairiver", "Kappa Ninja", ClassType.Farm),
+                ("yokairiver", "Funa-yurei", ClassType.Farm));
+        }
+
+
+        // 10057 | Calabash Elixir
+        if (!Story.QuestProgression(10057))
+        {
+            Core.HuntMonsterQuest(10057,
+                ("yokaihunt", UseableMonsters[4], ClassType.Solo));
+        }
+
+
+        // 10058 | Duàn Qiáo
+        if (!Story.QuestProgression(10058))
+        {
+            Core.HuntMonsterQuest(10058,
+                ("hakuvillage", "Mountain Oni", ClassType.Farm));
+        }
+
+
+        // 10059 | Sangharama's Blessing
+        if (!Story.QuestProgression(10059))
+        {
+            Core.HuntMonsterQuest(10059,
+                ("shogunwar", "Shadow Samurai", ClassType.Farm));
+        }
+
+
+        // 10060 | Lady Suzhen
+        if (!Story.QuestProgression(10060))
+        {
+            Core.HuntMonsterQuest(10060,
+                ("yokaihunt", UseableMonsters[6], ClassType.Solo));
+        }
+
+
     }
 }
