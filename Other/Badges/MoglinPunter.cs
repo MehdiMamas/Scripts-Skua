@@ -69,7 +69,7 @@ public class MoglinPunter
                             double score = data.val;
                             double RoundedScore = Math.Round(float.Parse($"{score.ToString()[..^2]}.{score.ToString()[^2..]}"));
 
-                            Core.Logger($"Punt [#{Punt++}] | Score [{RoundedScore}], Rounded Score [{RoundedScore}]\n" +
+                            Core.Logger($"Punt [#{Punt++}] | Score [{score} (Rounded Score [{RoundedScore}])], \n" +
                             $"Win? ({(score < 10000 ? "❌" : "✅")})");
                         }
                         break;
