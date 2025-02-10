@@ -81,9 +81,16 @@ public class Arcadia
         Story.KillQuest(8519, "Arcadia", "Agape");
 
         // Separation Anxiety 8520
-        Story.KillQuest(8520, "Arcadia", "Agape");
-        Core.EquipClass(ClassType.Farm);
-        Story.KillQuest(8520, "Arcadia", new[] {"Spirit Butterfly", "Lightguard Wraith" });
+        if (!Story.QuestProgression(8520))
+        {
+            Core.EnsureAccept(8520);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("arcadia", "Agape", "Agape Petal", 1);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("arcadia", "Spirit Butterfly", "Paper Butterfly Wings", 8);
+            Core.HuntMonster("arcadia", "Lightguard Wraith", "Armor Paint Residue", 8);
+            Core.EnsureComplete(8520);
+        }
 
     }
 }
