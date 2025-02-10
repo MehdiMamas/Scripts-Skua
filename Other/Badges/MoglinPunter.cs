@@ -33,8 +33,7 @@ public class MoglinPunter
         Core.OneTimeMessage("Minigame Explanation", "This minigame works off of a \"value\" system for ponts, so 9999 is 99, for the quest so youll need to get a value of 10000 points which may take a while.", forcedMessageBox: true);
 
 
-        int Punt = 1;
-        double lowestScore = 100;
+        int Punt = 0;
 
         Core.Logger($"Doing quest for {badge} badge, Purely Rng based, good luck");
         Core.Join("punt");
@@ -68,11 +67,13 @@ public class MoglinPunter
                         if (data.oName.ToString() == "btnPuntting" && data.unm.ToString() == Core.Username())
                         {
                             double score = data.val;
-                            score = Math.Round(float.Parse($"{score.ToString()[..^2]}.{score.ToString()[^2..]}"));
-                            lowestScore = lowestScore > score ? score : lowestScore;
-                            Core.Logger($"Punt: #{Punt++} | Score: {score}");
+                            double RoundedScore = Math.Round(float.Parse($"{score.ToString()[..^2]}.{score.ToString()[^2..]}"));
+
+                            Core.Logger($"Punt [#{Punt++}] | Score [{RoundedScore}], Rounded Score [{RoundedScore}]\n" +
+                            $"Win? ({(score < 10000 ? "❌" : "✅")})");
                         }
                         break;
+
                 }
             }
         }
