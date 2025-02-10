@@ -12,6 +12,8 @@ public class MoglinPunter
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public CoreFarms Farm = new();
+    bool Datagood = false;
+    bool Finished = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -40,17 +42,22 @@ public class MoglinPunter
         Bot.Events.ExtensionPacketReceived += puntingPacketReader;
         while (!Bot.ShouldExit && !Core.HasWebBadge(badge))
         {
-            Core.Jump("Enter", "Spawn");
+            Datagood = false;
             Core.Sleep();
             Core.SendPackets("%xt%zm%ia%1%rval%btnPuntting%%");
             Bot.Wait.ForCellChange("Punt");
-            Core.Sleep(3500);
-            if (Core.CheckInventory("Twilly Be Punted"))
+            Bot.Wait.ForTrue(() => Datagood, 5);
+
+            if (Finished || Core.CheckInventory(68214))
             {
+                Bot.Wait.ForDrop(68214);
+                Bot.Wait.ForPickup(68214);
+
                 Core.ChainComplete(8532);
                 Core.Logger($"Punts to get the badge: {Punt}");
-                return;
+                break;
             }
+            Core.Jump("Enter", "Spawn");
         }
         Bot.Events.ExtensionPacketReceived -= puntingPacketReader;
 
@@ -66,11 +73,18 @@ public class MoglinPunter
                     case "ia":
                         if (data.oName.ToString() == "btnPuntting" && data.unm.ToString() == Core.Username())
                         {
+                            Datagood = true;
                             double score = data.val;
                             double RoundedScore = Math.Round(float.Parse($"{score.ToString()[..^2]}.{score.ToString()[^2..]}"));
 
                             Core.Logger($"Punt [#{Punt++}] | Score [{score} (Rounded Score [{RoundedScore}])], \n" +
-                            $"Win? ({(score < 10000 ? "❌" : "✅")})");
+                            $"Win? ({(RoundedScore < 100 ? "❌" : "✅")})");
+
+                            if (RoundedScore == 100)
+                            {
+                                Bot.Events.ExtensionPacketReceived -= puntingPacketReader;
+                                Finished = true;
+                            }
                         }
                         break;
 
