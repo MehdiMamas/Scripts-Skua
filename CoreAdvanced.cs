@@ -140,7 +140,7 @@ public class CoreAdvanced
                     if (req.Name == "Dragon Runestone")
                         Farm.DragonRunestone(Math.Min(bundlesToBuy, req.MaxStack));
 
-                    if (bundlesToBuy <= 0 || !Bot.Shops.Items.Any(x => x.ID == req.ID))
+                    if (bundlesToBuy <= 0)
                         break;  // Exit the loop if no more bundles are needed
                 }
             }
