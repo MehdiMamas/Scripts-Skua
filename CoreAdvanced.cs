@@ -138,7 +138,15 @@ public class CoreAdvanced
                     int totalBundlesNeeded = (int)Math.Ceiling((double)totalReqNeeded / shopQuant);
                     int bundlesToBuy = totalBundlesNeeded - (QuantOwned / req.Quantity);
 
-                    GetItemReq(Bot.Shops.Items.FirstOrDefault(x => x.Name == req.Name), bundlesToBuy);
+                    ShopItem? shopItem = Bot.Shops.Items.FirstOrDefault(x => x.Name == req.Name);
+                    if (shopItem != null)
+                    {
+                        GetItemReq(shopItem, bundlesToBuy);
+                    }
+                    else
+                    {
+                        Core.Logger($"Failed to find shop item: {req.Name}");
+                    }
                     if (req.Name.Contains("Voucher"))
                     {
                         Farm.Voucher(req.Name, Math.Min(bundlesToBuy, req.MaxStack));
@@ -151,7 +159,7 @@ public class CoreAdvanced
 
                     Core.BuyItem(map, shopID, req.ID, req.Quantity, shopItemID, Log: Log);
 
-                    if (bundlesToBuy <= 0) 
+                    if (bundlesToBuy <= 0)
                     {
                         continue;  // Exit the loop if no more bundles are needed}
                     }
