@@ -163,7 +163,7 @@ public class PotionBuyer
         //2ndary potions that are obtained alongside the normal versions, to be banked and added as a drop.
         string[] SecondaryPotions = new[] { "Potent Malice Potion", "Potent Soul Potion" };
         Core.ToBank(SecondaryPotions);
-        Bot.Drops.Add(SecondaryPotions);
+        Core.AddDrop(SecondaryPotions);
 
         for (int t = 0; t < Potions!.Length; t++)
         {
