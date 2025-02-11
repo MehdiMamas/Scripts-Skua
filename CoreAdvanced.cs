@@ -116,9 +116,11 @@ public class CoreAdvanced
     {
         int shopQuant = item.Quantity; // Quantity per purchase from the shop
         string shopName = Bot.Shops.Name; // Store the currently loaded shop name
+        Core.DebugLogger(this);
 
         if (item.Requirements != null)
         {
+            Core.DebugLogger(this);
             foreach (ItemBase req in item.Requirements)
             {
                 if (Core.CheckInventory(item.ID, quant))
@@ -141,6 +143,7 @@ public class CoreAdvanced
                     ShopItem? shopItem = Bot.Shops.Items.FirstOrDefault(x => x.Name == req.Name);
                     if (shopItem != null)
                     {
+                        Core.DebugLogger(this, $"shopItem {shopItem} bundlesToBuy, {bundlesToBuy}");
                         GetItemReq(shopItem, bundlesToBuy);
                     }
                     else
@@ -157,7 +160,7 @@ public class CoreAdvanced
                         Farm.DragonRunestone(Math.Min(bundlesToBuy, req.MaxStack));
                     }
 
-                    Core.BuyItem(map, shopID, req.ID, req.Quantity, shopItemID, Log: Log);
+                    BuyItem(map, shopID, req.ID, bundlesToBuy, shopItemID, Log: Log);
 
                     if (bundlesToBuy <= 0)
                     {
@@ -165,17 +168,23 @@ public class CoreAdvanced
                     }
                 }
             }
+            Core.DebugLogger(this, $"Item {item.Name}, quant: {quant}");
 
             // Ensure required items are available before purchasing the main item
             GetItemReq(item, quant);
+            Core.DebugLogger(this);
             Core.BuyItem(map, shopID, item.ID, (int)Math.Ceiling((double)quant / shopquant), shopItemID, Log: Log);
+            Core.DebugLogger(this);
             Core.Sleep();
             // Check if the main item was purchased successfully
+            Core.DebugLogger(this);
             if (!Core.CheckInventory(item.Name, (int)Math.Ceiling((double)quant / shopquant)))
             {
+                Core.DebugLogger(this);
                 Core.Logger($"Failed to Buy {item.Name}");
                 foreach (ItemBase req in item.Requirements.Where(x => x != null && !Core.CheckInventory(x.ID, x.Quantity)))
                 {
+                    Core.DebugLogger(this);
                     Core.Logger($"Missing {req.Name} x{req.Quantity}");
                 }
             }
@@ -189,9 +198,13 @@ public class CoreAdvanced
     /// <param name="quant"></param>
     public void GetItemReq(ShopItem item, int quant = 1)
     {
+        Core.DebugLogger(this);
         if (!string.IsNullOrEmpty(item.Faction) && item.Faction != "None" && item.RequiredReputation > 0)
+        {
+            Core.DebugLogger(this, $"Item {item.Name}, item.Faction {item.Faction}, CPtoLevel: {Core.PointsToLevel(item.RequiredReputation)}");
             runRep(item.Faction, Core.PointsToLevel(item.RequiredReputation));
-
+            Core.DebugLogger(this);
+        }
         Farm.Experience(item.Level);
 
         if (!item.Coins)
@@ -210,33 +223,40 @@ public class CoreAdvanced
 
     private void runRep(string faction, int rank)
     {
+        Core.DebugLogger(this);
         faction = faction.Replace(" ", "");
         Type farmClass = Farm.GetType();
         MethodInfo? theMethod = farmClass.GetMethod(faction + "REP");
         if (theMethod == null)
         {
+            Core.DebugLogger(this);
             Core.Logger("Failed to find " + faction + "REP. Make sure you have the correct name and capitalization.");
             return;
         }
-
+        Core.DebugLogger(this, $"themethod: {theMethod}, farmclass: {farmClass}, faction: {faction}, Rank: {rank}");
         try
         {
+            Core.DebugLogger(this);
             switch (faction.ToLower())
             {
                 case "alchemy":
                 case "blacksmith":
+                    Core.DebugLogger(this);
                     theMethod.Invoke(Farm, new object[] { rank, true });
                     break;
                 case "bladeofawe":
+                    Core.DebugLogger(this);
                     theMethod.Invoke(Farm, new object[] { rank, false });
                     break;
                 default:
+                    Core.DebugLogger(this);
                     theMethod.Invoke(Farm, new object[] { rank });
                     break;
             }
         }
         catch
         {
+            Core.DebugLogger(this);
             Core.Logger($"Faction {faction} has invalid paramaters, please report", messageBox: true, stopBot: true);
         }
     }
