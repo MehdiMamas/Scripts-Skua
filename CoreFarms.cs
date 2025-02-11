@@ -1447,7 +1447,7 @@ public class CoreFarms
         Core.ShopLoadedCheck(map, "Enter", shopID);
 
         // Ensure the correct Item is found in the shop
-        ShopItem item = Bot.Shops.Items.FirstOrDefault(x => x != null && x.Name == Voucher);
+        ShopItem? item = Bot.Shops.Items.FirstOrDefault(x => x != null && x.Name == Voucher);
 
         // If the item was found, proceed to buy it
         if (item != null)

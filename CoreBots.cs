@@ -1206,7 +1206,7 @@ public class CoreBots
                 Join(MapName);
 
             if (Bot.Player.Cell != cell)
-                Jump(cell);
+                Jump(cell ?? "Enter");
 
             Bot.Shops.Load(ShopID);
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
