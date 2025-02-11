@@ -1196,6 +1196,32 @@ public class CoreBots
         }
     }
 
+    public void ShopLoadedCheck(string? MapName = null, string? cell = "Enter", int ShopID = 0)
+    {
+        bool ShopCheck = ShopCheck = Bot.Map.Name == MapName && Bot.Shops.IsLoaded && Bot.Shops.ID == ShopID;
+
+        while (!Bot.ShouldExit && !ShopCheck)
+        {
+            if (Bot.Map.Name != MapName)
+                Join(MapName);
+
+            if (Bot.Player.Cell != cell)
+                Jump(cell);
+
+            Bot.Shops.Load(ShopID);
+            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+            Bot.Wait.ForTrue(() => Bot.Shops.ID == ShopID, 20);
+            ShopCheck = ShopCheck = Bot.Map.Name == MapName && Bot.Shops.IsLoaded && Bot.Shops.ID == ShopID;
+            if (ShopCheck)
+                break;
+        }
+        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
+
+        Sleep();
+    }
+
+
     /// <summary>
     /// Buys a item till you have the desired quantity
     /// </summary>
@@ -1237,7 +1263,7 @@ public class CoreBots
     int retrys = 0;
     public void _BuyItem(string map, int shopID, ShopItem? item, int quant, bool Log = true)
     {
-        int buy_quant;
+        int buy_quant = quant;
         if (item == null || (buy_quant = _CalcBuyQuantity(item, quant)) == 0 || !_canBuy(shopID, item, buy_quant))
             return;
 
@@ -1251,7 +1277,7 @@ public class CoreBots
             JumpWait();
             Sleep();
         }
-        Bot.Shops.Load(shopID);
+        ShopLoadedCheck(map, "Enter", shopID);
         Bot.Wait.ForActionCooldown(GameActions.LoadShop);
 
         dynamic sItem = new ExpandoObject();
@@ -1592,24 +1618,39 @@ public class CoreBots
 
     private int _CalcBuyQuantity(ShopItem item, int requestedQuant)
     {
+        // Check if the requested quantity exceeds the max stack
         if (requestedQuant > item.MaxStack)
         {
             Logger($"Attempting to buy {requestedQuant - item.MaxStack} more than {item.MaxStack} of {item.Name}. The developer needs to fix the calling script.", "BuyItem");
             Bot.Stop(true);
         }
 
-        // requestQuant <= max stack.
-        // No clamp checks needed, as Buys already asserts current quantity is less.
-        int buy_quant;
-        if ((buy_quant = requestedQuant - Bot.Inventory.GetQuantity(item.Name)) % item.Quantity != 0)
-        {
-            int diff = item.Quantity - (buy_quant % item.Quantity);
-            SellItem(item.Name, Bot.Inventory.GetQuantity(item.Name) - diff);
-            buy_quant += diff;
-        }
-        return buy_quant == 302500 ? 1 : buy_quant;
-    }
+        // Calculate the total quantity needed
+        int quantityToBuy = requestedQuant - Bot.Inventory.GetQuantity(item.ID);
 
+        // If the quantity to buy is less than or equal to zero, set to zero to avoid buying negative or zero quantities
+        if (quantityToBuy <= 0)
+        {
+            return 0;
+        }
+
+        // Ensure quantityToBuy is a multiple of item.Quantity (the shop's buy quantity)
+        int buyQuantity = quantityToBuy / item.Quantity * item.Quantity;
+
+        // If the quantity isn't divisible by item.Quantity, sell the excess
+        if (quantityToBuy % item.Quantity != 0)
+        {
+            int diff = item.Quantity - (quantityToBuy % item.Quantity);
+            SellItem(item.Name, diff);  // Sell the excess to make the quantity divisible
+            buyQuantity = quantityToBuy / item.Quantity * item.Quantity; // Recalculate the buy quantity
+        }
+
+        // Ensure we do not buy more than the max stack
+        buyQuantity = Math.Min(buyQuantity, item.MaxStack);
+
+        // If the result is zero (less than a full set), buy at least one valid quantity
+        return buyQuantity > 0 ? buyQuantity : item.Quantity;
+    }
 
     public int PointsToLevel(int points) => RepCPLevel.First(kvp => points <= kvp.Value).Key;
 
@@ -5562,20 +5603,17 @@ public class CoreBots
                     dItem.sMeta = item.Meta;
 
                     Bot.Flash.CallGameFunction("toggleItemEquip", dItem);
+                    Sleep(1500);
                     break;
 
                 default:
                     Bot.Inventory.EquipItem(item.ID);
+                    Sleep(1500);
                     break;
             }
 
-            // Wait for item to equip, add sleep before retry if not successful
-            Bot.Wait.ForItemEquip(item.ID);
             Sleep();
         }
-
-        // Log result
-        Logger($"Equipping {(Bot.Inventory.IsEquipped(item.ID) ? string.Empty : "Failed! (either you're in combat, or in a PvP map): ")} {item.Name}", "Equip");
     }
 
     /// <summary>
@@ -7221,7 +7259,6 @@ public class CoreBots
         foreach (Monster targetMonster in Bot.Monsters.MapMonsters
         .Where(x => x != null && x.Cell == Bot.Player.Cell && x.State > 0))
         {
-            // DebugLogger(this);
 
             Logger($"Killing {targetMonster}");
             while (!Bot.ShouldExit && Bot.Monsters.MapMonsters.Any(x => x.State > 0))
@@ -7229,7 +7266,6 @@ public class CoreBots
                 while (!Bot.ShouldExit && (!Bot.Player.Alive || Bot.Map.Name == "legionpvp"))
                 {
                     Sleep();
-                    // DebugLogger(this);
                     if (Bot.Map.Name == "legionpvp")
                     {
                         Join("dagepvp-999999", "Enter0", "Spawn");
