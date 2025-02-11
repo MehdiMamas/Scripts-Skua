@@ -1196,31 +1196,6 @@ public class CoreBots
         }
     }
 
-    public void ShopLoadedCheck(string? MapName = null, string? cell = "Enter", int ShopID = 0)
-    {
-        bool ShopCheck = ShopCheck = Bot.Map.Name == MapName && Bot.Shops.IsLoaded && Bot.Shops.ID == ShopID;
-
-        while (!Bot.ShouldExit && !ShopCheck)
-        {
-            if (Bot.Map.Name != MapName)
-                Join(MapName);
-
-            if (Bot.Player.Cell != cell)
-                Jump(cell ?? "Enter");
-
-            Bot.Shops.Load(ShopID);
-            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-            Bot.Wait.ForTrue(() => Bot.Shops.ID == ShopID, 20);
-            ShopCheck = ShopCheck = Bot.Map.Name == MapName && Bot.Shops.IsLoaded && Bot.Shops.ID == ShopID;
-            if (ShopCheck)
-                break;
-        }
-        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
-
-        Sleep();
-    }
-
 
     /// <summary>
     /// Buys a item till you have the desired quantity
@@ -1277,8 +1252,11 @@ public class CoreBots
             JumpWait();
             Sleep();
         }
-        ShopLoadedCheck(map, "Enter", shopID);
+
+        Bot.Shops.Load(shopID);
+
         Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
 
         dynamic sItem = new ExpandoObject();
         for (int i = 0; i < 5; i++)

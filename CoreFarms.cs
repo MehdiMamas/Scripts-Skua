@@ -1444,7 +1444,9 @@ public class CoreFarms
 
 
         // Ensure the correct shop is loaded
-        Core.ShopLoadedCheck(map, "Enter", shopID);
+        Bot.Shops.Load(shopID);
+        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
 
         // Ensure the correct Item is found in the shop
         ShopItem? item = Bot.Shops.Items.FirstOrDefault(x => x != null && x.Name == Voucher);

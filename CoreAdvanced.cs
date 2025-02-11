@@ -112,7 +112,7 @@ public class CoreAdvanced
     }
 
 
-    private void _BuyItem(string map, int shopID, ShopItem item, int quant = 1, int shopquant = 0, int shopItemID = 0, bool Log = true)
+    private void _BuyItem(string map, int shopID, ShopItem item, int quant = 1, int shopquant = 1, int shopItemID = 1, bool Log = true)
     {
         int shopQuant = item.Quantity; // Quantity per purchase from the shop
         string shopName = Bot.Shops.Name; // Store the currently loaded shop name
@@ -122,11 +122,15 @@ public class CoreAdvanced
             foreach (ItemBase req in item.Requirements)
             {
                 if (Core.CheckInventory(item.ID, quant))
-                    continue;
-
-                while (!Core.CheckInventory(req.ID, req.Quantity))  // Changed the condition to check for missing inventory
                 {
-                    Core.ShopLoadedCheck(map, "Enter", shopID);
+                    continue;
+                }
+
+                while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))  // Changed the condition to check for missing inventory
+                {
+                    Bot.Shops.Load(shopID);
+                    Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+                    Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
 
                     // Determine how many total items are needed
                     int QuantOwned = Bot.Inventory.GetQuantity(req.ID);
@@ -134,14 +138,23 @@ public class CoreAdvanced
                     int totalBundlesNeeded = (int)Math.Ceiling((double)totalReqNeeded / shopQuant);
                     int bundlesToBuy = totalBundlesNeeded - (QuantOwned / req.Quantity);
 
+                    GetItemReq(Bot.Shops.Items.FirstOrDefault(x => x.Name == req.Name), bundlesToBuy);
                     if (req.Name.Contains("Voucher"))
+                    {
                         Farm.Voucher(req.Name, Math.Min(bundlesToBuy, req.MaxStack));
+                    }
 
                     if (req.Name == "Dragon Runestone")
+                    {
                         Farm.DragonRunestone(Math.Min(bundlesToBuy, req.MaxStack));
+                    }
 
-                    if (bundlesToBuy <= 0)
-                        break;  // Exit the loop if no more bundles are needed
+                    Core.BuyItem(map, shopID, req.ID, req.Quantity, shopItemID, Log: Log);
+
+                    if (bundlesToBuy <= 0) 
+                    {
+                        continue;  // Exit the loop if no more bundles are needed}
+                    }
                 }
             }
 
@@ -168,7 +181,6 @@ public class CoreAdvanced
     /// <param name="quant"></param>
     public void GetItemReq(ShopItem item, int quant = 1)
     {
-        Core.DebugLogger(this, $"{item.Name}");
         if (!string.IsNullOrEmpty(item.Faction) && item.Faction != "None" && item.RequiredReputation > 0)
             runRep(item.Faction, Core.PointsToLevel(item.RequiredReputation));
 
