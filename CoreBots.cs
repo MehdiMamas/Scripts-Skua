@@ -1263,8 +1263,8 @@ public class CoreBots
     int retrys = 0;
     public void _BuyItem(string map, int shopID, ShopItem? item, int quant, bool Log = true)
     {
-        int buy_quant = quant;
-        if (item == null || (buy_quant = _CalcBuyQuantity(item, quant)) == 0 || !_canBuy(shopID, item, buy_quant))
+        int buy_quant;
+        if (item == null || (buy_quant = _CalcBuyQuantity(item, quant)) <= 0 || !_canBuy(shopID, item, buy_quant))
             return;
 
         Join(map);
@@ -1315,7 +1315,7 @@ public class CoreBots
         if (CheckInventory(item.ID, quant))
         {
             if (Log)
-                Logger($"Bought {(buy_quant == 302500 ? 1 : buy_quant)} {item.Name}, now at {quant} {item.Name}", "BuyItem");
+                Logger($"Bought {(buy_quant == 302500 ? 1 : buy_quant)} {item.Name}, now at {Bot.Inventory.GetQuantity(item.ID)}/{quant} {item.Name}", "BuyItem");
         }
         else
         {
@@ -1616,41 +1616,53 @@ public class CoreBots
         }
     }
 
-    private int _CalcBuyQuantity(ShopItem item, int requestedQuant)
+    private int _CalcBuyQuantity(ShopItem item, int requestedAmount)
     {
-        // Check if the requested quantity exceeds the max stack
-        if (requestedQuant > item.MaxStack)
+        if (requestedAmount > item.MaxStack)
         {
-            Logger($"Attempting to buy {requestedQuant - item.MaxStack} more than {item.MaxStack} of {item.Name}. The developer needs to fix the calling script.", "BuyItem");
+            Logger($"Requested {requestedAmount}, but max stack for {item.Name} is {item.MaxStack}. Fix the calling script.", "BuyItem");
             Bot.Stop(true);
         }
 
-        // Calculate the total quantity needed
-        int quantityToBuy = requestedQuant - Bot.Inventory.GetQuantity(item.ID);
+        int itemStackSize = item.Quantity;
+        int currentStock = Bot.Inventory.GetQuantity(item.ID);
+        int neededAmount = requestedAmount - currentStock;
 
-        // If the quantity to buy is less than or equal to zero, set to zero to avoid buying negative or zero quantities
-        if (quantityToBuy <= 0)
+        if (neededAmount <= 0)
         {
+            Logger($"Already have enough of {item.Name} ({currentStock}/{requestedAmount}).");
             return 0;
         }
 
-        // Ensure quantityToBuy is a multiple of item.Quantity (the shop's buy quantity)
-        int buyQuantity = quantityToBuy / item.Quantity * item.Quantity;
+        // Round up to the nearest multiple of itemStackSize
+        int buyAmount = (int)Math.Ceiling((double)neededAmount / itemStackSize) * itemStackSize;
 
-        // If the quantity isn't divisible by item.Quantity, sell the excess
-        if (quantityToBuy % item.Quantity != 0)
+        // Ensure buyAmount does not exceed MaxStack
+        int maxCanBuy = item.MaxStack - currentStock;
+        buyAmount = Math.Min(buyAmount, maxCanBuy - (maxCanBuy % itemStackSize)); // Adjust to nearest valid multiple
+
+        // If we still can't reach the requested amount, sell extra to make space
+        if (buyAmount < neededAmount)
         {
-            int diff = item.Quantity - (quantityToBuy % item.Quantity);
-            SellItem(item.Name, diff);  // Sell the excess to make the quantity divisible
-            buyQuantity = quantityToBuy / item.Quantity * item.Quantity; // Recalculate the buy quantity
+            int excess = (currentStock + buyAmount) % itemStackSize;
+            if (excess > 0)
+            {
+                Logger($"Selling {excess} {item.Name} to fit a proper stack.");
+                SellItem(item.Name, excess);
+                buyAmount += excess; // Now we can buy the exact amount
+            }
         }
 
-        // Ensure we do not buy more than the max stack
-        buyQuantity = Math.Min(buyQuantity, item.MaxStack);
+        if (buyAmount <= 0)
+        {
+            Logger($"Cannot buy more {item.Name}, max stack reached ({currentStock}/{item.MaxStack}).");
+            return 0;
+        }
 
-        // If the result is zero (less than a full set), buy at least one valid quantity
-        return buyQuantity > 0 ? buyQuantity : item.Quantity;
+        Logger($"Final purchase amount for {item.Name}: {buyAmount}");
+        return buyAmount;
     }
+
 
     public int PointsToLevel(int points) => RepCPLevel.First(kvp => points <= kvp.Value).Key;
 
