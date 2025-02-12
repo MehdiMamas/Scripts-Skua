@@ -30,7 +30,7 @@ public class VoidHighlordsChallenge
         Core.BankingBlackList.AddRange(Nation.bagDrops);
         Core.SetOptions();
 
-        VHL.VHLChallenge(15);
+        VHL.VHLChallenge(25);
 
         Core.SetOptions(false);
     }
