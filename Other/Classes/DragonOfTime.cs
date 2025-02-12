@@ -297,15 +297,13 @@ public class DragonOfTime
         // I'm Loving It My Way 7725
         if (doExtra)
         {
+            Borgars.StoryLine();
+            Farm.Experience(75);
+            Core.AddDrop("Burger Buns");
+            Core.EquipClass(ClassType.Solo);
             while (!Bot.ShouldExit && !Core.CheckInventory(Extras, toInv: false))
             {
-                Farm.Experience(75);
                 Core.EnsureAccept(7725);
-
-                Borgars.StoryLine();
-                Core.AddDrop("Burger Buns");
-                Core.EquipClass(ClassType.Solo);
-
                 if (!Core.CheckInventory("Borgar"))
                 {
                     bool LoggedBefore = false;
@@ -318,8 +316,8 @@ public class DragonOfTime
                         Bot.Wait.ForPickup("Burger Buns");
                         LoggedBefore = true;
                     }
+                    Core.BuyItem("borgars", 1884, 54650, shopItemID: 7387);
                 }
-                Core.BuyItem("borgars", 1884, 54650, shopItemID: 7387);
 
                 Core.EnsureCompleteChoose(7725, Extras);
                 Bot.Wait.ForPickup("*");

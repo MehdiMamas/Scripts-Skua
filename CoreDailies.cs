@@ -559,6 +559,7 @@ public class CoreDailies
             return;
         if (!CheckDailyv2(802, true, true, "Elders' Blood"))
             return;
+        Core.AddDrop("Elders' Blood");
         Core.Logger("Daily: Elders' Blood");
         Core.EquipClass(ClassType.Farm);
         DailyRoutine(802, "arcangrove", "Gorillaphant", "Slain Gorillaphant", 50, cell: "LeftBack", pad: "Left");
