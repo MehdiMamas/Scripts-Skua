@@ -145,9 +145,10 @@ public class CoreAdvanced
 
                     // Determine how many total items are needed
                     int QuantOwned = Bot.Inventory.GetQuantity(req.ID);
-                    int totalReqNeeded = req.Quantity * (quant - QuantOwned);
+                    int totalReqNeeded = (req.Quantity * quant) - QuantOwned;
                     // int totalBundlesNeeded = (int)Math.Ceiling((double)totalReqNeeded / shopQuant);
                     // int bundlesToBuy = totalBundlesNeeded - (QuantOwned / req.Quantity);
+
                     Core.DebugLogger(this);
                     if (req.Name.Contains("Voucher"))
                     {
@@ -185,14 +186,14 @@ public class CoreAdvanced
             Core.DebugLogger(this, $"Item {item.Name}, quant to buy: {quant}");
 
             // Ensure required items are available before purchasing the main item
-            GetItemReq(item, quant);
+            GetItemReq(item, quant - Bot.Inventory.GetQuantity(item.ID));
             Core.DebugLogger(this);
 
             item = Bot.Shops.Items.FirstOrDefault(x =>
                 x.ID == item.ID && !x.Coins && item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity)));
 
             Core.DebugLogger(this);
-            Core.BuyItem(map, shopID, item.ID, quant, shopItemID, Log: Log);
+            Core.BuyItem(map, shopID, item.ID, quant - Bot.Inventory.GetQuantity(item.ID), shopItemID, Log: Log);
             Core.DebugLogger(this);
             Core.Sleep();
             // Check if the main item was purchased successfully
