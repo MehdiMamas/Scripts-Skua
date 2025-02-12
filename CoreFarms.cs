@@ -1321,10 +1321,10 @@ public class CoreFarms
         if (YMB)
             Core.Logger("\"YouMadBro\" Mode: Enabled (this will only buy 1 Dragon Runestone as it doesnt use it :D)");
         Core.Join("alchemy");
-        int i = 1;
+        int i = 0;
         if (loop)
         {
-            while (!Bot.ShouldExit && Core.CheckInventory(new[] { reagent1, reagent2 }))
+            while (!Bot.ShouldExit && Core.CheckInventory(new[] { reagent1, reagent2, "Dragon Runestone" }))
             {
                 if (!Core.CheckInventory(new[] { reagent1, reagent2 }) || (item != null && Core.CheckInventory(item, quant)))
                     break;
