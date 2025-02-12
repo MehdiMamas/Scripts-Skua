@@ -1445,6 +1445,7 @@ public class CoreFarms
 
         // Ensure the correct shop is loaded
         Bot.Shops.Load(shopID);
+        Core.Sleep(1000);
         Bot.Wait.ForActionCooldown(GameActions.LoadShop);
         Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
 
@@ -1476,7 +1477,9 @@ public class CoreFarms
     {
         if (Core.CheckInventory("Dragon Runestone", quant))
             return;
-        Core.Join("alchemyacademy");
+
+        if (Bot.Map.Name != "alchemyacademy")
+            Core.Join("alchemyacademy");
 
         Core.ToggleAggro(false);
         Core.JumpWait();
@@ -1484,19 +1487,13 @@ public class CoreFarms
 
         Core.FarmingLogger("Dragon Runestone", quant);
 
-        Gold((100000 * (quant - Bot.Inventory.GetQuantity("Dragon Runestone"))) - Bot.Inventory.GetQuantity("Gold Voucher 100k"));
-        // if you use 500ks.. uncomment v and then comment ^ above
-        // Gold((int)((Math.Ceiling((quant - Bot.Inventory.GetQuantity("Dragon Runestone")) / 10.0) * 1000000) - (Bot.Inventory.GetQuantity("Gold Voucher 500k") * 500000)));
+        Gold(100000 * (quant - Bot.Inventory.GetQuantity("Gold Voucher 100k")));
 
-        Core.BuyItem("alchemyacademy", 395, "Gold Voucher 100k", quant - Bot.Inventory.GetQuantity("Dragon Runestone"));
-        // if you use 500ks.. uncomment v and then comment ^ above
-        // Core.BuyItem("alchemyacademy", 395, "Gold Voucher 500k", (int)(Math.Ceiling((desiredDstoneQ - Bot.Inventory.GetQuantity("Dragon Runestone")) / 10.0) * 2));
+        Core.BuyItem("alchemyacademy", 395, "Gold Voucher 100k", quant);
 
         Core.BuyItem("alchemyacademy", 395, "Dragon Runestone", quant, 8844);
-        // if you use 500ks.. uncomment v and then comment ^ above
-        // Core.BuyItem("alchemyacademy", 395, "Dragon Runestone", quant, 8845);
 
-        Bot.Wait.ForPickup("Dragon Runestone");
+
     }
 
     public void AlchemyREP(int rank = 10, bool goldMethod = true)
