@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 341947,
+    "size": 342206,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 140199,
+    "size": 139508,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 142474,
+    "size": 143557,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -11855,7 +11855,7 @@
       "null"
     ],
     "path": "Other/Various/Potions.cs",
-    "size": 21779,
+    "size": 21830,
     "fileName": "Potions.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/Potions.cs"
   },
