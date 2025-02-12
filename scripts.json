@@ -8509,6 +8509,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornLichKing/LesserHollowbornCaladbolg.cs"
   },
   {
+    "name": "Hollowborn Lich King - Lich King Fragment",
+    "description": "maxes out the \"Lich King Fragment\" item",
+    "tags": [
+      "hollowborn lich king",
+      "hollowborn",
+      "lich king fragment"
+    ],
+    "path": "Hollowborn/HollowbornLichKing/MaxLichKingFragments.cs",
+    "size": 1778,
+    "fileName": "MaxLichKingFragments.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornLichKing/MaxLichKingFragments.cs"
+  },
+  {
     "name": "null",
     "description": "null",
     "tags": [
