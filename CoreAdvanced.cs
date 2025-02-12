@@ -108,7 +108,7 @@ public class CoreAdvanced
         if (item == null)
             return;
 
-        _BuyItem(map, shopID, item, quant, item.Quantity, shopItemID, Log);
+        _BuyItem(map, shopID, item, quant, shopQuant, shopItemID, Log);
     }
 
 
@@ -125,60 +125,79 @@ public class CoreAdvanced
             {
                 if (Core.CheckInventory(item.ID, quant))
                 {
+                    Core.DebugLogger(this);
                     continue;
                 }
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))  // Changed the condition to check for missing inventory
                 {
+                    if (Bot.Map.Name != map)
+                        Core.Join(map);
+
+                    Core.DebugLogger(this);
                     Bot.Shops.Load(shopID);
+                    Core.DebugLogger(this);
                     Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-                    Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
+                    Core.DebugLogger(this);
+                    Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+                    // Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
+                    Core.DebugLogger(this);
 
                     // Determine how many total items are needed
                     int QuantOwned = Bot.Inventory.GetQuantity(req.ID);
-                    int totalReqNeeded = req.Quantity - QuantOwned;
-                    int totalBundlesNeeded = (int)Math.Ceiling((double)totalReqNeeded / shopQuant);
-                    int bundlesToBuy = totalBundlesNeeded - (QuantOwned / req.Quantity);
-
-                    ShopItem? shopItem = Bot.Shops.Items.FirstOrDefault(x => x.Name == req.Name);
-                    if (shopItem != null)
-                    {
-                        Core.DebugLogger(this, $"shopItem {shopItem} bundlesToBuy, {bundlesToBuy}");
-                        GetItemReq(shopItem, bundlesToBuy);
-                    }
-                    else
-                    {
-                        Core.Logger($"Failed to find shop item: {req.Name}");
-                    }
+                    int totalReqNeeded = req.Quantity * (quant - QuantOwned);
+                    // int totalBundlesNeeded = (int)Math.Ceiling((double)totalReqNeeded / shopQuant);
+                    // int bundlesToBuy = totalBundlesNeeded - (QuantOwned / req.Quantity);
+                    Core.DebugLogger(this);
                     if (req.Name.Contains("Voucher"))
                     {
-                        Farm.Voucher(req.Name, Math.Min(bundlesToBuy, req.MaxStack));
+                        Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {req.Quantity * quant}");
+                        Farm.Voucher(req.Name, totalReqNeeded);
+                        continue;
                     }
 
                     if (req.Name == "Dragon Runestone")
                     {
-                        Farm.DragonRunestone(Math.Min(bundlesToBuy, req.MaxStack));
+                        Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {req.Quantity * quant}");
+                        Farm.DragonRunestone(totalReqNeeded);
+                        continue;
                     }
 
-                    BuyItem(map, shopID, req.ID, bundlesToBuy, shopItemID, Log: Log);
-
-                    if (bundlesToBuy <= 0)
+                    Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {req.Quantity * quant}");
+                    ShopItem? shopItem = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
+                    Core.DebugLogger(this);
+                    if (shopItem != null)
                     {
-                        continue;  // Exit the loop if no more bundles are needed}
+                        Core.DebugLogger(this, $"shopItem {shopItem} bundlesToBuy, {totalReqNeeded}");
+                        Core.DebugLogger(this);
+                        BuyItem(map, shopID, req.ID, totalReqNeeded, shopItemID, Log: Log);
+                        Core.DebugLogger(this);
                     }
+                    else
+                    {
+                        Core.DebugLogger(this);
+                        Core.Logger($"Failed to find shop item: {req.Name}");
+                    }
+                    Core.DebugLogger(this);
                 }
+                Core.DebugLogger(this);
             }
-            Core.DebugLogger(this, $"Item {item.Name}, quant: {quant}");
+            Core.DebugLogger(this, $"Item {item.Name}, quant to buy: {quant}");
 
             // Ensure required items are available before purchasing the main item
             GetItemReq(item, quant);
             Core.DebugLogger(this);
-            Core.BuyItem(map, shopID, item.ID, (int)Math.Ceiling((double)quant / shopquant), shopItemID, Log: Log);
+
+            item = Bot.Shops.Items.FirstOrDefault(x =>
+                x.ID == item.ID && !x.Coins && item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity)));
+
+            Core.DebugLogger(this);
+            Core.BuyItem(map, shopID, item.ID, quant, shopItemID, Log: Log);
             Core.DebugLogger(this);
             Core.Sleep();
             // Check if the main item was purchased successfully
             Core.DebugLogger(this);
-            if (!Core.CheckInventory(item.Name, (int)Math.Ceiling((double)quant / shopquant)))
+            if (!Core.CheckInventory(item.ID, quant))
             {
                 Core.DebugLogger(this);
                 Core.Logger($"Failed to Buy {item.Name}");
@@ -205,20 +224,25 @@ public class CoreAdvanced
             runRep(item.Faction, Core.PointsToLevel(item.RequiredReputation));
             Core.DebugLogger(this);
         }
+        Core.DebugLogger(this);
         Farm.Experience(item.Level);
 
         if (!item.Coins)
+        {
+            Core.DebugLogger(this);
             Farm.Gold(item.Cost * quant);
-
+        }
         if (item.Name.Contains("Dragon Runestone"))
         {
-            Farm.DragonRunestone(item.Requirements.First(x => x.Name.Contains("Dragon Runestone")).Quantity);
+            Core.DebugLogger(this);
+            Farm.DragonRunestone(quant);
         }
-
         if (item.Name.Contains("Gold Voucher"))
         {
-            Farm.Voucher(item.Name, item.Quantity);
+            Core.DebugLogger(this);
+            Farm.Voucher(item.Name, quant);
         }
+        Core.DebugLogger(this);
     }
 
     private void runRep(string faction, int rank)
