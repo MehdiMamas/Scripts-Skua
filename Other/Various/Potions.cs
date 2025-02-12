@@ -53,12 +53,16 @@ public class PotionBuyer
         new Option<bool>("buyEndu", "Endurance Draught", "Should the bot buy Endurance Draught?", false)
     };
 
+
+    //2ndary potions that are obtained alongside the normal versions, to be banked and added as a drop.
+    string[] SecondaryPotions = new[] { "Potent Malice Potion", "Potent Soul Potion" };
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.BankingBlackList.Add("Dragon Runestone");
+        Core.BankingBlackList.AddRange(SecondaryPotions);
         Core.SetOptions();
         // INeedYourStrongestPotions(null, null, PotionQuant: Bot.Config!.Get<int>("PotionQuant"), BuyReagents: Bot.Config!.Get<bool>("BuyReagents"));
-
         INeedYourStrongestPotions(
             Potions: Bot.Config!.Get<bool>("MaxAll") ?
                         new[]
@@ -160,8 +164,6 @@ public class PotionBuyer
             Core.AddDrop(Potions);
         }
 
-        //2ndary potions that are obtained alongside the normal versions, to be banked and added as a drop.
-        string[] SecondaryPotions = new[] { "Potent Malice Potion", "Potent Soul Potion" };
         Core.ToBank(SecondaryPotions);
         Core.AddDrop(SecondaryPotions);
 
