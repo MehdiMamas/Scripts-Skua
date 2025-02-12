@@ -1231,6 +1231,14 @@ public class CoreBots
             return;
         _CheckInventorySpace();
 
+        if (Bot.Map.Name != map)
+            Join(map);
+
+        Bot.Shops.Load(shopID);
+        Sleep(1000);
+        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+        
         ShopItem? item = parseShopItem(GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.ID == itemID : x.ShopItemID == shopItemID).ToList(), shopID, itemID.ToString(), shopItemID);
         _BuyItem(map, shopID, item, quant, Log);
     }
