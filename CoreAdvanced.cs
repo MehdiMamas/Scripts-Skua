@@ -189,24 +189,31 @@ public class CoreAdvanced
             GetItemReq(item, quant - Bot.Inventory.GetQuantity(item.ID));
             Core.DebugLogger(this);
 
-            item = Bot.Shops.Items.FirstOrDefault(x =>
-                x.ID == item.ID && !x.Coins && item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity)));
+            ShopItem? mainItem = Bot.Shops.Items.FirstOrDefault(x =>
+            x.ID == item.ID && !x.Coins && item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity)));
 
-            Core.DebugLogger(this);
-            Core.BuyItem(map, shopID, item.ID, quant - Bot.Inventory.GetQuantity(item.ID), shopItemID, Log: Log);
-            Core.DebugLogger(this);
-            Core.Sleep();
-            // Check if the main item was purchased successfully
-            Core.DebugLogger(this);
-            if (!Core.CheckInventory(item.ID, quant))
+            if (mainItem != null)
             {
                 Core.DebugLogger(this);
-                Core.Logger($"Failed to Buy {item.Name}");
-                foreach (ItemBase req in item.Requirements.Where(x => x != null && !Core.CheckInventory(x.ID, x.Quantity)))
+                Core.BuyItem(map, shopID, mainItem.ID, quant - Bot.Inventory.GetQuantity(mainItem.ID), shopItemID, Log: Log);
+                Core.DebugLogger(this);
+                Core.Sleep();
+                // Check if the main item was purchased successfully
+                Core.DebugLogger(this);
+                if (!Core.CheckInventory(mainItem.ID, quant))
                 {
                     Core.DebugLogger(this);
-                    Core.Logger($"Missing {req.Name} x{req.Quantity}");
+                    Core.Logger($"Failed to Buy {mainItem.Name}");
+                    foreach (ItemBase req in mainItem.Requirements.Where(x => x != null && !Core.CheckInventory(x.ID, x.Quantity)))
+                    {
+                        Core.DebugLogger(this);
+                        Core.Logger($"Missing {req.Name} x{req.Quantity}");
+                    }
                 }
+            }
+            else
+            {
+                Core.Logger($"Failed to find the main item: {item.Name}");
             }
         }
     }
