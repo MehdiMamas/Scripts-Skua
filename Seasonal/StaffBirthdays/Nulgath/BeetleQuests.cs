@@ -1,7 +1,7 @@
 /*
 name: Beetle Quests and Rewards
 description: This will complete the Beetle General Pet quest.
-tags: quest, beetle, general, warlord, pet, staff, birthday, nulgath
+tags: quest, beetle, general, warlord, pet, staff, birthday, nulgath, void beetle, void,void beetle warlord, beetle general
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
@@ -151,7 +151,7 @@ public class BeetleQuests
         List<ItemBase> RewardOptions = Core.EnsureLoad(9076).Rewards;
         RewardOptions.RemoveAll(item => item.Name == "Beetle EXP");
         Core.AddDrop(Core.QuestRewards(9076));
-        
+
         foreach (ItemBase item in RewardOptions)
         {
             Core.FarmingLogger(item.Name, item.MaxStack);
