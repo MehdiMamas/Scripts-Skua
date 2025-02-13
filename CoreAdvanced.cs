@@ -190,7 +190,7 @@ public class CoreAdvanced
             Core.DebugLogger(this);
 
             ShopItem? mainItem = Bot.Shops.Items.FirstOrDefault(x =>
-            x.ID == item.ID && !x.Coins && item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity)));
+            x.ID == item.ID && !(x.Coins && x.Cost > 0) && item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity)));
 
             if (mainItem != null)
             {
