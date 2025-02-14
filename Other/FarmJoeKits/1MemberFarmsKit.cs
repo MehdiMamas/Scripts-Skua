@@ -166,6 +166,8 @@ public class MemberFarm
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
     private CoreAdvanced Adv = new();
+    private CoreFarms Farm = new();
+    private CoreDailies Daily = new();
     private CoreNation Nation = new();
     private CoreSDKA SDKA = new();
     private TrobbolierPet Trobbolier = new();
@@ -201,6 +203,13 @@ public class MemberFarm
             Core.Logger("This script is Member-Only", messageBox: true);
             return;
         }
+
+        //Dailies
+        Daily.DeathKnightLord();
+        Daily.MonthlyTreasureChestKeys();
+        Daily.WheelofDoom();
+        Daily.FreeDailyBoost();
+        Daily.BeastMasterChallenge();
 
         //Core Farm
         SDKA.DoAll();
@@ -250,6 +259,10 @@ public class MemberFarm
         //Class
         ChronoAssassin.GetChronoAss();
         Core.ToBank("Chrono Assassin");
+
+        //Reputations
+        Farm.BeastMasterREP();
+        Farm.SkyguardREP();
 
         //Deadfly.BuyAllMerge();
         //GonnaGetcha.BuyAllMerge();
