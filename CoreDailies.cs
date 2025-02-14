@@ -89,7 +89,12 @@ public class CoreDailies
 
     public bool CheckDailyv2(int quest, bool any = true, bool shouldUnBank = true, params string[] items)
     {
-        Quest Quest = Core.InitializeWithRetries(() => Core.EnsureLoad(quest));
+        Quest? Quest = Core.InitializeWithRetries(() => Core.EnsureLoad(quest));
+        if (Quest == null)
+        {
+            Core.Logger($"Failed to load quest {quest}");
+            return false;
+        }
         // Check if the daily quest is complete
         if (Bot.Quests.IsDailyComplete(quest))
         {
