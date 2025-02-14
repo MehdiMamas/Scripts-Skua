@@ -1444,6 +1444,7 @@ public class CoreFarms
 
 
         // Ensure the correct shop is loaded
+        Core.Join(map);
         Bot.Shops.Load(shopID);
         Core.Sleep(1000);
         Bot.Wait.ForActionCooldown(GameActions.LoadShop);
@@ -1460,7 +1461,7 @@ public class CoreFarms
             // Get current quantity
             int currentQuantity = Bot.Inventory.GetQuantity(Voucher);
             // Calculate the amount to buy
-            int AmountToBuy = Math.Min(quant - Bot.Inventory.GetQuantity(item.Name), item.MaxStack - currentQuantity);
+            int AmountToBuy = Math.Min(quant, item.MaxStack);
             // Farm gold for the required amount and buy the item
             Gold(AmountToBuy * v);
             // Buy Item
