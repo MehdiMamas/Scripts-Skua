@@ -195,7 +195,7 @@ public class CoreAdvanced
             if (mainItem != null)
             {
                 Core.DebugLogger(this);
-                Core.BuyItem(map, shopID, mainItem.ID, quant - Bot.Inventory.GetQuantity(mainItem.ID), shopItemID, Log: Log);
+                Core.BuyItem(map, shopID, mainItem.ID, quant, shopItemID, Log: Log);
                 Core.DebugLogger(this);
                 Core.Sleep();
                 // Check if the main item was purchased successfully
