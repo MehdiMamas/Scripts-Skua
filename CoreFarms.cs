@@ -1462,6 +1462,8 @@ public class CoreFarms
             int currentQuantity = Bot.Inventory.GetQuantity(Voucher);
             // Calculate the amount to buy
             int AmountToBuy = Math.Min(quant, item.MaxStack);
+            if (quant > item.MaxStack)
+                Core.Logger($"Amount of {item.Name} to buy ({quant}) is greater than the max stack of {item.MaxStack}, buying {item.MaxStack} instead.");
             // Farm gold for the required amount and buy the item
             Gold(AmountToBuy * v);
             // Buy Item
