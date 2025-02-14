@@ -83,15 +83,17 @@ public class CoreDailies
     /// </param>
     /// <param name="items">The list of item names to verify or add to the drop list.</param>
     /// <returns>
-    /// True if the quest is incomplete and relevant items are added to the drop list; 
-    /// false if the quest is already complete or all items are at max stack (when <paramref name="any"/> is true).
+    /// True (dont use !) if the quest is incomplete and relevant items are added to the drop list;<br/>
+    /// false (use !) if the quest is already complete or all items are at max stack (when <paramref name="any"/> is true).
     /// </returns>
+
     public bool CheckDailyv2(int quest, bool any = true, bool shouldUnBank = true, params string[] items)
     {
+        Quest Quest = Core.InitializeWithRetries(() => Core.EnsureLoad(quest));
         // Check if the daily quest is complete
         if (Bot.Quests.IsDailyComplete(quest))
         {
-            Core.Logger("Daily/Weekly/Monthly quest not available right now");
+            Core.Logger($"Daily/Weekly/Monthly \"{Quest.Name} [{Quest.ID}]\" is not available right now");
             return false;
         }
 
@@ -566,18 +568,27 @@ public class CoreDailies
         Bot.Wait.ForPickup("Elders' Blood");
     }
 
-    public void SparrowsBlood()
+    public void SparrowsBlood(int quant = 3)
     {
-        Core.Logger("Daily: Sparrow's Blood");
-        if (!CheckDailyv2(803, true, true, "Sparrow's Blood") || Core.CheckInventory("Sparrow's Blood", 3))
+        if (!CheckDailyv2(803, false, true, "Sparrow's Blood"))
             return;
-        Core.AddDrop("Sparrow's Blood");
+
+        if (Core.CheckInventory("Sparrow's Blood", quant))
+        {
+            Core.Logger($"You already have enough Sparrow's Blood ({Bot.Inventory.GetQuantity("Sparrow's Blood")}/{quant}). Skipped");
+            return;
+        }
+
+        Core.Logger("Daily: Sparrow's Blood");
+
+        Core.AddDrop(5584);
         Core.EquipClass(ClassType.Farm);
         Core.EnsureAccept(803);
         Core.KillMonster("arcangrove", "LeftBack", "Left", "*", "Blood Lily", 30);
         Core.KillMonster("arcangrove", "RightBack", "Left", "*", "Snapdrake", 17);
         Core.KillMonster("arcangrove", "Back", "Left", "*", "DOOM Dirt", 12);
         Core.EnsureComplete(803);
+        Bot.Wait.ForDrop("Sparrow's Blood");
         Bot.Wait.ForPickup("Sparrow's Blood");
     }
 

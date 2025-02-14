@@ -339,8 +339,7 @@ public class BrightOak
                     break;
 
                 case 4806: // Outside Assistance [Lapis Token II]
-                    if (!Core.CheckInventory("Sparrow's Blood"))
-                        Daily.SparrowsBlood();
+                    Daily.SparrowsBlood(1);
                     Bot.Wait.ForPickup("Lapis Token II");
                     break;
 

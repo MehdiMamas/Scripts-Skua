@@ -62,7 +62,7 @@ public class AssistingCragAndBamboozle
 
         if (Item != null)
         {
-            Core.AddDrop("Nulgath Larvae",
+            Core.AddDrop("Nulgath Larvae", "Sparrow's Blood",
                          "Sword of Nulgath", "Gem of Nulgath", "Tainted Gem", "Dark Crystal Shard", "Diamond of Nulgath",
                          "Totem of Nulgath", "Blood Gem of the Archfiend", "Unidentified 19", "Elders' Blood", "Voucher of Nulgath", "Voucher of Nulgath (non-mem)");
 
@@ -79,7 +79,9 @@ public class AssistingCragAndBamboozle
             if (!Core.CheckInventory("Tendurrr The Assistant"))
                 Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Tendurrr The Assistant", isTemp: false);
 
-            Daily.SparrowsBlood();
+            Daily.SparrowsBlood(1);
+
+            // ReCheck Sparrow's Blood
             if (!Core.CheckInventory("Sparrow's Blood"))
                 Core.Logger("This bot requires you to have at least 1 Sparrow's Blood", stopBot: true);
 
