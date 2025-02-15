@@ -77,7 +77,7 @@ public class CoreArmyRep
     public void ArmyRavenlossRep() => RunArmyRep("RavenLoss", "twilightedge", new[] { "r2", "r3", "r4" }, new[] { "r2", "r3", "r4" }, new[] { 3445 });
     public void ArmySandseaRep() => RunArmyRep("Sandsea", "Sandsea", new[] { "Enter", "r6", "r7", "r8" }, new[] { "Enter", "r6", "r7", "r8" }, new[] { 916, 917, 919, 921, 922 });
     public void ArmySomniaRep() => RunArmyRep("Somnia", "Somnia", new[] { "r8", "r4", "r7" }, new[] { "r8", "r4", "r7" }, new[] { 7665, 7666, 7669 });
-    public void ArmySwordhavenRep() => RunArmyRep("Swordhaven", "Swordhaven", new[] { "r4", "r3", "r5" }, new[] { "r4", "r3", "r5" }, new[] { 3065, 3066, 3067, 3070, 3085, 3086, 3087 });
+    public void ArmySwordhavenRep() => RunArmyRep("Swordhaven", "Swordhavencastle", new[] { "r4", "r3", "r5" }, new[] { "r4", "r3", "r5" }, new[] { 3065, 3066, 3067, 3070, 3085, 3086, 3087 });
     public void ArmyTreasureHunterRep() => RunArmyRep("TreasureHunter", "stalagbite", new[] { "Enter", "r1" }, new[] { "Enter", "r1" }, new[] { 6593 });
     public void ArmyTrollRep() => RunArmyRep("Troll", "bloodtuskwar", new[] { "r6", "r3", "r2" }, new[] { "r6", "r3", "r2" }, new[] { 1263 });
     public void ArmyLoremasterRep() => RunArmyRep("Loremaster", Core.IsMember ? "druids" : "wardwarf", new[] { Core.IsMember ? "r5" : "r2", Core.IsMember ? "r5" : "r4" }, new[] { Core.IsMember ? "r5" : "r2", Core.IsMember ? "r5" : "r4" }, Core.IsMember ? new[] { 3032 } : new[] { 7505 });
