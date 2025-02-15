@@ -76,7 +76,7 @@ public class BigDaddysWardrobeMerge
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(10062,
+                        Core.HuntMonsterQuest(10072,
                         ("tunneloflove", "Love Knight", ClassType.Farm),
                         ("tunneloflove", "Oubliette", ClassType.Solo),
                         ("tunneloflove", "Rosey Moth", ClassType.Farm)
