@@ -9971,6 +9971,38 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HerosHeartDay/Fezzini.cs"
   },
   {
+    "name": "Big Daddys Wardrobe Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Big Daddys Wardrobe Merge [2560] in /tunneloflove",
+    "tags": [
+      "big",
+      "daddys",
+      "wardrobe",
+      "merge",
+      "tunneloflove",
+      "lovely",
+      "moonlighters",
+      "moonlighter",
+      "heart",
+      "hearts",
+      "arcane",
+      "rouge",
+      "cowl",
+      "morph",
+      "silphium",
+      "rapier",
+      "potion",
+      "rapiers",
+      "crystalized",
+      "alchemist",
+      "daddy",
+      "cherub"
+    ],
+    "path": "Seasonal/HerosHeartDay/BigDaddysWardrobeMerge.cs",
+    "size": 6525,
+    "fileName": "BigDaddysWardrobeMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HerosHeartDay/BigDaddysWardrobeMerge.cs"
+  },
+  {
     "name": "Love Spell Merge (Pinkest Dye Ever!!!)",
     "description": "This will farm Pinkest Dye Ever!!! for the Love Spell Merge.",
     "tags": [
