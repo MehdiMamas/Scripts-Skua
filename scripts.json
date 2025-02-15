@@ -9935,6 +9935,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HerosHeartDay/LoveSpellStory.cs"
   },
   {
+    "name": "Tunnel Of Love Story",
+    "description": "This will complete the Tunnel of Love story in /tunneloflove.",
+    "tags": [
+      "story",
+      "quest",
+      "seasonal",
+      "hero",
+      "heart",
+      "valentines",
+      "tunneloflove",
+      "tunnel of love",
+      "big daddy",
+      "hero's heart day"
+    ],
+    "path": "Seasonal/HerosHeartDay/TunnelOfLove.cs",
+    "size": 2868,
+    "fileName": "TunnelOfLove.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HerosHeartDay/TunnelOfLove.cs"
+  },
+  {
     "name": "Fezzini Story",
     "description": "This will complete the Fezzini story quest.",
     "tags": [
