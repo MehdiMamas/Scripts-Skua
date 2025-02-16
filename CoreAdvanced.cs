@@ -3192,6 +3192,8 @@ public class CoreAdvanced
 
                 #region  Theif - Mana Vamp
                 case "ninja":
+                case "classic ninja":
+                case "ninja (rare)":
                     type = EnhancementType.Thief;
                     wSpecial = WeaponSpecial.Mana_Vamp;
                     break;
