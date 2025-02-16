@@ -2926,8 +2926,9 @@ public class CoreAdvanced
                 case "vindicator of they":
                 case "void highlord tester":
                 case "warlord":
-                case "warrior (rare)":
                 case "warrior":
+                case "classic warrior":
+                case "warrior (rare)":
                 case "warriorscythe general":
                 case "witch":
                 default: // If the correct enhancement arent unlocked, or the class in question isnt in the Forge Enhancement Lib, use Awe Enhancements Lib
@@ -3049,6 +3050,7 @@ public class CoreAdvanced
                 case "ranger":
                 case "renegade":
                 case "rogue":
+                case "classic rogue":
                 case "rogue (rare)":
                 case "scarlet sorceress":
                 case "shadowscythe general":
@@ -3270,6 +3272,7 @@ public class CoreAdvanced
                 case "lightcaster test":
                 case "love caster":
                 case "mage":
+                case "classic mage":
                 case "mage (rare)":
                 case "sorcerer":
                 case "the collector":
