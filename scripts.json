@@ -9796,10 +9796,11 @@
       "leques",
       "encantadas",
       "ecantado",
-      "bolsa"
+      "bolsa",
+      "espelho"
     ],
     "path": "Seasonal/HerosHeartDay/YguasuFallsMerge.cs",
-    "size": 6117,
+    "size": 7067,
     "fileName": "YguasuFallsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HerosHeartDay/YguasuFallsMerge.cs"
   },
