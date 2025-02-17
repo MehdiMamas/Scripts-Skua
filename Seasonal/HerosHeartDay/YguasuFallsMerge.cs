@@ -1,7 +1,7 @@
 /*
 name: Yguasu Falls Merge
 description: This bot will farm the items belonging to the selected mode for the Yguasu Falls Merge [2413] in /yguasu
-tags: yguasu, falls, merge, yguasu, vestes, da, rainha, das, ondas, morph, turbante, espírito, mãe, dágua, leque, leques, encantadas, ecantado, bolsa
+tags: yguasu, falls, merge, yguasu, vestes, da, rainha, das, ondas, morph, turbante, espírito, mãe, dágua, leque, leques, encantadas, ecantado, bolsa, espelho
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -31,7 +31,7 @@ public class YguasuFallsMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Lovely Silk", "Bolsa da Mãe D'água" });
+        Core.BankingBlackList.AddRange(new[] { "Lovely Silk", "Bolsa da Mãe D'água", "Espelho da Mãe D'água" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -93,6 +93,17 @@ public class YguasuFallsMerge
                     Bot.Wait.ForPickup(req.ID);
                     break;
 
+                case "Espelho da Mãe D'água":
+                    Core.FarmingLogger(req.Name, quant);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.HuntMonsterQuestChoose(9610, 83981,
+                        ("canalshore", "Trapped Snack", ClassType.Farm),
+                        ("cursedshop", "Ghost Vase", ClassType.Farm),
+                        ("terradefesta", "Baron Sunday", ClassType.Solo));
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
             }
         }
     }
@@ -110,8 +121,10 @@ public class YguasuFallsMerge
         new Option<bool>("83984", "Vestes Encantadas da Rainha das Ondas", "Mode: [select] only\nShould the bot buy \"Vestes Encantadas da Rainha das Ondas\" ?", false),
         new Option<bool>("83985", "Turbante Ecantado das Ondas Visage", "Mode: [select] only\nShould the bot buy \"Turbante Ecantado das Ondas Visage\" ?", false),
         new Option<bool>("83986", "Turbante Ecantado das Ondas", "Mode: [select] only\nShould the bot buy \"Turbante Ecantado das Ondas\" ?", false),
+        new Option<bool>("83987", "Bolsa Ecantado da Mãe D'água", "Mode: [select] only\nShould the bot buy \"Bolsa Ecantado da Mãe D'água\" ?", false),
         new Option<bool>("83988", "Bolsa Ecantado da Mãe D'água", "Mode: [select] only\nShould the bot buy \"Bolsa Ecantado da Mãe D'água\" ?", false),
         new Option<bool>("83989", "Leque Ecantado da Mãe D'água", "Mode: [select] only\nShould the bot buy \"Leque Ecantado da Mãe D'água\" ?", false),
         new Option<bool>("83990", "Leques Ecantado da Mãe D'água", "Mode: [select] only\nShould the bot buy \"Leques Ecantado da Mãe D'água\" ?", false),
+        new Option<bool>("83991", "Espelho Ecantado da Mãe D'água", "Mode: [select] only\nShould the bot buy \"Espelho Ecantado da Mãe D'água\" ?", false),
     };
 }
