@@ -1238,7 +1238,7 @@ public class CoreBots
         Sleep(1000);
         Bot.Wait.ForActionCooldown(GameActions.LoadShop);
         Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
-        
+
         ShopItem? item = parseShopItem(GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.ID == itemID : x.ShopItemID == shopItemID).ToList(), shopID, itemID.ToString(), shopItemID);
         _BuyItem(map, shopID, item, quant, Log);
     }
@@ -2775,7 +2775,7 @@ public class CoreBots
         }
     }
 
-    public string[] QuestRewards(params int[] questIDs)
+    public string[] QuestRewards(int[] questIDs)
     {
         if (questIDs.Length == 0)
             return Array.Empty<string>();
@@ -2787,6 +2787,103 @@ public class CoreBots
             toReturn.AddRange(q.Rewards.Select(i => i.Name));
         }
         return toReturn.ToArray();
+    }
+
+    public ItemBase[] QuestRewardsItemBase(int[] questIDs)
+    {
+        if (questIDs.Length == 0)
+            return Array.Empty<ItemBase>();
+        List<ItemBase> toReturn = new();
+        foreach (Quest q in EnsureLoad(questIDs))
+        {
+            if (q.Rewards == null || q.Rewards.Count == 0)
+                continue;
+            toReturn.AddRange(q.Rewards);
+        }
+        return toReturn.ToArray();
+    }
+
+    public int[] QuestRewardsInt(int[] questIDs)
+    {
+        if (questIDs.Length == 0)
+            return Array.Empty<int>();
+        List<int> toReturn = new();
+        foreach (Quest q in EnsureLoad(questIDs))
+        {
+            if (q.Rewards == null || q.Rewards.Count == 0)
+                continue;
+            toReturn.AddRange(q.Rewards.Select(x => x.ID).ToArray());
+        }
+        return toReturn.ToArray();
+    }
+
+    public T[] QuestRequirements<T>(int[] questIDs) where T : class
+    {
+        /*
+        Example usage:
+        string[] names = QuestRequirements<string>(questIDs);
+        int[] ids = QuestRequirements<int>(questIDs);
+        ItemBase[] items = QuestRequirements<ItemBase>(questIDs);
+        */
+
+        if (questIDs.Length == 0)
+            return Array.Empty<T>();
+
+        List<T> toReturn = new();
+
+        foreach (Quest q in EnsureLoad(questIDs))
+        {
+            if (q == null || q.Requirements == null || q.Requirements.Count == 0)
+            {
+                if (typeof(T) == typeof(string))
+                    toReturn.Add((T)(object)string.Empty);
+                else if (typeof(T) == typeof(ItemBase))
+                    toReturn.Add(null); // Returning null for ItemBase
+                else
+                    toReturn.Add(default); // Returns 0 for int
+                continue;
+            }
+
+            if (typeof(T) == typeof(string))
+                toReturn.Add((T)(object)q.Requirements.First().Name);
+            else if (typeof(T) == typeof(int))
+                toReturn.Add((T)(object)q.Requirements.First().ID);
+            else if (typeof(T) == typeof(ItemBase))
+                toReturn.Add((T)(object)q.Requirements.First().ID); // Assuming `Item` is of type ItemBase
+        }
+
+        return toReturn.ToArray();
+    }
+
+    public T? QuestRequirement<T>(int questID) where T : class
+    {
+        /*
+        Example usage:
+        string name = QuestRequirement<string>(questID);
+        int id = QuestRequirement<int>(questID);
+        ItemBase item = QuestRequirement<ItemBase>(questID);
+        */
+
+        Quest q = EnsureLoad(new int[] { questID }).FirstOrDefault();
+        if (q == null || q.Requirements == null || q.Requirements.Count == 0)
+        {
+            if (typeof(T) == typeof(string))
+                return (T)(object)string.Empty;
+            else if (typeof(T) == typeof(ItemBase))
+                return null; // Returning null for ItemBase
+            return default; // Returns 0 for int
+        }
+
+        if (typeof(T) == typeof(string))
+            return (T)(object)q.Requirements.First().Name;
+
+        if (typeof(T) == typeof(int))
+            return (T)(object)q.Requirements.First().ID;
+
+        if (typeof(T) == typeof(ItemBase))
+            return (T)(object)q.Requirements.First().ID;
+
+        return default; // Fallback, should never happen
     }
 
     /// <summary>
