@@ -2775,7 +2775,7 @@ public class CoreBots
         }
     }
 
-    public string[] QuestRewards(int[] questIDs)
+    public string[] QuestRewards(params int[] questIDs)
     {
         if (questIDs.Length == 0)
             return Array.Empty<string>();
@@ -2789,7 +2789,7 @@ public class CoreBots
         return toReturn.ToArray();
     }
 
-    public ItemBase[] QuestRewardsItemBase(int[] questIDs)
+    public ItemBase[] QuestRewardsItemBase(params int[] questIDs)
     {
         if (questIDs.Length == 0)
             return Array.Empty<ItemBase>();
@@ -2803,7 +2803,7 @@ public class CoreBots
         return toReturn.ToArray();
     }
 
-    public int[] QuestRewardsInt(int[] questIDs)
+    public int[] QuestRewardsInt(params int[] questIDs)
     {
         if (questIDs.Length == 0)
             return Array.Empty<int>();
@@ -2817,7 +2817,7 @@ public class CoreBots
         return toReturn.ToArray();
     }
 
-    public T[] QuestRequirements<T>(int[] questIDs) where T : class
+    public T[] QuestRequirements<T>(params int[] questIDs) where T : class
     {
         /*
         Example usage:
@@ -2855,36 +2855,36 @@ public class CoreBots
         return toReturn.ToArray();
     }
 
-    public T? QuestRequirement<T>(int questID) where T : class
+   public T QuestRequirement<T>(int questID) where T : struct
+{
+    /*
+    Example usage:
+    string name = QuestRequirement<string>(questID);
+    int id = QuestRequirement<int>(questID);
+    ItemBase item = QuestRequirement<ItemBase>(questID);
+    */
+
+    Quest q = EnsureLoad(new int[] { questID }).FirstOrDefault();
+    if (q == null || q.Requirements == null || q.Requirements.Count == 0)
     {
-        /*
-        Example usage:
-        string name = QuestRequirement<string>(questID);
-        int id = QuestRequirement<int>(questID);
-        ItemBase item = QuestRequirement<ItemBase>(questID);
-        */
-
-        Quest q = EnsureLoad(new int[] { questID }).FirstOrDefault();
-        if (q == null || q.Requirements == null || q.Requirements.Count == 0)
-        {
-            if (typeof(T) == typeof(string))
-                return (T)(object)string.Empty;
-            else if (typeof(T) == typeof(ItemBase))
-                return null; // Returning null for ItemBase
-            return default; // Returns 0 for int
-        }
-
         if (typeof(T) == typeof(string))
-            return (T)(object)q.Requirements.First().Name;
-
-        if (typeof(T) == typeof(int))
-            return (T)(object)q.Requirements.First().ID;
-
-        if (typeof(T) == typeof(ItemBase))
-            return (T)(object)q.Requirements.First().ID;
-
-        return default; // Fallback, should never happen
+            return (T)(object)string.Empty;
+        else if (typeof(T) == typeof(ItemBase))
+            return default; // Returning default for ItemBase
+        return default; // Returns 0 for int or default for other value types
     }
+
+    if (typeof(T) == typeof(string))
+        return (T)(object)q.Requirements.First().Name;
+
+    if (typeof(T) == typeof(int))
+        return (T)(object)q.Requirements.First().ID;
+
+    if (typeof(T) == typeof(ItemBase))
+        return (T)(object)q.Requirements.First().ID;
+
+    return default; // Fallback, should never happen
+}
 
     /// <summary>
     /// Accepts and then completes the quest, used inside a loop
