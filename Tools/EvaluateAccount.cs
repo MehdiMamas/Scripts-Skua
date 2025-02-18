@@ -82,7 +82,7 @@ public class EvalAcc
 
             $"\nMaxed Factions:\t\t\t{Bot.Reputation.FactionList.Count(f => f.Rank == 10)} out of {Bot.Reputation.FactionList.Count}\n" +
             $"Joined Legion:\t\t\t{checkbox(Core.isCompletedBefore(793))}\n" +
-            $"Treasure Potion Count:\t\t{Bot.Inventory.GetItem(18927)?.Quantity}\n\n" +
+            $"Treasure Potion Count:\t\t{Bot.Inventory.GetQuantity(18927)}\n\n" +
 
             $"Current Gold:\t\t\t{ToKMB((int)Math.Round((double)Bot.Player.Gold / 100000d) * 100000)}\n" +
             $"Current ACs:\t\t\t{ToKMB((int)Math.Floor((double)ACs / 1000d) * 1000)}{(ACs > 0 ? "+" : string.Empty)}\n" +

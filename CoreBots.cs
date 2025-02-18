@@ -2789,20 +2789,6 @@ public class CoreBots
         return toReturn.ToArray();
     }
 
-    public ItemBase[] QuestRewardsItemBase(params int[] questIDs)
-    {
-        if (questIDs.Length == 0)
-            return Array.Empty<ItemBase>();
-        List<ItemBase> toReturn = new();
-        foreach (Quest q in EnsureLoad(questIDs))
-        {
-            if (q.Rewards == null || q.Rewards.Count == 0)
-                continue;
-            toReturn.AddRange(q.Rewards);
-        }
-        return toReturn.ToArray();
-    }
-
     public int[] QuestRewardsInt(params int[] questIDs)
     {
         if (questIDs.Length == 0)
@@ -2817,74 +2803,31 @@ public class CoreBots
         return toReturn.ToArray();
     }
 
-    public T?[] QuestRequirements<T>(params int[] questIDs) where T : class
+    public T[] QuestRequirements<T>(params int[] questIDs)
     {
-        /*
-        Example usage:
-        string[] names = QuestRequirements<string>(questIDs);
-        int[] ids = QuestRequirements<int>(questIDs);
-        ItemBase[] items = QuestRequirements<ItemBase>(questIDs);
-        */
-
         if (questIDs.Length == 0)
-            return Array.Empty<T?>();
+            return Array.Empty<T>();
 
-        List<T?> toReturn = new();
+        List<T> toReturn = new();
 
         foreach (Quest q in EnsureLoad(questIDs))
         {
             if (q == null || q.Requirements == null || q.Requirements.Count == 0)
             {
-                if (typeof(T) == typeof(string))
-                    toReturn.Add((T?)(object)string.Empty);
-                else if (typeof(T) == typeof(ItemBase))
-                    toReturn.Add(null); // Returning null for ItemBase
-                else
-                    toReturn.Add(default); // Returns 0 for int
+                toReturn.Add(typeof(T) == typeof(string) ? (T)(object)string.Empty : (T)(object)default(int));
                 continue;
             }
 
             if (typeof(T) == typeof(string))
-                toReturn.Add((T?)(object)q.Requirements.First().Name);
+                toReturn.AddRange(q.Requirements.Where(x => x != null).Select(x => (T)(object)x.Name));
             else if (typeof(T) == typeof(int))
-                toReturn.Add((T?)(object)q.Requirements.First().ID);
-            else if (typeof(T) == typeof(ItemBase))
-                toReturn.Add((T?)(object)q.Requirements.First().ID); // Assuming `Item` is of type ItemBase
+                toReturn.AddRange(q.Requirements.Select(x => (T)(object)x.ID));
         }
 
         return toReturn.ToArray();
     }
 
-    public T QuestRequirement<T>(int questID) where T : struct
-    {
-        /*
-        Example usage:
-        string name = QuestRequirement<string>(questID);
-        int id = QuestRequirement<int>(questID);
-        ItemBase item = QuestRequirement<ItemBase>(questID);
-        */
 
-        Quest? q = EnsureLoad(new int[] { questID }).FirstOrDefault();
-        if (q == null || q.Requirements == null || q.Requirements.Count == 0)
-        {
-            if (typeof(T) == typeof(string))
-                return (T)(object)string.Empty;
-            else if (typeof(T) == typeof(ItemBase))
-                return default; // Returning default for ItemBase
-            return default; // Returns 0 for int or default for other value types
-        }
-
-        if (typeof(T) == typeof(string))
-            return (T)(object)q.Requirements.First().Name;
-
-        if (typeof(T) == typeof(int))
-            return (T)(object)q.Requirements.First().ID;
-
-        if (typeof(T) == typeof(ItemBase))
-            return (T)(object)q.Requirements.First().ID;
-
-        return default; // Fallback, should never happen
-    }
 
     /// <summary>
     /// Accepts and then completes the quest, used inside a loop
