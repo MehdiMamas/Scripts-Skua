@@ -2521,6 +2521,9 @@ public class CoreBots
 
         foreach (ItemBase item in rewards)
         {
+            if (CheckInventory(item.ID, item.MaxStack, false))
+                continue;
+
             // Check if no space in inventory and item isn't in the inventory
             if (!HasSpace && !CheckInventory(item.ID, toInv: false))
             {
