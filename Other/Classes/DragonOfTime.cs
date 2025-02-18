@@ -22,6 +22,7 @@ tags: class, dot, damage over time, dragon of time, timeinn
 //cs_include Scripts/Story/Borgars.cs
 //cs_include Scripts/Story/ElegyofMadness(Darkon)/CoreAstravia.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 
 public class DragonOfTime
 {
@@ -301,20 +302,19 @@ public class DragonOfTime
             Farm.Experience(75);
             Core.AddDrop("Burger Buns");
             Core.EquipClass(ClassType.Solo);
-            while (!Bot.ShouldExit && !Core.CheckInventory(Extras, toInv: false))
+            Bot.Drops.Add(Extras.Where(x => Core.CheckInventory(x, toInv: false)).Select(x => x).ToArray());
+            foreach (string Item in Core.QuestRewards(7725).Where(x => !Core.CheckInventory(x, toInv: false)).Select(x => x).ToArray())
             {
                 Core.EnsureAccept(7725);
                 if (!Core.CheckInventory("Borgar"))
                 {
-                    bool LoggedBefore = false;
                     while (!Bot.ShouldExit && !Core.CheckInventory("Burger Buns", 5))
                     {
                         // Burglinster's Revenge 7522
                         Core.EnsureAccept(7522);
-                        Core.HuntMonster("borgars", "Burglinster", "Burglinster Cured", log: !LoggedBefore);
+                        Core.HuntMonster("borgars", "Burglinster", "Burglinster Cured");
                         Core.EnsureComplete(7522);
                         Bot.Wait.ForPickup("Burger Buns");
-                        LoggedBefore = true;
                     }
                     Core.BuyItem("borgars", 1884, 54650, shopItemID: 7387);
                 }
