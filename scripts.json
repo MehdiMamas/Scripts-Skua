@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 345772,
+    "size": 343664,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 51984,
+    "size": 51973,
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreDailies.cs"
   },
@@ -2290,7 +2290,7 @@
       "seasonal"
     ],
     "path": "Tools/EvaluateAccount.cs",
-    "size": 12245,
+    "size": 12239,
     "fileName": "EvaluateAccount.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/EvaluateAccount.cs"
   },
@@ -17864,7 +17864,7 @@
       "armor"
     ],
     "path": "Nation/Various/ContractEnforcer.cs",
-    "size": 4860,
+    "size": 4946,
     "fileName": "ContractEnforcer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/ContractEnforcer.cs"
   },
