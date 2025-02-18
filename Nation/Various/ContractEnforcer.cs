@@ -60,7 +60,7 @@ public class ContractEnforcer
         DLM.BuyAllMerge("Shadow Legacy of Nulgath");
         Adv.BuyItem("tercessuinotlim", 1951, "Unmoulded Fiend Essence");
 
-        // Quest must be acepted for contrac to drop, droprate is not 100%.
+        // Quest must be acepted for contract to drop, droprate is not 100%.
         Core.EnsureAccept(10050);
         Core.HuntMonster("ebilcorphq", "Dage the Evil", "Dage's Contract", isTemp: false);
 
@@ -69,20 +69,19 @@ public class ContractEnforcer
             Daily.PearlOfNulgath();
             if (!Core.CheckInventory("Pearl of Nulgath", 4))
             {
-                Core.Logger($"You need 4 Pearls of Nulgath to complete the quest, you have {Bot.Inventory.GetItem("Pearl of Nulgath")?.Quantity ?? 0}");
+                Core.Logger($"You need 4 Pearls of Nulgath to complete the quest, you have {Bot.Inventory.GetQuantity("Pearl of Nulgath")}/4");
                 return;
             }
         }
 
-        if (!Core.CheckInventory(Core.QuestRewards(10048).Concat(Core.QuestRewards(10049)).ToArray()))
+        if (!Core.CheckInventory(Core.QuestRequirement<int>(10050)))
         {
             Core.Logger("You need to have both rewards from both quests in order to complete the quest. Run the script again tomorrow.");
             return;
-
         }
 
         Core.EnsureComplete(10050);
-        Core.ToBank(Core.QuestRewards(10048).Concat(Core.QuestRewards(10049)).ToArray());
+        Core.ToBank(Core.QuestRewards(10048, 10049));
     }
 
     public void Adornments()
