@@ -2514,7 +2514,12 @@ public class CoreBots
         bool hasAllItems = true;
         bool questCompleted = false;
 
-        foreach (ItemBase item in quest.Rewards)
+        // Filter the rewards based on the itemList if provided
+        IEnumerable<ItemBase> rewards = itemList == null
+            ? quest.Rewards
+            : quest.Rewards.Where(item => itemList.Contains(item.Name));
+
+        foreach (ItemBase item in rewards)
         {
             // Check if no space in inventory and item isn't in the inventory
             if (!HasSpace && !CheckInventory(item.ID, toInv: false))
