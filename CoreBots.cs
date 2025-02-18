@@ -2779,7 +2779,15 @@ public class CoreBots
             Bot.Quests.UnregisterQuests(q.ID);
         }
     }
-
+    /// <summary>
+    /// Retrieves the quest reward names for the specified quest IDs.
+    /// </summary>
+    /// <param name="questIDs">
+    /// The quest IDs for which to retrieve the reward names.
+    /// </param>
+    /// <returns>
+    /// An array of reward names (strings) for the specified quest IDs.
+    /// </returns>
     public string[] QuestRewards(params int[] questIDs)
     {
         if (questIDs.Length == 0)
@@ -2794,6 +2802,15 @@ public class CoreBots
         return toReturn.ToArray();
     }
 
+    /// <summary>
+    /// Retrieves the quest reward IDs for the specified quest IDs.
+    /// </summary>
+    /// <param name="questIDs">
+    /// The quest IDs for which to retrieve the reward IDs.
+    /// </param>
+    /// <returns>
+    /// An array of reward IDs (integers) for the specified quest IDs.
+    /// </returns>
     public int[] QuestRewardsInt(params int[] questIDs)
     {
         if (questIDs.Length == 0)
@@ -2808,6 +2825,21 @@ public class CoreBots
         return toReturn.ToArray();
     }
 
+
+    /// <summary>
+    /// Retrieves the quest requirements for the specified quest IDs, based on the type parameter.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The type of the result. Can be either <see cref="string"/> or <see cref="int"/>.
+    /// </typeparam>
+    /// <param name="questIDs">
+    /// The quest IDs for which to retrieve the requirements.
+    /// </param>
+    /// <returns>
+    /// An array of the specified type containing the quest requirements.
+    /// For <see cref="string"/>, it returns an array of the requirement names.
+    /// For <see cref="int"/>, it returns an array of the requirement IDs.
+    /// </returns>
     public T[] QuestRequirements<T>(params int[] questIDs)
     {
         if (questIDs.Length == 0)
@@ -2831,7 +2863,6 @@ public class CoreBots
 
         return toReturn.ToArray();
     }
-
 
 
     /// <summary>
