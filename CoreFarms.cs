@@ -1398,6 +1398,7 @@ public class CoreFarms
         string map = "";
         int shopID = 0;
 
+        Core.FarmingLogger(Voucher, quant);
         // Map voucher types based on the voucher amount (e.g., 500, 25, 7.5)
         switch (Voucher)
         {
@@ -1461,7 +1462,7 @@ public class CoreFarms
             // Get current quantity
             int currentQuantity = Bot.Inventory.GetQuantity(Voucher);
             // Calculate the amount to buy
-            int AmountToBuy = Math.Min(quant, item.MaxStack);
+            int AmountToBuy = Math.Min(quant - currentQuantity, item.MaxStack);
             if (quant > item.MaxStack)
                 Core.Logger($"Amount of {item.Name} to buy ({quant}) is greater than the max stack of {item.MaxStack}, buying {item.MaxStack} instead.");
             // Farm gold for the required amount and buy the item
@@ -1484,19 +1485,11 @@ public class CoreFarms
         if (Bot.Map.Name != "alchemyacademy")
             Core.Join("alchemyacademy");
 
-        Core.ToggleAggro(false);
-        Core.JumpWait();
-        Bot.Wait.ForCombatExit();
-
         Core.FarmingLogger("Dragon Runestone", quant);
 
-        Gold(100000 * (quant - Bot.Inventory.GetQuantity("Gold Voucher 100k")));
-
-        Core.BuyItem("alchemyacademy", 395, "Gold Voucher 100k", quant);
-
+        // Gold(100000 * (quant - Bot.Inventory.GetQuantity("Gold Voucher 100k")));
+        Voucher("Gold Voucher 100k", quant - Bot.Inventory.GetQuantity("Gold Voucher 100k"));
         Core.BuyItem("alchemyacademy", 395, "Dragon Runestone", quant, 8844);
-
-
     }
 
     public void AlchemyREP(int rank = 10, bool goldMethod = true)
