@@ -95,13 +95,24 @@ public class ExaltedApotheosisPreReqs
                         {
                             if (!Core.CheckInventory(req.ID, req.Quantity))
                             {
-                                // Farm the required quantity of Exalted Nodes
-                                if (req.Name == "Exalted Node")
-                                    Core.KillMonster("timeinn", "r3", "Bottom", "*", "Exalted Node", req.Quantity, isTemp: false);
-                                else
+                                switch (req.Name)
                                 {
-                                    missingMaterials[req.Name] = req.Quantity - Bot.Inventory?.GetQuantity(req.ID) ?? 0;
-                                    canBuy = false;
+                                    case "Exalted Node":
+                                        Core.KillMonster("timeinn", "r3", "Bottom", "*", "Exalted Node", req.Quantity, isTemp: false);
+                                        break;
+                                    case "Exalted Artillery Shard":
+                                        Core.HuntMonster("timeinn", "The Engineer", req.Name, req.Quantity, false);
+                                        break;
+                                    case "Exalted Relic Piece":
+                                        Core.HuntMonster("timeinn", "The Warden", req.Name, req.Quantity, false);
+                                        break;
+                                    case "Exalted Forgemetal":
+                                        Core.HuntMonster("timeinn", "Ezrajal", req.Name, req.Quantity, false);
+                                        break;
+                                    default:
+                                        missingMaterials[req.Name] = req.Quantity - Bot.Inventory?.GetQuantity(req.ID) ?? 0;
+                                        canBuy = false;
+                                        break;
                                 }
                             }
                         }
