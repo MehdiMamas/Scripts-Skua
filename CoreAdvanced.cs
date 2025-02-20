@@ -132,7 +132,10 @@ public class CoreAdvanced
                 while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))  // Changed the condition to check for missing inventory
                 {
                     if (Bot.Map.Name != map)
+                    {
                         Core.Join(map);
+                        Bot.Wait.ForMapLoad(map);
+                    }
 
                     Core.DebugLogger(this);
                     Bot.Shops.Load(shopID);
@@ -152,19 +155,27 @@ public class CoreAdvanced
                     Core.DebugLogger(this);
                     if (req.Name.Contains("Voucher"))
                     {
-                        Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {req.Quantity * quant}");
-                        Farm.Voucher(req.Name, totalReqNeeded);
+                        if (Bot.Shops.IsLoaded && Bot.Shops.Items.Contains(item))
+                        {
+                            Core.Logger($"Buying {req.Name} x{totalReqNeeded} from Currently loaded shop.");
+                            Core.BuyItem(Bot.Map.Name, Bot.Shops.ID, req.Name, totalReqNeeded); // Buy from shop if available
+                        }
+                        else
+                        {
+                            Core.Logger($"Buying {req.Name} x{totalReqNeeded} from another map");
+                            Farm.Voucher(req.Name, totalReqNeeded); // Otherwise, farm the voucher
+                        }
                         continue;
                     }
 
                     if (req.Name == "Dragon Runestone")
                     {
-                        Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {req.Quantity * quant}");
+                        Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {totalReqNeeded}");
                         Farm.DragonRunestone(totalReqNeeded);
                         continue;
                     }
 
-                    Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {req.Quantity * quant}");
+                    Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {totalReqNeeded}");
                     ShopItem? shopItem = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
                     Core.DebugLogger(this);
                     if (shopItem != null)
@@ -188,6 +199,16 @@ public class CoreAdvanced
             // Ensure required items are available before purchasing the main item
             GetItemReq(item, quant - Bot.Inventory.GetQuantity(item.ID));
             Core.DebugLogger(this);
+
+            // Rejoin the map here incase getitemreq takes you elsewhere, to ensure that the shopitem is found (hopefully) 
+            if (Bot.Map.Name != map)
+                Core.Join(map);
+
+            Bot.Wait.ForTrue(() => Bot.Shops.ID == shopID, () =>
+            {
+                Bot.Shops.Load(shopID);
+                Core.Sleep();
+            }, 20, 1000);
 
             ShopItem? mainItem = Bot.Shops.Items.FirstOrDefault(x =>
             x.ID == item.ID && !(x.Coins && x.Cost > 0) && item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity)));
@@ -217,40 +238,81 @@ public class CoreAdvanced
             }
         }
     }
-
     /// <summary>
-    /// Will make sure you have every requierment (XP, Rep and Gold) to buy the item.
+    /// Ensures that all necessary requirements (Experience, Reputation, Gold, and specific items)
+    /// are met in order to purchase an item. This includes verifying player level, farming or purchasing 
+    /// required reputation, acquiring specific items such as Gold Vouchers and Dragon Runestones,
+    /// and ensuring enough gold is available for the transaction.
     /// </summary>
-    /// <param name="item">The ShopItem object containing all the information</param>
-    /// <param name="quant"></param>
+    /// <param name="item">
+    /// The <see cref="ShopItem"/> object that contains all the details about the item, 
+    /// including its requirements like reputation, level, gold cost, and additional items needed.
+    /// </param>
+    /// <param name="quant">
+    /// The quantity of the item needed for purchase. The default value is 1, but can be adjusted
+    /// to handle cases where multiple units of the item are required.
+    /// </param>
     public void GetItemReq(ShopItem item, int quant = 1)
     {
-        Core.DebugLogger(this);
+        if (item?.Requirements == null)
+        {
+            Core.Logger("Invalid item or missing requirements.");
+            return;
+        }
+
+        // Ensure required reputation for faction-based items
         if (!string.IsNullOrEmpty(item.Faction) && item.Faction != "None" && item.RequiredReputation > 0)
         {
-            Core.DebugLogger(this, $"Item {item.Name}, item.Faction {item.Faction}, CPtoLevel: {Core.PointsToLevel(item.RequiredReputation)}");
+            Core.Logger($"Farming reputation for {item.Faction} (Required: {item.RequiredReputation})");
             runRep(item.Faction, Core.PointsToLevel(item.RequiredReputation));
-            Core.DebugLogger(this);
         }
-        Core.DebugLogger(this);
-        Farm.Experience(item.Level);
 
+        // Level up if the item requires a higher player level
+        if (item.Level > Bot.Player.Level)
+        {
+            Core.Logger($"Farming experience to reach level {item.Level}");
+            Farm.Experience(Math.Min(item.Level, 100));
+        }
+
+        // Farm gold if the item costs gold and isn't a premium currency purchase
         if (!item.Coins)
         {
-            Core.DebugLogger(this);
-            Farm.Gold(item.Cost * quant);
+            Core.Logger($"Farming {item.Cost * quant} gold for {item.Name}");
+            Farm.Gold(Math.Min(item.Cost * quant, 100_000_000));
         }
-        if (item.Name.Contains("Dragon Runestone"))
+
+        // Handle Gold Vouchers (multiple types possible)
+        foreach (ItemBase req in item.Requirements.Where(x => x?.Name?.Contains("Gold Voucher") == true))
         {
-            Core.DebugLogger(this);
-            Farm.DragonRunestone(quant);
+            int needed = req.Quantity - Bot.Inventory.GetQuantity(req.ID);
+            if (needed <= 0) continue;
+
+            if (Bot.Shops.IsLoaded && Bot.Shops.Items?.Contains(req) == true)
+            {
+                Core.Logger($"Buying {req.Name} x{needed} from currently loaded shop.");
+                Core.BuyItem(Bot.Map.Name, Bot.Shops.ID, req.ID, needed);
+            }
+            else
+            {
+                Core.Logger($"Farming {req.Name} x{needed} from another map.");
+                Farm.Voucher(req.Name, needed);
+            }
         }
-        if (item.Name.Contains("Gold Voucher"))
+
+        // Handle Dragon Runestone farming if required
+        foreach (ItemBase req in item.Requirements.Where(x => x?.Name?.Contains("Dragon Runestone") == true))
         {
-            Core.DebugLogger(this);
-            Farm.Voucher(item.Name, quant);
+            int needed = req.Quantity - Bot.Inventory.GetQuantity(req.ID);
+            if (needed > 0)
+            {
+                Core.Logger($"Farming {needed} Dragon Runestones.");
+                Farm.DragonRunestone(needed);
+            }
         }
-        Core.DebugLogger(this);
+
+        // Warn if a temp item is missing
+        foreach (ItemBase req in item.Requirements.Where(x => x?.Temp == true && x.Quantity > Bot.TempInv.GetQuantity(x.ID)))
+            Core.Logger($"Temp item: {req.Name}, quant needed: {req.Quantity}... did the bot not farm them?");
     }
 
     private void runRep(string faction, int rank)
