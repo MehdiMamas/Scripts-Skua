@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 345054,
+    "size": 345472,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 139688,
+    "size": 139677,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 144073,
+    "size": 147178,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -16927,7 +16927,7 @@
       "null"
     ],
     "path": "Other/Weapons/ExaltedApotheosisPreReqs.cs",
-    "size": 6591,
+    "size": 6585,
     "fileName": "ExaltedApotheosisPreReqs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Weapons/ExaltedApotheosisPreReqs.cs"
   },
