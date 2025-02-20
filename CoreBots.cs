@@ -1229,17 +1229,29 @@ public class CoreBots
     {
         if (CheckInventory(itemID, quant))
             return;
+        DebugLogger(this);
         _CheckInventorySpace();
 
+        DebugLogger(this);
         if (Bot.Map.Name != map)
+        {
+            DebugLogger(this);
             Join(map);
+            DebugLogger(this);
+            Bot.Wait.ForMapLoad(map);
+            DebugLogger(this);
+        }
 
-        Bot.Shops.Load(shopID);
-        Sleep(1000);
-        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+        DebugLogger(this);
+        Bot.Wait.ForTrue(() => Bot.Shops.ID == shopID, () =>
+            {
+                Bot.Shops.Load(shopID);
+                Sleep();
+            }, 20, 1000);
 
+        DebugLogger(this);
         ShopItem? item = parseShopItem(GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.ID == itemID : x.ShopItemID == shopItemID).ToList(), shopID, itemID.ToString(), shopItemID);
+        DebugLogger(this);
         _BuyItem(map, shopID, item, quant, Log);
     }
 
@@ -1250,8 +1262,12 @@ public class CoreBots
         if (item == null || (buy_quant = _CalcBuyQuantity(item, quant)) <= 0 || !_canBuy(shopID, item, buy_quant))
             return;
 
-        Join(map);
-        Bot.Wait.ForMapLoad(map);
+        if (Bot.Map.Name != map)
+        {
+            Join(map);
+            Bot.Wait.ForMapLoad(map);
+        }
+
         Bot.Events.ExtensionPacketReceived += RelogRequieredListener;
         while (!Bot.ShouldExit && Bot.Player.InCombat)
         {
@@ -1261,10 +1277,11 @@ public class CoreBots
             Sleep();
         }
 
-        Bot.Shops.Load(shopID);
-
-        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
+        Bot.Wait.ForTrue(() => Bot.Shops.ID == shopID, () =>
+            {
+                Bot.Shops.Load(shopID);
+                Sleep();
+            }, 20, 1000);
 
         dynamic sItem = new ExpandoObject();
         for (int i = 0; i < 5; i++)
@@ -1757,13 +1774,17 @@ public class CoreBots
     /// <returns>A list of <see cref="ShopItem"/> objects from the specified shop, or an empty list if the shop data could not be loaded.</returns>
     public List<ShopItem> GetShopItems(string map, int shopID)
     {
+        // Ensure player is in map
+        if (Bot.Map.Name != map)
+        {
+            DebugLogger(this);
+            Join(map);
+            DebugLogger(this);
+            Bot.Wait.ForMapLoad(map);
+        }
+
         Bot.Wait.ForTrue(() => Bot.Shops.ID == shopID, () =>
         {
-            if (Bot.Map.Name != map)
-            {
-                Join(map);
-                Bot.Wait.ForMapLoad(map);
-            }
             Bot.Shops.Load(shopID);
             Sleep();
         }, 20, 1000);
