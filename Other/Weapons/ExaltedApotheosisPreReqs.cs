@@ -145,7 +145,7 @@ public class ExaltedApotheosisPreReqs
             {
                 foreach (ItemBase item in exaltedApo.Requirements)
                 {
-                    int missingQuantity = item.Quantity - Bot.Inventory.GetQuantity(item.ID);
+                    int missingQuantity = item.Quantity - (Bot.Inventory?.GetQuantity(item.ID) ?? 0); // It's not handled automatically if Inventory is null, only if item is not in inventory!
                     if (missingQuantity > 0)
                         missingMaterials[item.Name] = missingQuantity;
                 }
