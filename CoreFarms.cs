@@ -288,7 +288,7 @@ public class CoreFarms
             if (Bot.Player.Level < 10)
             {
                 Core.Logger("Doing Oaklore \"Bone Berserker\" Quest till level 10");
-                Core.RegisterQuests(4007);
+                Core.RegisterQuests(4007, 6257);
                 while (!Bot.ShouldExit && Bot.Player.Level < 10)
                     Core.KillMonster("oaklore", "r3", "Left", "Bone Berserker", log: false);
                 Core.CancelRegisteredQuests();
