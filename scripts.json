@@ -27010,6 +27010,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/QueenofMonsters/Extra/LivingDungeon.cs"
   },
   {
+    "name": "Infernal Paradise",
+    "description": "This will finish the Aranx' quests in /infernalparadise.",
+    "tags": [
+      "story",
+      "quest",
+      "queen of monster",
+      "celestial realm",
+      "infernalparadise",
+      "aranx",
+      "extra",
+      "qom"
+    ],
+    "path": "Story/QueenofMonsters/Extra/InfernalParadise.cs",
+    "size": 3147,
+    "fileName": "InfernalParadise.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/QueenofMonsters/Extra/InfernalParadise.cs"
+  },
+  {
     "name": "Celestial Arena (Extra)",
     "description": "This will finish the Celestial Arena quest.",
     "tags": [
