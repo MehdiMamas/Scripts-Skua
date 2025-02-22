@@ -7,8 +7,8 @@ tags: infernal, paradise, merge, infernalparadise, golden, crown, astral, celest
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/Story\QueenofMonsters\Extra\CelestialPast.cs
-//cs_include Scripts/Story\QueenofMonsters\Extra\InfernalParadise.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/CelestialPast.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/InfernalParadise.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;

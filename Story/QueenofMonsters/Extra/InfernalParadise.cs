@@ -5,7 +5,7 @@ tags: story, quest, queen of monster, celestial realm, infernalparadise,aranx, e
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/Story\QueenofMonsters\Extra\CelestialPast.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/CelestialPast.cs
 using Skua.Core.Interfaces;
 
 public class InfernalParadise
