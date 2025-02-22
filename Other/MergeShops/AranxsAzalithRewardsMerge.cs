@@ -71,7 +71,6 @@ public class AranxsAzalithRewardsMerge
 );
                         Bot.Wait.ForPickup(req.Name);
                     }
-                    Core.CancelRegisteredQuests();
                     break;
 
                 case "Infernalis Oculus":
@@ -84,7 +83,6 @@ public class AranxsAzalithRewardsMerge
 );
                         Bot.Wait.ForPickup(req.Name);
                     }
-                    Core.CancelRegisteredQuests();
                     break;
 
                 case "Divina Voluntas":
