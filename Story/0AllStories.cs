@@ -63,6 +63,7 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/QueenofMonsters/Extra/CelestialArena.cs
 //cs_include Scripts/Story/QueenofMonsters/Extra/CelestialPast.cs
 //cs_include Scripts/Story/QueenofMonsters/Extra/GoldenArena.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/InfernalParadise.cs
 //cs_include Scripts/Story/QueenofMonsters/Extra/LivingDungeon.cs
 //cs_include Scripts/Story/QueenofMonsters/Extra/OrbHunt.cs
 //cs_include Scripts/Story/QueenofMonsters/Extra/QueenBattle.cs
@@ -272,6 +273,7 @@ public class AllStories
     public CelestialArenaQuests CelestialArena = new();
     public CelestialPast CelestialPast = new();
     public GoldenArena GoldenArena = new();
+    public InfernalParadise InfernalParadise = new();
     public LivingDungeon LivingDungeon = new();
     public OrbHunt OrbHunt = new();
     public QueenBattle QueenBattle = new();
@@ -577,6 +579,9 @@ public class AllStories
 
         GoldenArena.StoryLine();
         Core.Logger($"Story: GoldenArena - Complete");
+
+        InfernalParadise.Storyline();
+        Core.Logger($"Story: Infernal Paradise - Complete");
 
         LivingDungeon.LivingDungeonStory();
         Core.Logger($"Story: LivingDungeon - Complete");
