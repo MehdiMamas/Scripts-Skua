@@ -13764,6 +13764,33 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/UbearMerge.cs"
   },
   {
+    "name": "Infernal Paradise Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Infernal Paradise Merge [2561] in /infernalparadise",
+    "tags": [
+      "infernal",
+      "paradise",
+      "merge",
+      "infernalparadise",
+      "golden",
+      "crown",
+      "astral",
+      "celestial",
+      "wings",
+      "halo",
+      "fallen",
+      "aranx",
+      "evolved",
+      "wreathed",
+      "furled",
+      "archangel",
+      "mysteries"
+    ],
+    "path": "Other/MergeShops/InfernalParadiseMerge.cs",
+    "size": 9335,
+    "fileName": "InfernalParadiseMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/InfernalParadiseMerge.cs"
+  },
+  {
     "name": "BloodWarLycanMerge",
     "description": "null",
     "tags": [
@@ -14221,7 +14248,7 @@
       "freed"
     ],
     "path": "Other/MergeShops/AranxsAzalithRewardsMerge.cs",
-    "size": 6634,
+    "size": 6532,
     "fileName": "AranxsAzalithRewardsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/AranxsAzalithRewardsMerge.cs"
   },
