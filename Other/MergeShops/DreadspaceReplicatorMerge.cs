@@ -70,7 +70,7 @@ public class DreadspaceReplicatorMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("dreadspace", "Red Trobble", req.Name, quant, false, log: false);
+                        Core.HuntMonster("dreadspace", "Red Trobble", req.Name, quant, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -80,7 +80,7 @@ public class DreadspaceReplicatorMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("dreadspace", "Trobble", req.Name, quant, false, log: false);
+                        Core.HuntMonster("dreadspace", "Trobble", req.Name, quant, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -90,7 +90,7 @@ public class DreadspaceReplicatorMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("dreadspace", "Troblor", req.Name, quant, false, log: false);
+                        Core.HuntMonster("dreadspace", "Troblor", req.Name, quant, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -98,9 +98,10 @@ public class DreadspaceReplicatorMerge
                 case "Scrap Metal":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("dreadspace", "Undead Space Marine", req.Name, quant, false, log: false);
+                        Core.HuntMonster("dreadspace", "Undead Space Marine", req.Name, quant, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -110,9 +111,10 @@ public class DreadspaceReplicatorMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(4289);
+                    Core.AddDrop(req.ID);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("dreadspace", "Undead Space Marine", "Golden Spork of Justice", log: false);
+                        Core.HuntMonster("dreadspace", "Undead Space Marine", "Golden Spork of Justice");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -128,7 +130,7 @@ public class DreadspaceReplicatorMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Adv.BuyItem("necropolis", 422, "Daimyo", Log: false);
+                        Adv.BuyItem("necropolis", 422, "Daimyo");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -138,7 +140,7 @@ public class DreadspaceReplicatorMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("dreadspace", "Dread Space", req.Name, quant, log: false);
+                        Core.HuntMonster("dreadspace", "Dread Space", req.Name, quant);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -147,6 +149,7 @@ public class DreadspaceReplicatorMerge
                 case "Blinding Light of Dread Space":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonsterQuest(4294, "dreadspace", "Dra'gorn");
