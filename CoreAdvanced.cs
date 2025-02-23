@@ -116,20 +116,18 @@ public class CoreAdvanced
     {
         int shopQuant = item.Quantity; // Quantity per purchase from the shop
         string shopName = Bot.Shops.Name; // Store the currently loaded shop name
-        Core.DebugLogger(this);
 
         if (item.Requirements != null)
         {
-            Core.DebugLogger(this);
             foreach (ItemBase req in item.Requirements)
             {
-                if (Core.CheckInventory(item.ID, quant))
+                if (Core.CheckInventory(req.ID, req.Quantity))
                 {
-                    Core.DebugLogger(this);
+                    Core.DebugLogger(this, $"Requirement \"{req.Name}\" x{req.Quantity} already owned.");
                     continue;
                 }
 
-                while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))  // Changed the condition to check for missing inventory
+                while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
                 {
                     if (Bot.Map.Name != map)
                     {
@@ -137,14 +135,11 @@ public class CoreAdvanced
                         Bot.Wait.ForMapLoad(map);
                     }
 
-                    Core.DebugLogger(this);
-                    Bot.Shops.Load(shopID);
-                    Core.DebugLogger(this);
-                    Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-                    Core.DebugLogger(this);
-                    Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
-                    // Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
-                    Core.DebugLogger(this);
+                    Bot.Wait.ForTrue(() => Bot.Shops.ID == shopID, () =>
+                    {
+                        Bot.Shops.Load(shopID);
+                        Core.Sleep();
+                    }, 20, 1000);
 
                     // Determine how many total items are needed
                     int QuantOwned = Bot.Inventory.GetQuantity(req.ID);
@@ -152,7 +147,6 @@ public class CoreAdvanced
                     // int totalBundlesNeeded = (int)Math.Ceiling((double)totalReqNeeded / shopQuant);
                     // int bundlesToBuy = totalBundlesNeeded - (QuantOwned / req.Quantity);
 
-                    Core.DebugLogger(this);
                     if (req.Name.Contains("Voucher"))
                     {
                         if (Bot.Shops.IsLoaded && Bot.Shops.Items.Contains(item))
@@ -177,28 +171,23 @@ public class CoreAdvanced
 
                     Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {totalReqNeeded}");
                     ShopItem? shopItem = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
-                    Core.DebugLogger(this);
                     if (shopItem != null)
                     {
                         Core.DebugLogger(this, $"shopItem {shopItem} bundlesToBuy, {totalReqNeeded}");
-                        Core.DebugLogger(this);
                         BuyItem(map, shopID, req.ID, totalReqNeeded, shopItemID, Log: Log);
-                        Core.DebugLogger(this);
                     }
+                    // Else continue when the req.name isnt in the shop.
                     else
                     {
-                        Core.DebugLogger(this);
-                        Core.Logger($"Failed to find shop item: {req.Name}");
+                        // Core.Logger($"Failed to find shop item: {req.Name} (its probably a Mob Drop)");
+                        continue;
                     }
-                    Core.DebugLogger(this);
                 }
-                Core.DebugLogger(this);
             }
             Core.DebugLogger(this, $"Item {item.Name}, quant to buy: {quant}");
 
             // Ensure required items are available before purchasing the main item
             GetItemReq(item, quant - Bot.Inventory.GetQuantity(item.ID));
-            Core.DebugLogger(this);
 
             // Rejoin the map here incase getitemreq takes you elsewhere, to ensure that the shopitem is found (hopefully) 
             if (Bot.Map.Name != map)
@@ -215,19 +204,14 @@ public class CoreAdvanced
 
             if (mainItem != null)
             {
-                Core.DebugLogger(this);
-                Core.BuyItem(map, shopID, mainItem.ID, quant, shopItemID, Log: Log);
-                Core.DebugLogger(this);
+                Core.BuyItem(map, shopID, mainItem.ID, quant, shopItemID != 1 ? mainItem.ShopItemID : shopItemID, Log: Log);
                 Core.Sleep();
                 // Check if the main item was purchased successfully
-                Core.DebugLogger(this);
                 if (!Core.CheckInventory(mainItem.ID, quant))
                 {
-                    Core.DebugLogger(this);
                     Core.Logger($"Failed to Buy {mainItem.Name}");
                     foreach (ItemBase req in mainItem.Requirements.Where(x => x != null && !Core.CheckInventory(x.ID, x.Quantity)))
                     {
-                        Core.DebugLogger(this);
                         Core.Logger($"Missing {req.Name} x{req.Quantity}");
                     }
                 }
@@ -317,40 +301,33 @@ public class CoreAdvanced
 
     private void runRep(string faction, int rank)
     {
-        Core.DebugLogger(this);
         faction = faction.Replace(" ", "");
         Type farmClass = Farm.GetType();
         MethodInfo? theMethod = farmClass.GetMethod(faction + "REP");
         if (theMethod == null)
         {
-            Core.DebugLogger(this);
             Core.Logger("Failed to find " + faction + "REP. Make sure you have the correct name and capitalization.");
             return;
         }
         Core.DebugLogger(this, $"themethod: {theMethod}, farmclass: {farmClass}, faction: {faction}, Rank: {rank}");
         try
         {
-            Core.DebugLogger(this);
             switch (faction.ToLower())
             {
                 case "alchemy":
                 case "blacksmith":
-                    Core.DebugLogger(this);
                     theMethod.Invoke(Farm, new object[] { rank, true });
                     break;
                 case "bladeofawe":
-                    Core.DebugLogger(this);
                     theMethod.Invoke(Farm, new object[] { rank, false });
                     break;
                 default:
-                    Core.DebugLogger(this);
                     theMethod.Invoke(Farm, new object[] { rank });
                     break;
             }
         }
         catch
         {
-            Core.DebugLogger(this);
             Core.Logger($"Faction {faction} has invalid paramaters, please report", messageBox: true, stopBot: true);
         }
     }
