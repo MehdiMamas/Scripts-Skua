@@ -135,11 +135,10 @@ public class CoreAdvanced
                         Bot.Wait.ForMapLoad(map);
                     }
 
-                    Bot.Wait.ForTrue(() => Bot.Shops.ID == shopID, () =>
-                    {
-                        Bot.Shops.Load(shopID);
-                        Core.Sleep();
-                    }, 20, 1000);
+                    Bot.Shops.Load(shopID);
+                    Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+                    Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+                    // Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
 
                     // Determine how many total items are needed
                     int QuantOwned = Bot.Inventory.GetQuantity(req.ID);
@@ -193,11 +192,9 @@ public class CoreAdvanced
             if (Bot.Map.Name != map)
                 Core.Join(map);
 
-            Bot.Wait.ForTrue(() => Bot.Shops.ID == shopID, () =>
-            {
-                Bot.Shops.Load(shopID);
-                Core.Sleep();
-            }, 20, 1000);
+            Bot.Shops.Load(shopID);
+            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
 
             ShopItem? mainItem = Bot.Shops.Items.FirstOrDefault(x =>
             x.ID == item.ID && !(x.Coins && x.Cost > 0) && item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity)));
