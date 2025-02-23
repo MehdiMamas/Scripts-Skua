@@ -69,31 +69,31 @@ public class InfernalParadiseMerge
                 case "Golden Scale":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("infernalparadise", "Blessed Dragon", req.Name, quant, false, false);
+                    Core.HuntMonster("goldenarena", "Blessed Dragon", req.Name, quant, false, false);
                     break;
 
                 case "Golden Badge":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("infernalparadise", "Blessed Inquisitor", req.Name, quant, false, false);
+                    Core.HuntMonster("goldenarena", "Blessed Inquisitor", req.Name, quant, false, false);
                     break;
 
                 case "Golden Wing":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("infernalparadise", "Blessed Gladius", req.Name, quant, false, false);
+                    Core.HuntMonster("goldenarena", "Blessed Gladius", req.Name, quant, false, false);
                     break;
 
                 case "Golden Rune":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("infernalparadise", "Blessed Karok", req.Name, quant, false, false);
+                    Core.HuntMonster("goldenarena", "Blessed Karok", req.Name, quant, false, false);
                     break;
 
                 case "Laurel Crown":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("infernalparadise", "Queen of Hope", req.Name, quant, false, false);
+                    Core.HuntMonster("goldenarena", "Queen of Hope", req.Name, quant, false, false);
                     break;
 
                 case "Divine Down":
