@@ -178,7 +178,7 @@ public class CoreAdvanced
                     // Else continue when the req.name isnt in the shop.
                     else
                     {
-                        // Core.Logger($"Failed to find shop item: {req.Name} (its probably a Mob Drop)");
+                        Core.Logger($"Failed to find shop item: {req.Name} (its probably a Mob Drop)");
                         continue;
                     }
                 }

@@ -35,6 +35,8 @@ public class WillpowerExtraction
         if (Core.CheckInventory("Unidentified 34", quant))
             return;
 
+        Core.FarmingLogger("Unidentified 34", quant);
+
         Core.AddDrop(Nation.bagDrops
             .Concat(Nation.tercessBags)
             .Concat(new[]
