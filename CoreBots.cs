@@ -6265,6 +6265,11 @@ public class CoreBots
                 blackListedCells.UnionWith(new[] { "Quest" });
                 break;
 
+            case "mobius":
+                // Requires quest "The Star of Flames [2364]" to be completed
+                blackListedCells.UnionWith(new[] { "hair" });
+                break;
+
             case "beehive":
                 blackListedCells.UnionWith(new[] { "Dance" });
                 break;
