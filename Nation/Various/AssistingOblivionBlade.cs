@@ -38,7 +38,7 @@ public class AssistingOblivionBlade
 
         List<ItemBase> RewardOptions = Core.EnsureLoad(5818).Rewards;
         List<string> RewardsList = new();
-        foreach (Skua.Core.Models.Items.ItemBase Item in RewardOptions)
+        foreach (ItemBase Item in RewardOptions)
             RewardsList.Add(Item.Name);
         string[] Rewards = RewardsList.ToArray();
         Core.AddDrop(Rewards);
