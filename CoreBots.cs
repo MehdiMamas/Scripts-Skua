@@ -3187,16 +3187,25 @@ public class CoreBots
             cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell;
         pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
 
+        if (Bot.Player.Cell != cell)
+        {
+            Bot.Map.Jump(cell, pad);
+            Bot.Wait.ForCellChange(cell);
+        }
+
         if (item != null && !isTemp)
             AddDrop(item);
-        ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).FirstOrDefault(x => x != null && x.Name == item);
 
-        if (Bot.Player.Cell != cell)
-            Bot.Map.Jump(cell, pad);
-        Bot.Wait.ForCellChange(cell);
+        ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).FirstOrDefault(x => x != null && x.Name == item);
 
         List<Monster> FindMonsters()
         {
+            if (Bot.Player.Cell != cell)
+            {
+                Bot.Map.Jump(cell, pad);
+                Bot.Wait.ForCellChange(cell);
+            }
+
             // If monster is "*", return all mobs in the specified cell
             if (monster == "*")
             {
@@ -3207,7 +3216,7 @@ public class CoreBots
             // Otherwise, return all mobs in the specified cell that match the name (case-insensitive)
             return Bot.Monsters.MapMonsters
                 .Where(x => x != null && x.Cell == cell && x.Name.FormatForCompare() == monster.FormatForCompare())
-                .ToList();
+                .ToList() ?? Bot.Monsters.MapMonsters.Where(x => x != null && x.Cell == Bot.Player.Cell).ToList();
         }
 
         Bot.Options.AggroAllMonsters = false;
