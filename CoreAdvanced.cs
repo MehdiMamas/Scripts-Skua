@@ -141,8 +141,7 @@ public class CoreAdvanced
                     // Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
 
                     // Determine how many total items are needed
-                    int QuantOwned = Bot.Inventory.GetQuantity(req.ID);
-                    int totalReqNeeded = (req.Quantity * quant) - QuantOwned;
+                    int totalReqNeeded = (req.Quantity * quant);
                     // int totalBundlesNeeded = (int)Math.Ceiling((double)totalReqNeeded / shopQuant);
                     // int bundlesToBuy = totalBundlesNeeded - (QuantOwned / req.Quantity);
 
