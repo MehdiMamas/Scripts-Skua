@@ -755,7 +755,10 @@ public class UnlockForgeEnhancements
         PFS.Storyline();
 
         Adv.BuyItem(Bot.Map.Name, 2411, "Gluttonous Maw");
-        Core.ChainComplete(9560);
+        if (Bot.Quests.CanCompleteFullCheck(9560))
+            Core.ChainComplete(9560);
+        else
+            Core.Logger("Cannot complete Ravenous: Requires Gluttonous Maw, which needs 10 Roentgeniums of Nulgath (daily). Try again tomorrow.");
     }
 
     #endregion
