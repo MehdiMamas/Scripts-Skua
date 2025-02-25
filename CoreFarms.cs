@@ -1787,8 +1787,8 @@ public class CoreFarms
             Core.Logger($"Farming rank {(FactionRank("Blade of Awe") < targetRank ? targetRank : rank)}");
 
             Core.RegisterQuests(2935);
-            while (!Bot.ShouldExit && (FactionRank("Blade of Awe") < targetRank || (farmBoA && FactionRank("Blade of Awe") < rank)))
-                Core.KillMonster("castleundead", "Enter", "Left", "Skeletal Viking", "Hilt Found!", 1, false);
+            while (!Bot.ShouldExit && (FactionRank("Blade of Awe") < targetRank || (farmBoA && FactionRank("Blade of Awe") < targetRank)))
+                Core.KillMonster("castleundead", "Enter", "Left", "Skeletal Viking");
             Core.CancelRegisteredQuests();
             Core.SavedState(false);
         }
