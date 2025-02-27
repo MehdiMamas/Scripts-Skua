@@ -6361,7 +6361,7 @@ public class CoreBots
     private (string, string) lastCellPadJW = (string.Empty, string.Empty);
 
     // Combined static and dynamic blacklist
-    string[] BlackListedJumptoCells = new[]
+    public string[] BlackListedJumptoCells = new[]
     { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame", "Fall", "Move", "Cut", "Movie" };
 
     /// <summary>
