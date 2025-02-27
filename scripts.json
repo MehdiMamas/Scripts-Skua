@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 345933,
+    "size": 345940,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -788,7 +788,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 67227,
+    "size": 87084,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -1468,7 +1468,7 @@
       "goto"
     ],
     "path": "Tools/Butler.cs",
-    "size": 11418,
+    "size": 11828,
     "fileName": "Butler.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/Butler.cs"
   },
