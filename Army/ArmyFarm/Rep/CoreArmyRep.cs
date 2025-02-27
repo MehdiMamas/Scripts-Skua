@@ -67,7 +67,19 @@ public class CoreArmyRep
     public void ArmyEtherstormRep() => RunArmyRep("Etherstorm", "etherwardes", new string[] { "Enter", "r3", "r2" }, new string[] { "Enter", "r3", "r2" }, new int[] { 1721 });
     public void ArmyEmberseaRep() => RunArmyRep("Embersea", "fireforge", new string[] { "r5", "r8", "r7" }, new string[] { "r5", "r8", "r7" }, new int[] { 4227, 4228, 4229 });
     public void ArmyEternalRep() => RunArmyRep("Eternal", "fourdpyramid", new[] { "r10", "r11" }, new[] { "r10", "r11" }, new int[] { 5198, 5208 });
-    public void ArmyGoodEvilRep() { int goodRank = FactionRank("Good"); int evilRank = FactionRank("Evil"); string repname = "Good"; string AggroMonStart = goodRank < 4 || evilRank < 4 ? "castleundead" : "swordhavenbridge"; string[] Cells = goodRank < 4 || evilRank < 4 ? new[] { "Bridge" } : new string[] { "Enter", "Bright", "Hall" }; int[] quests = goodRank < 4 || evilRank < 4 ? new[] { 364, 369 } : new int[] { 367, 372 }; RunArmyRep(repname, AggroMonStart, Cells, Cells, quests); }
+    public void ArmyGoodEvilRep()
+    {
+        int goodRank = FactionRank("Good");
+        int evilRank = FactionRank("Evil");
+        string repname = "Good";
+        string AggroMonStart = goodRank < 4 || evilRank < 4 ? "castleundead" : "swordhavenbridge";
+        string[] Cells = goodRank < 4 || evilRank < 4 ? new[] { "Bridge" } :
+        new string[] { "Enter", "Bright", "Hall" };
+        int[] quests = goodRank < 4 || evilRank < 4 ? new[] { 364, 369 } : new int[] { 367, 372 };
+
+        RunArmyRep(repname, AggroMonStart, Cells, Cells, quests);
+    }
+
     public void ArmyHollowbornRep() => RunArmyRep("Hollowborn", "shadowrealm", new[] { "r2", "r4", "r6" }, new[] { "r2", "r4", "r6" }, new int[] { 7553, 7555 });
     public void ArmyInfernalArmyRep() => RunArmyRep("Infernal Army", "dreadfire", new[] { "r10", "r10a", "r10b" }, new[] { "r10", "r10a", "r10b" }, new int[] { 5707, 5708, 5709 });
     public void ArmyMythsongRep() => RunArmyRep("Mythsong", "beehive", new[] { "r1", "r2", "r3", "r4" }, new string[] { "r1", "r2", "r3", "r4" }, new int[] { 4829 });
@@ -189,7 +201,7 @@ public class CoreArmyRep
         while (!Bot.ShouldExit && FactionRank(repname) < 10)
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+            { Core.Sleep(); }
 
             while (!Bot.ShouldExit && Bot.Player.Cell != Dividedcell.Item1)
             {
