@@ -1691,7 +1691,7 @@ public class CoreArmyLite
                     break; // Exit combat and recheck
                 }
                 // Check if player is in the map
-                if (!Bot.Map.PlayerNames.Contains(playerName))
+                if (Bot.Map.PlayerNames != null && !Bot.Map.PlayerNames.Contains(playerName))
                 {
                     Core.Logger("Player moved to different a map");
                     Core.DebugLogger(this);
