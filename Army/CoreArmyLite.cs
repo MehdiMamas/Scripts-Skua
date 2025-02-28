@@ -1538,18 +1538,20 @@ public class CoreArmyLite
         foreach (int questId in bypasses)
             Bot.Quests.UpdateQuest(questId);
         Core.SetAchievement(18); // doomvaultb
+        if (Bot.Player.Level < 100)
+            Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json"); // level bypass
         #endregion
 
         int retryLimit = 5; // Set retry limit
         int retryCount = 0; // Track number of retries
+        PlayerInfo? playerObject = new(); // Initialize player object
 
-        bool success = tryGoto(playerName, out PlayerInfo? playerObject);
         while (!Bot.ShouldExit)
         {
             Core.DebugLogger(this);
+            #region Ignore me
             // Try to /goto the player with retry logic
-
-            while (!success && retryCount < retryLimit)
+            while (!tryGoto(playerName, out playerObject) && playerObject != null && retryCount < retryLimit)
             {
                 Core.DebugLogger(this);
                 // Increment retry count and log the attempt
@@ -1592,22 +1594,24 @@ public class CoreArmyLite
 
                 Core.DebugLogger(this);
                 Core.Logger($"Could not find {playerName}. Ensure they are on the same server.", "tryGoto");
+
                 if (b_shouldHibernate)
                     Core.Logger($"Bot will hibernate and retry every {hibernateTimer} seconds.", "tryGoto");
 
+                #region Hybernation
                 int elapsedMinutes = 0;
 
                 // Enter hibernation retry loop
                 while (!Bot.ShouldExit)
                 {
-                    Core.DebugLogger(this);
+                    Core.DebugLogger(this, "Enter hibernation retry loop");
                     if (b_shouldHibernate)
                     {
-                        Core.DebugLogger(this);
+                        Core.DebugLogger(this, "b_shouldHibernate");
                         // Sleep for the hibernate period
                         for (int t = 0; t < hibernateTimer; t++)
                         {
-                            Core.DebugLogger(this);
+                            Core.DebugLogger(this, "hibernateTimer" + hibernateTimer);
                             Core.Sleep(1000);
                             if (Bot.ShouldExit)
                                 break;
@@ -1615,8 +1619,7 @@ public class CoreArmyLite
                     }
 
                     // Retry /goto after hibernation
-                    success = tryGoto(playerName, out playerObject);
-                    if (success)
+                    if (tryGoto(playerName, out playerObject) && playerObject != null)
                     {
                         Core.DebugLogger(this);
                         break;
@@ -1639,12 +1642,13 @@ public class CoreArmyLite
                     // e.g., join a specific map or wait before retrying
                     Core.Join("whitemap");
                 }
-                if (success)
+                if (tryGoto(playerName, out playerObject) && playerObject != null)
                 {
                     Core.DebugLogger(this);
                     Core.Logger($"{playerName} found!");
                     break;
                 }
+                #endregion Hybernation
             }
 
             if (retryCount >= retryLimit)
@@ -1655,55 +1659,58 @@ public class CoreArmyLite
             // Check for break on specific map
             if (b_breakOnMap != null && b_breakOnMap == Bot.Map.Name)
             {
-                Core.DebugLogger(this);
+                Core.DebugLogger(this, "b_breakOnMap??");
                 b_breakOnMap = null;
                 break;
             }
+            #endregion Ignore me
 
             #region Combat Area
             // Check if there are monsters in the same cell
-            while (!Bot.ShouldExit && tryGoto(playerName, out PlayerInfo? innerPlayerObject) && innerPlayerObject != null)
+            while (!Bot.ShouldExit)
             {
-                Core.DebugLogger(this);
+                // Exit early if {playerName} is not in the map
+                if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Count > 0 && !Bot.Map.PlayerNames.Contains(playerName))
+                {
+                    Core.Logger($"{playerName} is not in the map");
+                    break;
+                }
 
+                #region ignore this
                 // Handle combat based on attack priority or attack all
                 while (!Bot.ShouldExit && !Bot.Player.Alive) { Core.Sleep(); }
+
                 if (!string.IsNullOrEmpty(attackPriority))
                 {
-                    Core.DebugLogger(this);
+                    Core.DebugLogger(this, "Attack priority lsit isnt empty, attack priority is " + attackPriority);
                     if (!Bot.Combat.StopAttacking)
                         PriorityAttack();
                 }
+                #endregion ignore this
                 else
                 {
-                    Core.DebugLogger(this);
                     if (!Bot.Combat.StopAttacking)
+                    {
                         Bot.Combat.Attack("*"); // Attack any monster if no priority exists
-                    Core.Sleep(); // Pause to avoid busy waiting
-                    Core.DebugLogger(this);
+                        Core.Sleep(); // Pause to avoid busy waiting
+                    }
                 }
 
-                // Ensure player is in the same map and cell
-                if (innerPlayerObject != null && Bot.Player.Cell != innerPlayerObject.Cell)
+                // Ensure player is in the same cell
+                if (Bot.Map.TryGetPlayer(playerName, out playerObject) && playerObject != null && playerObject?.Cell != Bot.Player.Cell)
                 {
-                    Core.DebugLogger(this);
-                    Core.Logger("Player moved to a different cell, following player.");
-                    break; // Exit combat and recheck
+                    Bot.Map.Jump(playerObject?.Cell ?? Bot.Player.Cell, playerObject?.Pad ?? Bot.Player.Pad, false);
+                    Bot.Wait.ForCellChange(playerObject?.Cell ?? Bot.Player.Cell);
+                    Core.Sleep();
+                    Bot.Player.SetSpawnPoint();
+                    Core.DebugLogger(this, "Jumped to player");
                 }
-                // Check if player is in the map
-                if (Bot.Map.PlayerNames != null && !Bot.Map.PlayerNames.Contains(playerName))
-                {
-                    Core.Logger("Player moved to different a map");
-                    Core.DebugLogger(this);
-                    break; // Exit and recheck if player is not found
-                }
-                Core.DebugLogger(this);
+
             }
-            #endregion
-            Core.DebugLogger(this);
+            #endregion Combat Area
+            //itll get here if the player isnt in the map
         }
 
-        Core.DebugLogger(this);
         ButlerStop();
     }
 
@@ -1802,93 +1809,100 @@ public class CoreArmyLite
 
     private bool tryGoto(string userName, out PlayerInfo? playerObject)
     {
-        playerObject = null; // Initialize playerObject to null
-        Core.DebugLogger(this);
-        if (Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null)
+        playerObject = new();
+
+        if (string.IsNullOrWhiteSpace(userName))
         {
-            if (playerObject != null && playerObject.Cell != Bot.Player.Cell)
+            Core.Logger("Invalid username.");
+            return false;
+        }
+
+        Core.Logger("Attempting /goto");
+        int retry = 0;
+
+        // Handle locked zones by subscribing to the event if necessary
+        if (b_doLockedMaps)
+            Bot.Events.ExtensionPacketReceived += LockedZoneListener;
+
+        while (!Bot.ShouldExit)
+        {
+            Core.DebugLogger(this);
+            if (Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null && playerObject.Cell == Bot.Player.Cell)
             {
-                Bot.Map.Jump(playerObject.Cell, playerObject.Pad, false);
-                Bot.Wait.ForCellChange(playerObject.Cell);
+                Core.DebugLogger(this);
                 return true;
             }
+            Core.DebugLogger(this);
+            Core.JumpWait();
+            Core.Sleep();
+            Bot.Player.Goto(userName);
+            Core.Sleep();
+            Core.DebugLogger(this);
+            playerObject = Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null ? playerObject : null;
+            if (Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null)
+            {
+                if (playerObject != null && playerObject?.Cell == Bot.Player.Cell)
+                {
+                    Core.DebugLogger(this);
+                    return true;
+                }
+
+                Core.DebugLogger(this);
+                Bot.Map.Jump(playerObject?.Cell, playerObject?.Pad, false);
+                Core.DebugLogger(this);
+                Bot.Wait.ForCellChange(playerObject.Cell);
+                Core.DebugLogger(this);
+                Core.Sleep();
+                playerObject = Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null ? playerObject : null;
+
+                Core.DebugLogger(this);
+                if (playerObject != null && playerObject?.Cell == Bot.Player.Cell)
+                {
+                    Core.DebugLogger(this);
+                    return true;
+                }
+                Core.DebugLogger(this);
+            }
+
+            Core.DebugLogger(this);
+
             if (playerObject != null && playerObject.Cell == Bot.Player.Cell)
             {
                 Core.DebugLogger(this);
                 return true;
             }
-        }
-        else
-        {
-            ExitCombat();
-            Bot.Player.Goto(userName);
-            Core.Sleep(); // Wait for the player to move
-        }
-
-        // Check if the player is in the map
-        if (Bot.Map.PlayerNames?.Count > 0 && Bot.Map.PlayerNames.Contains(userName) &&
-            Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null)
-        {
+            // Check for locked zone warning and handle it accordingly
+            if (LockedZoneWarning)
+            {
+                Core.DebugLogger(this);
+                break;
+            }
             Core.DebugLogger(this);
-            // Jump to the player if we are not on the same cell
-            if (Bot.Player.Cell != playerObject.Cell)
-            {
-                Core.DebugLogger(this);
-                Bot.Map.Jump(playerObject.Cell, playerObject.Pad, false); // Jump if in different cell
-                Bot.Wait.ForCellChange(playerObject.Cell);
-            }
 
-            // If player is not in the map after jumping
-            if (Bot.Map.PlayerNames?.Count > 0 && !Bot.Map.PlayerNames.Contains(userName))
-            {
-                Core.DebugLogger(this);
-                Bot.Player.Goto(userName);
-                Core.Sleep();
-            }
+            if (++retry >= 5)
+                break;
+            Core.Sleep(1000);
 
-            Bot.Player.SetSpawnPoint(); // Set the spawn point
-
-            // Final check to ensure player is still in the same cell
-            if (Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null)
-            {
-                Core.DebugLogger(this);
-                // Check if we are on the same cell as the player
-                if (Bot.Player?.Cell == playerObject?.Cell)
-                    return true;
-            }
-        }
-
-        Core.DebugLogger(this);
-
-        // Handle locked zone (if applicable)
-        if (b_doLockedMaps)
-        {
             Core.DebugLogger(this);
-            Bot.Events.ExtensionPacketReceived += LockedZoneListener; // Add the listener for locked zones
         }
 
-        // Check if we're in a locked zone and handle the zone logic directly
-        if (LockedZoneWarning && b_doLockedMaps && !insideLockedMaps)
+        // Handle locked zone scenario
+        if (b_doLockedMaps && LockedZoneWarning && !insideLockedMaps)
         {
             Core.DebugLogger(this);
             LockedZoneWarning = false;
-            LockedMaps(); // Execute logic for locked zones
-            Core.DebugLogger(this);
+            Core.DebugLogger(this, $"{LockedZoneWarning}");
+            LockedMaps(); // Handle the locked zone logic
             Core.ToggleAggro(true);
-            Bot.Events.ExtensionPacketReceived -= LockedZoneListener; // Remove the listener after handling
+            Bot.Events.ExtensionPacketReceived -= LockedZoneListener;
             return true;
         }
 
-        Core.DebugLogger(this);
-
-        // No need for redundant recheck – the Butler area already handles this
-        Core.Sleep(); // Sleep to avoid looping too fast
-
-        // Remove the locked zone listener in case of failure
+        // Unsubscribe from event once done
         Bot.Events.ExtensionPacketReceived -= LockedZoneListener;
+
         return false;
     }
-
 
     private void ExitCombat()
     {
@@ -1908,6 +1922,7 @@ public class CoreArmyLite
         Core.JumpWait();
     }
     private bool LockedZoneWarning = false;
+    public bool MapUnavailable = false;
     private bool insideLockedMaps = false;
 
     private void LockedZoneListener(dynamic packet)
@@ -1922,7 +1937,7 @@ public class CoreArmyLite
             {
                 case "warning":
                     string LockerZonePacket = Convert.ToString(packet);
-                    if (LockerZonePacket.Contains("a Locked zone."))
+                    if (LockerZonePacket.Contains("a Locked zone.") || LockerZonePacket.Contains("is not available."))
                         LockedZoneWarning = true;
                     break;
             }
@@ -1931,6 +1946,7 @@ public class CoreArmyLite
 
     private void LockedMaps()
     {
+        Core.DebugLogger(this);
         // If the followed player is leaving behind a location in the file
         if (File.Exists(Path.Combine(CoreBots.ButlerLogDir, b_playerName + ".txt")))
         {
@@ -1940,9 +1956,13 @@ public class CoreArmyLite
             // If it was not empty
             if (targetMap != null)
             {
+                Core.DebugLogger(this);
                 Core.Join(targetMap);
                 if (Bot.Map.PlayerExists(b_playerName!))
+                {
+                    Core.DebugLogger(this);
                     return;
+                }
             }
         }
 
@@ -1991,11 +2011,6 @@ public class CoreArmyLite
             "yoshino"
         };
 
-        string[] VerusMaps =
-        {
-            "seavoice"
-        };
-
         var levelLockedMaps = new[]
         {
             new { Map = "icestormunder", LevelRequired = 75 },
@@ -2006,24 +2021,12 @@ public class CoreArmyLite
         };
 
 
-        int maptry = 1;
-        int mapCount = _LockedMapsList.Count == 0 ? (Core.IsMember ? NonMemMaps.Length + MemMaps.Length : NonMemMaps.Length) : (_LockedMapsList.Count);
+        Core.DebugLogger(this);
+        int maptry = 0;
+        int mapCount = _LockedMapsList.Count == 0 ? (Core.IsMember ? NonMemMaps.Length + MemMaps.Length : NonMemMaps.Length) : _LockedMapsList.Count;
 
         if (_LockedMapsList.Count == 0)
         {
-            foreach (string map in VerusMaps)
-            {
-                Core.Logger($"[{(maptry.ToString().Length == 1 ? "0" : "")}{maptry++}/{mapCount}] Searching for {b_playerName} in /{map}", "LockedZoneHandler");
-                Core.Join(map);
-
-                if (!Bot.Map.PlayerExists(b_playerName!))
-                    continue;
-                else
-                {
-                    Core.Logger($"{b_playerName!} Found!");
-                    return;
-                }
-            }
 
             foreach (string map in EventMaps)
             {
@@ -2041,23 +2044,32 @@ public class CoreArmyLite
                     return;
                 }
             }
+            Core.DebugLogger(this);
 
             foreach (var mapInfo in levelLockedMaps)
             {
+                Core.DebugLogger(this);
                 if (Bot.Player.Level < mapInfo.LevelRequired)
                 {
                     Core.Logger($"Not a high enough level.\n" +
                     $"required: {mapInfo.LevelRequired}, your's: {Bot.Player.Level}");
+                    Core.DebugLogger(this);
                     continue;
                 }
+                Core.DebugLogger(this);
 
                 Core.Logger($"[{(maptry.ToString().Length == 1 ? "0" : "")}{maptry++}/{mapCount}] Searching for {b_playerName} in /{mapInfo.Map}", "LockedZoneHandler");
+                Core.DebugLogger(this);
                 Core.Join(mapInfo.Map);
 
                 if (!Bot.Map.PlayerExists(b_playerName!))
+                {
+                    Core.DebugLogger(this);
                     continue;
+                }
                 else
                 {
+                    Core.DebugLogger(this);
                     Core.Logger($"{b_playerName!} Found!");
                     return;
                 }
