@@ -28,7 +28,7 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 34015,
+    "size": 34264,
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreStory.cs"
   },
@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 345940,
+    "size": 346146,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -788,7 +788,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 87115,
+    "size": 87703,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -1468,7 +1468,7 @@
       "goto"
     ],
     "path": "Tools/Butler.cs",
-    "size": 11769,
+    "size": 11833,
     "fileName": "Butler.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/Butler.cs"
   },
@@ -13886,7 +13886,7 @@
       "null"
     ],
     "path": "Story/7DeadlyDragons/Core7DD.cs",
-    "size": 14814,
+    "size": 14986,
     "fileName": "Core7DD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/7DeadlyDragons/Core7DD.cs"
   },
