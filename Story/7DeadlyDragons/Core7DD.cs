@@ -34,7 +34,6 @@ public class Core7DD
     {
         if (Core.isCompletedBefore(5915))
             return;
-
         Core.Logger("Hunting the Fire Dragon of Gluttony!");
 
         Story.PreLoad(this);
@@ -56,8 +55,13 @@ public class Core7DD
         Story.MapItemQuest(5907, "Gluttony", 5345);
 
         // Glowworms not Glowsticks 5908
-        Story.MapItemQuest(5908, "Gluttony", 5347, 10);
-        Story.KillQuest(5908, "Gluttony", "Bowel Worm");
+        if(!Story.QuestProgression(5908))
+        {
+            Core.EnsureAccept(5908);
+            Core.GetMapItem(5347, 10, "Gluttony");
+            Core.KillMonster("Gluttony", "r7", "Left", "Bowel Worm", "Agitated Bowel Worm", 10);
+            Core.EnsureComplete(5908);
+        }
 
         // Ossification Needed 5909
         if (!Story.QuestProgression(5909))
