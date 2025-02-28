@@ -1,7 +1,7 @@
 /*
-name: script name here
-description: Farms [InsertItem] using your army.
-tags: army, [item]
+name: Army Polly Roger
+description: Farms Polly Roger using your army.
+tags: army, polly roger,polly,poly, celestial
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
@@ -105,7 +105,7 @@ public class ArmyPoly
                 Army.AggroMonStart(map);
                 Army.DivideOnCells(cell);
                 Army.AggroMonMIDs(MonsterMapIDs);
-                    
+
                 // Farm the specified item
                 while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                     Bot.Combat.Attack("*");
