@@ -95,6 +95,8 @@ public class Butler
 
     void DoButler()
     {
+        // Core.DL_Enable();
+        // Core.DebugLogger(this);
         if (!int.TryParse(Bot.Config!.Get<string>("roomNumber"), out int roomNr) && Bot.Config!.Get<bool>("lockedMaps"))
         {
             Core.Logger("Please provide a room number for the bot to use whilst searching locked zones", messageBox: true);
