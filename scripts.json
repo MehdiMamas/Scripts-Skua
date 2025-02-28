@@ -9547,14 +9547,17 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/ArmySeasonal/ArmyHigure.cs"
   },
   {
-    "name": "script name here",
-    "description": "Farms [InsertItem] using your army.",
+    "name": "Army Polly Roger",
+    "description": "Farms Polly Roger using your army.",
     "tags": [
       "army",
-      "[item]"
+      "polly roger",
+      "polly",
+      "poly",
+      "celestial"
     ],
     "path": "Army/ArmySeasonal/ArmyPoly.cs",
-    "size": 4305,
+    "size": 4311,
     "fileName": "ArmyPoly.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/ArmySeasonal/ArmyPoly.cs"
   },
