@@ -6260,6 +6260,10 @@ public class CoreBots
                 blackListedCells.UnionWith(new[] { "r7" });
                 break;
 
+            case "Gluttony":
+                blackListedCells.UnionWith(Bot.Map.Cells?.Where(x => x.StartsWith("Enter")));
+                break;
+
             case "xantown":
                 string[]? cells = Bot.Map.Cells?.Where(x => x != "r3").ToArray();
                 if (cells != null)
@@ -6761,7 +6765,6 @@ public class CoreBots
                 Bot.Wait.ForMapLoad(strippedMap);
                 break;
 
-
             case "zephyrus":
                 JumpWait();
                 Join("hyperium");
@@ -7007,8 +7010,8 @@ public class CoreBots
                         // Log and perform the jump if a valid cell is found and it's different from the current one
                         if (cell != null && Bot.Player.Cell != cell)
                         {
-                            Bot.Map.Jump(cell ?? "Enter", pad ?? "Spawn");
-                            Bot.Wait.ForCellChange(cell ?? "Enter");
+                            Bot.Map.Jump(cell ?? "Enter", pad ?? "Spawn", false);
+                            Sleep(1000);
                         }
                     }
 
@@ -7261,8 +7264,8 @@ public class CoreBots
         JumpWait();
         Sleep();
 
-        var initialItems = Bot.TempInv.Items.ToList();
-        ItemBase? newItem = null;
+        List<ItemBase> initialItems = Bot.TempInv.Items?.ToList();
+        ItemBase? newItem = new();
 
         for (int i = 0; i < quant; i++)
         {
@@ -7270,10 +7273,10 @@ public class CoreBots
             Sleep(1000);
 
             // Identify new items
-            var newItems = Bot.TempInv.Items.Except(initialItems).ToList();
+            List<ItemBase> newItems = Bot.TempInv.Items?.Except(initialItems).ToList();
             if (newItem == null && newItems.Any())
             {
-                newItem = newItems.First();
+                newItem = newItems.Where(x => x.ID == itemID).FirstOrDefault() ?? newItems.First();
             }
         }
 
