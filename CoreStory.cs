@@ -134,7 +134,12 @@ public class CoreStory
     /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
     public void MapItemQuest(int QuestID, string MapName, int MapItemID, int Amount = 1, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-        Quest QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+        if (QuestData == null)
+        {
+            Core.Logger($"Quest with ID {QuestID} not found");
+            return;
+        }
 
         if (QuestProgression(QuestID, GetReward, Reward))
         {
@@ -159,7 +164,12 @@ public class CoreStory
     /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
     public void MapItemQuest(int QuestID, string MapName, int[] MapItemIDs, int Amount = 1, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-        Quest QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+        if (QuestData == null)
+        {
+            Core.Logger($"Quest with ID {QuestID} not found");
+            return;
+        }
 
         if (QuestProgression(QuestID, GetReward, Reward))
         {
@@ -185,7 +195,12 @@ public class CoreStory
     /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
     public void MapItemQuest(int QuestID, (int MapItemID, int Amount, string MapName)[] MapItems, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-        Quest QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+        if (QuestData == null)
+        {
+            Core.Logger($"Quest with ID {QuestID} not found");
+            return;
+        }
 
         if (QuestProgression(QuestID, GetReward, Reward))
         {
@@ -214,7 +229,12 @@ public class CoreStory
     /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
     public void BuyQuest(int QuestID, string MapName, int ShopID, string ItemName, int Amount = 1, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-        Quest QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+        if (QuestData == null)
+        {
+            Core.Logger($"Quest with ID {QuestID} not found");
+            return;
+        }
 
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
@@ -233,7 +253,12 @@ public class CoreStory
     /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
     public void ChainQuest(int QuestID, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-        Quest QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+        if (QuestData == null)
+        {
+            Core.Logger($"Quest with ID {QuestID} not found");
+            return;
+        }
 
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
@@ -254,7 +279,7 @@ public class CoreStory
 
     private void TryComplete(Quest questData, bool autoCompleteQuest)
     {
-        Quest QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(questData.ID));
+        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(questData.ID));
         if (!Bot.Quests.CanComplete(questData.ID))
         {
             return;
