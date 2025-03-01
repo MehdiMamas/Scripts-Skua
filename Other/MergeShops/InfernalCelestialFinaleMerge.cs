@@ -21,7 +21,7 @@ public class InfernalCelestialFinaleMerge
     private CoreFarms Farm = new();
     private CoreAdvanced Adv = new();
     private static CoreAdvanced sAdv = new();
-    private infernalDianoia ID = new();
+    private InfernalDianoia ID = new();
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
