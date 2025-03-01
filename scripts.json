@@ -18455,6 +18455,27 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DreadspaceReplicatorMerge.cs"
   },
   {
+    "name": "Infernal Celestial Finale Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Infernal Celestial Finale Merge [2562] in /infernaldianoia",
+    "tags": [
+      "infernal",
+      "celestial",
+      "finale",
+      "merge",
+      "infernaldianoia",
+      "nightstar",
+      "crown",
+      "fallen",
+      "arthelyn",
+      "wings",
+      "dominion"
+    ],
+    "path": "Other/MergeShops/InfernalCelestialFinaleMerge.cs",
+    "size": 5141,
+    "fileName": "InfernalCelestialFinaleMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/InfernalCelestialFinaleMerge.cs"
+  },
+  {
     "name": "ArchFiendWarlordMerge",
     "description": "null",
     "tags": [
