@@ -1847,10 +1847,13 @@ public class CoreArmyLite
                     return true;
                 }
 
+                string targetCell = playerObject?.Cell ?? Bot.Player.Cell;
+                string targetPad = playerObject?.Pad ?? Bot.Player.Pad;
+
                 Core.DebugLogger(this);
-                Bot.Map.Jump(playerObject?.Cell, playerObject?.Pad, false);
+                Bot.Map.Jump(targetCell, targetPad, false);
                 Core.DebugLogger(this);
-                Bot.Wait.ForCellChange(playerObject.Cell);
+                Bot.Wait.ForCellChange(targetCell);
                 Core.DebugLogger(this);
                 Core.Sleep();
                 playerObject = Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null ? playerObject : null;
