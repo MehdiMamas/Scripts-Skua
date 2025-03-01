@@ -1,0 +1,97 @@
+/*
+name: Celestial Of Mysteries
+description: This script will complete "Luctus in Perpetuum" [10096] quest.
+tags: celestial, aranx, azalith, luctus in perpetuum, celestial realm, infernaldianoia,extra,qom,celestial of mysteries,luctus,perpetuum
+*/
+//cs_include Scripts/CoreBots.cs
+//cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/CoreStory.cs
+//cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/CelestialPast.cs
+//cs_include Scripts/Story\QueenofMonsters\Extra\InfernalParadise.cs
+//cs_include Scripts/Story\QueenofMonsters\Extra\InfernalDianoia.cs
+//cs_include Scripts/Other\MergeShops\InfernalParadiseMerge.cs
+//cs_include Scripts/Other\MergeShops\InfernalCelestialFinaleMerge.cs
+using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
+using Skua.Core.Models.Monsters;
+using Skua.Core.Models.Quests;
+
+public class CelestialOfMysteries
+{
+    private IScriptInterface Bot => IScriptInterface.Instance;
+    private CoreBots Core => CoreBots.Instance;
+    private CoreFarms Farm = new();
+    private CoreAdvanced Adv = new();
+    private InfernalDianoia ID = new();
+    private InfernalParadiseMerge IPM = new();
+    private InfernalCelestialFinaleMerge ICFM = new();
+
+    public void ScriptMain(IScriptInterface Bot)
+    {
+        Core.SetOptions();
+
+        DoQuest();
+        Core.SetOptions(false);
+    }
+
+    public void DoQuest()
+    {
+        if (Core.CheckInventory(Core.QuestRewards(10096)))
+            return;
+
+        // Prereqs
+        ID.Storyline();
+        Farm.Experience(90);
+        Quest? q = Core.InitializeWithRetries(() => Core.EnsureLoad(10096));
+        if (q == null)
+        {
+            Core.Logger("Failed to load quest 10096.");
+            return;
+        }
+        foreach (ItemBase req in q.AcceptRequirements)
+        {
+            if (!Core.CheckInventory(req.ID))
+            {
+                IPM.BuyAllMerge(req.Name); // Archangel of Mysteries Armor, Helm and Wings
+            }
+        }
+
+        // Gold Voucher 500k
+        Adv.BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", 35);
+
+        // Duo's Dinner
+        Core.BossClass();
+        Core.HuntMonster("infernalarena", "Deadly Duo", "Duo's Dinner", 35, false);
+
+        // Cervus Dente
+        if (Core.CheckInventory(new[] { "Legion DoomKnight", "Classic Legion DoomKnight" }, any: true))
+            Core.BossClass(Core.CheckInventory("Legion DoomKnight") ? "Legion DoomKnight" : "Classic Legion DoomKnight");
+        Core.HuntMonster("infernalarena", "Cervus Malus", "Cervus Dente", 35, false);
+
+        // Infernal Incantation
+        Core.BossClass("Dragon of Time");
+        Core.HuntMonster("infernalarena", "Key of Sholemoh", "Infernal Incantation", 35, false);
+
+        // Scythe Shard
+        Core.DodgeClass("Lord Of Order");
+        Core.HuntMonster("infernalarena", "Azalith's Scythe", "Scythe Shard", 35, false);
+
+        // Champion's Seal
+        Core.BossClass(Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
+        Core.HuntMonster("infernalarena", "Na'al", "Champion's Seal", 20, false, false);
+
+        // Infernal Down
+        ICFM.InfernalDown(50);
+
+        if (!Core.CheckInventory("The Divine Will"))
+        {
+            Core.Logger("Farming Azalith for The Divine Will. Azalith is tough, consider using an army to speed it up.");
+            Core.BossClass();
+            Core.HuntMonster("celestialpast", "Azalith", "The Divine Will", 1, false);
+        }
+
+        Core.AddDrop(Core.QuestRewards(10096));
+        Core.ChainComplete(10096);
+    }
+}

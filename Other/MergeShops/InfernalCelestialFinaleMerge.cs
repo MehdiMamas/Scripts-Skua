@@ -67,15 +67,7 @@ public class InfernalCelestialFinaleMerge
                 #endregion
 
                 case "Infernal Down":
-                    Core.FarmingLogger(req.Name, quant);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonsterQuest(10085,
-                            ("infernaldianoia", "Eudae", ClassType.Solo),
-                            ("infernaldianoia", "Avatar of Time", ClassType.Solo),
-                            ("infernaldianoia", "Aranx, Nightstar", ClassType.Solo));
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    InfernalDown(quant);
                     break;
 
                 case "Arthelyn's Oculus":
@@ -94,6 +86,18 @@ public class InfernalCelestialFinaleMerge
         }
     }
 
+    public void InfernalDown(int quant = 100)
+    {
+        Core.FarmingLogger("Infernal Down", quant);
+        while (!Bot.ShouldExit && !Core.CheckInventory("Infernal Down", quant))
+        {
+            Core.HuntMonsterQuest(10085,
+                ("infernaldianoia", "Eudae", ClassType.Solo),
+                ("infernaldianoia", "Avatar of Time", ClassType.Solo),
+                ("infernaldianoia", "Aranx, Nightstar", ClassType.Solo));
+            Bot.Wait.ForPickup("Infernal Down");
+        }
+    }
     public List<IOption> Select = new()
     {
         new Option<bool>("92057", "Nightstar Crown", "Mode: [select] only\nShould the bot buy \"Nightstar Crown\" ?", false),
