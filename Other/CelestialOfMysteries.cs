@@ -55,7 +55,9 @@ public class CelestialOfMysteries
             {
                 IPM.BuyAllMerge(req.Name); // Archangel of Mysteries Armor, Helm and Wings
             }
+            Core.Unbank(req.ID);
         }
+
 
         // Gold Voucher 500k
         Adv.BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", 35);
