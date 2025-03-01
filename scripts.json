@@ -26587,6 +26587,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/QueenofMonsters/Extra/CelestialArena.cs"
   },
   {
+    "name": "Infernal Dianoia",
+    "description": "This will finish the Azalith's quests in /infernaldianoia.",
+    "tags": [
+      "story",
+      "quest",
+      "queen of monster",
+      "celestial realm",
+      "infernaldianoia",
+      "aranx",
+      "azalith",
+      "extra",
+      "qom"
+    ],
+    "path": "Story/QueenofMonsters/Extra/InfernalDianoia.cs",
+    "size": 3603,
+    "fileName": "InfernalDianoia.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/QueenofMonsters/Extra/InfernalDianoia.cs"
+  },
+  {
     "name": "Infernal Paradise",
     "description": "This will finish the Aranx' quests in /infernalparadise.",
     "tags": [
