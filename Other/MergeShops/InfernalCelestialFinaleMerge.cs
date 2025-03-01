@@ -8,8 +8,8 @@ tags: infernal, celestial, finale, merge, infernaldianoia, nightstar, crown, fal
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/QueenofMonsters/Extra/CelestialPast.cs
-//cs_include Scripts/Story\QueenofMonsters\Extra\InfernalParadise.cs
-//cs_include Scripts/Story\QueenofMonsters\Extra\InfernalDianoia.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/InfernalParadise.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/InfernalDianoia.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;

@@ -8,10 +8,10 @@ tags: celestial, aranx, azalith, luctus in perpetuum, celestial realm, infernald
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Story/QueenofMonsters/Extra/CelestialPast.cs
-//cs_include Scripts/Story\QueenofMonsters\Extra\InfernalParadise.cs
-//cs_include Scripts/Story\QueenofMonsters\Extra\InfernalDianoia.cs
-//cs_include Scripts/Other\MergeShops\InfernalParadiseMerge.cs
-//cs_include Scripts/Other\MergeShops\InfernalCelestialFinaleMerge.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/InfernalParadise.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/InfernalDianoia.cs
+//cs_include Scripts/Other/MergeShops/InfernalParadiseMerge.cs
+//cs_include Scripts/Other/MergeShops/InfernalCelestialFinaleMerge.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;

@@ -6,7 +6,7 @@ tags: story, quest, queen of monster, celestial realm, infernaldianoia,aranx,aza
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/QueenofMonsters/Extra/CelestialPast.cs
-//cs_include Scripts/Story\QueenofMonsters\Extra\InfernalParadise.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/InfernalParadise.cs
 using Skua.Core.Interfaces;
 
 public class InfernalDianoia
