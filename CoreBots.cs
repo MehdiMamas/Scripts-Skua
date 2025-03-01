@@ -6261,7 +6261,10 @@ public class CoreBots
                 break;
 
             case "Gluttony":
-                blackListedCells.UnionWith(Bot.Map.Cells?.Where(x => x.StartsWith("Enter")));
+                if (Bot.Map.Cells != null)
+                {
+                    blackListedCells.UnionWith(Bot.Map.Cells.Where(x => x.StartsWith("Enter")));
+                }
                 break;
 
             case "xantown":
@@ -7264,7 +7267,7 @@ public class CoreBots
         JumpWait();
         Sleep();
 
-        List<ItemBase> initialItems = Bot.TempInv.Items?.ToList();
+        List<ItemBase>? initialItems = Bot.TempInv.Items?.ToList();
         ItemBase? newItem = new();
 
         for (int i = 0; i < quant; i++)
@@ -7273,8 +7276,8 @@ public class CoreBots
             Sleep(1000);
 
             // Identify new items
-            List<ItemBase> newItems = Bot.TempInv.Items?.Except(initialItems).ToList();
-            if (newItem == null && newItems.Any())
+            List<ItemBase>? newItems = Bot.TempInv.Items?.Except(initialItems ?? Enumerable.Empty<ItemBase>()).ToList();
+            if (newItem == null && newItems != null && newItems.Any())
             {
                 newItem = newItems.Where(x => x.ID == itemID).FirstOrDefault() ?? newItems.First();
             }
