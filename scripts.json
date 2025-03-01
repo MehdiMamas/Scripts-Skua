@@ -3748,6 +3748,27 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MasterofYourCraft.cs"
   },
   {
+    "name": "Celestial Of Mysteries",
+    "description": "This script will complete \"Luctus in Perpetuum\" [10096] quest.",
+    "tags": [
+      "celestial",
+      "aranx",
+      "azalith",
+      "luctus in perpetuum",
+      "celestial realm",
+      "infernaldianoia",
+      "extra",
+      "qom",
+      "celestial of mysteries",
+      "luctus",
+      "perpetuum"
+    ],
+    "path": "Other/CelestialOfMysteries.cs",
+    "size": 3562,
+    "fileName": "CelestialOfMysteries.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/CelestialOfMysteries.cs"
+  },
+  {
     "name": "Daily Gifts",
     "description": "This will get all of the available gifts upto this date.",
     "tags": [
@@ -18471,7 +18492,7 @@
       "dominion"
     ],
     "path": "Other/MergeShops/InfernalCelestialFinaleMerge.cs",
-    "size": 5141,
+    "size": 5153,
     "fileName": "InfernalCelestialFinaleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/InfernalCelestialFinaleMerge.cs"
   },
