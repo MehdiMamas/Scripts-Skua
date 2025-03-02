@@ -63,23 +63,28 @@ public class CelestialOfMysteries
         Adv.BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", 35);
 
         // Duo's Dinner
-        Core.BossClass();
+        if (!Core.CheckInventory("Duo's Dinner", 35))
+            Core.BossClass();
         Core.HuntMonster("infernalarena", "Deadly Duo", "Duo's Dinner", 35, false);
 
         // Cervus Dente
-        Core.BossClass("Chaos Avenger");
+        if (!Core.CheckInventory("Cervus Dente", 35))
+            Core.BossClass("Chaos Avenger");
         Core.HuntMonster("infernalarena", "Cervus Malus", "Cervus Dente", 35, false);
 
         // Infernal Incantation
-        Core.BossClass("Dragon of Time");
+        if (!Core.CheckInventory("Infernal Incantation", 35))
+            Core.BossClass("Dragon of Time");
         Core.HuntMonster("infernalarena", "Key of Sholemoh", "Infernal Incantation", 35, false);
 
         // Scythe Shard
-        Core.DodgeClass("Lord Of Order");
+        if (!Core.CheckInventory("Scythe Shard", 35))
+            Core.DodgeClass("Lord Of Order");
         Core.HuntMonster("infernalarena", "Azalith's Scythe", "Scythe Shard", 35, false);
 
         // Champion's Seal
-        Core.BossClass(Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
+        if (!Core.CheckInventory("Champion's Seal", 20))
+            Core.BossClass(Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
         Core.HuntMonster("infernalarena", "Na'al", "Champion's Seal", 20, false, false);
 
         // Infernal Down
