@@ -67,8 +67,7 @@ public class CelestialOfMysteries
         Core.HuntMonster("infernalarena", "Deadly Duo", "Duo's Dinner", 35, false);
 
         // Cervus Dente
-        if (Core.CheckInventory(new[] { "Legion DoomKnight", "Classic Legion DoomKnight" }, any: true))
-            Core.BossClass(Core.CheckInventory("Legion DoomKnight") ? "Legion DoomKnight" : "Classic Legion DoomKnight");
+        Core.BossClass("Chaos Avenger");
         Core.HuntMonster("infernalarena", "Cervus Malus", "Cervus Dente", 35, false);
 
         // Infernal Incantation
