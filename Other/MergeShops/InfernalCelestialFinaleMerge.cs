@@ -91,7 +91,7 @@ public class InfernalCelestialFinaleMerge
         Core.FarmingLogger("Infernal Down", quant);
         while (!Bot.ShouldExit && !Core.CheckInventory("Infernal Down", quant))
         {
-            Core.HuntMonsterQuest(10085,
+            Core.HuntMonsterQuest(10095,
                 ("infernaldianoia", "Eudae", ClassType.Solo),
                 ("infernaldianoia", "Avatar of Time", ClassType.Solo),
                 ("infernaldianoia", "Aranx, Nightstar", ClassType.Solo));
