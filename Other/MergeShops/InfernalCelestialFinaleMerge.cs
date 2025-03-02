@@ -79,7 +79,7 @@ public class InfernalCelestialFinaleMerge
                 case "Life Spirit":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.KillMonster("infernaldianoia", "r7", "Left", "*", req.Name, quant, false, false);
+                    Core.HuntMonster("infernaldianoia", "Avatar of Life", req.Name, quant, false, false);
                     break;
 
             }
