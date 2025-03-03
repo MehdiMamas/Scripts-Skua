@@ -1,7 +1,7 @@
 /*
 name: leZard Man Merge
 description: This bot will farm the items belonging to the selected mode for the leZard Man Merge [2428] in /battleon
-tags: lezard, man, merge, battleon, void, stareater, blackout, stareaters, morph, ravenous, grin, flare, tusk, tusks, tail, tentacles, total, solar, eclipse, chibi, buddy, collapse, knights, glasses, , adventurers, double, puffs
+tags: lezard, man, merge, battleon, void, stareater, blackout, stareaters, morph, ravenous, grin, flare, tusk, tusks, tail, tentacles, total, solar, eclipse, chibi, buddy, collapse, knights, glasses, , adventurers, double, puffs, astral, symbiote, alignment, greatsword, greatswords
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -31,7 +31,7 @@ public class leZardManMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Cosmic Dust", "Cosmic Aura" });
+        Core.BankingBlackList.AddRange(new[] { "Cosmic Dust", "Cosmic Aura", "Astral Alignment Sword", "Astral Alignment Swords" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -98,6 +98,12 @@ public class leZardManMerge
                     Core.CancelRegisteredQuests();
                     break;
 
+                case "Astral Alignment Sword":
+                case "Astral Alignment Swords":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.HuntMonster("starfield", "Astral Spirit", req.Name, quant, false, false);
+                    break;
             }
         }
     }
@@ -122,5 +128,8 @@ public class leZardManMerge
         new Option<bool>("85320", "Knight's Total Eclipse Solar Glasses + Locks", "Mode: [select] only\nShould the bot buy \"Knight's Total Eclipse Solar Glasses + Locks\" ?", false),
         new Option<bool>("85319", "Adventurer's Total Eclipse Solar Glasses", "Mode: [select] only\nShould the bot buy \"Adventurer's Total Eclipse Solar Glasses\" ?", false),
         new Option<bool>("85322", "Total Eclipse Solar Glasses + Double Puffs", "Mode: [select] only\nShould the bot buy \"Total Eclipse Solar Glasses + Double Puffs\" ?", false),
+        new Option<bool>("92191", "Astral Symbiote", "Mode: [select] only\nShould the bot buy \"Astral Symbiote\" ?", false),
+        new Option<bool>("92253", "Astral Alignment Greatsword", "Mode: [select] only\nShould the bot buy \"Astral Alignment Greatsword\" ?", false),
+        new Option<bool>("92254", "Astral Alignment Greatswords", "Mode: [select] only\nShould the bot buy \"Astral Alignment Greatswords\" ?", false),
     };
 }
