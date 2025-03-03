@@ -88,7 +88,10 @@ public class InfernalCelestialFinaleMerge
 
     public void InfernalDown(int quant = 100)
     {
+        if (Core.CheckInventory("Infernal Down", quant))
+            return;
         Core.FarmingLogger("Infernal Down", quant);
+        Core.AddDrop("Infernal Down");
         while (!Bot.ShouldExit && !Core.CheckInventory("Infernal Down", quant))
         {
             Core.HuntMonsterQuest(10095,
