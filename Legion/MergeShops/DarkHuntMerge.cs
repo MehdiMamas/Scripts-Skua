@@ -7,7 +7,7 @@ tags: dark, hunt, merge, darkfortress, bone, crusher, knight, skull, centurion, 
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/Legion\CoreLegion.cs
+//cs_include Scripts/Legion/CoreLegion.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
