@@ -4725,10 +4725,15 @@
       "",
       "adventurers",
       "double",
-      "puffs"
+      "puffs",
+      "astral",
+      "symbiote",
+      "alignment",
+      "greatsword",
+      "greatswords"
     ],
     "path": "Seasonal/Eclipse/leZardManMerge.cs",
-    "size": 7274,
+    "size": 8140,
     "fileName": "leZardManMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Eclipse/leZardManMerge.cs"
   },
