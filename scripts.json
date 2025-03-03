@@ -8899,6 +8899,29 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/LegionPyromancerMerge.cs"
   },
   {
+    "name": "Dark Hunt Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Dark Hunt Merge [1102] in /darkfortress",
+    "tags": [
+      "dark",
+      "hunt",
+      "merge",
+      "darkfortress",
+      "bone",
+      "crusher",
+      "knight",
+      "skull",
+      "centurion",
+      "cocar",
+      "dos",
+      "mortosvivos",
+      "dançarinos"
+    ],
+    "path": "Legion/MergeShops/DarkHuntMerge.cs",
+    "size": 4326,
+    "fileName": "DarkHuntMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/DarkHuntMerge.cs"
+  },
+  {
     "name": "SoulForge Merge",
     "description": "This bot will farm the items belonging to the selected mode for the SoulForge Merge [577] in /underworld",
     "tags": [
