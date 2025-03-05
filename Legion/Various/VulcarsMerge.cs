@@ -9,9 +9,9 @@ tags: null
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Legion/CoreLegion.cs
 //cs_include Scripts/Story/Legion/SeraphicWar.cs
-//cs_include Scripts/Legion/Various/SoulSand.cs
+//cs_include Scripts/Legion/LegionMaterials/SoulSand.cs
 //cs_include Scripts/Legion/Various/LegionBonfire.cs
-//cs_include Scripts/Legion/Various/LetitBurn(SoulEssence).cs
+//cs_include Scripts/Legion/LegionMaterials/LetitBurn(SoulEssence).cs
 
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;

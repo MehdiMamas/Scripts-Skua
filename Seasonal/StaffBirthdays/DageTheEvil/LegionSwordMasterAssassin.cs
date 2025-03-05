@@ -7,7 +7,7 @@ tags: legion, class, darkbirthday, legion swordmaster assassin
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Legion/CoreLegion.cs
-//cs_include Scripts/Legion/Various/SoulSand.cs
+//cs_include Scripts/Legion/LegionMaterials/SoulSand.cs
 //cs_include Scripts/Legion/Various/LegionBonfire.cs
 //cs_include Scripts/Story/Legion/SeraphicWar.cs
 //cs_include Scripts/CoreAdvanced.cs

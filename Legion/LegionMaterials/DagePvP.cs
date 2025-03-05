@@ -31,7 +31,7 @@ public class LegionCombatTrophy
     {
         Bot.Options.LagKiller = false;
         //order of quants: Trophy - Technique - Scroll
-        Legion.DagePvP(4000, 50, 1000);
+        Legion.DagePvP();
 
     }
 }

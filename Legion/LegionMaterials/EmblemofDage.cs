@@ -1,27 +1,33 @@
 /*
-name: Emblem of Dage
-description: This script will farm Emblems of Dage.
-tags: emblem, dage, lf3, legion fealty 3, shadowblast arena, legion recruits, the dark path waits
+name: MaxEmblemofDage
+description: farms EmblemofDage till max quantity
+tags: legion, dage, EmblemofDage, 🖕, you
 */
+
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Legion/CoreLegion.cs
-//cs_include Scripts/CoreAdvanced.cs
+
 using Skua.Core.Interfaces;
 
 public class EmblemofDage
 {
-    public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreLegion Legion = new();
-    public CoreAdvanced Adv = new();
+    public CoreLegion CL = new();
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
 
-        Legion.EmblemofDage();
+        GetEmblemofDage();
 
         Core.SetOptions(false);
+    }
+
+    public void GetEmblemofDage()
+    {
+        CL.EmblemofDage();
     }
 }

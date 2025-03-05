@@ -71,7 +71,7 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Seasonal/MayThe4th/MurderMoonMerge.cs
 //cs_include Scripts/Seasonal/Mogloween/PumpkinLord(Class).cs
 //cs_include Scripts/Seasonal/Mogloween/VampireLord(Class).cs
-//cs_include Scripts/Legion/Various/SoulSand.cs
+//cs_include Scripts/Legion/LegionMaterials/SoulSand.cs
 //cs_include Scripts/Legion/Various/LegionBonfire.cs
 //cs_include Scripts/Seasonal/StaffBirthdays/DageTheEvil/LegionSwordMasterAssassin.cs
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/BlazeBeardStory.cs

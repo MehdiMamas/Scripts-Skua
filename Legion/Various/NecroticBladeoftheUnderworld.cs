@@ -11,7 +11,7 @@ tags: null
 //cs_include Scripts/Evil/NSoD/CoreNSOD.cs
 //cs_include Scripts/Legion/CoreLegion.cs
 //cs_include Scripts/Story/Legion/DageChallengeStory.cs
-//cs_include Scripts/Legion/Various/SoulSand.cs
+//cs_include Scripts/Legion/LegionMaterials/SoulSand.cs
 //cs_include Scripts/Good/BLOD/CoreBLOD.cs
 //cs_include Scripts/Evil/SDKA/CoreSDKA.cs
 //cs_include Scripts/Other/Classes/Necromancer.cs

@@ -17,9 +17,9 @@ tags: hollowborn lich king, hollowborn, heat treatment
 
 
 //cs_include Scripts/Legion/MergeShops/UndeadLegionMerge.cs
-//cs_include Scripts/Legion/Various/SoulSand.cs
+//cs_include Scripts/Legion/LegionMaterials/SoulSand.cs
 //cs_include Scripts/Hollowborn/Materials/HollowSoul.cs
-//cs_include Scripts/Legion/Various/LetitBurn(SoulEssence).cs
+//cs_include Scripts/Legion/LegionMaterials/LetitBurn(SoulEssence).cs
 
 //cs_include Scripts/Legion/InfiniteLegionDarkCaster.cs
 //cs_include Scripts/Story/Legion/SeraphicWar.cs

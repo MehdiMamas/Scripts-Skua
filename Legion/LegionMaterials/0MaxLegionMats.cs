@@ -3,17 +3,29 @@ name: 0MaxLegionMats
 description: Farms the max stack of all the legion materials using various methods based off the pets / quest you have avaiable.
 tags: legion, dage, all, 🖕, you
 */
+
+//cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Legion/CoreLegion.cs
+//cs_include Scripts/Legion/LegionMaterials/SoulSand.cs
+//cs_include Scripts/Legion/LegionMaterials/LetitBurn(SoulEssence).cs
+//cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
+//cs_include Scripts/Legion/SwordMaster.cs
+//cs_include Scripts/Legion/YamiNoRonin/CoreYnR.cs
+//cs_include Scripts/Legion/Various/LegionBonfire.cs
+//cs_include Scripts/Story/Legion/SeraphicWar.cs
+
 using Skua.Core.Interfaces;
 
 public class MaxLegionMats
 {
     public CoreBots Core => CoreBots.Instance;
-    public CoreNation Nation = new();
     public CoreLegion CL = new();
+    public LetItBurn LetItBurn = new();
+    public AnotherOneBitesTheDust AnotherOneBitesTheDust = new();
+    public CoreYnR CoreYnR = new();
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -38,7 +50,10 @@ public class MaxLegionMats
         CL.DarkToken();
         CL.DiamondTokenofDage();
         CL.ObsidianRock();
-
+        LetItBurn.SoulEssence();
+        AnotherOneBitesTheDust.SoulSand();
+        CoreYnR.YokaiSwordScroll();
+        
         // Keep pvp as the last, as it takes **FUCKING FOREVER**
         CL.DagePvP();
     }
