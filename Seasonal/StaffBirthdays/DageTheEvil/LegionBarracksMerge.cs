@@ -86,7 +86,7 @@ public class LegionBarracksMerge
                     break;
 
                 case "Grand Antaeus Spear":
-                    Adv.BuyItem("legionbarracks", 1982, req.Name, quant);
+                    Core.Logger($"Item {req.Name} is not obtainable anymore.");
                     break;
 
             }
