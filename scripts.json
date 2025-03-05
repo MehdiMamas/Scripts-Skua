@@ -602,30 +602,13 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/SwordMaster.cs"
   },
   {
-    "name": "Legion Combat Trophy",
-    "description": "This script will farm Legion Combat Trophies in /dagepvp.",
-    "tags": [
-      "legion",
-      "combat",
-      "trophy",
-      "dage",
-      "pvp",
-      "dage pvp",
-      "dagepvp"
-    ],
-    "path": "Legion/DagePvP.cs",
-    "size": 1082,
-    "fileName": "DagePvP.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/DagePvP.cs"
-  },
-  {
     "name": "null",
     "description": "null",
     "tags": [
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 37513,
+    "size": 37534,
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -660,78 +643,6 @@
     "size": 9487,
     "fileName": "HeadOfTheLegionBeast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/HeadOfTheLegionBeast.cs"
-  },
-  {
-    "name": "Diamond Token of Dage",
-    "description": "This script will farm Diamond Tokens of Dage.",
-    "tags": [
-      "diamond token",
-      "dage",
-      "diamond",
-      "token",
-      "lf3",
-      "legion fealty 3",
-      "lr",
-      "legion loyalty rewarded",
-      "shadowblast arena"
-    ],
-    "path": "Legion/DiamondTokenofDage.cs",
-    "size": 793,
-    "fileName": "DiamondTokenofDage.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/DiamondTokenofDage.cs"
-  },
-  {
-    "name": "SoulForge Hammer",
-    "description": "This script will get SoulForge Hammer.",
-    "tags": [
-      "soul",
-      "forge",
-      "soulforge",
-      "hammer",
-      "unlock soul forge",
-      "soul forge hammer",
-      "legion",
-      "dage",
-      "underworld"
-    ],
-    "path": "Legion/SoulForgeHammer.cs",
-    "size": 763,
-    "fileName": "SoulForgeHammer.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/SoulForgeHammer.cs"
-  },
-  {
-    "name": "Dark Token",
-    "description": "This script will farm Dark Tokens.",
-    "tags": [
-      "darktoken",
-      "lf3",
-      "legion fealty 3",
-      "lr",
-      "seraphic medals",
-      "seraphic",
-      "dark token"
-    ],
-    "path": "Legion/DarkToken.cs",
-    "size": 903,
-    "fileName": "DarkToken.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/DarkToken.cs"
-  },
-  {
-    "name": "Emblem of Dage",
-    "description": "This script will farm Emblems of Dage.",
-    "tags": [
-      "emblem",
-      "dage",
-      "lf3",
-      "legion fealty 3",
-      "shadowblast arena",
-      "legion recruits",
-      "the dark path waits"
-    ],
-    "path": "Legion/EmblemofDage.cs",
-    "size": 753,
-    "fileName": "EmblemofDage.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/EmblemofDage.cs"
   },
   {
     "name": "Join the Legion",
@@ -9135,6 +9046,175 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionTokens/InfernalLegionBetrayal.cs"
   },
   {
+    "name": "Legion Combat Trophy",
+    "description": "This script will farm Legion Combat Trophies in /dagepvp.",
+    "tags": [
+      "legion",
+      "combat",
+      "trophy",
+      "dage",
+      "pvp",
+      "dage pvp",
+      "dagepvp"
+    ],
+    "path": "Legion/LegionMaterials/DagePvP.cs",
+    "size": 1068,
+    "fileName": "DagePvP.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionMaterials/DagePvP.cs"
+  },
+  {
+    "name": "0MaxLegionMats",
+    "description": "Farms the max stack of all the legion materials using various methods based off the pets / quest you have avaiable.",
+    "tags": [
+      "legion",
+      "dage",
+      "all",
+      "🖕",
+      "you"
+    ],
+    "path": "Legion/LegionMaterials/0MaxLegionMats.cs",
+    "size": 1731,
+    "fileName": "0MaxLegionMats.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionMaterials/0MaxLegionMats.cs"
+  },
+  {
+    "name": "MaxBoneSigil",
+    "description": "farms BoneSigil till max quantity",
+    "tags": [
+      "legion",
+      "dage",
+      "bonesigil",
+      "🖕",
+      "you"
+    ],
+    "path": "Legion/LegionMaterials/BoneSigil.cs",
+    "size": 647,
+    "fileName": "BoneSigil.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionMaterials/BoneSigil.cs"
+  },
+  {
+    "name": "SoulSand",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Legion/LegionMaterials/SoulSand.cs",
+    "size": 1391,
+    "fileName": "SoulSand.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionMaterials/SoulSand.cs"
+  },
+  {
+    "name": "Diamond Token of Dage",
+    "description": "This script will farm Diamond Tokens of Dage.",
+    "tags": [
+      "diamond token",
+      "dage",
+      "diamond",
+      "token",
+      "lf3",
+      "legion fealty 3",
+      "lr",
+      "legion loyalty rewarded",
+      "shadowblast arena"
+    ],
+    "path": "Legion/LegionMaterials/DiamondTokenofDage.cs",
+    "size": 793,
+    "fileName": "DiamondTokenofDage.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionMaterials/DiamondTokenofDage.cs"
+  },
+  {
+    "name": "MaxDageApprovalAndFavor",
+    "description": "farms DageApprovalAndFavor till max quantity",
+    "tags": [
+      "legion",
+      "dage",
+      "dageapprovalandfavor",
+      "🖕",
+      "you"
+    ],
+    "path": "Legion/LegionMaterials/ApprovalAndFavor.cs",
+    "size": 720,
+    "fileName": "ApprovalAndFavor.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionMaterials/ApprovalAndFavor.cs"
+  },
+  {
+    "name": "SoulForge Hammer",
+    "description": "This script will get SoulForge Hammer.",
+    "tags": [
+      "soul",
+      "forge",
+      "soulforge",
+      "hammer",
+      "unlock soul forge",
+      "soul forge hammer",
+      "legion",
+      "dage",
+      "underworld"
+    ],
+    "path": "Legion/LegionMaterials/SoulForgeHammer.cs",
+    "size": 763,
+    "fileName": "SoulForgeHammer.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionMaterials/SoulForgeHammer.cs"
+  },
+  {
+    "name": "Dark Token",
+    "description": "This script will farm Dark Tokens.",
+    "tags": [
+      "darktoken",
+      "lf3",
+      "legion fealty 3",
+      "lr",
+      "seraphic medals",
+      "seraphic",
+      "dark token"
+    ],
+    "path": "Legion/LegionMaterials/DarkToken.cs",
+    "size": 903,
+    "fileName": "DarkToken.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionMaterials/DarkToken.cs"
+  },
+  {
+    "name": "MaxEmblemofDage",
+    "description": "farms EmblemofDage till max quantity",
+    "tags": [
+      "legion",
+      "dage",
+      "emblemofdage",
+      "🖕",
+      "you"
+    ],
+    "path": "Legion/LegionMaterials/EmblemofDage.cs",
+    "size": 668,
+    "fileName": "EmblemofDage.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionMaterials/EmblemofDage.cs"
+  },
+  {
+    "name": "LetitBurn(SoulEssence)",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Legion/LegionMaterials/LetitBurn(SoulEssence).cs",
+    "size": 1866,
+    "fileName": "LetitBurn(SoulEssence).cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionMaterials/LetitBurn(SoulEssence).cs"
+  },
+  {
+    "name": "MaxObsidianRock",
+    "description": "farms ObsidianRock till max quantity",
+    "tags": [
+      "legion",
+      "dage",
+      "obsidianrock",
+      "🖕",
+      "you"
+    ],
+    "path": "Legion/LegionMaterials/ObsidianRock.cs",
+    "size": 668,
+    "fileName": "ObsidianRock.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionMaterials/ObsidianRock.cs"
+  },
+  {
     "name": "Legion Exercise Number 3",
     "description": "This script will complete \"Legion Exercise Number 3\" quest.",
     "tags": [
@@ -9270,7 +9350,7 @@
       "null"
     ],
     "path": "Legion/Various/VulcarsMerge.cs",
-    "size": 5033,
+    "size": 5049,
     "fileName": "VulcarsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Various/VulcarsMerge.cs"
   },
@@ -9299,17 +9379,6 @@
     "size": 1441,
     "fileName": "LegionDBoN.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Various/LegionDBoN.cs"
-  },
-  {
-    "name": "SoulSand",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Legion/Various/SoulSand.cs",
-    "size": 1391,
-    "fileName": "SoulSand.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Various/SoulSand.cs"
   },
   {
     "name": "Exalted Soul Cleaver",
@@ -9404,20 +9473,9 @@
       "null"
     ],
     "path": "Legion/Various/NecroticBladeoftheUnderworld.cs",
-    "size": 4403,
+    "size": 4411,
     "fileName": "NecroticBladeoftheUnderworld.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Various/NecroticBladeoftheUnderworld.cs"
-  },
-  {
-    "name": "LetitBurn(SoulEssence)",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Legion/Various/LetitBurn(SoulEssence).cs",
-    "size": 1858,
-    "fileName": "LetitBurn(SoulEssence).cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Various/LetitBurn(SoulEssence).cs"
   },
   {
     "name": "ThanatostheDestroyer",
@@ -13187,7 +13245,7 @@
       "do all"
     ],
     "path": "Hollowborn/HollowbornLichKing/0DoAll.cs",
-    "size": 1806,
+    "size": 1822,
     "fileName": "0DoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornLichKing/0DoAll.cs"
   },
@@ -13200,7 +13258,7 @@
       "heat treatment"
     ],
     "path": "Hollowborn/HollowbornLichKing/3HeatTreatment.cs",
-    "size": 1800,
+    "size": 1816,
     "fileName": "3HeatTreatment.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornLichKing/3HeatTreatment.cs"
   },
@@ -13221,7 +13279,7 @@
       "hollowborn caladbolg battle companion"
     ],
     "path": "Hollowborn/HollowbornLichKing/PayHomagetoCaladbolgAgain.cs",
-    "size": 3447,
+    "size": 3463,
     "fileName": "PayHomagetoCaladbolgAgain.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornLichKing/PayHomagetoCaladbolgAgain.cs"
   },
@@ -13237,7 +13295,7 @@
       "quest"
     ],
     "path": "Hollowborn/HollowbornLichKing/LesserHollowbornCaladbolg.cs",
-    "size": 2545,
+    "size": 2561,
     "fileName": "LesserHollowbornCaladbolg.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornLichKing/LesserHollowbornCaladbolg.cs"
   },
@@ -13250,7 +13308,7 @@
       "counterblow"
     ],
     "path": "Hollowborn/HollowbornLichKing/4Counterblow.cs",
-    "size": 1787,
+    "size": 1803,
     "fileName": "4Counterblow.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornLichKing/4Counterblow.cs"
   },
@@ -13263,7 +13321,7 @@
       "lich king fragment"
     ],
     "path": "Hollowborn/HollowbornLichKing/MaxLichKingFragments.cs",
-    "size": 1778,
+    "size": 1794,
     "fileName": "MaxLichKingFragments.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornLichKing/MaxLichKingFragments.cs"
   },
@@ -13276,7 +13334,7 @@
       "draftless"
     ],
     "path": "Hollowborn/HollowbornLichKing/1Draftless.cs",
-    "size": 1776,
+    "size": 1792,
     "fileName": "1Draftless.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornLichKing/1Draftless.cs"
   },
@@ -13289,7 +13347,7 @@
       "flow stress"
     ],
     "path": "Hollowborn/HollowbornLichKing/2FlowStress.cs",
-    "size": 1785,
+    "size": 1801,
     "fileName": "2FlowStress.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornLichKing/2FlowStress.cs"
   },
@@ -13300,7 +13358,7 @@
       "null"
     ],
     "path": "Hollowborn/HollowbornLichKing/CoreHollowbornLichKing.cs",
-    "size": 21013,
+    "size": 21029,
     "fileName": "CoreHollowbornLichKing.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornLichKing/CoreHollowbornLichKing.cs"
   },
@@ -22460,7 +22518,7 @@
       "all"
     ],
     "path": "Other/Classes/0AllClasses.cs",
-    "size": 27783,
+    "size": 27791,
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
@@ -24124,7 +24182,7 @@
       "legion swordmaster assassin"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/LegionSwordMasterAssassin.cs",
-    "size": 1508,
+    "size": 1516,
     "fileName": "LegionSwordMasterAssassin.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/LegionSwordMasterAssassin.cs"
   },
