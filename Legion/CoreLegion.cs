@@ -819,7 +819,7 @@ public class CoreLegion
         Core.CancelRegisteredQuests();
     }
 
-    public void DagePvP(int trophyQuant, int techniqueQuant, int scrollQuant, bool canSoloBoss = true, bool enableDebug = false)
+    public void DagePvP(int trophyQuant = 4000, int techniqueQuant = 1000, int scrollQuant = 1000, bool canSoloBoss = true, bool enableDebug = false)
     {
 
         if (Core.CheckInventory("Legion Combat Trophy", trophyQuant) &&
