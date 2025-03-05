@@ -56,8 +56,9 @@ public class CoreAdvanced
     /// <param name="itemName">Name of the item</param>
     /// <param name="quant">Desired quantity</param>
     /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will re-log you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
+    /// <param name="index"></param>
     /// <param name="Log"></param>
-    public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, bool Log = true)
+    public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, int index = 0, bool Log = true)
     {
         if (Core.CheckInventory(itemName, quant))
             return;
@@ -76,7 +77,7 @@ public class CoreAdvanced
         if (item == null)
             return;
 
-        _BuyItem(map, shopID, item, quant, item.Quantity, shopItemID, Log);
+        _BuyItem(map, shopID, item, quant, item.Quantity, shopItemID, index, Log);
     }
 
     /// <summary>
@@ -88,8 +89,9 @@ public class CoreAdvanced
     /// <param name="quant">Desired quantity</param>
     /// <param name="shopQuant">How many items you get for 1 buy</param>
     /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will relog you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
+    /// <param name="index"></param>
     /// <param name="Log"></param>
-    public void BuyItem(string map, int shopID, int itemID, int quant = 1, int shopQuant = 1, int shopItemID = 0, bool Log = true)
+    public void BuyItem(string map, int shopID, int itemID, int quant = 1, int shopQuant = 1, int shopItemID = 0, int index = 0, bool Log = true)
     {
         if (Core.CheckInventory(itemID, quant))
             return;
@@ -108,11 +110,11 @@ public class CoreAdvanced
         if (item == null)
             return;
 
-        _BuyItem(map, shopID, item, quant, shopQuant, shopItemID, Log);
+        _BuyItem(map, shopID, item, quant, shopQuant, shopItemID, index, Log);
     }
 
 
-    private void _BuyItem(string map, int shopID, ShopItem item, int quant = 1, int shopquant = 1, int shopItemID = 1, bool Log = true)
+    private void _BuyItem(string map, int shopID, ShopItem item, int quant = 1, int shopquant = 1, int shopItemID = 1, int index = 0, bool Log = true)
     {
         int shopQuant = item.Quantity; // Quantity per purchase from the shop
         string shopName = Bot.Shops.Name; // Store the currently loaded shop name
@@ -195,27 +197,51 @@ public class CoreAdvanced
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
 
-            ShopItem? mainItem = Bot.Shops.Items.FirstOrDefault(x =>
-            x.ID == item.ID && !(x.Coins && x.Cost > 0) && item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity)));
+            // Try to find the exact item match based on ID and ShopItemID
+            List<ShopItem> matchingItems = Bot.Shops.Items
+                .Where(x => x.ID == item.ID &&
+                            x.ShopItemID == (item.ShopItemID != 1 ? item.ShopItemID : shopItemID) &&
+                            !(x.Coins && x.Cost > 0) && // Exclude AC/paid items
+                            item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity)))
+                .ToList(); // Convert to list to allow index selection
+
+            // If no exact match is found, fall back to matching only by ID
+            if (!matchingItems.Any())
+            {
+                matchingItems = Bot.Shops.Items
+                    .Where(x => x.ID == item.ID &&
+                                !(x.Coins && x.Cost > 0) && // Exclude AC/paid items
+                                item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity)))
+                    .ToList();
+            }
+
+            // Select the item by index if possible, otherwise default to the first available match
+            ShopItem? mainItem = matchingItems.Count > index ? matchingItems[index] : matchingItems.FirstOrDefault();
+
 
             if (mainItem != null)
             {
-                Core.BuyItem(map, shopID, mainItem.ID, quant, shopItemID != 1 ? mainItem.ShopItemID : shopItemID, Log: Log);
+                // Attempt to buy the item using the correct ShopItemID if applicable
+                Core.BuyItem(map, shopID, mainItem.ID, quant, mainItem.ShopItemID != 1 ? mainItem.ShopItemID : shopItemID, Log: Log);
                 Core.Sleep();
-                // Check if the main item was purchased successfully
+
+                // Verify if the item was successfully purchased
                 if (!Core.CheckInventory(mainItem.ID, quant))
                 {
-                    Core.Logger($"Failed to Buy {mainItem.Name}");
-                    foreach (ItemBase req in mainItem.Requirements.Where(x => x != null && !Core.CheckInventory(x.ID, x.Quantity)))
+                    Core.Logger($"❌ Failed to buy {mainItem.Name} ({quant}x)");
+
+                    // Log any missing requirements for debugging
+                    foreach (ItemBase req in mainItem.Requirements.Where(r => r != null && !Core.CheckInventory(r.ID, r.Quantity)))
                     {
-                        Core.Logger($"Missing {req.Name} x{req.Quantity}");
+                        Core.Logger($"⚠️ Missing: {req.Name} x{req.Quantity}");
                     }
                 }
             }
             else
             {
-                Core.Logger($"Failed to find the main item: {item.Name}");
+                Core.Logger($"❌ Failed to find the item: {item.Name} in shop {shopID} on map {map}");
             }
+
         }
     }
     /// <summary>
