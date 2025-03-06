@@ -24476,6 +24476,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/FortressDelve.cs"
   },
   {
+    "name": "Paragon Greatsword BattleGear",
+    "description": "This script will complete the \"Bonus Quest",
+    "tags": [
+      "nation",
+      "dage",
+      "birthday",
+      "seasonal",
+      "soul food",
+      "bonus quest",
+      "paragon",
+      "greatsword",
+      "battlegear"
+    ],
+    "path": "Seasonal/StaffBirthdays/DageTheEvil/ParagonGreatsword.cs",
+    "size": 954,
+    "fileName": "ParagonGreatsword.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/ParagonGreatsword.cs"
+  },
+  {
     "name": "Exalted Harbinger (Class)",
     "description": "This script will get Exalted Harbinger class.",
     "tags": [
