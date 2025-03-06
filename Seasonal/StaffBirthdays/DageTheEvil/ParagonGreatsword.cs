@@ -16,13 +16,13 @@ public class ParagonGS
     {
         Core.SetOptions();
 
-        GetBlade();
+        GetCape();
 
         Core.SetOptions(false);
     }
 
 
-    public void GetBlade()
+    public void GetCape()
     {
         if (Core.CheckInventory(43061))
             return;
