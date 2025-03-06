@@ -24477,7 +24477,7 @@
   },
   {
     "name": "Paragon Greatsword BattleGear",
-    "description": "This script will complete the \"Bonus Quest",
+    "description": "This script will complete the \"Soul Food\" [10104] quest for Paragon Greatsword BattleGear.",
     "tags": [
       "nation",
       "dage",
@@ -24490,7 +24490,7 @@
       "battlegear"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/ParagonGreatsword.cs",
-    "size": 954,
+    "size": 955,
     "fileName": "ParagonGreatsword.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/ParagonGreatsword.cs"
   },
