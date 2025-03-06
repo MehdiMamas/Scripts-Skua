@@ -1,6 +1,6 @@
 /*
 name: Paragon Greatsword BattleGear
-description: This script will complete the "Bonus Quest: Soul Food" for Paragon Greatsword BattleGear.
+description: This script will complete the "Soul Food" [10104] quest for Paragon Greatsword BattleGear.
 tags: nation, dage, birthday, seasonal, soul food, bonus quest, paragon,greatsword,battlegear
 */
 //cs_include Scripts/CoreBots.cs
