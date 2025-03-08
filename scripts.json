@@ -8810,6 +8810,32 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/LegionPyromancerMerge.cs"
   },
   {
+    "name": "Librarys Lost and Found Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Librarys Lost and Found Merge [2563] in /legionlibrary",
+    "tags": [
+      "librarys",
+      "lost",
+      "and",
+      "found",
+      "merge",
+      "legionlibrary",
+      "argus",
+      "panoptes",
+      "phlegethon",
+      "magma",
+      "lava",
+      "legion",
+      "loremaster",
+      "tome",
+      "lorekeeper",
+      "veil"
+    ],
+    "path": "Legion/MergeShops/LibrarysLostandFoundMerge.cs",
+    "size": 5755,
+    "fileName": "LibrarysLostandFoundMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/LibrarysLostandFoundMerge.cs"
+  },
+  {
     "name": "Dark Hunt Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Dark Hunt Merge [1102] in /darkfortress",
     "tags": [
