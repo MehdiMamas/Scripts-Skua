@@ -9,7 +9,7 @@ tags: legioncastle,legion,dage,birthday,castle,crown,quest,raven's curse scythe,
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Legion/CoreLegion.cs
-//cs_include Scripts/Legion\Various\LegionCastle.cs
+//cs_include Scripts/Legion/Various/LegionCastle.cs
 using Skua.Core.Interfaces;
 
 public class CrownedAxes

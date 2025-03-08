@@ -18,10 +18,10 @@ tags: underworld,legion,dage,birthday,image of dage,quest,hateful,hateful goliat
 //cs_include Scripts/Legion/LegionExcercise/LegionExercise4.cs
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Nation/Various/DragonBlade[mem].cs
-//cs_include Scripts/Legion\MergeShops\UndeadLegionMerge.cs
-//cs_include Scripts/Story\IsleOfFotia\CoreIsleOfFotia.cs
+//cs_include Scripts/Legion/MergeShops/UndeadLegionMerge.cs
+//cs_include Scripts/Story/IsleOfFotia/CoreIsleOfFotia.cs
 //cs_include Scripts/Story/Legion/SevenCircles(War).cs
-//cs_include Scripts/Legion\HeadOfTheLegionBeast.cs
+//cs_include Scripts/Legion/HeadOfTheLegionBeast.cs
 using Skua.Core.Interfaces;
 
 public class HatefulGoliaths
