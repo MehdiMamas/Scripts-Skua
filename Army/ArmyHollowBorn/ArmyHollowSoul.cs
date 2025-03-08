@@ -30,8 +30,7 @@ public class ArmyHollowSoul
         sArmy.player2,
         sArmy.player3,
         sArmy.player4,
-        sArmy.player5,
-        sArmy.player6,
+        // 4 players due to /Shadowrealm
         sArmy.packetDelay,
         CoreBots.Instance.SkipOptions
     };
