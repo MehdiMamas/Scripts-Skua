@@ -9460,6 +9460,27 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Various/DageChallengeMerge.cs"
   },
   {
+    "name": "The Castle's Crown Quest Rewards",
+    "description": "This script will complete \"The Castle's Crown\" quest",
+    "tags": [
+      "legioncastle",
+      "legion",
+      "dage",
+      "birthday",
+      "castle",
+      "crown",
+      "quest",
+      "raven's curse scythe",
+      "raven",
+      "crowned axes",
+      "crowned axes of the underworld"
+    ],
+    "path": "Legion/Various/CrownedAxes.cs",
+    "size": 2124,
+    "fileName": "CrownedAxes.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Various/CrownedAxes.cs"
+  },
+  {
     "name": "LegionOverfiendBlade",
     "description": "null",
     "tags": [
