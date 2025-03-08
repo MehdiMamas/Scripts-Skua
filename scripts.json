@@ -9381,6 +9381,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Various/VulcarsMerge.cs"
   },
   {
+    "name": "Image of Dage Quest Rewards",
+    "description": "This script will complete \"Image of Dage\" quest",
+    "tags": [
+      "underworld",
+      "legion",
+      "dage",
+      "birthday",
+      "image of dage",
+      "quest",
+      "hateful",
+      "hateful goliath",
+      "hateful goliaths",
+      ""
+    ],
+    "path": "Legion/Various/HatefulGoliaths.cs",
+    "size": 2829,
+    "fileName": "HatefulGoliaths.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Various/HatefulGoliaths.cs"
+  },
+  {
     "name": "Legion Castle Quest",
     "description": "Farms the \"Legion Castle Quest\" untill all drops are obtained. Requires \"Legion Castle\". Will also farm Legion Tokens",
     "tags": [
@@ -12753,7 +12773,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelper.cs",
-    "size": 9032,
+    "size": 8986,
     "fileName": "MergeTemplateHelper.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelper.cs"
   },
@@ -16580,7 +16600,7 @@
       "null"
     ],
     "path": "Story/IsleOfFotia/CoreIsleOfFotia.cs",
-    "size": 9353,
+    "size": 9592,
     "fileName": "CoreIsleOfFotia.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/IsleOfFotia/CoreIsleOfFotia.cs"
   },
