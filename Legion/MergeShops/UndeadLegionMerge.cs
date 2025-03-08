@@ -1,7 +1,7 @@
 /*
 name: Undead Legion Merge
 description: This bot will farm the items belonging to the selected mode for the Undead Legion Merge [238] in /underworld
-tags: undead, legion, merge, underworld, frostbite, overlord, zealith, reavers, master, guiltius, legend, crown, face, judge, assassin, darkside, titan, cloak, exalted, champion, horns, archer, otherworldly, deathstare, deathdealer, shield, gutripper, skull, goggles, deathmask, apocalypse, dark, flaming, ultimate, lich, king, original, paragon, castle, soul, cleaver, smiling, dage, infinite, caster, loyal, warrior, swordmaster, draconic, plate, horned, spiked, guard, rhongomyniad, yami, no, ronin, sheathed, katana, shuriken, shurikens, healer, mage, hatmask, rogue, , dragonblade, nulgath, monsterhunter, monsterhunters, revenant, seven, circles, beast, ancient, wraiths, winged, bone, crusher, crushers, warlord, great, twisted, yulgars, inn, house, parabellum, armaments, hammer, back, armet, hollowborn, wrap, void, vigilante, maw, battlegear, awakened, deaths, requiem, ops, armed, breach, morph, briefcase, tactical, gear, ghost, drone, cold, steel, kukri, kukris, rifle, rifles, quest, pet
+tags: undead, legion, merge, underworld, frostbite, overlord, zealith, reavers, blademaster, guiltius, legend, crown, face, judge, assassin, darkside, titan, cloak, exalted, champion, horns, archer, otherworldly, deathstare, deathdealer, shield, gutripper, skull, goggles, deathmask, apocalypse, dark, flaming, ultimate, lich, king, original, paragon, castle, soul, cleaver, smiling, dage, infinite, caster, loyal, warrior, swordmaster, draconic, plate, horned, spiked, guard, rhongomyniad, yami, no, ronin, sheathed, katana, shuriken, shurikens, healer, mage, hatmask, rogue, , dragonblade, nulgath, monsterhunter, monsterhunters, revenant, seven, circles, beast, ancient, wraiths, winged, bone, crusher, crushers, warlord, great, twisted, yulgars, inn, house, parabellum, armaments, hammer, back, armet, void, vigilante, maw, battlegear, awakened, deaths, requiem, ops, armed, breach, morph, briefcase, tactical, gear, ghost, drone, cold, steel, kukri, kukris, rifle, rifles, corpsewax, candle, incendo, regius
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -48,7 +48,7 @@ public class UndeadLegionMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Legion Token", "Frosted Falchion", "Judgement Scythe", "Judgement Hammer", "Cursed Scimitar", "Essence of the Undead Legend", "Shadow Shroud", "DragonBlade of Nulgath", "Fallen MonsterHunter", "Fallen MonsterHunter Helm", "Fallen MonsterHunter Cape", "Fallen MonsterHunter Sword", "Exalted Crown", "Hollow Soul", "Death's Requiem Staff" });
+        Core.BankingBlackList.AddRange(new[] { "Legion Token", "Frosted Falchion", "Judgement Scythe", "Judgement Hammer", "Cursed Scimitar", "Essence of the Undead Legend", "Shadow Shroud", "DragonBlade of Nulgath", "Fallen MonsterHunter", "Fallen MonsterHunter Helm", "Fallen MonsterHunter Cape", "Fallen MonsterHunter Sword", "Exalted Crown", "Death's Requiem Staff" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -133,10 +133,6 @@ public class UndeadLegionMerge
                     LR.ExaltedCrown();
                     break;
 
-                case "Hollow Soul":
-                    HS.GetYaSoulsHeeeere(quant);
-                    break;
-
                 case "Death's Requiem Staff":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -152,7 +148,7 @@ public class UndeadLegionMerge
         new Option<bool>("6522", "Frostbite", "Mode: [select] only\nShould the bot buy \"Frostbite\" ?", false),
         new Option<bool>("6519", "Undead Legion OverLord", "Mode: [select] only\nShould the bot buy \"Undead Legion OverLord\" ?", false),
         new Option<bool>("2188", "Zealith Reavers", "Mode: [select] only\nShould the bot buy \"Zealith Reavers\" ?", false),
-        new Option<bool>("6921", "Blade Master", "Mode: [select] only\nShould the bot buy \"Blade Master\" ?", false),
+        new Option<bool>("6921", "BladeMaster", "Mode: [select] only\nShould the bot buy \"BladeMaster\" ?", false),
         new Option<bool>("6948", "The Guiltius", "Mode: [select] only\nShould the bot buy \"The Guiltius\" ?", false),
         new Option<bool>("8586", "Undead Legend Crown", "Mode: [select] only\nShould the bot buy \"Undead Legend Crown\" ?", false),
         new Option<bool>("8585", "Undead Legend Face", "Mode: [select] only\nShould the bot buy \"Undead Legend Face\" ?", false),
@@ -268,6 +264,11 @@ public class UndeadLegionMerge
         new Option<bool>("84752", "Dark Ops Cold Steel Kukris", "Mode: [select] only\nShould the bot buy \"Dark Ops Cold Steel Kukris\" ?", false),
         new Option<bool>("84753", "Underworld Dark Ops Rifle", "Mode: [select] only\nShould the bot buy \"Underworld Dark Ops Rifle\" ?", false),
         new Option<bool>("84754", "Underworld Dark Ops Rifles", "Mode: [select] only\nShould the bot buy \"Underworld Dark Ops Rifles\" ?", false),
+        new Option<bool>("85285", "Corpsewax Candle", "Mode: [select] only\nShould the bot buy \"Corpsewax Candle\" ?", false),
+        new Option<bool>("85286", "Revenant Incendo", "Mode: [select] only\nShould the bot buy \"Revenant Incendo\" ?", false),
+        new Option<bool>("85287", "Underworld Candle", "Mode: [select] only\nShould the bot buy \"Underworld Candle\" ?", false),
+        new Option<bool>("85288", "Revenant Candle", "Mode: [select] only\nShould the bot buy \"Revenant Candle\" ?", false),
+        new Option<bool>("85289", "Regius Revenant", "Mode: [select] only\nShould the bot buy \"Regius Revenant\" ?", false),
+        new Option<bool>("85290", "Regius Underworld Candle", "Mode: [select] only\nShould the bot buy \"Regius Underworld Candle\" ?", false),
     };
-
 }
