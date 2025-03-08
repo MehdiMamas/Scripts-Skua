@@ -199,9 +199,9 @@ public class CoreIsleOfFotia
     }
 
 
-    public void DageFortress()
+    public void DageFortress(bool map = false)
     {
-        if (Core.isCompletedBefore(4258))
+        if (Core.isCompletedBefore(4258) || (map && Core.CheckInventory("Palace Map")))
             return;
 
         Judgement();
@@ -216,17 +216,21 @@ public class CoreIsleOfFotia
         Story.KillQuest(4250, "DageFortress", "Tainted Seneschal");
 
         //Locate the Compass Stone 4251
-        if (!Story.QuestProgression(4251))
+        if (!Story.QuestProgression(4251) || (map && !Core.CheckInventory("Compass Stone")))
             CompassStone();
 
         //Create the Dark Fortress Map 4255
-        if (!Story.QuestProgression(4255))
+        if (!Story.QuestProgression(4255) || (map && !Core.CheckInventory("Palace Map")))
         {
-            Core.EnsureAccept(4255);
+            if (!map)
+                Core.EnsureAccept(4255);
             CompassStone();
             PalaceMap();
+            if (map)
+                return;
             Core.EnsureComplete(4255);
-        };
+        }
+        ;
 
         //Quest for the Room of Rune-ation 4256
         Story.MapItemQuest(4256, "DageFortress", 3404);
