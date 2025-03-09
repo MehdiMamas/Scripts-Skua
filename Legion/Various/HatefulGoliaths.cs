@@ -22,6 +22,9 @@ tags: underworld,legion,dage,birthday,image of dage,quest,hateful,hateful goliat
 //cs_include Scripts/Story/IsleOfFotia/CoreIsleOfFotia.cs
 //cs_include Scripts/Story/Legion/SevenCircles(War).cs
 //cs_include Scripts/Legion/HeadOfTheLegionBeast.cs
+//cs_include Scripts/Seasonal\StaffBirthdays\DageTheEvil\FortressDelve.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleSiege.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleDelve.cs
 using Skua.Core.Interfaces;
 
 public class HatefulGoliaths
@@ -31,6 +34,7 @@ public class HatefulGoliaths
     private UndeadLegionMerge ULM = new();
     private CoreIsleOfFotia IOF = new();
     private HeadoftheLegionBeast HOTLB = new();
+    private FortressDelve FD = new();
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -61,6 +65,7 @@ public class HatefulGoliaths
         HOTLB.Indulgence(1);
 
         // Rune of Radiance
+        FD.DoStory();
         Core.EnsureAccept(9170);
         Core.EquipClass(ClassType.Farm);
         Core.HuntMonster("fortressdelve", "Enlightened Shadow", "Shadowscythe Bone Shard", 10, log: false);
