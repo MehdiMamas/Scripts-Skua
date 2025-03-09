@@ -111,9 +111,9 @@ public class LibrarysLostandFoundMerge
         Core.FarmingLogger("River Glowstone", quant);
         if (!Core.isCompletedBefore(10098))
             Glowstone(2);
-        if (!Core.isCompletedBefore(10010))
+        if (!Core.isCompletedBefore(10100))
         {
-            Core.HuntMonsterQuest(10010,
+            Core.HuntMonsterQuest(10100,
             ("legionlibrary", "Cerberus Pup", ClassType.Farm));
         }
         while (!Bot.ShouldExit && !Core.CheckInventory("River Glowstone", quant))
