@@ -70,7 +70,7 @@ public class HatefulGoliaths
         Core.EnsureComplete(9170);
 
         Core.HuntMonsterQuest(10103,
-    ("shadowblastarena", "Thanatos", ClassType.Solo),
+    ("shadowblast", "Thanatos", ClassType.Solo),
     ("evilwarnul", "Laken", ClassType.Solo),
     ("envy", "Envy", ClassType.Solo),
     ("darkfortress", "Wilhelm", ClassType.Solo),
