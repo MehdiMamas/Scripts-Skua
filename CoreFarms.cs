@@ -131,6 +131,7 @@ public class CoreFarms
     #region Gold
     public void Gold(int quant = 100000000)
     {
+        quant -= Bot.Player.Gold;
         if (Bot.Player.Gold >= quant)
             return;
 
@@ -1400,49 +1401,49 @@ public class CoreFarms
 
         Core.FarmingLogger(Voucher, quant);
         // Map voucher types based on the voucher amount (e.g., 500, 25, 7.5)
-        switch (Voucher)
-        {
-            case "Gold Voucher 500k":
-            case "Gold Voucher 100k":
-            case "Gold Voucher 200k":
-                map = "alchemyacademy";
-                shopID = 2036;
-                shopName = "Gebo Shop";
-                break;
-
-            case "Gold Voucher 25k":
-                map = "hydrachallenge";
-                shopID = 1597;
-                shopName = "Hydra Merge";
-                break;
-
-            case "Gold Voucher 7k":
-                map = "alchemyacademy";
-                shopID = 2116;
-                shopName = "Fehu Shop";
-                break;
-
-            default:
-                Core.Logger($"Invalid Gold Voucher: {Voucher}");
-                return;
-        }
-
-
-        /* 
-        // This bita below code seems... troublesom in the future 
-        // (not sure if itll handle being able to buy the vouchers on a different
-        // map if the shops already been loaded, as the `Bot.Shops.Items...`
-        // does current and last loaded shop)
-
         if (Bot.Shops.Items.Any(x => x != null && x.Name == Voucher))
         {
-            Bot.Shops.BuyItem(Voucher, quant - Bot.Inventory.GetQuantity(Voucher));
-             Bot.Wait.ForActionCooldown(GameActions.BuyItem);
-             Bot.Wait.ForItemBuy();
-            return;
+            try
+            {
+                Core.Logger($"Item \"{Voucher}\" in current shop, we'll buy it from here.");
+                map = Bot.Map.Name; // Use current map name
+                shopID = Bot.Shops.ID; // Use current shop ID
+            }
+            catch (Exception ex)
+            {
+                Core.Logger($"Error loading shop: {ex.Message}");
+                return;
+            }
         }
-        */
+        else
+        {
+            switch (Voucher)
+            {
+                case "Gold Voucher 500k":
+                case "Gold Voucher 100k":
+                case "Gold Voucher 200k":
+                    map = "alchemyacademy";
+                    shopID = 2036;
+                    shopName = "Gebo Shop";
+                    break;
 
+                case "Gold Voucher 25k":
+                    map = "hydrachallenge";
+                    shopID = 1597;
+                    shopName = "Hydra Merge";
+                    break;
+
+                case "Gold Voucher 7k":
+                    map = "alchemyacademy";
+                    shopID = 2116;
+                    shopName = "Fehu Shop";
+                    break;
+
+                default:
+                    Core.Logger($"Invalid Gold Voucher: {Voucher}");
+                    return;
+            }
+        }
 
         // Ensure the correct shop is loaded
         Core.Join(map);
@@ -1457,19 +1458,17 @@ public class CoreFarms
         // If the item was found, proceed to buy it
         if (item != null)
         {
-            // Take item name (voucher), split it to just the digits, use that for the maths
-            int v = int.Parse(item.Name.Split(' ').Last().Replace("K", "").Trim().Where(char.IsDigit).ToArray());
-            // Get current quantity
-            int currentQuantity = Bot.Inventory.GetQuantity(Voucher);
-            // Calculate the amount to buy
-            int AmountToBuy = Math.Min(quant - currentQuantity, item.MaxStack);
-            if (quant > item.MaxStack)
-                Core.Logger($"Amount of {item.Name} to buy ({quant}) is greater than the max stack of {item.MaxStack}, buying {item.MaxStack} instead.");
-            // Farm gold for the required amount and buy the item
-            Gold(AmountToBuy * v);
-            // Buy Item
-            Core.BuyItem(map, shopID, item.Name, AmountToBuy);
+            int vouchervalue = int.Parse(item.Name.Split(' ')[2].Replace("k", "000"));
+
+            int amountToBuy = Math.Min(quant - Bot.Inventory.GetQuantity(Voucher), item.MaxStack);
+            if (amountToBuy <= 0)
+                return;
+
+            Gold(amountToBuy * vouchervalue);
+
+            Core.BuyItem(map, shopID, item.Name, amountToBuy);
         }
+
         // Else, log that the item was not found
         else
         {

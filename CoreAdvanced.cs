@@ -118,7 +118,6 @@ public class CoreAdvanced
     {
         int shopQuant = item.Quantity; // Quantity per purchase from the shop
         string shopName = Bot.Shops.Name; // Store the currently loaded shop name
-
         if (item.Requirements != null)
         {
             foreach (ItemBase req in item.Requirements)
@@ -143,22 +142,15 @@ public class CoreAdvanced
                     // Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
 
                     // Determine how many total items are needed
-                    int totalReqNeeded = (req.Quantity * quant);
+                    int totalReqNeeded = Math.Max(0, req.Quantity * (quant - ((int?)Bot.Inventory.GetQuantity(item.ID) ?? 0)));
+
                     // int totalBundlesNeeded = (int)Math.Ceiling((double)totalReqNeeded / shopQuant);
                     // int bundlesToBuy = totalBundlesNeeded - (QuantOwned / req.Quantity);
 
                     if (req.Name.Contains("Voucher"))
                     {
-                        if (Bot.Shops.IsLoaded && Bot.Shops.Items.Contains(item))
-                        {
-                            Core.Logger($"Buying {req.Name} x{totalReqNeeded} from Currently loaded shop.");
-                            Core.BuyItem(Bot.Map.Name, Bot.Shops.ID, req.Name, totalReqNeeded); // Buy from shop if available
-                        }
-                        else
-                        {
-                            Core.Logger($"Buying {req.Name} x{totalReqNeeded} from another map");
-                            Farm.Voucher(req.Name, totalReqNeeded); // Otherwise, farm the voucher
-                        }
+                        Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {totalReqNeeded}");
+                        Farm.Voucher(req.Name, totalReqNeeded); // Will buy from shop if available
                         continue;
                     }
 
@@ -179,7 +171,7 @@ public class CoreAdvanced
                     // Else continue when the req.name isnt in the shop.
                     else
                     {
-                        Core.Logger($"Failed to find shop item: {req.Name} (its probably a Mob Drop)");
+                        Core.Logger($"Failed to find shop item: {req.Name}[{req.ID}] in {Bot.Shops.ID}[{Bot.Shops.Name}] (its probably a Mob Drop)");
                         continue;
                     }
                 }
@@ -187,7 +179,7 @@ public class CoreAdvanced
             Core.DebugLogger(this, $"Item {item.Name}, quant to buy: {quant}");
 
             // Ensure required items are available before purchasing the main item
-            GetItemReq(item, quant - Bot.Inventory.GetQuantity(item.ID));
+            GetItemReq(item, quant);
 
             // Rejoin the map here incase getitemreq takes you elsewhere, to ensure that the shopitem is found (hopefully) 
             if (Bot.Map.Name != map)
@@ -281,10 +273,11 @@ public class CoreAdvanced
         }
 
         // Farm gold if the item costs gold and isn't a premium currency purchase
-        if (!item.Coins)
+        if (!item.Coins && item.Cost > 0)
         {
-            Core.Logger($"Farming {item.Cost * quant} gold for {item.Name}");
-            Farm.Gold(Math.Min(item.Cost * quant, 100_000_000));
+            int GoldtoFarm = Math.Min(item.Cost * quant, 100000000); // 100m gold cap
+            Core.Logger($"Farming {GoldtoFarm} gold for {item.Name}");
+            Farm.Gold(GoldtoFarm);
         }
 
         // Handle Gold Vouchers (multiple types possible)
@@ -293,10 +286,21 @@ public class CoreAdvanced
             int needed = req.Quantity - Bot.Inventory.GetQuantity(req.ID);
             if (needed <= 0) continue;
 
+            // If in the future it becomes an issue where it has issues getting vouchers from `Bot.Shops.ID`, just remove the if there and keep the else area without the else.. obviosuly.
             if (Bot.Shops.IsLoaded && Bot.Shops.Items?.Contains(req) == true)
             {
                 Core.Logger($"Buying {req.Name} x{needed} from currently loaded shop.");
-                Core.BuyItem(Bot.Map.Name, Bot.Shops.ID, req.ID, needed);
+
+                int vouchervalue = int.Parse(item.Name.Split(' ')[2].Replace("k", "000"));
+
+                int amountToBuy = Math.Min(quant - Bot.Inventory.GetQuantity(item.Name), item.MaxStack);
+                if (amountToBuy <= 0)
+                    return;
+
+                Core.Logger($"Farming {amountToBuy * vouchervalue} gold for {item.Name} (x{amountToBuy}).");
+                Farm.Gold(amountToBuy * vouchervalue);
+
+                Core.BuyItem(Bot.Map.Name, Bot.Shops.ID, item.Name, amountToBuy);
             }
             else
             {
