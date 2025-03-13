@@ -122,51 +122,55 @@ public class CoreAdvanced
         {
             foreach (ItemBase req in item.Requirements)
             {
-                if (Core.CheckInventory(req.ID, req.Quantity))
+                // Determine how many total items are needed
+                int totalBundlesNeeded = (int)Math.Ceiling((double)req.Quantity * quant / shopQuant);
+                Core.DebugLogger(this, $"totalBundlesNeeded {totalBundlesNeeded} ");
+
+                if (Core.CheckInventory(req.ID, totalBundlesNeeded))
                 {
-                    Core.DebugLogger(this, $"Requirement \"{req.Name}\" x{req.Quantity} already owned.");
+                    Core.DebugLogger(this, $"Requirement \"{req.Name}\" x{totalBundlesNeeded} already owned.");
                     continue;
                 }
 
-                while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
+                while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, totalBundlesNeeded))
                 {
                     if (Bot.Map.Name != map)
                     {
+                        Core.DebugLogger(this);
                         Core.Join(map);
                         Bot.Wait.ForMapLoad(map);
                     }
 
+                    Core.DebugLogger(this);
                     Bot.Shops.Load(shopID);
                     Bot.Wait.ForActionCooldown(GameActions.LoadShop);
                     Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+                    Core.DebugLogger(this);
                     // Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
 
-                    // Determine how many total items are needed
-                    int totalReqNeeded = Math.Max(0, req.Quantity * (quant - ((int?)Bot.Inventory.GetQuantity(item.ID) ?? 0)));
 
-                    // int totalBundlesNeeded = (int)Math.Ceiling((double)totalReqNeeded / shopQuant);
                     // int bundlesToBuy = totalBundlesNeeded - (QuantOwned / req.Quantity);
 
                     if (req.Name.Contains("Voucher"))
                     {
-                        Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {totalReqNeeded}");
-                        Farm.Voucher(req.Name, totalReqNeeded); // Will buy from shop if available
+                        Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {totalBundlesNeeded}");
+                        Farm.Voucher(req.Name, totalBundlesNeeded); // Will buy from shop if available
                         continue;
                     }
 
                     if (req.Name == "Dragon Runestone")
                     {
-                        Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {totalReqNeeded}");
-                        Farm.DragonRunestone(totalReqNeeded);
+                        Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {totalBundlesNeeded}");
+                        Farm.DragonRunestone(totalBundlesNeeded);
                         continue;
                     }
 
-                    Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {totalReqNeeded}");
+                    Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {totalBundlesNeeded}");
                     ShopItem? shopItem = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
                     if (shopItem != null)
                     {
-                        Core.DebugLogger(this, $"shopItem {shopItem} bundlesToBuy, {totalReqNeeded}");
-                        BuyItem(map, shopID, req.ID, totalReqNeeded, shopItemID, Log: Log);
+                        Core.DebugLogger(this, $"shopItem {shopItem} bundlesToBuy, {totalBundlesNeeded}");
+                        BuyItem(map, shopID, req.ID, totalBundlesNeeded, shopItemID, Log: Log);
                     }
                     // Else continue when the req.name isnt in the shop.
                     else
@@ -209,7 +213,6 @@ public class CoreAdvanced
 
             // Select the item by index if possible, otherwise default to the first available match
             ShopItem? mainItem = matchingItems.Count > index ? matchingItems[index] : matchingItems.FirstOrDefault();
-
 
             if (mainItem != null)
             {
@@ -293,14 +296,13 @@ public class CoreAdvanced
 
                 int vouchervalue = int.Parse(item.Name.Split(' ')[2].Replace("k", "000"));
 
-                int amountToBuy = Math.Min(quant - Bot.Inventory.GetQuantity(item.Name), item.MaxStack);
-                if (amountToBuy <= 0)
+                if (quant <= 0)
                     return;
 
-                Core.Logger($"Farming {amountToBuy * vouchervalue} gold for {item.Name} (x{amountToBuy}).");
-                Farm.Gold(amountToBuy * vouchervalue);
+                Core.Logger($"Farming {quant * vouchervalue} gold for {item.Name} (x{quant}).");
+                Farm.Gold(quant * vouchervalue);
 
-                Core.BuyItem(Bot.Map.Name, Bot.Shops.ID, item.Name, amountToBuy);
+                Core.BuyItem(Bot.Map.Name, Bot.Shops.ID, item.Name, quant);
             }
             else
             {
