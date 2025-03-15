@@ -519,7 +519,7 @@ public class CoreHollowbornChaosEnvoy
             if (rewardSelection == ShadowsOfDisdainRewards.All)
             {
                 Core.EnsureCompleteChoose(9002, Core.QuestRewards(9002));
-                if(Core.CheckInventory(Core.QuestRewards(9002), toInv: false))
+                if (Core.CheckInventory(Core.QuestRewards(9002), toInv: false))
                 {
                     Core.Logger("All rewards present, exiting Shadows Of Disdain quest.");
                     return;
@@ -598,11 +598,11 @@ public class CoreHollowbornChaosEnvoy
                 if (rewardSelection == PersistingMayhemRewards.All)
                 {
                     Core.EnsureCompleteChoose(9003, Core.QuestRewards(9003));
-                    if(Core.CheckInventory(Core.QuestRewards(9003), toInv: false))
-                {
-                    Core.Logger("All rewards present, exiting Persisting Mayhem quest.");
-                    return;
-                }
+                    if (Core.CheckInventory(Core.QuestRewards(9003), toInv: false))
+                    {
+                        Core.Logger("All rewards present, exiting Persisting Mayhem quest.");
+                        return;
+                    }
                 }
                 else
                 {
