@@ -158,17 +158,11 @@ public class CoreHollowbornChaosEnvoy
             // Handle reward selection
             if (rewardSelection == StirringDiscordRewards.All)
             {
-                foreach (StirringDiscordRewards reward in Enum.GetValues<StirringDiscordRewards>())
+                Core.EnsureCompleteChoose(8998, Core.QuestRewards(8998));
+                if (Core.CheckInventory(Core.QuestRewards(8998), toInv: false))
                 {
-                    if (reward == StirringDiscordRewards.All || reward == StirringDiscordRewards.None)
-                        continue;
-
-                    if (!Core.CheckInventory((int)reward))
-                    {
-                        Core.EnsureCompleteChoose(8998, new[] { reward.ToString() });
-                        Core.Logger($"Stirring Discord quest completed for reward: {reward}");
-                        break;
-                    }
+                    Core.Logger("All rewards present, exiting Stirring Discord quest.");
+                    return;
                 }
             }
             else
@@ -249,17 +243,11 @@ public class CoreHollowbornChaosEnvoy
 
             if (rewardSelection == InTheBeastsShadowRewards.All)
             {
-                foreach (InTheBeastsShadowRewards reward in Enum.GetValues<InTheBeastsShadowRewards>())
+                Core.EnsureCompleteChoose(8999, Core.QuestRewards(8999));
+                if (Core.CheckInventory(Core.QuestRewards(8999), toInv: false))
                 {
-                    if (reward == InTheBeastsShadowRewards.All || reward == InTheBeastsShadowRewards.None)
-                        continue;
-
-                    if (!Core.CheckInventory((int)reward))
-                    {
-                        Core.EnsureCompleteChoose(8999, new[] { reward.ToString() });
-                        Core.Logger($"In The Beasts Shadow quest completed for reward: {reward}");
-                        break;
-                    }
+                    Core.Logger("All rewards present, exiting In The Beasts Shadow quest.");
+                    return;
                 }
             }
             else
@@ -349,17 +337,11 @@ public class CoreHollowbornChaosEnvoy
 
             if (rewardSelection == UniqueQuarryRewards.All)
             {
-                foreach (UniqueQuarryRewards reward in Enum.GetValues<UniqueQuarryRewards>())
+                Core.EnsureCompleteChoose(9000, Core.QuestRewards(9000));
+                if (Core.CheckInventory(Core.QuestRewards(9000), toInv: false))
                 {
-                    if (reward == UniqueQuarryRewards.All || reward == UniqueQuarryRewards.None)
-                        continue;
-
-                    if (!Core.CheckInventory((int)reward))
-                    {
-                        Core.EnsureCompleteChoose(9000, new[] { reward.ToString() });
-                        Core.Logger($"Unique Quarry quest completed for reward: {reward}");
-                        break;
-                    }
+                    Core.Logger("All rewards present, exiting Unique Quarry quest.");
+                    return;
                 }
             }
             else
@@ -449,17 +431,11 @@ public class CoreHollowbornChaosEnvoy
 
             if (rewardSelection == WaveringIllusionsRewards.All)
             {
-                foreach (WaveringIllusionsRewards reward in Enum.GetValues<WaveringIllusionsRewards>())
+                Core.EnsureCompleteChoose(9001, Core.QuestRewards(9001));
+                if (Core.CheckInventory(Core.QuestRewards(9001), toInv: false))
                 {
-                    if (reward == WaveringIllusionsRewards.All || reward == WaveringIllusionsRewards.None)
-                        continue;
-
-                    if (!Core.CheckInventory((int)reward))
-                    {
-                        Core.EnsureCompleteChoose(9001, new[] { reward.ToString() });
-                        Core.Logger($"Wavering Illusions quest completed for reward: {reward}");
-                        break;
-                    }
+                    Core.Logger("All rewards present, exiting Wavering Illusions quest.");
+                    return;
                 }
             }
             else
@@ -542,17 +518,11 @@ public class CoreHollowbornChaosEnvoy
 
             if (rewardSelection == ShadowsOfDisdainRewards.All)
             {
-                foreach (ShadowsOfDisdainRewards reward in Enum.GetValues<ShadowsOfDisdainRewards>())
+                Core.EnsureCompleteChoose(9002, Core.QuestRewards(9002));
+                if(Core.CheckInventory(Core.QuestRewards(9002), toInv: false))
                 {
-                    if (reward == ShadowsOfDisdainRewards.All || reward == ShadowsOfDisdainRewards.None)
-                        continue;
-
-                    if (!Core.CheckInventory((int)reward))
-                    {
-                        Core.EnsureCompleteChoose(9002, new[] { reward.ToString() });
-                        Core.Logger($"Shadows Of Disdain quest completed for reward: {reward}");
-                        break;
-                    }
+                    Core.Logger("All rewards present, exiting Shadows Of Disdain quest.");
+                    return;
                 }
             }
             else
@@ -627,21 +597,12 @@ public class CoreHollowbornChaosEnvoy
             {
                 if (rewardSelection == PersistingMayhemRewards.All)
                 {
-                    // Iterate through all rewards and complete the quest for the first unowned one
-                    foreach (PersistingMayhemRewards reward in Enum.GetValues<PersistingMayhemRewards>())
-                    {
-                        if (reward == PersistingMayhemRewards.All || reward == PersistingMayhemRewards.None)
-                            continue; // Skip special enum values
-
-                        if (!Core.CheckInventory((int)reward))
-                        {
-                            Core.EnsureComplete(9003, (int)reward);
-                            Core.Logger($"Persisting Mayhem quest completed for reward: {reward}");
-
-                            // Break after completing for the first unowned reward and start the process again
-                            break;
-                        }
-                    }
+                    Core.EnsureCompleteChoose(9003, Core.QuestRewards(9003));
+                    if(Core.CheckInventory(Core.QuestRewards(9003), toInv: false))
+                {
+                    Core.Logger("All rewards present, exiting Persisting Mayhem quest.");
+                    return;
+                }
                 }
                 else
                 {
