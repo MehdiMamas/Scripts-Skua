@@ -220,12 +220,10 @@ public class HeadoftheLegionBeast
             EssenceTreachery(5);
             SoulsHeresy(75);
 
-            int currentQuantity = Bot.Inventory.GetQuantity("Penance");
-
             // Buy current quantity + the calculated amount:
             // - Math.Min(5, quant - currentQuantity) ensures the increment is up to 5,
             //   but doesn't exceed the remaining amount needed to reach the target (quant).
-            Adv.BuyItem("sevencircleswar", 1984, "Penance", currentQuantity + Math.Min(5, quant - currentQuantity));
+            Adv.BuyItem("sevencircleswar", 1984, "Penance", quant);
         }
     }
 
