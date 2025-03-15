@@ -10,6 +10,7 @@ tags: head, legion, beast, LOTLB, seven, circles, war, penance, essence, wrath, 
 //cs_include Scripts/Legion/CoreLegion.cs
 //cs_include Scripts/Story/Legion/SevenCircles(War).cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 
 public class HeadoftheLegionBeast
 {
@@ -212,13 +213,15 @@ public class HeadoftheLegionBeast
         Core.AddDrop(HeadLegionBeast);
         Core.FarmingLogger("Penance", quant);
         Core.EquipClass(ClassType.Farm);
-
+        quant -= Bot.Inventory.TryGetItem("Penance", out var penance) ? penance.Quantity : 0;
         while (!Bot.ShouldExit && !Core.CheckInventory("Penance", quant))
         {
-            EssenceWrath(5);
-            EssenceViolence(5);
-            EssenceTreachery(5);
-            SoulsHeresy(75);
+            quant -= Bot.Inventory.TryGetItem("Penance", out penance) ? penance.Quantity : 0;
+            EssenceWrath(Math.Min(quant, 300));
+            EssenceViolence(Math.Min(quant, 300));
+            EssenceTreachery(Math.Min(quant, 300));
+            // Take the lower number between quant * 15 & max stack (300) to avoid overbuying.
+            SoulsHeresy(Math.Min(quant * 15, 300));
 
             // Buy current quantity + the calculated amount:
             // - Math.Min(5, quant - currentQuantity) ensures the increment is up to 5,
