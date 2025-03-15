@@ -96,7 +96,10 @@ public class HeadoftheLegionBeast
     public void EssenceWrath(int quant = 300)
     {
         if (Core.CheckInventory("Essence of Wrath", quant))
+        {
+            Core.Logger($"Essence of Wrath owned {(Bot.Inventory.TryGetItem("Essence of Wrath", out var Wrath) ? Wrath.Quantity : 0)} / {quant}");
             return;
+        }
 
         Core.AddDrop(HeadLegionBeast);
         Core.EquipClass(ClassType.Farm);
@@ -143,7 +146,10 @@ public class HeadoftheLegionBeast
     public void EssenceViolence(int quant = 300)
     {
         if (Core.CheckInventory("Essence of Violence", quant))
+        {
+            Core.Logger($"Essence of Violence owned {(Bot.Inventory.TryGetItem("Essence of Violence", out var Violence) ? Violence.Quantity : 0)} / {quant}");
             return;
+        }
 
         Core.AddDrop(HeadLegionBeast);
         Core.EquipClass(ClassType.Farm);
@@ -165,7 +171,10 @@ public class HeadoftheLegionBeast
     public void EssenceTreachery(int quant = 300)
     {
         if (Core.CheckInventory("Essence of Treachery", quant))
+        {
+            Core.Logger($"Essence of Treachery owned {(Bot.Inventory.TryGetItem("Essence of Treachery", out var Treachery) ? Treachery.Quantity : 0)} / {quant}");
             return;
+        }
 
         Core.AddDrop(HeadLegionBeast);
         Core.EquipClass(ClassType.Farm);
@@ -209,14 +218,17 @@ public class HeadoftheLegionBeast
     public void Penance(int quant = 300)
     {
         if (Core.CheckInventory("Penance", quant))
+        {
+            Core.Logger($"Penance owned {(Bot.Inventory.TryGetItem("Penance", out var penance) ? penance.Quantity : 0)} / {quant}");
             return;
+        }
+
         Core.AddDrop(HeadLegionBeast);
         Core.FarmingLogger("Penance", quant);
         Core.EquipClass(ClassType.Farm);
-        quant -= Bot.Inventory.TryGetItem("Penance", out var penance) ? penance.Quantity : 0;
         while (!Bot.ShouldExit && !Core.CheckInventory("Penance", quant))
         {
-            quant -= Bot.Inventory.TryGetItem("Penance", out penance) ? penance.Quantity : 0;
+            quant -= Bot.Inventory.TryGetItem("Penance", out var Penance) ? Penance.Quantity : 0;
             EssenceWrath(Math.Min(quant, 300));
             EssenceViolence(Math.Min(quant, 300));
             EssenceTreachery(Math.Min(quant, 300));
