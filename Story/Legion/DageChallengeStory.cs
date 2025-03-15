@@ -58,7 +58,7 @@ public class DageChallengeStory
             Core.EnsureAccept(8545);
             if (!Core.CheckInventory("Dage's Favor", 200))
                 Core.HuntMonster("underworld", "Dark Makai", "Dage's Favor", 200, isTemp: false);
-            Legion.ObsidianRock();
+            Legion.ObsidianRock(10);
 
             HOTLB.SoulsHeresy(30);
             Core.EnsureComplete(8545);

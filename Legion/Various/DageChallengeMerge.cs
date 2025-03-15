@@ -92,7 +92,7 @@ public class DageChallengeMerge
                     {
                         Core.EnsureAccept(8545);
                         Legion.ApprovalAndFavor(0, 200);
-                        Legion.ObsidianRock();
+                        Legion.ObsidianRock(10);
                         HOTLB.SoulsHeresy(30);
                         Core.EnsureComplete(8545);
                         Bot.Wait.ForPickup("Underworld Medal");
