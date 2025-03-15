@@ -1315,7 +1315,7 @@ public class CoreBots
 
         Bot.Events.ExtensionPacketReceived -= RelogRequieredListener;
 
-        if (CheckInventory(item.ID, quant))
+        if (CheckInventory(item.ID, buy_quant))
         {
             if (Log)
                 Logger($"Bought {(buy_quant == 302500 ? 1 : buy_quant)} {item.Name}, now at {Bot.Inventory.GetQuantity(item.ID)}/{quant} {item.Name}", "BuyItem");
@@ -7337,6 +7337,18 @@ public class CoreBots
             nr = 1;
         return nr < 1000;
     }
+    /// <summary>
+    /// Adjusts the farming quantity by subtracting the available item count, up to a maximum stack limit.
+    /// </summary>
+    /// <param name="quant">Reference to the target quantity to adjust.</param>
+    /// <param name="item">The name of the item to check in the inventory.</param>
+    /// <param name="MaxStack">The maximum stack size to subtract.</param>
+    /// <returns>The updated quantity after adjustment.</returns>
+    public int FarmQuantity(ref int quant, string item, int MaxStack) =>
+        quant -= Math.Min(
+            Bot.Inventory.TryGetItem(item, out InventoryItem Item) ? Item.Quantity : 0,
+            MaxStack
+        );
 
     public void PVPKilling(int MonsterMapID = 0)
     {

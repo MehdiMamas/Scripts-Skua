@@ -97,7 +97,7 @@ public class HeadoftheLegionBeast
     {
         if (Core.CheckInventory("Essence of Wrath", quant))
         {
-            Core.Logger($"Essence of Wrath owned {(Bot.Inventory.TryGetItem("Essence of Wrath", out var Wrath) ? Wrath.Quantity : 0)} / {quant}");
+            Core.FarmingLogger("Essence of Wrath", quant);
             return;
         }
 
@@ -147,7 +147,7 @@ public class HeadoftheLegionBeast
     {
         if (Core.CheckInventory("Essence of Violence", quant))
         {
-            Core.Logger($"Essence of Violence owned {(Bot.Inventory.TryGetItem("Essence of Violence", out var Violence) ? Violence.Quantity : 0)} / {quant}");
+            Core.FarmingLogger("Essence of Violence", quant);
             return;
         }
 
@@ -172,7 +172,7 @@ public class HeadoftheLegionBeast
     {
         if (Core.CheckInventory("Essence of Treachery", quant))
         {
-            Core.Logger($"Essence of Treachery owned {(Bot.Inventory.TryGetItem("Essence of Treachery", out var Treachery) ? Treachery.Quantity : 0)} / {quant}");
+            Core.FarmingLogger("Essence of Treachery", quant);
             return;
         }
 
@@ -196,7 +196,10 @@ public class HeadoftheLegionBeast
     public void SoulsHeresy(int quant = 300)
     {
         if (Core.CheckInventory("Souls of Heresy", quant))
+        {
+            Core.FarmingLogger("Souls of Heresy", quant);
             return;
+        }
 
         Core.AddDrop(HeadLegionBeast);
         if (!Bot.Quests.IsUnlocked(7983))
@@ -211,34 +214,48 @@ public class HeadoftheLegionBeast
         Core.CancelRegisteredQuests();
     }
 
+
     /// <summary>
     /// Farms the specified quantity of "Penance" items.
     /// </summary>
-    /// <param name="quant">The target quantity of "Penance" items to collect. Default is 30.</param>
+    /// <param name="quant">The target quantity of "Penance" items to collect. Default is 300.</param>
     public void Penance(int quant = 300)
     {
         if (Core.CheckInventory("Penance", quant))
         {
-            Core.Logger($"Penance owned {(Bot.Inventory.TryGetItem("Penance", out var penance) ? penance.Quantity : 0)} / {quant}");
+            Core.FarmingLogger("Penance", quant);
             return;
         }
 
         Core.AddDrop(HeadLegionBeast);
         Core.FarmingLogger("Penance", quant);
         Core.EquipClass(ClassType.Farm);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Penance", quant))
-        {
-            quant -= Bot.Inventory.TryGetItem("Penance", out var Penance) ? Penance.Quantity : 0;
-            EssenceWrath(Math.Min(quant, 300));
-            EssenceViolence(Math.Min(quant, 300));
-            EssenceTreachery(Math.Min(quant, 300));
-            // Take the lower number between quant * 15 & max stack (300) to avoid overbuying.
-            SoulsHeresy(Math.Min(quant * 15, 300));
 
-            // Buy current quantity + the calculated amount:
-            // - Math.Min(5, quant - currentQuantity) ensures the increment is up to 5,
-            //   but doesn't exceed the remaining amount needed to reach the target (quant).
-            Adv.BuyItem("sevencircleswar", 1984, "Penance", quant);
+        int targetQuant = quant; // Store the original quantity
+
+        while (!Bot.ShouldExit && !Core.CheckInventory("Penance", targetQuant))
+        {
+            // Define required quantities for each item, ensuring no overfarming
+            var requiredItems = new Dictionary<string, Action<int>>
+            {
+                { "Essence of Wrath", EssenceWrath },
+                { "Essence of Violence", EssenceViolence },
+                { "Essence of Treachery", EssenceTreachery },
+                { "Souls of Heresy", amount => SoulsHeresy(amount * 15) } // Adjust Souls of Heresy multiplier
+            };
+
+            foreach (var (item, farmAction) in requiredItems)
+            {
+                int needed = Math.Min(targetQuant, 300);
+                if (needed > 0)
+                    farmAction(needed);
+            }
+
+            // Buy Penance in the correct quantity
+            Adv.BuyItem("sevencircleswar", 1984, "Penance", targetQuant);
+            Bot.Wait.ForPickup("Penance");
+
+            Core.Sleep(500); // Allow time for inventory update
         }
     }
 

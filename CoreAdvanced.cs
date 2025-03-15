@@ -141,7 +141,7 @@ public class CoreAdvanced
                         Bot.Wait.ForMapLoad(map);
                     }
 
-                    Core.DebugLogger(this);
+                    Core.DebugLogger(this, $"Requirement \"{req.Name}\" x{totalBundlesNeeded} NEEDED.");
                     Bot.Shops.Load(shopID);
                     Bot.Wait.ForActionCooldown(GameActions.LoadShop);
                     Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
@@ -175,7 +175,7 @@ public class CoreAdvanced
                     // Else continue when the req.name isnt in the shop.
                     else
                     {
-                        Core.Logger($"Failed to find shop item: {req.Name}[{req.ID}] in {Bot.Shops.ID}[{Bot.Shops.Name}] (its probably a Mob Drop)");
+                        Core.Logger($"Failed to find shop item: \"{req.Name} [{req.ID}]\" in [{Bot.Shops.ID} | {Bot.Shops.Name}] (its probably a Mob Drop)", stopBot: true);
                         continue;
                     }
                 }
