@@ -788,7 +788,7 @@ public class CoreLegion
         Adv.BuyItem("underworld", 216, "Undead Champion");
     }
 
-    public void ObsidianRock(int quant = 10)
+    public void ObsidianRock(int quant = 666)
     {
         if (Core.CheckInventory("Obsidian Rock", quant))
             return;
