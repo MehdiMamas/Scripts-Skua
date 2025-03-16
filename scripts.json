@@ -15558,6 +15558,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Legion/SeraphicWar.cs"
   },
   {
+    "name": "Atlas Promenade Story",
+    "description": "This will finish General Rand's questline in /atlaspromenade.",
+    "tags": [
+      "story",
+      "quest",
+      "legion",
+      "dage",
+      "atlas",
+      "promenade",
+      "atlas-promenade",
+      "general rand",
+      "rand",
+      "atlaspromenade"
+    ],
+    "path": "Story/Legion/AtlasPromenade.cs",
+    "size": 3447,
+    "fileName": "AtlasPromenade.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Legion/AtlasPromenade.cs"
+  },
+  {
     "name": "Zorbas Palace",
     "description": "This will finish the Zorbas Palace quest.",
     "tags": [
