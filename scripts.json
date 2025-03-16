@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 346954,
+    "size": 347348,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 139271,
+    "size": 139355,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -24426,7 +24426,7 @@
       "null"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/CoreDageBirthday.cs",
-    "size": 9231,
+    "size": 8723,
     "fileName": "CoreDageBirthday.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/CoreDageBirthday.cs"
   },
