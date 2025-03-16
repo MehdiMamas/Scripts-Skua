@@ -8915,6 +8915,10 @@
       "cane",
       "death",
       "bane",
+      "obsidian",
+      "rock",
+      "solidified",
+      "soul",
       "pride",
       "horrid",
       "cleaver",
@@ -8924,10 +8928,14 @@
       "undead",
       "horns",
       "breaker",
-      "warrior"
+      "warrior",
+      "shadow",
+      "katana",
+      "fatal",
+      "keraunos"
     ],
     "path": "Legion/MergeShops/SoulForgeMerge.cs",
-    "size": 4592,
+    "size": 6078,
     "fileName": "SoulForgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/SoulForgeMerge.cs"
   },
