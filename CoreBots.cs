@@ -1208,8 +1208,6 @@ public class CoreBots
     /// <param name="Log"></param>
     public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, bool Log = true)
     {
-        if (CheckInventory(itemName, quant))
-            return;
         _CheckInventorySpace();
 
         ShopItem? item = parseShopItem(GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.Name.ToLower() == itemName.ToLower() : x.ShopItemID == shopItemID).ToList(), shopID, itemName, shopItemID);
@@ -1258,8 +1256,9 @@ public class CoreBots
     int retrys = 0;
     public void _BuyItem(string map, int shopID, ShopItem? item, int quant, bool Log = true)
     {
+        #region IgnoreMe
         int buy_quant;
-        if (item == null || (buy_quant = _CalcBuyQuantity(item, quant)) <= 0 || !_canBuy(shopID, item, buy_quant))
+        if (item == null || (buy_quant = _CalcBuyQuantity(item, quant)) <= 0 || !_canBuy(shopID, item, quant))
             return;
 
         if (Bot.Map.Name != map)
@@ -1282,6 +1281,7 @@ public class CoreBots
                 Bot.Shops.Load(shopID);
                 Sleep();
             }, 20, 1000);
+        #endregion IgnoreMe
 
         dynamic sItem = new ExpandoObject();
         for (int i = 0; i < 5; i++)
