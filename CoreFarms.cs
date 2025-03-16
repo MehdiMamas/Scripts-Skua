@@ -131,7 +131,7 @@ public class CoreFarms
     #region Gold
     public void Gold(int quant = 100000000)
     {
-        quant -= Bot.Player.Gold;
+        // quant -= Bot.Player.Gold;
         if (Bot.Player.Gold >= quant)
             return;
 
