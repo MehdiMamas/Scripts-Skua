@@ -8811,6 +8811,23 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/AtlasWarTrophiesMerge.cs"
   },
   {
+    "name": "Strangers Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Strangers Merge [464] in /evilwardage",
+    "tags": [
+      "strangers",
+      "merge",
+      "evilwardage",
+      "skullborne",
+      "stranger",
+      "house",
+      "guard"
+    ],
+    "path": "Legion/MergeShops/StrangersMerge.cs",
+    "size": 3089,
+    "fileName": "StrangersMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/StrangersMerge.cs"
+  },
+  {
     "name": "SevenCirclesMerge",
     "description": "null",
     "tags": [
