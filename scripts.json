@@ -8777,6 +8777,40 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/ForgottenTombsMerge.cs"
   },
   {
+    "name": "Atlas War Trophies Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Atlas War Trophies Merge [2564] in /atlaspromenade",
+    "tags": [
+      "atlas",
+      "war",
+      "trophies",
+      "merge",
+      "atlaspromenade",
+      "knight",
+      "cloak",
+      "axis",
+      "enchanted",
+      "barrensoul",
+      "psalm",
+      "ritualist",
+      "aeterna",
+      "adornment",
+      "cowl",
+      "horns",
+      "underworld",
+      "vestments",
+      "",
+      "horned",
+      "corpse",
+      "wax",
+      "candelabras",
+      "candelabra"
+    ],
+    "path": "Legion/MergeShops/AtlasWarTrophiesMerge.cs",
+    "size": 9215,
+    "fileName": "AtlasWarTrophiesMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/AtlasWarTrophiesMerge.cs"
+  },
+  {
     "name": "SevenCirclesMerge",
     "description": "null",
     "tags": [
@@ -15573,7 +15607,7 @@
       "atlaspromenade"
     ],
     "path": "Story/Legion/AtlasPromenade.cs",
-    "size": 3447,
+    "size": 3334,
     "fileName": "AtlasPromenade.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Legion/AtlasPromenade.cs"
   },
