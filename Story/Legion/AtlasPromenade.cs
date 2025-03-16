@@ -4,10 +4,7 @@ description: This will finish General Rand's questline in /atlaspromenade.
 tags: story, quest, legion,dage,atlas,promenade,atlas-promenade,general rand,rand,atlaspromenade
 */
 //cs_include Scripts/CoreBots.cs
-//cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Legion/CoreLegion.cs
 //cs_include Scripts/Story/Legion/SevenCircles(War).cs
 using Skua.Core.Interfaces;
 
