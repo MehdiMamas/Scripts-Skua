@@ -13,7 +13,6 @@ public class AtlasPromenade
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public CoreStory Story = new();
-    public CoreLegion Legion = new();
     public SevenCircles SCW = new();
 
     public void ScriptMain(IScriptInterface bot)
