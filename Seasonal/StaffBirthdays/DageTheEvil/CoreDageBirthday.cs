@@ -36,7 +36,13 @@ public class CoreDageBirthday
 
     public void DarkPath()
     {
-        if (Core.isCompletedBefore(6234) || !Core.isSeasonalMapActive("darkpath"))
+        if (Core.isCompletedBefore(6234))
+        {
+            Core.Logger($"{Core.EnsureLoad(6234).Name} has already been completed.");
+            return;
+        }
+
+        if (!Core.isSeasonalMapActive("darkpath"))
             return;
 
         Story.PreLoad(this);
@@ -94,10 +100,14 @@ public class CoreDageBirthday
         //Defeat Zeph'gorog (6234)
         Story.KillQuest(6234, "voidvault", "Zeph'gorog");
     }
+
     public void FutureLegion()
     {
         if (Core.isCompletedBefore(5736))
+        {
+            Core.Logger($"{Core.EnsureLoad(5736).Name} has already been completed.");
             return;
+        }
         if (!Core.isSeasonalMapActive("futurelegion"))
             return;
 
@@ -150,7 +160,13 @@ public class CoreDageBirthday
 
     public void Undervoid()
     {
-        if (Core.isCompletedBefore(3406) || !Core.isSeasonalMapActive("undervoid"))
+        if (Core.isCompletedBefore(3406))
+        {
+            Core.Logger($"{Core.EnsureLoad(3406).Name} has already been completed.");
+            return;
+        }
+
+        if (!Core.isSeasonalMapActive("undervoid"))
             return;
 
         Story.PreLoad(this);
@@ -184,7 +200,13 @@ public class CoreDageBirthday
 
     public void LegionBarracks()
     {
-        if (Core.isCompletedBefore(9619) || !Core.isSeasonalMapActive("legionbarracks"))
+        if (Core.isCompletedBefore(9619))
+        {
+            Core.Logger($"{Core.EnsureLoad(9619).Name} has already been completed.");
+            return;
+        }
+
+        if (!Core.isSeasonalMapActive("legionbarracks"))
             return;
 
         Story.PreLoad(this);
@@ -229,7 +251,13 @@ public class CoreDageBirthday
 
     public void CocytusBarracks()
     {
-        if (Core.isCompletedBefore(9632) || !Core.isSeasonalMapActive("cocytusbarracks"))
+        if (Core.isCompletedBefore(9632))
+        {
+            Core.Logger($"{Core.EnsureLoad(9632).Name} has already been completed.");
+            return;
+        }
+        
+        if (!Core.isSeasonalMapActive("cocytusbarracks"))
             return;
 
         LegionBarracks();
