@@ -38,7 +38,7 @@ public class CoreDageBirthday
     {
         if (Core.isCompletedBefore(6234))
         {
-            Core.Logger($"{Core.EnsureLoad(6234).Name} has already been completed.");
+            Core.Logger($"Quest \"{Core.EnsureLoad(6234).Name}\" has already been completed.");
             return;
         }
 
@@ -105,7 +105,7 @@ public class CoreDageBirthday
     {
         if (Core.isCompletedBefore(5736))
         {
-            Core.Logger($"{Core.EnsureLoad(5736).Name} has already been completed.");
+            Core.Logger($"Quest \"{Core.EnsureLoad(5736).Name}\" has already been completed.");
             return;
         }
         if (!Core.isSeasonalMapActive("futurelegion"))
@@ -162,7 +162,7 @@ public class CoreDageBirthday
     {
         if (Core.isCompletedBefore(3406))
         {
-            Core.Logger($"{Core.EnsureLoad(3406).Name} has already been completed.");
+            Core.Logger($"Quest \"{Core.EnsureLoad(3406).Name}\" has already been completed.");
             return;
         }
 
@@ -202,7 +202,7 @@ public class CoreDageBirthday
     {
         if (Core.isCompletedBefore(9619))
         {
-            Core.Logger($"{Core.EnsureLoad(9619).Name} has already been completed.");
+            Core.Logger($"Quest \"{Core.EnsureLoad(9619).Name}\" has already been completed.");
             return;
         }
 
@@ -253,10 +253,10 @@ public class CoreDageBirthday
     {
         if (Core.isCompletedBefore(9632))
         {
-            Core.Logger($"{Core.EnsureLoad(9632).Name} has already been completed.");
+            Core.Logger($"Quest \"{Core.EnsureLoad(9632).Name}\" has already been completed.");
             return;
         }
-        
+
         if (!Core.isSeasonalMapActive("cocytusbarracks"))
             return;
 
