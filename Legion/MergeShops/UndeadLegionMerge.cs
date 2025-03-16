@@ -1,7 +1,7 @@
 /*
 name: Undead Legion Merge
 description: This bot will farm the items belonging to the selected mode for the Undead Legion Merge [238] in /underworld
-tags: undead, legion, merge, underworld, frostbite, overlord, zealith, reavers, blademaster, guiltius, legend, crown, face, judge, assassin, darkside, titan, cloak, exalted, champion, horns, archer, otherworldly, deathstare, deathdealer, shield, gutripper, skull, goggles, deathmask, apocalypse, dark, flaming, ultimate, lich, king, original, paragon, castle, soul, cleaver, smiling, dage, infinite, caster, loyal, warrior, swordmaster, draconic, plate, horned, spiked, guard, rhongomyniad, yami, no, ronin, sheathed, katana, shuriken, shurikens, healer, mage, hatmask, rogue, , dragonblade, nulgath, monsterhunter, monsterhunters, revenant, seven, circles, beast, ancient, wraiths, winged, bone, crusher, crushers, warlord, great, twisted, yulgars, inn, house, parabellum, armaments, hammer, back, armet, void, vigilante, maw, battlegear, awakened, deaths, requiem, ops, armed, breach, morph, briefcase, tactical, gear, ghost, drone, cold, steel, kukri, kukris, rifle, rifles, corpsewax, candle, incendo, regius
+tags: undead, legion, merge, underworld, frostbite, overlord, zealith, reavers, blademaster, guiltius, legend, crown, face, judge, assassin, darkside, promotion, titan, cloak, exalted, champion, horns, archer, otherworldly, deathstare, deathdealer, shield, gutripper, skull, goggles, deathmask, apocalypse, dark, flaming, ultimate, lich, king, original, paragon, castle, soul, cleaver, smiling, dage, infinite, caster, loyal, warrior, swordmaster, draconic, plate, horned, spiked, guard, rhongomyniad, platinum, medal, gold, silver, bronze, yami, no, ronin, sheathed, katana, shuriken, shurikens, healer, mage, hatmask, rogue, , dragonblade, nulgath, monsterhunter, monsterhunters, revenant, seven, circles, beast, ancient, wraiths, winged, bone, crusher, crushers, warlord, great, twisted, yulgars, inn, house, parabellum, armaments, hammer, back, armet, void, vigilante, maw, battlegear, awakened, deaths, requiem, ops, armed, breach, morph, briefcase, tactical, gear, ghost, drone, cold, steel, kukri, kukris, rifle, rifles, corpsewax, candle, incendo, regius, nástrandir, warbringer
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -159,6 +159,7 @@ public class UndeadLegionMerge
         new Option<bool>("9969", "Undead Assassin Swords", "Mode: [select] only\nShould the bot buy \"Undead Assassin Swords\" ?", false),
         new Option<bool>("10597", "Darkside Helm", "Mode: [select] only\nShould the bot buy \"Darkside Helm\" ?", false),
         new Option<bool>("10740", "Darkside Staff", "Mode: [select] only\nShould the bot buy \"Darkside Staff\" ?", false),
+        new Option<bool>("11025", "Legion Promotion", "Mode: [select] only\nShould the bot buy \"Legion Promotion\" ?", false),
         new Option<bool>("11359", "Legion Titan", "Mode: [select] only\nShould the bot buy \"Legion Titan\" ?", false),
         new Option<bool>("11360", "Legion Titan Crown", "Mode: [select] only\nShould the bot buy \"Legion Titan Crown\" ?", false),
         new Option<bool>("11361", "Legion Titan Cloak", "Mode: [select] only\nShould the bot buy \"Legion Titan Cloak\" ?", false),
@@ -192,6 +193,10 @@ public class UndeadLegionMerge
         new Option<bool>("53877", "Draconic Paragon Cape", "Mode: [select] only\nShould the bot buy \"Draconic Paragon Cape\" ?", false),
         new Option<bool>("53879", "Draconic Reavers", "Mode: [select] only\nShould the bot buy \"Draconic Reavers\" ?", false),
         new Option<bool>("53880", "Draconic Rhongomyniad", "Mode: [select] only\nShould the bot buy \"Draconic Rhongomyniad\" ?", false),
+        new Option<bool>("53907", "Platinum Paragon Medal", "Mode: [select] only\nShould the bot buy \"Platinum Paragon Medal\" ?", false),
+        new Option<bool>("53908", "Gold Paragon Medal", "Mode: [select] only\nShould the bot buy \"Gold Paragon Medal\" ?", false),
+        new Option<bool>("53909", "Silver Paragon Medal", "Mode: [select] only\nShould the bot buy \"Silver Paragon Medal\" ?", false),
+        new Option<bool>("53910", "Bronze Paragon Medal", "Mode: [select] only\nShould the bot buy \"Bronze Paragon Medal\" ?", false),
         new Option<bool>("53863", "Yami no Ronin", "Mode: [select] only\nShould the bot buy \"Yami no Ronin\" ?", false),
         new Option<bool>("53864", "Yami no Ronin Helm", "Mode: [select] only\nShould the bot buy \"Yami no Ronin Helm\" ?", false),
         new Option<bool>("53865", "Yami no Ronin Sheathed Katana", "Mode: [select] only\nShould the bot buy \"Yami no Ronin Sheathed Katana\" ?", false),
@@ -270,5 +275,9 @@ public class UndeadLegionMerge
         new Option<bool>("85288", "Revenant Candle", "Mode: [select] only\nShould the bot buy \"Revenant Candle\" ?", false),
         new Option<bool>("85289", "Regius Revenant", "Mode: [select] only\nShould the bot buy \"Regius Revenant\" ?", false),
         new Option<bool>("85290", "Regius Underworld Candle", "Mode: [select] only\nShould the bot buy \"Regius Underworld Candle\" ?", false),
+        new Option<bool>("84483", "Awakened Death's Requiem Axes", "Mode: [select] only\nShould the bot buy \"Awakened Death's Requiem Axes\" ?", false),
+        new Option<bool>("84482", "Awakened Death's Requiem Axe", "Mode: [select] only\nShould the bot buy \"Awakened Death's Requiem Axe\" ?", false),
+        new Option<bool>("92236", "Nástrandir", "Mode: [select] only\nShould the bot buy \"Nástrandir\" ?", false),
+        new Option<bool>("92221", "Underworld Warbringer Hood", "Mode: [select] only\nShould the bot buy \"Underworld Warbringer Hood\" ?", false),
     };
 }
