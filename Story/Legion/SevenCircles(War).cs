@@ -24,7 +24,7 @@ public class SevenCircles
 
     public void Circles()
     {
-        if (Core.isCompletedBefore(7978))
+        if (Core.isCompletedBefore(7977))
             return;
 
         Story.PreLoad(this);
@@ -51,8 +51,6 @@ public class SevenCircles
         Story.KillQuest(7976, "sevencircles", new[] { "Limbo Guard", "Luxuria Guard", "Gluttony Guard", "Avarice Guard" });
         //Ava-risky Business
         Story.KillQuest(7977, "sevencircles", "Avarice");
-        //Cirlces of Fate
-        Story.KillQuest(7978, "sevencircles", new[] { "Luxuria", "Gluttony", "Avarice", "Limbo Guard" });
     }
 
     public void CirclesWar(bool excludeBoss = false, bool StopForGoldFarm = false)
