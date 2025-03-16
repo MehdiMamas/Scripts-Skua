@@ -215,10 +215,6 @@ public class HeadoftheLegionBeast
     }
 
 
-    /// <summary>
-    /// Farms the specified quantity of "Penance" items.
-    /// </summary>
-    /// <param name="quant">The target quantity of "Penance" items to collect. Default is 300.</param>
     public void Penance(int quant = 300)
     {
         if (Core.CheckInventory("Penance", quant))
@@ -235,12 +231,12 @@ public class HeadoftheLegionBeast
         {
             // Farm required materials
             var requiredItems = new Dictionary<string, Action<int>>
-        {
-            { "Essence of Wrath", EssenceWrath },
-            { "Essence of Violence", EssenceViolence },
-            { "Essence of Treachery", EssenceTreachery },
-            { "Souls of Heresy", amount => SoulsHeresy(Math.Min(300, amount * 15)) }
-        };
+            {
+                { "Essence of Wrath", EssenceWrath },
+                { "Essence of Violence", EssenceViolence },
+                { "Essence of Treachery", EssenceTreachery },
+                { "Souls of Heresy", amount => SoulsHeresy(Math.Min(300, amount * 15)) }
+            };
 
             foreach (var (item, farmAction) in requiredItems)
                 farmAction(Math.Min(quant, 300));
@@ -250,20 +246,13 @@ public class HeadoftheLegionBeast
             if (currentPenance >= quant)
                 break;
 
-            // Determine the amount of Penance we can buy (full multiples of 15)
+            // Determine the amount of "Penance" we can buy (full multiples of 15)
             int sohCount = Bot.Inventory.GetQuantity("Souls of Heresy");
-            int maxBuyable = sohCount / 15; // Only full multiples of 15, no rounding up
 
-            // Ensure we buy exactly what’s needed, no extras
-            int buyAmount = Math.Min(maxBuyable, quant - currentPenance); // Only buy what’s needed
-
-            if (buyAmount > 0)
-            {
-                Core.BuyItem("sevencircleswar", 1984, "Penance", buyAmount);
-                Bot.Wait.ForPickup("Penance");
-                if (Core.CheckInventory("Penance", quant))
-                    break;
-            }
+            Core.BuyItem("sevencircleswar", 1984, "Penance", Math.Max(quant, sohCount / 15));
+            Bot.Wait.ForPickup("Penance");
+            if (Core.CheckInventory("Penance", quant))
+                break;
 
             Core.Sleep(500);
         }
