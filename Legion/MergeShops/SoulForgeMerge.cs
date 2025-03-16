@@ -10,7 +10,7 @@ tags: soulforge, merge, underworld, classy, skullseeker, legion, beast, within, 
 //cs_include Scripts/Legion/CoreLegion.cs
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
 //cs_include Scripts/Legion/SwordMaster.cs
-//cs_include Scripts/Legion\YamiNoRonin\CoreYnR.cs
+//cs_include Scripts/Legion/YamiNoRonin/CoreYnR.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;

@@ -22,7 +22,7 @@ tags: underworld,legion,dage,birthday,image of dage,quest,hateful,hateful goliat
 //cs_include Scripts/Story/IsleOfFotia/CoreIsleOfFotia.cs
 //cs_include Scripts/Story/Legion/SevenCircles(War).cs
 //cs_include Scripts/Legion/HeadOfTheLegionBeast.cs
-//cs_include Scripts/Seasonal\StaffBirthdays\DageTheEvil\FortressDelve.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/DageTheEvil/FortressDelve.cs
 //cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleSiege.cs
 //cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleDelve.cs
 using Skua.Core.Interfaces;

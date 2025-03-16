@@ -7,9 +7,9 @@ tags: atlas, war, trophies, merge, atlaspromenade, knight, cloak, axis, enchante
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/Legion\CoreLegion.cs
+//cs_include Scripts/Legion/CoreLegion.cs
 //cs_include Scripts/Story/Legion/SevenCircles(War).cs
-//cs_include Scripts/Story\Legion\AtlasPromenade.cs
+//cs_include Scripts/Story/Legion/AtlasPromenade.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
