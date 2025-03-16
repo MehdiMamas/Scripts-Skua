@@ -39,10 +39,7 @@ public class CoreDageBirthday
     public void DarkPath()
     {
         if (Core.isCompletedBefore(6234))
-        {
-            Core.Logger($"Quest \"{Core.EnsureLoad(6234).Name}\" has already been completed.");
             return;
-        }
 
         if (!Core.isSeasonalMapActive("darkpath"))
             return;
@@ -106,10 +103,8 @@ public class CoreDageBirthday
     public void FutureLegion()
     {
         if (Core.isCompletedBefore(5736))
-        {
-            Core.Logger($"Quest \"{Core.EnsureLoad(5736).Name}\" has already been completed.");
             return;
-        }
+
         if (!Core.isSeasonalMapActive("futurelegion"))
             return;
 
@@ -163,10 +158,7 @@ public class CoreDageBirthday
     public void Undervoid()
     {
         if (Core.isCompletedBefore(3406))
-        {
-            Core.Logger($"Quest \"{Core.EnsureLoad(3406).Name}\" has already been completed.");
             return;
-        }
 
         if (!Core.isSeasonalMapActive("undervoid"))
             return;
@@ -203,10 +195,7 @@ public class CoreDageBirthday
     public void LegionBarracks()
     {
         if (Core.isCompletedBefore(9619))
-        {
-            Core.Logger($"Quest \"{Core.EnsureLoad(9619).Name}\" has already been completed.");
             return;
-        }
 
         if (!Core.isSeasonalMapActive("legionbarracks"))
             return;
@@ -254,10 +243,7 @@ public class CoreDageBirthday
     public void CocytusBarracks()
     {
         if (Core.isCompletedBefore(9632))
-        {
-            Core.Logger($"Quest \"{Core.EnsureLoad(9632).Name}\" has already been completed.");
             return;
-        }
 
         if (!Core.isSeasonalMapActive("cocytusbarracks"))
             return;

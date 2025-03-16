@@ -2908,31 +2908,47 @@ public class CoreBots
         EnsureCompleteMulti(questID, itemID: itemID);
     }
 
-    /// <param name="QuestID">ID of the quest</param>
+    /// <summary>
+    /// Checks if a quest has been completed before.
+    /// </summary>
+    /// <param name="QuestID">The ID of the quest to check.</param>
+    /// <returns>True if the quest is completed, otherwise false.</returns>
     public bool isCompletedBefore(int QuestID)
     {
-        Quest? QuestData = InitializeWithRetries(() => EnsureLoad(QuestID));
-        if (QuestData == null)
+        Quest? quest = InitializeWithRetries(() => EnsureLoad(QuestID));
+        if (quest == null)
         {
-            Logger($"Failed to initialize quest with ID {QuestID} after multiple attempts.");
+            Logger($"❌ Failed to initialize quest {QuestID} after multiple attempts.");
             return false;
+        }
+
+        string questName = quest.Name ?? $"{QuestID}";
+
+        bool CheckCompletion(Quest questData)
+        {
+            bool complete = questData.Slot < 0 ||
+                Bot.Flash.CallGameFunction<int>("world.getQuestValue", questData.Slot) >= questData.Value;
+
+            Logger($"[{(complete ? '✔' : '❌')}] {questName} [{QuestID}] completion check.");
+            return complete;
         }
 
         try
         {
-            return QuestData.Slot < 0 || Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot) >= QuestData.Value;
+            return CheckCompletion(quest);
         }
         catch
         {
-            QuestData = InitializeWithRetries(() => EnsureLoad(QuestID));
-            if (QuestData == null)
+            quest = InitializeWithRetries(() => EnsureLoad(QuestID));
+            if (quest == null)
             {
-                Logger($"Failed to reinitialize quest with ID {QuestID} after multiple attempts.");
+                Logger($"❌ Failed to reinitialize {questName} [{QuestID}] after multiple attempts.");
                 return false;
             }
-            return QuestData.Slot < 0 || Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot) >= QuestData.Value;
+            return CheckCompletion(quest);
         }
     }
+
 
     #region Backups - from 2022
     /// <summary>
