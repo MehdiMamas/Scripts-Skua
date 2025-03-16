@@ -231,33 +231,41 @@ public class HeadoftheLegionBeast
         Core.FarmingLogger("Penance", quant);
         Core.EquipClass(ClassType.Farm);
 
-        int targetQuant = quant; // Store the original quantity
-
-        while (!Bot.ShouldExit && !Core.CheckInventory("Penance", targetQuant))
+        while (!Bot.ShouldExit && !Core.CheckInventory("Penance", quant))
         {
-            // Define required quantities for each item, ensuring no overfarming
+            // Farm required materials
             var requiredItems = new Dictionary<string, Action<int>>
-            {
-                { "Essence of Wrath", EssenceWrath },
-                { "Essence of Violence", EssenceViolence },
-                { "Essence of Treachery", EssenceTreachery },
-                { "Souls of Heresy", amount => SoulsHeresy(Math.Min(300, amount * 15)) } // Adjust Souls of Heresy multiplier
-            };
+        {
+            { "Essence of Wrath", EssenceWrath },
+            { "Essence of Violence", EssenceViolence },
+            { "Essence of Treachery", EssenceTreachery },
+            { "Souls of Heresy", amount => SoulsHeresy(Math.Min(300, amount * 15)) }
+        };
 
             foreach (var (item, farmAction) in requiredItems)
+                farmAction(Math.Min(quant, 300));
+
+            // Check inventory
+            int currentPenance = Bot.Inventory.GetQuantity("Penance");
+            if (currentPenance >= quant)
+                break;
+
+            // Determine the amount of Penance we can buy (full multiples of 15)
+            int sohCount = Bot.Inventory.GetQuantity("Souls of Heresy");
+            int maxBuyable = sohCount / 15; // Only full multiples of 15, no rounding up
+
+            // Ensure we buy exactly what’s needed, no extras
+            int buyAmount = Math.Min(maxBuyable, quant - currentPenance); // Only buy what’s needed
+
+            if (buyAmount > 0)
             {
-                int needed = Math.Min(targetQuant, 300);
-                if (needed > 0)
-                    farmAction(needed);
+                Core.BuyItem("sevencircleswar", 1984, "Penance", buyAmount);
+                Bot.Wait.ForPickup("Penance");
+                if (Core.CheckInventory("Penance", quant))
+                    break;
             }
 
-            // Buy Penance in the correct quantity
-            // Either buy the Amount of SoH divided by 15, or target quantity, what ever is less
-            Core.BuyItem("sevencircleswar", 1984, "Penance",  targetQuant);
-            // Core.BuyItem("sevencircleswar", 1984, "Penance", Math.Min(Bot.Inventory.GetQuantity("Souls of Heresy") / 15, targetQuant));
-            Bot.Wait.ForPickup("Penance");
-
-            Core.Sleep(500); // Allow time for inventory update
+            Core.Sleep(500);
         }
     }
 
