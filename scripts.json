@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 347348,
+    "size": 347332,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -640,7 +640,7 @@
       "luxuria"
     ],
     "path": "Legion/HeadOfTheLegionBeast.cs",
-    "size": 10724,
+    "size": 10243,
     "fileName": "HeadOfTheLegionBeast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/HeadOfTheLegionBeast.cs"
   },
