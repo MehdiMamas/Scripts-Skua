@@ -32,6 +32,8 @@ public class CoreDageBirthday
         Undervoid();
         LegionBarracks();
         CocytusBarracks();
+
+        Core.Logger("All Dage Birthday quests have been completed.");
     }
 
     public void DarkPath()
