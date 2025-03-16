@@ -241,7 +241,7 @@ public class HeadoftheLegionBeast
                 { "Essence of Wrath", EssenceWrath },
                 { "Essence of Violence", EssenceViolence },
                 { "Essence of Treachery", EssenceTreachery },
-                { "Souls of Heresy", amount => SoulsHeresy(amount * 15) } // Adjust Souls of Heresy multiplier
+                { "Souls of Heresy", amount => SoulsHeresy(Math.Min(300, amount * 15)) } // Adjust Souls of Heresy multiplier
             };
 
             foreach (var (item, farmAction) in requiredItems)
@@ -252,7 +252,9 @@ public class HeadoftheLegionBeast
             }
 
             // Buy Penance in the correct quantity
-            Adv.BuyItem("sevencircleswar", 1984, "Penance", targetQuant);
+            // Either buy the Amount of SoH divided by 15, or target quantity, what ever is less
+            Core.BuyItem("sevencircleswar", 1984, "Penance",  targetQuant);
+            // Core.BuyItem("sevencircleswar", 1984, "Penance", Math.Min(Bot.Inventory.GetQuantity("Souls of Heresy") / 15, targetQuant));
             Bot.Wait.ForPickup("Penance");
 
             Core.Sleep(500); // Allow time for inventory update
