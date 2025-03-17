@@ -7360,11 +7360,14 @@ public class CoreBots
     /// <param name="item">The name of the item to check in the inventory.</param>
     /// <param name="MaxStack">The maximum stack size to subtract.</param>
     /// <returns>The updated quantity after adjustment.</returns>
-    public int FarmQuantity(ref int quant, string item, int MaxStack) =>
-        quant -= Math.Min(
-            Bot.Inventory.TryGetItem(item, out InventoryItem Item) ? Item.Quantity : 0,
-            MaxStack
-        );
+    public int FarmQuantity(ref int quant, string item, int MaxStack)
+    {
+        if (Bot.Inventory.TryGetItem(item, out InventoryItem? Item) && Item != null)
+        {
+            quant -= Math.Min(Item.Quantity, MaxStack);
+        }
+        return quant;
+    }
 
     public void PVPKilling(int MonsterMapID = 0)
     {
