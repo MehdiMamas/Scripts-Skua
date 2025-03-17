@@ -227,6 +227,7 @@ public class HeadoftheLegionBeast
         Core.FarmingLogger("Penance", quant);
         Core.EquipClass(ClassType.Farm);
 
+        int LeftToFarm = quant - Bot.Inventory.GetQuantity("Penance");
         while (!Bot.ShouldExit && !Core.CheckInventory("Penance", quant))
         {
             // Farm required materials
@@ -239,22 +240,16 @@ public class HeadoftheLegionBeast
             };
 
             foreach (var (item, farmAction) in requiredItems)
-                farmAction(Math.Min(quant, 300));
+                farmAction(Math.Min(LeftToFarm, 300));
 
-            // Check inventory
-            int currentPenance = Bot.Inventory.GetQuantity("Penance");
-            if (currentPenance >= quant)
-                break;
 
-            // Determine the amount of "Penance" we can buy (full multiples of 15)
-            int sohCount = Bot.Inventory.GetQuantity("Souls of Heresy");
-
-            Core.BuyItem("sevencircleswar", 1984, "Penance", Math.Max(quant, sohCount / 15));
+            // Check if SohCount (quant * 15) is greater then 300 (max stack of souls of heresy), if so then do sohcount / 15 (300 [soh max stack] / 15 = 20), else do quant
+            Core.BuyItem("sevencircleswar", 1984, "Penance", LeftToFarm * 15 > 300 ? Bot.Inventory.GetQuantity("Souls of Heresy") / 15 : LeftToFarm);
             Bot.Wait.ForPickup("Penance");
             if (Core.CheckInventory("Penance", quant))
                 break;
 
-            Core.Sleep(500);
+            Core.Sleep(1000);
         }
     }
 

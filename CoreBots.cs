@@ -1209,7 +1209,6 @@ public class CoreBots
     public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, bool Log = true)
     {
         _CheckInventorySpace();
-
         ShopItem? item = parseShopItem(GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.Name.ToLower() == itemName.ToLower() : x.ShopItemID == shopItemID).ToList(), shopID, itemName, shopItemID);
         _BuyItem(map, shopID, item, quant, Log);
     }
@@ -1257,9 +1256,18 @@ public class CoreBots
     public void _BuyItem(string map, int shopID, ShopItem? item, int quant, bool Log = true)
     {
         #region IgnoreMe
+        // Set potentialy buy breaking options to false
+        Bot.Options.AggroAllMonsters = false;
+        Bot.Options.AggroMonsters = false;
+        Bot.Options.AttackWithoutTarget = false;
+
         int buy_quant;
+        int StaticQuant = quant;
+        // This process will return early if the materials run out (hopefully) - from `_CalcBuyQuantity`'s calculations. [Line 1695]
         if (item == null || (buy_quant = _CalcBuyQuantity(item, quant)) <= 0 || !_canBuy(shopID, item, quant))
+        {
             return;
+        }
 
         if (Bot.Map.Name != map)
         {
@@ -1315,24 +1323,24 @@ public class CoreBots
 
         Bot.Events.ExtensionPacketReceived -= RelogRequieredListener;
 
-        if (CheckInventory(item.ID, buy_quant))
+        if (CheckInventory(item.ID, StaticQuant))
         {
             if (Log)
-                Logger($"Bought {(buy_quant == 302500 ? 1 : buy_quant)} {item.Name}, now at {Bot.Inventory.GetQuantity(item.ID)}/{quant} {item.Name}", "BuyItem");
+                Logger($"Bought {(buy_quant == 302500 ? 1 : buy_quant)} {item.Name}", "BuyItem");
         }
         else
         {
             if (retrys < 5)
             {
-                Logger($"Failed at buying {(buy_quant == 302500 ? 1 : buy_quant)}/{quant} {item.Name}, retrying: x{retrys}", "BuyItem");
+                Logger($"Failed at buying {(buy_quant == 302500 ? 1 : buy_quant)} {item.Name}, retrying: x{retrys}", "BuyItem");
                 retrys++;
                 JumpWait();
-                _BuyItem(map, shopID, item, buy_quant, Log);
+                _BuyItem(map, shopID, item, quant, Log);
             }
             else
             {
                 retrys = 0;
-                Logger($"Failed at buying {(buy_quant == 302500 ? 1 : buy_quant)}/{quant} {item.Name}", "BuyItem");
+                Logger($"Failed at buying {(buy_quant == 302500 ? 1 : buy_quant)} {item.Name}", "BuyItem");
             }
         }
 
@@ -1462,9 +1470,9 @@ public class CoreBots
                     {
                         if (CheckInventory(req.ID))
                         {
-                            Logger($"Cannot buy {item.Name} from {shopID}.", "CanBuy");
-                            Logger($"You own {Bot.Inventory.GetQuantity(req.ID)}x {req.Name}.", "CanBuy");
-                            Logger($"You need {total_quant}.", "CanBuy");
+                            Logger($"Cannot buy {req.Name} from {shopID}.\n" +
+                            $"You own {Bot.Inventory.GetQuantity(req.ID)}x {req.Name}.\n" +
+                            $"You need {total_quant}.", "CanBuy");
 
                             return false;
                         }
@@ -1619,6 +1627,56 @@ public class CoreBots
         }
     }
 
+    // private int _CalcBuyQuantity(ShopItem item, int requestedAmount)
+    // {
+    //     if (requestedAmount > item.MaxStack)
+    //     {
+    //         Logger($"Requested {requestedAmount}, but max stack for {item.Name} is {item.MaxStack}. Fix the calling script.", "BuyItem");
+    //         Bot.Stop(true);
+    //     }
+
+    //     int itemStackSize = item.Quantity;
+    //     int currentStock = Bot.Inventory.GetQuantity(item.ID);
+    //     int neededAmount = requestedAmount;
+    //     Logger($"itemStackSize: {itemStackSize}");
+    //     Logger($"requestedAmount: {requestedAmount}");
+    //     Logger($"neededAmount: {neededAmount}");
+
+    //     if (CheckInventory(item.ID, requestedAmount))
+    //     {
+    //         Logger($"Already have enough of {item.Name} ({currentStock}/{requestedAmount}).");
+    //         return 0;
+    //     }
+
+    //     // Round up to the nearest multiple of itemStackSize
+    //     int buyAmount = (int)Math.Ceiling((double)neededAmount / itemStackSize) * itemStackSize;
+
+    //     // Ensure buyAmount does not exceed MaxStack
+    //     int maxCanBuy = item.MaxStack - currentStock;
+    //     buyAmount = Math.Min(buyAmount, maxCanBuy - (maxCanBuy % itemStackSize)); // Adjust to nearest valid multiple
+
+    //     // If we still can't reach the requested amount, sell extra to make space
+    //     if (buyAmount < neededAmount)
+    //     {
+    //         int excess = (currentStock + buyAmount) % itemStackSize;
+    //         if (excess > 0)
+    //         {
+    //             Logger($"Selling {excess} {item.Name} to fit a proper stack.");
+    //             SellItem(item.Name, excess);
+    //             buyAmount += excess; // Now we can buy the exact amount
+    //         }
+    //     }
+
+    //     if (buyAmount <= 0)
+    //     {
+    //         Logger($"Cannot buy more {item.Name}, max stack reached ({currentStock}/{item.MaxStack}).");
+    //         return 0;
+    //     }
+
+    //     Logger($"Final purchase amount for {item.Name}: {buyAmount}");
+    //     return buyAmount;
+    // }
+
     private int _CalcBuyQuantity(ShopItem item, int requestedAmount)
     {
         if (requestedAmount > item.MaxStack)
@@ -1629,43 +1687,46 @@ public class CoreBots
 
         int itemStackSize = item.Quantity;
         int currentStock = Bot.Inventory.GetQuantity(item.ID);
-        int neededAmount = requestedAmount - currentStock;
+        // int neededAmount = requestedAmount - currentStock; // Calculate how much more is needed
 
-        if (neededAmount <= 0)
+        // Check if all requirements are met before proceeding
+        foreach (var req in item.Requirements)
         {
-            Logger($"Already have enough of {item.Name} ({currentStock}/{requestedAmount}).");
-            return 0;
-        }
+            int totalNeeded = (requestedAmount / itemStackSize) * req.Quantity;  // Adjust required amount for stack size
+            int reqCurrent = Bot.Inventory.GetQuantity(req.ID);
 
-        // Round up to the nearest multiple of itemStackSize
-        int buyAmount = (int)Math.Ceiling((double)neededAmount / itemStackSize) * itemStackSize;
-
-        // Ensure buyAmount does not exceed MaxStack
-        int maxCanBuy = item.MaxStack - currentStock;
-        buyAmount = Math.Min(buyAmount, maxCanBuy - (maxCanBuy % itemStackSize)); // Adjust to nearest valid multiple
-
-        // If we still can't reach the requested amount, sell extra to make space
-        if (buyAmount < neededAmount)
-        {
-            int excess = (currentStock + buyAmount) % itemStackSize;
-            if (excess > 0)
+            if (reqCurrent < totalNeeded)
             {
-                Logger($"Selling {excess} {item.Name} to fit a proper stack.");
-                SellItem(item.Name, excess);
-                buyAmount += excess; // Now we can buy the exact amount
+                Logger($"Missing {req.Name} ({reqCurrent}/{totalNeeded}). Cannot proceed with purchase.");
+                return 0; // Stop the buy process if requirements are not met
             }
         }
+
+        // Calculate the buy amount, ensuring we don’t exceed the required total
+        int buyAmount = (int)Math.Ceiling((double)requestedAmount / itemStackSize) * itemStackSize;
+
+        // Ensure buyAmount does not exceed the maximum stack
+        int maxCanBuy = item.MaxStack - currentStock;
+        buyAmount = Math.Min(buyAmount, maxCanBuy - (maxCanBuy % itemStackSize)); // Round to nearest valid stack size
+
+
+
+        // Ensure that the total bought amount matches the requestedAmount
+        if (buyAmount + currentStock > requestedAmount)
+        {
+            buyAmount = (int)Math.Ceiling((double)requestedAmount / itemStackSize) * itemStackSize;
+        }
+
 
         if (buyAmount <= 0)
         {
             Logger($"Cannot buy more {item.Name}, max stack reached ({currentStock}/{item.MaxStack}).");
-            return 0;
+            return 0; // Stop if no further items can be bought
         }
 
         Logger($"Final purchase amount for {item.Name}: {buyAmount}");
         return buyAmount;
     }
-
 
     public int PointsToLevel(int points) => RepCPLevel.First(kvp => points <= kvp.Value).Key;
 
