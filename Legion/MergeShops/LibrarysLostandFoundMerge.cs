@@ -1,7 +1,7 @@
 /*
 name: Librarys Lost and Found Merge
 description: This bot will farm the items belonging to the selected mode for the Librarys Lost and Found Merge [2563] in /legionlibrary
-tags: librarys, lost, and, found, merge, legionlibrary, argus, panoptes, phlegethon, magma, lava, legion, loremaster, tome, lorekeeper, veil
+tags: librarys, lost, and, found, merge, legionlibrary, argus, panoptes, phlegethon, magma, lava, legion, loremaster, tome, lorekeeper, veil, strategy, table, study, underworld
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -28,7 +28,7 @@ public class LibrarysLostandFoundMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Argus' Iris", "Underworld Linen", "River Glowstone" });
+        Core.BankingBlackList.AddRange(new[] { "Argus' Iris", "Underworld Linen", "River Glowstone", "Teacup Mace" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -72,6 +72,11 @@ public class LibrarysLostandFoundMerge
                     Glowstone(quant);
                     break;
 
+                case "Teacup Mace":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.HuntMonster("junkhoard", "Junk Golem", req.Name, quant, false, false);
+                    break;
             }
         }
     }
@@ -135,5 +140,9 @@ public class LibrarysLostandFoundMerge
         new Option<bool>("92304", "Legion Lorekeeper Veil", "Mode: [select] only\nShould the bot buy \"Legion Lorekeeper Veil\" ?", false),
         new Option<bool>("92303", "Legion Loremaster Veil", "Mode: [select] only\nShould the bot buy \"Legion Loremaster Veil\" ?", false),
         new Option<bool>("92302", "Legion Loremaster", "Mode: [select] only\nShould the bot buy \"Legion Loremaster\" ?", false),
+        new Option<bool>("92408", "Legion Strategy Table", "Mode: [select] only\nShould the bot buy \"Legion Strategy Table\" ?", false),
+        new Option<bool>("92407", "Legion Study Table", "Mode: [select] only\nShould the bot buy \"Legion Study Table\" ?", false),
+        new Option<bool>("92470", "Underworld Lorekeeper", "Mode: [select] only\nShould the bot buy \"Underworld Lorekeeper\" ?", false),
+        new Option<bool>("92471", "Underworld Lorekeeper Veil", "Mode: [select] only\nShould the bot buy \"Underworld Lorekeeper Veil\" ?", false),
     };
 }
