@@ -65,18 +65,20 @@ public class Butler2
             Bot.Options.RejectAllDrops = true;
         }
 
-        string drops = Bot.Config.Get<string>("Drops");
+
+
+        string? drops = Bot.Config.Get<string>("Drops") ?? string.Empty;
         if (!string.IsNullOrEmpty(drops))
             Core.AddDrop(drops.Split(',', StringSplitOptions.TrimEntries)
                               .Where(s => !string.IsNullOrEmpty(s))
                               .ToArray());
 
-        string attackPriority = Bot.Config.Get<string>("attackPriority");
+        string? attackPriority = Bot.Config.Get<string>("attackPriority") ?? string.Empty;
         if (!string.IsNullOrEmpty(attackPriority))
             Army._attackPriority.AddRange(attackPriority.Split(',', StringSplitOptions.TrimEntries)
                                                         .Where(s => !string.IsNullOrEmpty(s)));
 
-        string quests = Bot.Config.Get<string>("Quests");
+        string? quests = Bot.Config.Get<string>("Quests") ?? string.Empty;
         if (!string.IsNullOrEmpty(quests))
             Core.RegisterQuests(quests.Split(',', StringSplitOptions.TrimEntries)
                                       .Where(s => !string.IsNullOrEmpty(s))
