@@ -27,7 +27,7 @@ public class CoreIsleOfFotia
         UnderRealm();
         Styx();
         Judgement();
-        DageFortress();
+        DageFortress(!Core.CheckInventory("Palace Map"));
     }
 
 
@@ -201,7 +201,10 @@ public class CoreIsleOfFotia
 
     public void DageFortress(bool map = false)
     {
-        if (Core.isCompletedBefore(4258) || (map && Core.CheckInventory("Palace Map")))
+        if (map && Core.CheckInventory("Palace Map"))
+            return;
+
+        if (Core.isCompletedBefore(4258))
             return;
 
         Judgement();
@@ -220,7 +223,7 @@ public class CoreIsleOfFotia
             CompassStone();
 
         //Create the Dark Fortress Map 4255
-        if (!Story.QuestProgression(4255) || (map && !Core.CheckInventory("Palace Map")))
+        if (map && !Core.CheckInventory("Palace Map") || !Story.QuestProgression(4255))
         {
             if (!map)
                 Core.EnsureAccept(4255);
@@ -230,7 +233,6 @@ public class CoreIsleOfFotia
                 return;
             Core.EnsureComplete(4255);
         }
-        ;
 
         //Quest for the Room of Rune-ation 4256
         Story.MapItemQuest(4256, "DageFortress", 3404);
@@ -238,53 +240,6 @@ public class CoreIsleOfFotia
         //Defeat the Underworld Guardian 4258
         Story.KillQuest(4258, "DageFortress", "Grrrberus");
 
-
-        void CompassStone()
-        {
-            if (Core.CheckInventory("Compass Stone"))
-                return;
-
-            Core.AddDrop("Compass Stone");
-            Core.EnsureAccept(4251);
-            Core.KillMonster("DageFortress", "r2", "Bottom", "Scorned Knight", "Compass Stone Piece Found");
-            Core.GetMapItem(3405, 4, "DageFortress");
-            Core.EnsureComplete(4251);
-        }
-
-        void PalaceMap()
-        {
-            if (Core.CheckInventory("Palace Map"))
-                return;
-
-            string[] MapPieces = { "Left Map Piece", "Right Map Piece", "Center Map Piece" };
-            Core.AddDrop(MapPieces);
-
-            if (!Core.CheckInventory("Left Map Piece"))
-            {
-                //The First Map Piece 4252
-                Core.EnsureAccept(4252);
-                Core.HuntMonster("DageFortress", "Scorned Knight", "Map Fragment");
-                Core.EnsureComplete(4252);
-                Bot.Wait.ForPickup("Left Map Piece");
-            }
-            if (!Core.CheckInventory("Right Map Piece"))
-            {
-                //The Second Map Piece 4253
-                Core.EnsureAccept(4253);
-                Core.HuntMonster("DageFortress", "Twisted Warrior", "Map Fragment", 3);
-                Core.EnsureComplete(4253);
-                Bot.Wait.ForPickup("Right Map Piece");
-            }
-            if (!Core.CheckInventory("Center Map Piece"))
-            {
-                //The Final Map Piece 4254
-                Core.EnsureAccept(4254);
-                Core.HuntMonster("DageFortress", "Leeched Legend", "Map Fragment", 5);
-                Core.EnsureComplete(4254);
-                Bot.Wait.ForPickup("Center Map Piece");
-            }
-            Core.BuyItem("DageFortress", 1144, "Palace Map");
-        }
     }
 
     public void FlowerPower(string? item = null, int quant = 1, bool isTemp = false)
@@ -318,6 +273,53 @@ public class CoreIsleOfFotia
         }
 
         Core.EnsureComplete(3036);
+    }
+
+    void CompassStone()
+    {
+        if (Core.CheckInventory("Compass Stone"))
+            return;
+
+        Core.AddDrop("Compass Stone");
+        Core.EnsureAccept(4251);
+        Core.KillMonster("DageFortress", "r2", "Bottom", "Scorned Knight", "Compass Stone Piece Found");
+        Core.GetMapItem(3405, 4, "DageFortress");
+        Core.EnsureComplete(4251);
+    }
+
+    void PalaceMap()
+    {
+        if (Core.CheckInventory("Palace Map"))
+            return;
+
+        string[] MapPieces = { "Left Map Piece", "Right Map Piece", "Center Map Piece" };
+        Core.AddDrop(MapPieces);
+
+        if (!Core.CheckInventory("Left Map Piece"))
+        {
+            //The First Map Piece 4252
+            Core.EnsureAccept(4252);
+            Core.HuntMonster("DageFortress", "Scorned Knight", "Map Fragment");
+            Core.EnsureComplete(4252);
+            Bot.Wait.ForPickup("Left Map Piece");
+        }
+        if (!Core.CheckInventory("Right Map Piece"))
+        {
+            //The Second Map Piece 4253
+            Core.EnsureAccept(4253);
+            Core.HuntMonster("DageFortress", "Twisted Warrior", "Map Fragment", 3);
+            Core.EnsureComplete(4253);
+            Bot.Wait.ForPickup("Right Map Piece");
+        }
+        if (!Core.CheckInventory("Center Map Piece"))
+        {
+            //The Final Map Piece 4254
+            Core.EnsureAccept(4254);
+            Core.HuntMonster("DageFortress", "Leeched Legend", "Map Fragment", 5);
+            Core.EnsureComplete(4254);
+            Bot.Wait.ForPickup("Center Map Piece");
+        }
+        Core.BuyItem("DageFortress", 1144, "Palace Map");
     }
 
 }
