@@ -79,6 +79,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/DarkonDebris2ReconstructedPrerequisites.cs"
   },
   {
+    "name": "Butler",
+    "description": "This will follow a player and copy their actions and do attack actions.",
+    "tags": [
+      "butler",
+      "follow",
+      "player",
+      "copy",
+      "actions",
+      "attack",
+      "maidr",
+      "auto",
+      "goto"
+    ],
+    "path": "Prototypes/Butler2[WIP].cs",
+    "size": 10274,
+    "fileName": "Butler2[WIP].cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Butler2[WIP].cs"
+  },
+  {
     "name": "Break Into the Hoard Daily",
     "description": "does the quest `break into the hoard` for the rewards",
     "tags": [
@@ -699,7 +718,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 87828,
+    "size": 87826,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/CoreArmyLite.cs"
   },
