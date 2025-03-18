@@ -50,7 +50,7 @@ public class Butler2
         Core.SetOptions(false, disableClassSwap: true);
     }
 
-    public void DoButler(string? playerName)
+    public void DoButler(string? playerName, bool log = false)
     {
         Core.OneTimeMessage("Butler2 [WIP]", "this butler is more stable, but atm only has the follow and attack feature", forcedMessageBox: true);
         if (string.IsNullOrEmpty(playerName))
@@ -83,6 +83,22 @@ public class Butler2
                                       .Select(int.Parse)
                                       .ToArray());
 
+        if (log)
+        { // For Drops (as string array)
+            Core.Logger("drops: " + string.Join(", ", drops.Split(',', StringSplitOptions.TrimEntries)
+                                                          .Where(s => !string.IsNullOrEmpty(s))
+                                                          .ToArray()));
+
+            // For Attack Priority (as string array)
+            Core.Logger("attackPriority: " + string.Join(", ", attackPriority.Split(',', StringSplitOptions.TrimEntries)
+                                                                           .Where(s => !string.IsNullOrEmpty(s))));
+
+            // For Quests (as int array)
+            Core.Logger("quests: " + string.Join(", ", quests.Split(',', StringSplitOptions.TrimEntries)
+                                                            .Where(s => !string.IsNullOrEmpty(s))
+                                                            .Select(int.Parse)
+                                                            .ToArray()));
+        }
 
         Core.EquipClass(Bot.Config!.Get<ClassType>("classType"));
         StartButler(playerName);
@@ -112,9 +128,8 @@ public class Butler2
             #endregion ignore this
 
             // If there's no target, attack
-            if (!string.IsNullOrEmpty(Army._attackPriority[0]))
+            if (Army._attackPriority.Count > 0)
             {
-                Core.DebugLogger(this, "Attack priority lsit isnt empty, attack priority is " + Army._attackPriority);
                 if (!Bot.Combat.StopAttacking)
                     Army.PriorityAttack();
             }
