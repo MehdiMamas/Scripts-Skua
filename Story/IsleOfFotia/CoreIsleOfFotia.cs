@@ -27,7 +27,7 @@ public class CoreIsleOfFotia
         UnderRealm();
         Styx();
         Judgement();
-        DageFortress(!Core.CheckInventory("Palace Map"));
+        DageFortress();
     }
 
 
@@ -204,7 +204,7 @@ public class CoreIsleOfFotia
         if (map && Core.CheckInventory("Palace Map"))
             return;
 
-        if (Core.isCompletedBefore(4258))
+        if (Core.isCompletedBefore(4258) && !map)
             return;
 
         Judgement();
