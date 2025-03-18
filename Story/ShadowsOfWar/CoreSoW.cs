@@ -1169,7 +1169,7 @@ public class CoreSoW
             }
         }
         // If Dodge Class was found, kill Malgor & The Mainyu with it, else use what you have on.
-        else Core.Logger($"No Doge Class found! Good luck killing Malgor & The Mainyu with {Bot.Inventory?.Items?.Where(x => x?.Category == ItemCategory.Class && x.Equipped)?.FirstOrDefault()?.Name}");
+        else Core.Logger($"No Dodge Class found! Good luck killing Malgor & The Mainyu with {Bot.Inventory?.Items?.Where(x => x?.Category == ItemCategory.Class && x.Equipped)?.FirstOrDefault()?.Name}");
 
         // Cognitive Dissonance 9124
         Story.KillQuest(9124, "manacradle", "Malgor");
