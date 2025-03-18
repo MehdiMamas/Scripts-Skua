@@ -8906,10 +8906,14 @@
       "loremaster",
       "tome",
       "lorekeeper",
-      "veil"
+      "veil",
+      "strategy",
+      "table",
+      "study",
+      "underworld"
     ],
     "path": "Legion/MergeShops/LibrarysLostandFoundMerge.cs",
-    "size": 5755,
+    "size": 6631,
     "fileName": "LibrarysLostandFoundMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/LibrarysLostandFoundMerge.cs"
   },
@@ -24759,10 +24763,14 @@
       "ivory",
       "overdriven",
       "evocator",
-      "morph"
+      "morph",
+      "statue",
+      "crusher",
+      "thorny",
+      "skull"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/CocytusBarracksMerge.cs",
-    "size": 9003,
+    "size": 9643,
     "fileName": "CocytusBarracksMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/CocytusBarracksMerge.cs"
   },
