@@ -1726,8 +1726,8 @@ public class CoreArmyLite
     private bool b_doCopyWalk = false;
     private int b_hibernationTimer = 0;
     private bool b_shouldHibernate = true;
-    private List<string> _attackPriority = new();
-    private List<string> _LockedMapsList = new();
+    public List<string> _attackPriority = new();
+    public List<string> _LockedMapsList = new();
 
     // private bool tryGoto(string userName)
     // {
