@@ -65,21 +65,24 @@ public class Butler2
             Bot.Options.RejectAllDrops = true;
         }
 
-        if (!string.IsNullOrEmpty(Bot.Config.Get<string>("Quests")))
-            Core.RegisterQuests(Bot.Config.Get<string>("Quests")
-                .Split(',', StringSplitOptions.TrimEntries)
-                .Select(int.Parse)
-                .ToArray());
+        string drops = Bot.Config.Get<string>("Drops");
+        if (!string.IsNullOrEmpty(drops))
+            Core.AddDrop(drops.Split(',', StringSplitOptions.TrimEntries)
+                              .Where(s => !string.IsNullOrEmpty(s))
+                              .ToArray());
 
-        if (!string.IsNullOrEmpty(Bot.Config.Get<string>("Drops")))
-        {
-            if (Bot.Config!.Get<bool>("rejectDrops"))
-                Bot.Options.RejectAllDrops = false;
-            Core.AddDrop(Bot.Config.Get<string>("Drops").Split(',', StringSplitOptions.TrimEntries));
-        }
+        string attackPriority = Bot.Config.Get<string>("attackPriority");
+        if (!string.IsNullOrEmpty(attackPriority))
+            Army._attackPriority.AddRange(attackPriority.Split(',', StringSplitOptions.TrimEntries)
+                                                        .Where(s => !string.IsNullOrEmpty(s)));
 
-        if (!string.IsNullOrEmpty(Bot.Config.Get<string>("attackPriority")))
-            Army._attackPriority.AddRange(Bot.Config.Get<string>("attackPriority").Split(',', StringSplitOptions.TrimEntries));
+        string quests = Bot.Config.Get<string>("Quests");
+        if (!string.IsNullOrEmpty(quests))
+            Core.RegisterQuests(quests.Split(',', StringSplitOptions.TrimEntries)
+                                      .Where(s => !string.IsNullOrEmpty(s))
+                                      .Select(int.Parse)
+                                      .ToArray());
+
 
         Core.EquipClass(Bot.Config!.Get<ClassType>("classType"));
         StartButler(playerName);
