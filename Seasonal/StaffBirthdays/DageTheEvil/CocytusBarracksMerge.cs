@@ -1,7 +1,7 @@
 /*
 name: Cocytus Barracks Merge
 description: This bot will farm the items belonging to the selected mode for the Cocytus Barracks Merge [2421] in /cocytusbarracks
-tags: cocytus, barracks, merge, cocytusbarracks, penitent, underworld, keeper, tower, bramble, blame, sullied, bangle, shield, acheron, usurper, lord, horns, halo, regalia, phantima, maiden, woe, defiler, ancients, defilers, shielded, ivory, overdriven, evocator, morph
+tags: cocytus, barracks, merge, cocytusbarracks, penitent, underworld, keeper, tower, bramble, blame, sullied, bangle, shield, acheron, usurper, lord, horns, halo, regalia, phantima, maiden, woe, defiler, ancients, defilers, shielded, ivory, overdriven, evocator, morph, statue, crusher, thorny, skull
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -126,5 +126,9 @@ public class CocytusBarracksMerge
         new Option<bool>("84680", "Ivory Defiler of the Ancients", "Mode: [select] only\nShould the bot buy \"Ivory Defiler of the Ancients\" ?", false),
         new Option<bool>("84681", "Ivory Defilers of the Ancients", "Mode: [select] only\nShould the bot buy \"Ivory Defilers of the Ancients\" ?", false),
         new Option<bool>("84676", "Ivory Usurper Lord Horns", "Mode: [select] only\nShould the bot buy \"Ivory Usurper Lord Horns\" ?", false),
+        new Option<bool>("84692", "Penitent Ivory Keeper Helm", "Mode: [select] only\nShould the bot buy \"Penitent Ivory Keeper Helm\" ?", false),
+        new Option<bool>("84690", "Ivory Usurper Lord Statue", "Mode: [select] only\nShould the bot buy \"Ivory Usurper Lord Statue\" ?", false),
+        new Option<bool>("84689", "Crusher of the Ancients Statue", "Mode: [select] only\nShould the bot buy \"Crusher of the Ancients Statue\" ?", false),
+        new Option<bool>("84677", "Thorny Ivory Usurper Lord Skull", "Mode: [select] only\nShould the bot buy \"Thorny Ivory Usurper Lord Skull\" ?", false),
     };
 }
