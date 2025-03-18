@@ -9,6 +9,7 @@ tags: null
 //cs_include Scripts/CoreAdvanced.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Skills;
+using Skua.Core.Models.Items;
 
 public class CoreSoW
 {
@@ -1157,20 +1158,24 @@ public class CoreSoW
         if (Core.CheckInventory(DodgeClasses, any: true))
         {
             Adv.GearStore();
-            Core.DodgeClass();
+            foreach (string CLASS in DodgeClasses)
+            {
+                if (!Core.CheckInventory(CLASS))
+                    continue;
 
-            // Cognitive Dissonance 9124
-            Story.KillQuest(9124, "manacradle", "Malgor");
-            Adv.GearStore(true);
+                Core.Equip(CLASS);
+                break;
 
-            // Your Hero 9125
-            Story.KillQuest(9125, "manacradle", "The Mainyu");
+            }
         }
-        else Core.Logger($"Cant do these last quests\n" +
-        "as they require Yami no Ronin/TimeKeeper\n" +
-        "or a *really good* dodge class... or for you\n" +
-        "todo it manualy with an group/army\n" +
-        "(this quest is required for seavoice story and beyond.)", stopBot: true);
+        // If Dodge Class was found, kill Malgor & The Mainyu with it, else use what you have on.
+        else Core.Logger($"No Doge Class found! Good luck killing Malgor & The Mainyu with {Bot.Inventory?.Items?.Where(x => x?.Category == ItemCategory.Class && x.Equipped)?.FirstOrDefault()?.Name}");
+
+        // Cognitive Dissonance 9124
+        Story.KillQuest(9124, "manacradle", "Malgor");
+
+        // Your Hero 9125
+        Story.KillQuest(9125, "manacradle", "The Mainyu");
 
         Core.ToBank(MainyuDrops.Concat(MalgorDrops).ToArray());
         #region GroupBoss Quest
@@ -1178,5 +1183,6 @@ public class CoreSoW
         // Once Upon Another Time 9126
         // Build Malgor's Armor Set 9127
         #endregion
+        Adv.GearStore(true);
     }
 }
