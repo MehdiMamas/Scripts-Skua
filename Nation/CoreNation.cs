@@ -772,6 +772,12 @@ public class CoreNation
         bool sellMemVoucher = Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher) && _sellMemVoucher == true;
         bool returnPolicyDuringSupplies = Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies == true;
 
+        if (KeepVoucher && sellMemVoucher)
+        {
+            Core.Logger("KeepVoucher is enabled via the script, Overriding Cbo Setting, Voucher of Nulgath will be kept");
+            sellMemVoucher = false; // If KeepVoucher is enabled, don't sell the voucher}
+        }
+
         if (sellMemVoucher == true && Bot.Player.Gold >= 100000000)
         {
             Core.Logger("Gold is capped, no reason to sell Vouchers");
