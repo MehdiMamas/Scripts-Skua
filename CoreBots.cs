@@ -125,8 +125,7 @@ public class CoreBots
             Bot.Events.ScriptStopping += CrashDetector;
             SkuaVersionChecker("1.2.4.0");
 
-            if (File.Exists(ClientFileSources.SkuaScriptsDIR + "/z_CompiledScript.cs"))
-                File.Delete(ClientFileSources.SkuaScriptsDIR + "/z_CompiledScript.cs");
+            DeleteCompiledScript();
 
             loadedBot = Bot.Manager.LoadedScript.Replace("\\", "/").Split("/Scripts/").Last().Replace(".cs", "");
             Logger($"Bot Started [{loadedBot}]");
@@ -8047,6 +8046,55 @@ public class CoreBots
         return files.Length > 0 && files.Any(x => x.Contains("~!") && (x.Split("~!").Last() == (Username().ToLower() + ".txt")));
     }
 
+    public void DeleteCompiledScript()
+    {
+        string filePath = Path.Combine(ClientFileSources.SkuaScriptsDIR ?? string.Empty, "z_CompiledScript.cs");
+
+        // Check if SkuaScriptsDIR is not null and file exists
+        if (ClientFileSources.SkuaScriptsDIR != null && File.Exists(filePath))
+        {
+            try
+            {
+                // Check if the file is empty
+                if (new FileInfo(filePath).Length == 0)
+                {
+                    return; // Skip deletion for empty file
+                }
+
+                // Attempt to delete the file if not empty
+                File.Delete(filePath);
+            }
+            catch (IOException ex)
+            {
+                // Handle errors related to file access (e.g., OneDrive might be syncing the file)
+
+                // Retry deleting the file if it's in use or locked (OneDrive syncing issue)
+                int retryCount = 3;
+                for (int i = 0; i < retryCount; i++)
+                {
+                    try
+                    {
+                        // Wait for a short time before retrying
+                        Thread.Sleep(1000);
+                        File.Delete(filePath);
+                        break;
+                    }
+                    catch (IOException retryEx)
+                    {
+                        if (i == retryCount - 1)
+                        {
+                            Console.WriteLine($"Error deleting file '{filePath}': {retryEx.Message}");
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine("File not found or SkuaScriptsDIR is null.");
+        }
+    }
+
     public void WriteFile(string path, IEnumerable<string> content)
     {
         try
@@ -8754,7 +8802,8 @@ public static class UtilExtensionsS
     {
         if (input == null)
         {
-            if (DebugLog) Console.WriteLine("Input is null, returning an empty string.");
+            if (DebugLog)
+                Console.WriteLine("Input is null, returning an empty string.");
             return string.Empty;
         }
 
