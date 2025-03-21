@@ -1,7 +1,7 @@
 /*
-name: BattleGemsGameGearMerge
-description: Farms "Golden Ticket" in /luck to buy items in the BattleGamesGameGearMerge
-tags: merge, luck, battlegamesgamegear, merge
+name: Battle Gems Game Gear Merge
+description: This bot will farm the items belonging to the selected mode for the Battle Gems Game Gear Merge [844] in /luck
+tags: battle, gems, game, gear, merge, luck, hyena, troll, snowwolf, minoootaur, ninetail, gorillaphant, anubus, deathknight, dimetrodon, werewolf, citrine, poleaxe, ruby, amethyst, sapphire, emerald, artix, bobble, cysero, gravelyn, golden, metal, necro, skull, hunter, explorer, windy
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -99,5 +99,15 @@ public class BattleGemsGameGearMerge
         new Option<bool>("23207", "Amethyst Axe", "Mode: [select] only\nShould the bot buy \"Amethyst Axe\" ?", false),
         new Option<bool>("23208", "Sapphire Axe", "Mode: [select] only\nShould the bot buy \"Sapphire Axe\" ?", false),
         new Option<bool>("23288", "Emerald Axe", "Mode: [select] only\nShould the bot buy \"Emerald Axe\" ?", false),
+        new Option<bool>("92613", "Battle Gems Artix Bobble Helm", "Mode: [select] only\nShould the bot buy \"Battle Gems Artix Bobble Helm\" ?", false),
+        new Option<bool>("92614", "Battle Gems Cysero Bobble Helm", "Mode: [select] only\nShould the bot buy \"Battle Gems Cysero Bobble Helm\" ?", false),
+        new Option<bool>("92615", "Battle Gems Gravelyn Bobble Helm", "Mode: [select] only\nShould the bot buy \"Battle Gems Gravelyn Bobble Helm\" ?", false),
+        new Option<bool>("92616", "Battle Gems Golden Bobble Helm", "Mode: [select] only\nShould the bot buy \"Battle Gems Golden Bobble Helm\" ?", false),
+        new Option<bool>("92617", "Battle Gems Metal Bobble Helm", "Mode: [select] only\nShould the bot buy \"Battle Gems Metal Bobble Helm\" ?", false),
+        new Option<bool>("92618", "Battle Gems Necro Bobble Helm", "Mode: [select] only\nShould the bot buy \"Battle Gems Necro Bobble Helm\" ?", false),
+        new Option<bool>("92619", "Battle Gems Skull Bobble Helm", "Mode: [select] only\nShould the bot buy \"Battle Gems Skull Bobble Helm\" ?", false),
+        new Option<bool>("92620", "Battle Gems Hunter Bobble Helm", "Mode: [select] only\nShould the bot buy \"Battle Gems Hunter Bobble Helm\" ?", false),
+        new Option<bool>("92621", "Battle Gems Explorer Helm", "Mode: [select] only\nShould the bot buy \"Battle Gems Explorer Helm\" ?", false),
+        new Option<bool>("27908", "Battle Gems Windy", "Mode: [select] only\nShould the bot buy \"Battle Gems Windy\" ?", false),
     };
 }
