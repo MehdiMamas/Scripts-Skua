@@ -33,14 +33,15 @@ public class AbyssalAngelsShadow
     {
         if (Core.CheckInventory("Abyssal Angel Shadow"))
             return;
-        if (!Core.CheckInventory("Abyssal Angel"))
+
+        if (!Core.CheckInventory(34584))
         {
-            Core.Logger($"This bot requires \"Abyssal Angel\", stopping the bot");
+            Core.Logger($"This bot requires \"Abyssal Angel [34584]\", stopping the bot");
             return;
         }
 
         Adv.RankUpClass("Abyssal Angel");
-        Core.BuyItem("curio", 1245, "Abyssal Angel Shadow");
+        Core.BuyItem("curio", 1657, "Abyssal Angel Shadow");
 
         if (rankUpClass)
             Adv.RankUpClass("Abyssal Angel Shadow");
