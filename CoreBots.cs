@@ -3259,8 +3259,17 @@ public class CoreBots
             Bot.Wait.ForMapLoad(map);
         }
 
-        if (!Bot.Map.Cells.Any(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)))
-            cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell;
+        // Normalize the input cell string to handle variations and trim spaces
+        cell = cell.Trim().Normalize(NormalizationForm.FormC);
+
+        // Check if the normalized input matches any cell (case-insensitive and handles all variations)
+        var matchingCell = Bot.Map.Cells
+            .FirstOrDefault(c => c.Trim().Normalize(NormalizationForm.FormC)
+                                 .Equals(cell, StringComparison.InvariantCultureIgnoreCase));
+
+        // If no match, fall back to the original
+        cell = matchingCell ?? cell;
+
         pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
 
         if (Bot.Player.Cell != cell)
@@ -3294,7 +3303,7 @@ public class CoreBots
                 .Where(x => x != null && x.Cell == cell && x.Name.FormatForCompare() == monster.FormatForCompare())
                 .ToList() ?? Bot.Monsters.MapMonsters.Where(x => x != null && x.Cell == Bot.Player.Cell).ToList();
         }
-
+        
         Bot.Options.AggroAllMonsters = false;
         //fuck it lets test it.
         if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
