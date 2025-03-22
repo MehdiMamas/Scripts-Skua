@@ -32,6 +32,8 @@ tags: story, quest, complete, all
 
 //cs_include Scripts/Legion/CoreLegion.cs
 //cs_include Scripts/Story/Legion/DageTheEvilIsland/CoreDageTheEvilIsland.cs
+//cs_include Scripts/Story/Legion/AtlasKingdom.cs
+//cs_include Scripts/Story/Legion/AtlasPromenade.cs
 //cs_include Scripts/Story/Legion/DageChallengeStory.cs
 //cs_include Scripts/Story/Legion/DarkWarLegionandNation.cs
 //cs_include Scripts/Story/Legion/Ravenscar.cs
@@ -242,6 +244,8 @@ public class AllStories
 
     // Legion
     public CoreDageTheEvilIsland DageIsland = new();
+    public AtlasKingdom AtlasKingdom = new();
+    public AtlasPromenade AtlasPromenade = new();
     public DageChallengeStory DageChallengeStory = new();
     public DarkWarLegionandNation DarkWar = new();
     public Ravenscar Ravenscar = new();
@@ -508,6 +512,12 @@ public class AllStories
         DageIsland.CompleteDageTheEvilIslandStory();
         Core.Logger($"Saga: DageTheEvil island Maps - Complete");
         #endregion
+
+        AtlasKingdom.Storyline();
+        Core.Logger($"Story: Atlas Kingdom - Complete");
+
+        AtlasPromenade.Storyline();
+        Core.Logger($"Story: Atlas Promenade - Complete");
 
         DageChallengeStory.DageChallengeQuests();
         Core.Logger($"Story: Dage Challenge - Complete");
