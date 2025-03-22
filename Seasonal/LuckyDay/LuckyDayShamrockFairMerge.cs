@@ -39,7 +39,7 @@ public class LuckyDayShamrockFairMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null, int ShopItemID = new())
     {
-        if (!Core.isSeasonalMapActive("rainbow"))
+        if (!Core.isSeasonalMapActive("rainbow") || !Core.isSeasonalMapActive("luck"))
             return;
 
         //Only edit the map and shopID here
@@ -77,19 +77,34 @@ public class LuckyDayShamrockFairMerge
                     break;
 
                 case "Lucky Clover":
+                    if (!Daily.CheckDailyv2(Core.CheckInventory(971) ? 1761 : 1759))
+                    {
+                        Core.Logger($"Lucky Clover Daily unavailable {Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x?.ID == 971)?.Quantity ?? 0}/{quant}");
+                        return;
+                    }
+
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    while (!Bot.ShouldExit && Daily.CheckDailyv2(Core.CheckInventory(971) ? 1761 : 1759) && !Core.CheckInventory(req.Name, quant))
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(Core.CheckInventory(971) ? 1761 : 1759);
                         Core.HuntMonster("rainbow", "Lucky Harms", "Clover Leaves");
                         Core.EnsureComplete(Core.CheckInventory(971) ? 1761 : 1759);
                         Bot.Wait.ForPickup(req.Name);
+
+                        if (!Daily.CheckDailyv2(Core.CheckInventory(971) ? 1761 : 1759))
+                        {
+                            Core.Logger($"Lucky Clover Daily unavailable {Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x?.ID == 971)?.Quantity ?? 0}/{quant}");
+                            break;
+                        }
                     }
                     Core.CancelRegisteredQuests();
-                    
+
                     if (!Core.CheckInventory(req.Name, quant))
-                        Core.Logger($"not enough {req.Name}");
+                    {
+                        Core.Logger($"not enough {req.Name}. Run this again tomarrow!");
+                        break;
+                    }
                     break;
 
                 case "Rainbow Shard":
