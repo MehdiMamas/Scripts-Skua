@@ -90,7 +90,7 @@ public class LuckyDayShamrockFairMerge
                         if (!Daily.CheckDailyv2(Core.CheckInventory(971) ? 1761 : 1759))
                         {
                             Core.Logger($"Lucky Clover Daily unavailable {Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x?.ID == 971)?.Quantity ?? 0}/{quant}. Run this again tomarrow!");
-                            break;
+                            return;
                         }
 
                         Core.EnsureAccept(Core.CheckInventory(971) ? 1761 : 1759);

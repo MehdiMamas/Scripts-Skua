@@ -175,7 +175,9 @@ public class CoreAdvanced
                     // Else continue when the req.name isnt in the shop.
                     else
                     {
-                        Core.Logger($"Failed to find shop item: \"{req.Name} [{req.ID}]\" in [{Bot.Shops.ID} | {Bot.Shops.Name}] (its probably a Mob Drop)", stopBot: true);
+                        Core.Logger($"Failed to find shop item: \"{req.Name} [{req.ID}]\" in ({Bot.Shops.Name} [{Bot.Shops.ID}].)\n"
+                        + $"Its either a `mob drop` or a `daily`.\n"
+                        + $"Check the Wiki: http://aqwwiki.wikidot.com/search:main/fullname/{req.Name}.");
                         continue;
                     }
                 }
