@@ -87,16 +87,16 @@ public class LuckyDayShamrockFairMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
+                        if (!Daily.CheckDailyv2(Core.CheckInventory(971) ? 1761 : 1759))
+                        {
+                            Core.Logger($"Lucky Clover Daily unavailable {Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x?.ID == 971)?.Quantity ?? 0}/{quant}. Run this again tomarrow!");
+                            break;
+                        }
+
                         Core.EnsureAccept(Core.CheckInventory(971) ? 1761 : 1759);
                         Core.HuntMonster("rainbow", "Lucky Harms", "Clover Leaves");
                         Core.EnsureComplete(Core.CheckInventory(971) ? 1761 : 1759);
                         Bot.Wait.ForPickup(req.Name);
-
-                        if (!Daily.CheckDailyv2(Core.CheckInventory(971) ? 1761 : 1759))
-                        {
-                            Core.Logger($"Lucky Clover Daily unavailable {Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x?.ID == 971)?.Quantity ?? 0}/{quant}");
-                            break;
-                        }
                     }
                     Core.CancelRegisteredQuests();
 
