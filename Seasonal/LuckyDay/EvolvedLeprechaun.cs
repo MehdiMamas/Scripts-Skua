@@ -16,6 +16,7 @@ public class EvolvedLeprechaun
     private CoreBots Core => CoreBots.Instance;
     private CoreAdvanced Adv = new();
     private LuckyDayShamrockFairMerge LDSFM = new();
+    public CoreDailies Daily = new();
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -27,7 +28,7 @@ public class EvolvedLeprechaun
 
     public void GetClass(bool rankUpClass = true)
     {
-        if (Core.CheckInventory("Evolved Leprechaun") || !Core.isSeasonalMapActive("luck"))
+        if (Core.CheckInventory("Evolved Leprechaun") || Core.CheckInventory("Evolved Leprechaun") && !Daily.CheckDailyv2(Core.CheckInventory(971) ? 1761 : 1759) || !Core.isSeasonalMapActive("luck"))
         {
             Core.Logger(Core.CheckInventory("Evolved Leprechaun") ? "You already own Evolved Leprechaun class." : "This class is only available during the Good Luck Day event.");
             return;
