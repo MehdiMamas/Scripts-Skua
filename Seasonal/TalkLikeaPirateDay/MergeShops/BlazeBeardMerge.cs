@@ -42,6 +42,9 @@ public class BlazeBeardMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        if (!Core.isSeasonalMapActive("Blazebeard"))
+            return;
+            
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("blazebeard", 108, findIngredients, buyOnlyThis, buyMode: buyMode);
 
