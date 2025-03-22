@@ -8064,7 +8064,7 @@ public class CoreBots
                 // Attempt to delete the file if not empty
                 File.Delete(filePath);
             }
-            catch (IOException ex)
+            catch (IOException)
             {
                 // Handle errors related to file access (e.g., OneDrive might be syncing the file)
 
