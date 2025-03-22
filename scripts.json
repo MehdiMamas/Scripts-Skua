@@ -8776,6 +8776,47 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/SevenCirclesWarMerge.cs"
   },
   {
+    "name": "Atlas Dowry Treasury Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Atlas Dowry Treasury Merge [2565] in /atlaskingdom",
+    "tags": [
+      "atlas",
+      "dowry",
+      "treasury",
+      "merge",
+      "atlaskingdom",
+      "spell",
+      "book",
+      "light",
+      "mage",
+      "morph",
+      "wedding",
+      "attire",
+      "bell",
+      "rose",
+      "bush",
+      "arch",
+      "matrimony",
+      "pact",
+      "dias",
+      "souledge",
+      "armblades",
+      "armblade",
+      "shuriken",
+      "shadow",
+      "soulblades",
+      "soulblade",
+      "sheath",
+      "sheathed",
+      "master",
+      "shadows",
+      "veil"
+    ],
+    "path": "Legion/MergeShops/AtlasDowryTreasuryMerge.cs",
+    "size": 7733,
+    "fileName": "AtlasDowryTreasuryMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/AtlasDowryTreasuryMerge.cs"
+  },
+  {
     "name": "Lich Kings Bounty Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Lich Kings Bounty Merge [1658] in /frozenlair",
     "tags": [
@@ -15653,6 +15694,26 @@
     "size": 1767,
     "fileName": "WorldSoul.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Legion/WorldSoul.cs"
+  },
+  {
+    "name": "Atlas Kingdom Story",
+    "description": "This will finish General Slaine's questline in /atlaskingdom.",
+    "tags": [
+      "story",
+      "quest",
+      "legion",
+      "dage",
+      "atlas",
+      "kingdom",
+      "atlas-kingdom",
+      "general slaine",
+      "slaine",
+      "atlaskingdom"
+    ],
+    "path": "Story/Legion/AtlasKingdom.cs",
+    "size": 3145,
+    "fileName": "AtlasKingdom.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Legion/AtlasKingdom.cs"
   },
   {
     "name": "Seraphic War",
