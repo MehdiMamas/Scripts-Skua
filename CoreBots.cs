@@ -8048,50 +8048,36 @@ public class CoreBots
 
     public void DeleteCompiledScript()
     {
-        string filePath = Path.Combine(ClientFileSources.SkuaScriptsDIR ?? string.Empty, "z_CompiledScript.cs");
+        string? scriptDir = ClientFileSources.SkuaScriptsDIR;
+        if (string.IsNullOrEmpty(scriptDir))
+            return;
 
-        // Check if SkuaScriptsDIR is not null and file exists
-        if (ClientFileSources.SkuaScriptsDIR != null && File.Exists(filePath))
+        string filePath = Path.Combine(scriptDir, "z_CompiledScript.cs");
+        if (!File.Exists(filePath) || new FileInfo(filePath).Length == 0)
+            return; // Skip deletion if file doesn't exist or is empty
+
+        try
         {
-            try
-            {
-                // Check if the file is empty
-                if (new FileInfo(filePath).Length == 0)
-                {
-                    return; // Skip deletion for empty file
-                }
-
-                // Attempt to delete the file if not empty
-                File.Delete(filePath);
-            }
-            catch (IOException)
-            {
-                // Handle errors related to file access (e.g., OneDrive might be syncing the file)
-
-                // Retry deleting the file if it's in use or locked (OneDrive syncing issue)
-                int retryCount = 3;
-                for (int i = 0; i < retryCount; i++)
-                {
-                    try
-                    {
-                        // Wait for a short time before retrying
-                        Thread.Sleep(1000);
-                        File.Delete(filePath);
-                        break;
-                    }
-                    catch (IOException retryEx)
-                    {
-                        if (i == retryCount - 1)
-                        {
-                            Console.WriteLine($"Error deleting file '{filePath}': {retryEx.Message}");
-                        }
-                    }
-                }
-            }
+            File.Delete(filePath);
         }
-        else
+        catch (IOException)
         {
-            Console.WriteLine("File not found or SkuaScriptsDIR is null.");
+            // Retry deleting the file if it's locked (e.g., OneDrive syncing)
+            const int retryCount = 3;
+            for (int i = 0; i < retryCount; i++)
+            {
+                Bot.Sleep(1000); // Wait before retrying
+                try
+                {
+                    File.Delete(filePath);
+                    return;
+                }
+                catch (IOException)
+                {
+                    if (i == retryCount - 1)
+                        Bot.Log($"Error deleting '{filePath}'. Please pause or quit OneDrive from the bottom right, and try again.");
+                }
+            }
         }
     }
 
