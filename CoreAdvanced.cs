@@ -178,7 +178,7 @@ public class CoreAdvanced
                         Core.Logger($"Failed to find shop item: \"{req.Name} [{req.ID}]\" in ({Bot.Shops.Name} [{Bot.Shops.ID}].)\n"
                         + $"Its either a `mob drop` or a `daily`.\n"
                         + $"Check the Wiki: http://aqwwiki.wikidot.com/search:main/fullname/{req.Name}.");
-                        continue;
+                        return;
                     }
                 }
             }
