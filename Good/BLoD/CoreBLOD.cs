@@ -185,7 +185,7 @@ public class CoreBLOD
         while (!Bot.ShouldExit && !Core.CheckInventory("Loyal Spirit Orb", quant))
         {
             Core.FarmingLogger("Loyal Spirit Orb", quant);
-            SpiritOrb(100 * (quant - (Bot.Inventory.Items.FirstOrDefault(x => x.Name == "Loyal Spirit Orb")?.Quantity ?? 0)));
+            SpiritOrb(100 * quant);
             LightMerge("Loyal Spirit Orb", quant);
         }
     }
@@ -204,7 +204,7 @@ public class CoreBLOD
         while (!Bot.ShouldExit && !Core.CheckInventory("Bright Aura", quant))
         {
             Core.FarmingLogger("Bright Aura", quant);
-            LoyalSpiritOrb(50 * (quant - (Bot.Inventory.Items.FirstOrDefault(x => x.Name == "Bright Aura")?.Quantity ?? 0)));
+            LoyalSpiritOrb(50 * quant);
 
             LightMerge("Bright Aura", quant);
         }
@@ -221,7 +221,7 @@ public class CoreBLOD
         while (!Bot.ShouldExit && !Core.CheckInventory("Brilliant Aura", quant))
         {
             Core.FarmingLogger("Brilliant Aura", quant);
-            BrightAura(25 * (quant - (Bot.Inventory.Items.FirstOrDefault(x => x.Name == "Brilliant Aura")?.Quantity ?? 0)));
+            BrightAura(25 * quant);
             LightMerge("Brilliant Aura", quant);
         }
     }
@@ -548,7 +548,8 @@ public class CoreBLOD
                 upgradeMetalQuest = 2109;
                 forgeKeyQuest = 2135;
                 break;
-        };
+        }
+        ;
         if (Core.CheckInventory(fullMetalName))
             return;
 
