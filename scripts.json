@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 351148,
+    "size": 351203,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -4441,7 +4441,7 @@
       "bow"
     ],
     "path": "Seasonal/LuckyDay/LuckyDayShamrockFairMerge.cs",
-    "size": 14601,
+    "size": 14304,
     "fileName": "LuckyDayShamrockFairMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/LuckyDay/LuckyDayShamrockFairMerge.cs"
   },
@@ -19544,7 +19544,7 @@
       "null"
     ],
     "path": "Other/MergeShops/3LittleWolvesHousesMerge.cs",
-    "size": 10277,
+    "size": 8950,
     "fileName": "3LittleWolvesHousesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/3LittleWolvesHousesMerge.cs"
   },
