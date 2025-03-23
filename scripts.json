@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 139358,
+    "size": 135926,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -11114,7 +11114,7 @@
       "reputation"
     ],
     "path": "Farm/REP/SkyguardREP[Mem].cs",
-    "size": 692,
+    "size": 605,
     "fileName": "SkyguardREP[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/SkyguardREP[Mem].cs"
   },
