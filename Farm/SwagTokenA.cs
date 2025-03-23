@@ -22,8 +22,6 @@ public class SwagTokenA
 
     public void GetToken()
     {
-        if (Core.IsMember)
-            Farm.SwagTokenA();
-        else Farm.SwagTokenAF2p(); 
+        Farm.SwagTokenA();
     }
 }
