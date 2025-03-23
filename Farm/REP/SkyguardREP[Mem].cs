@@ -16,9 +16,7 @@ public class SkyguardREP
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
-
-        //Adv.BestGear(GenericGearBoost.dmgAll);
-        //Adv.BestGear(GenericGearBoost.rep);
+        
         Farm.SkyguardREP();
 
         Core.SetOptions(false);

@@ -3455,191 +3455,147 @@ public class CoreFarms
 
     public void SwagTokenA(int quant = 100)
     {
+        // Check if we already have the required amount of Token A or not
         if (Core.CheckInventory("Super-Fan Swag Token A", quant))
+        {
             return;
-        Core.Logger("Swag Token A [Members]");
-        Core.AddDrop("Super-Fan Swag Token A", "Super-Fan Swag Token B", "Super-Fan Swag Token C");
-        Core.EquipClass(ClassType.Farm);
-        Core.RegisterQuests(1310, 1312, 1313, 1314);
-        Core.FarmingLogger($"Super-Fan Swag Token A", quant);
+        }
 
+        Core.FarmingLogger("Swag Token A", quant);
+        Core.AddDrop("Super-Fan Swag Token A", "Super-Fan Swag Token B", "Super-Fan Swag Token C");
+        if (!Core.IsMember)
+            Core.AddDrop("Super-Fan Swag Token D");
+        Core.EquipClass(ClassType.Farm);
+        Core.RegisterQuests(!Core.IsMember ? new[] { 1304, 1307 } : new[] { 1310, 1312, 1313, 1314 });
+
+        #region Token farm and check for Token A only
         while (!Bot.ShouldExit && !Core.CheckInventory("Super-Fan Swag Token A", quant))
         {
+
+            // Refresh token quantities
             int dQuantity = Bot.Inventory.GetQuantity("Super-Fan Swag Token D");
             int cQuantity = Bot.Inventory.GetQuantity("Super-Fan Swag Token C");
             int bQuantity = Bot.Inventory.GetQuantity("Super-Fan Swag Token B");
             int aQuantity = Bot.Inventory.GetQuantity("Super-Fan Swag Token A");
 
-            // Updated kill logic for farming Super-Fan Swag Token C
-            Core.KillMonster("collectorlab", "r2", "Left", "*", "Super-Fan Swag Token C", 200, isTemp: false, log: false);
-            Bot.Wait.ForPickup("Super-Fan Swag Token C");
-
-            Core.Join("Collection");
-            Bot.Wait.ForMapLoad("Collection");
-            Bot.Wait.ForCellChange("Enter");
-            Bot.Wait.ForCellChange("Begin");
-            Core.Sleep();
-
-            bool ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-
-            while (!Bot.ShouldExit && !ShopCheck)
+            if (Core.IsMember)
             {
-                if (Bot.Map.Name != "Collection")
-                    Core.Join("Collection");
-
-                if (Bot.Player.Cell != "Begin")
-                    Core.Jump("Begin");
-
-                Bot.Shops.Load(325);
-                Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-                Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
-                ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-                if (ShopCheck)
-                    break;
+                Core.KillMonster("collectorlab", "r2", "Left", "*", "Super-Fan Swag Token C", 200, isTemp: false);
+                Bot.Wait.ForPickup("Super-Fan Swag Token C");
             }
-            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-
-            Core.Sleep();
-            ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-            // Token D > Token C
-            if (ShopCheck && dQuantity / 10 > 1 && cQuantity < 500 && dQuantity / 10 + cQuantity < 500)
+            else
             {
-                int buyC = dQuantity / 10;
-                Core.Logger($"Buying {buyC} Super-Fan Swag Token C.");
-                Bot.Shops.BuyItem("Super-Fan Swag Token C", buyC);
-                Bot.Wait.ForActionCooldown(GameActions.BuyItem);
-                Bot.Wait.ForItemBuy();
+                // Farm Token D from Terrarium
+                Core.KillMonster("terrarium", "Enter", "Spawn", "*", "Super-Fan Swag Token D", 500, isTemp: false);
+                Bot.Wait.ForPickup("Super-Fan Swag Token D");
             }
-            Core.Sleep();
-            ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-            // Token C > Token B
-            if (ShopCheck && cQuantity / 10 > 1 && bQuantity < 200 && cQuantity / 10 + bQuantity < 200)
-            {
-                int buyB = cQuantity / 10;
-                Core.Logger($"Buying {buyB} Super-Fan Swag Token B.");
-                Bot.Shops.BuyItem("Super-Fan Swag Token B", buyB);
-                Bot.Wait.ForActionCooldown(GameActions.BuyItem);
-                Bot.Wait.ForItemBuy();
-            }
-            Core.Sleep();
-            ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
 
-            // Token B > Token A
-            if (ShopCheck && bQuantity / 20 > 1 && aQuantity < 100 && bQuantity / 20 + aQuantity < 100)
-            {
-                int buyA = bQuantity / 20;
-                Core.Logger($"Buying {buyA} Super-Fan Swag Token A.");
-                Bot.Shops.BuyItem("Super-Fan Swag Token A", buyA);
-                Bot.Wait.ForActionCooldown(GameActions.BuyItem);
-                Bot.Wait.ForItemBuy();
-            }
-            Core.Sleep();
-            ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
+            HandleShopPurchases(
+      Bot.Inventory.GetQuantity("Super-Fan Swag Token D"),
+      Bot.Inventory.GetQuantity("Super-Fan Swag Token C"),
+      Bot.Inventory.GetQuantity("Super-Fan Swag Token B"),
+      Bot.Inventory.GetQuantity("Super-Fan Swag Token A"));
+
         }
+        #endregion Token farm and check
 
         Core.CancelRegisteredQuests();
     }
 
-    public void SwagTokenAF2p(int quant = 100)
+    // Helper method to determine if we should buy a token
+    private bool ShouldBuy(string tokenType, int currentQuantity, int targetQuantity, int maxQuantity, int divisor)
     {
-        if (Core.CheckInventory("Super-Fan Swag Token A", quant))
-            return;
-
-        Core.Logger("Swag Token A [Non-Members]");
-        Core.AddDrop("Super-Fan Swag Token A", "Super-Fan Swag Token B", "Super-Fan Swag Token C");
-        Core.EquipClass(ClassType.Farm);
-        Core.RegisterQuests(1304, 1307);
-        Core.FarmingLogger($"Super-Fan Swag Token A", quant);
-
-        while (!Bot.ShouldExit && !Core.CheckInventory("Super-Fan Swag Token A", quant))
+        if (ShopCheck())
         {
-            int dQuantity = Bot.Inventory.GetQuantity("Super-Fan Swag Token D");
-            int cQuantity = Bot.Inventory.GetQuantity("Super-Fan Swag Token C");
-            int bQuantity = Bot.Inventory.GetQuantity("Super-Fan Swag Token B");
-            int aQuantity = Bot.Inventory.GetQuantity("Super-Fan Swag Token A");
+            int quantityToBuy = currentQuantity / divisor;
+            if (currentQuantity < targetQuantity && quantityToBuy + currentQuantity < maxQuantity)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
-            Core.KillMonster("terrarium", "Enter", "Spawn", "*", "Super-Fan Swag Token D", 500, isTemp: false);
-            Bot.Wait.ForPickup("Super-Fan Swag Token D");
-
+    // Helper method to check if the shop is loaded and ready
+    private bool ShopCheck()
+    {
+        Core.JumpWait();
+        if (Bot.Map.Name != "collection")
+        {
             Core.Join("Collection");
             Bot.Wait.ForMapLoad("Collection");
+        }
+        if (Bot.Player.Cell != "Begin")
+        {
+            Core.Jump("Begin");
             Bot.Wait.ForCellChange("Begin");
-            Core.Sleep();
-
-            bool ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-
-            while (!Bot.ShouldExit && !ShopCheck)
-            {
-                if (Bot.Map.Name != "Collection")
-                    Core.Join("Collection");
-
-                if (Bot.Player.Cell != "Begin")
-                    Core.Jump("Begin");
-
-                Bot.Shops.Load(325);
-                Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-                Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
-                ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-                if (ShopCheck)
-                    break;
-            }
-            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-
-            Core.Sleep();
-            ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-            if (ShopCheck && dQuantity / 10 > 1 && cQuantity < 500 && dQuantity / 10 + cQuantity < 500)
-            {
-                int buyC = dQuantity / 10;
-                Core.Logger($"Buying {buyC} Super-Fan Swag Token C.");
-                Bot.Shops.BuyItem("Super-Fan Swag Token C", buyC);
-                Bot.Wait.ForActionCooldown(GameActions.BuyItem);
-                Bot.Wait.ForItemBuy();
-            }
-            Core.Sleep();
-            ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-            if (ShopCheck && cQuantity / 10 > 1 && bQuantity < 200 && cQuantity / 10 + bQuantity < 200)
-            {
-                int buyB = cQuantity / 10;
-                Core.Logger($"Buying {buyB} Super-Fan Swag Token B.");
-                Bot.Shops.BuyItem("Super-Fan Swag Token B", buyB);
-                Bot.Wait.ForActionCooldown(GameActions.BuyItem);
-                Bot.Wait.ForItemBuy();
-            }
-            Core.Sleep();
-            ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-            if (ShopCheck && bQuantity / 20 > 1 && aQuantity < 100 && bQuantity / 20 + aQuantity < 100)
-            {
-                int buyA = bQuantity / 20;
-                Core.Logger($"Buying {buyA} Super-Fan Swag Token A.");
-                Bot.Shops.BuyItem("Super-Fan Swag Token A", buyA);
-                Bot.Wait.ForActionCooldown(GameActions.BuyItem);
-                Bot.Wait.ForItemBuy();
-            }
-            Core.Sleep();
-            ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-
+            Bot.Wait.ForCellChange("Enter");
         }
 
-        Core.CancelRegisteredQuests();
+        Bot.Shops.Load(325);
+        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 325, 20);
+
+        return Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
+    }
+
+    // Shop handler for SwagTokens
+    private void HandleShopPurchases(int dQuantity, int cQuantity, int bQuantity, int aQuantity)
+    {
+
+        // Join "Collection" map and wait for it to load
+        Core.Join("Collection");
+        Bot.Wait.ForMapLoad("Collection");
+        Bot.Wait.ForCellChange("Begin");
+        Core.Sleep();
+
+        // Token D > Token C (purchase if needed)
+        if (dQuantity / 10 > 1 && cQuantity < 500 && dQuantity / 10 + cQuantity < 500)
+        {
+            int buyC = dQuantity / 10;
+            Core.BuyItem("collection", 325, "Super-Fan Swag Token C", buyC);
+            Bot.Wait.ForActionCooldown(GameActions.BuyItem);
+            Bot.Wait.ForItemBuy();
+        }
+
+        Core.Sleep();
+
+        // Token C > Token B (buy from shop if needed)
+        if (cQuantity / 10 > 1 && bQuantity < 200 && cQuantity / 10 + bQuantity < 200)
+        {
+            int buyB = cQuantity / 10;
+            Core.BuyItem("collection", 325, "Super-Fan Swag Token B", buyB);
+            Bot.Wait.ForActionCooldown(GameActions.BuyItem);
+            Bot.Wait.ForItemBuy();
+        }
+
+        Core.Sleep();
+
+        // Token B > Token A (buy from shop if needed)
+        if (bQuantity / 20 > 1 && aQuantity < 100 && bQuantity / 20 + aQuantity < 100)
+        {
+            int buyA = bQuantity / 20;
+            Core.BuyItem("collection", 325, "Super-Fan Swag Token A", buyA);
+            Bot.Wait.ForActionCooldown(GameActions.BuyItem);
+            Bot.Wait.ForItemBuy();
+        }
+        Core.Sleep();
     }
 
     public void MembershipDues(MemberShipsIDS faction, int rank = 10)
     {
         if (FactionRank(faction.ToString()) >= rank)
             return;
+
         Bot.Options.SkipCutscenes = false;
-        Core.Logger($"Farming rank {rank}");
+        Core.Logger($"Membership Dues - Rep: {faction} - Rank: {rank}");
         Core.SavedState();
         ToggleBoost(BoostType.Reputation);
-        int i = 1;
         Core.BankingBlackList.AddRange(new[] { "Super-Fan Swag Token A", "Super-Fan Swag Token B", "Super-Fan Swag Token C", "Super-Fan Swag Token D" });
-        while (FactionRank($"{faction}") < rank)
+        while (FactionRank(faction.ToString()) < rank)
         {
-            if (Core.IsMember)
-                SwagTokenA(1);
-            else SwagTokenAF2p(1);
+            SwagTokenA((RemainingFactionXp(faction.ToString()) / 5000) + 1);
             Core.EnsureCompleteMulti((int)faction);
-            Core.Logger($"Completed x{i++}");
         }
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
@@ -3656,7 +3612,7 @@ public class CoreFarms
         var factionData = Bot.Reputation.FactionList
             .FirstOrDefault(f => string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase));
 
-        return factionData?.RemainingRep ?? 302500; // Return 0 if factionData is null
+        return factionData?.RemainingRep ?? 302500; // Return 302500 (Max rep) if factionData is null
     }
 
     #endregion Reputation
