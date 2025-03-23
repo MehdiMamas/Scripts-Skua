@@ -68,9 +68,13 @@ public class LuckyDayShamrockFairMerge
 
                 case "Golden Ticket":
                     Core.FarmingLogger(req.Name, quant);
+                    Core.Join("luck");
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.Join("luck");
+
+                        if (Bot.Map.Name != "luck")
+                            Core.Join("luck");
+
                         Core.SendPackets("%xt%zm%getMapItem%10173%101%");
                         Bot.Wait.ForPickup(req.Name);
                     }
