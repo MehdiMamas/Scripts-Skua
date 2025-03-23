@@ -69,9 +69,9 @@ public class ThreeLittleWolvesHousesMerge
                     Core.RegisterQuests(6915);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("farm", "Treeant", "Wooden Planks", 5, log: false);
-                        Core.HuntMonster("bloodtusk", "Rhison", "Glue", log: false);
-                        Core.HuntMonster("crashsite", "ProtoSartorium", "Nails", 10, log: false);
+                        Core.HuntMonster("farm", "Treeant", "Wooden Planks", 5);
+                        Core.HuntMonster("bloodtusk", "Rhison", "Glue");
+                        Core.HuntMonster("crashsite", "ProtoSartorium", "Nails", 10);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -109,91 +109,64 @@ public class ThreeLittleWolvesHousesMerge
 
                 case "Dragonrune Blueprint":
                     Core.FarmingLogger(req.Name, quant);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Farm.ElementalMasterREP();
-                        Core.BuyItem("dragonrune", 690, 48758);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Farm.ElementalMasterREP();
+                    Core.BuyItem("dragonrune", 690, 48758);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Mana Golem's Core":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("elemental", "Mana Golem", "Mana Golem's Core", isTemp: false, log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
-                    Core.CancelRegisteredQuests();
+                    Core.HuntMonster("elemental", "Mana Golem", "Mana Golem's Core", isTemp: false, log: false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Arcangrove Blueprint":
                     Core.FarmingLogger(req.Name, quant);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Farm.ArcangroveREP();
-                        Core.BuyItem("arcangrove", 214, 48759);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Farm.ArcangroveREP();
+                    Core.BuyItem("arcangrove", 214, 48759);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Falcontower Blueprint":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("falconreach", "Dragon Drakath", "Falcontower Blueprint", isTemp: false, log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.HuntMonster("falconreach", "Dragon Drakath", "Falcontower Blueprint", isTemp: false, log: false);
+                    Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
 
                 case "Citadel Caverns Blueprint":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("citadel", "Belrot the Fiend", "Citadel Caverns Blueprint", isTemp: false, log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+
+                    Core.HuntMonster("citadel", "Belrot the Fiend", "Citadel Caverns Blueprint", isTemp: false, log: false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Citadel Blueprint":
                     Core.FarmingLogger(req.Name, quant);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.BuyItem("citadel", 44, 48761, Log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.BuyItem("citadel", 44, 48761, Log: false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Seraphic Blueprint":
                     Core.FarmingLogger(req.Name, quant);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.BuyItem("seraph", 1133, 48762, Log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.BuyItem("seraph", 1133, 48762, Log: false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Hachiko Blueprint":
                     Core.FarmingLogger(req.Name, quant);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.BuyItem("dragonkoiz", 95, 48763, Log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.BuyItem("dragonkoiz", 95, 48763, Log: false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Clubhouse Blueprint":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("clubhouse", "Riddlelord's Golem", "Clubhouse Blueprint", isTemp: false, log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.HuntMonster("clubhouse", "Riddlelord's Golem", "Clubhouse Blueprint", isTemp: false, log: false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
             }
