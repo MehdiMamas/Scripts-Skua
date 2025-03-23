@@ -1837,17 +1837,13 @@ public class CoreBots
         // Ensure player is in map
         if (Bot.Map.Name != map)
         {
-            DebugLogger(this);
             Join(map);
-            DebugLogger(this);
             Bot.Wait.ForMapLoad(map);
         }
 
-        Bot.Wait.ForTrue(() => Bot.Shops.ID == shopID, () =>
-        {
-            Bot.Shops.Load(shopID);
-            Sleep();
-        }, 20, 1000);
+        Bot.Shops.Load(shopID);
+        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
 
         if (Bot.Shops.ID != shopID || Bot.Shops.Items == null)
         {
@@ -4967,7 +4963,7 @@ public class CoreBots
         }
         if (log && item != null)
             if (name != "*")
-            Logger($"Attacking Monster: {name}, for {item}  {dynamicQuant(item, isTemp)}/{quantity}");
+                Logger($"Attacking Monster: {name}, for {item}  {dynamicQuant(item, isTemp)}/{quantity}");
 
         while (!Bot.ShouldExit && item != null && (isTemp ? !Bot.TempInv.Contains(item, quantity) : !CheckInventory(item, quantity)))
         {
@@ -6912,11 +6908,13 @@ public class CoreBots
 
             #region BuyHouse (for a merge)
             case "buyhouse":
-                Logger("This is a public map.. and non-privateable, so blame ae for that.. tho its required for some things so this will be forced public");
+                Logger($"\"{map}\" is a public map.. and non-privateable, so blame ae for that.. tho its required for some things so this will be forced public");
                 JumpWait();
                 if (Bot.Map.Name != null && Bot.Map.Name != map)
-                    Bot.Map.Join(map);
-                Bot.Wait.ForMapLoad(map);
+                {
+                    Bot.Map.Join("buyhouse", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Wait.ForMapLoad(map);
+                }
                 break;
             #endregion BuyHouse (for a merge)
 
