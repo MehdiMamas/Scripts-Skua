@@ -92,7 +92,7 @@ public class WheelOfDoomSpam
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 707, 20);
             Core.Sleep(1000);
-            if (Bot.Shops.ID != 707 || retry == 20)
+            if (Bot.Shops.ID == 707 || retry == 20)
             {
                 break;
             }

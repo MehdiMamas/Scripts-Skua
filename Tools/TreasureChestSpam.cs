@@ -110,20 +110,20 @@ public class TreasureChestSpam
         Core.KillMonster("swordhavenundead", "Left", "Right", "*", "Treasure Chest", amount > 250 ? 250 : amount, false);
 
         Core.Join("battleon");
+
         // Load shop data
         int retry = 0;
-        while (!Bot.ShouldExit && Bot.Shops.ID != 314)
+        while (!Bot.ShouldExit && Bot.Shops.ID != 325)
         {
-            Bot.Shops.Load(314);
+            Bot.Shops.Load(325);
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 314, 20);
+            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 325, 20);
             Core.Sleep(1000);
-            if (Bot.Shops.ID != 314 || retry == 20)
-            {
+            if (Bot.Shops.ID == 325 || retry == 20)
                 break;
-            }
             else retry++;
         }
+        retry = 0;
 
         for (int i = 0; i < amount; i++)
         {

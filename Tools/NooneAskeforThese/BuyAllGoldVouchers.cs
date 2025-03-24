@@ -37,6 +37,7 @@ public class BuyAllGoldVouchers
     public void Getemall(bool TestMode = false)
     {
         Core.Logger("This script is pointless... but was requested to waste gold.");
+        int i = 0;
         foreach (string voucher in new[] { "500", "200", "100", "25", "7.5" })
         {
             string formattedVoucher = $"Gold Voucher {voucher}k"; // Create the formatted string
@@ -46,19 +47,19 @@ public class BuyAllGoldVouchers
                 case "100":
                 case "200":
                     // Load shop data
-                    int retry = 0;
                     while (!Bot.ShouldExit && Bot.Shops.ID != 2036)
                     {
                         Bot.Shops.Load(2036);
                         Bot.Wait.ForActionCooldown(GameActions.LoadShop);
                         Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 2036, 20);
                         Core.Sleep(1000);
-                        if (Bot.Shops.ID != 2036 || retry == 20)
+                        if (Bot.Shops.ID == 2036 || i == 20)
                         {
                             break;
                         }
-                        else retry++;
+                        else i++;
                     }
+                    i = 0;
 
                     ShopItem? Item = Bot.Shops.Items.FirstOrDefault(s => s != null && s.Name == formattedVoucher);
                     if (Item != null)
@@ -76,19 +77,20 @@ public class BuyAllGoldVouchers
 
                 case "25":
                     // Load shop data
-                    int i = 0;
                     while (!Bot.ShouldExit && Bot.Shops.ID != 1597)
                     {
                         Bot.Shops.Load(1597);
                         Bot.Wait.ForActionCooldown(GameActions.LoadShop);
                         Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 1597, 20);
                         Core.Sleep(1000);
-                        if (Bot.Shops.ID != 1597 || i == 20)
+                        if (Bot.Shops.ID == 1597 || i == 20)
                         {
+                            i = 0;
                             break;
                         }
                         else i++;
                     }
+                    i = 0;
                     ShopItem? Item2 = Bot.Shops.Items.FirstOrDefault(s => s != null && s.Name == formattedVoucher);
                     if (Item2 != null)
                     {
@@ -103,14 +105,20 @@ public class BuyAllGoldVouchers
                     break;
 
                 case "7.5":
-                    while (!Bot.ShouldExit && Bot.Shops.Name != "Fehu Shop")
+                    // Load shop data
+                    while (!Bot.ShouldExit && Bot.Shops.ID != 2116)
                     {
-                        Core.Join("alchemyacademy");
-                        Bot.Wait.ForMapLoad("alchemyacademy");
                         Bot.Shops.Load(2116);
-                        Bot.Wait.ForActionCooldown(Skua.Core.Models.GameActions.LoadShop);
-                        Core.Sleep();
+                        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+                        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 2116, 20);
+                        Core.Sleep(1000);
+                        if (Bot.Shops.ID == 2116 || i == 20)
+                        {
+                            break;
+                        }
+                        else i++;
                     }
+                    i = 0;
                     ShopItem? Item3 = Bot.Shops.Items.FirstOrDefault(s => s != null && s.Name == formattedVoucher);
                     if (Item3 != null)
                     {

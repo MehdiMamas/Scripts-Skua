@@ -1454,7 +1454,7 @@ public class CoreFarms
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
             Core.Sleep(1000);
-            if (Bot.Shops.ID != shopID || retry == 20)
+            if (Bot.Shops.ID == shopID || retry == 20)
             {
                 break;
             }
@@ -3548,12 +3548,11 @@ public class CoreFarms
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 325, 20);
             Core.Sleep(1000);
-            if (Bot.Shops.ID != 325 || retry == 20)
-            {
+            if (Bot.Shops.ID == 325 || retry == 20)
                 break;
-            }
             else retry++;
         }
+        retry = 0;
 
         return Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
     }
