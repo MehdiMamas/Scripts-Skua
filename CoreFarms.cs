@@ -1446,12 +1446,20 @@ public class CoreFarms
             }
         }
 
-        // Ensure the correct shop is loaded
-        Core.Join(map);
-        Bot.Shops.Load(shopID);
-        Core.Sleep(1000);
-        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
+        // Load shop data
+        int retry = 0;
+        while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+        {
+            Bot.Shops.Load(shopID);
+            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+            Core.Sleep(1000);
+            if (Bot.Shops.ID != shopID || retry == 20)
+            {
+                break;
+            }
+            else retry++;
+        }
 
         // Ensure the correct Item is found in the shop
         ShopItem? item = Bot.Shops.Items.FirstOrDefault(x => x != null && x.Name == Voucher);
@@ -3532,9 +3540,20 @@ public class CoreFarms
             Bot.Wait.ForCellChange("Enter");
         }
 
-        Bot.Shops.Load(325);
-        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 325, 20);
+        // Load shop data
+        int retry = 0;
+        while (!Bot.ShouldExit && Bot.Shops.ID != 325)
+        {
+            Bot.Shops.Load(325);
+            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 325, 20);
+            Core.Sleep(1000);
+            if (Bot.Shops.ID != 325 || retry == 20)
+            {
+                break;
+            }
+            else retry++;
+        }
 
         return Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
     }

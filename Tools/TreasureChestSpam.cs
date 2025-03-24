@@ -6,6 +6,7 @@ tags: treasure, chest, key, dark, box, waste, AC
 //cs_include Scripts/CoreBots.cs
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Skua.Core.Interfaces;
+using Skua.Core.Models;
 using Skua.Core.ViewModels;
 
 public class TreasureChestSpam
@@ -109,7 +110,20 @@ public class TreasureChestSpam
         Core.KillMonster("swordhavenundead", "Left", "Right", "*", "Treasure Chest", amount > 250 ? 250 : amount, false);
 
         Core.Join("battleon");
-        Bot.Shops.Load(314);
+        // Load shop data
+        int retry = 0;
+        while (!Bot.ShouldExit && Bot.Shops.ID != 314)
+        {
+            Bot.Shops.Load(314);
+            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 314, 20);
+            Core.Sleep(1000);
+            if (Bot.Shops.ID != 314 || retry == 20)
+            {
+                break;
+            }
+            else retry++;
+        }
 
         for (int i = 0; i < amount; i++)
         {

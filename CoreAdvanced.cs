@@ -142,16 +142,16 @@ public class CoreAdvanced
                     }
 
                     // Load shop data
-                    int retry = 0;
+                    int i = 0;
                     while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
                     {
                         Bot.Shops.Load(shopID);
                         Bot.Wait.ForActionCooldown(GameActions.LoadShop);
                         Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
                         Core.Sleep(1000);
-                        if (Bot.Shops.ID != shopID || retry == 20)
+                        if (Bot.Shops.ID != shopID || i == 20)
                             break;
-                        else retry++;
+                        else i++;
                     }
 
 
@@ -198,17 +198,19 @@ public class CoreAdvanced
                 Core.Join(map);
 
             // Load shop data
-            int i = 0;
-            while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+        int retry = 0;
+        while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+        {
+            Bot.Shops.Load(shopID);
+            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+            Core.Sleep(1000);
+            if (Bot.Shops.ID != shopID || retry == 20)
             {
-                Bot.Shops.Load(shopID);
-                Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-                Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
-                Core.Sleep(1000);
-                if (Bot.Shops.ID != shopID || i == 20)
-                    break;
-                else i++;
+                break;
             }
+            else retry++;
+        }
 
             // Try to find the exact item match based on ID and ShopItemID
             List<ShopItem> matchingItems = Bot.Shops.Items

@@ -7,6 +7,7 @@ tags: wheel, doom, spin, waste, AC, treasure, potions, IODA
 using Skua.Core.Interfaces;
 using Skua.Core.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Skua.Core.Models;
 
 public class WheelOfDoomSpam
 {
@@ -83,7 +84,20 @@ public class WheelOfDoomSpam
             amount = currentAC / 200;
 
         Core.Join("doom");
-        Bot.Shops.Load(707);
+         // Load shop data
+        int retry = 0;
+        while (!Bot.ShouldExit && Bot.Shops.ID != 707)
+        {
+            Bot.Shops.Load(707);
+            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 707, 20);
+            Core.Sleep(1000);
+            if (Bot.Shops.ID != 707 || retry == 20)
+            {
+                break;
+            }
+            else retry++;
+        }
         int preTicketTP = Bot.Inventory.GetQuantity("Treasure Potion");
         var rewards = Core.QuestRewards(3074);
 

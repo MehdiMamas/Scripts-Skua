@@ -5,6 +5,7 @@ tags: null
 */
 //cs_include Scripts/CoreBots.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models;
 using Skua.Core.Options;
 
 public class ShopAcheivmentandIOGrabber
@@ -32,10 +33,20 @@ public class ShopAcheivmentandIOGrabber
     public void GrabME(string? map, int ShopID)
     {
         Core.Join(map == "None" ? Bot.Map.Name : map);
-        while (!Bot.ShouldExit && !Bot.Shops.IsLoaded)
+      
+        // Load shop data
+        int retry = 0;
+        while (!Bot.ShouldExit && Bot.Shops.ID != ShopID)
         {
             Bot.Shops.Load(ShopID);
-            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
+            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == ShopID, 20);
+            Core.Sleep(1000);
+            if (Bot.Shops.ID != ShopID || retry == 20)
+            {
+                break;
+            }
+            else retry++;
         }
 
         int achievementID = Bot.Flash.GetGameObject<int>("world.shopinfo.iIndex");

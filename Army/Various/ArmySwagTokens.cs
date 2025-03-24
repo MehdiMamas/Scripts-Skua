@@ -84,9 +84,22 @@ public class ArmySwagTokens
                 if (Bot.Player.Cell != "Begin")
                     Core.Jump("Begin");
 
-                Bot.Shops.Load(325);
-                Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-                Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
+                // Load shop data
+                int retry = 0;
+                while (!Bot.ShouldExit && Bot.Shops.ID != 325)
+                {
+                    Bot.Shops.Load(325);
+                    Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+                    Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 325, 20);
+                    Core.Sleep(1000);
+                    if (Bot.Shops.ID != 325 || retry == 20)
+                    {
+                        break;
+                    }
+                    else retry++;
+                }
+
+
                 ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
                 if (ShopCheck)
                     break;

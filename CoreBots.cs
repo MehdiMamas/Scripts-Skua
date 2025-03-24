@@ -1239,11 +1239,21 @@ public class CoreBots
         }
 
         DebugLogger(this);
-        Bot.Wait.ForTrue(() => Bot.Shops.ID == shopID, () =>
+
+        // Load shop data
+        int retry = 0;
+        while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+        {
+            Bot.Shops.Load(shopID);
+            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+            Sleep(1000);
+            if (Bot.Shops.ID != shopID || retry == 20)
             {
-                Bot.Shops.Load(shopID);
-                Sleep();
-            }, 20, 1000);
+                break;
+            }
+            else retry++;
+        }
 
         DebugLogger(this);
         ShopItem? item = parseShopItem(GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.ID == itemID : x.ShopItemID == shopItemID).ToList(), shopID, itemID.ToString(), shopItemID);
@@ -1283,11 +1293,17 @@ public class CoreBots
             Sleep();
         }
 
-        Bot.Wait.ForTrue(() => Bot.Shops.ID == shopID, () =>
-            {
-                Bot.Shops.Load(shopID);
-                Sleep();
-            }, 20, 1000);
+        int retry = 0;
+        while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+        {
+            Bot.Shops.Load(shopID);
+            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+            Sleep(1000);
+            if (Bot.Shops.ID != shopID || retry == 20)
+                break;
+            else retry++;
+        }
         #endregion IgnoreMe
 
         dynamic sItem = new ExpandoObject();
@@ -1560,8 +1576,17 @@ public class CoreBots
         }
 
         // Load shop and wait for cooldown
-        Bot.Shops.Load(shopID);
-        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+        int retry = 0;
+        while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+        {
+            Bot.Shops.Load(shopID);
+            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+            Sleep(1000);
+            if (Bot.Shops.ID != shopID || retry == 20)
+                break;
+            else retry++;
+        }
 
         // Try to fetch shop item data with retries
         dynamic? sItem = null;
@@ -1842,23 +1867,22 @@ public class CoreBots
         }
 
         // Load shop data
-        int i = 0;
+        int retry = 0;
         while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
         {
             Bot.Shops.Load(shopID);
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
             Sleep(1000);
-            if (Bot.Shops.ID != shopID || i == 20)
-                break;
-            else i++;
+            if (Bot.Shops.ID != shopID || retry == 20)
+            {
+                Logger("Failed to load shop the shop and get it's data" + reinstallCleanFlash, "Shop Data Loading Failed");
+                return new();
+            }
+            else retry++;
         }
 
-        if (Bot.Shops.ID != shopID || Bot.Shops.Items == null)
-        {
-            Bot.ShowMessageBox("Failed to load shop the shop and get it's data" + reinstallCleanFlash, "Shop Data Loading Failed");
-            return new();
-        }
+        // Return the shop items
         return Bot.Shops.Items;
     }
 

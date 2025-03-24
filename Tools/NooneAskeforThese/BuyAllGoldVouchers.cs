@@ -9,6 +9,7 @@ tags: gold voucher, gold, voucher
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreDailies.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Quests;
@@ -44,14 +45,21 @@ public class BuyAllGoldVouchers
                 case "500":
                 case "100":
                 case "200":
-                    while (!Bot.ShouldExit && Bot.Shops.Name != "Gebo Shop")
+                    // Load shop data
+                    int retry = 0;
+                    while (!Bot.ShouldExit && Bot.Shops.ID != 2036)
                     {
-                        Core.Join("alchemyacademy");
-                        Bot.Wait.ForMapLoad("alchemyacademy");
                         Bot.Shops.Load(2036);
-                        Bot.Wait.ForActionCooldown(Skua.Core.Models.GameActions.LoadShop);
-                        Core.Sleep();
+                        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+                        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 2036, 20);
+                        Core.Sleep(1000);
+                        if (Bot.Shops.ID != 2036 || retry == 20)
+                        {
+                            break;
+                        }
+                        else retry++;
                     }
+
                     ShopItem? Item = Bot.Shops.Items.FirstOrDefault(s => s != null && s.Name == formattedVoucher);
                     if (Item != null)
                     {
@@ -67,13 +75,19 @@ public class BuyAllGoldVouchers
                     break;
 
                 case "25":
-                    while (!Bot.ShouldExit && Bot.Shops.Name != "Hydra Merge")
+                    // Load shop data
+                    int i = 0;
+                    while (!Bot.ShouldExit && Bot.Shops.ID != 1597)
                     {
-                        Core.Join("titanattack");
-                        Bot.Wait.ForMapLoad("titanattack");
                         Bot.Shops.Load(1597);
-                        Bot.Wait.ForActionCooldown(Skua.Core.Models.GameActions.LoadShop);
-                        Core.Sleep();
+                        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+                        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 1597, 20);
+                        Core.Sleep(1000);
+                        if (Bot.Shops.ID != 1597 || i == 20)
+                        {
+                            break;
+                        }
+                        else i++;
                     }
                     ShopItem? Item2 = Bot.Shops.Items.FirstOrDefault(s => s != null && s.Name == formattedVoucher);
                     if (Item2 != null)
