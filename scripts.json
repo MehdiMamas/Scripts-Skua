@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 148660,
+    "size": 148725,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 352297,
+    "size": 352195,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 136453,
+    "size": 136444,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -1494,7 +1494,7 @@
       "AC"
     ],
     "path": "Tools/TreasureChestSpam.cs",
-    "size": 6706,
+    "size": 6698,
     "fileName": "TreasureChestSpam.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/TreasureChestSpam.cs"
   },
@@ -10248,7 +10248,7 @@
       "rep"
     ],
     "path": "Army/Various/ArmySwagTokens.cs",
-    "size": 6352,
+    "size": 6335,
     "fileName": "ArmySwagTokens.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/Various/ArmySwagTokens.cs"
   },
@@ -13044,7 +13044,7 @@
       "voucher"
     ],
     "path": "Tools/NooneAskeforThese/BuyAllGoldVouchers.cs",
-    "size": 5359,
+    "size": 5598,
     "fileName": "BuyAllGoldVouchers.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/NooneAskeforThese/BuyAllGoldVouchers.cs"
   },
