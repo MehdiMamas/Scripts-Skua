@@ -1987,7 +1987,7 @@ public class CoreAdvanced
             // Shopdata complete check
             if (!shopItems.Any(x => x.Category == ItemCategory.Enhancement) || shopItems.Count == 0)
             {
-                Core.Logger($"Enhancement Failed:\tCouldn't find enhancements in shop {shopID}");
+                Core.Logger($"Enhancement Failed for {item.Name}[{item.ID}], (EnhancementLevel: {item.EnhancementLevel}, map: {map ?? Bot.Map.Name}, shopID: {shopID}):\n" + $"Couldn't find enhancements in shop {shopID}");
                 return;
             }
 
