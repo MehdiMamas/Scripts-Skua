@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 148676,
+    "size": 148660,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 351459,
+    "size": 352297,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 135926,
+    "size": 136453,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -1379,7 +1379,7 @@
       "IODA"
     ],
     "path": "Tools/WheelOfDoomSpam.cs",
-    "size": 5046,
+    "size": 5503,
     "fileName": "WheelOfDoomSpam.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/WheelOfDoomSpam.cs"
   },
@@ -1494,7 +1494,7 @@
       "AC"
     ],
     "path": "Tools/TreasureChestSpam.cs",
-    "size": 6250,
+    "size": 6706,
     "fileName": "TreasureChestSpam.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/TreasureChestSpam.cs"
   },
@@ -10248,7 +10248,7 @@
       "rep"
     ],
     "path": "Army/Various/ArmySwagTokens.cs",
-    "size": 5944,
+    "size": 6352,
     "fileName": "ArmySwagTokens.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/Various/ArmySwagTokens.cs"
   },
@@ -13016,7 +13016,7 @@
       "null"
     ],
     "path": "Tools/ForDevelopers/ShopAcheivmentandIOGrabber.cs",
-    "size": 1586,
+    "size": 1919,
     "fileName": "ShopAcheivmentandIOGrabber.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/ShopAcheivmentandIOGrabber.cs"
   },
@@ -13044,7 +13044,7 @@
       "voucher"
     ],
     "path": "Tools/NooneAskeforThese/BuyAllGoldVouchers.cs",
-    "size": 4900,
+    "size": 5359,
     "fileName": "BuyAllGoldVouchers.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/NooneAskeforThese/BuyAllGoldVouchers.cs"
   },
