@@ -127,15 +127,7 @@ public class J6Saga
             Core.HuntMonster("sandsea", "Cactus Creeper", "Cactus Creeper Oil", 3);
             Core.KillMonster("cloister", "r2", "Right", "*", "Acornent Oil", 3);
             Bot.Quests.UpdateQuest(1176);
-            if (!Core.CheckInventory("Robo Dog Oil", 3))
-            {
-                //##THIS IS REQUIRED, DO NOT DELETE, THE J6 MAPS ARE FUCKY.. SUPRISE SUPRISE##
-                Core.Jump("R10");
-                Core.Join("moonyard");
-                Core.Jump("MoonCut", "Left");
-                Core.Join("moonyardb");
-                Core.KillMonster("moonyardb", "r4", "Left", "*", "Robo Dog Oil", 3);
-            }
+            Core.KillMonster("moonyardb", "r4", "Left", "*", "Robo Dog Oil", 3);
             Core.KillMonster("farm", "Crop1", "Left", "*", "Scarecrow Canola Oil", 3);
             Core.EnsureComplete(2831);
         }
