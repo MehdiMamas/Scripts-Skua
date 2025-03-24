@@ -6,7 +6,7 @@ tags: story, quest, legion,dage,atlas,kingdom,atlas-kingdom,general slaine,slain
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/Legion/SevenCircles(War).cs
-//cs_include Scripts/Story\Legion\AtlasPromenade.cs
+//cs_include Scripts/Story/Legion/AtlasPromenade.cs
 using Skua.Core.Interfaces;
 
 public class AtlasKingdom

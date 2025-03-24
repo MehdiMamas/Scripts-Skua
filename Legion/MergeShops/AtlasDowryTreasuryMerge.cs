@@ -8,9 +8,9 @@ tags: atlas, dowry, treasury, merge, atlaskingdom, spell, book, light, mage, mor
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/Legion/SevenCircles(War).cs
-//cs_include Scripts/Story\Legion\AtlasPromenade.cs
-//cs_include Scripts/Story\Legion\AtlasKingdom.cs
-//cs_include Scripts/Legion\CoreLegion.cs
+//cs_include Scripts/Story/Legion/AtlasPromenade.cs
+//cs_include Scripts/Story/Legion/AtlasKingdom.cs
+//cs_include Scripts/Legion/CoreLegion.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
