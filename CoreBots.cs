@@ -1841,9 +1841,18 @@ public class CoreBots
             Bot.Wait.ForMapLoad(map);
         }
 
-        Bot.Shops.Load(shopID);
-        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+        // Load shop data
+        int i = 0;
+        while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+        {
+            Bot.Shops.Load(shopID);
+            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+            Sleep(1000);
+            if (Bot.Shops.ID != shopID || i == 20)
+                break;
+            else i++;
+        }
 
         if (Bot.Shops.ID != shopID || Bot.Shops.Items == null)
         {

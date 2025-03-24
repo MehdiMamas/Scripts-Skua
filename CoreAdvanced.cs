@@ -141,12 +141,18 @@ public class CoreAdvanced
                         Bot.Wait.ForMapLoad(map);
                     }
 
-                    Core.DebugLogger(this, $"Requirement \"{req.Name}\" x{totalBundlesNeeded} NEEDED.");
-                    Bot.Shops.Load(shopID);
-                    Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-                    Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
-                    Core.DebugLogger(this);
-                    // Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded, 20);
+                    // Load shop data
+                    int i = 0;
+                    while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+                    {
+                        Bot.Shops.Load(shopID);
+                        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+                        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+                        Core.Sleep(1000);
+                        if (Bot.Shops.ID != shopID || i == 20)
+                            break;
+                        else i++;
+                    }
 
 
                     // int bundlesToBuy = totalBundlesNeeded - (QuantOwned / req.Quantity);
@@ -191,9 +197,18 @@ public class CoreAdvanced
             if (Bot.Map.Name != map)
                 Core.Join(map);
 
-            Bot.Shops.Load(shopID);
-            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+            // Load shop data
+            int i = 0;
+            while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+            {
+                Bot.Shops.Load(shopID);
+                Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+                Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+                Core.Sleep(1000);
+                if (Bot.Shops.ID != shopID || i == 20)
+                    break;
+                else i++;
+            }
 
             // Try to find the exact item match based on ID and ShopItemID
             List<ShopItem> matchingItems = Bot.Shops.Items
