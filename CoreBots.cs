@@ -1750,7 +1750,8 @@ public class CoreBots
             return 0; // Stop if no further items can be bought
         }
 
-        Logger($"Final purchase amount for {item.Name}: {buyAmount}");
+        // Disable Logger till needed
+        // Logger($"Final purchase amount for {item.Name}: {buyAmount}");
         return buyAmount;
     }
 
