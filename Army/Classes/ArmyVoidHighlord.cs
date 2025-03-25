@@ -88,8 +88,8 @@ public class VHLArmy
 
         Core.Logger("This script has been disabled by the author as it is not working as intended. " +
      "Please use the Solo version of this script instead.\n" +
-     $"Location: {Path.Combine(ClientFileSources.SkuaScriptsDIR, @"Nation\VHL\0VoidHighlord.cs")}"); 
-     // GetVHL();
+     $"Location: {Path.Combine(ClientFileSources.SkuaScriptsDIR, @"Nation\VHL\0VoidHighlord.cs")}");
+        // GetVHL();
 
         Core.SetOptions(false);
     }
@@ -125,7 +125,7 @@ public class VHLArmy
         // Core.SendPackets($"%xt%zm%house%1%{Bot.Player.Username}%");
 
         //=======================Last 2 Uni 13===========================
-        Larvae("Unidentified 13", 15 - Bot.Inventory.GetQuantity("Roentgenium of Nulgath"));
+        Larvae("Unidentified 13", 15);
         // //Army.waitForParty("whitemap", "Unidentified 13");
         // Core.SendPackets($"%xt%zm%house%1%{Bot.Player.Username}%");
 
@@ -202,7 +202,7 @@ public class VHLArmy
         // //Army.waitForParty("whitemap", "Emblem of Nulgath");
         // Core.SendPackets($"%xt%zm%house%1%{Bot.Player.Username}%");
 
-        Larvae("Unidentified 13", 15 - Bot.Inventory.GetQuantity("Roentgenium of Nulgath"));
+        Larvae("Unidentified 13", 15);
         // //Army.waitForParty("whitemap", "Unidentified 13");
         // Core.SendPackets($"%xt%zm%house%1%{Bot.Player.Username}%");
 
@@ -480,15 +480,15 @@ public class VHLArmy
             return;
         }
 
-        SCW(80, (quantity - Bot.Inventory.GetQuantity("Blood Gem of the Archfiend")) * 900000);
+        SCW(80, quantity * 900000);
 
         while (Bot.Inventory.GetQuantity("Blood Gem of the Archfiend") < quantity)
         {
-            Escherion("Unidentified 10", 200 + ((quantity - Bot.Inventory.GetQuantity("Blood Gem of the Archfiend")) / 2 + 1) * 50);
+            Escherion("Unidentified 10", 200 + (quantity / 2 + 1) * 50);
             // Receipt of Swindle
-            Core.BuyItem("tercessuinotlim", 1951, 57446, 3 * ((quantity - Bot.Inventory.GetQuantity("Blood Gem of the Archfiend")) / 2 + 1), 7904);
+            Core.BuyItem("tercessuinotlim", 1951, 57446, 3 * (quantity / 2 + 1), 7904);
             // Blood Gem of the Archfiend
-            Core.BuyItem("tercessuinotlim", 1951, 22332, (quantity - Bot.Inventory.GetQuantity("Blood Gem of the Archfiend")) / 2 + 1, 7913);
+            Core.BuyItem("tercessuinotlim", 1951, 22332, quantity / 2 + 1, 7913);
         }
     }
 

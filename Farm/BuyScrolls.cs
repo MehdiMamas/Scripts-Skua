@@ -66,7 +66,7 @@ public class BuyScrolls
             }
         : () =>
         {
-            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Mystic Parchment", (quant / 10) - Bot.Inventory.GetQuantity("Mystic Parchment"), isTemp: false);
+            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Mystic Parchment", quant / 10, isTemp: false);
             Core.BuyItem("spellcraft", 549, ink, 5);
         };
 

@@ -304,7 +304,7 @@ public class CoreAdvanced
         // Handle Gold Vouchers (multiple types possible)
         foreach (ItemBase req in item.Requirements.Where(x => x?.Name?.Contains("Gold Voucher") == true))
         {
-            int needed = req.Quantity - Bot.Inventory.GetQuantity(req.ID);
+            int needed = req.Quantity;
             if (needed <= 0) continue;
 
             // If in the future it becomes an issue where it has issues getting vouchers from `Bot.Shops.ID`, just remove the if there and keep the else area without the else.. obviosuly.
@@ -332,12 +332,7 @@ public class CoreAdvanced
         // Handle Dragon Runestone farming if required
         foreach (ItemBase req in item.Requirements.Where(x => x?.Name?.Contains("Dragon Runestone") == true))
         {
-            int needed = req.Quantity - Bot.Inventory.GetQuantity(req.ID);
-            if (needed > 0)
-            {
-                Core.Logger($"Farming {needed} Dragon Runestones.");
-                Farm.DragonRunestone(needed);
-            }
+            Farm.DragonRunestone(req.Quantity);
         }
 
         // Warn if a temp item is missing

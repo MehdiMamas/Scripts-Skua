@@ -1469,7 +1469,7 @@ public class CoreFarms
         {
             int vouchervalue = int.Parse(item.Name.Split(' ')[2].Replace("k", "000"));
 
-            int amountToBuy = Math.Min(quant - Bot.Inventory.GetQuantity(Voucher), item.MaxStack);
+            int amountToBuy = Math.Min(quant, item.MaxStack);
             if (amountToBuy <= 0)
                 return;
 
@@ -1495,8 +1495,7 @@ public class CoreFarms
 
         Core.FarmingLogger("Dragon Runestone", quant);
 
-        // Gold(100000 * (quant - Bot.Inventory.GetQuantity("Gold Voucher 100k")));
-        Voucher("Gold Voucher 100k", quant - Bot.Inventory.GetQuantity("Gold Voucher 100k"));
+        Voucher("Gold Voucher 100k", quant);
         Core.BuyItem("alchemyacademy", 395, "Dragon Runestone", quant, 8844);
     }
 
