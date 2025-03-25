@@ -66,7 +66,7 @@ public class Butler2
         }
 
 
-
+        #region Log Secion
         string? drops = Bot.Config.Get<string>("Drops") ?? string.Empty;
         if (!string.IsNullOrEmpty(drops))
             Core.AddDrop(drops.Split(',', StringSplitOptions.TrimEntries)
@@ -101,6 +101,17 @@ public class Butler2
                                                             .Select(int.Parse)
                                                             .ToArray()));
         }
+        #endregion Lgo Secion
+
+        int[] bypasses = {
+        598, 3004, 3008, 3484, 3799, 4616, 8107, 9126, 5915, 9814, 7522, 10125
+    };
+        Bot.Quests.Load(bypasses);
+        foreach (int questId in bypasses)
+            Bot.Quests.UpdateQuest(questId);
+        Core.SetAchievement(18); // doomvaultb
+        if (Bot.Player.Level < 100)
+            Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json"); // level bypass
 
         Core.EquipClass(Bot.Config!.Get<ClassType>("classType"));
         StartButler(playerName);
