@@ -33,8 +33,7 @@ public class LegionBonfire
             return;
 
         Legion.FarmLegionToken(10000);
-        Farm.Gold(5000000);
 
-        Core.BuyItem("underworld", 1985, "Legion Bonfire");
+        Adv.BuyItem("underworld", 1985, "Legion Bonfire");
     }
 }
