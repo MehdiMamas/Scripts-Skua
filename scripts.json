@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 352236,
+    "size": 352235,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -93,7 +93,7 @@
       "goto"
     ],
     "path": "Prototypes/Butler2[WIP].cs",
-    "size": 11451,
+    "size": 11995,
     "fileName": "Butler2[WIP].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Butler2[WIP].cs"
   },
@@ -9689,7 +9689,7 @@
       "null"
     ],
     "path": "Legion/Various/LegionBonfire.cs",
-    "size": 912,
+    "size": 883,
     "fileName": "LegionBonfire.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Various/LegionBonfire.cs"
   },
