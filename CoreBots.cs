@@ -593,6 +593,9 @@ public class CoreBots
         if (Bot.Inventory.Contains(_itemID, quant))
             return true;
 
+        if (Bot.House.Contains(_itemID))
+            return true;
+
         if (Bot.Bank.Contains(_itemID))
         {
             if (toInv)
@@ -603,8 +606,6 @@ public class CoreBots
                 return true;
         }
 
-        if (Bot.House.Contains(_itemID))
-            return true;
 
         return false;
     }
@@ -1711,16 +1712,20 @@ public class CoreBots
             Bot.Stop(true);
         }
 
-        int itemStackSize = item.Quantity;
-        int currentStock = Bot.Inventory.GetQuantity(item.ID);
+        int itemStackSize = item.Quantity == 302500 ? 1 : item.Quantity;
+        // Cocant (make take everything into a giant array, and then find the current quantity if its null, default to 0)
+        int currentStock = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).Concat(Bot.TempInv.Items /* because fucking why not*/ ).FirstOrDefault(x => x.ID == item.ID)?.Quantity ?? 0;
         // int neededAmount = requestedAmount - currentStock; // Calculate how much more is needed
 
         // Check if all requirements are met before proceeding
         foreach (var req in item.Requirements)
         {
-            int totalNeeded = (requestedAmount / itemStackSize) * req.Quantity;  // Adjust required amount for stack size
-            int reqCurrent = Bot.Inventory.GetQuantity(req.ID);
+            int totalNeeded = requestedAmount / itemStackSize * req.Quantity;  // Adjust required amount for stack size
 
+            // Cocant (make take everything into a giant array, and then find the current quantity if its null, default to 0)
+            int reqCurrent = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).Concat(Bot.TempInv.Items /* because fucking why not*/ ).FirstOrDefault(x => x.ID == req.ID)?.Quantity ?? 0; //
+
+            Logger($"req: {req.Name}, totalNeeded: {totalNeeded}, reqCurrent: {reqCurrent}");
             if (reqCurrent < totalNeeded)
             {
                 Logger($"Missing {req.Name} ({reqCurrent}/{totalNeeded}). Cannot proceed with purchase.");
@@ -1735,14 +1740,11 @@ public class CoreBots
         int maxCanBuy = item.MaxStack - currentStock;
         buyAmount = Math.Min(buyAmount, maxCanBuy - (maxCanBuy % itemStackSize)); // Round to nearest valid stack size
 
-
-
         // Ensure that the total bought amount matches the requestedAmount
         if (buyAmount + currentStock > requestedAmount)
         {
             buyAmount = (int)Math.Ceiling((double)requestedAmount / itemStackSize) * itemStackSize;
         }
-
 
         if (buyAmount <= 0)
         {
