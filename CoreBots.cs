@@ -3019,7 +3019,7 @@ public class CoreBots
             bool complete = questData.Slot < 0 ||
                 Bot.Flash.CallGameFunction<int>("world.getQuestValue", questData.Slot) >= questData.Value;
 
-            Logger($"[{(complete ? '✔' : '❌')}] {questName} [{QuestID}] completion check.");
+            Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
             return complete;
         }
 
