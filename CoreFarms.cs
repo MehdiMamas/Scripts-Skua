@@ -517,9 +517,19 @@ public class CoreFarms
         // Farming between levels 1-5
         while (!Bot.ShouldExit && Bot.Player.Level < 5)
         {
-            if (!Bot.Player.Alive)
-                Core.Sleep();
-            Core.ByPassCheck();
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
+            {
+                if (Bot.Player.Alive)
+                {
+                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+                    Bot.Sleep(1000);
+                    Core.Jump("r4", "Bottom");
+                    Bot.Wait.ForCellChange("r4");
+                    break;
+                }
+                else
+                    Bot.Sleep(1000);
+            }
 
             if (Bot.Map.Name != "icestormarena")
             {
@@ -542,9 +552,19 @@ public class CoreFarms
         // Farming between levels 5-10
         while (!Bot.ShouldExit && Bot.Player.Level >= 5 && Bot.Player.Level < 10)
         {
-            if (!Bot.Player.Alive)
-                Core.Sleep();
-            Core.ByPassCheck();
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
+            {
+                if (Bot.Player.Alive)
+                {
+                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+                    Bot.Sleep(1000);
+                    Core.Jump("r5", "Left");
+                    Bot.Wait.ForCellChange("r5");
+                    break;
+                }
+                else
+                    Bot.Sleep(1000);
+            }
 
             if (Bot.Map.Name != "icestormarena")
             {
@@ -568,9 +588,19 @@ public class CoreFarms
         // Farming between levels 10-20
         while (!Bot.ShouldExit && Bot.Player.Level >= 10 && Bot.Player.Level < 20)
         {
-            if (!Bot.Player.Alive)
-                Core.Sleep();
-            Core.ByPassCheck();
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
+            {
+                if (Bot.Player.Alive)
+                {
+                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+                    Bot.Sleep(1000);
+                    Core.Jump("r6", "Left");
+                    Bot.Wait.ForCellChange("r6");
+                    break;
+                }
+                else
+                    Bot.Sleep(1000);
+            }
 
             if (Bot.Map.Name != "icestormarena")
             {
@@ -597,9 +627,19 @@ public class CoreFarms
             Core.RegisterQuests(6628);
             while (!Bot.ShouldExit && Bot.Player.Level >= 20 && Bot.Player.Level < 25)
             {
-                if (!Bot.Player.Alive)
-                    Core.Sleep();
-                Core.ByPassCheck();
+                while (!Bot.ShouldExit && !Bot.Player.Alive)
+                {
+                    if (Bot.Player.Alive)
+                    {
+                        Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+                        Bot.Sleep(1000);
+                        Core.Jump("r7", "Left");
+                        Bot.Wait.ForCellChange("r7");
+                        break;
+                    }
+                    else
+                        Bot.Sleep(1000);
+                }
 
                 if (Bot.Map.Name != "icestormarena")
                 {
@@ -625,9 +665,19 @@ public class CoreFarms
         // Farming between levels 25-30
         while (!Bot.ShouldExit && Bot.Player.Level >= 25 && Bot.Player.Level < 30)
         {
-            if (!Bot.Player.Alive)
-                Core.Sleep();
-            Core.ByPassCheck();
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
+            {
+                if (Bot.Player.Alive)
+                {
+                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+                    Bot.Sleep(1000);
+                    Core.Jump("r10", "Left");
+                    Bot.Wait.ForCellChange("cell");
+                    break;
+                }
+                else
+                    Bot.Sleep(1000);
+            }
 
             if (Bot.Map.Name != "icestormarena")
             {
@@ -656,9 +706,19 @@ public class CoreFarms
             Core.RegisterQuests(6629);
             while (!Bot.ShouldExit && Bot.Player.Level >= 30 && Bot.Player.Level < 35)
             {
-                if (!Bot.Player.Alive)
-                    Core.Sleep();
-                Core.ByPassCheck();
+                while (!Bot.ShouldExit && !Bot.Player.Alive)
+                {
+                    if (Bot.Player.Alive)
+                    {
+                        Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+                        Bot.Sleep(1000);
+                        Core.Jump("r11", "Left");
+                        Bot.Wait.ForCellChange("r11");
+                        break;
+                    }
+                    else
+                        Bot.Sleep(1000);
+                }
 
                 if (Bot.Map.Name != "icestormarena")
                 {
@@ -687,9 +747,19 @@ public class CoreFarms
         // Farming between levels 35-50
         while (!Bot.ShouldExit && Bot.Player.Level >= 35 && Bot.Player.Level < 50)
         {
-            if (!Bot.Player.Alive)
-                Core.Sleep();
-            Core.ByPassCheck();
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
+            {
+                if (Bot.Player.Alive)
+                {
+                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+                    Bot.Sleep(1000);
+                    Core.Jump("r14", "Left");
+                    Bot.Wait.ForCellChange("cell");
+                    break;
+                }
+                else
+                    Bot.Sleep(1000);
+            }
 
             if (Bot.Map.Name != "icestormarena")
             {
@@ -711,9 +781,19 @@ public class CoreFarms
         // Farming between levels 50-61
         while (!Bot.ShouldExit && Bot.Player.Level >= 50 && Bot.Player.Level < 61)
         {
-            if (!Bot.Player.Alive)
-                Core.Sleep();
-            Core.ByPassCheck();
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
+            {
+                if (Bot.Player.Alive)
+                {
+                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+                    Bot.Sleep(1000);
+                    Core.Jump("r16", "Left");
+                    Bot.Wait.ForCellChange("cell");
+                    break;
+                }
+                else
+                    Bot.Sleep(1000);
+            }
 
             Core.CanWeAggro();
             if (Bot.Map.Name != "icestormarena")
@@ -741,9 +821,19 @@ public class CoreFarms
             {
                 while (!Bot.ShouldExit && Bot.Player.Level >= 61 && Bot.Player.Level < 75)
                 {
-                    if (!Bot.Player.Alive)
-                        Core.Sleep();
-                    Core.ByPassCheck();
+                    while (!Bot.ShouldExit && !Bot.Player.Alive)
+                    {
+                        if (Bot.Player.Alive)
+                        {
+                            Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+                            Bot.Sleep(1000);
+                            if (Bot.Player.Cell != "r17")
+                                Core.Jump("r17", "Left");
+                            break;
+                        }
+                        else
+                            Bot.Sleep(1000);
+                    }
 
                     if (Bot.Map.Name != "icestormarena")
                         Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
@@ -765,8 +855,18 @@ public class CoreFarms
                 Core.RegisterQuests(3991, 3992);
                 while (!Bot.ShouldExit && Bot.Player.Level >= 61 && Bot.Player.Level < 75)
                 {
-                    if (!Bot.Player.Alive)
-                        Core.Sleep();
+                    while (!Bot.ShouldExit && !Bot.Player.Alive)
+                    {
+                        if (Bot.Player.Alive)
+                        {
+                            Bot.Sleep(1000);
+                            if (Bot.Player.Cell != "r2")
+                                Core.Jump("r2", "center");
+                            break;
+                        }
+                        else
+                            Bot.Sleep(1000);
+                    }
 
                     if (Bot.Map.Name != "battlegrounde")
                         Core.Join("battlegrounde", publicRoom: Core.PrivateRooms);
@@ -786,8 +886,24 @@ public class CoreFarms
         // Farming between levels 75-100
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player.Alive)
-                Core.Sleep();
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
+            {
+                if (Bot.Player.Alive)
+                {
+                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+                    Bot.Sleep(1000);
+                    if (Bot.Player.Cell != "r2")
+                        if (Bot.Player.Cell != (Core.IsMember
+                ? "r13"
+                : "r2"))
+                            Core.Jump(Core.IsMember
+                            ? "r13"
+                            : "r2", "Left");
+                    break;
+                }
+                else
+                    Bot.Sleep(1000);
+            }
 
             if (!rankUpClass && Bot.Player.Level >= level)
                 break;
