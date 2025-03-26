@@ -10020,7 +10020,7 @@
       "army"
     ],
     "path": "Army/ArmyNulgath/ArmyBloodyChaos.cs",
-    "size": 7326,
+    "size": 7379,
     "fileName": "ArmyBloodyChaos.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/ArmyNulgath/ArmyBloodyChaos.cs"
   },
@@ -27875,6 +27875,40 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Good/BLoD/IndividualBlindingWeapons/BlindingBowofDestiny.cs"
   },
   {
+    "name": "BlindingMaceofDestiny",
+    "description": "This bot will do the entire farm for the Blinding Mace of Destiny *Note*",
+    "tags": [
+      "BLOD",
+      "blinding",
+      "mace",
+      "destiny",
+      "undead",
+      "75",
+      "damage",
+      "good",
+      "soul searching",
+      "minecrafting",
+      "metals",
+      "spirit orb",
+      "aura",
+      "loyal",
+      "blinding",
+      "bright",
+      "brilliant",
+      "weapon kit",
+      "finding fragments",
+      "bone some dust",
+      "essential essences",
+      "light merge",
+      "blinding light fragments",
+      "blinding mace of destiny"
+    ],
+    "path": "Good/BLoD/IndividualBlindingWeapons/BlindingMaceofDestiny.cs",
+    "size": 1062,
+    "fileName": "BlindingMaceofDestiny.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Good/BLoD/IndividualBlindingWeapons/BlindingMaceofDestiny.cs"
+  },
+  {
     "name": "BlindingBladeofDestiny",
     "description": "This bot will do the entire farm for the Blinding Blade of Destiny *Note*",
     "tags": [
@@ -27941,40 +27975,6 @@
     "size": 1074,
     "fileName": "BlindingScytheofDestiny.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Good/BLoD/IndividualBlindingWeapons/BlindingScytheofDestiny.cs"
-  },
-  {
-    "name": "BlindingMaceofDestiny",
-    "description": "This bot will do the entire farm for the Blinding Mace of Destiny *Note*",
-    "tags": [
-      "BLOD",
-      "blinding",
-      "mace",
-      "destiny",
-      "undead",
-      "75",
-      "damage",
-      "good",
-      "soul searching",
-      "minecrafting",
-      "metals",
-      "spirit orb",
-      "aura",
-      "loyal",
-      "blinding",
-      "bright",
-      "brilliant",
-      "weapon kit",
-      "finding fragments",
-      "bone some dust",
-      "essential essences",
-      "light merge",
-      "blinding light fragments",
-      "blinding mace of destiny"
-    ],
-    "path": "Good/BLoD/IndividualBlindingWeapons/BlindingMace.cs",
-    "size": 1062,
-    "fileName": "BlindingMace.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Good/BLoD/IndividualBlindingWeapons/BlindingMace.cs"
   },
   {
     "name": "BlindingBroadswordofDestiny",
