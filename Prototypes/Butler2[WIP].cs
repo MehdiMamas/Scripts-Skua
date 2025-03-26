@@ -113,7 +113,8 @@ public class Butler2
         if (Bot.Player.Level < 100)
             Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json"); // level bypass
 
-        Core.EquipClass(Bot.Config!.Get<ClassType>("classType"));
+        if (Bot.Config!.Get<ClassType>("classType") != ClassType.None)
+            Core.EquipClass(Bot.Config!.Get<ClassType>("classType"));
         StartButler(playerName);
         Bot.Events.PlayerAFK += PlayerAFK;
         Bot.Events.ExtensionPacketReceived += MapHandler;
