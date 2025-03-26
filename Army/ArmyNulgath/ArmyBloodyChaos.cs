@@ -44,7 +44,8 @@ public class ArmyBloodyChaos
         Core.SetOptions(false);
     }
 
-    public void Setup(Cell mob, int quant = 100)
+    // Change quant to 100 if u wish for it to stop
+    public void Setup(Cell mob, int quant = 1000)
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
