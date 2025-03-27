@@ -104,6 +104,7 @@ public class FarmAllDailies
             Daily.BreakIntotheHoard(false, false);
             Daily.EldenRuby();
             Daily.NCSGem();
+            Daily.EnchantedDarkBlood();
             Daily.MadWeaponSmith();
             Daily.CyserosSuperHammer();
             Daily.BrightKnightArmor();
