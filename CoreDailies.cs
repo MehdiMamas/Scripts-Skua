@@ -1011,6 +1011,17 @@ public class CoreDailies
         Core.ToBank("Compass Rose Skull", "Obsessor Captain");
     }
 
+    public void EnchantedDarkBlood(int quant = 10)
+    {
+        Core.Logger("Daily: Enchanted Dark Blood");
+        if (Core.CheckInventory("Enchanted Dark Blood", quant))
+            return;
+        if (!CheckDailyv2(2677, true, true, "Enchanted Dark Blood"))
+            return;
+        Core.EquipClass(ClassType.Farm);
+        Core.HuntMonsterQuest(2677, "falguard", "Chaonslaught Caster", true);
+    }
+
 
 #nullable enable
     #region Friendship
