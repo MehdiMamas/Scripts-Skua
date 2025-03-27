@@ -537,7 +537,7 @@
       "all"
     ],
     "path": "Dailies/0AllDailies.cs",
-    "size": 4404,
+    "size": 4445,
     "fileName": "0AllDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Dailies/0AllDailies.cs"
   },
@@ -20516,6 +20516,30 @@
     "size": 3973,
     "fileName": "GooseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/GooseMerge.cs"
+  },
+  {
+    "name": "Chaos Militia Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Chaos Militia Merge [1890] in /crownsreach",
+    "tags": [
+      "chaos",
+      "militia",
+      "merge",
+      "crownsreach",
+      "chaotic",
+      "savage",
+      "morph",
+      "",
+      "skullcap",
+      "hammer",
+      "accoutrements",
+      "mage",
+      "robe",
+      "iaste"
+    ],
+    "path": "Other/MergeShops/ChaosMilitiaMerge.cs",
+    "size": 6244,
+    "fileName": "ChaosMilitiaMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ChaosMilitiaMerge.cs"
   },
   {
     "name": "EaglesReachArmoryMerge",
