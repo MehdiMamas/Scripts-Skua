@@ -281,6 +281,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Dailies/PowerGem.cs"
   },
   {
+    "name": "Enchanted Dark Blood",
+    "description": "This script will complete the daily quest for Enchanted Dark Blood.",
+    "tags": [
+      "daily",
+      "dark blood",
+      "darkblood",
+      "enchanted dark blood",
+      "falguard",
+      "windren",
+      "iaste",
+      "iaste armor"
+    ],
+    "path": "Dailies/EnchantedDarkBlood.cs",
+    "size": 644,
+    "fileName": "EnchantedDarkBlood.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Dailies/EnchantedDarkBlood.cs"
+  },
+  {
     "name": "NCS Gem",
     "description": "This script will complete the daily quest for NCS Gem.",
     "tags": [
