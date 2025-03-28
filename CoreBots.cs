@@ -8609,9 +8609,53 @@ public class CoreBots
         OTM_Write(internalName);
         return yesAndNo && toReturn == true;
     }
-    private readonly static string OTM_File = Path.Combine(ClientFileSources.SkuaDIR, "OneTimeMessages.txt");
-    private bool OTM_Contains(string line) => File.Exists(OTM_File) && File.ReadAllLines(OTM_File).Contains(line);
-    private void OTM_Write(string line) => WriteFile(OTM_File, File.Exists(OTM_File) ? File.ReadAllLines(OTM_File).Append(line).ToArray() : new[] { line });
+
+    private static readonly string OTM_File = GetOTMFilePath();
+
+    private static string GetOTMFilePath()
+    {
+        string baseDir = string.IsNullOrWhiteSpace(ClientFileSources.SkuaDIR)
+            ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Skua") // Ensure it's within Documents
+            : ClientFileSources.SkuaDIR;
+
+        string fullPath = Path.Combine(baseDir, "OneTimeMessages.txt");
+
+        return Path.GetFullPath(fullPath); // Ensure it's absolute
+    }
+
+    private static readonly object _fileLock = new(); // Lock object for thread safety
+
+    private bool OTM_Contains(string line)
+    {
+        if (!File.Exists(OTM_File)) return false;
+
+        lock (_fileLock) // Prevent concurrent read/write issues
+        {
+            return File.ReadLines(OTM_File).Contains(line);
+        }
+    }
+
+    private void OTM_Write(string line)
+    {
+        string dir = Path.GetDirectoryName(OTM_File) ?? throw new InvalidOperationException("Invalid file path.");
+        if (!Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
+
+        lock (_fileLock)
+        {
+            try
+            {
+                using StreamWriter writer = File.AppendText(OTM_File);
+                writer.WriteLine(line);
+            }
+            catch (Exception ex)
+            {
+                Logger($"[OTM ERROR] Failed to write to '{OTM_File}': {ex.Message}", "One Time-Only Message", false);
+            }
+        }
+    }
+
+
 
     #endregion
 
