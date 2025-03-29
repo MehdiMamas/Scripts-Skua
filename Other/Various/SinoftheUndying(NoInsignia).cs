@@ -83,8 +83,8 @@ public class SinoftheSinoftheUndyingNoInsignia
         // Broke Chain x 20
         if (!Core.CheckInventory("Broken Chain", 150))
         {
-            Core.FarmingLogger("Broken Chain", 20);
-            while (!Bot.ShouldExit && !Core.CheckInventory("Broken Chain", 20))
+            Core.FarmingLogger("Broken Chain", 150);
+            while (!Bot.ShouldExit && !Core.CheckInventory("Broken Chain", 150))
             {
                 Core.HuntMonsterQuest(10115,
                 ("atlaspromenade", "Atlas Light Magus", ClassType.Farm),
