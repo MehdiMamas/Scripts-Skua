@@ -22382,25 +22382,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/DecorateYourSpace.cs"
   },
   {
-    "name": "Sin of the SinoftheUnderworld NoInsignia",
-    "description": "Does the Sin of the SinoftheUnderworld quest upto the \"Atlas Regalia\" item, of which skua cannot get.",
+    "name": "Sin of the SinoftheUndying NoInsignia",
+    "description": "Does the Sin of the SinoftheUndying quest upto the \"Atlas Regalia\" item, of which skua cannot get.",
     "tags": [
       "sin",
       "of",
       "the",
-      "sinoftheunderworld",
+      "sinoftheundying",
       "no",
       "insignia",
       "quest",
       "atlas",
       "regalia",
-      "sin of the sinoftheunderworld",
+      "sin of the sinoftheundying",
       "no insignia",
       "51",
       "fifty one"
     ],
     "path": "Other/Various/SinoftheUndying(NoInsignia).cs",
-    "size": 5304,
+    "size": 5292,
     "fileName": "SinoftheUndying(NoInsignia).cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/SinoftheUndying(NoInsignia).cs"
   },
