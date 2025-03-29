@@ -11,7 +11,7 @@ tags: atlas, falls, gear, merge, atlasfalls, underworld, gatekeeper, galea, flag
 //cs_include Scripts/Story/Legion/AtlasPromenade.cs
 //cs_include Scripts/Story/Legion/AtlasKingdom.cs
 //cs_include Scripts/Story/Legion/AtlasFalls.cs
-//cs_include Scripts/Legion\CoreLegion.cs
+//cs_include Scripts/Legion/CoreLegion.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
