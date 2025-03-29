@@ -15668,6 +15668,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Legion/DageRecruit.cs"
   },
   {
+    "name": "Atlas Falls Story",
+    "description": "This will finish Misaru's questline in /atlasfalls.",
+    "tags": [
+      "story",
+      "quest",
+      "legion",
+      "dage",
+      "atlas",
+      "atlasfalls",
+      "atlas-atlasfalls",
+      "general slaine",
+      "slaine",
+      "atlasfalls"
+    ],
+    "path": "Story/Legion/AtlasFalls.cs",
+    "size": 4632,
+    "fileName": "AtlasFalls.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Legion/AtlasFalls.cs"
+  },
+  {
     "name": "Ravenscar Story",
     "description": "This will finish the Ravenscar Story quests.",
     "tags": [
@@ -22362,6 +22382,29 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/DecorateYourSpace.cs"
   },
   {
+    "name": "Sin of the SinoftheUnderworld NoInsignia",
+    "description": "Does the Sin of the SinoftheUnderworld quest upto the \"Atlas Regalia\" item, of which skua cannot get.",
+    "tags": [
+      "sin",
+      "of",
+      "the",
+      "sinoftheunderworld",
+      "no",
+      "insignia",
+      "quest",
+      "atlas",
+      "regalia",
+      "sin of the sinoftheunderworld",
+      "no insignia",
+      "51",
+      "fifty one"
+    ],
+    "path": "Other/Various/SinoftheUndying(NoInsignia).cs",
+    "size": 5304,
+    "fileName": "SinoftheUndying(NoInsignia).cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/SinoftheUndying(NoInsignia).cs"
+  },
+  {
     "name": "Secret Map Quest",
     "description": "if you own the (rare) beta berserker class, this will do the quest [5516] for the rewards.",
     "tags": [
@@ -22451,6 +22494,29 @@
     "size": 1926,
     "fileName": "ShadowslayerSummoningRitual2.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/ShadowslayerSummoningRitual2.cs"
+  },
+  {
+    "name": "Sin of the SinoftheUnderworld NoInsignia",
+    "description": "Does the Sin of the SinoftheUnderworld quest upto the \"Atlas Regalia\" item, of which skua cannot get.",
+    "tags": [
+      "sin",
+      "of",
+      "the",
+      "sinoftheunderworld",
+      "no",
+      "insignia",
+      "quest",
+      "atlas",
+      "regalia",
+      "sin of the sinoftheunderworld",
+      "no insignia",
+      "51",
+      "fifty one"
+    ],
+    "path": "Other/Various/SinoftheUnderworld(NoInsignia).cs",
+    "size": 5714,
+    "fileName": "SinoftheUnderworld(NoInsignia).cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/SinoftheUnderworld(NoInsignia).cs"
   },
   {
     "name": "UnderworldPirateCasterQuest",
