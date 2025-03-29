@@ -1,7 +1,7 @@
 /*
 name: Sin of the SinoftheUnderworld NoInsignia
-description: Does the Sin of the SinoftheUnderworld quest upto the "Atlas Regalia" item, of which skua cannot get.
-tags: sin, of, the, SinoftheUnderworld, no, insignia, quest, atlas, regalia, sin of the SinoftheUnderworld, no insignia, 51, fifty one
+description: Does the Sin of the SinoftheUnderworld quest upto the "Dage the Evil Insignia" item, of which skua cannot get.
+tags: sin, of, the, SinoftheUnderworld, no, insignia, quest, Dage the Evil Insignia, sin of the SinoftheUnderworld, no insignia, 51, fifty one
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs

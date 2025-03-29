@@ -2978,7 +2978,7 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 29947,
+    "size": 30125,
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -22497,7 +22497,7 @@
   },
   {
     "name": "Sin of the SinoftheUnderworld NoInsignia",
-    "description": "Does the Sin of the SinoftheUnderworld quest upto the \"Atlas Regalia\" item, of which skua cannot get.",
+    "description": "Does the Sin of the SinoftheUnderworld quest upto the \"Dage the Evil Insignia\" item, of which skua cannot get.",
     "tags": [
       "sin",
       "of",
@@ -22506,15 +22506,14 @@
       "no",
       "insignia",
       "quest",
-      "atlas",
-      "regalia",
+      "dage the evil insignia",
       "sin of the sinoftheunderworld",
       "no insignia",
       "51",
       "fifty one"
     ],
     "path": "Other/Various/SinoftheUnderworld(NoInsignia).cs",
-    "size": 5714,
+    "size": 5731,
     "fileName": "SinoftheUnderworld(NoInsignia).cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/SinoftheUnderworld(NoInsignia).cs"
   },
