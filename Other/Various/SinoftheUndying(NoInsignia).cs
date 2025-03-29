@@ -1,7 +1,7 @@
 /*
-name: Sin of the SinoftheUnderworld NoInsignia
-description: Does the Sin of the SinoftheUnderworld quest upto the "Atlas Regalia" item, of which skua cannot get.
-tags: sin, of, the, SinoftheUnderworld, no, insignia, quest, atlas, regalia, sin of the SinoftheUnderworld, no insignia, 51, fifty one
+name: Sin of the SinoftheUndying NoInsignia
+description: Does the Sin of the SinoftheUndying quest upto the "Atlas Regalia" item, of which skua cannot get.
+tags: sin, of, the, SinoftheUndying, no, insignia, quest, atlas, regalia, sin of the SinoftheUndying, no insignia, 51, fifty one
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
