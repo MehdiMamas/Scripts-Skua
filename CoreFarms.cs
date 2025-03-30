@@ -1837,6 +1837,10 @@ public class CoreFarms
                     // Only farm as much gold as needed for this batch
                     Gold(goldNeeded);
 
+                    if (Core.CheckInventory("Gold Voucher 500k", itemsToBuy))
+                        Core.Logger($"Already have {itemsToBuy} Gold Vouchers, skipping purchase.");
+                    else
+                        Core.BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", itemsToBuy);
                     Core.BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", itemsToBuy);
                     Core.EnsureCompleteMulti(8737, itemsNeeded);
                 }
