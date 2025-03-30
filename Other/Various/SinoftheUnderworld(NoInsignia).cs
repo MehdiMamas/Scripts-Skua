@@ -52,7 +52,6 @@ public class SinoftheSinoftheUnderworldNoInsignia
 
     public void GetSword()
     {
-        Core.OneTimeMessage("WARNING", "Please do the Atlas Regalia quest manually, as it is not possible to get it with the bot.");
         Core.AddDrop("Undead Champion Blade", "Corrupted Dragon Slayer", "Wrath of the Legion Blade", "Fatal Keraunos", "Yami no Ronin Katana", "Dual Legion Soul Devourers", "Dage the Evil Insignia", "Sin Of the Underworld");
         AtlasFalls.Storyline();
 

@@ -70,7 +70,18 @@ public class AtlasFallsGearMerge
                 #endregion
 
                 case "Atlas Regalia":
-                    Core.Logger($"{req.Name} requires army, please farm it manually.");
+                    Core.FarmingLogger(req.Name, quant);
+                    if (Core.CheckInventory("Chaos Avenger"))
+                    {
+                        Core.BossClass("Chaos Avenger");
+                        while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                        {
+                            Core.HuntMonsterQuest(10137, "atlasfalls", "King Zedek");
+                            Bot.Wait.ForPickup(req.Name);
+                        }
+                    }
+                    else
+                        Core.Logger($"{req.Name} requires army, please farm it manually.");
                     break;
 
                 case "Arethusa's Black Steel":

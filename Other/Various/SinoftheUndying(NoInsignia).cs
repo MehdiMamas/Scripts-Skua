@@ -52,7 +52,6 @@ public class SinoftheSinoftheUndyingNoInsignia
 
     public void GetSword()
     {
-        Core.OneTimeMessage("WARNING", "Please do the Atlas Regalia quest manually, as it is not possible to get it with the bot.");
         Core.AddDrop("Sin of the Undying", "Atlas Lion Pelt", "Beast Soul", "Broken Chain", "Essence of Wrath", "Essence of Violence", "Essence of Treachery", "Atlas Regalia");
         AtlasFalls.Storyline();
 
@@ -116,7 +115,17 @@ public class SinoftheSinoftheUndyingNoInsignia
 
         if (!Core.CheckInventory("Atlas Regalia", 20))
         {
-            Core.Logger("Bot **Cannot** get Atlas Regalia, please do it manually.");
+            if (Core.CheckInventory("Chaos Avenger"))
+            {
+                Core.BossClass("Chaos Avenger");
+                while (!Bot.ShouldExit && !Core.CheckInventory("Atlas Regalia", 20))
+                {
+                    Core.HuntMonsterQuest(10137, "atlasfalls", "King Zedek");
+                    Bot.Wait.ForPickup("Atlas Regalia");
+                }
+            }
+            else
+                Core.Logger("Atlas Regalia requires Chaos Avenger class.");
         }
         else
         {

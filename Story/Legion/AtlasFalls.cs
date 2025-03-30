@@ -136,13 +136,18 @@ public class AtlasFalls
         }
 
 
-        // ----- dude isnt soloable. ----- //
-        // // 10136 | Dante to Beatrice
-        // if (!Story.QuestProgression(10136))
-        // {
-        //     Core.EquipClass(ClassType.Solo);
-        //     Story.KillQuest(10136, "atlasfalls", UseableMonsters[9]);
-        // }
+        // ----- dude isnt soloable. ----- yes he is
+        // 10136 | Dante to Beatrice
+        if (!Story.QuestProgression(10136))
+        {
+            if (Core.CheckInventory("Chaos Avenger"))
+            {
+                Core.BossClass("Chaos Avenger");
+                Story.KillQuest(10136, "atlasfalls", UseableMonsters[9]);
+            }
+            else Core.Logger("You need to have \"Chaos Avenger\" to kill \"King Zedek\".");
+
+        }
 
     }
 }
