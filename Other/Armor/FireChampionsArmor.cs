@@ -42,8 +42,6 @@ public class FireChampionsArmor
         WFE.WarfuryEmblemFarm(60);
         FlameForgedMetal(10);
         VoidScale(13);
-        //500k's arent in the fca shop
-        Adv.BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", 50);
         Adv.BuyItem("wartraining", 2035, "Fire Champion's Armor", shopItemID: 8759);
     }
 
