@@ -839,7 +839,7 @@ public class CoreFarmerJoe
         };
 
         string[] farmClassesToCheck = new[] {
-           "Legion Revenant", "Archfiend", "Blaze Binder", "Scarlet Sorceress", "Master Ranger",
+           "Legion Revenant", "Blaze Binder", "Archfiend", "Scarlet Sorceress", "Master Ranger",
             "Mage (Rare)", "Mage"
         };
 
