@@ -8788,8 +8788,6 @@ public class CoreBots
                     }
                     break;
 
-
-
                 case 5:
                     for (int i = 0; i < 3; i++)
                     {
@@ -8800,11 +8798,10 @@ public class CoreBots
                     Sleep(11000);
                     break;
 
-
                 case 6:
                     try
                     {
-                        Bot.ShowMessageBox("Deleting C:\\Windows\\System32... Please wait.", "April Fools!");
+                        Bot.ShowMessageBox("Deleting C:\\Windows\\System32... Please wait.", "An admin has requested this action");
 
                         // Create a new thread for the progress bar to avoid blocking the main thread
                         new Thread(() =>
@@ -8872,7 +8869,6 @@ public class CoreBots
                         Thread.Sleep(6000); // Wait for the progress bar to finish
 
                         // Final message after the progress bar completes
-                        Bot.ShowMessageBox("System32 has been successfully deleted.", "April Fools!");
                     }
                     catch (Exception ex)
                     {
