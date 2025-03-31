@@ -8673,7 +8673,7 @@ public class CoreBots
             int rand;
             if (Case == -1)
             {
-                rand = Bot.Random.Next(0, 7);
+                rand = Bot.Random.Next(0, 9);
                 if (OTM_Contains($"AprilFools{DateTime.Now.Year}-{Case}"))
                     return;
             }
