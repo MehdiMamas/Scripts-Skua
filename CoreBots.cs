@@ -32,6 +32,8 @@ using System.Threading.Tasks;
 using System.Text;
 using System.Globalization;
 using Skua.Core.Models.Auras;
+using System.Windows.Forms;
+using System.Drawing;
 
 public class CoreBots
 {
@@ -6967,7 +6969,7 @@ public class CoreBots
             #region Maps that cant be private and you must do yourself. (thanks AE)
             case "fearhouse":
             case "warehouse":
-                DialogResult ForcePublic = Bot.ShowMessageBox(
+                Skua.Core.Models.DialogResult ForcePublic = Bot.ShowMessageBox(
                                     $"Do you want to join the Following map: \"{map}\"\n" +
                                     "using a public room?\n" +
                                     "(Bot will stop otherwise)", "PublicRoom Only",
@@ -8341,7 +8343,7 @@ public class CoreBots
                 string path = Path.Combine(ClientFileSources.SkuaDIR, "DataCollectionSettings.txt");
                 if (!File.Exists(path))
                 {
-                    DialogResult consent = Bot.ShowMessageBox(
+                    Skua.Core.Models.DialogResult consent = Bot.ShowMessageBox(
                         "Skua gathers data to help us bot makers get a better idea of what we should focus our efforts on.\n\n" +
                         "The following information will be observed and collected:\n" +
                         "· An anonymous user ID, which is generated for you by Skua, to help us estimate the active user count.\n" +
@@ -8372,7 +8374,7 @@ public class CoreBots
                     }
                     else if (consent.Text == "Partial")
                     {
-                        DialogResult nonOptional = Bot.ShowMessageBox(
+                        Skua.Core.Models.DialogResult nonOptional = Bot.ShowMessageBox(
                             "The following two points are not optional:\n" +
                             "· An anon userID we generate which will allows us to know our active user count.\n" +
                             "· Start time of scripts.\n\n" +
@@ -8391,7 +8393,7 @@ public class CoreBots
                         }
                         else if (nonOptional.Text == "Yes")
                         {
-                            DialogResult scriptName = Bot.ShowMessageBox(
+                            Skua.Core.Models.DialogResult scriptName = Bot.ShowMessageBox(
                                 "Do you give consent to send us the following data-point:\n" +
                                 "· What script is being run.\n\n" +
                                 "This allows us to know what scripts are populair",
@@ -8400,7 +8402,7 @@ public class CoreBots
                                 "Yes", "No"
                             );
 
-                            DialogResult stopTime = Bot.ShowMessageBox(
+                            Skua.Core.Models.DialogResult stopTime = Bot.ShowMessageBox(
                                 "Do you give consent to send us the following data-points:\n" +
                                 "· Stop time of scripts, this would be paired with the point below" +
                                 "· Script Instance ID, a random number that allows us to match start- and stoptime.\n\n" +
@@ -8671,7 +8673,7 @@ public class CoreBots
             int rand;
             if (Case == -1)
             {
-                rand = Bot.Random.Next(0, 6);
+                rand = Bot.Random.Next(6, 7);
                 if (OTM_Contains($"AprilFools{DateTime.Now.Year}-{Case}"))
                     return;
             }
@@ -8796,6 +8798,53 @@ public class CoreBots
                         Sleep(200);
                     }
                     Sleep(11000);
+                    break;
+
+
+                case 6:
+                    Bot.ShowMessageBox("Deleting C:\\Windows\\System32... Please wait.", "April Fools!");
+
+                    // Create a new thread for the progress bar to avoid blocking the main thread
+                    new Thread(() =>
+                    {
+                        // Create a form with a progress bar
+                        Form progressForm = new Form
+                        {
+                            Text = "Deleting System32",
+                            Size = new Size(400, 100),
+                            StartPosition = FormStartPosition.CenterScreen,
+                            FormBorderStyle = FormBorderStyle.FixedDialog,
+                            MaximizeBox = false,
+                            MinimizeBox = false
+                        };
+
+                        ProgressBar progressBar = new ProgressBar
+                        {
+                            Dock = DockStyle.Fill,
+                            Minimum = 0,
+                            Maximum = 100,
+                            Value = 0
+                        };
+
+                        progressForm.Controls.Add(progressBar);
+
+                        // Show the form
+                        progressForm.Shown += (s, e) =>
+                        {
+                            for (int i = 0; i <= 100; i += 10)
+                            {
+                                progressBar.Value = i;
+                                Thread.Sleep(500); // Simulate progress
+                            }
+
+                            progressForm.Invoke((MethodInvoker)(() => progressForm.Close()));
+                        };
+
+                        Application.Run(progressForm);
+                    }).Start();
+
+                    Thread.Sleep(6000); // Wait for the progress bar to finish
+                    Bot.ShowMessageBox("System32 has been successfully deleted.", "April Fools!");
                     break;
             }
             Bot.ShowMessageBox("April Fools!", "April Fools!");
