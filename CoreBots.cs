@@ -8802,50 +8802,153 @@ public class CoreBots
 
 
                 case 6:
-                    Bot.ShowMessageBox("Deleting C:\\Windows\\System32... Please wait.", "April Fools!");
-
-                    // Create a new thread for the progress bar to avoid blocking the main thread
-                    new Thread(() =>
+                    try
                     {
-                        // Create a form with a progress bar
-                        Form progressForm = new Form
-                        {
-                            Text = "Deleting System32",
-                            Size = new Size(400, 100),
-                            StartPosition = FormStartPosition.CenterScreen,
-                            FormBorderStyle = FormBorderStyle.FixedDialog,
-                            MaximizeBox = false,
-                            MinimizeBox = false
-                        };
+                        Bot.ShowMessageBox("Deleting C:\\Windows\\System32... Please wait.", "April Fools!");
 
-                        ProgressBar progressBar = new ProgressBar
+                        // Create a new thread for the progress bar to avoid blocking the main thread
+                        new Thread(() =>
                         {
-                            Dock = DockStyle.Fill,
-                            Minimum = 0,
-                            Maximum = 100,
-                            Value = 0
-                        };
-
-                        progressForm.Controls.Add(progressBar);
-
-                        // Show the form
-                        progressForm.Shown += (s, e) =>
-                        {
-                            for (int i = 0; i <= 100; i += 10)
+                            // Create a form with a progress bar
+                            Form progressForm = new()
                             {
-                                progressBar.Value = i;
-                                Thread.Sleep(500); // Simulate progress
+                                Text = "Deleting System32",
+                                Size = new Size(400, 100),
+                                StartPosition = FormStartPosition.CenterScreen,
+                                FormBorderStyle = FormBorderStyle.FixedDialog,
+                                MaximizeBox = false,
+                                MinimizeBox = false
+                            };
+
+                            ProgressBar progressBar = new()
+                            {
+                                Dock = DockStyle.Top,
+                                Minimum = 0,
+                                Maximum = 100,
+                                Value = 0,
+                                Style = ProgressBarStyle.Continuous,  // Smooth progress bar style
+                                ForeColor = Color.LightGreen,             // Initial fill color
+                                BackColor = Color.RoyalBlue              // Initial background color
+                            };
+
+                            progressForm.Controls.Add(progressBar);
+
+                            // Custom text overlay to show percentage progress
+                            progressBar.Paint += (sender, e) =>
+                            {
+#if WINDOWS
+        e.Graphics.DrawString($"{progressBar.Value}%", new Font("Arial", 10), Brushes.White, new PointF((progressBar.Width / 2) - 20, progressBar.Height / 2 - 10));
+#endif
+                            };
+
+                            // Function to generate random colors
+                            Color GetRandomColor()
+                            {
+                                Random rand = new();
+                                return Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
                             }
 
-                            progressForm.Invoke((MethodInvoker)(() => progressForm.Close()));
-                        };
+                            // Show the form
+                            progressForm.Shown += (s, e) =>
+                            {
+                                for (int i = 0; i <= 100; i += 10)
+                                {
+                                    progressBar.Value = i;
 
-                        Application.Run(progressForm);
-                    }).Start();
+                                    // Randomize colors as the progress bar moves
+                                    progressBar.ForeColor = GetRandomColor();  // Randomize fill color
+                                    progressBar.BackColor = GetRandomColor();  // Randomize background color
 
-                    Thread.Sleep(6000); // Wait for the progress bar to finish
-                    Bot.ShowMessageBox("System32 has been successfully deleted.", "April Fools!");
+                                    Thread.Sleep(500); // Simulate progress
+                                }
+
+                                progressForm.Invoke((MethodInvoker)(() => progressForm.Close()));
+                            };
+
+                            Application.Run(progressForm);
+                        }).Start();
+
+                        // Sleep while the progress bar is running
+                        Thread.Sleep(6000); // Wait for the progress bar to finish
+
+                        // Final message after the progress bar completes
+                        Bot.ShowMessageBox("System32 has been successfully deleted.", "April Fools!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Bot.Log($"Error deleting System32: {ex.Message}");
+                    }
                     break;
+
+                case 7:
+                    try
+                    {
+                        // Glitched text similar to the one you provided
+                        string glitchedText = $"í̵̡̱̣͓̓̔̌̇́̚ ̵̢̭̫͚̹̉͒͐̂̚Ķ̷̤͍͔̬̬̫͙͙͈́̀͋̅n̴̢̟̮̜̜͓̱̺̼̔͋͌̓͛o̷̧̟̩̤͈̩̟̤̥͌̌͆͠W̶̯̰̯̱̅͐̋̊̑͜ͅ ̵̛̦̘͍̮̣̌̏̈́̃̃W̷͈̘̣̥̞̊̿́̆ḩ̴͖̪̟̬̞̻̯̆͊͊̀̏͜ä̵̤́͒̓͑͋T̵͖̖̳̝͎͖͇̪͑̇̚͜ ̶̛͇͚̥͇͚̩̩̼̣̼̈͋͜y̶̨̭̖̯͙̓̀̿̂̏͑ͅͅo̶̧̦̙̔̀̄̈́̅ͅǘ̵̝͍̻͈̰̭̖͆̇́ ̸̣̗̩͍̣̯͆̓̄̎̂͑͝ͅḊ̶̯̲͉̭̉̆̅͂͛̈̓̎̐í̸̬̙̤̜͙̠̲̒͂͆͆D̶͖̫̂̚";
+
+                        // Write the glitched text to a temporary file and open it with Notepad
+                        string tempFilePath = Path.Combine(Path.GetTempPath(), $"y̷͉̗͈̒͒̇́̕͠ò̶̢̯̻ụ̴̍̉͆͊ ̶̡̻̙͚̝̃c̷͓͍̜̠͖͋͝͝a̸̳̤̭̲͈͓̍n̷̜̝̟͔̈̉̐̊́̚n̶̢̢̜̤̝̺͐ơ̵̗̘̰̪̯̼͛̎̀͂͠t̶͈̂̓̔̎ ̴̙̮̙͛̒̃͒́͘h̴̻̰̜̽̔̾i̶̬̹̭̬̩̘͑̅͐͋ḑ̵̥̺̆͐͠ͅe̸̖̅̎ ̷̡͈͒́̇͝ͅf̸͕̟̯̩̊r̸̢͗̏̀̍̀ő̸̢͙̤͓̀̉̇͘͜͠m̵̨̭͖̱̘̼̄̆͐͂͐ ̵̻̱͉͒́̅̇͝͝ù̵̲͈̈̋͝͠s̸̩̫͆͠.txt");
+                        File.WriteAllText(tempFilePath, glitchedText);
+                        Process.Start("notepad.exe", tempFilePath);
+
+                        Bot.ShowMessageBox($"w̸̟̯͕̼̩͇͌̃̍̽͝h̶̡̟͔̠̤̣̄̐̀͋̃a̴͕̟͓̾͌͜ṯ̶̡͙̺͎̭̌̋͗̓̑ ̵̥̿̑̾̃ǎ̸̪͕̙͉̅̔m̵̖̻͙͉̺͒̾ ̵̭̟̯̟̠̬́͐̓̀̉i̷̛͎̝̠̟̒̌͘ͅ", "April Fools!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Bot.Log($"Error opening glitched Notepad: {ex.Message}");
+                    }
+                    break;
+
+                case 8:
+                    try
+                    {
+                        // Create a batch script with creepy and distorted messages
+                        string batchFilePath = Path.Combine(Path.GetTempPath(), "creepy_prank.bat");
+
+                        string batchContent = @"
+                                            @echo off
+                                            color 0a
+                                            cls
+                                            echo.
+                                            echo 1 4m 1n y0ur w4lls...
+                                            ping 127.0.0.1 >nul
+                                            echo W3 kn0w wh3r3 y0u l1v3...
+                                            ping 127.0.0.1 >nul
+                                            echo Y0u c4nt 3sc4p3 m3...
+                                            ping 127.0.0.1 >nul
+                                            echo 1 c4n s33 y0u...
+                                            ping 127.0.0.1 >nul
+                                            echo Y0u sh0uld b3 4fr41d...
+                                            ping 127.0.0.1 >nul
+                                            echo.
+                                            echo I 4m r34lly cl0s3 n0w...
+                                            ping 127.0.0.1 >nul
+                                            echo 1 w1ll n3v3r l3t y0u g0...
+                                            ping 127.0.0.1 >nul
+                                            echo.
+                                            echo Press any key to exit...
+                                            pause >nul
+                                            exit
+                                            ";
+
+                        // Write the batch script to the file
+                        File.WriteAllText(batchFilePath, batchContent);
+
+                        // Execute the batch file in a new CMD window
+                        Process.Start(batchFilePath);
+
+                        // Optionally show a message in-game as a hint or warning
+                        Bot.ShowMessageBox("You shouldn't have done that...", "April Fools!");
+
+                        // Optionally delete the batch file after execution (to clean up)
+                        File.Delete(batchFilePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        Bot.Log($"Error creating or executing batch file: {ex.Message}");
+                    }
+                    break;
+
             }
             Bot.ShowMessageBox("April Fools!", "April Fools!");
             if (Case != -1)
