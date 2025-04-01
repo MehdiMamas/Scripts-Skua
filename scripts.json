@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 148491,
+    "size": 148543,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 141777,
+    "size": 141929,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -22464,6 +22464,17 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/BetaBerserkerQuest.cs"
   },
   {
+    "name": "UndeadGoat",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Other/Various/UndeadGoat.cs",
+    "size": 3653,
+    "fileName": "UndeadGoat.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/UndeadGoat.cs"
+  },
+  {
     "name": "DeepTrobbleTreasureChest",
     "description": "Does the \"Deep Trobble Treasure Chest\" quest for the rewards [random drops]",
     "tags": [
@@ -23057,7 +23068,7 @@
       "timeinn"
     ],
     "path": "Other/Classes/DragonOfTime.cs",
-    "size": 12640,
+    "size": 12743,
     "fileName": "DragonOfTime.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/DragonOfTime.cs"
   },
