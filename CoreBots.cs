@@ -8665,7 +8665,7 @@ public class CoreBots
 
     private void AprilFools(int Case = -1)
     {
-        if (Case == -1 && DateTime.Now.Date != new DateTime(DateTime.Now.Year, 4, 1).Date && DateTime.Now.Date != new DateTime(DateTime.Now.Year, 4, 2).Date)
+        if (Case == -1 && DateTime.Now.Date != new DateTime(DateTime.Now.Year, 4, 1).Date)
             return;
 
         Bot.Handlers.RegisterOnce(Bot.Random.Next(9000, 21000), Bot =>
