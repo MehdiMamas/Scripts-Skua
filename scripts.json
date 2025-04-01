@@ -5005,6 +5005,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/MeateorHunt.cs"
   },
   {
+    "name": "GoatedAccessories",
+    "description": "This script will optain all rewards from the `Goated Accessories` quest.",
+    "tags": [
+      "goatedaccessories",
+      "goated",
+      "accessories",
+      "goated accessories",
+      "april fools",
+      "seasonal"
+    ],
+    "path": "Seasonal/AprilFools/GoatedAccessories.cs",
+    "size": 2071,
+    "fileName": "GoatedAccessories.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/GoatedAccessories.cs"
+  },
+  {
     "name": "Duplication Error Badge Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Duplication Error Badge Merge [2426] in /ebilart",
     "tags": [
@@ -11261,6 +11277,20 @@
     "size": 987,
     "fileName": "DiabolicalREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/DiabolicalREP.cs"
+  },
+  {
+    "name": "Goat REP",
+    "description": "This script will farm Goat reputation to rank 10.",
+    "tags": [
+      "goat",
+      "rank",
+      "rep",
+      "reputation"
+    ],
+    "path": "Farm/REP/GoatRep.cs",
+    "size": 3036,
+    "fileName": "GoatRep.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/GoatRep.cs"
   },
   {
     "name": "Aegis REP",
