@@ -323,6 +323,8 @@ public class CoreArchMage
         if (Core.CheckInventory(73327, quant))
             return;
 
+        quant -= Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.ID == 73327)?.Quantity ?? 0;
+
         Core.FarmingLogger("Mystic Scribing Kit", quant);
         Core.AddDrop("Mystic Scribing Kit");
 
@@ -388,6 +390,8 @@ public class CoreArchMage
         if (Core.CheckInventory(73333, quant))
             return;
 
+        quant -= Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.ID == 73333)?.Quantity ?? 0;
+
         if (!Bot.Quests.IsUnlocked(8910))
             MysticScribingKit(1);
 
@@ -411,6 +415,8 @@ public class CoreArchMage
     {
         if (Core.CheckInventory(73339, quant))
             return;
+
+        quant -= Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.ID == 73339)?.Quantity ?? 0;
 
         if (!Bot.Quests.IsUnlocked(8911))
             PrismaticEther(1);
