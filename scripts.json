@@ -4894,6 +4894,17 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/3DBattleon.cs"
   },
   {
+    "name": "UndeadGoat",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Seasonal/AprilFools/UndeadGoat.cs",
+    "size": 3738,
+    "fileName": "UndeadGoat.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/UndeadGoat.cs"
+  },
+  {
     "name": "Meateor Shard Merge",
     "description": "This script farms all the materials needed for Meateor Shard Merge in meateortown.",
     "tags": [
@@ -22462,17 +22473,6 @@
     "size": 1393,
     "fileName": "BetaBerserkerQuest.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/BetaBerserkerQuest.cs"
-  },
-  {
-    "name": "UndeadGoat",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Other/Various/UndeadGoat.cs",
-    "size": 3653,
-    "fileName": "UndeadGoat.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/UndeadGoat.cs"
   },
   {
     "name": "DeepTrobbleTreasureChest",
