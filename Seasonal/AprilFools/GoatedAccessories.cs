@@ -53,7 +53,7 @@ public class GoatedAccessories
         Core.RegisterQuests(10155);
         while (!Bot.ShouldExit && !Core.CheckInventory(Rewards, toInv: false))
         {
-            Core.KillMonster("j6cruise", "Frame3", "Left", "*");
+            Core.KillMonster("j6cruise", "Frame3", "Left", "MEGA-GOAT");
         }
         Core.CancelRegisteredQuests();
         Core.ToBank(Rewards);
