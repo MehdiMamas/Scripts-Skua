@@ -56,6 +56,7 @@ public class GoatedAccessories
             Core.KillMonster("j6cruise", "Frame3", "Left", "MEGA-GOAT");
         }
         Core.CancelRegisteredQuests();
+        Core.JumpWait();
         Core.ToBank(Rewards);
     }
 }
