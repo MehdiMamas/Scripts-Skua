@@ -323,8 +323,6 @@ public class CoreArchMage
         if (Core.CheckInventory(73327, quant))
             return;
 
-        quant -= Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.ID == 73327)?.Quantity ?? 0;
-
         Core.FarmingLogger("Mystic Scribing Kit", quant);
         Core.AddDrop("Mystic Scribing Kit");
 
@@ -356,17 +354,6 @@ public class CoreArchMage
                 Core.HuntMonster("gilead", "Mana Elemental", "Mana Core", log: false);
             }
 
-            //Incase they swap it back again:
-
-            // Core.RegisterQuests(3298);
-            // while (!Bot.ShouldExit && !Core.CheckInventory(new[] { "Mystic Shards", "Mystic Quills" }, 49))
-            // {
-            //     Core.HuntMonster("gilead", "Water Elemental", "Water Drop", 5, log: false);
-            //     Core.HuntMonster("gilead", "Fire Elemental", "Flame", 5, log: false);
-            //     Core.HuntMonster("gilead", "Wind Elemental", "Breeze", 5, log: false);
-            //     Core.HuntMonster("gilead", "Earth Elemental", "Stone", 5, log: false);
-            // }
-
             Core.CancelRegisteredQuests();
 
             Core.EquipClass(ClassType.Solo);
@@ -389,8 +376,6 @@ public class CoreArchMage
     {
         if (Core.CheckInventory(73333, quant))
             return;
-
-        quant -= Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.ID == 73333)?.Quantity ?? 0;
 
         if (!Bot.Quests.IsUnlocked(8910))
             MysticScribingKit(1);
@@ -415,8 +400,6 @@ public class CoreArchMage
     {
         if (Core.CheckInventory(73339, quant))
             return;
-
-        quant -= Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.ID == 73339)?.Quantity ?? 0;
 
         if (!Bot.Quests.IsUnlocked(8911))
             PrismaticEther(1);
@@ -455,9 +438,9 @@ public class CoreArchMage
 
         Core.FarmingLogger("Unbound Tome", quant);
 
-        MysticScribingKit(quant);
-        PrismaticEther(quant);
-        ArcaneLocus(quant);
+        MysticScribingKit(quant -= Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Mystic Scribing Kit")?.Quantity ?? 0);
+        PrismaticEther(quant -= Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Prismatic Ether")?.Quantity ?? 0);
+        ArcaneLocus(quant -= Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Arcane Locus")?.Quantity ?? 0);
 
         Core.AddDrop("Unbound Tome");
         while (!Bot.ShouldExit
