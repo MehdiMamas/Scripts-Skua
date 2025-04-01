@@ -48,6 +48,7 @@ public class UndeadGoat
 
     public void Getthestuff(bool rankUpClass = true)
     {
+
         if (Core.CheckInventory("UnUnundead Goat"))
         {
             if (rankUpClass)
@@ -57,7 +58,9 @@ public class UndeadGoat
             return;
         }
 
-
+        if (!Core.isSeasonalMapActive("goatfield"))
+            return;
+            
         if (!Core.isCompletedBefore(10139))
         {
             Core.AddDrop(92935);
