@@ -4894,17 +4894,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/3DBattleon.cs"
   },
   {
-    "name": "UndeadGoat",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Seasonal/AprilFools/UndeadGoat.cs",
-    "size": 3738,
-    "fileName": "UndeadGoat.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/UndeadGoat.cs"
-  },
-  {
     "name": "Meateor Shard Merge",
     "description": "This script farms all the materials needed for Meateor Shard Merge in meateortown.",
     "tags": [
@@ -4965,6 +4954,23 @@
     "size": 1021,
     "fileName": "ArtIficialErrorBadge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/ArtIficialErrorBadge.cs"
+  },
+  {
+    "name": "UnundeadGoat",
+    "description": "This script will do the `Extended Vacation` Quest to acess the `UnundeadGoat`, get the class and rank it.",
+    "tags": [
+      "unundeadgoat",
+      "goatfield",
+      "class",
+      "rank",
+      "farm",
+      "seasonal",
+      "aprilfools"
+    ],
+    "path": "Seasonal/AprilFools/UnundeadGoat.cs",
+    "size": 3903,
+    "fileName": "UnundeadGoat.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AprilFools/UnundeadGoat.cs"
   },
   {
     "name": "Chairman Platinum's Evolving Environmental Art Gallery",
