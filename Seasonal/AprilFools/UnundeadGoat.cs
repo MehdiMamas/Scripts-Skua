@@ -1,7 +1,7 @@
 /*
-name: UndeadGoat
-description: null
-tags: null
+name: UnundeadGoat
+description: This script will do the `Extended Vacation` Quest to acess the `UnundeadGoat`, get the class and rank it.
+tags: UnundeadGoat, goatfield, class, rank, farm, seasonal, aprilfools
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -28,7 +28,7 @@ using Skua.Core.Models;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Shops;
 
-public class UndeadGoat
+public class UnundeadGoat
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
