@@ -51,7 +51,7 @@ public class DragonOfTime
 
     private string[] Extras = { "Dragon of Time Horns", "Dragon of Time Horns + Ponytail", "Dragon of Time Wings + Tail" };
 
-    public void GetDoT(bool rankUpClass = true, bool doExtra = true)
+    public void GetDoT(bool rankUpClass = true, bool doExtra = true, bool DotArmorOnly = false)
     {
         if (doExtra ? Core.CheckInventory(Extras) : Core.CheckInventory("Dragon of Time"))
             return;
@@ -134,7 +134,7 @@ public class DragonOfTime
         }
 
         // Through the Wormhole 7719
-        if (!Story.QuestProgression(7719))
+        if (!Story.QuestProgression(7719) || DotArmorOnly)
         {
             Farm.Experience(40);
             Core.EnsureAccept(7719);
@@ -152,7 +152,9 @@ public class DragonOfTime
 
             Story.ChainQuest(7719);
             Bot.Wait.ForPickup("*");
-            Core.ToBank("Dragon of Time Armor");
+            if (!DotArmorOnly)
+                Core.ToBank("Dragon of Time Armor");
+            else return;
         }
 
         // Rend 7720

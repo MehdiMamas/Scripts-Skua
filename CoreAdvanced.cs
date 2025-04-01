@@ -2998,7 +2998,6 @@ public class CoreAdvanced
                 case "troubador of love":
                 case "unchained rocker":
                 case "unchained rockstar":
-                case "undead goat":
                 case "undead leperchaun":
                 case "undeadslayer":
                 case "unlucky leperchaun":
@@ -3012,6 +3011,7 @@ public class CoreAdvanced
                 case "warriorscythe general":
                 case "witch":
                 default: // If the correct enhancement arent unlocked, or the class in question isnt in the Forge Enhancement Lib, use Awe Enhancements Lib
+                    type = EnhancementType.Lucky;
                     return false;
 
                     #endregion
@@ -3144,7 +3144,6 @@ public class CoreAdvanced
                 case "timekeeper":
                 case "timekiller":
                 case "timeless chronomancer":
-                case "undead goat":
                 case "undead leperchaun":
                 case "undeadslayer":
                 case "underworld chronomancer":
@@ -3239,6 +3238,8 @@ public class CoreAdvanced
                 case "troubador of love":
                 case "unchained rocker":
                 case "unchained rockstar":
+                case "undead goat":
+                case "unundead goat":
                 case "doom metal necro":
                 case "neo metal necro":
                 case "martial artist":

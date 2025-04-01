@@ -1566,6 +1566,12 @@ public class CoreFarms
         int retry = 0;
         while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
         {
+            if (Bot.Map.Name != map)
+            {
+                Core.Join(map);
+                Bot.Wait.ForMapLoad(map);
+            }
+            
             Bot.Shops.Load(shopID);
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);

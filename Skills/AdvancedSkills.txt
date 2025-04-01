@@ -266,7 +266,8 @@ Base = Ultra OmniKnight = 1 | 2 | 3 | 4 = Use if Available
 Base = Underworld Chronomancer = 4 | 2 | 3 | 1 | 1 | 1 | 3 | 1 | 4 | 3 | 1 | 1 | 1 | 3 | 1 | 4 = 250
 Base = Unchained Rocker = 1 | 2 | 3 | 4 = Use if Available
 Base = Unchained Rockstar = 1 | 2 | 3 | 4 = Use if Available
-Base = Undead Goat = 1 | 2 | 3 | 4 = Use if Available
+Base = Undead Goat = 3 | 4H>50s | 2 | 1 = 250
+Base = Unundead Goat = 3 | 4H>50s | 2 | 1 = 250
 Base = Undead Leperchaun = 1 | 2 | 3 | 4 = Use if Available
 Base = UndeadSlayer = 1 | 3 | 2H<50S = 250
 Base = Unlucky Leperchaun = 1 | 2 | 3 | 4 = Use if Available
