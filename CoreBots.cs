@@ -8824,8 +8824,8 @@ public class CoreBots
                                 Maximum = 100,
                                 Value = 0,
                                 Style = ProgressBarStyle.Continuous,  // Smooth progress bar style
-                                ForeColor = Color.LightGreen,             // Initial fill color
-                                BackColor = Color.RoyalBlue              // Initial background color
+                                ForeColor = ColorTranslator.FromHtml("#000100"),           // Initial fill color [Vanta Black]
+                                BackColor = ColorTranslator.FromHtml("#ff073a")          // Initial background color [Neon Red]
                             };
 
                             progressForm.Controls.Add(progressBar);
@@ -8838,25 +8838,16 @@ public class CoreBots
 #endif
                             };
 
-                            // Function to generate random colors
-                            Color GetRandomColor()
-                            {
-                                Random rand = new();
-                                return Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
-                            }
-
                             // Show the form
                             progressForm.Shown += (s, e) =>
                             {
+                                Random progresstimer = new();
+                                int progressTime = progresstimer.Next(1500, 5000); // Randomize the time taken for each step
                                 for (int i = 0; i <= 100; i += 10)
                                 {
                                     progressBar.Value = i;
 
-                                    // Randomize colors as the progress bar moves
-                                    progressBar.ForeColor = GetRandomColor();  // Randomize fill color
-                                    progressBar.BackColor = GetRandomColor();  // Randomize background color
-
-                                    Thread.Sleep(500); // Simulate progress
+                                    Thread.Sleep(progressTime); // Simulate progress
                                 }
 
                                 progressForm.Invoke((MethodInvoker)(() => progressForm.Close()));
