@@ -98,7 +98,7 @@ Farm = Dragon Shinobi = 1 | 2H<30 M>70S | 3M<10S = 250
 Base = Dragonlord = 1 | 2 | 3 | 4 = Use if Available
 Base = Dragonslayer = 1 | 2 | 3 | 4 = Use if Available
 Base = Dragonslayer General = 1 | 2 | 3 | 4 = Use if Available
-Farm = DragonSoul Shinobi = 1 | 2H<30 M>70 | 3M<10 = Use if Available
+Farm = DragonSoul Shinobi = 1 | 2H<30 M>70S | 3H>30 M<10S = Use if Available
 Base = DragonSoul Shinobi = 4H>50 | 3M<70S | 2H<50 M>70S | 1H>50 = 250
 Base = Drakel Warlord = 1 | 2 | 3 | 4 = Use if Available
 Base = Drakkar Knight = 1 | 2 | 3 | 4 = Use if Available
