@@ -3168,6 +3168,7 @@ public class CoreAdvanced
                 case "clawsuit":
                 case "cryomancer mini pet coming soon":
                 case "dark legendary hero":
+                case "dragonsoul shinobi":
                 case "ultra omniknight":
                 case "dark ultra omninight":
                 case "doomknight overlord":
@@ -3215,7 +3216,6 @@ public class CoreAdvanced
                 case "dragon shinobi":
                 case "dragonlord":
                 case "evolved pumpkin lord":
-                case "dragonsoul shinobi":
                 case "glacial berserker":
                 case "grunge rocker":
                 case "guardian":
