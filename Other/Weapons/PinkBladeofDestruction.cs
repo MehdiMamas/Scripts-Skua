@@ -60,7 +60,8 @@ public class PinkBladeOfDestruciton
             Core.HuntMonster("techdungeon", "DoomBorg Guard", "Paladin Armor Scraps", 30, log: false);
             Core.EnsureComplete(7616);
         }
-
+        
+        Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("undergroundlabb", "Ultra BrutalCorn", "Unicorn Essence", 5, false, false);
 
         Core.HuntMonster("undergroundlabb", "Ultra Battle Gem", "Gem Power", 5, false, false);
