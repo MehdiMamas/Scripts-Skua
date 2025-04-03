@@ -42,6 +42,8 @@ public class CoreQOM
         //Preload Quests
         Story.PreLoad(this);
 
+        Core.AddDrop(31052);
+
         //Summon Help
         Story.MapItemQuest(4495, "celestialrealm", 3698);
         Story.KillQuest(4495, "celestialrealm", new[] { "Fallen Knight", "Celestial Bird of Paradise" });
@@ -92,6 +94,7 @@ public class CoreQOM
                 Core.BuyItem("fishing", 356, "Holy Oil");
             Core.HuntMonsterMapID("lostruins", 8, "Cage Key");
             Core.EnsureComplete(4503);
+            Bot.Wait.ForPickup(31052);
         }
 
         //Protect Them
@@ -115,6 +118,16 @@ public class CoreQOM
         }
 
         //Open the Cage
+        if (!Core.CheckInventory(31052))
+        {
+            Core.EnsureAccept(4503);
+            Farm.FishingREP(2);
+            if (!Core.CheckInventory("Holy Oil"))
+                Core.BuyItem("fishing", 356, "Holy Oil");
+            Core.HuntMonsterMapID("lostruins", 8, "Cage Key");
+            Core.EnsureComplete(4503);
+            Bot.Wait.ForPickup(31052);
+        }
         Story.MapItemQuest(4506, "lostruins", 3695);
 
         //Defeat the Infernal Warlord
