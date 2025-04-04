@@ -2264,6 +2264,18 @@ public class CoreAdvanced
                 #endregion Ravenous
 
 
+                #region Lucky - Dauntless - Vim - Lament
+                case "great thief":
+                    if (!uDauntless() || !uVim() || !uLament())
+                        goto default;
+
+                    type = EnhancementType.Lucky;
+                    cSpecial = CapeSpecial.Lament;
+                    wSpecial = WeaponSpecial.Dauntless;
+                    hSpecial = HelmSpecial.Vim;
+                    break;
+                #endregion Lucky - Dauntless - Vim - Penitence
+
                 #region Lucky - Forge - Spiral Carve
                 case "corrupted chronomancer":
                 case "underworld chronomancer":
@@ -2272,7 +2284,6 @@ public class CoreAdvanced
                 case "eternal chronomancer":
                 case "immortal chronomancer":
                 case "dark metal necro":
-                case "great thief":
                     if (!uForgeCape())
                         goto default;
 
