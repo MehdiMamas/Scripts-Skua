@@ -167,6 +167,8 @@ public class InsertNameHeresUltraPrep
 
     public List<IOption> Options = new()
     {
+       CoreBots.Instance.SkipOptions,
+       
         // Player options
         new Option<string>("Player1", "Player 1 name", "Username of Player 1", "Player1"),
         new Option<string>("Player2", "Player 2 name", "Username of Player 2", "Player2"),
