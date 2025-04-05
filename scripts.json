@@ -908,7 +908,7 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 44004,
+    "size": 44461,
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -1430,7 +1430,7 @@
       "me"
     ],
     "path": "Tools/InsertNameHeresUltraPrep.cs",
-    "size": 22031,
+    "size": 19800,
     "fileName": "InsertNameHeresUltraPrep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/InsertNameHeresUltraPrep.cs"
   },
