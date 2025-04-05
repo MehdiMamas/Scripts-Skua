@@ -295,8 +295,7 @@ public class InsertNameHeresUltraPrep
                 if (Bot.Inventory.Contains(Item))
                     continue;
 
-                while (!Bot.ShouldExit && !Bot.Inventory.Contains(Item))
-                    Bot.Wait.ForTrue(() => Bot.Bank.EnsureToInventory(Item), 20);
+                Core.Unbank(Item);
             }
         }
         #endregion  Unbanking Required items
