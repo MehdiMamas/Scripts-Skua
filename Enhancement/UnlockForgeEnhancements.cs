@@ -595,7 +595,17 @@ public class UnlockForgeEnhancements
     public void Acheron()
     {
         if (Core.isCompletedBefore(8820) || !Core.CheckInventory(new[] { 38566, 38567 }, toInv: false))
+        {
+            Core.Logger(Core.isCompletedBefore(8820)
+                ? "Skipped: \"Acheron\" (8820) is already completed."
+                : "Skipped: Required items (Dark Box, Dark Key) are missing from inventory.");
+
+            Core.Logger($"Dark Key: {(Core.CheckInventory(38567, toInv: false) ? "✔️" : "❌")}");
+            Core.Logger($"Dark Box: {(Core.CheckInventory(38566, toInv: false) ? "✔️" : "❌")}");
             return;
+        }
+
+
 
         Core.Logger("Unlocking Enhancement: Acheron");
 
