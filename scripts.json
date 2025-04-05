@@ -5612,6 +5612,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Grenwog(Easter)/BringmetheBLUEEggs!(Weapons).cs"
   },
   {
+    "name": "GrenWogWarren",
+    "description": "This script will complete the questline in grenwogwarren.",
+    "tags": [
+      "grenstory",
+      "seasonal",
+      "grenwogwarren",
+      "easter"
+    ],
+    "path": "Seasonal/Grenwog(Easter)/GrenWogWarren.cs",
+    "size": 2428,
+    "fileName": "GrenWogWarren.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Grenwog(Easter)/GrenWogWarren.cs"
+  },
+  {
     "name": "Berserker Bunny Armor",
     "description": "This will finish the quest to obtain the Berserker Bunny Armor.",
     "tags": [
@@ -5666,6 +5680,34 @@
     "size": 926,
     "fileName": "BringmethePINKEggs!(Cape).cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Grenwog(Easter)/BringmethePINKEggs!(Cape).cs"
+  },
+  {
+    "name": "Grenwog Warrens Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Grenwog Warrens Merge [2571] in /grenwogwarren",
+    "tags": [
+      "grenwog",
+      "warrens",
+      "merge",
+      "grenwogwarren",
+      "lagomorph",
+      "techwear",
+      "tech",
+      "morph",
+      "ears",
+      "techmask",
+      "royal",
+      "graffiti",
+      "wings",
+      "angel",
+      "crown",
+      "punk",
+      "hammer",
+      "hammers"
+    ],
+    "path": "Seasonal/Grenwog(Easter)/GrenwogWarrensMerge.cs",
+    "size": 6564,
+    "fileName": "GrenwogWarrensMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Grenwog(Easter)/GrenwogWarrensMerge.cs"
   },
   {
     "name": "Dance Guru Merge",
