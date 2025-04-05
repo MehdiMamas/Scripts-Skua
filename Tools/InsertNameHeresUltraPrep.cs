@@ -169,13 +169,9 @@ public class InsertNameHeresUltraPrep
     {
         // Player options
         new Option<string>("Player1", "Player 1 name", "Username of Player 1", "Player1"),
-        new Option<string>("Player1_Pet", "Player 1 pet", "Pet of Player 1", "Pet1"),
         new Option<string>("Player2", "Player 2 name", "Username of Player 2", "Player2"),
-        new Option<string>("Player2_Pet", "Player 2 pet", "Pet of Player 2", "Pet2"),
         new Option<string>("Player3", "Player 3 name", "Username of Player 3", "Player3"),
-        new Option<string>("Player3_Pet", "Player 3 pet", "Pet of Player 3", "Pet3"),
         new Option<string>("Player4", "Player 4 name", "Username of Player 4", "Player4"),
-        new Option<string>("Player4_Pet", "Player 4 pet", "Pet of Player 4", "Pet4"),
 
         // Weapon and enhancement options
         new Option<string>("Dauntless", "Dauntless Weapon", "Weapon for Dauntless", ""),
@@ -223,47 +219,10 @@ public class InsertNameHeresUltraPrep
         //bank insigs upto, but not including the required items.
         Core.ToBank(UltraItems[..14]);
 
-        // Dictionary to store players and their associated pets
-        Dictionary<string, string> PlayersAndPets = new();
-
-        // List of player keys
-        var playerKeys = new[] { "Player1", "Player2", "Player3", "Player4" };
-
-        foreach (var playerKey in playerKeys)
-        {
-            var playerName = Bot.Config?.Get<string>(playerKey);
-            var petName = Bot.Config?.Get<string>($"{playerKey}_Pet");
-
-            if (!string.IsNullOrEmpty(playerName) && !string.IsNullOrEmpty(petName))
-                PlayersAndPets.Add(playerName, petName);
-
-            else
-            {
-                Core.Logger($"Player {playerKey} is missing a pet or name.");
-                return;
-            }
-        }
-
         // Retrieve options excluding those related to players
         var blacklistOptions = Options
             .Where(o => !o.Name.StartsWith("Player", StringComparison.OrdinalIgnoreCase))
             .Select(o => Bot.Config!.Get<string>(o.Name));
-
-        // Retrieve the pet associated with the current player
-        var currentPlayerPets = new List<string>();
-        foreach (var kvp in PlayersAndPets)
-        {
-            if (Bot.Player.Username != kvp.Key)
-                continue;
-
-            currentPlayerPets.Add(kvp.Value);
-        }
-
-        // Combine blacklist options and the current player's pets
-        var combinedBlacklist = blacklistOptions.Concat(currentPlayerPets);
-
-        // Bank all items with the generated blacklist
-        BankAllItems.BankAll(true, true, false, string.Join(",", combinedBlacklist));
 
         #region  Unbanking Required items
         // Iterate through options and unbank items for each option except those starting with "player"
@@ -299,8 +258,6 @@ public class InsertNameHeresUltraPrep
                             items.Add("Classic Legion DoomKnight");
                         else
                             items.Add("Legion DoomKnight");
-                        var player1Pet = Bot.Config.Get<string>("Player1_Pet");
-                        if (player1Pet != null) items.Add(player1Pet);
                         break;
                     case "Player2":
                         items.Add("Quantum Chronomancer");
@@ -310,24 +267,15 @@ public class InsertNameHeresUltraPrep
                         else
                             items.Add("Verus DoomKnight");
                         items.Add("StoneCrusher");
-                        var player2Pet = Bot.Config.Get<string>("Player2_Pet");
-                        if (player2Pet != null)
-                            items.Add(player2Pet);
                         break;
                     case "Player3":
                         items.Add("Lord Of Order");
                         items.Add("Legion Revenant");
-                        var player3Pet = Bot.Config.Get<string>("Player3_Pet");
-                        if (player3Pet != null)
-                            items.Add(player3Pet);
                         break;
                     case "Player4":
                         items.Add("ArchPaladin");
                         items.Add("LightCaster");
                         items.Add("Verus DoomKnight");
-                        var player4Pet = Bot.Config.Get<string>("Player4_Pet");
-                        if (player4Pet != null)
-                            items.Add(player4Pet);
                         break;
                 }
                 PlayersandItems.Add(playerName, items);
@@ -466,7 +414,8 @@ public class InsertNameHeresUltraPrep
         // Buy potions and scrolls
         PotionBuyer.INeedYourStrongestPotions(new[] { "Potent Malevolence Elixir" }, new bool[] { true }, 300, true, true);
         Scroll.BuyScroll(Scrolls.Enrage, 1000);
-        Adv.BuyItem("terminatemple", 2328, "Scroll of Life Steal", 99);
+        if (!Core.CheckInventory("Scroll of Life Steal", 99))
+            Adv.BuyItem("terminatemple", 2328, "Scroll of Life Steal", 99 - Bot.Inventory.GetQuantity("Scroll of Life Steal"));
         #endregion  Potions & Scrolls
     }
 }
