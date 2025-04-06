@@ -23,7 +23,7 @@ public class GrenWogWarren
 
     public void Storyline()
     {
-        if (Core.isCompletedBefore(10153))
+        if (Core.isCompletedBefore(10152))
             return;
 
         Story.PreLoad(this);
@@ -77,14 +77,6 @@ public class GrenWogWarren
         {
             Core.HuntMonsterQuest(10152,
                 ("grenwogwarren", UseableMonsters[4], ClassType.Solo));
-        }
-
-
-        // 10153 | Free Cabdury
-        if (!Story.QuestProgression(10153))
-        {
-            Core.HuntMonsterQuest(10153,
-                ("grenwogwarren", UseableMonsters[5], ClassType.Solo));
         }
 
     }
