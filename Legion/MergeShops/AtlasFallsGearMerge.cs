@@ -1,7 +1,7 @@
 /*
 name: Atlas Falls Gear Merge
 description: This bot will farm the items belonging to the selected mode for the Atlas Falls Gear Merge [2568] in /atlasfalls
-tags: atlas, falls, gear, merge, atlasfalls, underworld, gatekeeper, galea, flag, sheathed, alexiares, key, territory, unconquerable, anicetus, keys, elite, lone, wolf, jagged, lupo, pet, azione, solo, legion, necromancer, cowl, sovereign, banner, crown, evanescence, hand, hands
+tags: atlas, falls, gear, merge, atlasfalls, underworld, gatekeeper, galea, flag, sheathed, alexiares, key, territory, unconquerable, anicetus, keys, elite, lone, wolf, jagged, lupo, pet, azione, solo, legion, necromancer, cowl, sovereign, banner, crown, evanescence, hand, hands, hraesvelgr, shield, rider, horns, undead, urla, spear, halberd, ulare, guard, sworn, promised, empowered, cloak, terror, enyo, eclipse, eclipses
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
@@ -36,7 +36,7 @@ public class AtlasFallsGearMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Atlas Regalia", "Arethusa's Black Steel", "Sundered Soul of Atlas", "Atlas Crest", "Legion Token" });
+        Core.BankingBlackList.AddRange(new[] { "Atlas Regalia", "Arethusa's Black Steel", "Sundered Soul of Atlas", "Atlas Crest", "Legion Token"});
         Core.SetOptions();
 
         BuyAllMerge();
@@ -144,5 +144,21 @@ public class AtlasFallsGearMerge
         new Option<bool>("92845", "Dual Evanescence", "Mode: [select] only\nShould the bot buy \"Dual Evanescence\" ?", false),
         new Option<bool>("92849", "Hand of the Legion Sovereign", "Mode: [select] only\nShould the bot buy \"Hand of the Legion Sovereign\" ?", false),
         new Option<bool>("92850", "Hands of the Legion Sovereign", "Mode: [select] only\nShould the bot buy \"Hands of the Legion Sovereign\" ?", false),
+        new Option<bool>("92231", "Hraesvelgr", "Mode: [select] only\nShould the bot buy \"Hraesvelgr\" ?", false),
+        new Option<bool>("92232", "Dual Hraesvelgr", "Mode: [select] only\nShould the bot buy \"Dual Hraesvelgr\" ?", false),
+        new Option<bool>("92237", "Hraesvelgr Shield", "Mode: [select] only\nShould the bot buy \"Hraesvelgr Shield\" ?", false),
+        new Option<bool>("93078", "Underworld Lone Wolf Rider", "Mode: [select] only\nShould the bot buy \"Underworld Lone Wolf Rider\" ?", false),
+        new Option<bool>("92651", "Underworld Lone Wolf Horns", "Mode: [select] only\nShould the bot buy \"Underworld Lone Wolf Horns\" ?", false),
+        new Option<bool>("92663", "Undead Urla Spear", "Mode: [select] only\nShould the bot buy \"Undead Urla Spear\" ?", false),
+        new Option<bool>("92664", "Halberd of Ulare", "Mode: [select] only\nShould the bot buy \"Halberd of Ulare\" ?", false),
+        new Option<bool>("92665", "Underworld Lone Wolf Guard", "Mode: [select] only\nShould the bot buy \"Underworld Lone Wolf Guard\" ?", false),
+        new Option<bool>("92834", "Sworn Legion Sovereign", "Mode: [select] only\nShould the bot buy \"Sworn Legion Sovereign\" ?", false),
+        new Option<bool>("92836", "Promised Legion Sovereign", "Mode: [select] only\nShould the bot buy \"Promised Legion Sovereign\" ?", false),
+        new Option<bool>("92838", "Legion Sovereign Horns", "Mode: [select] only\nShould the bot buy \"Legion Sovereign Horns\" ?", false),
+        new Option<bool>("92840", "Empowered Legion Sovereign Locks", "Mode: [select] only\nShould the bot buy \"Empowered Legion Sovereign Locks\" ?", false),
+        new Option<bool>("92842", "Legion Sovereign Cloak", "Mode: [select] only\nShould the bot buy \"Legion Sovereign Cloak\" ?", false),
+        new Option<bool>("92846", "Terror of Enyo", "Mode: [select] only\nShould the bot buy \"Terror of Enyo\" ?", false),
+        new Option<bool>("92847", "Eclipse of Enyo", "Mode: [select] only\nShould the bot buy \"Eclipse of Enyo\" ?", false),
+        new Option<bool>("92848", "Eclipses of Enyo", "Mode: [select] only\nShould the bot buy \"Eclipses of Enyo\" ?", false),
     };
 }
