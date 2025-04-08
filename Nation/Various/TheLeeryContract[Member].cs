@@ -42,7 +42,10 @@ public class TheLeeryContract
     public void QuestItems(RewardsSelection reward = RewardsSelection.All)
     {
         if (!Core.IsMember)
+        {
+            Core.Logger("You need to be a member to do this quest.");
             return;
+        }
 
         var RewardOptions = Core.EnsureLoad(554).Rewards.Select(x => x.Name).ToArray();
         Core.AddDrop(RewardOptions);
