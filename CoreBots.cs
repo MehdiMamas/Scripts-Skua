@@ -177,9 +177,9 @@ public class CoreBots
         Bot.Lite.CharacterSelectScreen = false;
 
         //adding sommore
-        // Bot.Lite.SmoothBackground = true;
-        // Bot.Lite.ShowMonsterType = true;
-        // Bot.Lite.CustomDropsUI = true;
+        Bot.Lite.SmoothBackground = true;
+        Bot.Lite.ShowMonsterType = true;
+        Bot.Lite.CustomDropsUI = true;
 
         CollectData(changeTo);
 
