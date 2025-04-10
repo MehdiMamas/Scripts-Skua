@@ -2573,7 +2573,18 @@ public class CoreBots
                         && CheckInventory(questData.Requirements.Select(x => x.ID).ToArray())
                         && CheckInventory(questData.AcceptRequirements.Select(x => x.ID).ToArray())))
         {
+            if (itemID == -1 && questData.SimpleRewards.Any())
+            {
+                var availableReward = questData.SimpleRewards
+                    .FirstOrDefault(x => x.ID > 0 && !CheckInventory(x.ID, x.MaxStack, false));
+
+                itemID = availableReward?.ID ?? -1;
+
+                if (itemID != -1 && !Bot.Drops.ToPickupIDs.Contains(itemID))
+                    AddDrop(availableReward.ID);
+            }
             return Bot.Quests.EnsureComplete(questID, itemID);
+
         }
         else
         {
