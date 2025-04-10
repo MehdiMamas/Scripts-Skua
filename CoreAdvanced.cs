@@ -2388,6 +2388,8 @@ public class CoreAdvanced
 
                 #region Lucky - Vainglory - Dauntless|Valiance|Smite - Vim
                 case "yami no ronin":
+                case "martial artist":
+                case "master martial artist":
                     if ((!uDauntless() && !uValiance() && !uSmite()) || !uVainglory() || !uVim())
                         goto default;
 
@@ -3254,6 +3256,7 @@ public class CoreAdvanced
                 case "doom metal necro":
                 case "neo metal necro":
                 case "martial artist":
+                case "master martial artist":
                 case "antique hunter":
                     type = EnhancementType.Lucky;
                     wSpecial = WeaponSpecial.Awe_Blast;
