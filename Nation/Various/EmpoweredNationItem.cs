@@ -121,7 +121,7 @@ public class EmpoweredWeaponsofNulgath
                 Farm.ChronoSpanREP(4);
                 Adv.BuyItem("thespan", 435, "Shadow Warrior");
                 Adv.BuyItem("tercessuinotlim", 1951, "Unmoulded Fiend Essence");
-                Core.EnsureComplete(8700);
+                Core.EnsureComplete(8700, (int)Bot.Config.Get<EmpoweredItems>("EmpoweredWep"));
                 break;
 
             //Empowered Evolved Void Armors 2 8701
@@ -141,7 +141,7 @@ public class EmpoweredWeaponsofNulgath
                 Farm.ChronoSpanREP(4);
                 Adv.BuyItem("thespan", 435, "Shadow Warrior");
                 Adv.BuyItem("tercessuinotlim", 1951, "Unmoulded Fiend Essence");
-                Core.EnsureComplete(8701);
+                Core.EnsureComplete(8701, (int)Bot.Config.Get<EmpoweredItems>("EmpoweredWep"));
                 break;
 
             //Empowered Legacy of Nulgath 8698
@@ -181,7 +181,7 @@ public class EmpoweredWeaponsofNulgath
                 Nation.FarmDiamondofNulgath(600);
                 Nation.FarmGemofNulgath(150);
                 Nation.FarmBloodGem(70);
-                Core.EnsureComplete(8697);
+                Core.EnsureComplete(8697, (int)Bot.Config.Get<EmpoweredItems>("EmpoweredWep"));
                 break;
 
             //Empowered Shadow Spear 8695
@@ -226,17 +226,17 @@ public class EmpoweredWeaponsofNulgath
 
 public enum EmpoweredItems
 {
-    Empowered_Overfiend_Blade,
-    Empowered_Ungodly_Reavers,
-    Empowered_Shadow_Spear,
-    Empowered_Bloodletter,
-    Empowered_Prismatic_Manslayer,
-    Empowered_Prismatic_Manslayers,
-    Empowered_Legacy_of_Nulgath,
-    Empowered_Worshipper_of_Nulgath,
-    Empowered_Evolved_Void,
-    Empowered_Evolved_Fiend,
-    Empowered_Evolved_Blood,
-    Empowered_Evolved_Hex,
-    Empowered_Evolved_Shadow,
+    Empowered_Overfiend_Blade = 70441,
+    Empowered_Ungodly_Reavers = 70442,
+    Empowered_Shadow_Spear = 70443,
+    Empowered_Bloodletter = 70444,
+    Empowered_Prismatic_Manslayer = 70445,
+    Empowered_Prismatic_Manslayers = 70446,
+    Empowered_Legacy_of_Nulgath = 70447,
+    Empowered_Worshipper_of_Nulgath = 70448,
+    Empowered_Evolved_Void = 70449,
+    Empowered_Evolved_Fiend = 70450,
+    Empowered_Evolved_Blood = 70451,
+    Empowered_Evolved_Hex = 70452,
+    Empowered_Evolved_Shadow = 70453,
 };
