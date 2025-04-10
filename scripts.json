@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 361844,
+    "size": 362274,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -12904,7 +12904,7 @@
       "evovled void armor"
     ],
     "path": "Nation/Various/EmpoweredNationItem.cs",
-    "size": 10272,
+    "size": 10535,
     "fileName": "EmpoweredNationItem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/EmpoweredNationItem.cs"
   },
