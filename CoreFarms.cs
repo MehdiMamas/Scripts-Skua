@@ -1513,53 +1513,38 @@ public class CoreFarms
 
     public void Voucher(string Voucher, int quant, string? shopName = null)
     {
+
         string map = "";
         int shopID = 0;
 
         Core.FarmingLogger(Voucher, quant);
         // Map voucher types based on the voucher amount (e.g., 500, 25, 7.5)
-        if (Bot.Shops.Items.Any(x => x != null && x.Name == Voucher))
+
+        switch (Voucher)
         {
-            try
-            {
-                Core.Logger($"Item \"{Voucher}\" in current shop, we'll buy it from here.");
-                map = Bot.Map.Name; // Use current map name
-                shopID = Bot.Shops.ID; // Use current shop ID
-            }
-            catch (Exception ex)
-            {
-                Core.Logger($"Error loading shop: {ex.Message}");
+            case "Gold Voucher 500k":
+            case "Gold Voucher 100k":
+            case "Gold Voucher 200k":
+                map = "alchemyacademy";
+                shopID = 2036;
+                shopName = "Gebo Shop";
+                break;
+
+            case "Gold Voucher 25k":
+                map = "hydrachallenge";
+                shopID = 1597;
+                shopName = "Hydra Merge";
+                break;
+
+            case "Gold Voucher 7k":
+                map = "alchemyacademy";
+                shopID = 2116;
+                shopName = "Fehu Shop";
+                break;
+
+            default:
+                Core.Logger($"Invalid Gold Voucher: {Voucher}");
                 return;
-            }
-        }
-        else
-        {
-            switch (Voucher)
-            {
-                case "Gold Voucher 500k":
-                case "Gold Voucher 100k":
-                case "Gold Voucher 200k":
-                    map = "alchemyacademy";
-                    shopID = 2036;
-                    shopName = "Gebo Shop";
-                    break;
-
-                case "Gold Voucher 25k":
-                    map = "hydrachallenge";
-                    shopID = 1597;
-                    shopName = "Hydra Merge";
-                    break;
-
-                case "Gold Voucher 7k":
-                    map = "alchemyacademy";
-                    shopID = 2116;
-                    shopName = "Fehu Shop";
-                    break;
-
-                default:
-                    Core.Logger($"Invalid Gold Voucher: {Voucher}");
-                    return;
-            }
         }
 
         // Load shop data
@@ -1571,7 +1556,7 @@ public class CoreFarms
                 Core.Join(map);
                 Bot.Wait.ForMapLoad(map);
             }
-            
+
             Bot.Shops.Load(shopID);
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
