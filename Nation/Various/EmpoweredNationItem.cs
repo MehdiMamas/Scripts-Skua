@@ -108,9 +108,17 @@ public class EmpoweredWeaponsofNulgath
             //Empowered Evolved Void Armors 1 8700
             case EmpoweredItems.Empowered_Evolved_Fiend:
             case EmpoweredItems.Empowered_Evolved_Void:
-                if (!Core.CheckInventory(new[] { "Evolved Fiend Of Nulgath", "Evolved Void Of Nulgath" }))
-                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
-
+                if (!Core.CheckInventory(
+                        Bot.Config?.Get<EmpoweredItems>("EmpoweredWep") switch
+                        {
+                            EmpoweredItems.Empowered_Evolved_Fiend => "Evolved Fiend Of Nulgath",
+                            EmpoweredItems.Empowered_Evolved_Void => "Evolved Void Of Nulgath",
+                            _ => null
+                        }))
+                {
+                    Core.Logger("Missing required item. Bot cannot continue", messageBox: true, stopBot: true);
+                    break;
+                }
                 Core.EnsureAccept(8700);
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
@@ -128,9 +136,18 @@ public class EmpoweredWeaponsofNulgath
             case EmpoweredItems.Empowered_Evolved_Blood:
             case EmpoweredItems.Empowered_Evolved_Shadow:
             case EmpoweredItems.Empowered_Evolved_Hex:
-                if (!Core.CheckInventory(new[] { "Evolved Hex of Nulgath", "Evolved Shadow of Nulgath", "Evolved Blood of Nulgath" }))
-                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
-
+                if (!Core.CheckInventory(
+                        Bot.Config?.Get<EmpoweredItems>("EmpoweredWep") switch
+                        {
+                            EmpoweredItems.Empowered_Evolved_Blood => "Evolved Blood of Nulgath",
+                            EmpoweredItems.Empowered_Evolved_Shadow => "Evolved Shadow of Nulgath",
+                            EmpoweredItems.Empowered_Evolved_Hex => "Evolved Hex of Nulgath",
+                            _ => null
+                        }))
+                {
+                    Core.Logger("Missing required item. Bot cannot continue", messageBox: true, stopBot: true);
+                    break;
+                }
                 Core.EnsureAccept(8701);
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
@@ -172,8 +189,16 @@ public class EmpoweredWeaponsofNulgath
             //Empowered Prismatic Manslayers 8697
             case EmpoweredItems.Empowered_Prismatic_Manslayer:
             case EmpoweredItems.Empowered_Prismatic_Manslayers:
-                if (!Core.CheckInventory(new[] { "Taro's Prismatic Manslayer", "Taro's Dual Prismatic Manslayers" }) || !Core.IsMember)
-                    Core.Logger($"Missing required items or your not a member. Bot cannot continue", messageBox: true, stopBot: true);
+                if (!Core.CheckInventory(
+                        Bot.Config?.Get<EmpoweredItems>("EmpoweredWep") == EmpoweredItems.Empowered_Prismatic_Manslayer
+                            ? "Taro's Prismatic Manslayer"
+                            : "Taro's Dual Prismatic Manslayers")
+                    || !Core.IsMember)
+                {
+                    Core.Logger("Required item not found or you're not a member. Bot cannot continue", messageBox: true, stopBot: true);
+                    break;
+                }
+
 
                 Core.EnsureAccept(8697);
                 Nation.SwindleBulk(400);
