@@ -2030,7 +2030,7 @@
   },
   {
     "name": "WarMonger",
-    "description": "Does the Quests from the Trainrs in /Trainers",
+    "description": "Does the Quests from the Trainers in /Trainers",
     "tags": [
       "trainers",
       "quests",
@@ -2043,7 +2043,7 @@
       "warlord"
     ],
     "path": "Story/TrainersStory.cs",
-    "size": 8267,
+    "size": 8268,
     "fileName": "TrainersStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/TrainersStory.cs"
   },
