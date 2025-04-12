@@ -58,7 +58,7 @@ public class MeateorHunt
         if (!Story.QuestProgression(8616))
         {
             Core.EnsureAccept(8616);
-            Core.KillMonster("Uppercity", "r2", "Left", 249, "Nested Freggment", 8);
+            Core.KillMonster("Uppercity", "r2", "Left", "Chaotic Draconian", "Nested Freggment", 8);
             Core.EnsureComplete(8616);
         }
 
