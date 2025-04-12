@@ -65,14 +65,14 @@ public class HarleysMerge
                 case "Harley's Reinforced Steel":
 
 
-                    if (!Core.CheckInventory(new[] { "ArchPaladin", "Chaos Avenger" }, any: true))
+                    if (!Core.CheckInventory(new[] { "ArchPaladin", "Chaos Avenger", "Verus DoomKnight", "Void Highlord", "Void Highlord (IoDA)" }, any: true))
                     {
-                        Core.Logger("You need to have the ArchPaladin or Chaos Avenger class to farm this item... good luck killing it", "**WARNING**");
-                        Core.EquipClass(ClassType.Solo);
+                        Core.Logger("These Classes are not required, but making killing the boss... possible atleast solo: AP/VDk/CAV/VHL. if you dont have *any* of them... good luck killing it", "**WARNING**");
+                        Core.Logger($"Bot will use {Bot.Player?.CurrentClass} to farm Harley's Reinforced Steel", "WARNING");
                     }
                     else
                     {
-                        foreach (string ClassName in new[] { "Chaos Avenger", "ArchPaladin" })
+                        foreach (string ClassName in new[] { "Chaos Avenger", "Verus DoomKnight", "Void Highlord", "Void Highlord (IoDA)", "ArchPaladin" })
                         {
                             if (Core.CheckInventory(ClassName))
                             {
