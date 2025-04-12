@@ -2029,6 +2029,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ShadowSlayerK.cs"
   },
   {
+    "name": "WarMonger",
+    "description": "Does the Quests from the Trainrs in /Trainers",
+    "tags": [
+      "trainers",
+      "quests",
+      "story",
+      "warmonger",
+      "warrior",
+      "mage",
+      "healer",
+      "rogue",
+      "warlord"
+    ],
+    "path": "Story/TrainersStory.cs",
+    "size": 8267,
+    "fileName": "TrainersStory.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/TrainersStory.cs"
+  },
+  {
     "name": "Shinkansen Story",
     "description": "This will finish the Shinkansen Story.",
     "tags": [
@@ -19047,6 +19066,28 @@
     "size": 9447,
     "fileName": "ArchFiendWarlordMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ArchFiendWarlordMerge.cs"
+  },
+  {
+    "name": "Harleys Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Harleys Merge [2572] in /trainers",
+    "tags": [
+      "harleys",
+      "merge",
+      "trainers",
+      "battleon",
+      "warlord",
+      "grizzled",
+      "eyepatch",
+      "scarred",
+      "banner",
+      "cloak",
+      "warbeast",
+      "armaments"
+    ],
+    "path": "Other/MergeShops/HarleysMerge.cs",
+    "size": 6420,
+    "fileName": "HarleysMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/HarleysMerge.cs"
   },
   {
     "name": "Light Merge",
