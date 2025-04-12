@@ -1,6 +1,6 @@
 /*
 name: WarMonger
-description: Does the Quests from the Trainrs in /Trainers
+description: Does the Quests from the Trainers in /Trainers
 tags: trainers, quests, story, warmonger, warrior, mage, healer, rogue, warlord
 */
 //cs_include Scripts/CoreBots.cs
