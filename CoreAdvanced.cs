@@ -402,6 +402,17 @@ public class CoreAdvanced
 
         matsOnly = mode == 2;
 
+        // For those Who have thousands of items in their bank, this will help to speed up the process of checking if you have the item or not.
+        HashSet<int> uniqueItemIds = new(
+                    new[] {
+                Bot.Bank.Items.Select(item => item.ID),
+                Bot.TempInv.Items.Select(item => item.ID),
+                Bot.House.Items.Select(item => item.ID),
+                Bot.Inventory.Items.Select(item => item.ID)
+                    }.SelectMany(id => id)
+                );
+
+
         List<ShopItem> shopItems = Core.GetShopItems(map, shopID)
                                 .GroupBy(item => new { item.Name, item.ID })
                                 .Select(group =>
