@@ -77,6 +77,8 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/BlazeBeardStory.cs
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/MergeShops/BlazeBeardMerge.cs
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/AlphaPirate.cs
+//cs_include Scripts/Story/Legion/AtlasFalls.cs
+//cs_include Scripts/Legion/MergeShops/AtlasFallsGearMerge.cs
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/PirateClass.cs
 
 //cs_include Scripts/Evil/VordredsArmor.cs
