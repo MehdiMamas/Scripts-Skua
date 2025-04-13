@@ -3,6 +3,8 @@ name: All Classes
 description: This script will get all of the classes that are currently farmable.
 tags: all classes, class, farm, complete, all
 */
+
+ #region  includes
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreDailies.cs
@@ -78,8 +80,11 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/MergeShops/BlazeBeardMerge.cs
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/AlphaPirate.cs
 //cs_include Scripts/Story/Legion/AtlasFalls.cs
+//cs_include Scripts/Story/Legion/AtlasPromenade.cs
+//cs_include Scripts/Story/Legion/AtlasKingdom.cs
 //cs_include Scripts/Legion/MergeShops/AtlasFallsGearMerge.cs
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/PirateClass.cs
+//cs_include Scripts/Story/Legion/SevenCircles(War).cs
 
 //cs_include Scripts/Evil/VordredsArmor.cs
 //cs_include Scripts/Other/Concerts/BattleConcert2023.cs
@@ -189,6 +194,8 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Other/Classes/SovereignOfStorms.cs
 //cs_include Scripts/Other/Classes/Sentinal.cs
 //cs_include Scripts/Other/Classes/MartialArtist.cs
+#endregion includes
+
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
