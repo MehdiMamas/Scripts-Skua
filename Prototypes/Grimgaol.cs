@@ -32,7 +32,6 @@ public class Grimgaol
         // weaponons
         new Option<string>("Valiance", "Weapon: Valiance", "insert name of your Valiance weapon", ""),
         new Option<string>("Dauntless", "Weapon: Dauntless", "insert name of your Dauntless weapon", ""),
-        new Option<string>("Elysium", "Weapon: Elysium", "insert name of your Elysium weapon", ""),
 
         // helm
         new Option<string>("WizHelm", "Helm: WizHelm", "insert name of your WizHelm helm", ""),
@@ -75,7 +74,6 @@ public class Grimgaol
         // Weapons
         Adv.EnhanceItem(Bot.Config.Get<string>("Valiance"), EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Valiance);
         Adv.EnhanceItem(Bot.Config.Get<string>("Dauntless"), EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless);
-        Adv.EnhanceItem(Bot.Config.Get<string>("Elysium"), EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Elysium);
 
         // Helms
         Adv.EnhanceItem(Bot.Config.Get<string>("WizHelm"), EnhancementType.Wizard);
