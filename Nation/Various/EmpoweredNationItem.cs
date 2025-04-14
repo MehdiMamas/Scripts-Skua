@@ -129,7 +129,7 @@ public class EmpoweredWeaponsofNulgath
                 Farm.ChronoSpanREP(4);
                 Adv.BuyItem("thespan", 435, "Shadow Warrior");
                 Adv.BuyItem("tercessuinotlim", 1951, "Unmoulded Fiend Essence");
-                Core.EnsureComplete(8700, (int)Bot.Config.Get<EmpoweredItems>("EmpoweredWep"));
+                Core.EnsureComplete(8700, (int)Bot.Config!.Get<EmpoweredItems>("EmpoweredWep"));
                 break;
 
             //Empowered Evolved Void Armors 2 8701
@@ -158,7 +158,7 @@ public class EmpoweredWeaponsofNulgath
                 Farm.ChronoSpanREP(4);
                 Adv.BuyItem("thespan", 435, "Shadow Warrior");
                 Adv.BuyItem("tercessuinotlim", 1951, "Unmoulded Fiend Essence");
-                Core.EnsureComplete(8701, (int)Bot.Config.Get<EmpoweredItems>("EmpoweredWep"));
+                Core.EnsureComplete(8701, (int)Bot.Config!.Get<EmpoweredItems>("EmpoweredWep"));
                 break;
 
             //Empowered Legacy of Nulgath 8698
@@ -206,7 +206,7 @@ public class EmpoweredWeaponsofNulgath
                 Nation.FarmDiamondofNulgath(600);
                 Nation.FarmGemofNulgath(150);
                 Nation.FarmBloodGem(70);
-                Core.EnsureComplete(8697, (int)Bot.Config.Get<EmpoweredItems>("EmpoweredWep"));
+                Core.EnsureComplete(8697, (int)Bot.Config!.Get<EmpoweredItems>("EmpoweredWep"));
                 break;
 
             //Empowered Shadow Spear 8695
