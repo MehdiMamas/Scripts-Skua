@@ -63,8 +63,15 @@ public class Grimgaol
             Core.Logger("You need to have the following classes: Dragon of Time, Void Highlord, Verus DoomKnight", stopBot: true);
         }
 
+        if (!Core.isCompletedBefore(9467))
+        {
+            Core.Logger("You need to have completed the quest 'The Gaol of Eternal Torment and Misery' before using this script", stopBot: true);
+        }
+
         // Options Check
         CheckConfig();
+
+        Farm.Experience(80);
 
         // Classes
         Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky);
@@ -182,11 +189,10 @@ public class Grimgaol
             Core.Sleep(500);
         }
 
-        Core.EnsureAccept(9467);
-        Core.Sleep(500);
-        Core.EnsureComplete(9467);
+        Core.ChainComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9467) : 9466);
+        Bot.Wait.ForQuestComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9467) : 9466);
+        Core.Sleep(1500);
         Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol{(Core.PrivateRoomNumber > 0 ? "-" + Core.PrivateRoomNumber : "")}%");
-
         Core.Sleep(4000);
         Bot.Wait.ForMapLoad("grimgaol");
     }
