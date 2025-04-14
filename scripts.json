@@ -79,6 +79,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/DarkonDebris2ReconstructedPrerequisites.cs"
   },
   {
+    "name": "Grimgoal",
+    "description": "Goes through teh grimgaol dungeon... Testing Phase",
+    "tags": [
+      "grimgoal",
+      "dungeon",
+      "why",
+      "did",
+      "we",
+      "make",
+      "this",
+      "testing",
+      "WIP",
+      "beta"
+    ],
+    "path": "Prototypes/Grimgaol.cs",
+    "size": 23650,
+    "fileName": "Grimgaol.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Grimgaol.cs"
+  },
+  {
     "name": "Butler",
     "description": "This will follow a player and copy their actions and do attack actions.",
     "tags": [
