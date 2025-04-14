@@ -94,7 +94,7 @@
       "beta"
     ],
     "path": "Prototypes/Grimgaol.cs",
-    "size": 23781,
+    "size": 25278,
     "fileName": "Grimgaol.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
@@ -3463,25 +3463,6 @@
     "size": 3882,
     "fileName": "GachaponMachineQuests.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/GachaponMachineQuests.cs"
-  },
-  {
-    "name": "Grimskull Dungeon Pre Reqs",
-    "description": "This script will complete the quest prereqs to unlock Grimskull Dungeon.",
-    "tags": [
-      "grim",
-      "dungeon",
-      "grimskull",
-      "trolling",
-      "rep",
-      "skullcrusher",
-      "gaol",
-      "grimgaol",
-      "gaolcell"
-    ],
-    "path": "Other/GrimDungeonPreReqs.cs",
-    "size": 2362,
-    "fileName": "GrimDungeonPreReqs.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/GrimDungeonPreReqs.cs"
   },
   {
     "name": "Elemental Dragon Slayer set",
