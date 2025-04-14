@@ -6,7 +6,14 @@ tags: grimgoal, dungeon, why, did, we, make, this, Testing, WIP, beta
 
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/Story/DoomVault.cs
+//cs_include Scripts/Story/DoomVaultB.cs
+//cs_include Scripts/Other/MergeShops/InfernalArenaMerge.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/InfernalArena.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/CelestialArena.cs
+//cs_include Scripts/Story/J6Saga.cs
 using System.Threading.Tasks;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Players;
@@ -19,7 +26,11 @@ public class Grimgaol
     public IScriptInterface Bot => IScriptInterface.Instance;
     public static CoreBots Core => CoreBots.Instance;
     public CoreFarms Farm = new();
+    private CoreStory Story = new();
     public CoreAdvanced Adv = new();
+    private DoomVaultB DVB = new();
+    private InfernalArenaMerge IAM = new();
+    private J6Saga J6 = new();
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "Grimgaol";
@@ -58,20 +69,15 @@ public class Grimgaol
     private void DoGrimGaol()
     {
         // Class Check
-        if (!Core.CheckInventory(new[] { "Dragon of Time", "VOid Highlord", "Verus DoomKnight" }))
+        if (!Core.CheckInventory(new[] { "Dragon of Time", "Void Highlord", "Verus DoomKnight" }))
         {
             Core.Logger("You need to have the following classes: Dragon of Time, Void Highlord, Verus DoomKnight", stopBot: true);
-        }
-
-        if (!Core.isCompletedBefore(9467))
-        {
-            Core.Logger("You need to have completed the quest 'The Gaol of Eternal Torment and Misery' before using this script", stopBot: true);
         }
 
         // Options Check
         CheckConfig();
 
-        Farm.Experience(80);
+        Prereqs();
 
         // Classes
         Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky);
@@ -796,5 +802,47 @@ public class Grimgaol
         }
     }
 
+    private void Prereqs()
+    {
+        if (Core.isCompletedBefore(9465))
+            return;
+
+        Farm.Experience(80);
+        DVB.StoryLine();
+
+        if (!Core.isCompletedBefore(8740))
+        {
+            Core.Logger("You need to get Smite Forge Enhancement, run Unlock Forge Enhancement script first.");
+            return;
+        }
+
+        // Smite the Boulder! (9463)
+        if (!Story.QuestProgression(9463))
+        {
+            Core.EnsureAccept(9463);
+            Adv.BuyItem("forge", 2142, 70990);
+            Core.GetMapItem(12327, map: "gaolcell");
+            Core.EnsureComplete(9463);
+        }
+
+        // Strike the Boulder! (9464)
+        if (!Story.QuestProgression(9464))
+        {
+            IAM.BuyAllMerge("Scythe of Azalith");
+            Core.EnsureAccept(9464);
+            Core.GetMapItem(12328, map: "gaolcell");
+            Core.EnsureComplete(9464);
+        }
+
+        // Smash the Boulder! (9465)
+        if (!Story.QuestProgression(9465))
+        {
+            J6.J6(true);
+            Adv.BuyItem("hyperspace", 194, "J6's Hammer");
+            Core.EnsureAccept(9465);
+            Core.GetMapItem(12329, map: "gaolcell");
+            Core.EnsureComplete(9465);
+        }
+    }
 
 }
