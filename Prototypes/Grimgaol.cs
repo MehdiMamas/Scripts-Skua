@@ -20,6 +20,7 @@ using Skua.Core.Models.Players;
 using Skua.Core.Options;
 using Newtonsoft.Json.Linq;
 using Skua.Core.Models.Monsters;
+using Skua.Core.Models.Items;
 
 public class Grimgaol
 {
@@ -96,6 +97,7 @@ public class Grimgaol
         // Capes
         Adv.EnhanceItem(Bot.Config.Get<string>("Penitence"), EnhancementType.Lucky, CapeSpecial.Penitence);
         Adv.EnhanceItem(Bot.Config.Get<string>("Vainglory"), EnhancementType.Lucky, CapeSpecial.Vainglory);
+        Farm.ToggleBoost(BoostType.Reputation);
 
         while (!Bot.ShouldExit)
         {
@@ -116,6 +118,7 @@ public class Grimgaol
             Core.Sleep(1000);
             Init();
         }
+        Farm.ToggleBoost(BoostType.Reputation, false);
     }
 
     private void Init()
