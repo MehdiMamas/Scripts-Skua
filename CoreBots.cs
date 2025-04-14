@@ -2580,7 +2580,7 @@ public class CoreBots
 
                 itemID = availableReward?.ID ?? -1;
 
-                if (itemID != -1 && !Bot.Drops.ToPickupIDs.Contains(itemID))
+                if (availableReward != null && itemID != -1 && !Bot.Drops.ToPickupIDs.Contains(itemID))
                     AddDrop(availableReward.ID);
             }
             return Bot.Quests.EnsureComplete(questID, itemID);
