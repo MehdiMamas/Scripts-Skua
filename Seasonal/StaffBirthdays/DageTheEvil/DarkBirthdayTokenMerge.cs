@@ -13,7 +13,7 @@ tags: dark, birthday, token, merge, darkbirthday, legion, doomknight, doomblade,
 //cs_include Scripts/Story/Legion/AtlasPromenade.cs
 //cs_include Scripts/Story/Legion/AtlasKingdom.cs
 //cs_include Scripts/Story/Legion/AtlasFalls.cs
-//cs_include Scripts/Legion\MergeShops\AtlasFallsGearMerge.cs
+//cs_include Scripts/Legion/MergeShops/AtlasFallsGearMerge.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;

@@ -21,7 +21,7 @@ tags: Goat, rank, rep, reputation
 //cs_include Scripts/Story/Summer2015AdventureMap/CoreSummer.cs
 //cs_include Scripts/Story/Borgars.cs
 //cs_include Scripts/Story/ElegyofMadness(Darkon)/CoreAstravia.cs
-//cs_include Scripts/Other\Classes\DragonOfTime.cs
+//cs_include Scripts/Other/Classes/DragonOfTime.cs
 
 using Skua.Core.Interfaces;
 public class GoatREP
