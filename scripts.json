@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 362301,
+    "size": 362295,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -77,6 +77,26 @@
     "size": 1810,
     "fileName": "DarkonDebris2ReconstructedPrerequisites.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/DarkonDebris2ReconstructedPrerequisites.cs"
+  },
+  {
+    "name": "Grimgoal",
+    "description": "Goes through teh grimgaol dungeon... Testing Phase",
+    "tags": [
+      "grimgoal",
+      "dungeon",
+      "why",
+      "did",
+      "we",
+      "make",
+      "this",
+      "testing",
+      "WIP",
+      "beta"
+    ],
+    "path": "Prototypes/Grimgaol.cs",
+    "size": 32415,
+    "fileName": "Grimgaol.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
   {
     "name": "Butler",
@@ -3443,25 +3463,6 @@
     "size": 3882,
     "fileName": "GachaponMachineQuests.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/GachaponMachineQuests.cs"
-  },
-  {
-    "name": "Grimskull Dungeon Pre Reqs",
-    "description": "This script will complete the quest prereqs to unlock Grimskull Dungeon.",
-    "tags": [
-      "grim",
-      "dungeon",
-      "grimskull",
-      "trolling",
-      "rep",
-      "skullcrusher",
-      "gaol",
-      "grimgaol",
-      "gaolcell"
-    ],
-    "path": "Other/GrimDungeonPreReqs.cs",
-    "size": 2362,
-    "fileName": "GrimDungeonPreReqs.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/GrimDungeonPreReqs.cs"
   },
   {
     "name": "Elemental Dragon Slayer set",
@@ -12923,7 +12924,7 @@
       "evovled void armor"
     ],
     "path": "Nation/Various/EmpoweredNationItem.cs",
-    "size": 11581,
+    "size": 11584,
     "fileName": "EmpoweredNationItem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/EmpoweredNationItem.cs"
   },

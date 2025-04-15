@@ -481,13 +481,13 @@ public class CoreBots
     }
     private bool scriptFinished = true;
 
-    private bool StopBotEvent(Exception? e)
+    public bool StopBotEvent(Exception? e)
     {
         SetOptions(false);
         return StopBot(e != null);
     }
 
-    private bool CrashDetector(Exception? e)
+    public bool CrashDetector(Exception? e)
     {
         if (e == null || e is OperationCanceledException)
             return scriptFinished;
@@ -5146,12 +5146,12 @@ public class CoreBots
     }
 
 
-    private readonly List<int> KilledMonsters = new();
-    private void CleanKilledMonstersList(string map)
+    public readonly List<int> KilledMonsters = new();
+    public void CleanKilledMonstersList(string map)
         => KilledMonsters.Clear();
-    private void KilledMonsterListener(int monsterMapID)
+    public void KilledMonsterListener(int monsterMapID)
         => KilledMonsters.Add(monsterMapID);
-    private void RespawnListener(dynamic packet)
+    public void RespawnListener(dynamic packet)
     { //%xt%respawnMon%-1%12% (monster map ID is 12 in this example)
         string type = packet["params"].type;
         dynamic data = packet["params"].dataObj;
