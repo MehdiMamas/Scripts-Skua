@@ -4,16 +4,120 @@ description: Goes through teh grimgaol dungeon... Testing Phase
 tags: grimgoal, dungeon, why, did, we, make, this, Testing, WIP, beta
 */
 
+#region includes
+//cs_include Scripts/Chaos/DrakathsArmor.cs
+//cs_include Scripts/Chaos/EternalDrakathSet.cs
+//cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreBots.cs
+//cs_include Scripts/CoreDailies.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/Dailies/LordOfOrder.cs
+//cs_include Scripts/Darkon/CoreDarkon.cs
+//cs_include Scripts/Darkon/Various/PrinceDarkonsPoleaxePreReqs.cs
+//cs_include Scripts/Enhancement/UnlockForgeEnhancements.cs
+//cs_include Scripts/Evil/ADK.cs
+//cs_include Scripts/Evil/NSoD/CoreNSOD.cs
+//cs_include Scripts/Evil/SDKA/CoreSDKA.cs
+//cs_include Scripts/Evil/SepulchuresOriginalHelm.cs
+//cs_include Scripts/Good/ArchPaladin.cs
+//cs_include Scripts/Good/BLoD/CoreBLOD.cs
+//cs_include Scripts/Good/GearOfAwe/ArmorOfAwe.cs
+//cs_include Scripts/Good/GearOfAwe/Awescended.cs
+//cs_include Scripts/Good/GearOfAwe/CoreAwe.cs
+//cs_include Scripts/Good/GearOfAwe/HelmOfAwe.cs
+//cs_include Scripts/Good/Paladin.cs
+//cs_include Scripts/Good/SilverExaltedPaladin.cs
+//cs_include Scripts/Hollowborn/CoreHollowborn.cs
+//cs_include Scripts/Hollowborn/TradingandStuff(single).cs
+//cs_include Scripts/Legion/CoreLegion.cs
+//cs_include Scripts/Legion/HeadOfTheLegionBeast.cs
+//cs_include Scripts/Legion/SwordMaster.cs
+//cs_include Scripts/Legion/YamiNoRonin/CoreYnR.cs
+//cs_include Scripts/Nation/AFDL/NulgathDemandsWork.cs
+//cs_include Scripts/Nation/AFDL/WillpowerExtraction.cs
+//cs_include Scripts/Nation/AssistingCragAndBamboozle[Mem].cs
+//cs_include Scripts/Nation/CoreNation.cs
+//cs_include Scripts/Nation/EmpoweringItems.cs
+//cs_include Scripts/Nation/MergeShops/DilligasMerge.cs
+//cs_include Scripts/Nation/MergeShops/DirtlickersMerge.cs
+//cs_include Scripts/Nation/MergeShops/NationMerge.cs
+//cs_include Scripts/Nation/MergeShops/NulgathDiamondMerge.cs
+//cs_include Scripts/Nation/MergeShops/VoidChasmMerge.cs
+//cs_include Scripts/Nation/MergeShops/VoidRefugeMerge.cs
+//cs_include Scripts/Nation/NationLoyaltyRewarded.cs
+//cs_include Scripts/Nation/VHL/CoreVHL.cs
+//cs_include Scripts/Nation/Various/ArchfiendDeathLord.cs
+//cs_include Scripts/Nation/Various/DragonBlade[mem].cs
+//cs_include Scripts/Nation/Various/GoldenHanzoVoid.cs
+//cs_include Scripts/Nation/Various/JuggernautItems.cs
+//cs_include Scripts/Nation/Various/PrimeFiendShard.cs
+//cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
+//cs_include Scripts/Nation/Various/SwirlingTheAbyss.cs
+//cs_include Scripts/Nation/Various/TarosManslayer.cs
+//cs_include Scripts/Nation/Various/TheLeeryContract[Member].cs
+//cs_include Scripts/Nation/Various/VoidPaladin.cs
+//cs_include Scripts/Nation/Various/VoidSpartan.cs
+//cs_include Scripts/Other/Armor/FireChampionsArmor.cs
+//cs_include Scripts/Other/Armor/MalgorsArmorSet.cs
+//cs_include Scripts/Other/Classes/DragonOfTime.cs
+//cs_include Scripts/Other/Classes/DragonslayerGeneral.cs
+//cs_include Scripts/Other/Classes/Necromancer.cs
+//cs_include Scripts/Other/MergeShops/InfernalArenaMerge.cs
+//cs_include Scripts/Other/MysteriousEgg.cs
+//cs_include Scripts/Other/ShadowDragonDefender.cs
+//cs_include Scripts/Other/WarFuryEmblem.cs
+//cs_include Scripts/Other/Weapons/FortitudeAndHubris.cs
+//cs_include Scripts/Other/Weapons/GoldenBladeOfFate.cs
+//cs_include Scripts/Other/Weapons/PinkBladeofDestruction.cs
+//cs_include Scripts/Other/Weapons/ShadowReaperOfDoom.cs
+//cs_include Scripts/Other/Weapons/VoidAvengerScythe.cs
+//cs_include Scripts/Other/Weapons/WrathofNulgath.cs
+//cs_include Scripts/ShadowsOfWar/CoreSoWMats.cs
+//cs_include Scripts/ShadowsOfWar/MergeShops/DeadLinesMerge.cs
+//cs_include Scripts/ShadowsOfWar/MergeShops/ManaCradleMerge.cs
+//cs_include Scripts/ShadowsOfWar/MergeShops/ShadowflameFinaleMerge.cs
+//cs_include Scripts/ShadowsOfWar/MergeShops/StreamwarMerge.cs
+//cs_include Scripts/ShadowsOfWar/MergeShops/TimekeepMerge.cs
+//cs_include Scripts/ShadowsOfWar/MergeShops/WorldsCoreMerge.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleDelve.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleDelveMerge.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleSiege.cs
+//cs_include Scripts/Story/7DeadlyDragons/Core7DD.cs
+//cs_include Scripts/Story/7DeadlyDragons/Extra/HatchTheEgg.cs
+//cs_include Scripts/Story/BattleUnder.cs
+//cs_include Scripts/Story/Borgars.cs
+//cs_include Scripts/Story/DjinnGate.cs
 //cs_include Scripts/Story/DoomVault.cs
 //cs_include Scripts/Story/DoomVaultB.cs
-//cs_include Scripts/Other/MergeShops/InfernalArenaMerge.cs
-//cs_include Scripts/Story/QueenofMonsters/Extra/InfernalArena.cs
-//cs_include Scripts/Story/QueenofMonsters/Extra/CelestialArena.cs
+//cs_include Scripts/Story/Doomwood/CoreDoomwood.cs
+//cs_include Scripts/Story/DragonFableOrigins.cs
+//cs_include Scripts/Story/ElegyofMadness(Darkon)/CoreAstravia.cs
 //cs_include Scripts/Story/J6Saga.cs
+//cs_include Scripts/Story/Lair.cs
+//cs_include Scripts/Story/Legion/DarkWarLegionandNation.cs
+//cs_include Scripts/Story/Legion/SevenCircles(War).cs
+//cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
+//cs_include Scripts/Story/Nation/Bamboozle.cs
+//cs_include Scripts/Story/Nation/CitadelRuins.cs
+//cs_include Scripts/Story/Nation/Fiendshard.cs
+//cs_include Scripts/Story/Nation/Originul.cs
+//cs_include Scripts/Story/Nation/VoidChasm.cs
+//cs_include Scripts/Story/Nation/VoidRefuge.cs
+//cs_include Scripts/Story/QueenofMonsters/CoreQoM.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/CelestialArena.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/InfernalArena.cs
+//cs_include Scripts/Story/SepulchureSaga/CoreSepulchure.cs
+//cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
+//cs_include Scripts/Story/StarSinc.cs
+//cs_include Scripts/Story/Summer2015AdventureMap/CoreSummer.cs
+//cs_include Scripts/Story/ThirdSpell.cs
+//cs_include Scripts/Story/ThroneofDarkness/CoreToD.cs
+//cs_include Scripts/Story/TowerOfDoom.cs
+//cs_include Scripts/Story/XansLair.cs
+//cs_include Scripts/Story/Yokai.cs
+#endregion includes
+
 using System.Threading.Tasks;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Players;
@@ -32,9 +136,10 @@ public class Grimgaol
     private DoomVaultB DVB = new();
     private InfernalArenaMerge IAM = new();
     private J6Saga J6 = new();
+    private UnlockForgeEnhancements Forge = new();
 
-    public bool DontPreconfigure = true;
     public string OptionsStorage = "Grimgaol";
+    public bool DontSetOptions = true;
     public List<IOption> Options = new()
     {
         // VHL : luck
@@ -57,28 +162,30 @@ public class Grimgaol
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        // Setoptions is disable due to how we'l be using skills, leave it alone ^_^
-        // Core.SetOptions(disableClassSwap: true);
-        Bot.Options.InfiniteRange = true;
-        Bot.Options.SkipCutscenes = true;
+        // Setoptions is disable due to how we'l be using skills, so we have todo it like this:
+        //transfered stuff from core to a void below, it wont affect the script
+        // SetOptions();
 
-        DoGrimGaol();
+        // Options Check
+        CheckConfig();
 
-        // Core.SetOptions(false, disableClassSwap: true);
-    }
+        //Prerequisites
+        Prereqs();
 
-    private void DoGrimGaol()
-    {
         // Class Check
         if (!Core.CheckInventory(new[] { "Dragon of Time", "Void Highlord", "Verus DoomKnight" }))
         {
             Core.Logger("You need to have the following classes: Dragon of Time, Void Highlord, Verus DoomKnight", stopBot: true);
         }
 
-        // Options Check
-        CheckConfig();
+        DoGrimGaol();
 
-        Prereqs();
+        Bot.Stop();
+    }
+
+    private void DoGrimGaol()
+    {
+
 
         // Classes
         Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky);
@@ -800,7 +907,8 @@ public class Grimgaol
             // If the value is null, empty, or still equal to the default (""), log an error and stop the bot
             if (string.IsNullOrEmpty(value))
             {
-                Core.Logger($"[ERROR] Item with enhancement '{label}' missing or unchanged from the default. Please fill this in (if it's not enhanced, we'll do it for you).", stopBot: true);
+                Core.Logger($"The item with enhancement '{key}' is missing. Please enter its exact in-game name (including capitalization). If unsure, use Tools > Grabber > Inventory to find it.", $"Missing Item: {key}", stopBot: true);
+
             }
         }
     }
@@ -813,12 +921,9 @@ public class Grimgaol
         Farm.Experience(80);
         DVB.StoryLine();
 
-        if (!Core.isCompletedBefore(8740))
-        {
-            Core.Logger("You need to get Smite Forge Enhancement, run Unlock Forge Enhancement script first.");
-            return;
-        }
+        Forge.Smite();
 
+        #region Grimgaol Prereqs
         // Smite the Boulder! (9463)
         if (!Story.QuestProgression(9463))
         {
@@ -846,6 +951,53 @@ public class Grimgaol
             Core.GetMapItem(12329, map: "gaolcell");
             Core.EnsureComplete(9465);
         }
+        #endregion Grimgaol Prereqs
     }
 
+    private void SetOptions()
+    {
+        #region SetOptions
+        if (Bot.Config != null && Bot.Config.Options.Contains(CoreBots.Instance.SkipOptions) && !Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
+            Bot.Config.Configure();
+
+        Bot.Events.ScriptStopping += Core.CrashDetector;
+        Bot.Events.MapChanged += Core.CleanKilledMonstersList;
+        Bot.Events.MonsterKilled += Core.KilledMonsterListener;
+        Bot.Events.ExtensionPacketReceived += Core.RespawnListener;
+        Core.ReadCBO();
+
+        Core.IsMember = Core.isUpgraded();
+
+        // Common Options
+        Bot.Options.PrivateRooms = false;
+        Bot.Options.AttackWithoutTarget = false;
+        Bot.Options.SafeTimings = true;
+        Bot.Options.RestPackets = true && Core.ShouldRest;
+        Bot.Options.AutoRelogin = true;
+        Bot.Options.InfiniteRange = true;
+        Bot.Options.SkipCutscenes = true;
+        Bot.Options.QuestAcceptAndCompleteTries = Core.AcceptandCompleteTries;
+        Bot.Drops.RejectElse = true;
+        Bot.Lite.UntargetDead = true;
+        Bot.Lite.UntargetSelf = true;
+        Bot.Lite.ReacceptQuest = false;
+        Bot.Lite.DisableRedWarning = true;
+        Bot.Lite.CharacterSelectScreen = false;
+
+        //adding sommore
+        Bot.Lite.DisableDamageStrobe = true;
+        Bot.Lite.DisableRedWarning = true;
+        Bot.Lite.InvisibleMonsters = false;
+        Bot.Lite.SmoothBackground = true;
+        Bot.Lite.ShowMonsterType = true;
+        Bot.Lite.CustomDropsUI = true;
+
+        if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
+            Bot.Bank.Open();
+        Core.Sleep(1500);
+        Bot.Bank.Load();
+        Bot.Bank.Loaded = true;
+
+        #endregion SetOptionsq
+    }
 }
