@@ -56,10 +56,6 @@ public class SecondSpeakerPrismaticSeams
             Core.Logger("Joining whitemap then back to streamwar to avoid being stuck in private room from doing the story.");
             Core.Join("whitemap");
             Core.PrivateRooms = false;
-        // if (Core.CBOBool("PrivateRooms", out bool _PrivateRooms) && _PrivateRooms)
-        // {
-        //     Core.PrivateRooms = false;
-        // }
         }
 
         Core.Join("streamwar", publicRoom: Bot.Config?.Get<bool>("Use Public Boss") == true);
