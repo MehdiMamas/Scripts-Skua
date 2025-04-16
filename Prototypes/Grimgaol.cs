@@ -145,7 +145,7 @@ public class Grimgaol
         // VHL : luck
         // VDK : luck
         // Dragon of Time : Healer
-        CoreBots.Instance.SkipOptions,
+
         // weaponons
         new Option<string>("Valiance", "Weapon: Valiance", "insert name of your Valiance weapon", ""),
         new Option<string>("Dauntless", "Weapon: Dauntless", "insert name of your Dauntless weapon", ""),
@@ -164,7 +164,7 @@ public class Grimgaol
     {
         // Setoptions is disable due to how we'l be using skills, so we have todo it like this:
         //transfered stuff from core to a void below, it wont affect the script
-        // SetOptions();
+        SetOptions();
 
         // Options Check
         CheckConfig();
@@ -185,8 +185,6 @@ public class Grimgaol
 
     private void DoGrimGaol()
     {
-
-
         // Classes
         Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky);
         Adv.EnhanceItem("Verus DoomKnight", EnhancementType.Lucky);
@@ -1157,8 +1155,6 @@ public class Grimgaol
     private void SetOptions()
     {
         #region SetOptions
-        if (Bot.Config != null && Bot.Config.Options.Contains(CoreBots.Instance.SkipOptions) && !Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
-            Bot.Config.Configure();
 
         Bot.Events.ScriptStopping += Core.CrashDetector;
         Bot.Events.MapChanged += Core.CleanKilledMonstersList;
@@ -1166,7 +1162,7 @@ public class Grimgaol
         Bot.Events.ExtensionPacketReceived += Core.RespawnListener;
         Core.ReadCBO();
 
-        Core.IsMember = Core.isUpgraded();
+        Core.IsMember = Bot.Player.IsMember;
 
         // Common Options
         Bot.Options.PrivateRooms = false;
