@@ -1198,6 +1198,12 @@ public class CoreBots
         }
     }
 
+    public List<string> CategoryStrings = new()
+    {
+        "House",
+        "Wall Item",
+        "Floor Item",
+    };
 
     /// <summary>
     /// Buys a item till you have the desired quantity
@@ -1212,6 +1218,8 @@ public class CoreBots
     {
         _CheckInventorySpace();
         ShopItem? item = parseShopItem(GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.Name.ToLower() == itemName.ToLower() : x.ShopItemID == shopItemID).ToList(), shopID, itemName, shopItemID);
+        if (CategoryStrings.Contains(item?.CategoryString))
+            _CheckHouseSpace();
         _BuyItem(map, shopID, item, quant, Log);
     }
 
@@ -1260,6 +1268,8 @@ public class CoreBots
         DebugLogger(this);
         ShopItem? item = parseShopItem(GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.ID == itemID : x.ShopItemID == shopItemID).ToList(), shopID, itemID.ToString(), shopItemID);
         DebugLogger(this);
+        if (CategoryStrings.Contains(item?.CategoryString))
+            _CheckHouseSpace();
         _BuyItem(map, shopID, item, quant, Log);
     }
 
@@ -1655,6 +1665,30 @@ public class CoreBots
                 Logger($"Banked {prefCount - Bot.Inventory.UsedSlots} items but it still wasn't enough. Please clean the rest of your inventory manually. Stopping the bot.", "BuyItem", true, true);
         }
     }
+
+    private void _CheckHouseSpace()
+    {
+        if (Bot.House.Slots != 0 && Bot.House.FreeSlots <= 0)
+        {
+            int usedBefore = Bot.House.UsedSlots;
+            Logger($"Your house inventory is full [{usedBefore}/{Bot.House.Slots}]. Attempting to bank AC-tagged misc items...", "House");
+
+            BankACMisc();
+
+            int usedAfter = Bot.House.UsedSlots;
+            int freed = usedBefore - usedAfter;
+
+            if (Bot.House.FreeSlots <= 0)
+            {
+                Logger($"Banked {freed} item{(freed != 1 ? "s" : "")} but your house is still full. Please clear space manually. Stopping the bot.", "House", stopBot: true);
+            }
+            else
+            {
+                Logger($"Banked {freed} item{(freed != 1 ? "s" : "")}. {Bot.House.FreeSlots} slot{(Bot.House.FreeSlots != 1 ? "s" : "")} now available.", "House");
+            }
+        }
+    }
+
 
     // private int _CalcBuyQuantity(ShopItem item, int requestedAmount)
     // {
@@ -5978,35 +6012,58 @@ public class CoreBots
     }
 
     /// <summary>
-    /// Banks miscellaneous AC items based on specified conditions and exemptions.
+    /// Banks miscellaneous AC-tagged inventory items and non-equipped House items.
     /// </summary>
     public void BankACMisc()
     {
+        // Items to never bank
+        int[] exemptIDs = { 18927, 38575 }; // Treasure Potion, Dark Potion
 
-        /* put the (ID - ItemName) here vv
-                // 18927 is Treasure Potion
-                // 38575 is Dark Potion
-                */
+        // Allowed categories for inventory items
+        List<ItemCategory> allowedCategories = new()
+    {
+        ItemCategory.Note,
+        ItemCategory.Item,
+        ItemCategory.Resource,
+        ItemCategory.QuestItem
+    };
 
-        // Add extra (Misc) Items that *shouldnt* be banked (seperated by a comma ","),
-        // by their itemid here  vvvvv 
-        int?[] Extras = { 18927, 38575 };
-        List<ItemCategory> whiteList = new() { ItemCategory.Note, ItemCategory.Item, ItemCategory.Resource, ItemCategory.QuestItem };
+        // Optionally include ServerUse if boosts aren't active
+        if (!Bot.Boosts.Enabled && (CBO_Active() || !new[] { "doGoldBoost", "doClassBoost", "doRepBoost", "doExpBoost" }
+            .Any(flag => CBOBool(flag, out bool enabled) && enabled)))
+        {
+            allowedCategories.Add(ItemCategory.ServerUse);
+        }
 
-        // If boosts are not enabled, bank those too
-        if (!Bot.Boosts.Enabled && (CBO_Active() ||
-                !new[] { "doGoldBoost", "doClassBoost", "doRepBoost", "doExpBoost" }.Any(b => CBOBool(b, out bool o) && o)))
-            whiteList.Add(ItemCategory.ServerUse);
+        // --- Inventory: Misc AC items to bank ---
+        var toBank = Bot.Inventory.Items
+            .Where(item =>
+                item is not null &&
+                item.Coins &&
+                !item.Equipped &&
+                allowedCategories.Contains(item.Category) &&
+                !BankingBlackList.Contains(item.Name) &&
+                !exemptIDs.Contains(item.ID))
+            .Select(item => item.ID)
+            .ToArray();
 
-        // Bank AC items based on whitelist, exempt blacklist and treasure potion
-        ToBank(Bot.Inventory.Items
-            .Where(x =>
-                whiteList.Contains(x.Category) &&
-                x.Coins &&
-                !BankingBlackList.Contains(x.Name) &&
-                !Extras.Contains(x.ID))
-            .Select(x => x.ID)
-            .ToArray());
+        if (toBank.Length > 0)
+        {
+            Logger("Banking misc AC items", toBank.Count() + " items");
+            ToBank(toBank);
+        }
+
+        // --- House: Non-equipped items to move to house bank ---
+        var toHouseBank = Bot.House.Items
+            .Where(item => item is not null && !item.Equipped)
+            .Select(item => item.ID)
+            .ToArray();
+
+        if (toHouseBank.Length > 0)
+        {
+            Logger("Banking non-equipped house items", toHouseBank.Count() + " items");
+            ToHouseBank(toHouseBank);
+        }
     }
 
     /// <summary>
