@@ -1658,33 +1658,45 @@ public class CoreBots
     {
         if (Bot.Inventory.Slots != 0 && Bot.Inventory.FreeSlots <= 0)
         {
-            int prefCount = Bot.Inventory.UsedSlots;
-            Logger($"Your inventory is very full [{prefCount}/{Bot.Inventory.Slots}], the bot will now clean it a bit before continuing.", "BuyItem");
+            int usedBefore = Bot.Inventory.UsedSlots;
+            Logger($"Your inventory is full [{usedBefore}/{Bot.Inventory.Slots}]. Attempting to bank AC-tagged misc items...", "_CheckInventorySpace");
+
             BankACMisc();
+
+            int usedAfter = Bot.Inventory.UsedSlots;
+            int freed = usedBefore - usedAfter;
+
             if (Bot.Inventory.FreeSlots <= 0)
-                Logger($"Banked {prefCount - Bot.Inventory.UsedSlots} items but it still wasn't enough. Please clean the rest of your inventory manually. Stopping the bot.", "BuyItem", true, true);
+            {
+                Logger($"Banked {freed} item{(freed != 1 ? "s" : "")} but your inventory is still full. Please clear space manually. Stopping the bot.", "_CheckInventorySpace", stopBot: true);
+            }
+            else
+            {
+                Logger($"Banked {freed} item{(freed != 1 ? "s" : "")}. {Bot.Inventory.FreeSlots} slot{(Bot.Inventory.FreeSlots != 1 ? "s" : "")} now available.", "_CheckInventorySpace");
+            }
         }
     }
+
 
     private void _CheckHouseSpace()
     {
         if (Bot.House.Slots != 0 && Bot.House.FreeSlots <= 0)
         {
             int usedBefore = Bot.House.UsedSlots;
-            Logger($"Your house inventory is full [{usedBefore}/{Bot.House.Slots}]. Attempting to bank AC-tagged misc items...", "House");
+            Logger($"Your house inventory is full [{usedBefore}/{Bot.House.Slots}]. Attempting to bank AC-tagged misc items...", "_CheckHouseSpace");
 
-            BankACMisc();
+            BankACHouseItems();
 
             int usedAfter = Bot.House.UsedSlots;
             int freed = usedBefore - usedAfter;
 
             if (Bot.House.FreeSlots <= 0)
             {
-                Logger($"Banked {freed} item{(freed != 1 ? "s" : "")} but your house is still full. Please clear space manually. Stopping the bot.", "House", stopBot: true);
+                Logger($"Banked {freed} item{(freed != 1 ? "s" : "")} but your house is still full. Please clear space manually. Stopping the bot.", "_CheckHouseSpace", stopBot: true);
             }
             else
             {
-                Logger($"Banked {freed} item{(freed != 1 ? "s" : "")}. {Bot.House.FreeSlots} slot{(Bot.House.FreeSlots != 1 ? "s" : "")} now available.", "House");
+                Logger($"Banked {freed} item{(freed != 1 ? "s" : "")}. {Bot.House.FreeSlots} slot{(Bot.House.FreeSlots != 1 ? "s" : "")} now available.", "_CheckHouseSpace");
             }
         }
     }
@@ -6012,7 +6024,7 @@ public class CoreBots
     }
 
     /// <summary>
-    /// Banks miscellaneous AC-tagged inventory items and non-equipped House items.
+    /// Banks miscellaneous AC-tagged inventory items.
     /// </summary>
     public void BankACMisc()
     {
@@ -6031,9 +6043,7 @@ public class CoreBots
         // Optionally include ServerUse if boosts aren't active
         if (!Bot.Boosts.Enabled && (CBO_Active() || !new[] { "doGoldBoost", "doClassBoost", "doRepBoost", "doExpBoost" }
             .Any(flag => CBOBool(flag, out bool enabled) && enabled)))
-        {
             allowedCategories.Add(ItemCategory.ServerUse);
-        }
 
         // --- Inventory: Misc AC items to bank ---
         var toBank = Bot.Inventory.Items
@@ -6049,11 +6059,16 @@ public class CoreBots
 
         if (toBank.Length > 0)
         {
-            Logger("Banking misc AC items", toBank.Count() + " items");
+            Logger("Banking misc AC items", toBank.Length + " items");
             ToBank(toBank);
         }
+    }
 
-        // --- House: Non-equipped items to move to house bank ---
+    /// <summary>
+    /// Banks miscellaneous AC-tagged non-equipped House items.
+    /// </summary>
+    public void BankACHouseItems()
+    {
         var toHouseBank = Bot.House.Items
             .Where(item => item is not null && !item.Equipped)
             .Select(item => item.ID)
@@ -6061,10 +6076,12 @@ public class CoreBots
 
         if (toHouseBank.Length > 0)
         {
-            Logger("Banking non-equipped house items", toHouseBank.Count() + " items");
+            Logger("Banking non-equipped house items", toHouseBank.Length + " items");
             ToHouseBank(toHouseBank);
         }
     }
+
+
 
     /// <summary>
     /// Banks unenhanced AdventureCoins (AC) gear based on specified whitelist and conditions.
