@@ -22613,6 +22613,17 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/BetaBerserkerQuest.cs"
   },
   {
+    "name": "SecondSpeakerPrismaticSeams",
+    "description": "does the 'Mega Timestream Medals' quest for prismatic seams",
+    "tags": [
+      "null"
+    ],
+    "path": "Other/Various/SecondSpeakerPrismaticSeams.cs",
+    "size": 3420,
+    "fileName": "SecondSpeakerPrismaticSeams.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/SecondSpeakerPrismaticSeams.cs"
+  },
+  {
     "name": "DeepTrobbleTreasureChest",
     "description": "Does the \"Deep Trobble Treasure Chest\" quest for the rewards [random drops]",
     "tags": [
