@@ -5660,6 +5660,27 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Grenwog(Easter)/BerserkerBunnyArmor.cs"
   },
   {
+    "name": "Ultra Moglin Pets Quests",
+    "description": "This script will do all the quests of Moglin Pets you own.",
+    "tags": [
+      "moglin pets",
+      "seasonal",
+      "easter",
+      "quests",
+      "ultra moglin",
+      "pets",
+      "grenwog",
+      "twig",
+      "twilly",
+      "zorbak",
+      "houseguest"
+    ],
+    "path": "Seasonal/Grenwog(Easter)/UltraMoglinQuests.cs",
+    "size": 1801,
+    "fileName": "UltraMoglinQuests.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Grenwog(Easter)/UltraMoglinQuests.cs"
+  },
+  {
     "name": "Grenstory",
     "description": "This script will complete the questline in grenstory.",
     "tags": [
