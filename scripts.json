@@ -5702,6 +5702,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Grenwog(Easter)/BringmethePINKEggs!(Cape).cs"
   },
   {
+    "name": "Battle Bunny Plushies",
+    "description": "This will finish the Cheep Chase quest to obtain the Battle Bunny Plushies.",
+    "tags": [
+      "battle-bunny-plushies",
+      "seasonal",
+      "easter",
+      "battle bunny",
+      "plushie",
+      "plushies",
+      "battle bunny plushie",
+      "valencia",
+      "grenwog"
+    ],
+    "path": "Seasonal/Grenwog(Easter)/BattleBunnyPlushies.cs",
+    "size": 1106,
+    "fileName": "BattleBunnyPlushies.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Grenwog(Easter)/BattleBunnyPlushies.cs"
+  },
+  {
     "name": "Grenwog Warrens Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Grenwog Warrens Merge [2571] in /grenwogwarren",
     "tags": [
