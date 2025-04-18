@@ -321,7 +321,9 @@ public class CoreArchMage
     public void MysticScribingKit(int quant = 1)
     {
         if (Core.CheckInventory(73327, quant))
+        {
             return;
+        }
 
         Core.FarmingLogger("Mystic Scribing Kit", quant);
         Core.AddDrop("Mystic Scribing Kit");
@@ -375,7 +377,9 @@ public class CoreArchMage
     public void PrismaticEther(int quant = 1)
     {
         if (Core.CheckInventory(73333, quant))
+        {
             return;
+        }
 
         if (!Bot.Quests.IsUnlocked(8910))
             MysticScribingKit(1);
@@ -399,7 +403,9 @@ public class CoreArchMage
     public void ArcaneLocus(int quant = 1)
     {
         if (Core.CheckInventory(73339, quant))
+        {
             return;
+        }
 
         if (!Bot.Quests.IsUnlocked(8911))
             PrismaticEther(1);
@@ -431,18 +437,23 @@ public class CoreArchMage
     public void UnboundTome(int quant = 36)
     {
         if (Core.CheckInventory("Unbound Tome", quant))
+        {
             return;
+        }
 
         if (!Bot.Quests.IsUnlocked(8912))
+        {
             ArcaneLocus(1);
+        }
 
         Core.FarmingLogger("Unbound Tome", quant);
 
-        MysticScribingKit(quant -= Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Mystic Scribing Kit")?.Quantity ?? 0);
-        PrismaticEther(quant -= Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Prismatic Ether")?.Quantity ?? 0);
-        ArcaneLocus(quant -= Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Arcane Locus")?.Quantity ?? 0);
+        MysticScribingKit(Math.Max(0, quant - (Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Mystic Scribing Kit")?.Quantity ?? 0)));
+        PrismaticEther(Math.Max(0, quant - (Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Prismatic Ether")?.Quantity ?? 0)));
+        ArcaneLocus(Math.Max(0, quant - (Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Arcane Locus")?.Quantity ?? 0)));
 
         Core.AddDrop("Unbound Tome");
+
         while (!Bot.ShouldExit
         && Core.CheckInventory(new[] { "Mystic Scribing Kit", "Prismatic Ether", "Arcane Locus" })
         && !Core.CheckInventory("Unbound Tome", quant))
@@ -457,17 +468,19 @@ public class CoreArchMage
             Bot.Wait.ForPickup("Unbound Tome");
 
             if (Core.CheckInventory("Unbound Tome", quant))
+            {
                 break;
+            }
         }
     }
-    public void UnboundThread(int quant = 1000)
+
+    public void UnboundThread(int quant = 100)
     {
         if (Core.CheckInventory("Unbound Thread", quant))
+        {
             return;
+        }
 
-        Core.FarmingLogger("Unbound Thread", quant);
-        //Fallen Branches 8869
-        Core.RegisterQuests(8869);
         Core.AddDrop("Unbound Thread");
         while (!Bot.ShouldExit && !Core.CheckInventory("Unbound Thread", 100))
         {
