@@ -125,6 +125,7 @@ using Skua.Core.Options;
 using Newtonsoft.Json.Linq;
 using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Items;
+using Skua.Core.Models.Auras;
 
 public class Grimgaol
 {
@@ -221,6 +222,36 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(vainglory))
             Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory);
         Farm.ToggleBoost(BoostType.Reputation);
+
+        Core.Logger("Gear Enhancements:");
+        Core.Logger($"Classes:");
+        Core.Logger($"- Void Highlord: Lucky");
+        Core.Logger($"- Verus DoomKnight: Lucky");
+        Core.Logger($"- Dragon of Time: Healer");
+
+        if (!string.IsNullOrWhiteSpace(valiance))
+            Core.Logger($"Weapons:");
+        if (!string.IsNullOrWhiteSpace(valiance))
+            Core.Logger($"- {valiance}: Lucky (Valiance)");
+        if (!string.IsNullOrWhiteSpace(dauntless))
+            Core.Logger($"- {dauntless}: Lucky (Dauntless)");
+
+        if (!string.IsNullOrWhiteSpace(wizHelm) || !string.IsNullOrWhiteSpace(luckHelm) || !string.IsNullOrWhiteSpace(animaHelm))
+            Core.Logger($"Helms:");
+        if (!string.IsNullOrWhiteSpace(wizHelm))
+            Core.Logger($"- {wizHelm}: Wizard");
+        if (!string.IsNullOrWhiteSpace(luckHelm))
+            Core.Logger($"- {luckHelm}: Lucky");
+        if (!string.IsNullOrWhiteSpace(animaHelm))
+            Core.Logger($"- {animaHelm}: Lucky (Anima)");
+
+        if (!string.IsNullOrWhiteSpace(penitence) || !string.IsNullOrWhiteSpace(vainglory))
+            Core.Logger($"Capes:");
+        if (!string.IsNullOrWhiteSpace(penitence))
+            Core.Logger($"- {penitence}: Lucky (Penitence)");
+        if (!string.IsNullOrWhiteSpace(vainglory))
+            Core.Logger($"- {vainglory}: Lucky (Vainglory)");
+
 
         while (!Bot.ShouldExit)
         {
@@ -343,31 +374,73 @@ public class Grimgaol
         Core.Equip("Void Highlord");
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
-            Core.Equip(valiance);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
+            {
+                Core.Equip(valiance);
+                Core.Sleep(1500);
+            }
+        }
 
         string? dauntless = Bot.Config.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
-            Core.Equip(dauntless);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
+            {
+                Core.Equip(dauntless);
+                Core.Sleep(1500);
+            }
+        }
 
         string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
-            Core.Equip(wizHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
+            {
+                Core.Equip(wizHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
-            Core.Equip(luckHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
+            {
+                Core.Equip(luckHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
-            Core.Equip(animaHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
+            {
+                Core.Equip(animaHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
-            Core.Equip(penitence);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
+            {
+                Core.Equip(penitence);
+                Core.Sleep(1500);
+            }
+        }
 
         string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
-            Core.Equip(vainglory);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
+            {
+                Core.Equip(vainglory);
+                Core.Sleep(1500);
+            }
+        }
 
 
         int skillIndex = 0;
@@ -427,31 +500,73 @@ public class Grimgaol
         Core.Equip("Void Highlord");
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
-            Core.Equip(valiance);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
+            {
+                Core.Equip(valiance);
+                Core.Sleep(1500);
+            }
+        }
 
         string? dauntless = Bot.Config.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
-            Core.Equip(dauntless);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
+            {
+                Core.Equip(dauntless);
+                Core.Sleep(1500);
+            }
+        }
 
         string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
-            Core.Equip(wizHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
+            {
+                Core.Equip(wizHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
-            Core.Equip(luckHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
+            {
+                Core.Equip(luckHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
-            Core.Equip(animaHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
+            {
+                Core.Equip(animaHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
-            Core.Equip(penitence);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
+            {
+                Core.Equip(penitence);
+                Core.Sleep(1500);
+            }
+        }
 
         string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
-            Core.Equip(vainglory);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
+            {
+                Core.Equip(vainglory);
+                Core.Sleep(1500);
+            }
+        }
 
 
         int skillIndex = 0;
@@ -504,31 +619,73 @@ public class Grimgaol
         Core.Equip("Legion Revenant");
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
-            Core.Equip(valiance);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
+            {
+                Core.Equip(valiance);
+                Core.Sleep(1500);
+            }
+        }
 
         string? dauntless = Bot.Config.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
-            Core.Equip(dauntless);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
+            {
+                Core.Equip(dauntless);
+                Core.Sleep(1500);
+            }
+        }
 
         string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
-            Core.Equip(wizHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
+            {
+                Core.Equip(wizHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
-            Core.Equip(luckHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
+            {
+                Core.Equip(luckHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
-            Core.Equip(animaHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
+            {
+                Core.Equip(animaHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
-            Core.Equip(penitence);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
+            {
+                Core.Equip(penitence);
+                Core.Sleep(1500);
+            }
+        }
 
         string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
-            Core.Equip(vainglory);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
+            {
+                Core.Equip(vainglory);
+                Core.Sleep(1500);
+            }
+        }
 
 
         int skillIndex = 0;
@@ -575,38 +732,80 @@ public class Grimgaol
         {
             return;
         }
-        Core.Equip("Dragon of Time");
+        Core.Equip(Adv.uDauntless() ? "Dragon of Time" : "Void Highlord");
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
-            Core.Equip(valiance);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
+            {
+                Core.Equip(valiance);
+                Core.Sleep(1500);
+            }
+        }
 
         string? dauntless = Bot.Config.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
-            Core.Equip(dauntless);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
+            {
+                Core.Equip(dauntless);
+                Core.Sleep(1500);
+            }
+        }
 
         string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
-            Core.Equip(wizHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
+            {
+                Core.Equip(wizHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
-            Core.Equip(luckHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
+            {
+                Core.Equip(luckHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
-            Core.Equip(animaHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
+            {
+                Core.Equip(animaHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
-            Core.Equip(penitence);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
+            {
+                Core.Equip(penitence);
+                Core.Sleep(1500);
+            }
+        }
 
         string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
-            Core.Equip(vainglory);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
+            {
+                Core.Equip(vainglory);
+                Core.Sleep(1500);
+            }
+        }
 
 
         int skillIndex = 0;
-        int[] skillList = { 1, 2, 4, 2, 3, 2 };
+        int[] skillList = Adv.uDauntless() ?  new int[] { 1, 2, 4, 2, 3, 2 } : new int[] { 1, 2, 3, 4 };
         int[] priorityIDs = { 7, 8, 9 };
 
         while (!Bot.ShouldExit)
@@ -619,14 +818,15 @@ public class Grimgaol
             }
             string playerCell = Bot.Player.Cell;
             List<Monster> mapMonsters = Bot.Monsters.MapMonsters;
+            // List<Aura> targetAuras = Bot.Target?.Auras?.ToList() ?? new List<Aura>();
             Monster? target = null;
-
             foreach (var mon in mapMonsters)
             {
                 if (mon.Cell == playerCell && mon.HP > 0 && mon.State != 0)
                 {
                     if (priorityIDs.Contains(mon.MapID))
                     {
+                        // targetAuras = Bot.Target?.Auras?.ToList() ?? new List<Aura>();
                         target = mon;
                         break;
                     }
@@ -640,6 +840,7 @@ public class Grimgaol
             }
 
             Bot.Combat.Attack(target.MapID);
+            // targetAuras = Bot.Target?.Auras?.ToList() ?? new List<Aura>();
 
             int skillID = skillList[skillIndex];
             if (Bot.Player.HasTarget && Bot.Skills.CanUseSkill(skillID))
@@ -666,31 +867,73 @@ public class Grimgaol
         Core.Equip("Void Highlord");
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
-            Core.Equip(valiance);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
+            {
+                Core.Equip(valiance);
+                Core.Sleep(1500);
+            }
+        }
 
         string? dauntless = Bot.Config.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
-            Core.Equip(dauntless);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
+            {
+                Core.Equip(dauntless);
+                Core.Sleep(1500);
+            }
+        }
 
         string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
-            Core.Equip(wizHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
+            {
+                Core.Equip(wizHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
-            Core.Equip(luckHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
+            {
+                Core.Equip(luckHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
-            Core.Equip(animaHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
+            {
+                Core.Equip(animaHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
-            Core.Equip(penitence);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
+            {
+                Core.Equip(penitence);
+                Core.Sleep(1500);
+            }
+        }
 
         string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
-            Core.Equip(vainglory);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
+            {
+                Core.Equip(vainglory);
+                Core.Sleep(1500);
+            }
+        }
 
 
         int skillIndex = 0;
@@ -792,31 +1035,73 @@ public class Grimgaol
         Core.Equip("Void Highlord");
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
-            Core.Equip(valiance);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
+            {
+                Core.Equip(valiance);
+                Core.Sleep(1500);
+            }
+        }
 
         string? dauntless = Bot.Config.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
-            Core.Equip(dauntless);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
+            {
+                Core.Equip(dauntless);
+                Core.Sleep(1500);
+            }
+        }
 
         string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
-            Core.Equip(wizHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
+            {
+                Core.Equip(wizHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
-            Core.Equip(luckHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
+            {
+                Core.Equip(luckHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
-            Core.Equip(animaHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
+            {
+                Core.Equip(animaHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
-            Core.Equip(penitence);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
+            {
+                Core.Equip(penitence);
+                Core.Sleep(1500);
+            }
+        }
 
         string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
-            Core.Equip(vainglory);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
+            {
+                Core.Equip(vainglory);
+                Core.Sleep(1500);
+            }
+        }
 
 
         int skillIndex = 0;
@@ -871,31 +1156,73 @@ public class Grimgaol
         Core.Equip("Dragon of Time");
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
-            Core.Equip(valiance);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
+            {
+                Core.Equip(valiance);
+                Core.Sleep(1500);
+            }
+        }
 
         string? dauntless = Bot.Config.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
-            Core.Equip(dauntless);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
+            {
+                Core.Equip(dauntless);
+                Core.Sleep(1500);
+            }
+        }
 
         string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
-            Core.Equip(wizHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
+            {
+                Core.Equip(wizHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
-            Core.Equip(luckHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
+            {
+                Core.Equip(luckHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
-            Core.Equip(animaHelm);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
+            {
+                Core.Equip(animaHelm);
+                Core.Sleep(1500);
+            }
+        }
 
         string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
-            Core.Equip(penitence);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
+            {
+                Core.Equip(penitence);
+                Core.Sleep(1500);
+            }
+        }
 
         string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
-            Core.Equip(vainglory);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
+            {
+                Core.Equip(vainglory);
+                Core.Sleep(1500);
+            }
+        }
 
 
         int skillIndex = 0;
@@ -963,24 +1290,48 @@ public class Grimgaol
 
         string? dauntless = Bot.Config!.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
-            Core.Equip(dauntless);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
+            {
+                Core.Equip(dauntless);
+                Core.Sleep(1500);
+            }
+        }
 
         if (cell == "r11" || cell == "r12")
         {
             string? luckHelm = Bot.Config.Get<string>("LuckHelm");
             if (!string.IsNullOrWhiteSpace(luckHelm))
-                Core.Equip(luckHelm);
+            {
+                while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
+                {
+                    Core.Equip(luckHelm);
+                    Core.Sleep(1500);
+                }
+            }
         }
         else
         {
             string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
             if (!string.IsNullOrWhiteSpace(animaHelm))
-                Core.Equip(animaHelm);
+            {
+                while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
+                {
+                    Core.Equip(animaHelm);
+                    Core.Sleep(1500);
+                }
+            }
         }
 
         string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
-            Core.Equip(vainglory);
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
+            {
+                Core.Equip(vainglory);
+                Core.Sleep(1500);
+            }
+        }
 
         int skillIndex = 0;
         int[] skillList = { 1, 2, 3, 4 };
