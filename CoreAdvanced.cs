@@ -2134,51 +2134,51 @@ public class CoreAdvanced
     private int getEnhID(InventoryItem? item)
         => item == null ? 0 : Core.GetItemProperty<int>(item, "iEnh");
 
-    private bool uAwe()
+    public bool uAwe()
         => Core.isCompletedBefore(2937);
-    private bool uForgeWeapon()
+    public bool uForgeWeapon()
         => Core.isCompletedBefore(8738);
-    private bool uLacerate()
+    public bool uLacerate()
         => Core.isCompletedBefore(8739);
-    private bool uSmite()
+    public bool uSmite()
         => Core.isCompletedBefore(8740);
-    private bool uValiance()
+    public bool uValiance()
         => Core.isCompletedBefore(8741);
-    private bool uArcanasConcerto()
+    public bool uArcanasConcerto()
         => Core.isCompletedBefore(8742);
-    private bool uAbsolution()
+    public bool uAbsolution()
         => Core.isCompletedBefore(8743);
-    private bool uVainglory()
+    public bool uVainglory()
         => Core.isCompletedBefore(8744);
-    private bool uAvarice()
+    public bool uAvarice()
         => Core.isCompletedBefore(8745);
-    private bool uForgeCape()
+    public bool uForgeCape()
         => Core.isCompletedBefore(8758);
-    private bool uElysium()
+    public bool uElysium()
         => Core.isCompletedBefore(8821);
-    private bool uAcheron()
+    public bool uAcheron()
         => Core.isCompletedBefore(8820);
-    private bool uPenitence()
+    public bool uPenitence()
         => Core.isCompletedBefore(8822);
-    private bool uLament()
+    public bool uLament()
         => Core.isCompletedBefore(8823);
-    private bool uVim()
+    public bool uVim()
         => Core.isCompletedBefore(8824);
-    private bool uExamen()
+    public bool uExamen()
         => Core.isCompletedBefore(8825);
-    private bool uForgeHelm()
+    public bool uForgeHelm()
         => Core.isCompletedBefore(8828);
-    private bool uPneuma()
+    public bool uPneuma()
         => Core.isCompletedBefore(8827);
-    private bool uAnima()
+    public bool uAnima()
         => Core.isCompletedBefore(8826);
-    private bool uDauntless()
+    public bool uDauntless()
         => Core.isCompletedBefore(9172);
-    private bool uPraxis()
+    public bool uPraxis()
         => Core.isCompletedBefore(9171);
-    private bool uRavenous()
+    public bool uRavenous()
         => Core.isCompletedBefore(9560);
-    private bool uHearty()
+    public bool uHearty()
     {
         return Core.isCompletedBefore(9466) && Farm.FactionRank("Grimskull") >= 7;
     }
