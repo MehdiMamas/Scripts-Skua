@@ -1218,7 +1218,12 @@ public class CoreBots
     {
         _CheckInventorySpace();
         ShopItem? item = parseShopItem(GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.Name.ToLower() == itemName.ToLower() : x.ShopItemID == shopItemID).ToList(), shopID, itemName, shopItemID);
-        if (CategoryStrings.Contains(item?.CategoryString))
+        if (item == null)
+        {
+            Logger($"Failed to find the item with name {itemName} in the shop with ID {shopID}, skipping it");
+            return;
+        }
+        if (!string.IsNullOrEmpty(item.CategoryString) && CategoryStrings.Contains(item.CategoryString))
             _CheckHouseSpace();
         _BuyItem(map, shopID, item, quant, Log);
     }
@@ -1267,8 +1272,13 @@ public class CoreBots
 
         DebugLogger(this);
         ShopItem? item = parseShopItem(GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.ID == itemID : x.ShopItemID == shopItemID).ToList(), shopID, itemID.ToString(), shopItemID);
+        if (item == null)
+        {
+            Logger($"Failed to find the item with ID {itemID} in the shop with ID {shopID}, skipping it");
+            return;
+        }
         DebugLogger(this);
-        if (CategoryStrings.Contains(item?.CategoryString))
+        if (!string.IsNullOrEmpty(item.CategoryString) && CategoryStrings.Contains(item.CategoryString))
             _CheckHouseSpace();
         _BuyItem(map, shopID, item, quant, Log);
     }
