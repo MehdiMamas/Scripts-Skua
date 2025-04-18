@@ -389,7 +389,7 @@ public class CoreSepulchure
         Story.KillQuest(6546, "noxustower", "Lightguard Paladin");
 
         // Illusory Disguise 6547
-        Story.KillQuest(6547, "noxustower", new[] { "Lightguard Caster", "Doomwood Treeant", "Slimeskull" });
+        Story.KillQuest(6547, "noxustower", new[] { "Slimeskull", "Lightguard Caster", "Doomwood Treeant",  });
 
         // Test the Disguise 6548
         Story.MapItemQuest(6548, "noxustower", 6019);
