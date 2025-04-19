@@ -404,7 +404,7 @@ public class CoreAdvanced
 
         // For those Who have thousands of items in their bank, this will help to speed up the process of checking if you have the item or not.
         HashSet<int> uniqueItemIds = new(
-                    new[] {
+                     new[] {
                 Bot.Bank.Items.Select(item => item.ID),
                 Bot.TempInv.Items.Select(item => item.ID),
                 Bot.House.Items.Select(item => item.ID),
@@ -412,24 +412,25 @@ public class CoreAdvanced
                     }.SelectMany(id => id)
                 );
 
-
         List<ShopItem> shopItems = Core.GetShopItems(map, shopID)
-                                .GroupBy(item => new { item.Name, item.ID })
-                                .Select(group =>
-                                {
-                                    IOrderedEnumerable<ShopItem> orderedGroup = group.OrderBy(item => item.ShopItemID != group.First().ShopItemID);
-                                    return Group == "First" ? orderedGroup.First() : orderedGroup.Last();
-                                })
-                                .Where(x => !x.Name.ToLower().EndsWith("insignia"))
-                                .ToList();
+                              .GroupBy(item => new { item.Name, item.ID, item.ShopItemID })
+                              .Select(group =>
+                              {
+                                  IOrderedEnumerable<ShopItem> orderedGroup = group.OrderBy(item => item.ShopItemID != group.First().ShopItemID);
+                                  return Group == "First" ? orderedGroup.First() : orderedGroup.Last();
+                              })
+                              .Where(x => !x.Name.ToLower().EndsWith("insignia"))
+                              .Where(x => !uniqueItemIds.Contains(x.ID))
+                              .ToList();
+
+        uniqueItemIds = new HashSet<int>();
 
         List<ShopItem> items = new();
         bool memSkipped = false;
 
         foreach (ShopItem item in shopItems)
         {
-            if (Core.CheckInventory(item.ID, toInv: false) ||
-                    miscCatagories.Contains(item.Category) ||
+            if (miscCatagories.Contains(item.Category) ||
                     (!string.IsNullOrEmpty(buyOnlyThis) && buyOnlyThis != item.Name) ||
                     (itemBlackList != null && itemBlackList.Any(x => x.ToLower() == item.Name.ToLower())))
                 continue;
