@@ -382,6 +382,7 @@ public class ArcanaInvokerResourceMerge
                     break;
 
                 case "Chained Rune Bonebreaker":
+                case "Chained Rune Bonebreakers":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("archportal", "High Legion Inquisitor", req.Name, quant, req.Temp);
                     break;
