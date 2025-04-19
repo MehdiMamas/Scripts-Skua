@@ -1279,7 +1279,7 @@ public class Core13LoC
         {
             Core.EnsureAccept(1226);
             Core.HuntMonster("crossroads", "Chinchilizard", "Scaly Skin Scrub", 7);
-            Core.HuntMonster("bloodtusk", "Trollola Plant", "Perfumed Trollola Flower", 10);
+            Core.HuntMonster("bloodtusk", "Trollola Plant", "Perfumed Trollola Flower", 5);
             Story.MapItemQuest(1226, "bloodtusk", 523);
         }
 
