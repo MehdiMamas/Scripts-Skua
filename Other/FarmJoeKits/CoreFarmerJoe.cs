@@ -3,6 +3,7 @@ name: null
 description: null
 tags: null
 */
+#region includes
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreDailies.cs
@@ -144,7 +145,7 @@ tags: null
 //cs_include Scripts/Other/Weapons/FortitudeAndHubris.cs
 //cs_include Scripts/Other/Weapons/ExaltedApotheosisPreReqs.cs
 //cs_include Scripts/Story/Mazumi.cs
-
+#endregion includes
 
 
 
