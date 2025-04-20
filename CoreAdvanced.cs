@@ -486,7 +486,7 @@ public class CoreAdvanced
                 if (!matsOnly)
                     Core.Logger($"Farming to buy {item.Name} (#{t}/{items.Count})");
 
-                while (item.Requirements.FirstOrDefault(x => !Core.CheckInventory(x.ID, x.Quantity)) != null)
+                while (!Bot.ShouldExit && item.Requirements.FirstOrDefault(x => !Core.CheckInventory(x.ID, x.Quantity)) != null)
                     getIngredients(item, 1);
 
                 if (!matsOnly && !Core.CheckInventory(item.ID, toInv: false))
