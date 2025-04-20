@@ -60,7 +60,7 @@ public class CelestialOfMysteries
 
 
         // Gold Voucher 500k
-        Adv.BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", 35);
+        Farm.Voucher("Gold Voucher 500k", 35);
 
         // Duo's Dinner
         if (!Core.CheckInventory("Duo's Dinner", 35))
