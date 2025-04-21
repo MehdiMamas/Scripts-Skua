@@ -3090,6 +3090,23 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Eden.cs"
   },
   {
+    "name": "Aria's Greenhouse Story",
+    "description": "This will finish the Aria's Greenhouse quests.",
+    "tags": [
+      "story",
+      "quest",
+      "aria",
+      "greenhouse",
+      "nature",
+      "water",
+      "ariagreenhouse"
+    ],
+    "path": "Story/AriaGreenhouse.cs",
+    "size": 2410,
+    "fileName": "AriaGreenhouse.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AriaGreenhouse.cs"
+  },
+  {
     "name": "Musty Cave Story",
     "description": "This will finish the Musty Cave Story.",
     "tags": [
