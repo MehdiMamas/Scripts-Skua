@@ -19,10 +19,15 @@ public class AriaGreenhouse
     {
         Core.SetOptions();
 
-        Nature();
-        Water();
+        DoAll();
 
         Core.SetOptions(false);
+    }
+
+    public void DoAll()
+    {
+        Nature();
+        Water();
     }
 
     public void Nature()

@@ -85,6 +85,7 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/Adam1a1Quests.cs
 //cs_include Scripts/Story/AranxQuests.cs
 //cs_include Scripts/Story/Arcangrove.cs
+//cs_include Scripts/Story/AriaGreenhouse.cs
 //cs_include Scripts/Story/AriaPet[MEM].cs
 //cs_include Scripts/Story/Artixpointe.cs
 //cs_include Scripts/Story/ArtixWedding.cs
@@ -310,6 +311,7 @@ public class AllStories
     public Adam1a1Quest Adam1A1Quest = new();
     public AranxQuests AranxQuests = new();
     public Arcangrove Arcangrove = new();
+    public AriaGreenhouse AriaGreenhouse = new();
     public AriaPet AriaPet = new();
     public Artixpointe Artixpointe = new();
     public ArtixWedding ArtixWedding = new();
@@ -650,6 +652,9 @@ public class AllStories
 
         Arcangrove.GravelynandVictoria();
         Core.Logger($"Story: Arcangrove - Complete");
+
+        AriaGreenhouse.DoAll();
+        Core.Logger($"Story: Aria Greenhouse - Complete");
 
         if (Core.IsMember)
         {
