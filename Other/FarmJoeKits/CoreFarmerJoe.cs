@@ -941,15 +941,17 @@ public class CoreFarmerJoe
 
         // Arrays of classes to check
         string[] soloClassesToCheck = new[] {
-            "Void Highlord", "Legion Revenant", "Dragon of Time", "ArchPaladin", "Dragonslayer General", "Glacial Berserker", "Dragonslayer", "DragonSoul Shinobi",
-            "Assassin", "Ninja Warrior", "Ninja", "Rogue (Rare)", "Rogue", "Healer (Rare)", "Healer"
+            "Void Highlord", "Legion Revenant", "Dragon of Time", "ArchPaladin", "Dragonslayer General",
+            "Glacial Berserker", "Dragonslayer", "DragonSoul Shinobi", "Assassin", "Ninja Warrior",
+            "Ninja", "Rogue (Rare)", "Rogue", "Healer (Rare)", "Healer",
         };
 
         string[] farmClassesToCheck = new[] {
            "Legion Revenant", "Blaze Binder", "Archfiend", "Scarlet Sorceress", "Master Ranger",
             "Mage (Rare)", "Mage"
         };
-
+        
+        // "Frost Spirit Reaver", "Northlands Monk", "Shaman"
         // Combine inventory and bank items into a single collection
         List<ItemBase> availableItems = new();
         availableItems.AddRange(Bot.Inventory.Items.Concat(Bot.Bank.Items));
