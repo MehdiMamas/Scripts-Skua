@@ -19338,13 +19338,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/Adam1a1Merge.cs"
   },
   {
-    "name": "SpoilsofLightMerge",
-    "description": "null",
+    "name": "Spoils of Light Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Spoils of Light Merge [1643] in /lightguardwar",
     "tags": [
-      "null"
+      "spoils",
+      "of",
+      "light",
+      "merge",
+      "lightguardwar",
+      "crusader",
+      "furred",
+      "runed",
+      "morph",
+      "high",
+      "ruff",
+      "inquisitor",
+      "inquisitors",
+      "bright"
     ],
     "path": "Other/MergeShops/SpoilsofLightMerge.cs",
-    "size": 7065,
+    "size": 7157,
     "fileName": "SpoilsofLightMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SpoilsofLightMerge.cs"
   },
@@ -22012,13 +22025,32 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/IceDungeonMerge.cs"
   },
   {
-    "name": "FlockMerge",
-    "description": "null",
+    "name": "Flock Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Flock Merge [1218] in /battlefowl",
     "tags": [
-      "null"
+      "flock",
+      "merge",
+      "battlefowl",
+      "chicken",
+      "morph",
+      "self",
+      "plucked",
+      "chickencow",
+      "claws",
+      "nugget",
+      "on",
+      "a",
+      "stick",
+      "chickenwing",
+      "armblades",
+      "your",
+      "head",
+      "archimoodes",
+      "house",
+      "guest"
     ],
     "path": "Other/MergeShops/FlockMerge.cs",
-    "size": 4021,
+    "size": 4416,
     "fileName": "FlockMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FlockMerge.cs"
   },
