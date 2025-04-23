@@ -6337,14 +6337,6 @@ public class CoreBots
                     Logger($"Equipping best item: {item.Name} in category {category}.");
                     Equip(item.ID);
                 }
-                else
-                {
-                    Logger($"No suitable item found in category {category} for the desired metas.");
-                }
-            }
-            else
-            {
-                Logger($"No suitable item found in category {category} for the desired metas.");
             }
         }
     }
