@@ -1,7 +1,7 @@
 /*
-name: FlockMerge
-description: null
-tags: null
+name: Flock Merge
+description: This bot will farm the items belonging to the selected mode for the Flock Merge [1218] in /battlefowl
+tags: flock, merge, battlefowl, chicken, morph, self, plucked, chickencow, claws, nugget, on, a, stick, chickenwing, armblades, your, head, archimoodes, house, guest
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -28,7 +28,7 @@ public class FlockMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Golden Egg", "Golden Feather", "Chicken Claw", "Chickenwing ArmBlade " });
+        Core.BankingBlackList.AddRange(new[] { "Golden Egg", "Golden Feather", "Chicken Claw", "Chickenwing ArmBlade" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -88,5 +88,6 @@ public class FlockMerge
         new Option<bool>("33929", "Dual Chickenwing ArmBlades", "Mode: [select] only\nShould the bot buy \"Dual Chickenwing ArmBlades\" ?", false),
         new Option<bool>("33926", "Chicken on Your Head", "Mode: [select] only\nShould the bot buy \"Chicken on Your Head\" ?", false),
         new Option<bool>("33927", "Chicken on Your Locks", "Mode: [select] only\nShould the bot buy \"Chicken on Your Locks\" ?", false),
+        new Option<bool>("92896", "Archimoodes House Guest", "Mode: [select] only\nShould the bot buy \"Archimoodes House Guest\" ?", false),
     };
 }
