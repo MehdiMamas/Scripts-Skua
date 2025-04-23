@@ -17886,6 +17886,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/TreasureHunts/DarkScroll.cs"
   },
   {
+    "name": "JoePrepsForUltras",
+    "description": "This script will farm all the required items for Ultra Bosses",
+    "tags": [
+      "joe",
+      "ultra",
+      "boss",
+      "preparation",
+      "farm"
+    ],
+    "path": "Other/FarmJoeKits/JoePrepsForUltras.cs",
+    "size": 23869,
+    "fileName": "JoePrepsForUltras.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/JoePrepsForUltras.cs"
+  },
+  {
     "name": "Member Farms Kit",
     "description": "This kit contains all Member farms that you can profit off after your membership expires",
     "tags": [
