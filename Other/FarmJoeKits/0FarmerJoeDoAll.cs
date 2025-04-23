@@ -146,6 +146,10 @@ tags: null
 //cs_include Scripts/Other/Weapons/FortitudeAndHubris.cs
 //cs_include Scripts/Other/Weapons/ExaltedApotheosisPreReqs.cs
 //cs_include Scripts/Story/Mazumi.cs
+//cs_include Scripts/Other/Classes/Dragonslayer.cs
+//cs_include Scripts/Other/Classes/FrostSpiritReaver.cs
+//cs_include Scripts/Seasonal/Frostvale/NorthlandsMonk.cs
+
 #endregion includes
 
 using Skua.Core.Interfaces;

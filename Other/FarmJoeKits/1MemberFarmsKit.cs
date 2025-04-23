@@ -159,6 +159,10 @@ tags: member, kit, expire, legend
 //cs_include Scripts/Nation/Various/TarosPrismaticManslayers.cs
 //cs_include Scripts/Nation/EvolvedOrb/EvolvedShadowOrb[Mem].cs
 //cs_include Scripts/Story/Mazumi.cs
+//cs_include Scripts/Other/Classes/Dragonslayer.cs
+//cs_include Scripts/Other/Classes/FrostSpiritReaver.cs
+//cs_include Scripts/Seasonal/Frostvale/NorthlandsMonk.cs
+
 using Skua.Core.Interfaces;
 
 public class MemberFarm
