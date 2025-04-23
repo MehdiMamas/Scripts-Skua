@@ -295,13 +295,12 @@ public class CoreFarmerJoe
         SetClass(true, false, false);
 
         Farm.ToggleBoost(BoostType.Experience);
+        // Check for Elders' Blood daily every 5 levels
+        if (Bot.Player.Level % 5 == 0 && Bot.Player.Level >= 30 && Daily.CheckDailyv2(802, true, true, "Elders' Blood"))
+            Daily.EldersBlood();
 
         foreach (int Level in Core.FromTo(0, 75))
         {
-            // Check for Elders' Blood daily every 5 levels
-            if (Level % 5 == 0 && Bot.Player.Level >= 30 && Daily.CheckDailyv2(802, true, true, "Elders' Blood"))
-                Daily.EldersBlood();
-
             // Handle special cases and leveling
             switch (Level)
             {
@@ -665,7 +664,7 @@ public class CoreFarmerJoe
         Dragon of Time
         YnR
         */
-        Core.Logger("P4: Forge Capes Enhancements (Forge, Absolution, Vainglory, Avarice, Penitence, Lament)"); 
+        Core.Logger("P4: Forge Capes Enhancements (Forge, Absolution, Vainglory, Avarice, Penitence, Lament)");
         UnlockForgeEnhancements.ForgeCapeEnhancement();
         UnlockForgeEnhancements.Absolution();
         UnlockForgeEnhancements.Avarice();
