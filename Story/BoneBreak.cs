@@ -33,7 +33,10 @@ public class BoneBreak
             return;
         }
         if (Core.HasAchievement(30, "ip6"))
-            Core.BuyItem("battleon", 1046, 27222);
+        {
+            
+            Core.BuyItem("battleon", 1046, "BoneBreaker Fortress Map");
+        }
 
         Story.PreLoad(this);
 
