@@ -302,53 +302,105 @@ public class CoreFarmerJoe
 
         foreach (int Level in Core.FromTo(0, 75))
         {
-            if (Level >= Bot.Player.Level && Level % 5 == 0)
-            {
-                // Set Solo & FarmClass, and ensure class is ranked up each 5th level
-                SetClass(false, true, false);
-                SetClass(true, false, false);
-            }
-
             // Handle special cases and leveling
             switch (Level)
             {
                 case 30:
+                    if (Bot.Player.Level >= 30 &&
+                     Core.CheckInventory(new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress", "Master Ranger" }, any: true, toInv: false) &&
+                     Core.CheckInventory(new[] { "ArchPaladin", "Dragonslayer General", "Dragonslayer" }, any: true, toInv: false) &&
+                     Core.CheckInventory(new[] { "Burning Blade of Abezeth", "Burning Blade", "Awethur's Accoutrements" }, any: true, toInv: false))
+                    {
+                        continue;
+                    }
+
+                    // Set Solo & FarmClass, and ensure class is ranked up each 5th level
+                    SetClass(false, true, false);
+                    SetClass(true, false, false);
                     Core.Logger("Level 30: Getting Master Ranger, Awethur's Accoutrements, & Dragonslayer");
                     Farm.Experience(Level);
                     HandleLevel30();
                     break;
 
                 case 50:
+                    if (Bot.Player.Level >= 50 &&
+                     Core.CheckInventory(new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress" }, any: true, toInv: false) &&
+                     Core.CheckInventory(new[] { "ArchPaladin", "Dragonslayer General" }, any: true, toInv: false) &&
+                     Core.CheckInventory(new[] { "Burning Blade of Abezeth", "Burning Blade" }, any: true, toInv: false))
+                    {
+                        continue;
+                    }
+                    // Set Solo & FarmClass, and ensure class is ranked up each 5th level
+                    SetClass(false, true, false);
+                    SetClass(true, false, false);
                     Core.Logger("Level 50: Getting Scarlet Sorceress, Dragonslayer General, & Burning Blade");
                     Farm.Experience(Level);
                     HandleLevel50();
                     break;
 
                 case 55:
+                    if (Bot.Player.Level >= 55 &&
+                     Core.CheckInventory(new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress" }, any: true, toInv: false) &&
+                     Core.CheckInventory("Dragonslayer General", toInv: false) &&
+                     Core.CheckInventory(new[] { "Burning Blade of Abezeth", "Burning Blade" }, any: true, toInv: false))
+                    {
+                        continue;
+                    }
+                    // Set Solo & FarmClass, and ensure class is ranked up each 5th level
+                    SetClass(false, true, false);
+                    SetClass(true, false, false);
                     Core.Logger("Level 55: Getting Blaze Binder & Cryomancer");
                     Farm.Experience(Level);
                     HandleLevel55();
                     break;
 
                 case 60:
+                    if (Bot.Player.Level >= 60 &&
+                     Core.CheckInventory(new[] { "ArchPaladin", "DragonSoul Shinobi" }, toInv: false))
+                    {
+                        continue;
+                    }
+                    // Set Solo & FarmClass, and ensure class is ranked up each 5th level
+                    SetClass(false, true, false);
+                    SetClass(true, false, false);
                     Core.Logger("Level 60: Getting DragonSoul Shinobi for DoomKittem(ArchPaladin)");
                     Farm.Experience(Level);
                     HandleLevel60();
                     break;
 
                 case 65:
+                    if (Bot.Player.Level >= 65 &&
+                     Core.CheckInventory(new[] { "ArchPaladin", "Glacial Berserker" }, toInv: false))
+                    {
+                        continue;
+                    }
+                    // Set Solo & FarmClass, and ensure class is ranked up each 5th level
+                    SetClass(false, true, false);
+                    SetClass(true, false, false);
                     Core.Logger("Level 65: Getting Glacial Berserker &  ArchPaladin");
                     Farm.Experience(Level);
                     HandleLevel65();
                     break;
 
                 case 75:
+                    if (Bot.Player.Level >= 75 &&
+                     Core.CheckInventory(new[] { "ArchPaladin", "ArchFiend", "Archfiend DeathLord" }, toInv: false))
+                    {
+                        continue;
+                    }
+                    // Set Solo & FarmClass, and ensure class is ranked up each 5th level
+                    SetClass(false, true, false);
+                    SetClass(true, false, false);
                     Core.Logger("Level 75: Getting ArchFiend DeathLord (for +30dmgAll), ArchFiend");
                     Farm.Experience(Level);
                     HandleLevel75(Level);
                     break;
 
                 default:
+                    if (Bot.Player.Level >= 75)
+                    {
+                        continue;
+                    }
                     Farm.Experience(Level);
                     break;
             }
@@ -364,7 +416,7 @@ public class CoreFarmerJoe
             if (Core.CheckInventory("Venom Head"))
                 Core.SellItem("Venom Head");
             Core.Logger("Getting Master Ranger");
-            SetClass(false, true, true);
+            SetClass(false, true);
             MR.GetMR();
         }
 
@@ -378,8 +430,8 @@ public class CoreFarmerJoe
         if (!Core.CheckInventory(new[] { "Burning Blade of Abezeth", "Burning Blade", "Awethur's Accoutrements" }, any: true, toInv: false))
         {
             Core.Logger("Doing BoA rep (for enhancements & sword)");
-            SetClass(true, false, true);
-            SetClass(false, true, true);
+            SetClass(true, false);
+            SetClass(false, true);
             // R10 Blade of Awe Rep to unlock the AweEnhancements & Blade of Awe
             Farm.BladeofAweREP();
             Adv.BuyItem("museum", 631, "Awethur's Accoutrements");
@@ -391,24 +443,24 @@ public class CoreFarmerJoe
         if (!Core.CheckInventory(new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress" }, any: true, toInv: false))
         {
             Core.Logger("Getting Scarlet Socrceress");
-            SetClass(true, false, true);
-            SetClass(false, true, true);
+            SetClass(true, false);
+            SetClass(false);
             SS.GetSSorc();
         }
 
         if (!Core.CheckInventory(new[] { "ArchPaladin", "Dragonslayer General" }, any: true, toInv: false))
         {
             Core.Logger("Getting Dragonslayer General");
-            SetClass(true, false, ftruelse);
-            SetClass(false, true, true);
+            SetClass(true, false);
+            SetClass(false);
             DSG.GetDSGeneral();
         }
 
         if (!Core.CheckInventory(new[] { "Burning Blade of Abezeth", "Burning Blade" }, any: true, toInv: false))
         {
             Core.Logger("Getting Burning Blade");
-            SetClass(true, false, true);
-            SetClass(false, true, true);
+            SetClass(true, false);
+            SetClass(false, true);
             BB.GetBurningBlade();
         }
     }
@@ -419,13 +471,13 @@ public class CoreFarmerJoe
         if (!Core.CheckInventory("Blaze Binder", toInv: false))
         {
             Core.Logger("Getting Blaze Binder");
-            SetClass(false, true, true);
+            SetClass(false, true);
             Bb.GetClass();
         }
         if (!Core.CheckInventory("Cryomancer", toInv: false))
         {
             Core.Logger("Getting Cryomancer");
-            SetClass(true, false, true);
+            SetClass(true, false);
             Cryo.DoCryomancer();
         }
     }
@@ -435,7 +487,7 @@ public class CoreFarmerJoe
         if (!Core.CheckInventory(new[] { "ArchPaladin", "DragonSoul Shinobi" }, any: true, toInv: false))
         {
             Core.Logger("Getting DSS for DoomKittem(ArchPaladin)");
-            SetClass(true, false, true);
+            SetClass(true, false);
             DS.GetDSS();
         }
     }
@@ -445,14 +497,14 @@ public class CoreFarmerJoe
         if (!Core.CheckInventory(new[] { "ArchPaladin", "Glacial Berserker" }, any: true, toInv: false))
         {
             Core.Logger("Getting Glacial Berserker");
-            SetClass(true, false, true);
+            SetClass(true, false);
             GB.GetGB();
         }
 
         if (!Core.CheckInventory("ArchPaladin", toInv: false))
         {
             Core.Logger("Getting ArchPaladin");
-            SetClass(true, false, true);
+            SetClass(true, false);
             AP.GetAP();
         }
     }
@@ -462,15 +514,15 @@ public class CoreFarmerJoe
         if (!Adv.HasMinimalBoost(GenericGearBoost.dmgAll, 30) || !Core.CheckInventory("Archfiend DeathLord", toInv: false))
         {
             Core.Logger("Getting ArchFiend DeathLord for +30 dmgAll");
-            SetClass(true, false, true);
-            SetClass(false, true, true);
+            SetClass(true, false);
+            SetClass(false, true);
             AFDeath.GetArm(true, ArchfiendDeathLord.RewardChoice.Archfiend_DeathLord);
         }
 
         if (!Core.CheckInventory("Archfiend", toInv: false))
         {
             Core.Logger("Getting Archfiend");
-            SetClass(true, false, true);
+            SetClass(true, false);
             AF.GetArchfiend();
         }
     }
@@ -569,13 +621,13 @@ public class CoreFarmerJoe
         */
         Farm.Experience(80);
 
-        SetClass(true, false, true);
+        SetClass(true, false);
         CAQ.DoAll();
         Core.Logger("P4: Celestial Arena QuestLine for BBoA");
         BBOA.GetBBoA();
 
         // F/F/T = bestgear
-        SetClass(false, false, true);
+        SetClass(false, false);
 
         /*
         Lv to 90 (via the Enhancements)
@@ -595,12 +647,12 @@ public class CoreFarmerJoe
         YNR.GetYnR();
 
         Core.Logger("P4: Dragon of Time");
-        SetClass(true, false, true);
+        SetClass(true, false);
         DoT.GetDoT();
 
         // Leveling to 100 & HBRS
         Core.Logger("P4 Leveling to 100");
-        SetClass(true, false, true);
+        SetClass(true, false);
         Core.Logger("P4 Leveling to 100");
         Farm.Experience();
 
@@ -623,7 +675,7 @@ public class CoreFarmerJoe
         if (Bot.Config!.Get<bool>("OutFit"))
             Outfit();
 
-        SetClass(true, false, true);
+        SetClass(true, false);
 
         #region  Prefarm some non-Skua-able items:       
 
@@ -653,7 +705,7 @@ public class CoreFarmerJoe
     /// </summary>
     public void Outfit()
     {
-        SetClass(false, true, true);
+        SetClass(false, true);
 
         // Easy Difficulty Stuff
         ShirtAndHat();
@@ -693,7 +745,7 @@ public class CoreFarmerJoe
 
         if (configPetChoice == PetChoice.HotMama && !Core.CheckInventory("Hot Mama"))
         {
-            SetClass(true, false, true);
+            SetClass(true, false);
             Core.HuntMonster("battleundere", "Hot Mama", "Hot Mama", isTemp: false, log: false);
             Bot.Wait.ForPickup("Hot Mama");
             Core.Equip("Hot Mama");
@@ -701,7 +753,7 @@ public class CoreFarmerJoe
 
         if (configPetChoice == PetChoice.Akriloth && !Core.CheckInventory("Akriloth Pet"))
         {
-            SetClass(true, false, true);
+            SetClass(true, false);
             Core.HuntMonster("gravestrike", "Ultra Akriloth", "Akriloth Pet", isTemp: false, log: false);
             Bot.Wait.ForPickup("Akriloth Pet");
             Core.Equip("Akriloth Pet");
@@ -732,7 +784,7 @@ public class CoreFarmerJoe
             return;
 
         Core.FarmingLogger("The Server is Down", 1);
-        SetClass(false, true, true);
+        SetClass(false, true);
         Core.HuntMonster("undergroundlabb", "Rabid Server Hamster", "The Server is Down", isTemp: false, log: false);
         Bot.Wait.ForPickup("The Server is Down");
         Core.Equip("The Server is Down");
@@ -825,14 +877,14 @@ public class CoreFarmerJoe
         if (!Core.CheckInventory(new[] { "Assassin", "Ninja Warrior", "Ninja" }, any: true, toInv: false))
         {
             Core.Logger("Getting starter Dodge class (Ninja)");
-            SetClass(true, false, true);
+            SetClass(true, false);
             Adv.RankUpClass("Rogue");
             //ninja requires a few quets.. its ok tho
             Mazumi.MazumiQuests();
             Core.BuyItem("classhalla", 178, "Ninja");
         }
 
-        SetClass(true, false, true);
+        SetClass(true, false);
         Adv.RankUpClass("Ninja");
 
         if (!Core.CheckInventory(new[] { "Mage (Rare)", "Mage" }, any: true, toInv: false))
@@ -840,7 +892,7 @@ public class CoreFarmerJoe
             Core.Logger("Getting Starter Farm class (Mage)");
             Adv.BuyItem("classhalla", 174, 15653, shopItemID: 9845);
         }
-        SetClass(false, true, true);
+        SetClass(false, true);
     }
     #endregion Extra:
 
