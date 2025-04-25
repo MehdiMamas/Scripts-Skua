@@ -290,6 +290,7 @@ public class GlaceraStory
     {
         if (Core.isCompletedBefore(3950))
             return;
+
         Northstar();
 
         // Key to the Fortress
@@ -356,19 +357,18 @@ public class GlaceraStory
         // Take a Break from Fighting
         Story.KillQuest(5596, "IceWindPass", new[] { "Polar Golem", "Glacial Elemental" });
 
-        if (!Bot.Quests.IsUnlocked(5601))
-        {
-            //Fight For Kezeroth! && (Mega) Fight For Kezeroth!
-            Core.EnsureAcceptmultiple(new[] { 5597, 5598, 5599, 5600 });
-            Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster("icewindwar", "Glaceran Defender", "FrostSpawn Medal", 10);
-            Core.HuntMonster("icewindwar", "Glaceran Defender", "Mega Frostspawn Medal", 5);
+        // As these quests are pre-unlocked.. it wont do them if we put them under a quest check. annoyingly.
 
-            //Fight For Karok! && (Mega) Fight For Karok!
-            Core.HuntMonster("icewindwar", "Frost Invader", "World Ender Medal", 10);
-            Core.HuntMonster("icewindwar", "Frost Invader", "Mega World Ender Medal", 5);
-            Core.EnsureComplete(new[] { 5597, 5598, 5599, 5600 });
-        }
+        //Fight For Kezeroth! && (Mega) Fight For Kezeroth! - 5597, 5598
+        //Fight For Karok! && (Mega) Fight For Karok! - 5599, 5600  
+        Core.EnsureAcceptmultiple(new[] { 5597, 5598, 5599, 5600 });
+        Core.EquipClass(ClassType.Farm);
+        Core.HuntMonster("icewindwar", "Glaceran Defender", "FrostSpawn Medal", 10);
+        Core.HuntMonster("icewindwar", "Glaceran Defender", "Mega Frostspawn Medal", 5);
+
+        Core.HuntMonster("icewindwar", "Frost Invader", "World Ender Medal", 10);
+        Core.HuntMonster("icewindwar", "Frost Invader", "Mega World Ender Medal", 5);
+        Core.EnsureComplete(new[] { 5597, 5598, 5599, 5600 });
 
         // What is THAT?
         Story.KillQuest(5601, "icewindwar", "Soricomorpha");
