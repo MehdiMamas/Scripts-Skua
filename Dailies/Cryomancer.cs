@@ -38,7 +38,7 @@ public class Cryomancer
             return;
         }
 
-        Glac.FrozenTower();
+        Glac.DoAll();
         Daily.Cryomancer();
 
         if (rankUpClass)
