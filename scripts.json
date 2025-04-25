@@ -2222,7 +2222,7 @@
       "glacera"
     ],
     "path": "Story/Glacera.cs",
-    "size": 12662,
+    "size": 12704,
     "fileName": "Glacera.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Glacera.cs"
   },
@@ -4860,7 +4860,7 @@
       "reputation"
     ],
     "path": "Farm/REP/GlaceraREP.cs",
-    "size": 1013,
+    "size": 801,
     "fileName": "GlaceraREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/GlaceraREP.cs"
   },
@@ -17921,7 +17921,7 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 52842,
+    "size": 50238,
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
