@@ -3496,7 +3496,7 @@
       "seasonal"
     ],
     "path": "Dailies/Cryomancer.cs",
-    "size": 1126,
+    "size": 1120,
     "fileName": "Cryomancer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Dailies/Cryomancer.cs"
   },
@@ -17921,7 +17921,7 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 53307,
+    "size": 53527,
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
@@ -28209,7 +28209,7 @@
       "null"
     ],
     "path": "Other/Classes/REP-based/GlacialBerserker.cs",
-    "size": 1234,
+    "size": 1228,
     "fileName": "GlacialBerserker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/REP-based/GlacialBerserker.cs"
   },
