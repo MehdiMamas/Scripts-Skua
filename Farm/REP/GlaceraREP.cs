@@ -23,12 +23,8 @@ public class GlaceraREP
 
         //Adv.BestGear(GenericGearBoost.dmgAll);
         //Adv.BestGear(GenericGearBoost.rep);
-        if (!Core.isCompletedBefore(5601))
-        {
-            Core.Logger("Doing Glacera story to unlock farming quests.");
-            GlaceraStory.DoAll();
-            Core.Logger("Glacera story complete, beginning rep farm.");
-        }
+
+        GlaceraStory.DoAll();
         Farm.GlaceraREP();
 
         Core.SetOptions(false);
