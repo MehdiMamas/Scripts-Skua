@@ -305,8 +305,8 @@ public class CoreFarmerJoe
             if (Level >= Bot.Player.Level && Level % 5 == 0)
             {
                 // Set Solo & FarmClass, and ensure class is ranked up each 5th level
-                SetClass(false, true, true);
-                SetClass(true, false, true);
+                SetClass(false, true, false);
+                SetClass(true, false, false);
             }
 
             // Handle special cases and leveling
@@ -314,42 +314,42 @@ public class CoreFarmerJoe
             {
                 case 30:
                     Core.Logger("Level 30: Getting Master Ranger, Awethur's Accoutrements, & Dragonslayer");
-                    Farm.Experience(Level, true);
+                    Farm.Experience(Level);
                     HandleLevel30();
                     break;
 
                 case 50:
                     Core.Logger("Level 50: Getting Scarlet Sorceress, Dragonslayer General, & Burning Blade");
-                    Farm.Experience(Level, true);
+                    Farm.Experience(Level);
                     HandleLevel50();
                     break;
 
                 case 55:
                     Core.Logger("Level 55: Getting Blaze Binder & Cryomancer");
-                    Farm.Experience(Level, true);
+                    Farm.Experience(Level);
                     HandleLevel55();
                     break;
 
                 case 60:
                     Core.Logger("Level 60: Getting DragonSoul Shinobi for DoomKittem(ArchPaladin)");
-                    Farm.Experience(Level, true);
+                    Farm.Experience(Level);
                     HandleLevel60();
                     break;
 
                 case 65:
                     Core.Logger("Level 65: Getting Glacial Berserker &  ArchPaladin");
-                    Farm.Experience(Level, true);
+                    Farm.Experience(Level);
                     HandleLevel65();
                     break;
 
                 case 75:
                     Core.Logger("Level 75: Getting ArchFiend DeathLord (for +30dmgAll), ArchFiend");
-                    Farm.Experience(Level, true);
+                    Farm.Experience(Level);
                     HandleLevel75(Level);
                     break;
 
                 default:
-                    Farm.Experience(Level, true);
+                    Farm.Experience(Level);
                     break;
             }
         }
@@ -364,7 +364,7 @@ public class CoreFarmerJoe
             if (Core.CheckInventory("Venom Head"))
                 Core.SellItem("Venom Head");
             Core.Logger("Getting Master Ranger");
-            SetClass(false, true, false);
+            SetClass(false, true, true);
             MR.GetMR();
         }
 
@@ -399,7 +399,7 @@ public class CoreFarmerJoe
         if (!Core.CheckInventory(new[] { "ArchPaladin", "Dragonslayer General" }, any: true, toInv: false))
         {
             Core.Logger("Getting Dragonslayer General");
-            SetClass(true, false, true);
+            SetClass(true, false, ftruelse);
             SetClass(false, true, true);
             DSG.GetDSGeneral();
         }
@@ -419,12 +419,13 @@ public class CoreFarmerJoe
         if (!Core.CheckInventory("Blaze Binder", toInv: false))
         {
             Core.Logger("Getting Blaze Binder");
+            SetClass(false, true, true);
             Bb.GetClass();
         }
         if (!Core.CheckInventory("Cryomancer", toInv: false))
         {
             Core.Logger("Getting Cryomancer");
-            SetClass(true, false, false);
+            SetClass(true, false, true);
             Cryo.DoCryomancer();
         }
     }
@@ -434,7 +435,7 @@ public class CoreFarmerJoe
         if (!Core.CheckInventory(new[] { "ArchPaladin", "DragonSoul Shinobi" }, any: true, toInv: false))
         {
             Core.Logger("Getting DSS for DoomKittem(ArchPaladin)");
-            SetClass(true, false, false);
+            SetClass(true, false, true);
             DS.GetDSS();
         }
     }
@@ -444,14 +445,14 @@ public class CoreFarmerJoe
         if (!Core.CheckInventory(new[] { "ArchPaladin", "Glacial Berserker" }, any: true, toInv: false))
         {
             Core.Logger("Getting Glacial Berserker");
-            SetClass(true, false, false);
+            SetClass(true, false, true);
             GB.GetGB();
         }
 
         if (!Core.CheckInventory("ArchPaladin", toInv: false))
         {
             Core.Logger("Getting ArchPaladin");
-            SetClass(true, false, false);
+            SetClass(true, false, true);
             AP.GetAP();
         }
     }
@@ -461,14 +462,15 @@ public class CoreFarmerJoe
         if (!Adv.HasMinimalBoost(GenericGearBoost.dmgAll, 30) || !Core.CheckInventory("Archfiend DeathLord", toInv: false))
         {
             Core.Logger("Getting ArchFiend DeathLord for +30 dmgAll");
-            SetClass(true, false, false);
+            SetClass(true, false, true);
+            SetClass(false, true, true);
             AFDeath.GetArm(true, ArchfiendDeathLord.RewardChoice.Archfiend_DeathLord);
         }
 
         if (!Core.CheckInventory("Archfiend", toInv: false))
         {
             Core.Logger("Getting Archfiend");
-            SetClass(true, false, false);
+            SetClass(true, false, true);
             AF.GetArchfiend();
         }
     }
