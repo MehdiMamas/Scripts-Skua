@@ -836,7 +836,7 @@ public class CoreBots
     /// </remarks>
     public void Unbank(params int[] itemIDs)
     {
-        if (itemIDs == null || itemIDs.Length == 0)
+        if (itemIDs == null || itemIDs.Length == 0 || !itemIDs.Any(x => x != 0))
             return;
 
         if (Bot.Player.InCombat)
@@ -1128,20 +1128,15 @@ public class CoreBots
     /// </remarks>
     public void ToHouseBank(params string[] items)
     {
-        if (items == null || !items.Any(x => x != null))
+        if (!items.Any(x => !string.IsNullOrEmpty(x)))
             return;
 
         JumpWait();
 
         foreach (string? item in items)
         {
-            if (item == null || item == SoloClass || item == FarmClass)
+            if (item == SoloClass || item == FarmClass || !Bot.House.Items.Any(x => x != null && x.Name == item && (!x.Coins || x.Equipped)))
                 continue;
-            if (Bot.House.IsEquipped(item))
-            {
-                Logger("Can't bank an equipped item");
-                continue;
-            }
 
             if (Bot.House.Contains(item))
             {
@@ -1170,21 +1165,16 @@ public class CoreBots
     /// </remarks>
     public void ToHouseBank(params int[] items)
     {
-        if (items == null || !items.Any())
+        if (items == null || items.Length == 0 || !items.Any(x => x != 0))
             return;
 
         JumpWait();
 
         foreach (int item in items)
         {
-            if (item == 0 || Bot.House.Items.Any(x => x.ID == item && x.Equipped))
+            // Skip items that are equipped or not AC tagged
+            if (item == 0 || Bot.House.Items.Any(x => x.ID == item && (x.Equipped || !x.Coins)))
                 continue;
-
-            if (Bot.House.IsEquipped(item))
-            {
-                Logger("Can't bank an equipped item");
-                continue;
-            }
 
             if (Bot.House.Contains(item))
             {
@@ -1791,7 +1781,7 @@ public class CoreBots
             }
         }
 
-        // Calculate the buy amount, ensuring we don’t exceed the required total
+        // Calculate the buy amount, ensuring we don't exceed the required total
         int buyAmount = (int)Math.Ceiling((double)requestedAmount / itemStackSize) * itemStackSize;
 
         // Ensure buyAmount does not exceed the maximum stack
@@ -2188,7 +2178,7 @@ public class CoreBots
     /// <param name="item">The item from which to retrieve the boost value.</param>
     /// <param name="boostType">The type of boost to retrieve.</param>
     /// <returns>
-    /// The boost value for the specified boost type. Returns 0 if the boost type is not present in the item’s metadata.
+    /// The boost value for the specified boost type. Returns 0 if the boost type is not present in the item's metadata.
     /// </returns>
     public float GetBoostFloat(InventoryItem item, string boostType)
     {
@@ -5674,8 +5664,8 @@ public class CoreBots
     /// <summary>
     /// Logs the player out and attempts to relogin to the same or a suitable server.
     /// Temporarily disables <c>Options.AutoRelogin</c>. If no preferred server is set or available, 
-    /// connects to the first available server based on membership, ensuring it’s not a test realm, 
-    /// isn’t full, and is online.
+    /// connects to the first available server based on membership, ensuring it's not a test realm, 
+    /// isn't full, and is online.
     /// </summary>
     /// <exception cref="InvalidOperationException">
     /// Thrown if server details cannot be fetched or no preferred server is set in <c>Options > Game</c>.
@@ -6080,7 +6070,7 @@ public class CoreBots
     public void BankACHouseItems()
     {
         var toHouseBank = Bot.House.Items
-            .Where(item => item is not null && !item.Equipped)
+            .Where(item => item != null && item.Coins && !item.Equipped)
             .Select(item => item.ID)
             .ToArray();
 
@@ -6947,8 +6937,8 @@ public class CoreBots
                 Bot.Send.Packet($"%xt%zm%serverUseItem%{Bot.Map.RoomID}%+%5041%525,275%{(PrivateRooms ? (map + "-" + PrivateRoomNumber) : map)}%");
                 Bot.Wait.ForMapLoad("hyperium");
                 Jump("R10");
-                Bot.Map.Join(PrivateRooms ? $"{map}-" + PrivateRoomNumber : strippedMap, autoCorrect: false);
-                Bot.Wait.ForMapLoad(strippedMap);
+                Bot.Map.Join(PrivateRooms ? $"{map}-" + PrivateRoomNumber : "moonyard", autoCorrect: false);
+                Bot.Wait.ForMapLoad("moonyard");
                 Sleep();
                 Bot.Wait.ForItemEquip(8733);
                 Bot.Wait.ForCellChange("MoonCut");
