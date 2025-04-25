@@ -37,7 +37,7 @@ public class GlacialBerserker
             return;
         }
 
-        Glacera.IceWindPass();
+        Glacera.DoAll();
         Farm.GlaceraREP();
         // Adv.BestGear(GenericGearBoost.rep);
         if (!Core.CheckInventory(new[] { 38049, 38084 }, any: true))
