@@ -2987,7 +2987,7 @@ public class CoreAdvanced
                 case "obsidian no class":
                 case "oracle":
                 case "overworld chronomancer":
-                case "paladin high lord":
+                case "paladin highlord":
                 case "paladin":
                 case "paladinslayer":
                 case "pink romancer":
