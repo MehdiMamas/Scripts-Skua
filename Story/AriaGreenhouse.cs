@@ -29,7 +29,7 @@ public class AriaGreenhouse
         Nature();
         Water();
         Fire();
-        // Energy();
+        Energy();
     }
 
     public void Nature()
@@ -267,8 +267,86 @@ public class AriaGreenhouse
         Story.MapItemQuest(10213, "kingeldfell", 14404);
     }
 
-    // public void Energy()
-    // {
+    public void Energy()
+    {
+        if (Core.isCompletedBefore(10223))
+            return;
 
-    // }
+        Story.PreLoad(this);
+
+
+        // 10214 | Dragonlord Dreams
+        if (!Story.QuestProgression(10214))
+        {
+            Core.HuntMonsterQuest(10214,
+                ("dwarfhold", "Chaos Drow", ClassType.Farm));
+        }
+
+
+        // 10215 | Background Noise
+        if (!Story.QuestProgression(10215))
+        {
+            Core.HuntMonsterQuest(10215,
+                ("uppercity", "Drow Assassin", ClassType.Farm));
+        }
+
+
+        // 10216 | Manticore Prince
+        if (!Story.QuestProgression(10216))
+        {
+            Core.HuntMonsterQuest(10216,
+                ("venomvaults", "Chaonslaught Warrior", ClassType.Farm));
+        }
+
+
+        // 10217 | Solid Clouds
+        Story.KillQuest(10217, "stormtemple", "Chaonslaught Warrior");
+        Story.MapItemQuest(10217, "stormtemple", 14405, 8);
+
+
+        // 10218 | Electric Rivalry
+        if (!Story.QuestProgression(10218))
+        {
+            Core.HuntMonsterQuest(10218,
+                ("thunderfang", "Tonitru", ClassType.Solo));
+        }
+
+
+        // 10219 | A Dragon's Dignity
+        if (!Story.QuestProgression(10219))
+        {
+            Core.HuntMonsterQuest(10219,
+                ("pride", "Valsarian", ClassType.Solo));
+        }
+
+
+        // 10220 | A Show Horse
+        if (!Story.QuestProgression(10220))
+        {
+            Core.HuntMonsterQuest(10220,
+                ("balemorale", "Skye Warrior", ClassType.Farm));
+        }
+
+
+        // 10221 | Elemental Executioners
+        if (!Story.QuestProgression(10221))
+        {
+            Core.HuntMonsterQuest(10221,
+                ("loughshine", "Energy Elemental", ClassType.Farm));
+        }
+
+
+        // 10222 | Pride's Grave
+        if (!Story.QuestProgression(10222))
+        {
+            Core.HuntMonsterQuest(10222,
+                ("naoisegrave", "Volgritian", ClassType.Solo));
+        }
+
+
+        // 10223 | King of the Tempest
+        Story.MapItemQuest(10223, "terminagrove", 14406);
+
+
+    }
 }
