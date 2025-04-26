@@ -1,7 +1,7 @@
 /*
 name: Aria's Greenhouse Story
 description: This will finish the Aria's Greenhouse quests.
-tags: story, quest, aria, greenhouse, nature,water,ariagreenhouse
+tags: story, quest, aria, greenhouse, nature,water,fire,energy,ariagreenhouse
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
@@ -28,6 +28,8 @@ public class AriaGreenhouse
     {
         Nature();
         Water();
+        Fire();
+        // Energy();
     }
 
     public void Nature()
@@ -187,4 +189,86 @@ public class AriaGreenhouse
 
 
     }
+
+    public void Fire()
+    {
+        if (Core.isCompletedBefore(10213))
+            return;
+
+        Story.PreLoad(this);
+
+        // 10204 | Grassroots Opinion
+        if (!Story.QuestProgression(10204))
+        {
+            Core.HuntMonsterQuest(10204,
+                ("greendragon", "Greenguard Dragon", ClassType.Solo));
+        }
+
+
+        // 10205 | Flame War
+        if (!Story.QuestProgression(10205))
+        {
+            Core.HuntMonsterQuest(10205,
+                ("bludrut2", "Fire Elemental", ClassType.Farm));
+        }
+
+
+        // 10206 | Ashes Reignited
+        if (!Story.QuestProgression(10206))
+        {
+            Core.HuntMonsterQuest(10206,
+                ("lair", "Water Draconian", ClassType.Farm));
+        }
+
+
+        // 10207 | Feldspar Silica
+        Story.KillQuest(10207, "mafic", "Living Fire");
+        Story.MapItemQuest(10207, "mafic", 14402);
+
+
+        // 10208 | Convective Conversation
+        if (!Story.QuestProgression(10208))
+        {
+            Core.HuntMonsterQuest(10208,
+                ("embersea", "Living Lava", ClassType.Farm));
+        }
+
+
+        // 10209 | Spicy Chicken
+        if (!Story.QuestProgression(10209))
+        {
+            Core.HuntMonsterQuest(10209,
+                ("lavarun", "Phedra", ClassType.Solo));
+        }
+
+
+        // 10210 | Akriloth's Inferno
+        if (!Story.QuestProgression(10210))
+        {
+            Core.HuntMonsterQuest(10210,
+                ("firewar", "Uriax", ClassType.Solo));
+        }
+
+
+        // 10211 | Scattered Embers
+        Story.KillQuest(10211, "fireplanewar", "Shadefire Onslaught");
+        Story.MapItemQuest(10211, "fireplanewar", 14403, 11);
+
+
+        // 10212 | Tempered Restraint
+        if (!Story.QuestProgression(10212))
+        {
+            Core.HuntMonsterQuest(10212,
+                ("wartraining", "Fire Champion", ClassType.Solo));
+        }
+
+
+        // 10213 | Extinct Volcano
+        Story.MapItemQuest(10213, "kingeldfell", 14404);
+    }
+
+    // public void Energy()
+    // {
+
+    // }
 }
