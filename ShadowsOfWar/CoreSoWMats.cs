@@ -74,8 +74,8 @@ public class CoreSoWMats
         Core.AddDrop("Elemental Core");
 
         Adv.GearStore();
-        Core.BossClass();
 
+        Core.BossClass("Chaos Avenger");
         Core.RegisterQuests(9126);
         while (!Bot.ShouldExit && !Core.CheckInventory("Elemental Core", Quantity))
         {
