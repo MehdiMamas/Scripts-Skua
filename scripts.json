@@ -1463,10 +1463,12 @@
       "greenhouse",
       "nature",
       "water",
+      "fire",
+      "energy",
       "ariagreenhouse"
     ],
     "path": "Story/AriaGreenhouse.cs",
-    "size": 4837,
+    "size": 6912,
     "fileName": "AriaGreenhouse.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AriaGreenhouse.cs"
   },
