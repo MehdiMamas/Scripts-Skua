@@ -57,7 +57,6 @@ public class SpoilsofLightMerge
                 Core.Logger("req is NULL");
                 return;
             }
-
             switch (req.Name)
             {
                 default:
@@ -78,24 +77,33 @@ public class SpoilsofLightMerge
                 case "Citadel's Light Blade":
                 case "Medal of Light":
                     Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.FarmingLogger(req.Name, req.Quantity); 
                     Core.RegisterQuests(6560, 6561);
-                    Core.HuntMonster("lightguardwar", "Citadel Crusader", req.Name, req.Quantity, req.Temp);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
+                        Core.KillMonster("lightguardwar", "r2", "Left", "Citadel Crusader");
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
 
                 case "Medal of Honor":
                     Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.FarmingLogger(req.Name, req.Quantity);
                     Core.RegisterQuests(6562, 6563);
-                    Core.HuntMonster("lightguardwar", "Citadel Crusader", req.Name, req.Quantity, req.Temp);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
+                        Core.KillMonster("lightguardwar", "r2", "Left", "Citadel Crusader");
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
 
                 case "Medal of Justice":
                     Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.FarmingLogger(req.Name, req.Quantity);
                     Core.RegisterQuests(6566);
-                    Core.HuntMonster("lightguardwar", "Citadel Crusader", req.Name, req.Quantity, req.Temp);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
+                        Core.KillMonster("lightguardwar", "r2", "Left", "Citadel Crusader");
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
