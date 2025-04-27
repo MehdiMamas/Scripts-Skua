@@ -1250,6 +1250,7 @@ public class CoreFarms
                 Core.EnsureComplete(2066);
             }
 
+            Core.EquipClass(ClassType.Farm);
             // 2067 - Secret Order of Undead Slayers
             if (!Core.isCompletedBefore(2067))
             {
@@ -1262,7 +1263,7 @@ public class CoreFarms
             if (!Core.isCompletedBefore(2082))
             {
                 Core.EnsureAccept(2082);
-                Core.HuntMonster("battleunderb", "Skeleton Warrior", "Undead Essence", isTemp: false);
+                Core.HuntMonster("battleunderb", "Skeleton Warrior", "Undead Essence", 25, isTemp: false);
                 Core.EnsureComplete(2082);
             }
 
@@ -1270,7 +1271,7 @@ public class CoreFarms
             if (!Core.isCompletedBefore(2083))
             {
                 Core.EnsureAccept(2083);
-                Core.HuntMonster("battleunderb", "Skeleton Warrior", "Bone Dust", isTemp: false);
+                Core.HuntMonster("battleunderb", "Skeleton Warrior", "Bone Dust", 40, isTemp: false);
                 Core.EnsureComplete(2083);
             }
 
