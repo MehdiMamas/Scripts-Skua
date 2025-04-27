@@ -350,8 +350,8 @@ public class UnlockForgeEnhancements
 
         Core.Logger("Unlocking Enhancement: Forge (Weapon)");
 
-        LOC.Escherion();
         Farm.Experience(30);
+        LOC.Escherion();
         Farm.BlacksmithingREP(4, Bot.Config!.Get<bool>("UseGold"), Bot.Config!.Get<bool>("UseGold"));
 
         Core.EquipClass(ClassType.Solo);
@@ -781,8 +781,8 @@ public class UnlockForgeEnhancements
 
         Core.Logger("Unlocking Enhancement: Forge (Cape)");
 
-        LOC.Kitsune();
         Farm.Experience(30);
+        LOC.Kitsune();
         Farm.BlacksmithingREP(4, Bot.Config!.Get<bool>("UseGold"), Bot.Config!.Get<bool>("UseGold"));
 
         Core.EquipClass(ClassType.Solo);
