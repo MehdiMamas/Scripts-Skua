@@ -509,6 +509,8 @@ public class CoreAdvanced
             {
                 if (matsOnly && req.Name.Contains("Gold Voucher"))
                     continue;
+
+                Core.AddDrop(req.ID); // Add the required item to the drop list
                 // Determine the current quantity of the required item in inventory
                 // Check if the item is in the temporary inventory or the permanent inventory
                 int currentQuantity = req.Temp
