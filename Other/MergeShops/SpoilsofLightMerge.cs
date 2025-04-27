@@ -77,43 +77,26 @@ public class SpoilsofLightMerge
                 case "Apprentice of the Light Locks":
                 case "Citadel's Light Blade":
                 case "Medal of Light":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(6560, 6561);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("lightguardwar", "Citadel Crusader", "Lightguard Medals", 5, log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.HuntMonster("lightguardwar", "Citadel Crusader", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
 
                 case "Medal of Honor":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(6562, 6563);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("lightguardwar", "Citadel Crusader", "Bone Marrow", 3, log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.HuntMonster("lightguardwar", "Citadel Crusader", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
 
                 case "Medal of Justice":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(6566);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster(
-                            "lightguardwar",
-                            "Citadel Crusader",
-                            "Gunpowder",
-                            3
-                        );
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.HuntMonster("lightguardwar", "Citadel Crusader", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
             }
