@@ -63,7 +63,7 @@ public class Butler2
 
     public void DoButler(string? playerName, bool log = false)
     {
-        Core.DL_Enable();
+        // Core.DL_Enable();
         Core.DebugLogger(this);
         // Initialize the CancellationTokenSource and get the Token
         ButlerTokenSource = new CancellationTokenSource();
