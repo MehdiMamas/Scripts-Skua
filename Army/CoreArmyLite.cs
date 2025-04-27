@@ -498,7 +498,7 @@ public class CoreArmyLite
             string? jsonData = Bot.Flash.Call("availableMonsters");
             if (string.IsNullOrEmpty(jsonData))
             {
-                Core.Logger("Failed to retrieve available monsters data.");
+                // Core.Logger("Failed to retrieve available monsters data.");
                 return false;
             }
             JArray monsters = JArray.Parse(jsonData);
@@ -1721,11 +1721,11 @@ public class CoreArmyLite
         Core.Sleep(1500);
         Bot.Send.Packet("%xt%zm%afk%1%false%");
     }
-    private string? b_playerName = null;
-    private bool b_doLockedMaps = true;
-    private bool b_doCopyWalk = false;
-    private int b_hibernationTimer = 0;
-    private bool b_shouldHibernate = true;
+    public string? b_playerName = null;
+    public bool b_doLockedMaps = true;
+    public bool b_doCopyWalk = false;
+    public int b_hibernationTimer = 0;
+    public bool b_shouldHibernate = true;
     public List<string> _attackPriority = new();
     public List<string> _LockedMapsList = new();
 
@@ -1924,11 +1924,11 @@ public class CoreArmyLite
         Core.Sleep();
         Core.JumpWait();
     }
-    private bool LockedZoneWarning = false;
+    public bool LockedZoneWarning = false;
     public bool MapUnavailable = false;
-    private bool insideLockedMaps = false;
+    public bool insideLockedMaps = false;
 
-    private void LockedZoneListener(dynamic packet)
+    public void LockedZoneListener(dynamic packet)
     {
         string type = packet["params"].type;
         dynamic data = packet["params"].dataObj;
@@ -1947,9 +1947,21 @@ public class CoreArmyLite
         }
     }
 
-    private void LockedMaps()
+    public void LockedMaps(string Pname = null, bool Cancel = false)
     {
-        Core.DebugLogger(this);
+        // If we're already at the player
+        if (Cancel || Bot.Map.PlayerExists(Pname))
+        {
+            return;
+        }
+
+        //for Butler2
+        if (Pname != null)
+        {
+            b_playerName = Pname;
+        }
+
+        Core.DebugLogger(this, b_playerName);
         // If the followed player is leaving behind a location in the file
         if (File.Exists(Path.Combine(CoreBots.ButlerLogDir, b_playerName + ".txt")))
         {
@@ -2011,7 +2023,7 @@ public class CoreArmyLite
 
         string[] EventMaps =
         {
-            "yoshino"
+            // "yoshino"
         };
 
         var levelLockedMaps = new[]
@@ -2023,14 +2035,12 @@ public class CoreArmyLite
             new { Map = "voidnerfkitten", LevelRequired = 80 }
         };
 
-
         Core.DebugLogger(this);
         int maptry = 0;
         int mapCount = _LockedMapsList.Count == 0 ? (Core.IsMember ? NonMemMaps.Length + MemMaps.Length : NonMemMaps.Length) : _LockedMapsList.Count;
 
         if (_LockedMapsList.Count == 0)
         {
-
             foreach (string map in EventMaps)
             {
                 if (!Core.isSeasonalMapActive(map))
