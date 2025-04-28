@@ -68,7 +68,7 @@ public class GoatREP
             if (!Core.CheckInventory(56723))
             {
                 Core.FarmingLogger("Dragon of Time Armor");
-                DoT.GetDoT(false, false, true);
+                DoT.DotArmor();
             }
 
             if (!Core.CheckInventory("Gold Voucher 500k", 2))
