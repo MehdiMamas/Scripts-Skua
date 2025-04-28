@@ -134,7 +134,7 @@ public class DragonOfTime
         }
 
         // Through the Wormhole 7719
-        if (!Story.QuestProgression(7719) || DotArmorOnly)
+        if (!Story.QuestProgression(7719))
         {
             Farm.Experience(40);
             Core.EnsureAccept(7719);
@@ -150,12 +150,13 @@ public class DragonOfTime
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("ubear", "Cornholio", "Is This a Wormhole?", isTemp: false);
 
-            Story.ChainQuest(7719);
-            Bot.Wait.ForPickup("*");
-            if (!DotArmorOnly)
-                Core.ToBank("Dragon of Time Armor");
-            else return;
+            Core.EnsureComplete(7719);
+
         }
+        
+        // If we are only getting the armor, we can return here.
+        if (DotArmorOnly)
+            return;
 
         // Rend 7720
         if (!Story.QuestProgression(7720))
@@ -327,4 +328,32 @@ public class DragonOfTime
             Core.ToBank("Dragon of Time Horns", "Dragon of Time Horns + Ponytail", "Dragon of Time Wings + Tail");
         }
     }
+
+    public void DotArmor()
+    {
+        if (Core.CheckInventory("Dragon of Time Armor"))
+            return;
+
+        if (!Core.isCompletedBefore(7719))
+            GetDoT(false, false, true);
+
+        Farm.Experience(40);
+        Core.EnsureAccept(7719);
+
+        Core.EquipClass(ClassType.Solo);
+        Core.HuntMonster("cathedral", "Incarnation of Time", "Time Loop Broken", isTemp: false, publicRoom: true);
+
+        Core.EquipClass(ClassType.Farm);
+        Core.KillMonster("portalwar", "r4", "Right", "*", "Anomaly Silenced", 100, false);
+
+        Core.HuntMonster("portalmaze", "ChronoLord", "Chronolord Stopped", 50, false);
+
+        Core.EquipClass(ClassType.Solo);
+        Core.HuntMonster("ubear", "Cornholio", "Is This a Wormhole?", isTemp: false);
+
+        Core.EnsureComplete(7719);
+        Bot.Wait.ForDrop("Dragon of Time Armor");
+        Bot.Wait.ForPickup("Dragon of Time Armor");
+    }
+
 }
