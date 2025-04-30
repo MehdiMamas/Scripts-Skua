@@ -76,6 +76,7 @@ public class Butler2
             Bot.Log("You need to set a player name.");
             return;
         }
+        else playerToFollow = playerName;
 
         if (!int.TryParse(Bot.Config!.Get<string>("roomNumber"), out int roomNr) && Bot.Config!.Get<bool>("lockedMaps"))
         {
@@ -303,7 +304,8 @@ public class Butler2
                     if (!initializationDone)
                     {
                         Core.DebugLogger(this);
-                        if (!Bot.Map.TryGetPlayer(playerName, out PlayerInfo? player) && player != null && player.Cell != null && player.Pad != null)
+                        PlayerInfo? player;
+                        if (!Bot.Map.TryGetPlayer(playerName, out player) || player == null || player.Cell == null || player.Pad == null)
                         {
                             Core.DebugLogger(this);
                             continue;
@@ -324,7 +326,16 @@ public class Butler2
                     }
                     Core.DebugLogger(this);
 
-                    Core.Jump(cellJump, padJump);
+                    if (cellJump != null && padJump != null)
+                    {
+                        Core.Jump(cellJump, padJump);
+                    }
+                    else
+                    {
+                        Core.DebugLogger(this);
+                        Core.Logger("Jumping to player failed, cell or pad is null.");
+                        continue;
+                    }
                     Core.DebugLogger(this);
                     needJump = false;
                     if (initializationDone)
@@ -378,7 +389,7 @@ public class Butler2
         }, cancellationToken: _cancellationToken);
     }
 
-    public async Task GoToPlayer(string name, CancellationToken? cancellationToken = null)
+    public async Task GoToPlayer(string name, CancellationToken cancellationToken)
     {
         Core.DebugLogger(this);
         if (isGoto == false)
@@ -387,13 +398,13 @@ public class Butler2
             return;
         }
 
-        while (!Bot.ShouldExit && !Bot.Player.Alive && !ButlerTokenSource.IsCancellationRequested)
+        while (!Bot.ShouldExit && !Bot.Player.Alive && ButlerTokenSource != null && !ButlerTokenSource.IsCancellationRequested)
         {
             await Task.Delay(500);
         }
 
         // Stop Butler if max retries are reached
-        if (gotoTry >= maxTry || ButlerTokenSource.IsCancellationRequested)
+        if (gotoTry >= maxTry || ButlerTokenSource == null || ButlerTokenSource.IsCancellationRequested)
         {
             Core.DebugLogger(this);
             Bot.Log("token canceled.");
@@ -451,7 +462,7 @@ public class Butler2
             // Check if the packet matches the followed player
             if (data[0]?.ToString() == "uotls" && data[2]?.ToString().ToLower() == playerName.ToLower())
             {
-                string movementData = data[3]?.ToString();
+                string? movementData = data[3]?.ToString();
                 if (string.IsNullOrEmpty(movementData)) return;
 
                 string[] movementParts = movementData.Split(',', StringSplitOptions.TrimEntries);
@@ -506,7 +517,13 @@ public class Butler2
             }
         }
         // Handle exit area scenario
-        else if (data[0]?.ToString() == "exitArea" && data[3]?.ToString().ToLower() == playerToFollow.ToLower())
+        else if (
+    data[0]?.ToString() == "exitArea"
+    && !string.IsNullOrEmpty(playerToFollow)
+    && data.Count > 3
+    && !string.IsNullOrEmpty(data[3]?.ToString())
+    && data[3].ToString().ToLower() == playerToFollow?.ToLower()
+)
         {
             followedPlayerCell = null;
         }
@@ -523,7 +540,7 @@ public class Butler2
             foreach (dynamic uoBranch in data.uoBranch)
             {
                 string uoName = Convert.ToString(uoBranch.uoName);
-                if (uoName?.ToLower() == playerToFollow.ToLower())
+                if (!string.IsNullOrEmpty(playerToFollow) && uoName?.ToLower() == playerToFollow.ToLower())
                 {
                     followedPlayerCell = uoBranch.strFrame;
                     Core.Logger($"Updated followedPlayerCell: {followedPlayerCell}");
