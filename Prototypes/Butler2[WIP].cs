@@ -44,10 +44,10 @@ public class Butler2
     const int maxTry = 5;
     bool LockedZone = false;
     bool needJump = false;
-    string cellJump = null;
-    string padJump = null;
-    string followedPlayerCell = null;
-    string playerToFollow = null;
+    string? cellJump = null;
+    string? padJump = null;
+    string? followedPlayerCell = null;
+    string? playerToFollow = null;
     bool isGoto = false;
     bool initializationDone = false;
 
