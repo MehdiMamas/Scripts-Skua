@@ -181,6 +181,13 @@ public class Butler2
         StartButler(playerName);
         Core.DebugLogger(this);
 
+        // --- Call GoToPlayer at script start if not in same map as player ---
+        if (!string.IsNullOrEmpty(playerName) && !Bot.Map.PlayerExists(playerName))
+        {
+            isGoto = true;
+            Task.Run(async () => await GoToPlayer(playerName, _cancellationToken));
+        }
+
         Bot.Log($"Butler started for player {playerName}");
         Core.Sleep(5000);
 
@@ -339,15 +346,14 @@ public class Butler2
                     Core.DebugLogger(this);
                     needJump = false;
                     if (initializationDone)
-                        return;
+                        continue;
 
                 }
 
 
-                if (!Bot.Map.PlayerExists(playerName) && !LockedZone)
+                if (!Bot.Map.PlayerExists(playerName) && !LockedZone && isGoto)
                 {
                     Core.DebugLogger(this);
-                    isGoto = true;
                     if (followedPlayerCell == null)
                     {
                         Core.DebugLogger(this);
@@ -355,6 +361,7 @@ public class Butler2
                     }
                     Core.DebugLogger(this);
                     await GoToPlayer(playerName, _cancellationToken);
+                    isGoto = false; // Prevent repeated calls until re-triggered
                 }
 
                 Core.DebugLogger(this);
@@ -452,10 +459,25 @@ public class Butler2
     {
         string type = packet["params"].type;
         dynamic data = packet["params"].dataObj;
-
         // Handle str-type packets with data containing movement information
         if (type == "str" && data.Count >= 4)
         {
+            // --- Handle exitArea first ---
+            if (data[0]?.ToString() == "exitArea")
+            {
+                string? leftPlayer = data[3]?.ToString();
+                if (!string.IsNullOrEmpty(playerToFollow) &&
+                    !string.IsNullOrEmpty(leftPlayer) &&
+                    leftPlayer.Equals(playerToFollow, StringComparison.OrdinalIgnoreCase))
+                {
+                    followedPlayerCell = null;
+                    Core.Logger($"Detected {playerToFollow} left the map. Attempting to follow...");
+                    isGoto = true; // Only set here, not in the main loop
+                    Task.Run(async () => await GoToPlayer(playerToFollow, _cancellationToken));
+                }
+                return; // Prevent further processing for this packet
+            }
+
             string? playerName = Bot.Config!.Get<string>("playerName");
             if (string.IsNullOrEmpty(playerName)) return;
 
@@ -496,35 +518,23 @@ public class Butler2
                     }
                 }
 
-                // Handle Walking or Jumping Logic
-                if (!movementData.Contains("mvts"))
-                {
-                    // Ensure valid x and y before walking
-                    if (xSuccess && ySuccess)
-                    {
-                        Bot.Flash.Call("walkTo", x, y, sp);
-                        Core.Logger($"Walking to X: {x}, Y: {y}, Speed: {sp}");
-                    }
-                }
-                else if (!string.IsNullOrEmpty(cell) && !string.IsNullOrEmpty(pad))
+                // If both cell and pad are present, it's a jump
+                if (!string.IsNullOrEmpty(cell) && !string.IsNullOrEmpty(pad))
                 {
                     followedPlayerCell = cell;
                     needJump = true;
                     cellJump = cell;
                     padJump = pad;
                     Core.Logger($"Need to Jump to Cell: {cellJump}, Pad: {padJump}");
+                    Core.Jump(cellJump, padJump);
+                }
+                // If only tx/ty are present, it's a walk
+                else if (xSuccess && ySuccess)
+                {
+                    Bot.Flash.Call("walkTo", x, y, sp);
+                    Core.Logger($"Walking to X: {x}, Y: {y}, Speed: {sp}");
                 }
             }
-        }
-        // Handle exit area scenario
-        else if (
-    data[0]?.ToString() == "exitArea"
-    && !string.IsNullOrEmpty(playerToFollow)
-    && !string.IsNullOrEmpty(data[3]?.ToString())
-    && data[3].ToString().ToLower() == playerToFollow?.ToLower()
-)
-        {
-            followedPlayerCell = null;
         }
         // Handle warning message
         else if (data[0]?.ToString() == "warning")
