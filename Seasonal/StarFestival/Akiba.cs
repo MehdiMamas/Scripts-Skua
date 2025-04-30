@@ -51,7 +51,8 @@ public class Akiba
 
         // Festival of Stars (6435)
         Story.MapItemQuest(6435, "akiba", 5951, 8);
-        Story.MapItemQuest(6435, "akiba", new[] { 5952, 5953 }, 5);
+        Story.MapItemQuest(6435, "akiba", 5952, 5);
+        Story.MapItemQuest(6435, "akiba", 5953, 7);
         Story.MapItemQuest(6435, "akiba", 5954, 3);
         Story.MapItemQuest(6435, "akiba", 5955, 2);
 
