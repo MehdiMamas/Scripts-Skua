@@ -520,7 +520,6 @@ public class Butler2
         else if (
     data[0]?.ToString() == "exitArea"
     && !string.IsNullOrEmpty(playerToFollow)
-    && data.Count > 3
     && !string.IsNullOrEmpty(data[3]?.ToString())
     && data[3].ToString().ToLower() == playerToFollow?.ToLower()
 )
