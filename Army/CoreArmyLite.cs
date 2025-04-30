@@ -1895,7 +1895,7 @@ public class CoreArmyLite
             Core.DebugLogger(this);
             LockedZoneWarning = false;
             Core.DebugLogger(this, $"{LockedZoneWarning}");
-            LockedMaps(); // Handle the locked zone logic
+            LockedMaps(userName); // Handle the locked zone logic
             Core.ToggleAggro(true);
             Bot.Events.ExtensionPacketReceived -= LockedZoneListener;
             return true;
@@ -1947,7 +1947,7 @@ public class CoreArmyLite
         }
     }
 
-    public void LockedMaps(string Pname = null, bool Cancel = false)
+    public void LockedMaps(string Pname, bool Cancel = false)
     {
         // If we're already at the player
         if (Cancel || Bot.Map.PlayerExists(Pname))
