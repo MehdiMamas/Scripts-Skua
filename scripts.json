@@ -19856,13 +19856,34 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/QueensBattleMerge.cs"
   },
   {
-    "name": "UbearMerge",
-    "description": "null",
+    "name": "Ubear Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Ubear Merge [1849] in /ubear",
     "tags": [
-      "null"
+      "ubear",
+      "merge",
+      "ubear",
+      "old",
+      "skewl",
+      "pet",
+      "mystical",
+      "plank",
+      "awe",
+      "doomkeknight",
+      "legion",
+      "peace",
+      "ducky",
+      "double",
+      "trobble",
+      "team",
+      "not",
+      "so",
+      "invisible",
+      "ninja",
+      "raaaaageface",
+      "morph"
     ],
     "path": "Other/MergeShops/UbearMerge.cs",
-    "size": 4078,
+    "size": 4597,
     "fileName": "UbearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/UbearMerge.cs"
   },
