@@ -31,6 +31,15 @@ public class DarkonDebris2ReconstructedPrerequisites
 
     public void FarmAll()
     {
+        bool UseInsigs = false;
+        if (Core.CheckInventory("Darkon Insignia", 20))
+        {
+            if (Core.OneTimeMessage("Insignia Warning", "20 Darkon Insignia will be used to buy the \"Darkon Debris 2 (Reconstructed)\" item, is this ok?", true, true, true) == true)
+            {
+                Core.Logger("20 Darkon Insignia will be used to buy the \"Darkon Debris 2 (Reconstructed)\" item, is this ok? (y/n)", messageBox: true);
+                UseInsigs = true;
+            }
+        }
         if (!Core.CheckInventory("Darkon's Debris 2 (Reconstructed)"))
         {
             if (!Core.CheckInventory("Darkon's Debris 2 (Recovered)"))
@@ -47,7 +56,13 @@ public class DarkonDebris2ReconstructedPrerequisites
                 Core.Logger(" x20 \"Darkon Insignia\" is Required to continue the quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot", messageBox: true);
                 return;
             }
-            else Core.BuyItem("ultradarkon", 2147, "Darkon's Debris 2 (Reconstructed)");
+            if (UseInsigs)
+                Core.BuyItem("ultradarkon", 2147, "Darkon's Debris 2 (Reconstructed)");
+            else
+            {
+                Core.Logger("You have 20 Darkon Insignia, but you didn't want to use them, so we will not buy the \"Darkon Debris 2 (Reconstructed)\" item, do so yourself.", "No Insig Use", messageBox: true);
+                return;
+            }
         }
     }
 }
