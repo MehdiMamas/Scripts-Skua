@@ -171,7 +171,8 @@ public class UnlockForgeEnhancements
         new Option<bool>("BulkFarmGold", "Pre-Farm Gold(BlackSmithRep)", "Bulk Turnin after farming 100m Gold. (turns in x10 as long as u have 5m gold)", false),
         new Option<bool>("SellQuestClass", "Sell quest classes", "sell the classes backa after the Anima, Pneuma, Examen, and Vim quests", false),
         new Option<bool>("CanSolo", "Can solo", "Solo Sluggbutter"),
-        new Option<bool>("UseInsignOnDaunt", "Use Insignia for dauntless", "Use your Insignia to buy the `Malgor's ShadowFlame Blade`[Malgor] & `Infernal Flame Pyromancer`[Avatar Tyndarius]", false)
+        new Option<bool>("UseInsignOnDaunt", "Use Insignia for dauntless", "Use your Insignia to buy the `Malgor's ShadowFlame Blade`[Malgor] & `Infernal Flame Pyromancer`[Avatar Tyndarius]", false),
+        new Option<bool>("UseInsignOnArcanasConcerto", "Use Insignia for Arcanas Concerto", "Use your Insignia to buy the `Darkon's Debris 2 (Reconstructed) & to complete the quest.", false)
     };
 
     public void ScriptMain(IScriptInterface Bot)
@@ -575,7 +576,8 @@ public class UnlockForgeEnhancements
                 Core.Logger(" x20 \"Darkon Insignia\" is Required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot", messageBox: true);
                 return;
             }
-            else Core.BuyItem("ultradarkon", 2147, "Darkon's Debris 2 (Reconstructed)");
+            else if (Bot.Config!.Get<bool>("UseInsignOnArcanasConcerto"))
+                Core.BuyItem("ultradarkon", 2147, "Darkon's Debris 2 (Reconstructed)");
         }
 
         if (!Core.CheckInventory("King Drago Insignia", 5))
@@ -588,7 +590,10 @@ public class UnlockForgeEnhancements
             Core.Logger(" x5 \"Darkon Insignia\" is required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot", messageBox: true);
             return;
         }
-        Core.ChainComplete(8742);
+        if (Bot.Config!.Get<bool>("UseInsignOnArcanasConcerto"))
+            Core.ChainComplete(8742);
+        else
+            Core.Logger("\"UseInsignOnArcanasConcerto\" is set to false, please buy the \"Darkon's Debris 2 (Reconstructed)\" from the shop manually, and complete the quest yourself (QuestID: 8742).");
         Core.Logger("Enhancement Unlocked: Arcana's Concerto");
     }
 
