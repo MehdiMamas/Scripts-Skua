@@ -1,7 +1,7 @@
 /*
-name: UbearMerge
-description: null
-tags: null
+name: Ubear Merge
+description: This bot will farm the items belonging to the selected mode for the Ubear Merge [1849] in /ubear
+tags: ubear, merge, ubear, old, skewl, pet, mystical, plank, awe, doomkeknight, legion, peace, ducky, double, trobble, team, not, so, invisible, ninja, raaaaageface, morph
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -33,7 +33,7 @@ public class UbearMerge
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Ubear X Pass", "Legion Token " });
+        Core.BankingBlackList.AddRange(new[] { "Ubear X Pass", "Legion Token" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -91,5 +91,7 @@ public class UbearMerge
         new Option<bool>("54020", "Double Trobble Pet", "Mode: [select] only\nShould the bot buy \"Double Trobble Pet\" ?", false),
         new Option<bool>("54021", "Team Double Trobble Pet", "Mode: [select] only\nShould the bot buy \"Team Double Trobble Pet\" ?", false),
         new Option<bool>("54034", "Not So Invisible Ninja", "Mode: [select] only\nShould the bot buy \"Not So Invisible Ninja\" ?", false),
+        new Option<bool>("18491", "RAAAAAGEFACE Visage", "Mode: [select] only\nShould the bot buy \"RAAAAAGEFACE Visage\" ?", false),
+        new Option<bool>("91714", "RAAAAAGEFACE Morph", "Mode: [select] only\nShould the bot buy \"RAAAAAGEFACE Morph\" ?", false),
     };
 }
