@@ -7488,6 +7488,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/EarthDay/CaptainLoresQuests.cs"
   },
   {
+    "name": "AE-25's Quests",
+    "description": "This script will complete AE-25's Quests in /twigguhunt.",
+    "tags": [
+      "ae25",
+      "ae-25",
+      "twigguhunt",
+      "twiggu hunt",
+      "may the 4th",
+      "seasonal",
+      "story",
+      "quests",
+      "may4th"
+    ],
+    "path": "Seasonal/MayThe4th/AE25Story.cs",
+    "size": 2252,
+    "fileName": "AE25Story.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/MayThe4th/AE25Story.cs"
+  },
+  {
     "name": "(Class) Dark Lord",
     "description": "This will merge Cyber Crystals and get the Dark Lord class.",
     "tags": [
@@ -7552,19 +7571,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/MayThe4th/Zoda.cs"
   },
   {
-    "name": "Zoda's Quests",
-    "description": "This script will complete Zoda's Quests in /zorbaspalace.",
+    "name": "GL-24K's Quests",
+    "description": "This script will complete GL-24K's Quests in /twigguhunt.",
     "tags": [
-      "zodas",
-      "zorbas",
-      "palace",
+      "gl24k",
+      "gl-24k",
+      "twigguhunt",
+      "twiggu hunt",
+      "may the 4th",
       "seasonal",
       "story",
       "quests",
       "may4th"
     ],
     "path": "Seasonal/MayThe4th/TwigguHunt.cs",
-    "size": 1615,
+    "size": 1642,
     "fileName": "TwigguHunt.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/MayThe4th/TwigguHunt.cs"
   },
