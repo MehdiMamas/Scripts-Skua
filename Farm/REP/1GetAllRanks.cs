@@ -38,14 +38,10 @@ public class GetAllRanks
 
         //Required Stories add when needed.
         Core.Logger("Doing Required Stories for the reps, let tato know if another is required.");
-        TOD.FourthDimensionalPyramid();
-        TOD.BaconCatFortress();
-        TOD.LaserSharkInvasion();
+        TOD.CompleteToD();
+        LOC.Complete13LOC();
         // Commented out do to PvP (with farm class or deaths) is still broke appearnly :thumbsup:
         // TOD.DeathPitPVP();
-        LOC.Wolfwing();
-        LOC.Kimberly();
-        LOC.Lionfang();
 
 
         Farm.GetAllRanks();
