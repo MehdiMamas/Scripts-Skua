@@ -1686,8 +1686,8 @@ public class Core13LoC
         Story.KillQuest(2614, "blackhorn", "Tomb Spider");
 
         //Fire Is The Thing
-        Story.KillQuest(2615, "blackhorn", new[] { "Restless Undead", "Tomb Spider" });
         Story.MapItemQuest(2615, "blackhorn", 1616);
+        Story.KillQuest(2615, "blackhorn", new[] { "Restless Undead", "Tomb Spider" });
 
         //The Wall Comes Down
         Story.MapItemQuest(2616, "blackhorn", 1617);

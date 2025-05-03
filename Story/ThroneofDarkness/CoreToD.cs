@@ -504,13 +504,12 @@ public class CoreToD
         Story.KillQuest(5107, "baconcat", "Kitty Boo Boo");
 
         // Stop Hitting Yourself!
-        // if (!Story.QuestProgression(5108))
-        // {
-        //     Core.EnsureAccept(5108);
-        //     Core.HuntMonster("baconcatyou", "*", "Defeated YOURSELF!");
-        //     Core.EnsureComplete(5108);
-        // }
-        Story.KillQuest(5108, "baconcatyou", Bot.Options.CustomName);
+        if (!Story.QuestProgression(5108))
+        {
+            Core.EnsureAccept(5108);
+            Core.KillMonster("baconcatyou", "Enter", "Spawn", "*", "Defeated YOURSELF!");
+            Core.EnsureComplete(5108);
+        }
     }
 
     public void LaserSharkInvasion()
