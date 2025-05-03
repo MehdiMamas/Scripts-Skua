@@ -2481,33 +2481,22 @@ public class CoreBots
             return false;
 
         ItemBase[] requiredItems = QuestData.AcceptRequirements.Where(x => !x.Temp)
-                .Concat(QuestData.Requirements.Where(x => !x.Temp))
-                .Where(item => item != null && !string.IsNullOrEmpty(item.Name))
-                .ToArray();
+     .Concat(QuestData.Requirements.Where(x => !x.Temp))
+     .Where(item => item != null && item.ID > 0)
+     .ToArray();
 
-        foreach (ItemBase item in requiredItems.Where(x => !x.Temp))
-        {
-            if (item != null && Bot.Bank.Contains(item.ID) && !Bot.Inventory.Contains(item.ID))
+        // Loop through the required items and add the Name if either the Name or the ID is not in CurrentDrops or ToPickupIDs
+        requiredItems.ToList()
+            .ForEach(item =>
             {
-                Unbank(item.ID);
-            }
-        }
-
-        foreach (ItemBase item in QuestData.AcceptRequirements.Where(x => !x.Temp))
-        {
-            if (!Bot.Drops.ToPickupIDs.Contains(item.ID))
-            {
-                Bot.Drops.Add(item.ID);
-            }
-        }
-
-        foreach (ItemBase item in QuestData.Requirements.Where(x => !x.Temp))
-        {
-            if (!Bot.Drops.ToPickupIDs.Contains(item.ID))
-            {
-                Bot.Drops.Add(item.ID);
-            }
-        }
+                // Check if either the Name or ID is not in the drops or pickup list
+                if (item != null && (!Bot.Drops.ToPickup.Contains(item.Name) || !Bot.Drops.ToPickupIDs.Contains(item.ID)))
+                {
+                    // Add both ID and Name to the drop list if missing (ID is incase of duplicate names)
+                    AddDrop(item.ID);
+                    AddDrop(item.Name);
+                }
+            });
 
         Sleep(ActionDelay * 2);
         // Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
@@ -2516,6 +2505,7 @@ public class CoreBots
             return true;
         else
         {
+            Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
             Bot.Quests.EnsureAccept(questID);
             Bot.Wait.ForQuestAccept(questID);
             return true;
@@ -2562,25 +2552,22 @@ public class CoreBots
                 }
             }
 
-            foreach (ItemBase item in quest.AcceptRequirements.Where(x => !x.Temp))
-            {
-                if (item == null)
-                    continue;
+            // Loop through AcceptRequirements and Requirements for items to handle drops and pickup IDs
+            var allItems = quest.AcceptRequirements.Concat(quest.Requirements).Where(x => !x.Temp).ToArray();
 
-                if (!Bot.Drops.ToPickupIDs.Contains(item.ID) && item?.Name != null)
-                    Bot.Drops.Add(item.ID);  // Adjusted to use 0 as the default value
-            }
-
-            foreach (ItemBase item in quest.Requirements.Where(x => !x.Temp))
-            {
-                if (item == null)
-                    continue;
-
-                if (!Bot.Drops.ToPickupIDs.Contains(item.ID) && item?.Name != null)
+            allItems.ToList()
+                .ForEach(item =>
                 {
-                    Bot.Drops.Add(item.ID);
-                }
-            }
+                    if (item == null) return;
+
+                    // Check if either Name or ID is missing from CurrentDrops or ToPickupIDs
+                    if (!Bot.Drops.ToPickup.Contains(item.Name) || !Bot.Drops.ToPickupIDs.Contains(item.ID))
+                    {
+                        // Add both ID and Name to the drop list if missing (ID is incase of duplicate names)
+                        AddDrop(item.ID);
+                        AddDrop(item.Name);
+                    }
+                });
 
             Sleep(ActionDelay * 2);
             // Bot.Send.Packet($"%xt%zm%acceptQuest%{Bot.Map.RoomID}%{quest.ID}%");
@@ -3744,6 +3731,8 @@ public class CoreBots
 
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
+        if (item is not null && !isTemp)
+            AddDrop(item);
 
         Monster? FindMonster()
         {
@@ -3780,13 +3769,6 @@ public class CoreBots
         }
         else
         {
-            if (!isTemp)
-                AddDrop(item);
-
-            ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).FirstOrDefault(x => x != null && x.Name == item);
-            if (Item != null && Item.Quantity == Item.MaxStack)
-                Bot.Drops.Remove(Item.ID);
-
             if (log)
                 FarmingLogger(item, quant);
 
@@ -3925,7 +3907,7 @@ public class CoreBots
         // Add the non-temp items to the drop pickup list
         Bot.Drops.Add(quest.AcceptRequirements.Concat(quest.Requirements)
                                 .Where(x => x != null && !x.Temp)
-                                .Select(x => x.Name)
+                                .Select(x => x.ID)
                                 .Distinct()
                                 .ToArray());
 
