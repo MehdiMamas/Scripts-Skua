@@ -1,7 +1,7 @@
 /*
-name: Zoda's Quests
-description: This script will complete Zoda's Quests in /zorbaspalace.
-tags: zodas, zorbas, palace, seasonal, story, quests, may4th
+name: GL-24K's Quests
+description: This script will complete GL-24K's Quests in /twigguhunt.
+tags: gl24k,gl-24k,twigguhunt,twiggu hunt,may the 4th,seasonal, story, quests, may4th
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
