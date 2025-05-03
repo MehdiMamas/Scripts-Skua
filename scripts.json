@@ -7704,6 +7704,27 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/MayThe4th/ZodasMerge.cs"
   },
   {
+    "name": "AE25s Loot Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the AE25s Loot Merge [2575] in /twigguhunt",
+    "tags": [
+      "ae25s",
+      "loot",
+      "merge",
+      "twigguhunt",
+      "fourth",
+      "guardian",
+      "balance",
+      "morph",
+      "goggles",
+      "eyewear",
+      "consular"
+    ],
+    "path": "Seasonal/MayThe4th/AE25sLootMerge.cs",
+    "size": 5061,
+    "fileName": "AE25sLootMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/MayThe4th/AE25sLootMerge.cs"
+  },
+  {
     "name": "Murder Moon Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Murder Moon Merge [1998] in /murdermoon",
     "tags": [
