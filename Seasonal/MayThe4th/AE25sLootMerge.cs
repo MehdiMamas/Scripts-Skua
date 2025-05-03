@@ -8,7 +8,7 @@ tags: ae25s, loot, merge, twigguhunt, fourth, guardian, balance, morph, goggles,
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Seasonal/MayThe4th/MurderMoonStory.cs
-//cs_include Scripts/Seasonal\MayThe4th\TwigguHunt.cs
+//cs_include Scripts/Seasonal/MayThe4th/TwigguHunt.cs
 //cs_include Scripts/Seasonal/MayThe4th/AE25Story.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;

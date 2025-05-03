@@ -8,7 +8,7 @@ tags: ae25,ae-25,twigguhunt,twiggu hunt,may the 4th,seasonal, story, quests, may
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Seasonal/MayThe4th/MurderMoonStory.cs
-//cs_include Scripts/Seasonal\MayThe4th\TwigguHunt.cs
+//cs_include Scripts/Seasonal/MayThe4th/TwigguHunt.cs
 using Skua.Core.Interfaces;
 
 public class AE25Quests
