@@ -40,7 +40,7 @@ public class DarkLord
             return;
         }
 
-        MMS.MurderMoonStory();
+        MMS.MurderMoonStory(true);
 
         Core.AddDrop($"Cyber Crystal", "S Ring", "Fifth Lord's Filtrinator", "Dark Helmet", "Dotty");
 
