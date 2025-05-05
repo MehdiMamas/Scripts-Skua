@@ -878,85 +878,114 @@ public class CoreAdvanced
     /// </summary>
     /// <param name="className"></param>
     /// <param name="gearRestore"></param>
-    public void RankUpClass(string className, bool gearRestore = true)
+    /// <param name="itemid"></param>
+    public void RankUpClass(string className, bool gearRestore = true, int itemid = 0)
     {
-        InventoryItem? itemInv = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == className.ToLower().Trim() && i.Category == ItemCategory.Class);
+        // Determine search condition based on itemid
+        Func<InventoryItem, bool> classMatch = i => (itemid > 0 ? i.ID == itemid : i.Name.Equals(className, StringComparison.OrdinalIgnoreCase)) && i.Category == ItemCategory.Class;
 
-        if (itemInv != null && ((itemInv.Upgrade && !Bot.Player.IsMember) || (Bot.Inventory.Contains(itemInv.ID) && itemInv.Quantity >= 302500)))
-            return;
-
-        while (!Bot.ShouldExit && itemInv != null && Bot.Bank.Contains(itemInv.ID) && !Bot.Inventory.Contains(itemInv.ID))
-        {
-            Bot.Bank.ToInventory(itemInv.ID);
-            Core.Sleep();
-
-            if (Bot.Inventory.Contains(itemInv.ID))
-                break;
-        }
+        // Find the class item in inventory and bank
+        InventoryItem? itemInv = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(classMatch);
 
         if (itemInv == null)
         {
-            Core.Logger($"Can't level up \"{className}\" because you don't own it.");
+            Core.Logger($"Can't level up {(itemid > 0 ? $"item ID {itemid}" : $"\"{className}\"")} because you don't own it.");
             return;
         }
 
+        // Check if the class is already Rank 10 or unavailable due to membership requirement
+        if ((itemInv.Upgrade && !Bot.Player.IsMember) || (Bot.Inventory.Contains(itemInv.ID) && itemInv.Quantity >= 302500))
+        {
+            Core.Logger($"\"{itemInv.Name}\" is already Rank 10 or you are not a member and the item is members.");
+            return;
+        }
+
+        // Unbank the item if it's in the bank but not in the inventory
+        if (Bot.Bank.Contains(itemInv.ID) && !Bot.Inventory.Contains(itemInv.ID))
+        {
+            Core.Unbank(itemInv.ID);
+            Core.Sleep();
+
+            // Recheck the item in inventory after unbanking
+            itemInv = Bot.Inventory.Items.FirstOrDefault(classMatch);
+            if (itemInv == null)
+            {
+                Core.Logger($"Failed to unbank {(itemid > 0 ? $"item ID {itemid}" : $"\"{className}\"")}.");
+                return;
+            }
+        }
+
+        // Check if the class is already Rank 10
         if (itemInv.Quantity == 302500)
         {
-            Core.Logger($"\"{className}\" is already Rank 10");
+            Core.Logger($"\"{itemInv.Name}\" is already Rank 10");
+            return;
         }
-        else if (itemInv.Name.Equals("Hobo Highlord") || itemInv.Name.Equals("No Class") || itemInv.Name.Equals("Obsidian No Class"))
+
+        // Check if the class cannot be leveled past Rank 1
+        if (itemInv.Name.Equals("Hobo Highlord") || itemInv.Name.Equals("No Class") || itemInv.Name.Equals("Obsidian No Class"))
         {
             Core.Logger($"\"{itemInv.Name}\" cannot be leveled past Rank 1");
+            return;
         }
-        else
+
+        // Optionally restore gear
+        if (gearRestore)
+            GearStore();
+
+        Core.JumpWait();
+
+        // Attempt to enhance the class if applicable
+        SmartEnhance(className);
+
+        // Find the class item in inventory after enhancement
+        InventoryItem? classItem = Bot.Inventory.Items.FirstOrDefault(classMatch);
+        if (classItem == null)
         {
-            if (gearRestore)
-                GearStore();
-
-            Core.JumpWait();
-
-            SmartEnhance(className);
-            InventoryItem? classItem = Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == className.ToLower().Trim() && i.Category == ItemCategory.Class);
-            if (classItem == null)
-            {
-                Core.Logger($"Class item \"{className}\" not found in inventory.");
-            }
-            else if (classItem.EnhancementLevel <= 0)
-            {
-                Core.Logger($"Can't level up \"{classItem.Name}\" because it's not enhanced, and AutoEnhance is turned off");
-            }
-            else
-            {
-                if (classItem != null && !Bot.Inventory.IsEquipped(classItem.ID))
-                {
-                    Core.Equip(classItem.ID);
-                    Bot.Wait.ForTrue(() => Bot.Inventory.IsEquipped(classItem.ID), 20);
-                }
-                // string cpBoost = BestGear(GenericGearBoost.cp, false);
-                // EnhanceItem(cpBoost, CurrentClassEnh(), CurrentCapeSpecial(), CurrentHelmSpecial(), CurrentWeaponSpecial());
-                // Core.Equip(cpBoost);
-                Farm.ToggleBoost(BoostType.Class);
-                Farm.IcestormArena(Bot.Player.Level, true);
-                Core.Jump("Enter");
-                Bot.Options.AggroMonsters = false;
-                classItem = Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == className.ToLower().Trim() && i.Category == ItemCategory.Class);
-                if (classItem == null)
-                {
-                    Core.Logger($"Class item \"{className}\" not found in inventory.");
-                }
-                else
-                {
-                    if (classItem.Quantity == 302500)
-                        Core.Logger($"\"{classItem.Name}\" is now Rank 10");
-                    else
-                        Core.Logger($"\"{classItem.Name}\" is somehow... not rank 10??");
-
-                    Farm.ToggleBoost(BoostType.Class, false);
-                    if (gearRestore)
-                        GearStore(true);
-                }
-            }
+            Core.Logger($"Class item {(itemid > 0 ? $"ID {itemid}" : $"\"{className}\"")} not found in inventory.");
+            return;
         }
+
+        // Ensure the class item is enhanced before leveling up
+        if (classItem.EnhancementLevel <= 0)
+        {
+            Core.Logger($"Can't level up \"{classItem.Name}\" because it's not enhanced, and AutoEnhance is turned off");
+            return;
+        }
+
+        // Equip the class if it's not already equipped
+        if (!Bot.Inventory.IsEquipped(classItem.ID))
+        {
+            Core.Equip(classItem.ID);
+            Bot.Wait.ForTrue(() => Bot.Inventory.IsEquipped(classItem.ID), 20);
+        }
+
+        // Activate the class boost
+        Farm.ToggleBoost(BoostType.Class);
+        Farm.IcestormArena(Bot.Player.Level, true);
+        Core.Jump("Enter");
+        Bot.Options.AggroMonsters = false;
+
+        // Recheck the class item after jumping
+        classItem = Bot.Inventory.Items.FirstOrDefault(classMatch);
+        if (classItem == null)
+        {
+            Core.Logger($"Class item {(itemid > 0 ? $"ID {itemid}" : $"\"{className}\"")} not found in inventory.");
+            return;
+        }
+
+        // Check if the class reached Rank 10
+        if (classItem.Quantity == 302500)
+            Core.Logger($"\"{classItem.Name}\" is now Rank 10");
+        else
+            Core.Logger($"\"{classItem.Name}\" is somehow... not rank 10??");
+
+        // Deactivate the class boost
+        Farm.ToggleBoost(BoostType.Class, false);
+
+        // Optionally restore gear
+        if (gearRestore)
+            GearStore(true);
     }
 
     // Temp here cuz name change is fucky on auto update for some reason

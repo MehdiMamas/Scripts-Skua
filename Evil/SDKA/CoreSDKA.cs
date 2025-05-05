@@ -133,28 +133,42 @@ public class CoreSDKA
             Core.ToBank("Experimental Dark Item");
         }
 
-        if (!Story.QuestProgression(2087))
+        if (!Story.QuestProgression(Core.IsMember ? 2086 : 2087))
         {
-            Core.EnsureAccept(2087);
-            if (!Core.CheckInventory(2083))
-            {
-                Core.Logger("You don't have the DoomKnight Class, Getting it for you. (+warrior/Healer if those aren't R10)");
+            Core.EnsureAccept(Core.IsMember ? 2086 : 2087);
 
+            // Check if DoomKnight Class is missing for non-members or members without either version (AC or non-AC)
+            if (!Core.IsMember && !Core.CheckInventory(2083) || Core.IsMember && !Core.CheckInventory(new[] { 8523, 2083 }, any: true))
+            {
+                Core.Logger("You don't have the DoomKnight Class, Getting it for you. (+Warrior/Healer if those aren't R10)");
+
+                // Ensure Healer is Rank 10
                 Core.BuyItem("trainers", 176, "Healer");
                 Adv.RankUpClass("Healer");
 
+                // Ensure Warrior is Rank 10
                 Core.BuyItem("trainers", 170, "Warrior");
                 Adv.RankUpClass("Warrior");
 
-                Adv.BuyItem("shadowfall", 100, "DoomKnight", shopItemID: 6309);
+                // Buy and rank up DoomKnight if not owned (non-AC version for F2P)
+                Adv.BuyItem("shadowfall", 100, 2083, shopItemID: 6309); // Buy non-AC DoomKnight for F2P
+                Bot.Wait.ForPickup(2083); // Wait for the item to be picked up
+                Adv.RankUpClass("DoomKnight", itemid: 2083); // Rank it up
             }
-            Adv.RankUpClass("DoomKnight");
+
+            // Ensure DoomKnight is Rank 10 for both members and non-members before proceeding with quest completion
+            Adv.RankUpClass("DoomKnight", itemid: Core.IsMember ? (Core.CheckInventory(8523) ? 8523 : 2083) : 2083);
+
+            // Equip the DoomKnight class
             Core.EquipClass(ClassType.Solo);
 
-            Core.EnsureComplete(2087);
+            // Complete the quest for obtaining the class
+            Core.EnsureComplete(Core.IsMember ? 2086 : 2087);
+
+            // Bank non-solo classes if equipped
             if (Core.SoloClass != "DoomKnight")
-                Core.ToBank("DoomKnight");
-        }
+                Core.ToBank(Core.IsMember ? 8523 : 2083);
+        }        
 
         if (!Story.QuestProgression(2088))
         {
@@ -670,7 +684,8 @@ public class CoreSDKA
                 upgradeMetalQuest = 2116;
                 forgeKeyQuest = 2143;
                 break;
-        };
+        }
+        ;
 
         if (Core.CheckInventory(fullMetalName))
             return;
