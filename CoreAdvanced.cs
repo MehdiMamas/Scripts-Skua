@@ -507,7 +507,7 @@ public class CoreAdvanced
         {
             foreach (ItemBase req in item.Requirements)
             {
-                if (matsOnly && req.Name.Contains("Gold Voucher"))
+                if (matsOnly && req.Name.StartsWith("Gold Voucher"))
                     continue;
 
                 Core.AddDrop(req.ID); // Add the required item to the drop list
@@ -548,8 +548,15 @@ public class CoreAdvanced
                                 Core.AddDrop(req.ID);
                                 externalItem = req;
                                 externalQuant = 1;
-                                // Set the quantity to 1 to farm the item
-                                findIngredients();
+
+
+                                // Seperately handle Dstones and Vouchers as they arent included in the ingredients list on the merge scripts by default
+                                if (req.Name.Contains("Dragon Runestone"))
+                                    Farm.DragonRunestone(req.Quantity);
+                                else if (req.Name.StartsWith("Gold Voucher"))
+                                    Farm.Voucher(req.Name, req.Quantity);
+                                else
+                                    findIngredients();
 
                                 // Check if the item is now in the inventory
                                 if (req != null)
