@@ -1514,6 +1514,8 @@ public class CoreFarms
 
     public void Voucher(string Voucher, int quant, string? shopName = null)
     {
+        if (Core.CheckInventory(Voucher, quant))
+            return;
 
         string map = "";
         int shopID = 0;
