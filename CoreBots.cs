@@ -199,6 +199,13 @@ public class CoreBots
                 Logger("We started in oaklore... starting scripts here can cause \"issues\"... we're not sure why this happens... but hopefully this fixes that.\n \tTeleporting to \"battleon\"\n\n");
                 Join("battleon-100000");
             }
+            if (Bot.Map.Name != null && Bot.Map.Name == "bludrutbrawl")
+            {
+                Bot.Wait.ForMapLoad("bludrutbrawl");
+                Logger("We started in bludrutbrawl... starting scripts here can cause \"issues\"... we're not sure why this happens... but hopefully this fixes that.\n \tTeleporting to \"battleon\"\n\n");
+                Join("battleon-100000");
+            }
+
         }
 
 
