@@ -1087,6 +1087,12 @@ public class CoreFarms
         if (Core.CheckInventory(item, quant))
             return;
 
+        if (Bot.Map.Name == "bludrutbrawl")
+        {
+            Core.Logger("Started in PvP map, which doesnt allow us to equip things if needed and can cause issues. Joining whitemap first.");
+            Core.Join("whitemap");
+        }
+
         canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool KillAds);
         Core.Logger($"`Kill Ads` Enabled? {KillAds}");
         Core.AddDrop(new[] { item } ?? new[] { "The Secret 4", "Yoshino's Citrine" });
@@ -1096,30 +1102,16 @@ public class CoreFarms
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
 
-        if (Core.CheckInventory(AcceptablePvPAmulets, any: true) && !AcceptablePvPAmulets.Any(Bot.Inventory.IsEquipped) ||
-        !Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true)))
+        // Find the first matching amulet in inventory or bank
+        string? amulet = AcceptablePvPAmulets
+            .FirstOrDefault(name => Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i => i?.Name == name));
+
+        // Equip the amulet if found in inventory or bank
+        if (amulet != null)
         {
-            // Unbank and equip the first acceptable PvP amulet if owned
-            if (AcceptablePvPAmulets.Any(item => Bot.Bank.Contains(item)))
-            {
-                Core.Unbank(AcceptablePvPAmulets);
-                Core.Sleep(); // Sleep if necessary to account for server-side inventory updates
-            }
-
-            if (AcceptablePvPAmulets.Any(item => Bot.Inventory.Contains(item)))
-            {
-                Core.Equip(AcceptablePvPAmulets.First());
-                Core.Sleep(); // Sleep if necessary to allow equip to process
-            }
-
-            // Enable Kill Ads if no amulet is found
-            if (!Core.CheckInventory(AcceptablePvPAmulets, any: true))
-            {
-                Core.Logger("No amulet owned, enabling `Kill Ads`");
-                KillAds = true;
-            }
+            Core.Unbank(amulet);
+            Core.Equip(amulet);
         }
-
 
     Start:
         int ExitAttempt = 0;
@@ -1127,7 +1119,7 @@ public class CoreFarms
         Random random = new();
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
-            Core.Join("bludrutbrawl", "Enter0", "Spawn");
+            Core.Join("bludrutbrawl-999999", "Enter0", "Spawn");
             Bot.Wait.ForMapLoad("bludrutbrawl");
 
             Core.PvPMove(5, "Morale0C", random.Next(784, 862), random.Next(254, 274));
@@ -2721,33 +2713,24 @@ public class CoreFarms
                 Core.RegisterQuests(QID);
         }
 
-        canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool KillAds);
-
-        if (Core.CheckInventory(AcceptablePvPAmulets, any: true) && !AcceptablePvPAmulets.Any(Bot.Inventory.IsEquipped) ||
-     !Bot.Inventory.Items.Any(x => x != null && Core.CheckInventory(AcceptablePvPAmulets, any: true)))
+        if (Bot.Map.Name == "deathpitbrawl")
         {
-            // Unbank and equip the first acceptable PvP amulet if owned
-            if (AcceptablePvPAmulets.Any(item => Bot.Bank.Contains(item)))
-            {
-                Core.Unbank(AcceptablePvPAmulets);
-                Core.Sleep(); // Sleep if necessary to account for server-side inventory updates
-            }
-
-            if (AcceptablePvPAmulets.Any(item => Bot.Inventory.Contains(item)))
-            {
-                Core.Equip(AcceptablePvPAmulets.First());
-                Core.Sleep(); // Sleep if necessary to allow equip to process
-            }
-
-            // Enable Kill Ads if no amulet is found
-            if (!Core.CheckInventory(AcceptablePvPAmulets, any: true))
-            {
-                string amuletList = string.Join(Environment.NewLine + "> ", AcceptablePvPAmulets);
-                Bot.Log($"No amulet owned out of:{Environment.NewLine}> {amuletList}{Environment.NewLine}Enabling `Kill Ads`");
-                KillAds = true;
-            }
+            Core.Logger("Started in PvP map, which doesnt allow us to equip things if needed and can cause issues. Joining whitemap first.");
+            Core.Join("whitemap");
         }
 
+        canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool KillAds);
+
+        // Find the first matching amulet in inventory or bank
+        string? amulet = AcceptablePvPAmulets
+            .FirstOrDefault(name => Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i => i?.Name == name));
+
+        // Equip the amulet if found in inventory or bank
+        if (amulet != null)
+        {
+            Core.Unbank(amulet);
+            Core.Equip(amulet);
+        }
 
         Core.Logger($"Kill Additional mobs (more trophies - slower depending on gear): {KillAds}");
 
