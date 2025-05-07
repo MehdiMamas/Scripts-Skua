@@ -10738,13 +10738,12 @@
       "may the 4th",
       "quest reward",
       "its a trap",
-      "it's a trap",
       "droid for sale",
       "get me parts",
       "trobba fett house guard"
     ],
     "path": "Seasonal/MayThe4th/MawaQuestRewards.cs",
-    "size": 1913,
+    "size": 1900,
     "fileName": "MawaQuestRewards.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/MayThe4th/MawaQuestRewards.cs"
   },
