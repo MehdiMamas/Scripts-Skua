@@ -1,7 +1,7 @@
 /*
 name: Mawa's Quests Rewards
 description: This will farm the rewards from Mawa's Quests in /eventhub.
-tags: mawa, seasonal, may the 4th,quest reward,its a trap, it's a trap,droid for sale,get me parts, trobba fett house guard
+tags: mawa, seasonal, may the 4th,quest reward,its a trap,droid for sale,get me parts, trobba fett house guard
 */
 //cs_include Scripts/CoreBots.cs
 // //cs_include Scripts/CoreFarms.cs
