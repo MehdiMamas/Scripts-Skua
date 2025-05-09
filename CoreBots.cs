@@ -1761,15 +1761,24 @@ public class CoreBots
 
     private int _CalcBuyQuantity(ShopItem item, int requestedAmount)
     {
-        if (requestedAmount > item.MaxStack)
+        if (requestedAmount > item?.MaxStack)
         {
             Logger($"Requested {requestedAmount}, but max stack for {item.Name} is {item.MaxStack}. Fix the calling script.", "BuyItem");
             Bot.Stop(true);
         }
 
+        // Unbank it if its in bank
+        if (Bot.Bank.Contains(item.ID) && !Bot.Inventory.Contains(item.ID))
+            Unbank(item.ID);
+
         int itemStackSize = item.Quantity == 302500 ? 1 : item.Quantity;
         // Cocant (make take everything into a giant array, and then find the current quantity if its null, default to 0)
-        int currentStock = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).Concat(Bot.TempInv.Items /* because fucking why not*/ ).FirstOrDefault(x => x.ID == item.ID)?.Quantity ?? 0;
+        int currentStock = Bot.Inventory.Items
+        .Concat(Bot.Bank.Items)
+        .Concat(Bot.House.Items)
+        .Concat(Bot.House.Items)
+        .Concat(Bot.TempInv.Items) // Because fucking why not
+        .FirstOrDefault(x => x.ID == item.ID)?.Quantity ?? 0;
         // int neededAmount = requestedAmount - currentStock; // Calculate how much more is needed
 
         // Check if all requirements are met before proceeding
