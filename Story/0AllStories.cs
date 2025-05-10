@@ -48,6 +48,8 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/LordsofChaos/ChoasFinaleBonus[Mem]/KillerCatacombs[Mem].cs
 //cs_include Scripts/Story/LordsofChaos/ChoasFinaleBonus[Mem]/PyramidofPain[Mem].cs
 
+//cs_include Scripts/Story/Lynaria/CoreLynaria.cs
+
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Story/Nation/Bamboozle.cs
 //cs_include Scripts/Story/Nation/CitadelRuins.cs
@@ -261,6 +263,9 @@ public class AllStories
     public DeadlyDungeon DeadlyDungeon = new();
     public KillerCatacombs KillerCatacombs = new();
     public PyramidofPain PyramidofPain = new();
+
+    // Lynaria
+    public CoreLynaria Lynaria = new();
 
     // Nation
     public Bamboozle Bamboozle = new();
@@ -544,6 +549,11 @@ public class AllStories
 
         WorldSoul.WorldSoulQuests();
         Core.Logger($"Story: World Soul - Complete");
+        #endregion
+
+        #region Lynaria
+        Lynaria.DoAll();
+        Core.Logger($"Story: Lynaria - Complete");
         #endregion
 
         #region Nation
