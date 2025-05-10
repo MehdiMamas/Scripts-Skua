@@ -673,8 +673,14 @@ public class CoreAdvanced
                                         Core.AddDrop(externalthing.ID);
                                         externalItem = externalthing;
                                         externalQuant = 1;
-                                        // Set the quantity to 1 to farm the item
-                                        findIngredients();
+                                        // Seperately handle Dstones and Vouchers as they arent included in the ingredients list on the merge scripts by default
+                                        if (externalItem.Name.Contains("Dragon Runestone"))
+                                            Farm.DragonRunestone(externalthing.Quantity);
+                                        else if (externalthing.Name.StartsWith("Gold Voucher"))
+                                            Farm.Voucher(externalthing.Name, externalthing.Quantity);
+                                        else
+                                            // Call the findIngredients method to farm the item
+                                            findIngredients();
 
                                         // Check if the item is now in the inventory
                                         inventoryItem = Bot.Inventory.Items.FirstOrDefault(x => x != null && x.ID == externalthing.ID);
@@ -700,8 +706,12 @@ public class CoreAdvanced
                         // Ensure externalQuant does not exceed the maximum stack size
                         externalQuant = Math.Min(externalQuant, maxStack);
 
-
-                        findIngredients(); // Call a method to handle farming logic
+                        if (externalItem.Name.Contains("Dragon Runestone"))
+                            Farm.DragonRunestone(externalItem.Quantity);
+                        else if (externalItem.Name.StartsWith("Gold Voucher"))
+                            Farm.Voucher(externalItem.Name, externalItem.Quantity);
+                        else
+                            findIngredients(); // Call a method to handle farming logic
                     }
                     else
                     {
