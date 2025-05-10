@@ -1,7 +1,7 @@
 /*
-name: StreamwarMerge
-description: null
-tags: null
+name: Streamwar Merge
+description: This bot will farm the items belonging to the selected mode for the Streamwar Merge [2163] in /streamwar
+tags: streamwar, merge, streamwar, bright, mana, flame, guard, banner, sabre, bow, green, dragon, slayer, slayers, sallet, winged, cloak, halberd, dark, a, fragment, beginning
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -34,6 +34,7 @@ public class StreamwarMerge
 
     public void ScriptMain(IScriptInterface bot)
     {
+        Core.BankingBlackList.AddRange(new[] { "Avatar's Flame", "Prismatic Seams", "Avatar's Flame Guard", "Avatar's Flame Spikes", "Avatar's Flame Banners", "Avatar's Flame Sabre", "Willpower", "Garish Remnant", "Avatar's Flame Bow", "Unbound Thread" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -106,14 +107,6 @@ public class StreamwarMerge
         new Option<bool>("71901", "Bright Mana Flame Banner", "Mode: [select] only\nShould the bot buy \"Bright Mana Flame Banner\" ?", false),
         new Option<bool>("71902", "Bright Mana Flame Sabre", "Mode: [select] only\nShould the bot buy \"Bright Mana Flame Sabre\" ?", false),
         new Option<bool>("71903", "Bright Mana Flame Bow", "Mode: [select] only\nShould the bot buy \"Bright Mana Flame Bow\" ?", false),
-        new Option<bool>("72003", "Dark Mana Flame", "Mode: [select] only\nShould the bot buy \"Dark Mana Flame\" ?", false),
-        new Option<bool>("72004", "Mana Flame Skull", "Mode: [select] only\nShould the bot buy \"Mana Flame Skull\" ?", false),
-        new Option<bool>("72005", "Mana Flame Hair", "Mode: [select] only\nShould the bot buy \"Mana Flame Hair\" ?", false),
-        new Option<bool>("72006", "Dark Mana Flame Guard", "Mode: [select] only\nShould the bot buy \"Dark Mana Flame Guard\" ?", false),
-        new Option<bool>("72007", "Dark Mana Flame Spikes", "Mode: [select] only\nShould the bot buy \"Dark Mana Flame Spikes\" ?", false),
-        new Option<bool>("72008", "Dark Mana Flame Banner", "Mode: [select] only\nShould the bot buy \"Dark Mana Flame Banner\" ?", false),
-        new Option<bool>("72009", "Dark Mana Flame Sabre", "Mode: [select] only\nShould the bot buy \"Dark Mana Flame Sabre\" ?", false),
-        new Option<bool>("72010", "Dark Mana Flame Bow", "Mode: [select] only\nShould the bot buy \"Dark Mana Flame Bow\" ?", false),
         new Option<bool>("71827", "Green Dragon Slayer", "Mode: [select] only\nShould the bot buy \"Green Dragon Slayer\" ?", false),
         new Option<bool>("71828", "Green Dragon Slayer's Sallet", "Mode: [select] only\nShould the bot buy \"Green Dragon Slayer's Sallet\" ?", false),
         new Option<bool>("71829", "Green Dragon Slayer's Winged Sallet", "Mode: [select] only\nShould the bot buy \"Green Dragon Slayer's Winged Sallet\" ?", false),
@@ -124,5 +117,6 @@ public class StreamwarMerge
         new Option<bool>("71907", "Dark Dragon Slayer's Winged Sallet", "Mode: [select] only\nShould the bot buy \"Dark Dragon Slayer's Winged Sallet\" ?", false),
         new Option<bool>("71908", "Dark Dragon Slayer's Cloak", "Mode: [select] only\nShould the bot buy \"Dark Dragon Slayer's Cloak\" ?", false),
         new Option<bool>("71909", "Dark Dragon Slayer's Halberd", "Mode: [select] only\nShould the bot buy \"Dark Dragon Slayer's Halberd\" ?", false),
+        new Option<bool>("73356", "A Fragment of the Beginning", "Mode: [select] only\nShould the bot buy \"A Fragment of the Beginning\" ?", false),
     };
 }
