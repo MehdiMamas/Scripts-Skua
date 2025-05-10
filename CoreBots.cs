@@ -1761,7 +1761,7 @@ public class CoreBots
 
     private int _CalcBuyQuantity(ShopItem item, int requestedAmount)
     {
-        if (requestedAmount > item?.MaxStack)
+        if (requestedAmount > item.MaxStack)
         {
             Logger($"Requested {requestedAmount}, but max stack for {item.Name} is {item.MaxStack}. Fix the calling script.", "BuyItem");
             Bot.Stop(true);
