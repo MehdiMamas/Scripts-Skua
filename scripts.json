@@ -8723,6 +8723,61 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/7DeadlyDragons/02Pride.cs"
   },
   {
+    "name": "Lynaria's Saga (Do All)",
+    "description": "This will finish the Lynaria's Saga storyline in /bocklingrove.",
+    "tags": [
+      "story",
+      "quest",
+      "saga",
+      "doall",
+      "lynaria",
+      "complete",
+      "all",
+      "queen lynaria",
+      "bocklingrove",
+      "bocklin grove",
+      "victoria",
+      "victoria alteon"
+    ],
+    "path": "Story/Lynaria/00DoAll.cs",
+    "size": 703,
+    "fileName": "00DoAll.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lynaria/00DoAll.cs"
+  },
+  {
+    "name": "Bocklin Grove",
+    "description": "This will finish the Lynaria's Saga storyline.",
+    "tags": [
+      "story",
+      "quest",
+      "saga",
+      "doall",
+      "lynaria",
+      "complete",
+      "all",
+      "queen lynaria",
+      "bocklingrove",
+      "bocklin grove",
+      "victoria",
+      "victoria alteon"
+    ],
+    "path": "Story/Lynaria/01BocklinGrove.cs",
+    "size": 683,
+    "fileName": "01BocklinGrove.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lynaria/01BocklinGrove.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Story/Lynaria/CoreLynaria.cs",
+    "size": 3035,
+    "fileName": "CoreLynaria.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lynaria/CoreLynaria.cs"
+  },
+  {
     "name": "Dawn Vindicators' Sanctum",
     "description": "This script will complete the Lae's storyline in /dawnsanctum.",
     "tags": [
