@@ -16743,6 +16743,36 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SpoilsofLightMerge.cs"
   },
   {
+    "name": "Bocklin Grove Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Bocklin Grove Merge [2576] in /bocklingrove",
+    "tags": [
+      "bocklin",
+      "grove",
+      "merge",
+      "bocklingrove",
+      "champion",
+      "lynaria",
+      "chiral",
+      "valley",
+      "knight",
+      "duke",
+      "noble",
+      "antlered",
+      "golden",
+      "anjou",
+      "regal",
+      "visor",
+      "dukes",
+      "vaughns",
+      "sash",
+      "aquitaine"
+    ],
+    "path": "Other/MergeShops/BocklinGroveMerge.cs",
+    "size": 6138,
+    "fileName": "BocklinGroveMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BocklinGroveMerge.cs"
+  },
+  {
     "name": "DreadspaceReplicatorMerge",
     "description": "null",
     "tags": [
