@@ -4347,13 +4347,34 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/ShadowsOfWar/MergeShops/DeadLinesMerge.cs"
   },
   {
-    "name": "StreamwarMerge",
-    "description": "null",
+    "name": "Streamwar Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Streamwar Merge [2163] in /streamwar",
     "tags": [
-      "null"
+      "streamwar",
+      "merge",
+      "streamwar",
+      "bright",
+      "mana",
+      "flame",
+      "guard",
+      "banner",
+      "sabre",
+      "bow",
+      "green",
+      "dragon",
+      "slayer",
+      "slayers",
+      "sallet",
+      "winged",
+      "cloak",
+      "halberd",
+      "dark",
+      "a",
+      "fragment",
+      "beginning"
     ],
     "path": "ShadowsOfWar/MergeShops/StreamwarMerge.cs",
-    "size": 6973,
+    "size": 6576,
     "fileName": "StreamwarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/ShadowsOfWar/MergeShops/StreamwarMerge.cs"
   },
