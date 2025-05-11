@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 52381,
+    "size": 54532,
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreDailies.cs"
   },
@@ -3447,10 +3447,13 @@
       "free daily boost",
       "member",
       "boost",
-      "free"
+      "free",
+      "60 minutes",
+      "60 min",
+      "sixty minutes"
     ],
     "path": "Dailies/FreeDailyBoost[Mem].cs",
-    "size": 548,
+    "size": 1280,
     "fileName": "FreeDailyBoost[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Dailies/FreeDailyBoost[Mem].cs"
   },
