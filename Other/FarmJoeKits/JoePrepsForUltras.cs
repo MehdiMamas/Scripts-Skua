@@ -135,6 +135,7 @@ tags: joe, ultra, boss, preparation, farm
 //cs_include Scripts/Story/LordsofChaos/ChoasFinaleBonus[Mem]/KillerCatacombs[Mem].cs
 //cs_include Scripts/Story/LordsofChaos/ChoasFinaleBonus[Mem]/PyramidofPain[Mem].cs
 //cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
+//cs_include Scripts/Story\Lynaria\CoreLynaria.cs
 //cs_include Scripts/Story/MemetsRealm/CoreMemet.cs
 //cs_include Scripts/Story/Nation/Bamboozle.cs
 //cs_include Scripts/Story/Nation/CitadelRuins.cs
