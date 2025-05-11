@@ -29,7 +29,7 @@ public class FreeDailyBoost
         Core.SetOptions();
 
         // Get the selected reward from the script options and log it
-        DailyBoostRewards selectedReward = Bot.Config.Get<DailyBoostRewards>("BoostReward");
+        DailyBoostRewards selectedReward = Bot.Config!.Get<DailyBoostRewards>("BoostReward");
 
         // Call FreeDailyBoost, passing in the selected reward
         Daily.FreeDailyBoost(selectedReward);
