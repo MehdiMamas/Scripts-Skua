@@ -765,35 +765,58 @@ public class CoreDailies
         }
     }
 
-    public void FreeDailyBoost()
+    public void FreeDailyBoost(DailyBoostRewards reward = DailyBoostRewards.LowestQuantOwned)
     {
         if (!Core.IsMember || !CheckDailyv2(4069))
             return;
 
         Core.Logger("Daily: Free Boost");
 
-        Quest quest = Core.EnsureLoad(4069);
-        Dictionary<ItemBase, int> CompareDict = new();
-        List<InventoryItem> InventoryData = Bot.Inventory.Items;
+        Quest boostQuest = Core.EnsureLoad(4069);
 
-        foreach (ItemBase item in quest.Rewards)
+        // Concatenate inventory and bank items
+        List<InventoryItem> allItems = Bot.Inventory.Items.Concat(Bot.Bank.Items).ToList();
+
+        // Build a dictionary of valid reward items and their inventory quantities, skipping XP boost if level 100
+        Dictionary<ItemBase, int> rewardQuantities = boostQuest.Rewards
+            .Where(r => r.ID != 27552 || Bot.Player.Level < 100) // Skip XP boost if level 100
+            .ToDictionary(
+                r => r,
+                r => allItems.FirstOrDefault(item => item.ID == r.ID)?.Quantity ?? 0 // Get quantity or 0
+            );
+
+        // If the selected reward is max stacked, log and switch to the lowest quantity reward
+        if (reward != DailyBoostRewards.LowestQuantOwned)
         {
-            if (item.ID == 27552 && Bot.Player.Level == 100)
-                continue;
+            // Get the selected reward's ItemBase from the rewardQuantities dictionary
+            ItemBase selectedItem = rewardQuantities.Keys.FirstOrDefault(r => r.ID == (int)reward);
 
-            CompareDict.Add(item, Bot.Inventory.TryGetItem(item.ID, out InventoryItem? _item)
-                ? _item!.Quantity
-                : 0);
+            if (selectedItem != null && rewardQuantities[selectedItem] == rewardQuantities.Values.Max()) // If max stack
+            {
+                Core.Logger($"Selected reward {reward} (ID: {selectedItem.ID}) is max stacked with quantity {rewardQuantities[selectedItem]}. Switching to the lowest quantity reward.");
+                reward = DailyBoostRewards.LowestQuantOwned;
+            }
         }
 
-        ItemBase IWLQ = CompareDict.FirstOrDefault(x => x.Value == CompareDict.Values.Min()).Key;
+        // Select reward based on the input or default to the lowest owned
+        ItemBase selectedReward = reward switch
+        {
+            DailyBoostRewards.LowestQuantOwned => rewardQuantities.OrderBy(p => p.Value).FirstOrDefault().Key, // Select the lowest owned
+            _ => rewardQuantities.Keys.FirstOrDefault(r => r.ID == (int)reward)
+                    ?? rewardQuantities.OrderBy(p => p.Value).First().Key // Fallback to the lowest quantity reward if not found
+        };
 
-        Core.AddDrop(IWLQ.ID);
-        Core.ChainComplete(4069, IWLQ.ID);
-        Bot.Wait.ForPickup(IWLQ.ID);
-        Core.ToBank(IWLQ.ID);
+        if (selectedReward == null)
+            return;
+
+        Core.Logger($"Selected reward: {selectedReward.Name} (ID: {selectedReward.ID}) with quantity {rewardQuantities[selectedReward]}");
+
+        Core.AddDrop(selectedReward.ID);             // Ensure it's added to drop list
+        Core.ChainComplete(4069, selectedReward.ID); // Complete the quest with the chosen reward
+        Bot.Wait.ForDrop(selectedReward.ID);         // Wait for the item to be dropped
+        Bot.Wait.ForPickup(selectedReward.ID);       // Wait for the item to be picked up
+        Core.ToBank(selectedReward.ID);              // Bank the reward for inventory space
     }
-
 
     public void PowerGem()
     {
@@ -1389,3 +1412,15 @@ public enum HardCoreMetalsEnum
     Thorium = 12075,
     Mercury = 12122,
 }
+
+
+public enum DailyBoostRewards
+{
+    EXP = 27552,  // XP Boost
+    Gold = 27553, // Gold Boost
+    Rep = 27554,  // Rep Boost
+    Class = 27555, // Class Boost
+    LowestQuantOwned = 0 // Special case for selecting the reward with the lowest quantity
+}
+
+
