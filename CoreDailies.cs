@@ -789,7 +789,7 @@ public class CoreDailies
         if (reward != DailyBoostRewards.LowestQuantOwned)
         {
             // Get the selected reward's ItemBase from the rewardQuantities dictionary
-            ItemBase selectedItem = rewardQuantities.Keys.FirstOrDefault(r => r.ID == (int)reward);
+            ItemBase? selectedItem = rewardQuantities.Keys.FirstOrDefault(r => r.ID == (int)reward);
 
             if (selectedItem != null && rewardQuantities[selectedItem] == rewardQuantities.Values.Max()) // If max stack
             {
