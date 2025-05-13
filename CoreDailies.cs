@@ -387,7 +387,7 @@ public class CoreDailies
     public void CollectorClass()
     {
         Core.Logger("Daily: The Collector Class");
-        //30229 is the ac, 30250 is the non-ac
+        //30229 is the ac, 30250 is the non-ac, 30253 is the merge item
         if (Core.CheckInventory(new[] { 30229, 30250, 30253 }, any: true, toInv: false))
         {
             Core.Logger("You already own The Collector. Skipped");
