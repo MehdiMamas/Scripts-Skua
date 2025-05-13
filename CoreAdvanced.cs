@@ -172,19 +172,35 @@ public class CoreAdvanced
                     }
 
                     Core.DebugLogger(this, $"Item: {req.Name}, Quantity = {totalBundlesNeeded}");
+
+                    // Ensure we Reload the proper shop:
+                    // Load shop data
+                    while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+                    {
+                        Bot.Shops.Load(shopID);
+                        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+                        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+                        Core.Sleep(1000);
+                        if (Bot.Shops.ID == shopID || retry == 20)
+                            break;
+                        else retry++;
+                    }
+                    retry = 0;
+
                     ShopItem? shopItem = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
                     if (shopItem != null)
                     {
                         Core.DebugLogger(this, $"shopItem {shopItem} bundlesToBuy, {totalBundlesNeeded}");
                         BuyItem(map, shopID, req.ID, totalBundlesNeeded, shopItemID, Log: Log);
                     }
-                    // Else continue when the req.name isnt in the shop.
+                    // Else return and hope it hits the `findingredients` area. when the req.name isnt in the shop.
                     else
                     {
                         Core.Logger($"Failed to find shop item: \"{req.Name} [{req.ID}]\" in ({Bot.Shops.Name} [{Bot.Shops.ID}].)\n"
                         + $"Its either a `mob drop` or a `daily`.\n"
-                        + $"Check the Wiki: http://aqwwiki.wikidot.com/search:main/fullname/{req.Name}.");
-                        continue;
+                        + $"Check the Wiki: http://aqwwiki.wikidot.com/search:main/fullname/{req.Name.Replace(" ", "-")}.\n"
+                        + $"Maybe the bot will just farm in a moment once it returns to the previous code..? if not then its probably from a daily or an mob we cannot kill with skua.");
+                        return;
                     }
                 }
             }
@@ -486,8 +502,25 @@ public class CoreAdvanced
                 if (!matsOnly)
                     Core.Logger($"Farming to buy {item.Name} (#{t}/{items.Count})");
 
-                while (!Bot.ShouldExit && item.Requirements.FirstOrDefault(x => !Core.CheckInventory(x.ID, x.Quantity)) != null)
+                while (!Bot.ShouldExit && item.Requirements.All(x => x != null && !Core.CheckInventory(x.ID, x.Quantity)))
+                {
+                    // Ensure Load shop data is true
+                    int retry = 0;
+                    while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+                    {
+                        Bot.Shops.Load(shopID);
+                        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+                        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+                        Core.Sleep(1000);
+                        if (Bot.Shops.ID == shopID || retry == 20)
+                            break;
+                        else retry++;
+                    }
+                    retry = 0;
+
+                    // Continue to farm the required items for {item}
                     getIngredients(item, 1);
+                }
 
                 if (!matsOnly && !Core.CheckInventory(item.ID, toInv: false))
                 {
