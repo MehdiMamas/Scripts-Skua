@@ -880,23 +880,15 @@ public class CoreAdvanced
 
             EnsureShopLoaded(map, shopID);
             ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == Req.ID);
-            if (Req.Name.Contains("Dragon Runestone"))
-            {
-                Farm.DragonRunestone(ReqQuant);
-                return;
-            }
-            if (Req.Name.StartsWith("Gold Voucher"))
-            {
-                Farm.Voucher(Req.Name, ReqQuant);
-                return;
-            }
-
             if (wasinshop != null)
             {
-                Core.Logger($"Item {wasinshop.Name}[{wasinshop.ID}] is in the shop, attempting to get ingredients for it.");
+                Core.Logger($"Item: \"{wasinshop.Name} [{wasinshop.ID}]\" is in the shop.");
                 while (!Bot.ShouldExit && !Core.CheckInventory(Req.ID, ReqQuant))
                 {
-                    IngredientWasintheShop(wasinshop, ReqQuant);
+                    // for requirements that are in the shop, but are just buyable with gold. (excludes ac buyable items)
+                    if (wasinshop.Requirements.Count <= 0 && wasinshop.Cost <= 0)
+                        BuyItem(map, shopID, wasinshop.ID, ReqQuant, shopItemID: wasinshop.ShopItemID, Log: Log);
+                    else IngredientWasintheShop(wasinshop, ReqQuant);
                     if (Core.CheckInventory(Req.ID, ReqQuant))
                         break;
                     else Core.Logger($"Failed to meet requirements for {wasinshop} x{ReqQuant}, Retrying the farm (items may have been used).");
@@ -905,6 +897,18 @@ public class CoreAdvanced
             }
             else if (wasinshop == null)
             {
+                // Items not in the shop, so we have to get it externally
+                if (Req.Name.Contains("Dragon Runestone"))
+                {
+                    Farm.DragonRunestone(ReqQuant);
+                    return;
+                }
+                if (Req.Name.StartsWith("Gold Voucher"))
+                {
+                    Farm.Voucher(Req.Name, ReqQuant);
+                    return;
+                }
+
                 externalItem = Req;
                 externalQuant = Req.Quantity;
                 Core.AddDrop(externalItem.ID);
@@ -942,13 +946,27 @@ public class CoreAdvanced
 
                 if (wasinshop != null)
                 {
-                    Core.Logger($"Item {wasinshop.Name} [{wasinshop.ID}] is in the shop, attempting to get ingredients for it.");
+                    Core.Logger($"Item: \"{wasinshop.Name}  [{wasinshop.ID}\"] is in the shop.");
                     ReqQuant = Math.Min(ReqQuant, wasinshop.MaxStack);
-                    IngredientWasintheShop(wasinshop, ReqQuant);
+                    // for requirements that are in the shop, but are just buyable with gold. (excludes ac buyable items)
+                    if (wasinshop.Requirements.Count <= 0 && wasinshop.Cost <= 0)
+                        BuyItem(map, shopID, wasinshop.ID, ReqQuant, shopItemID: wasinshop.ShopItemID, Log: Log);
+                    else IngredientWasintheShop(wasinshop, ReqQuant);
                     continue;
                 }
-                else
+                else if (wasinshop == null)
                 {
+                    // Items not in the shop, so we have to get it externally
+                    if (req.Name.Contains("Dragon Runestone"))
+                    {
+                        Farm.DragonRunestone(ReqQuant);
+                        continue;
+                    }
+                    if (req.Name.StartsWith("Gold Voucher"))
+                    {
+                        Farm.Voucher(req.Name, ReqQuant);
+                        continue;
+                    }
                     externalItem = req;
                     externalQuant = ReqQuant;
                     Core.AddDrop(externalItem.ID);
@@ -965,11 +983,12 @@ public class CoreAdvanced
                 if (!matsOnly)
                     Core.Logger($"Buying {item.Name} [{item.ID}] from the shop.");
 
-                // Attempt to purchase the required quantity of the shop item
+                // Attempt to purchase the Requirement of Main / Sub-Main item
                 BuyItem(map, shopID, item.ID, craftingQ, shopItemID: item.ShopItemID, Log: Log);
             }
             else
             {
+                // If the purchase was unsuccessful, retry the process
                 Core.Logger($"Failed to meet requirements for {item.Name} [{item.ID}], Retrying the farm (items may have been used).");
                 goto Retry;
             }
