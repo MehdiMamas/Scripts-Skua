@@ -54,7 +54,7 @@ public class Butler2
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions(disableClassSwap: true);
-
+        // Core.DL_Enable();
         DoButler(Bot.Config!.Get<string>("playerName"));
 
         Core.SetOptions(false, disableClassSwap: true);
@@ -160,22 +160,6 @@ public class Butler2
         Bot.Events.ExtensionPacketReceived += MapHandler;
         Core.DebugLogger(this);
         Bot.Events.ExtensionPacketReceived += LockedZoneListener;
-        // Bot.Player.Goto(playerName);
-
-
-        // if (Bot.Map.PlayerExists(playerName))
-        // {
-        //     Core.DebugLogger(this);
-        //     PlayerInfo Player = Bot.Map.TryGetPlayer(playerName, out Player) && Player != null ? Player : null;
-        //     Core.DebugLogger(this);
-        //     if (Player != null)
-        //     {
-        //         Core.DebugLogger(this);
-        //         followedPlayerCell = Player.Cell;
-        //         gotoTry = 0;
-        //     }
-        //     Core.DebugLogger(this);
-        // }
 
         Core.DebugLogger(this);
         StartButler(playerName);
@@ -187,7 +171,6 @@ public class Butler2
             isGoto = true;
             Task.Run(async () => await GoToPlayer(playerName, _cancellationToken));
         }
-
         Bot.Log($"Butler started for player {playerName}");
         Core.Sleep(5000);
 
@@ -200,7 +183,6 @@ public class Butler2
         Core.DebugLogger(this);
         while (!Bot.ShouldExit)
         {
-            Core.DebugLogger(this, $"{isGoto}");
             #region ignore this
             if (Bot.ShouldExit)
             {
@@ -216,7 +198,8 @@ public class Butler2
             }
             #endregion ignore this
             Bot.Wait.ForMapLoad(Bot.Map.Name);
-            if (Army.IsMonsterAlive("*") && !isGoto)
+            Core.Logger($"any mobs? {Bot.Monsters.CurrentAvailableMonsters.Any()}, goto? {isGoto}");
+            if (Bot.Monsters.CurrentAvailableMonsters.Any() && !isGoto)
             {
                 Core.DebugLogger(this);
                 if (Army._attackPriority.Count > 0)
@@ -311,8 +294,7 @@ public class Butler2
                     if (!initializationDone)
                     {
                         Core.DebugLogger(this);
-                        PlayerInfo? player;
-                        if (!Bot.Map.TryGetPlayer(playerName, out player) || player == null || player.Cell == null || player.Pad == null)
+                        if (!Bot.Map.TryGetPlayer(playerName, out PlayerInfo? player) || player == null || player.Cell == null || player.Pad == null)
                         {
                             Core.DebugLogger(this);
                             continue;
@@ -361,11 +343,9 @@ public class Butler2
                     }
                     Core.DebugLogger(this);
                     await GoToPlayer(playerName, _cancellationToken);
-                    isGoto = false; // Prevent repeated calls until re-triggered
                 }
 
                 Core.DebugLogger(this);
-                isGoto = false;
 
                 // Reset and log if successfully moved *if* goto is true
                 Core.DebugLogger(this);
@@ -374,11 +354,11 @@ public class Butler2
                     Core.DebugLogger(this);
                     gotoTry = 0;  // Reset the counter properly
                     Core.DebugLogger(this);
-                    isGoto = false;
                     Core.DebugLogger(this);
                     Bot.Log("Successfully moved to player, resetting gotoTry.");
                 }
                 Core.DebugLogger(this);
+                isGoto = false;
 
                 // idk when to reset gotoTry
                 if (gotoTry >= maxTry || ButlerTokenSource.IsCancellationRequested)
@@ -407,7 +387,7 @@ public class Butler2
 
         while (!Bot.ShouldExit && !Bot.Player.Alive && ButlerTokenSource != null && !ButlerTokenSource.IsCancellationRequested)
         {
-            await Task.Delay(500);
+            await Task.Delay(500, cancellationToken);
         }
 
         // Stop Butler if max retries are reached
@@ -431,8 +411,9 @@ public class Butler2
 
         Bot.Send.Packet($"%xt%zm%cmd%1%goto%{name}%");
         Core.DebugLogger(this);
-        await Task.Delay(LockedZone ? 2500 : 1500);
+        await Task.Delay(LockedZone ? 2500 : 1500, cancellationToken);
         Core.DebugLogger(this);
+        isGoto = false; // Reset isGoto after attempting to go to the player
     }
 
     public void StopButler()
