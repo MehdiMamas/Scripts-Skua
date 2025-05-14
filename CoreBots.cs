@@ -3083,7 +3083,8 @@ public class CoreBots
             bool complete = questData.Slot < 0 ||
                 Bot.Flash.CallGameFunction<int>("world.getQuestValue", questData.Slot) >= questData.Value;
 
-            Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
+            // Commented out to reduce spam
+            // Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
             return complete;
         }
 
