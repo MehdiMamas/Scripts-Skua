@@ -99,11 +99,15 @@ public class CoreSDKA
         }
 
         Core.AddDrop(SDKAItems);
-
+        Core.Logger("Step 1/5: Unlock Hard Core Metals");
         UnlockHardCoreMetals();
+        Core.Logger("Step 2/5: Getting Necrotic Daggers");
         NecroticDaggers();
+        Core.Logger("Step 3/5: Getting Necrotic Broadsword");
         NecroticBroadsword();
+        Core.Logger("Step 4/5: Getting Necrotic Bow");
         NecroticBow();
+        Core.Logger("Step 5/5: Doing Quest: Summoning Sepulchure Armor, for SDKA");
         SummoningSepulchureArmor();
     }
 
@@ -168,7 +172,7 @@ public class CoreSDKA
             // Bank non-solo classes if equipped
             if (Core.SoloClass != "DoomKnight")
                 Core.ToBank(Core.IsMember ? 8523 : 2083);
-        }        
+        }
 
         if (!Story.QuestProgression(2088))
         {
@@ -553,7 +557,6 @@ public class CoreSDKA
         if (Core.CheckInventory("Sepulchure's DoomKnight Armor"))
             return;
 
-        Core.Logger("Final part");
         PinpointBow(500, 250);
         PinpointDaggers(125);
         PinpointBroadsword(75);
@@ -575,6 +578,7 @@ public class CoreSDKA
         Core.EnsureAccept(2187);
         Core.HuntMonster("ruins", "Dark Elemental", "Heart of Darkness");
         Core.EnsureComplete(2187);
+        Bot.Wait.ForDrop("Sepulchure's DoomKnight Armor");
         Bot.Wait.ForPickup("Sepulchure's DoomKnight Armor");
     }
 
@@ -729,14 +733,10 @@ public class CoreSDKA
             Bot.Wait.ForPickup(fullMetalName);
         }
     }
-
-
 }
-
-
 
 public enum SDKAQuest
 {
-    APennyforYourFoughts,
-    DarkSpiritOrbs,
+    APennyforYourFoughts = 2089,
+    DarkSpiritOrbs = 2065,
 }
