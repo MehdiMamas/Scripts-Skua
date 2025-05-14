@@ -857,9 +857,8 @@ public class CoreAdvanced
         }
 
         // Helper methods
-        void EnsureShopLoaded(string? map, int shopID)
+        bool EnsureShopLoaded(string? map, int shopID)
         {
-            int retry = 0;
             Core.Join(map);
             Bot.Wait.ForMapLoad(map);
             while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
@@ -868,10 +867,10 @@ public class CoreAdvanced
                 Bot.Wait.ForActionCooldown(GameActions.LoadShop);
                 Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
                 Core.Sleep(1000);
-                if (Bot.Shops.ID == shopID || retry == 20)
-                    break;
-                else retry++;
+                if (Bot.Shops.ID == shopID)
+                    return true;
             }
+            return true;
         }
 
         void HandleItemRequirements(ShopItem item, ItemBase Req, int ReqQuant, Action findIngredients)
@@ -879,23 +878,24 @@ public class CoreAdvanced
             if (Core.CheckInventory(Req.ID, ReqQuant))
                 return;
 
+            EnsureShopLoaded(map, shopID);
+            ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == Req.ID);
             if (Req.Name.Contains("Dragon Runestone"))
             {
                 Farm.DragonRunestone(ReqQuant);
                 return;
             }
-            else if (Req.Name.StartsWith("Gold Voucher"))
+            if (Req.Name.StartsWith("Gold Voucher"))
             {
                 Farm.Voucher(Req.Name, ReqQuant);
                 return;
             }
-            else if (Bot.Shops.Items.Contains(item))
+
+            if (wasinshop != null)
             {
-                ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == Req.ID);
-                Core.Logger($"Item {wasinshop} is in the shop, attempting to get ingredients for it.");
+                Core.Logger($"Item {wasinshop.Name}[{wasinshop.ID}] is in the shop, attempting to get ingredients for it.");
                 while (!Bot.ShouldExit && !Core.CheckInventory(Req.ID, ReqQuant))
                 {
-                    EnsureShopLoaded(map, shopID);
                     IngredientWasintheShop(wasinshop, ReqQuant);
                     if (Core.CheckInventory(Req.ID, ReqQuant))
                         break;
@@ -903,7 +903,7 @@ public class CoreAdvanced
                 }
                 return;
             }
-            else
+            else if (wasinshop == null)
             {
                 externalItem = Req;
                 externalQuant = Req.Quantity;
@@ -930,31 +930,22 @@ public class CoreAdvanced
             Core.Logger($"Attempting to get {item.Name} [{item.ID}] from the shop.");
 
             // Ensure shop is loaded before proceeding
-            EnsureShopLoaded(map, shopID);
 
+            EnsureShopLoaded(map, shopID);
             foreach (ItemBase req in item.Requirements)
             {
                 if (Core.CheckInventory(req.ID, req.Quantity))
                     continue;
 
                 int ReqQuant = req.Quantity * craftingQ;
+                ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
 
-                // Handle different types of requirements (e.g., Dragon Runestone)
-                if (Bot.Shops.Items.Contains(req))
+                if (wasinshop != null)
                 {
-                    ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
                     Core.Logger($"Item {wasinshop.Name} [{wasinshop.ID}] is in the shop, attempting to get ingredients for it.");
                     ReqQuant = Math.Min(ReqQuant, wasinshop.MaxStack);
                     IngredientWasintheShop(wasinshop, ReqQuant);
                     continue;
-                }
-                if (req.Name.Contains("Dragon Runestone"))
-                {
-                    Farm.DragonRunestone(ReqQuant);
-                }
-                else if (req.Name.StartsWith("Gold Voucher"))
-                {
-                    Farm.Voucher(req.Name, ReqQuant);
                 }
                 else
                 {
@@ -964,8 +955,10 @@ public class CoreAdvanced
                     Core.Logger($"{externalItem.Name} [{externalItem.ID}] is an external item (not in the shop), attempting to farm it.");
                     findIngredients();
                 }
+
             }
 
+            EnsureShopLoaded(map, shopID);
             if (item.Requirements.All(x => x != null && Core.CheckInventory(x.ID, x.Quantity)))
             {
                 // If all requirements are met, attempt to buy the item
