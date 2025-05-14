@@ -908,7 +908,7 @@ public class CoreAdvanced
                 externalItem = Req;
                 externalQuant = Req.Quantity;
                 Core.AddDrop(externalItem.ID);
-                Core.Logger($"{externalItem.Name} [{externalItem.ID}] is an external item(not in teh shop), attempting to farm it.");
+                Core.Logger($"{externalItem.Name} [{externalItem.ID}] is an external item(not in the shop), attempting to farm it.");
                 findIngredients();
             }
         }
@@ -961,7 +961,7 @@ public class CoreAdvanced
                     externalItem = req;
                     externalQuant = ReqQuant;
                     Core.AddDrop(externalItem.ID);
-                    Core.Logger($"{externalItem.Name} [{externalItem.ID}] is an external item(not in teh shop), attempting to farm it.");
+                    Core.Logger($"{externalItem.Name} [{externalItem.ID}] is an external item (not in the shop), attempting to farm it.");
                     findIngredients();
                 }
             }
@@ -977,7 +977,7 @@ public class CoreAdvanced
             }
             else
             {
-                Core.Logger($"Failed to meet requirements for {item.Name} [{item.ID}], Retrying teh farm (items may have been used).");
+                Core.Logger($"Failed to meet requirements for {item.Name} [{item.ID}], Retrying the farm (items may have been used).");
                 goto Retry;
             }
         }
