@@ -135,7 +135,13 @@ public class CoreNSOD
             return;
 
         if (Bot.Config!.Get<bool>("GetSDKA") && Core.IsMember)
-            SDKA.DoAll();
+        {
+            Core.Logger("Player is a Member, attempting to get SDKA first");
+            if (!Core.CheckInventory("Sepulchure's DoomKnight Armor"))
+                SDKA.DoAll();
+            else
+                Core.Logger("Player already has SDKA, continuing with Void Aura farm");
+        }
 
         CommandingShadowEssences(quant);
         GatheringUnstableEssences(quant);
