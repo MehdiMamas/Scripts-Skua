@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 140383,
+    "size": 140438,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 160365,
+    "size": 163619,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -3738,7 +3738,7 @@
       "goto"
     ],
     "path": "Prototypes/Butler2[WIP].cs",
-    "size": 22941,
+    "size": 23050,
     "fileName": "Butler2[WIP].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Butler2[WIP].cs"
   },
@@ -13501,7 +13501,7 @@
       "null"
     ],
     "path": "Other/MergeShops/BrightForestMerge.cs",
-    "size": 5281,
+    "size": 5444,
     "fileName": "BrightForestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BrightForestMerge.cs"
   },
