@@ -198,7 +198,6 @@ public class Butler2
             }
             #endregion ignore this
             Bot.Wait.ForMapLoad(Bot.Map.Name);
-            Core.Logger($"any mobs? {Bot.Monsters.CurrentAvailableMonsters.Any()}, goto? {isGoto}");
             if (Bot.Monsters.CurrentAvailableMonsters.Any() && !isGoto)
             {
                 Core.DebugLogger(this);
@@ -506,7 +505,7 @@ public class Butler2
                     needJump = true;
                     cellJump = cell;
                     padJump = pad;
-                    Core.Logger($"Need to Jump to Cell: {cellJump}, Pad: {padJump}");
+                    // Core.Logger($"Need to Jump to Cell: {cellJump}, Pad: {padJump}");
                     Core.Jump(cellJump, padJump);
                 }
                 // If only tx/ty are present, it's a walk
