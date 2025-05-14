@@ -453,6 +453,9 @@ public class Butler2
                     followedPlayerCell = null;
                     Core.Logger($"Detected {playerToFollow} left the map. Attempting to follow...");
                     isGoto = true; // Only set here, not in the main loop
+                    if (Bot.Player.Cell != "Enter")
+                        Bot.Map.Jump("Enter", "Spawn");
+
                     Task.Run(async () => await GoToPlayer(playerToFollow, _cancellationToken));
                 }
                 return; // Prevent further processing for this packet
