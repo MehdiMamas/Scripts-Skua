@@ -35,7 +35,7 @@ public class BrightForestMerge
     {
         Core.BankingBlackList.AddRange(new[] { "ShadowFlame Armor Scrap " });
         Core.SetOptions();
-
+        
         BuyAllMerge();
 
         Core.SetOptions(false);
@@ -66,11 +66,13 @@ public class BrightForestMerge
                     break;
                 #endregion
 
+                // This item is also gotten just from the mobs the the area, so you'll twice as much ¯\_(ツ)_/¯
                 case "ShadowFlame Armor Scrap":
                     SoC.CompleteCoreSoC();
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(7768);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
                         //The Shadows Recede 7768
                         Core.EquipClass(ClassType.Farm);
