@@ -26,7 +26,7 @@ public class CoreSoC
     {
         if (Core.isCompletedBefore(7768))
         {
-            Core.Logger("Saga Complet: Shadows Of Chaos");
+            Core.Logger("Saga Complete: Shadows Of Chaos");
             return;
         }
 
