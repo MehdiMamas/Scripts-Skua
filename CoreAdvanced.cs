@@ -859,6 +859,11 @@ public class CoreAdvanced
         // Helper methods
         bool EnsureShopLoaded(string? map, int shopID)
         {
+            if (map == null)
+            {
+                Core.Logger("Map is null, unable to load shop.");
+                return false;
+            }
             Core.Join(map);
             Bot.Wait.ForMapLoad(map);
             while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
@@ -922,7 +927,7 @@ public class CoreAdvanced
             // Ensure we are checking for items in the shop and inventory properly
             if (item == null)
             {
-                Core.Logger($"Item {item.Name} not found in the shop.");
+                Core.Logger($"Item not found in the shop.");
                 return;
             }
 
