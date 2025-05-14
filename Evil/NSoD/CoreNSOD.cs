@@ -143,6 +143,8 @@ public class CoreNSOD
                 Core.Logger("Player already has SDKA, continuing with Void Aura farm");
         }
 
+        Core.FarmingLogger("Void Aura", quant);
+        Core.AddDrop("Void Aura");
         CommandingShadowEssences(quant);
         GatheringUnstableEssences(quant);
         RetrieveVoidAuras(quant);
@@ -153,8 +155,6 @@ public class CoreNSOD
         if (Core.CheckInventory("Void Aura", quant) || !Core.CheckInventory(14474))
             return;
 
-        Core.AddDrop("Void Aura");
-        Core.FarmingLogger("Void Aura", quant);
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
         Core.RegisterQuests(4439);
@@ -177,8 +177,6 @@ public class CoreNSOD
 
         Farm.EvilREP();
         Core.EquipClass(ClassType.Farm);
-        Core.AddDrop("Void Aura");
-        Core.Logger($"Farming Void Aura's ({Bot.Inventory.GetQuantity("Void Aura")}/{quant}) with Member-Only Method");
 
         Core.RegisterQuests(4438);
         while (!Core.CheckInventory("Void Aura", quant))
@@ -208,11 +206,9 @@ public class CoreNSOD
             Core.Logger("Bot.Config is null, defaulting Essencequant to 20.");
         }
         Farm.EvilREP();
-        Core.AddDrop("Void Aura");
         Core.AddDrop(Essences);
         if (!Core.CheckInventory("Necromancer", toInv: false))
             Bot.Drops.Add("Creature Shard");
-        Core.Logger($"Gathering {quant} Void Aura's with Non-Mem/Non-SDKA Method");
 
         while (!Bot.ShouldExit && !Core.CheckInventory("Void Aura", quant))
         {
@@ -241,6 +237,7 @@ public class CoreNSOD
 
     private void HuntMonsterBatch(int quant, bool isTemp, bool publicRoom, bool log, params (string map, int monster, string essence)[] monsters)
     {
+        Core.AddDrop(monsters.Select(x => x.essence).ToArray());
         Core.EquipClass(ClassType.Solo);
         foreach (var monster in monsters.Where(x => x.essence != null && x.monster > 0 && !Core.CheckInventory(x.essence, quant)))
             Core.HuntMonsterMapID(monster.map, monster.monster, monster.essence, quant, isTemp, log, publicRoom);
