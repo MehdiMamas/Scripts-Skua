@@ -136,7 +136,6 @@ public class CoreAdvanced
                 {
                     if (Bot.Map.Name != map)
                     {
-                        Core.DebugLogger(this);
                         Core.Join(map);
                         Bot.Wait.ForMapLoad(map);
                     }
@@ -389,335 +388,336 @@ public class CoreAdvanced
         }
     }
 
-    /// <summary>
-    /// Buys merge items from a shop based on specified options. Filters ShopItems to ensure uniqueness by ID and ShopItemID,
-    /// selecting items based on Upgrade requirements and excluding those ending with "insignia".
-    /// </summary>
-    /// <param name="map">The map from which the shop is loaded.</param>
-    /// <param name="shopID">The shop ID to load shop data.</param>
-    /// <param name="findIngredients">Action determining where to retrieve items.</param>
-    /// <param name="buyOnlyThis">Optional. Limits purchases to a specific item.</param>
-    /// <param name="itemBlackList">Optional. List of excluded items.</param>
-    /// <param name="buyMode">Optional. Specifies buying mode.</param>
-    /// <param name="Group">Optional. Specifies group selection method.</param>
-    /// <param name="ShopItemID">Optional. Specifies ShopItem ID.</param>
-    /// <param name="Log">Optional. Enables logging.</param>
-    public void StartBuyAllMerge(string map, int shopID, Action findIngredients, string? buyOnlyThis = null, string[]? itemBlackList = null, mergeOptionsEnum? buyMode = null, string Group = "First", int ShopItemID = 0, bool Log = true)
-    {
-        if (buyOnlyThis == null && buyMode == null && Bot.Config != null && !Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
-            Bot.Config!.Configure();
+    // vvv old code, remove when new code is stable vvvv
+    // /// <summary>
+    // /// Buys merge items from a shop based on specified options. Filters ShopItems to ensure uniqueness by ID and ShopItemID,
+    // /// selecting items based on Upgrade requirements and excluding those ending with "insignia".
+    // /// </summary>
+    // /// <param name="map">The map from which the shop is loaded.</param>
+    // /// <param name="shopID">The shop ID to load shop data.</param>
+    // /// <param name="findIngredients">Action determining where to retrieve items.</param>
+    // /// <param name="buyOnlyThis">Optional. Limits purchases to a specific item.</param>
+    // /// <param name="itemBlackList">Optional. List of excluded items.</param>
+    // /// <param name="buyMode">Optional. Specifies buying mode.</param>
+    // /// <param name="Group">Optional. Specifies group selection method.</param>
+    // /// <param name="ShopItemID">Optional. Specifies ShopItem ID.</param>
+    // /// <param name="Log">Optional. Enables logging.</param>
+    // public void StartBuyAllMerge(string map, int shopID, Action findIngredients, string? buyOnlyThis = null, string[]? itemBlackList = null, mergeOptionsEnum? buyMode = null, string Group = "First", int ShopItemID = 0, bool Log = true)
+    // {
+    //     if (buyOnlyThis == null && buyMode == null && Bot.Config != null && !Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
+    //         Bot.Config!.Configure();
 
-        int mode = 0;
-        if (buyOnlyThis != null)
-            mode = (int)mergeOptionsEnum.all;
-        else if (buyMode != null)
-            mode = (int)buyMode;
-        else if (Bot.Config != null && Bot.Config.MultipleOptions.Any(o => o.Value.Any(x => x.Category == "Generic" && x.Name == "mode")))
-            mode = (int)Bot.Config.Get<mergeOptionsEnum>("Generic", "mode");
-        else Core.Logger("Invalid setup detected for StartBuyAllMerge. Please report", messageBox: true, stopBot: true);
+    //     int mode = 0;
+    //     if (buyOnlyThis != null)
+    //         mode = (int)mergeOptionsEnum.all;
+    //     else if (buyMode != null)
+    //         mode = (int)buyMode;
+    //     else if (Bot.Config != null && Bot.Config.MultipleOptions.Any(o => o.Value.Any(x => x.Category == "Generic" && x.Name == "mode")))
+    //         mode = (int)Bot.Config.Get<mergeOptionsEnum>("Generic", "mode");
+    //     else Core.Logger("Invalid setup detected for StartBuyAllMerge. Please report", messageBox: true, stopBot: true);
 
-        matsOnly = mode == 2;
+    //     matsOnly = mode == 2;
 
-        // For those Who have thousands of items in their bank, this will help to speed up the process of checking if you have the item or not.
-        HashSet<int> uniqueItemIds = new(
-                     new[] {
-                Bot.Bank.Items.Select(item => item.ID),
-                Bot.TempInv.Items.Select(item => item.ID),
-                Bot.House.Items.Select(item => item.ID),
-                Bot.Inventory.Items.Select(item => item.ID)
-                    }.SelectMany(id => id)
-                );
+    //     // For those Who have thousands of items in their bank, this will help to speed up the process of checking if you have the item or not.
+    //     HashSet<int> uniqueItemIds = new(
+    //                  new[] {
+    //             Bot.Bank.Items.Select(item => item.ID),
+    //             Bot.TempInv.Items.Select(item => item.ID),
+    //             Bot.House.Items.Select(item => item.ID),
+    //             Bot.Inventory.Items.Select(item => item.ID)
+    //                 }.SelectMany(id => id)
+    //             );
 
-        List<ShopItem> shopItems = Core.GetShopItems(map, shopID)
-                              .GroupBy(item => new { item.Name, item.ID, item.ShopItemID })
-                              .Select(group =>
-                              {
-                                  IOrderedEnumerable<ShopItem> orderedGroup = group.OrderBy(item => item.ShopItemID != group.First().ShopItemID);
-                                  return Group == "First" ? orderedGroup.First() : orderedGroup.Last();
-                              })
-                              .Where(x => !x.Name.ToLower().EndsWith("insignia"))
-                              .Where(x => !uniqueItemIds.Contains(x.ID))
-                              .ToList();
+    //     List<ShopItem> shopItems = Core.GetShopItems(map, shopID)
+    //                           .GroupBy(item => new { item.Name, item.ID, item.ShopItemID })
+    //                           .Select(group =>
+    //                           {
+    //                               IOrderedEnumerable<ShopItem> orderedGroup = group.OrderBy(item => item.ShopItemID != group.First().ShopItemID);
+    //                               return Group == "First" ? orderedGroup.First() : orderedGroup.Last();
+    //                           })
+    //                           .Where(x => !x.Name.ToLower().EndsWith("insignia"))
+    //                           .Where(x => !uniqueItemIds.Contains(x.ID))
+    //                           .ToList();
 
-        uniqueItemIds = new HashSet<int>();
+    //     uniqueItemIds = new HashSet<int>();
 
-        List<ShopItem> items = new();
-        bool memSkipped = false;
+    //     List<ShopItem> items = new();
+    //     bool memSkipped = false;
 
-        foreach (ShopItem item in shopItems)
-        {
-            if (miscCatagories.Contains(item.Category) ||
-                    (!string.IsNullOrEmpty(buyOnlyThis) && buyOnlyThis != item.Name) ||
-                    (itemBlackList != null && itemBlackList.Any(x => x.ToLower() == item.Name.ToLower())))
-                continue;
+    //     foreach (ShopItem item in shopItems)
+    //     {
+    //         if (miscCatagories.Contains(item.Category) ||
+    //                 (!string.IsNullOrEmpty(buyOnlyThis) && buyOnlyThis != item.Name) ||
+    //                 (itemBlackList != null && itemBlackList.Any(x => x.ToLower() == item.Name.ToLower())))
+    //             continue;
 
-            if (Core.IsMember || !item.Upgrade)
-            {
-                if (mode == 3)
-                {
-                    if (Bot.Config!.Get<bool>("Select", $"{item.ID}"))
-                        items.Add(item);
-                }
-                else if (mode != 1)
-                    items.Add(item);
-                else if (item.Coins)
-                    items.Add(item);
-            }
-            else if (mode == 3 && Bot.Config!.Get<bool>("Select", $"{item.ID}"))
-            {
-                Core.Logger($"\"{item.Name}\" will be skipped, as you aren't member.");
-                memSkipped = true;
-            }
-        }
+    //         if (Core.IsMember || !item.Upgrade)
+    //         {
+    //             if (mode == 3)
+    //             {
+    //                 if (Bot.Config!.Get<bool>("Select", $"{item.ID}"))
+    //                     items.Add(item);
+    //             }
+    //             else if (mode != 1)
+    //                 items.Add(item);
+    //             else if (item.Coins)
+    //                 items.Add(item);
+    //         }
+    //         else if (mode == 3 && Bot.Config!.Get<bool>("Select", $"{item.ID}"))
+    //         {
+    //             Core.Logger($"\"{item.Name}\" will be skipped, as you aren't member.");
+    //             memSkipped = true;
+    //         }
+    //     }
 
-        if (items.Count == 0)
-        {
-            if (buyOnlyThis != null)
-                return;
+    //     if (items.Count == 0)
+    //     {
+    //         if (buyOnlyThis != null)
+    //             return;
 
-            switch (mode)
-            {
-                case 0:
-                case 2:
-                    Core.Logger("The bot fetched 0 items to farm. Something must have gone wrong.");
-                    return;
-                case 1:
-                    if (shopItems.All(x => !x.Coins))
-                        Core.Logger("The bot fetched 0 items to farm. This is because none of the items in this shop are AC tagged.");
-                    else Core.Logger("The bot fetched 0 items to farm. Something must have gone wrong.");
-                    return;
-                case 3:
-                    if (memSkipped)
-                        Core.Logger("The bot fetched 0 items to farm. This is because you aren't member.");
-                    else Core.Logger("The bot fetched 0 items to farm. Something must have gone wrong.");
-                    return;
-            }
-        }
+    //         switch (mode)
+    //         {
+    //             case 0:
+    //             case 2:
+    //                 Core.Logger("The bot fetched 0 items to farm. Something must have gone wrong.");
+    //                 return;
+    //             case 1:
+    //                 if (shopItems.All(x => !x.Coins))
+    //                     Core.Logger("The bot fetched 0 items to farm. This is because none of the items in this shop are AC tagged.");
+    //                 else Core.Logger("The bot fetched 0 items to farm. Something must have gone wrong.");
+    //                 return;
+    //             case 3:
+    //                 if (memSkipped)
+    //                     Core.Logger("The bot fetched 0 items to farm. This is because you aren't member.");
+    //                 else Core.Logger("The bot fetched 0 items to farm. Something must have gone wrong.");
+    //                 return;
+    //         }
+    //     }
 
-        int t = 1;
-        for (int i = 0; i < 2; i++)
-        {
-            foreach (ShopItem item in items)
-            {
-                if (!matsOnly)
-                    Core.Logger($"Farming to buy {item.Name} (#{t}/{items.Count})");
+    //     int t = 1;
+    //     for (int i = 0; i < 2; i++)
+    //     {
+    //         foreach (ShopItem item in items)
+    //         {
+    //             if (!matsOnly)
+    //                 Core.Logger($"Farming to buy {item.Name} (#{t}/{items.Count})");
 
-                while (!Bot.ShouldExit && item.Requirements.All(x => x != null && !Core.CheckInventory(x.ID, x.Quantity)))
-                {
-                    // Ensure Load shop data is true
-                    int retry = 0;
-                    while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
-                    {
-                        Bot.Shops.Load(shopID);
-                        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-                        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
-                        Core.Sleep(1000);
-                        if (Bot.Shops.ID == shopID || retry == 20)
-                            break;
-                        else retry++;
-                    }
-                    retry = 0;
+    //             while (!Bot.ShouldExit && item.Requirements.All(x => x != null && !Core.CheckInventory(x.ID, x.Quantity)))
+    //             {
+    //                 // Ensure Load shop data is true
+    //                 int retry = 0;
+    //                 while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+    //                 {
+    //                     Bot.Shops.Load(shopID);
+    //                     Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+    //                     Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+    //                     Core.Sleep(1000);
+    //                     if (Bot.Shops.ID == shopID || retry == 20)
+    //                         break;
+    //                     else retry++;
+    //                 }
+    //                 retry = 0;
 
-                    // Continue to farm the required items for {item}
-                    getIngredients(item, 1);
-                }
+    //                 // Continue to farm the required items for {item}
+    //                 getIngredients(item, 1);
+    //             }
 
-                if (!matsOnly && !Core.CheckInventory(item.ID, toInv: false))
-                {
-                    Core.Logger($"Buying {item.Name} (#{t++}/{items.Count})");
-                    BuyItem(map, shopID, item.ID, shopItemID: item.ShopItemID, Log: Log);
+    //             if (!matsOnly && !Core.CheckInventory(item.ID, toInv: false))
+    //             {
+    //                 Core.Logger($"Buying {item.Name} (#{t++}/{items.Count})");
+    //                 BuyItem(map, shopID, item.ID, shopItemID: item.ShopItemID, Log: Log);
 
-                    if (item.Coins)
-                        Core.ToBank(item.ID);
-                    else Core.Logger($"{item.Name} [{item.ID}] is Non-AC Tagged, and would fill your bank (so we wont bank it).");
-                }
-            }
-            if (!matsOnly)
-                i++;
-        }
+    //                 if (item.Coins)
+    //                     Core.ToBank(item.ID);
+    //                 else Core.Logger($"{item.Name} [{item.ID}] is Non-AC Tagged, and would fill your bank (so we wont bank it).");
+    //             }
+    //         }
+    //         if (!matsOnly)
+    //             i++;
+    //     }
 
-        void getIngredients(ShopItem item, int craftingQ)
-        {
-            foreach (ItemBase req in item.Requirements)
-            {
-                if (matsOnly && req.Name.StartsWith("Gold Voucher"))
-                    continue;
+    //     void getIngredients(ShopItem item, int craftingQ)
+    //     {
+    //         foreach (ItemBase req in item.Requirements)
+    //         {
+    //             if (matsOnly && req.Name.StartsWith("Gold Voucher"))
+    //                 continue;
 
-                Core.AddDrop(req.ID); // Add the required item to the drop list
-                                      // Determine the current quantity of the required item in inventory
-                                      // Check if the item is in the temporary inventory or the permanent inventory
-                int currentQuantity = req.Temp
-                        ? Bot.TempInv.GetQuantity(req.ID)
-                        : (Bot.Inventory.Items.Concat(Bot.Bank.Items)
-                            .FirstOrDefault(x => x?.ID == req.ID)?.Quantity ?? 0);
+    //             Core.AddDrop(req.ID); // Add the required item to the drop list
+    //                                   // Determine the current quantity of the required item in inventory
+    //                                   // Check if the item is in the temporary inventory or the permanent inventory
+    //             int currentQuantity = req.Temp
+    //                     ? Bot.TempInv.GetQuantity(req.ID)
+    //                     : (Bot.Inventory.Items.Concat(Bot.Bank.Items)
+    //                         .FirstOrDefault(x => x?.ID == req.ID)?.Quantity ?? 0);
 
 
-                int maxStack = req.MaxStack;
-                if (maxStack == 0)
-                {
-                    if (req.ID != 0 && Bot.Bank.Contains(req.ID))
-                        Core.Unbank(req.ID);
+    //             int maxStack = req.MaxStack;
+    //             if (maxStack == 0)
+    //             {
+    //                 if (req.ID != 0 && Bot.Bank.Contains(req.ID))
+    //                     Core.Unbank(req.ID);
 
-                    // Step 1: Check if the item is in the inventory or bank
-                    InventoryItem? inventoryItem =
-                        Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x?.ID == req.ID)
-                        ?? Bot.Bank.Items.FirstOrDefault(x => x?.ID == req.ID);
+    //                 // Step 1: Check if the item is in the inventory or bank
+    //                 InventoryItem? inventoryItem =
+    //                     Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x?.ID == req.ID)
+    //                     ?? Bot.Bank.Items.FirstOrDefault(x => x?.ID == req.ID);
 
-                    if (inventoryItem != null)
-                    {
-                        maxStack = inventoryItem.MaxStack;
-                    }
+    //                 if (inventoryItem != null)
+    //                 {
+    //                     maxStack = inventoryItem.MaxStack;
+    //                 }
 
-                    // Step 2: Check if the item is in the shop
-                    else if (Core.GetShopItems(map, shopID).TryFind(x => x?.ID == req.ID, out ShopItem? shopItem) && shopItem != null)
-                    {
-                        maxStack = shopItem.MaxStack;
-                    }
+    //                 // Step 2: Check if the item is in the shop
+    //                 else if (Core.GetShopItems(map, shopID).TryFind(x => x?.ID == req.ID, out ShopItem? shopItem) && shopItem != null)
+    //                 {
+    //                     maxStack = shopItem.MaxStack;
+    //                 }
 
-                    // Farm one to discover MaxStack
-                    externalItem = req;
-                    externalQuant = 1;
+    //                 // Farm one to discover MaxStack
+    //                 externalItem = req;
+    //                 externalQuant = 1;
 
-                    if (req.Name.Contains("Dragon Runestone"))
-                        Farm.DragonRunestone(req.Quantity);
-                    else if (req.Name.StartsWith("Gold Voucher"))
-                        Farm.Voucher(req.Name, req.Quantity);
-                    else
-                        findIngredients();
+    //                 if (req.Name.Contains("Dragon Runestone"))
+    //                     Farm.DragonRunestone(req.Quantity);
+    //                 else if (req.Name.StartsWith("Gold Voucher"))
+    //                     Farm.Voucher(req.Name, req.Quantity);
+    //                 else
+    //                     findIngredients();
 
-                    inventoryItem = Bot.Inventory.Items.Concat(Bot.Bank.Items)
-                        .FirstOrDefault(x => x?.ID == req.ID);
+    //                 inventoryItem = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+    //                     .FirstOrDefault(x => x?.ID == req.ID);
 
-                    maxStack = inventoryItem?.MaxStack ?? 0;
+    //                 maxStack = inventoryItem?.MaxStack ?? 0;
 
-                    if (maxStack == 0)
-                    {
-                        Core.Logger($"Failed to obtain {req.Name} [{req.ID}] to get the MaxStack value.");
-                        continue;
-                    }
+    //                 if (maxStack == 0)
+    //                 {
+    //                     Core.Logger($"Failed to obtain {req.Name} [{req.ID}] to get the MaxStack value.");
+    //                     continue;
+    //                 }
 
-                }
-                // Calculate the external quantity needed
-                // If matsOnly is true, limit the quantity to the maximum requirement across all items
-                externalQuant = matsOnly
-        ? Math.Min(currentQuantity + req.Quantity, maxStack)
-        : req.Quantity * craftingQ; // Otherwise, scale by crafting quantity
-                Core.DebugLogger(this, $"{req.Name}: currentQuantity = {currentQuantity}, maxStack = {maxStack}, externalQuant = {externalQuant}");
+    //             }
+    //             // Calculate the external quantity needed
+    //             // If matsOnly is true, limit the quantity to the maximum requirement across all items
+    //             externalQuant = matsOnly
+    //     ? Math.Min(currentQuantity + req.Quantity, maxStack)
+    //     : req.Quantity * craftingQ; // Otherwise, scale by crafting quantity
+    //             Core.DebugLogger(this, $"{req.Name}: currentQuantity = {currentQuantity}, maxStack = {maxStack}, externalQuant = {externalQuant}");
 
-                // Ensure externalQuant does not exceed the maximum stack size
-                externalQuant = Math.Min(externalQuant, maxStack);
+    //             // Ensure externalQuant does not exceed the maximum stack size
+    //             externalQuant = Math.Min(externalQuant, maxStack);
 
-                ItemBase? externalthing = item.Requirements.TryFind(x => x != null && x.ID == req.ID, out ItemBase? item1) ? item1 : null;
+    //             ItemBase? externalthing = item.Requirements.TryFind(x => x != null && x.ID == req.ID, out ItemBase? item1) ? item1 : null;
 
-                // Skip if the required quantity is already in inventory
-                if (Core.CheckInventory(req.ID, externalQuant))
-                {
-                    continue;
-                }
+    //             // Skip if the required quantity is already in inventory
+    //             if (Core.CheckInventory(req.ID, externalQuant))
+    //             {
+    //                 continue;
+    //             }
 
-                // Check if the requirement is another shop item
-                if (shopItems.TryFind(x => x != null && x.ID == req.ID, out ShopItem? selectedItem) && selectedItem != null && selectedItem.ShopItemID != 0)
-                {
-                    // Warn if the external quantity exceeds the item's maximum stack size
-                    // if (externalQuant > selectedItem.MaxStack)
-                    // {
-                    //     Core.Logger($"{selectedItem.Name}: MaxStack = {selectedItem.MaxStack}, compared to externalQuant ({externalQuant}), the bot will have to farm multiple times.");
-                    // }
-                    // Recursively call getIngredients to fulfill the shop item's requirements
-                    getIngredients(selectedItem, externalQuant);
+    //             // Check if the requirement is another shop item
+    //             if (shopItems.TryFind(x => x != null && x.ID == req.ID, out ShopItem? selectedItem) && selectedItem != null && selectedItem.ShopItemID != 0)
+    //             {
+    //                 // Warn if the external quantity exceeds the item's maximum stack size
+    //                 // if (externalQuant > selectedItem.MaxStack)
+    //                 // {
+    //                 //     Core.Logger($"{selectedItem.Name}: MaxStack = {selectedItem.MaxStack}, compared to externalQuant ({externalQuant}), the bot will have to farm multiple times.");
+    //                 // }
+    //                 // Recursively call getIngredients to fulfill the shop item's requirements
+    //                 getIngredients(selectedItem, externalQuant);
 
-                    if (!matsOnly)
-                    {
-                        // Attempt to purchase the required quantity of the shop item
-                        BuyItem(map, shopID, selectedItem.ID, req.Quantity * craftingQ, shopItemID: selectedItem.ShopItemID, Log: Log);
+    //                 if (!matsOnly)
+    //                 {
+    //                     // Attempt to purchase the required quantity of the shop item
+    //                     BuyItem(map, shopID, selectedItem.ID, req.Quantity * craftingQ, shopItemID: selectedItem.ShopItemID, Log: Log);
 
-                        // If the purchase did not fulfill the requirement, recursively farm and buy more
-                        if (!Core.CheckInventory(selectedItem.ID, externalQuant))
-                        {
-                            getIngredients(selectedItem, externalQuant > selectedItem.MaxStack ? selectedItem.MaxStack : externalQuant);
-                        }
-                    }
-                    else
-                    {
-                        // Break the loop for matsOnly, since crafting-only materials are being processed
-                        break;
-                    }
-                }
-                else
-                {
+    //                     // If the purchase did not fulfill the requirement, recursively farm and buy more
+    //                     if (!Core.CheckInventory(selectedItem.ID, externalQuant))
+    //                     {
+    //                         getIngredients(selectedItem, externalQuant > selectedItem.MaxStack ? selectedItem.MaxStack : externalQuant);
+    //                     }
+    //                 }
+    //                 else
+    //                 {
+    //                     // Break the loop for matsOnly, since crafting-only materials are being processed
+    //                     break;
+    //                 }
+    //             }
+    //             else
+    //             {
 
-                    // Check if externalthing is not null before logging and farming
-                    if (externalthing != null)
-                    {
-                        currentQuantity = externalthing.Temp
-                            ? Bot.TempInv.GetQuantity(externalthing.ID)
-                            : Bot.Inventory.Items.Concat(Bot.Bank.Items)
-                                .FirstOrDefault(x => x?.ID == externalthing.ID)?.Quantity ?? 0;
+    //                 // Check if externalthing is not null before logging and farming
+    //                 if (externalthing != null)
+    //                 {
+    //                     currentQuantity = externalthing.Temp
+    //                         ? Bot.TempInv.GetQuantity(externalthing.ID)
+    //                         : Bot.Inventory.Items.Concat(Bot.Bank.Items)
+    //                             .FirstOrDefault(x => x?.ID == externalthing.ID)?.Quantity ?? 0;
 
-                        maxStack = externalthing.MaxStack;
+    //                     maxStack = externalthing.MaxStack;
 
-                        if (maxStack == 0)
-                        {
-                            InventoryItem? inventoryItem =
-                                Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x?.ID == externalthing.ID)
-                                ?? Bot.Bank.Items.FirstOrDefault(x => x?.ID == externalthing.ID);
+    //                     if (maxStack == 0)
+    //                     {
+    //                         InventoryItem? inventoryItem =
+    //                             Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x?.ID == externalthing.ID)
+    //                             ?? Bot.Bank.Items.FirstOrDefault(x => x?.ID == externalthing.ID);
 
-                            if (inventoryItem != null)
-                            {
-                                Core.Unbank(externalthing.ID);
-                                maxStack = inventoryItem.MaxStack;
-                            }
-                            else if (Core.GetShopItems(map, shopID)
-                                        .TryFind(x => x?.ID == externalthing.ID, out ShopItem? shopItem) && shopItem != null)
-                            {
-                                maxStack = shopItem.MaxStack;
-                            }
-                            else
-                            {
-                                Core.AddDrop(externalthing.ID);
-                                externalItem = externalthing;
-                                externalQuant = 1;
+    //                         if (inventoryItem != null)
+    //                         {
+    //                             Core.Unbank(externalthing.ID);
+    //                             maxStack = inventoryItem.MaxStack;
+    //                         }
+    //                         else if (Core.GetShopItems(map, shopID)
+    //                                     .TryFind(x => x?.ID == externalthing.ID, out ShopItem? shopItem) && shopItem != null)
+    //                         {
+    //                             maxStack = shopItem.MaxStack;
+    //                         }
+    //                         else
+    //                         {
+    //                             Core.AddDrop(externalthing.ID);
+    //                             externalItem = externalthing;
+    //                             externalQuant = 1;
 
-                                if (externalthing.Name.Contains("Dragon Runestone") && !Core.CheckInventory(externalthing.ID, 1))
-                                    Farm.DragonRunestone(1);
-                                else if (externalthing.Name.StartsWith("Gold Voucher") && !Core.CheckInventory(externalthing.ID, 1))
-                                    Farm.Voucher(externalthing.Name, 1);
-                                else
-                                    findIngredients();
+    //                             if (externalthing.Name.Contains("Dragon Runestone") && !Core.CheckInventory(externalthing.ID, 1))
+    //                                 Farm.DragonRunestone(1);
+    //                             else if (externalthing.Name.StartsWith("Gold Voucher") && !Core.CheckInventory(externalthing.ID, 1))
+    //                                 Farm.Voucher(externalthing.Name, 1);
+    //                             else
+    //                                 findIngredients();
 
-                                InventoryItem? farmedItem = Bot.Inventory.Items.Concat(Bot.Bank.Items)
-                                    .FirstOrDefault(x => x?.ID == externalthing.ID);
+    //                             InventoryItem? farmedItem = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+    //                                 .FirstOrDefault(x => x?.ID == externalthing.ID);
 
-                                if (farmedItem != null)
-                                    maxStack = farmedItem.MaxStack;
-                                else
-                                    Core.Logger($"Failed to obtain {externalthing.Name} [{externalthing.ID}] to get the MaxStack value.");
-                            }
-                        }
+    //                             if (farmedItem != null)
+    //                                 maxStack = farmedItem.MaxStack;
+    //                             else
+    //                                 Core.Logger($"Failed to obtain {externalthing.Name} [{externalthing.ID}] to get the MaxStack value.");
+    //                         }
+    //                     }
 
-                        externalItem = externalthing;
-                        externalQuant = matsOnly
-                            ? Math.Min(currentQuantity + externalthing.Quantity, maxStack)
-                            : externalthing.Quantity * craftingQ;
+    //                     externalItem = externalthing;
+    //                     externalQuant = matsOnly
+    //                         ? Math.Min(currentQuantity + externalthing.Quantity, maxStack)
+    //                         : externalthing.Quantity * craftingQ;
 
-                        externalQuant = Math.Min(externalQuant, maxStack);
+    //                     externalQuant = Math.Min(externalQuant, maxStack);
 
-                        if (externalItem.Name.Contains("Dragon Runestone"))
-                            Farm.DragonRunestone(externalItem.Quantity);
-                        else if (externalItem.Name.StartsWith("Gold Voucher"))
-                            Farm.Voucher(externalItem.Name, externalItem.Quantity);
-                        else
-                            findIngredients();
-                    }
-                    else
-                    {
-                        Core.Logger($"externalItem is null for {req.Name}, skipping farming.");
-                    }
+    //                     if (externalItem.Name.Contains("Dragon Runestone"))
+    //                         Farm.DragonRunestone(externalItem.Quantity);
+    //                     else if (externalItem.Name.StartsWith("Gold Voucher"))
+    //                         Farm.Voucher(externalItem.Name, externalItem.Quantity);
+    //                     else
+    //                         findIngredients();
+    //                 }
+    //                 else
+    //                 {
+    //                     Core.Logger($"externalItem is null for {req.Name}, skipping farming.");
+    //                 }
 
-                }
-            }
-        }
-    }
+    //             }
+    //         }
+    //     }
+    // }
 
     /// <summary>
     /// Buys merge items from a shop based on specified options. Filters ShopItems to ensure uniqueness by ID and ShopItemID,
@@ -733,7 +733,7 @@ public class CoreAdvanced
     /// <param name="ShopItemID">Optional. Specifies ShopItem ID.</param>
     /// <param name="Log">Optional. Enables logging.</param>
     // We'll use this later
-    public void StartBuyAllMerge2(string map, int shopID, Action findIngredients, string? buyOnlyThis = null, string[]? itemBlackList = null, mergeOptionsEnum? buyMode = null, string Group = "First", int ShopItemID = 0, bool Log = true)
+    public void StartBuyAllMerge(string map, int shopID, Action findIngredients, string? buyOnlyThis = null, string[]? itemBlackList = null, mergeOptionsEnum? buyMode = null, string Group = "First", int ShopItemID = 0, bool Log = true)
     {
         #region Setup and Initialization
         if (buyOnlyThis == null && buyMode == null && Bot.Config != null && !Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
@@ -819,18 +819,21 @@ public class CoreAdvanced
             foreach (ShopItem item in items)
             {
                 if (Core.CheckInventory(item.ID, toInv: false))
+                {
                     continue;
+                }
 
                 if (!matsOnly)
+                {
                     Core.Logger($"Farming to buy {item.Name} (#{t}/{items.Count})");
-
-                Retry:
+                }
+            Retry:
                 foreach (ItemBase Req in item.Requirements)
                 {
                     while (!Bot.ShouldExit && !Core.CheckInventory(Req.ID, Req.Quantity))
                     {
-                        EnsureShopLoaded(shopID);
-                        HandleItemRequirements(item, Req, findIngredients);
+                        EnsureShopLoaded(map, shopID);
+                        HandleItemRequirements(item, Req, Req.Quantity, findIngredients);
                     }
                 }
 
@@ -854,9 +857,11 @@ public class CoreAdvanced
         }
 
         // Helper methods
-        void EnsureShopLoaded(int shopID)
+        void EnsureShopLoaded(string? map, int shopID)
         {
             int retry = 0;
+            Core.Join(map);
+            Bot.Wait.ForMapLoad(map);
             while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
             {
                 Bot.Shops.Load(shopID);
@@ -869,29 +874,41 @@ public class CoreAdvanced
             }
         }
 
-        void HandleItemRequirements(ShopItem item, ItemBase Req, Action findIngredients)
+        void HandleItemRequirements(ShopItem item, ItemBase Req, int ReqQuant, Action findIngredients)
         {
-            if (Core.CheckInventory(Req.ID, Req.Quantity))
+            if (Core.CheckInventory(Req.ID, ReqQuant))
                 return;
 
-            if (item.Name.Contains("Dragon Runestone"))
+            if (Req.Name.Contains("Dragon Runestone"))
             {
-                Farm.DragonRunestone(item.Quantity);
+                Farm.DragonRunestone(ReqQuant);
                 return;
             }
-            if (item.Name.StartsWith("Gold Voucher"))
+            else if (Req.Name.StartsWith("Gold Voucher"))
             {
-                Farm.Voucher(item.Name, item.Quantity);
+                Farm.Voucher(Req.Name, ReqQuant);
                 return;
             }
-
-            if (Bot.Shops.Items.Contains(item))
+            else if (Bot.Shops.Items.Contains(item))
             {
-                IngredientWasintheShop(item, Req.Quantity);
+                ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == Req.ID);
+                Core.Logger($"Item {wasinshop} is in the shop, attempting to get ingredients for it.");
+                while (!Bot.ShouldExit && !Core.CheckInventory(Req.ID, ReqQuant))
+                {
+                    EnsureShopLoaded(map, shopID);
+                    IngredientWasintheShop(wasinshop, ReqQuant);
+                    if (Core.CheckInventory(Req.ID, ReqQuant))
+                        break;
+                    else Core.Logger($"Failed to meet requirements for {wasinshop} x{ReqQuant}, Retrying the farm (items may have been used).");
+                }
                 return;
             }
             else
             {
+                externalItem = Req;
+                externalQuant = Req.Quantity;
+                Core.AddDrop(externalItem.ID);
+                Core.Logger($"{externalItem.Name} [{externalItem.ID}] is an external item(not in teh shop), attempting to farm it.");
                 findIngredients();
             }
         }
@@ -908,35 +925,61 @@ public class CoreAdvanced
             // If item is already in inventory, no need to continue
             if (Core.CheckInventory(item.ID, item.Quantity))
                 return;
-
+            Retry:
             // Log the process of fetching ingredients
             Core.Logger($"Attempting to get {item.Name} [{item.ID}] from the shop.");
 
             // Ensure shop is loaded before proceeding
-            EnsureShopLoaded(shopID);
+            EnsureShopLoaded(map, shopID);
 
             foreach (ItemBase req in item.Requirements)
             {
                 if (Core.CheckInventory(req.ID, req.Quantity))
                     continue;
 
+                int ReqQuant = req.Quantity * craftingQ;
+
                 // Handle different types of requirements (e.g., Dragon Runestone)
+                if (Bot.Shops.Items.Contains(req))
+                {
+                    ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
+                    Core.Logger($"Item {wasinshop.Name} [{wasinshop.ID}] is in the shop, attempting to get ingredients for it.");
+                    ReqQuant = Math.Min(ReqQuant, wasinshop.MaxStack);
+                    IngredientWasintheShop(wasinshop, ReqQuant);
+                    continue;
+                }
                 if (req.Name.Contains("Dragon Runestone"))
                 {
-                    Farm.DragonRunestone(req.Quantity);
+                    Farm.DragonRunestone(ReqQuant);
                 }
                 else if (req.Name.StartsWith("Gold Voucher"))
                 {
-                    Farm.Voucher(req.Name, req.Quantity);
+                    Farm.Voucher(req.Name, ReqQuant);
                 }
                 else
                 {
+                    externalItem = req;
+                    externalQuant = ReqQuant;
+                    Core.AddDrop(externalItem.ID);
+                    Core.Logger($"{externalItem.Name} [{externalItem.ID}] is an external item(not in teh shop), attempting to farm it.");
                     findIngredients();
                 }
             }
 
-            // After ensuring requirements are met, attempt to buy the item
-            BuyItem(map, shopID, item.ID, craftingQ, shopItemID: item.ShopItemID, Log: Log);
+            if (item.Requirements.All(x => x != null && Core.CheckInventory(x.ID, x.Quantity)))
+            {
+                // If all requirements are met, attempt to buy the item
+                if (!matsOnly)
+                    Core.Logger($"Buying {item.Name} [{item.ID}] from the shop.");
+
+                // Attempt to purchase the required quantity of the shop item
+                BuyItem(map, shopID, item.ID, craftingQ, shopItemID: item.ShopItemID, Log: Log);
+            }
+            else
+            {
+                Core.Logger($"Failed to meet requirements for {item.Name} [{item.ID}], Retrying teh farm (items may have been used).");
+                goto Retry;
+            }
         }
 
         void HandleNoItemsFound(int mode, bool memSkipped)
