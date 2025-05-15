@@ -130,6 +130,7 @@ public class MergeTemplateHelper
 
         foreach (ShopItem item in shopItems)
         {
+            //if "Gold Voucher xxxx" becomes an issue remove it from this line.
             if (item.Requirements == null || item.Name.StartsWith("Gold Voucher"))
                 continue;
 
@@ -155,9 +156,11 @@ public class MergeTemplateHelper
                         output += $"\n                case \"{req.Name}\":\n";
                         output += "                    Core.FarmingLogger(req.Name, quant);\n";
                         output += "                    Core.EquipClass(ClassType.Farm);\n";
+                        output += "                    Core.AddDrop(req.ID);\n";
                         output += "                    Core.RegisterQuests(0000);\n";
-                        output += "                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))\n";
+                        output += "                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))\n";
                         output += "                    {\n";
+                        output += "                        Core.HuntMonster(\"map\", \"MonsterName\", \"QuestItem\", \"quant\", isTemp: false);\n";
                         output += "                        Core.Logger(\"This item is not setup yet\");\n";
                         output += "                        Bot.Wait.ForPickup(req.Name);\n";
                         output += "                    }\n";
