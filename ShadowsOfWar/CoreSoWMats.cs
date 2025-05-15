@@ -54,6 +54,7 @@ public class CoreSoWMats
             Core.HuntMonster("worldscore", "Crystalized Mana", "Crystalized Tooth", 14, log: false);
             Core.HuntMonster("worldscore", "Mask of Tranquility", "Creator's Favor", 1, log: false);
         }
+        Bot.Wait.ForPickup("Acquiescence");
         Core.CancelRegisteredQuests();
     }
 
@@ -83,6 +84,7 @@ public class CoreSoWMats
             Core.HuntMonster("manacradle", "Malgor", "Weathered Armor Shard", log: false);
             Core.HuntMonster("manacradle", "The Mainyu", "Licorice Scale", log: false);
         }
+        Bot.Wait.ForPickup("Elemental Core");
         Core.CancelRegisteredQuests();
         Adv.GearStore(true);
     }
@@ -106,6 +108,7 @@ public class CoreSoWMats
             Core.HuntMonster("Timekeep", "Mumbler", "Mumbler Drool", 8, log: false);
             Core.HuntMonster("Timekeep", "Decaying Locust", "Locust Wings", 8, log: false);
         }
+        Bot.Wait.ForPickup("Garish Remnant");
         Core.CancelRegisteredQuests();
     }
 
@@ -121,8 +124,8 @@ public class CoreSoWMats
         Core.EquipClass(ClassType.Farm);
 
         Core.RegisterQuests(8814, 8815);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Prismatic Seams", Quantity))
-            Core.KillMonster("Streamwar", "r3a", "Left", "*", log: false);
+        Core.KillMonster("Streamwar", "r3a", "Left", "*", "Prismatic Seams", Quantity, false);
+        Bot.Wait.ForPickup("Prismatic Seams");
         Core.CancelRegisteredQuests();
     }
 
@@ -146,6 +149,7 @@ public class CoreSoWMats
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("DeadLines", "Eternal Dragon", "Eternal Dragon Scale", log: false);
         }
+        Bot.Wait.ForPickup("Unbound Thread");
         Core.CancelRegisteredQuests();
     }
 
@@ -168,6 +172,7 @@ public class CoreSoWMats
             Core.HuntMonster("ruinedcrown", "Frenzied Mana", "Mana Residue", 8, log: false);
             Core.HuntMonster("ruinedcrown", "Mana-Burdened Mage", "Mage's Blood Sample", 8, log: false);
         }
+        Bot.Wait.ForPickup("Willpower");
         Core.CancelRegisteredQuests();
     }
 }
