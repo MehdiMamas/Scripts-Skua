@@ -885,7 +885,7 @@ public class CoreAdvanced
                 while (!Bot.ShouldExit && !Core.CheckInventory(Req.ID, ReqQuant))
                 {
                     // for requirements that are in the shop, but are just buyable with gold. (excludes ac buyable items)
-                    if (!(wasinshop.Requirements.Count > 0 && wasinshop.Cost > 0))
+                    if (wasinshop.Requirements.Count <= 0 && wasinshop.Cost <= 0)
                     {
                         BuyItem(map, shopID, wasinshop.ID, ReqQuant, shopItemID: wasinshop.ShopItemID, Log: Log);
                         Bot.Wait.ForPickup(wasinshop.ID);
