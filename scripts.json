@@ -15104,6 +15104,40 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BadmoonMerge.cs"
   },
   {
+    "name": "Bocklin Armory Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Bocklin Armory Merge [2577] in /bocklincastle",
+    "tags": [
+      "bocklin",
+      "armory",
+      "merge",
+      "bocklincastle",
+      "valens",
+      "knightly",
+      "golden",
+      "anjou",
+      "knight",
+      "duke",
+      "noble",
+      "enchanted",
+      "antlered",
+      "regal",
+      "dukes",
+      "vaughns",
+      "sash",
+      "aquitaine",
+      "gem",
+      "earthvessel",
+      "harpoon",
+      "rapier",
+      "rapiers",
+      "kris"
+    ],
+    "path": "Other/MergeShops/BocklinArmoryMerge.cs",
+    "size": 9604,
+    "fileName": "BocklinArmoryMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BocklinArmoryMerge.cs"
+  },
+  {
     "name": "EaglesReachArmoryMerge",
     "description": "null",
     "tags": [
