@@ -10322,15 +10322,12 @@
   },
   {
     "name": "Bocklin Grove",
-    "description": "This will finish the Lynaria's Saga storyline.",
+    "description": "This will complete the Victoria Alteon's storyline in /bocklingrove.",
     "tags": [
       "story",
       "quest",
       "saga",
-      "doall",
       "lynaria",
-      "complete",
-      "all",
       "queen lynaria",
       "bocklingrove",
       "bocklin grove",
@@ -10365,13 +10362,32 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lynaria/00DoAll.cs"
   },
   {
+    "name": "Bocklin Castle",
+    "description": "This will complete the Victoria Alteon's storyline in /bocklincastle.",
+    "tags": [
+      "story",
+      "quest",
+      "saga",
+      "lynaria",
+      "queen lynaria",
+      "bocklincastle",
+      "bocklin castle",
+      "victoria",
+      "victoria alteon"
+    ],
+    "path": "Story/Lynaria/02BocklinCastle.cs",
+    "size": 689,
+    "fileName": "02BocklinCastle.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lynaria/02BocklinCastle.cs"
+  },
+  {
     "name": "null",
     "description": "null",
     "tags": [
       "null"
     ],
     "path": "Story/Lynaria/CoreLynaria.cs",
-    "size": 3035,
+    "size": 5525,
     "fileName": "CoreLynaria.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lynaria/CoreLynaria.cs"
   },
