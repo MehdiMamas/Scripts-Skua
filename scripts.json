@@ -10353,11 +10353,13 @@
       "queen lynaria",
       "bocklingrove",
       "bocklin grove",
+      "bocklincastle",
+      "bocklin castle",
       "victoria",
       "victoria alteon"
     ],
     "path": "Story/Lynaria/00DoAll.cs",
-    "size": 703,
+    "size": 734,
     "fileName": "00DoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lynaria/00DoAll.cs"
   },
