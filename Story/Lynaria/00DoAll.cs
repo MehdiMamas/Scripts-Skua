@@ -1,7 +1,7 @@
 /*
 name: Lynaria's Saga (Do All)
 description: This will finish the Lynaria's Saga storyline in /bocklingrove.
-tags: story, quest, saga, doall, lynaria, complete, all, queen lynaria, bocklingrove, bocklin grove,victoria,victoria alteon
+tags: story, quest, saga, doall, lynaria, complete, all, queen lynaria, bocklingrove, bocklin grove, bocklincastle, bocklin castle,victoria,victoria alteon
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
