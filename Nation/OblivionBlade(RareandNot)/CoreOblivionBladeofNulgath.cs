@@ -45,14 +45,19 @@ public class CoreOblivionBladeofNulgath
         if (Core.CheckInventory(item, quant))
             return;
 
+        string[] rewards = Core.EnsureLoad(
+         Core.CheckInventory("Oblivion Blade of Nulgath Pet") ? 2557 : 868)
+         .Rewards?
+         .Where(x => x != null)
+         .Select(x => x.Name)
+         .ToArray() ?? Array.Empty<string>();
+
         Core.AddDrop(
-            Core.EnsureLoad(
-                Core.CheckInventory("Oblivion Blade of Nulgath Pet") ? 2557 : 868)
-                .Rewards?
-                .Where(x => x != null)
-                .Select(x => x.Name).ToArray()
-                .Concat(new[] { item }).ToArray()
-                .Concat(new[] { "Mana Energy for Nulgath" }).ToArray());
+            rewards
+                .Concat(new[] { item })
+                .Concat(new[] { "Mana Energy for Nulgath" })
+                .ToArray()
+        );
 
         PetCheck(2557, 868);
 
