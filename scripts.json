@@ -18305,6 +18305,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/SummarizeStatistics.cs"
   },
   {
+    "name": "Merge Shop Bot Generator/Helper",
+    "description": "Fill in the map and shop ID and this tool will generate most of the merge bot for you, then you fill in the rest",
+    "tags": [
+      "merge",
+      "shop",
+      "generator",
+      "helper",
+      "developer"
+    ],
+    "path": "Tools/ForDevelopers/CaseStorage.cs",
+    "size": 4651,
+    "fileName": "CaseStorage.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
+  },
+  {
     "name": "Update Script Data",
     "description": "This bot will check all bots so that you may add the missing Name, Description and Tags where needed",
     "tags": [
@@ -18318,6 +18333,21 @@
     "size": 10224,
     "fileName": "UpdateTags.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/UpdateTags.cs"
+  },
+  {
+    "name": "Merge Shop Bot Generator/Helper",
+    "description": "Fill in the map and shop ID and this tool will generate most of the merge bot for you, then you fill in the rest",
+    "tags": [
+      "merge",
+      "shop",
+      "generator",
+      "helper",
+      "developer"
+    ],
+    "path": "Tools/ForDevelopers/MergeTemplateHelper[WIP].cs",
+    "size": 10570,
+    "fileName": "MergeTemplateHelper[WIP].cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelper[WIP].cs"
   },
   {
     "name": "Merge Shop Bot Generator/Helper",
