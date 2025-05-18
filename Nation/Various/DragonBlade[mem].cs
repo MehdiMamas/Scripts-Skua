@@ -42,9 +42,7 @@ public class DragonBladeofNulgath
             return;
         }
 
-        Core.AddDrop(Nation.bagDrops);
-        Core.AddDrop(TwistedItems);
-        Core.AddDrop("DragonBlade of Nulgath", "Combat Trophy", "Basic War Sword", "Behemoth Blade of Shadow", "Behemoth Blade of Light");
+        Core.AddDrop(Nation.bagDrops.Concat(TwistedItems).ToArray().Concat(new[] { "DragonBlade of Nulgath", "Combat Trophy", "Basic War Sword", "Behemoth Blade of Shadow", "Behemoth Blade of Light" }).ToArray());
 
         BehemothBladeof("Shadow");
         BehemothBladeof("Light");
@@ -62,7 +60,7 @@ public class DragonBladeofNulgath
         Core.EnsureAccept(766);
         Core.HuntMonster("underworld", "Legion Fenrir", "Legion Fenrir Rune");
         Core.EnsureComplete(766, 5483);
-        Bot.Drops.Pickup("DragonBlade of Nulgath");
+        Bot.Wait.ForPickup("DragonBlade of Nulgath");
     }
 
     public void BehemothBladeof(string blade)

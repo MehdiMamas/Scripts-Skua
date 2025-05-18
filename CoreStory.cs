@@ -540,7 +540,6 @@ public class CoreStory
                 Bot.Wait.ForPickup(i);
             if (questID == finalItemQuest.desiredQuestID)
                 Bot.Drops.Pickup(Core.EnsureLoad(finalItemQuest.desiredQuestID).Rewards.Select(x => x.ID).ToArray());
-
             LegacyQuestAutoComplete = true;
         }
     }

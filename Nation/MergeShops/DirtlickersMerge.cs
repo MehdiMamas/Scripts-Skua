@@ -75,7 +75,7 @@ public class DirtlickersMerge
 
                 case "Nulgath Nation House":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.AddDrop("Cemaros' Amethyst", "Aluminium", "NUE Necronomicon");
+                    Core.AddDrop(req.Name, "Cemaros' Amethyst", "Aluminium", "NUE Necronomicon");
                     Nation.FarmUni10(400);
                     Nation.FarmUni13(1);
                     Nation.FarmVoucher(false);
@@ -103,45 +103,55 @@ public class DirtlickersMerge
                         Core.Logger("Could not complete the quest, stopping bot", messageBox: true);
                         return;
                     }
-                    Bot.Drops.Pickup(req.Name);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Pink Star Diamond of Nulgath":
-                Adv.BuyItem("tercessuinotlim", 1951, "Pink Star Diamond of Nulgath");
+                    Adv.BuyItem("tercessuinotlim", 1951, "Pink Star Diamond of Nulgath");
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Musgravite of Nulgath":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("timelibrary", "Ancient Chest", req.Name, quant, false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Nulgath's Approval":
                     Nation.ApprovalAndFavor(quant, 0);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Diamond of Nulgath":
                     Nation.FarmDiamondofNulgath(300);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Totem of Nulgath":
                     Nation.FarmTotemofNulgath(quant);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Voucher of Nulgath (non-mem)":
                     Nation.FarmVoucher(false, true);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Voucher of Nulgath":
                     Nation.FarmVoucher(true, true);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
 
                 case "Unidentified 13":
                     Nation.FarmUni13(quant);
+                    Bot.Wait.ForPickup(req.Name);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Dark Crystal Shard":
                     Nation.FarmDarkCrystalShard(quant);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Tainted Gem":
@@ -149,49 +159,60 @@ public class DirtlickersMerge
                         Nation.ForgeTaintedGems(quant);
                     else
                         Nation.FarmTaintedGem(quant);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Gem of Nulgath":
                     Nation.FarmGemofNulgath(quant);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Corpse Maker of Nulgath":
                     Core.FarmingLogger(req.Name, quant);
                     TLC.QuestItems(TheLeeryContract.RewardsSelection.Corpse_Maker_of_Nulgath);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Overfiend Blade of Nulgath":
                     Core.FarmingLogger(req.Name, quant);
                     Jugger.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Overfiend_Blade_of_Nulgath);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Archfiend's Favor":
                     Nation.ApprovalAndFavor(0, quant);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Hadean Onyx of Nulgath":
                     Core.HuntMonster("tercessuinotlim", "Shadow of Nulgath", req.Name, quant, false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Essence of Nulgath":
                     Nation.EssenceofNulgath(quant);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Letter from Asuka and Tendou":
                     Core.HuntMonster("citadel", "Burning Witch", req.Name, quant, false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Chain of Nulgath":
                     Core.HuntMonster("necrocavern", "Shadow Dragon", req.Name, quant, false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Yulgath's Hut":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("originul", "Fiend Champion", req.Name, quant, false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Unidentified 10":
                     Nation.FarmUni10(quant);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
             }

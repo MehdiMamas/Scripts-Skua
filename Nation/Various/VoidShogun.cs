@@ -7,6 +7,7 @@ tags: null
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/Nation/CoreNation.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 
 public class VoidShogun
 {
@@ -46,6 +47,7 @@ public class VoidShogun
     {
         Core.AddDrop(Nation.bagDrops);
         Core.AddDrop(Rewards);
+
         Core.AddDrop("Void Voucher", "Dai Tengu Blade of Wind", "Orochi's Shadow");
 
         if (!Core.CheckInventory("Void Monk of Nulgath"))
@@ -59,23 +61,35 @@ public class VoidShogun
         Farm.YokaiREP();
         Nation.FarmVoucher(false);
 
-        int i = 1;
-        while (!Bot.ShouldExit && !Core.CheckInventory(Rewards, toInv: false))
+        foreach (ItemBase item in Core.EnsureLoad(6484).Rewards.Where(x => x != null && Rewards.Contains(x.Name)).Select(x => x))
         {
-            Core.EnsureAccept(6484);
+            if (Core.CheckInventory(item.ID))
+            {
+                Core.Logger($"Already have {item}");
+                continue;
+            }
 
-            Nation.FarmUni13(1);
-            Nation.FarmBloodGem(7);
-            Nation.TheAssistant("Unidentified 24");
+            while (!Bot.ShouldExit && !Core.CheckInventory(item.ID, toInv: false))
+            {
+                if (Core.CheckInventory(item.ID))
+                {
+                    Core.Logger($"Already have {item}");
+                    continue;
+                }
+                Core.EnsureAccept(6484);
 
-            Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("hachiko", "Dai Tengu", "Dai Tengu Blade of Wind", isTemp: false);
-            Core.HuntMonster("shogunwar", "Orochi", "Orochi's Shadow", isTemp: false);
-            Core.HuntMonster("necrocavern", "Shadowstone Support", "ShadowStone Rune");
+                Nation.FarmUni13(1);
+                Nation.FarmBloodGem(7);
+                Nation.TheAssistant("Unidentified 24");
 
-            Core.EnsureCompleteChoose(6484, Rewards);
-            Bot.Drops.Pickup(Rewards);
-            Core.Logger($"Completed x{i++}");
+                Core.EquipClass(ClassType.Solo);
+                Core.HuntMonster("hachiko", "Dai Tengu", "Dai Tengu Blade of Wind", isTemp: false);
+                Core.HuntMonster("shogunwar", "Orochi", "Orochi's Shadow", isTemp: false);
+                Core.HuntMonster("necrocavern", "Shadowstone Support", "ShadowStone Rune");
+
+                Core.EnsureComplete(6484, item.ID);
+                Bot.Wait.ForPickup(item.ID);
+            }
         }
     }
 }

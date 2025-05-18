@@ -93,6 +93,7 @@ public class WillpowerExtraction
                 Nation.FarmDiamondofNulgath(1);
                 Core.EnsureComplete(3046, 18768);
 
+                Bot.Wait.ForDrop(18768);
                 Bot.Wait.ForPickup(18768);
 
                 if (Core.CheckInventory(18768))
@@ -111,7 +112,8 @@ public class WillpowerExtraction
             Core.HuntMonster("evilwarnul", "Laken", "King Klunk's Crown", 1, false);
 
             Core.EnsureComplete(5258);
-            Bot.Drops.Pickup("Unidentified 34");
+            Bot.Wait.ForDrop("Unidentified 34");
+            Bot.Wait.ForPickup("Unidentified 34");
 
             Core.Logger($"Completed x{i++}");
         }

@@ -1168,6 +1168,7 @@ public class CoreDailies
                             {
                                 Core.KillMonster("battleodium", "r6", "Left", "Diemond", log: false);
                                 Bot.Drops.Pickup(76288);
+                                Bot.Wait.ForPickup(76288);
                             }
                             Core.BuyItem("battleodium", 2236, "Cracked Opal");
                             break;

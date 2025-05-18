@@ -87,6 +87,7 @@ public class VoidPaladin
                 }
                 Core.ChainComplete(2346);
                 Bot.Drops.Pickup("Scroll of Underworld");
+                Bot.Wait.ForPickup("Scroll of Underworld");
             }
             Core.EnsureCompleteChoose(5826);
             Core.Logger($"Completed x{i++}");
@@ -117,6 +118,7 @@ public class VoidPaladin
 
         Core.EnsureComplete(5827);
         Bot.Drops.Pickup("Void Paladin");
+        Bot.Wait.ForPickup("Void Paladin");
     }
 
     public void Sacrifice()

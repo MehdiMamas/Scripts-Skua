@@ -69,6 +69,7 @@ public class ShadowscytheMerge
                 case "Diamond Token of Gravelyn":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(4737);
+                    Core.AddDrop("Diamond Token of Dage", "Legion Token");
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         if (!Core.CheckInventory("Defeated Makai", 25))
@@ -88,7 +89,8 @@ public class ShadowscytheMerge
 
                         Core.HuntMonster("lair", "Red Dragon", "Red Dragon's Fang");
                         Core.HuntMonster("bloodtitan", "Blood Titan", "Blood Titan's Blade", publicRoom: true);
-                        Bot.Drops.Pickup("Legion Token", "Diamond Token of Dage");
+
+                        Bot.Wait.ForQuestComplete(4737);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -102,6 +104,7 @@ public class ShadowscytheMerge
                     {
                         Core.HuntMonster("shadowblast", "Carnage", "Shadow Seal", isTemp: false);
                         Core.HuntMonster("shadowblast", "Legion Fenrir", "Gem of Superiority", isTemp: false);
+                        Bot.Wait.ForQuestComplete(4750);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

@@ -41,8 +41,7 @@ public class EnhancedNulgathNationHouse
             return;
         }
 
-        Core.AddDrop(Nation.bagDrops);
-        Core.AddDrop("Nulgath Nation House", "Enchanted Nulgath Nation House", "Cemaros' Amethyst", "Aluminum");
+        Core.AddDrop(Nation.bagDrops.Concat(new[] { "Cemaros' Amethyst", "Aluminum", "NUE Necronomicon", "Nulgath Nation House", "Enchanted Nulgath Nation House" }).ToArray());
 
         if (!Core.CheckInventory("Nulgath Nation House"))
         {
@@ -70,7 +69,8 @@ public class EnhancedNulgathNationHouse
                 Core.Logger("Could not complete the quest, stopping bot", messageBox: true);
                 return;
             }
-            Bot.Drops.Pickup("Nulgath Nation House");
+            Bot.Wait.ForQuestComplete(4779);
+            Bot.Wait.ForPickup("Nulgath Nation House");
         }
         
         Adv.BuyItem("tercessuinotlim", 1951, "Pink Star Diamond of Nulgath");

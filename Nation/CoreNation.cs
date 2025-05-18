@@ -317,7 +317,7 @@ public class CoreNation
                 Core.EnsureComplete(2221);
             else
                 Core.EnsureComplete(2219);
-            Bot.Drops.Pickup("Diamond of Nulgath");
+            Bot.Wait.ForPickup("Diamond of Nulgath");
             Core.Logger($"Completed x{i++}");
             if (Bot.Inventory.IsMaxStack("Diamond of Nulgath"))
                 Core.Logger("Max Stack Hit.");
@@ -424,7 +424,7 @@ public class CoreNation
             Core.KillMonster("mountfrost", "War", "Left", "Snow Golem", "Ice Cubes", snowGolemKillCount, log: false);
             Core.EnsureComplete(questId);
 
-            Bot.Drops.Pickup("Tainted Gem");
+            Bot.Wait.ForPickup("Tainted Gem");
             Core.Logger($"Completed x{attemptCount++}");
 
             if (Bot.Inventory.IsMaxStack("Tainted Gem"))
@@ -564,6 +564,7 @@ public class CoreNation
 
         foreach (string medal in new[] { "Nation Round 1 Medal", "Nation Round 2 Medal", "Nation Round 3 Medal", "Nation Round 4 Medal" })
         {
+            Core.AddDrop(medal);
             if (Core.CheckInventory(medal))
             {
                 Core.Logger($"\"{medal}\" owned.");
@@ -604,8 +605,9 @@ public class CoreNation
                         break;
                 }
 
-                Bot.Drops.Pickup(medal);
+                Bot.Wait.ForPickup(medal);
                 Core.Logger($"Medal {medal} acquired");
+                Bot.Drops.Remove(medal);
             }
         }
     }
@@ -1437,8 +1439,10 @@ public class CoreNation
             Core.HuntMonster("hydra", "Fire Imp", "Imp Flame", 3, log: false);
             Core.HuntMonster("battleunderc", "Crystalized Jellyfish", "Aquamarine of Nulgath", 3, false, log: false);
 
+            Bot.Wait.ForQuestComplete(Core.CheckInventory(38275) ? 5662 : 5659);
             // Pick up any dropped items
-            Bot.Drops.Pickup(bagDrops);
+            if (Bot.Drops.Exists(item))
+                Bot.Wait.ForPickup(item);
         }
 
         // Cancel any registered quests once the desired items are obtained

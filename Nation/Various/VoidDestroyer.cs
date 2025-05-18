@@ -38,18 +38,40 @@ public class VoidDestroyer
 
     public void GetDestroyer()
     {
-        int i = 1;
+        if (Core.CheckInventory(Rewards))
+        {
+            Core.Logger($"All rewards already owned");
+            return;
+        }
+
+        // Track only relevant rewards from quest 5661
+        Bot.Drops.Add(Core.EnsureLoad(5661).Rewards
+            .Where(x => x != null && Rewards.Contains(x.Name))
+            .Select(x => x.Name)
+            .ToArray());
+
+        // Loop until all desired rewards are in inventory
         while (!Bot.ShouldExit && !Core.CheckInventory(Rewards, toInv: false))
         {
+            Core.EnsureAccept(5661);
             Nation.Supplies("Unidentified 4");
             Nation.SwindleBulk(1);
             Nation.FarmDarkCrystalShard(1);
             Nation.EssenceofNulgath(1);
             Nation.FarmGemofNulgath(1);
 
-            Core.ChainComplete(5661);
-            Bot.Drops.Pickup(Rewards);
-            Core.Logger($"Completed x{i++}");
+            Core.EnsureComplete(5661);
+
+            // Wait for any desired drops that appeared
+            foreach (string reward in Rewards)
+            {
+                if (Bot.Drops.CurrentDrops.Contains(reward))
+                    Bot.Wait.ForPickup(reward);
+            }
         }
+        Core.Logger($"All rewards collected, banking them;\n"
+        + $" {string.Join(", ", Bot.Drops.CurrentDrops)}");
+        Core.ToBank(Rewards);
     }
+
 }

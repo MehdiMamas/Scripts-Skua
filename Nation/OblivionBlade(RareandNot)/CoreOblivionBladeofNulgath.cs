@@ -45,12 +45,14 @@ public class CoreOblivionBladeofNulgath
         if (Core.CheckInventory(item, quant))
             return;
 
-        Quest QuestData = Core.EnsureLoad(Core.CheckInventory("Oblivion Blade of Nulgath Pet") ? 2557 : 868);
-        _ = QuestData.Requirements.ToArray();
-        ItemBase[] QuestReward = QuestData.Rewards.ToArray();
-        foreach (ItemBase Item in QuestReward)
-            Core.AddDrop(Item.Name);
-        Core.AddDrop("Mana Energy for Nulgath");
+        Core.AddDrop(
+            Core.EnsureLoad(
+                Core.CheckInventory("Oblivion Blade of Nulgath Pet") ? 2557 : 868)
+                .Rewards?
+                .Where(x => x != null)
+                .Select(x => x.Name).ToArray()
+                .Concat(new[] { item }).ToArray()
+                .Concat(new[] { "Mana Energy for Nulgath" }).ToArray());
 
         PetCheck(2557, 868);
 
@@ -60,7 +62,7 @@ public class CoreOblivionBladeofNulgath
             Core.HuntMonsterMapID("elemental", 7, "Mana Energy for Nulgath", isTemp: false, log: false);
             Core.EquipClass(ClassType.Farm);
             Core.KillMonster("elemental", "r3", "Down", "*", "Charged Mana Energy for Nulgath", 5, log: false);
-            Bot.Drops.Pickup(item);
+            Bot.Wait.ForPickup(item);
             if (Bot.Inventory.IsMaxStack(item))
                 Core.Logger("Max Stack Hit.");
             else Core.Logger($"{item}: {Bot.Inventory.GetQuantity(item)}/{quant}");

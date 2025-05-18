@@ -1029,7 +1029,7 @@ public class CoreFarms
         Core.HuntMonster("trunk", "GreenGuard Basilisk", "Black Knight Arm Piece");
 
         Core.EnsureComplete(318);
-        Bot.Drops.Pickup("Black Knight Orb");
+        Bot.Wait.ForPickup("Black Knight Orb");
     }
 
     /// <summary>
@@ -1059,12 +1059,18 @@ public class CoreFarms
             Core.PvPMove(18, "Resource1A");
             Bot.Kill.Monster("(B) Defensive Restorer");
             if (Bot.Drops.Exists("The Secret 4"))
+            {
                 Bot.Drops.Pickup("The Secret 4");
+                Bot.Wait.ForPickup("The Secret 4");
+            }
 
             Core.PvPMove(20, "Resource1B");
             Bot.Kill.Monster("(B) Defensive Restorer");
             if (Bot.Drops.Exists("The Secret 4"))
+            {
                 Bot.Drops.Pickup("The Secret 4");
+                Bot.Wait.ForPickup("The Secret 4");
+            }
 
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
