@@ -81,13 +81,14 @@ public class WillpowerExtraction
             }
 
             Core.AddDrop(18768);
-            while (!Bot.ShouldExit && !Core.CheckInventory(18768)) // "Facebreakers of Nulgath"
+            if (!Core.CheckInventory(18768)) // "Facebreakers of Nulgath"
             {
                 // "Kindness" of Nulgath
                 Core.EnsureAccept(3046);
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("citadel", "Grand Inquisitor", "Golden Shadow Breaker", 1, false);
                 Core.HuntMonster("battleundera", "Bone Terror", "Shadow Terror Axe", 1, false);
+                Core.EquipClass(ClassType.Farm);
                 Nation.FarmDarkCrystalShard(5);
                 Nation.SwindleBulk(5);
                 Nation.FarmDiamondofNulgath(1);
@@ -95,9 +96,6 @@ public class WillpowerExtraction
 
                 Bot.Wait.ForDrop(18768);
                 Bot.Wait.ForPickup(18768);
-
-                if (Core.CheckInventory(18768))
-                    break;
             }
 
             Nation.ApprovalAndFavor(0, 90);
