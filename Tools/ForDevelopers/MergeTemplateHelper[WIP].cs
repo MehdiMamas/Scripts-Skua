@@ -94,7 +94,7 @@ public class MergeTemplateHelpernew
         tags.Add(map);
 
         List<string> shopItemNames = new();
-       
+
 
 
         foreach (ShopItem item in shopItems)
@@ -107,7 +107,7 @@ public class MergeTemplateHelpernew
                 bool isRequirementInShop = shopItems.Exists(_item => _item.ID == req.ID);
                 if (!isRequirementInShop && !processedRequirements.Contains(req.Name))
                 {
-                    if (storedCases.TryGetValue(req.Name, out string caseCode))
+                    if (storedCases.TryGetValue(req.Name, out string? caseCode))
                         output += $"\n{caseCode.TrimEnd()}\n";
                     else
                     {
