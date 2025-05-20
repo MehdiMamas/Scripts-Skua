@@ -86,21 +86,28 @@ public class MergeTemplateHelpernew
         string[] multipliedTagsBlacklist = tagsBlacklist.Select(x => x + 's').ToArray();
 
         string scriptInfo =
-            "/*\n" +
-            $"name: {scriptName}\n" +
-            $"description: This bot will farm the items belonging to the selected mode for the {scriptName} [{shopID}] in /{map}\n" +
-            $"tags: ";
+           "/*\n" +
+           $"name: {scriptName}\n" +
+           $"description: This bot will farm the items belonging to the selected mode for the {scriptName} [{shopID}] in /{map}\n" +
+           $"tags: ";
         List<string> tags = scriptName.ToLower().Split(' ').ToList();
         tags.Add(map);
 
         List<string> shopItemNames = new();
-
-
+        if (genFile)
+        {
+            shopItemNames.Add("");
+            shopItemNames.Add("    public List<IOption> Select = new()");
+            shopItemNames.Add("    {");
+        }
 
         foreach (ShopItem item in shopItems)
         {
             if (item.Requirements == null || item.Name.StartsWith("Gold Voucher"))
                 continue;
+
+            shopItemNames.Add($"        new Option<bool>(\"{item.ID}\", \"{item.Name}\", \"Mode: [select] only\\nShould the bot buy \\\"{item.Name}\\\" ?\", false),");
+            tags.AddRange(item.Name.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => new string(x.Where(char.IsLetter).ToArray())).Except(tags).Except(tagsBlacklist).Except(multipliedTagsBlacklist));
 
             foreach (ItemBase req in item.Requirements)
             {
@@ -127,12 +134,13 @@ public class MergeTemplateHelpernew
                                             Core.CancelRegisteredQuests();
                                             break;
                                         ";
-                        itemsToLearn.Add(req.Name);
                     }
+                    itemsToLearn.Add(req.Name);
                     processedRequirements.Add(req.Name);
                 }
             }
         }
+        shopItemNames.Add("   };");
 
         if (!genFile)
         {
@@ -172,7 +180,6 @@ public class MergeTemplateHelpernew
         }
         MergeTemplate[startIndex] = $"        Adv.StartBuyAllMerge(\"{map.ToLower()}\", {shopID}, findIngredients, buyOnlyThis, buyMode: buyMode);";
 
-        shopItemNames.Add("    };");
 
         scriptInfo += tags.Join(", ") + "\n*/";
 
@@ -181,7 +188,9 @@ public class MergeTemplateHelpernew
                             .Concat(new[] { output })
                             .Concat(MergeTemplate[(MergeTemplate.Length - 4)..(MergeTemplate.Length - 1)])
                             .Concat(shopItemNames.ToArray())
+                            .Concat(new[] { "}" })
                             .ToArray();
+
 
         string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP", className + ".cs");
         Directory.CreateDirectory(Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP"));
