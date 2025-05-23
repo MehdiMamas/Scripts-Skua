@@ -141,6 +141,7 @@ public class ShadowrealmMerge
                 case "Blessed Shield of Vindication":
                 case "Blessed Hammers of the Dawn":
                 case "Blessed Hammer of the Dawn":
+                case "Vindicator Archer's Hat":
                     DFM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
