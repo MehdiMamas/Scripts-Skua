@@ -10374,11 +10374,13 @@
       "bocklin grove",
       "bocklincastle",
       "bocklin castle",
+      "bocklin sanctum",
+      "bocklinsanctum",
       "victoria",
       "victoria alteon"
     ],
     "path": "Story/Lynaria/00DoAll.cs",
-    "size": 734,
+    "size": 766,
     "fileName": "00DoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lynaria/00DoAll.cs"
   },
