@@ -22,6 +22,7 @@ public class CoreLynaria
     {
         BocklinGrove();
         BocklinCastle();
+        BocklinSanctum();
     }
 
     public void BocklinGrove()
@@ -203,4 +204,105 @@ public class CoreLynaria
 
     }
 
+    public void BocklinSanctum()
+    {
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+            "Warped Revenant", // UseableMonsters[0],
+            "Faceless Ritualist", // UseableMonsters[1],
+            "Tarnished Scion", // UseableMonsters[2],
+            "Ghostly Servant", // UseableMonsters[3],
+            "Headless Rider", // UseableMonsters[4],
+            "Thronekeeper", // UseableMonsters[5]
+        };
+        #endregion Useable Monsters
+
+        if (Core.isCompletedBefore(10265))
+            return;
+
+        BocklinCastle();
+        Story.PreLoad(this);
+
+
+        // 10256 | Shot in the Dark
+        if (!Story.QuestProgression(10256))
+        {
+            Core.HuntMonsterQuest(10256,
+                ("bocklinsanctum", UseableMonsters[0], ClassType.Farm));
+        }
+
+
+        // 10257 | Sparkling Changeling
+        if (!Story.QuestProgression(10257))
+        {
+            Core.HuntMonsterQuest(10257,
+                ("bocklinsanctum", UseableMonsters[1], ClassType.Farm));
+        }
+
+
+        // 10258 | Silver Proof
+        if (!Story.QuestProgression(10258))
+        {
+            Story.MapItemQuest(10258, "bocklinsanctum", 14478, 6);
+        }
+
+
+        // 10259 | Gilded Peace
+        if (!Story.QuestProgression(10259))
+        {
+            Core.HuntMonsterQuest(10259,
+                ("bocklinsanctum", UseableMonsters[1], ClassType.Farm),
+                ("bocklinsanctum", UseableMonsters[0], ClassType.Farm));
+        }
+
+
+        // 10260 | Towards Reunion
+        if (!Story.QuestProgression(10260))
+        {
+            Core.EquipClass(ClassType.Solo);
+            Story.MapItemQuest(10260, "bocklinsanctum", 14479);
+            Story.KillQuest(10260, "bocklinsanctum", UseableMonsters[2]);
+        }
+
+
+        // 10261 | Servants Stay Unseen
+        if (!Story.QuestProgression(10261))
+        {
+            Core.EquipClass(ClassType.Farm);
+            Story.KillQuest(10261, "bocklinsanctum", UseableMonsters[3]);
+            Story.MapItemQuest(10261, "bocklinsanctum", 14480);
+        }
+
+
+        // 10262 | The Slaying of Sacred Deer
+        if (!Story.QuestProgression(10262))
+        {
+            Core.HuntMonsterQuest(10262,
+                ("bocklinsanctum", UseableMonsters[4], ClassType.Farm));
+        }
+
+
+        // 10263 | The Light Protects You
+        if (!Story.QuestProgression(10263))
+        {
+            Story.MapItemQuest(10263, "bocklinsanctum", new[] {14481, 14482});
+        }
+
+
+        // 10264 | Cure-All
+        if (!Story.QuestProgression(10264))
+        {
+            Core.HuntMonsterQuest(10264,
+                ("bocklinsanctum", UseableMonsters[3], ClassType.Solo),
+                ("bocklinsanctum", UseableMonsters[4], ClassType.Solo));
+        }
+
+        // 10265 | The Thronekeeper
+        if (!Story.QuestProgression(10265))
+        {
+            Core.HuntMonsterQuest(10265,
+                ("bocklinsanctum", UseableMonsters[5], ClassType.Solo));
+        }
+    }
 }

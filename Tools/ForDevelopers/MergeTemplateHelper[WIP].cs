@@ -101,44 +101,66 @@ public class MergeTemplateHelpernew
             shopItemNames.Add("    {");
         }
 
+        List<string> globalFallbackCases = new();
+        List<string> globalKnownCases = new();
+
         foreach (ShopItem item in shopItems)
         {
             if (item.Requirements == null || item.Name.StartsWith("Gold Voucher"))
                 continue;
 
             shopItemNames.Add($"        new Option<bool>(\"{item.ID}\", \"{item.Name}\", \"Mode: [select] only\\nShould the bot buy \\\"{item.Name}\\\" ?\", false),");
-            tags.AddRange(item.Name.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => new string(x.Where(char.IsLetter).ToArray())).Except(tags).Except(tagsBlacklist).Except(multipliedTagsBlacklist));
+
+            tags.AddRange(item.Name.ToLower()
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => new string(x.Where(char.IsLetter).ToArray()))
+                .Except(tags)
+                .Except(tagsBlacklist)
+                .Except(multipliedTagsBlacklist));
 
             foreach (ItemBase req in item.Requirements)
             {
-                bool isRequirementInShop = shopItems.Exists(_item => _item.ID == req.ID);
-                if (!isRequirementInShop && !processedRequirements.Contains(req.Name))
-                {
-                    if (storedCases.TryGetValue(req.Name, out string? caseCode))
-                        output += $"\n{caseCode.TrimEnd()}\n";
-                    else
-                    {
-                        // Fallback template case for unknown requirement
-                        output += $@"
-                                        case ""{req.Name}"":
-                                            Core.FarmingLogger(""{req.Name}"", quant);
-                                            Core.EquipClass(ClassType.Farm);
-                                            Core.AddDrop({req.ID});
-                                            Core.RegisterQuests(0000);
-                                            while (!Bot.ShouldExit && !Core.CheckInventory({req.ID}, quant))
-                                            {{
-                                                Core.HuntMonster(""{map}"", ""MonsterName"", ""QuestItem"", quant, isTemp: false);
-                                                Core.Logger(""This item is not setup yet"");
-                                                Bot.Wait.ForPickup(""{req.Name}"");
-                                            }}
-                                            Core.CancelRegisteredQuests();
-                                            break;
-                                        ";
-                    }
-                    itemsToLearn.Add(req.Name);
-                    processedRequirements.Add(req.Name);
-                }
+                if (processedRequirements.Contains(req.Name) || shopItems.Exists(_item => _item.ID == req.ID))
+                    continue;
+
+                processedRequirements.Add(req.Name);
+                itemsToLearn.Add(req.Name);
+
+                if (storedCases.TryGetValue(req.Name, out string? caseCode))
+                    globalKnownCases.Add(caseCode.TrimEnd());
+                else
+                    globalFallbackCases.Add($@"
+                case ""{req.Name}"":
+                    Core.FarmingLogger(""{req.Name}"", quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop({req.ID});
+                    Core.RegisterQuests(0000);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
+                    {{
+                        Core.HuntMonster(""{map}"", ""MonsterName"", req.Name, req.Quantity, req.Temp);
+                        Core.Logger(""{req.Name} is not setup yet"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }}
+                    Core.CancelRegisteredQuests();
+                    break;
+            ");
             }
+        }
+
+        // Output fallback region first
+        if (globalFallbackCases.Count > 0)
+        {
+            output += "\n#region Items not setup\n";
+            output += string.Join('\n', globalFallbackCases);
+            output += "#endregion\n";
+        }
+
+        // Output known cases region next
+        if (globalKnownCases.Count > 0)
+        {
+            output += "\n#region Known items\n";
+            output += string.Join('\n', globalKnownCases);
+            output += "\n#endregion\n";
         }
         shopItemNames.Add("   };");
 

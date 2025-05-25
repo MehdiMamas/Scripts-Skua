@@ -3952,7 +3952,7 @@ public class CoreBots
             if (!Bot.Quests.IsInProgress(questId))
                 EnsureAccept(questId);
 
-            HuntMonster(mapName ?? Bot.Map.Name, monsterName ?? "*", requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp, log: false);
+            HuntMonster(mapName ?? Bot.Map.Name, monsterName ?? "*", requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp);
         }
 
         if (!Bot.Quests.EnsureComplete(questId))
@@ -7446,13 +7446,20 @@ public class CoreBots
 
 
     /// <summary>
-    /// Sends a getMapItem packet for the specified item
+    /// Sends a getMapItem packet for the specified item.
     /// </summary>
     /// <param name="itemID">ID of the item</param>
     /// <param name="quant">Desired quantity of the item</param>
     /// <param name="map">Map where the item is</param>
     public void GetMapItem(int itemID, int quant = 1, string? map = null)
     {
+        // Early exit if item already present in sufficient quantity
+        if (Bot.TempInv.Contains(itemID, quant))
+        {
+            Logger($"Map item {itemID} already acquired ({quant})");
+            return;
+        }
+
         if (map != null)
             Join(map);
 
@@ -7460,19 +7467,19 @@ public class CoreBots
         Sleep();
 
         List<ItemBase>? initialItems = Bot.TempInv.Items?.ToList();
-        ItemBase? newItem = new();
+        ItemBase? newItem = null;
 
         for (int i = 0; i < quant; i++)
         {
             Bot.Map.GetMapItem(itemID);
             Sleep(1000);
 
-            // Identify new items
+            if (newItem != null)
+                continue;
+
+            // Try to find the newly acquired item
             List<ItemBase>? newItems = Bot.TempInv.Items?.Except(initialItems ?? Enumerable.Empty<ItemBase>()).ToList();
-            if (newItem == null && newItems != null && newItems.Any())
-            {
-                newItem = newItems.Where(x => x.ID == itemID).FirstOrDefault() ?? newItems.First();
-            }
+            newItem = newItems?.FirstOrDefault(x => x.ID == itemID) ?? newItems?.FirstOrDefault();
         }
 
         if (quant > 1 && newItem != null)
@@ -7486,7 +7493,7 @@ public class CoreBots
                 Sleep(1000);
                 attempts++;
 
-                if (attempts > quant + 10)
+                if (attempts > quant + 10 || Bot.TempInv.Contains(newItem.Name, quant))
                     break;
             }
         }
