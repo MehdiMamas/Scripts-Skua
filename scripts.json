@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 365132,
+    "size": 365370,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -10340,6 +10340,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lynaria/01BocklinGrove.cs"
   },
   {
+    "name": "Bocklin Sanctum",
+    "description": "This will complete the Victoria Alteon's storyline in /bocklinsanctum.",
+    "tags": [
+      "story",
+      "quest",
+      "saga",
+      "lynaria",
+      "queen lynaria",
+      "bocklinsanctum",
+      "bocklin sanctum",
+      "victoria",
+      "victoria alteon"
+    ],
+    "path": "Story/Lynaria/03BocklinSanctum.cs",
+    "size": 695,
+    "fileName": "03BocklinSanctum.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lynaria/03BocklinSanctum.cs"
+  },
+  {
     "name": "Lynaria's Saga (Do All)",
     "description": "This will finish the Lynaria's Saga storyline in /bocklingrove.",
     "tags": [
@@ -10389,7 +10408,7 @@
       "null"
     ],
     "path": "Story/Lynaria/CoreLynaria.cs",
-    "size": 5525,
+    "size": 8534,
     "fileName": "CoreLynaria.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lynaria/CoreLynaria.cs"
   },
@@ -13441,6 +13460,30 @@
     "size": 4448,
     "fileName": "KagesMerge[mem-non-ac].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/KagesMerge[mem-non-ac].cs"
+  },
+  {
+    "name": "Bocklin Treasury Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Bocklin Treasury Merge [2578] in /bocklinsanctum",
+    "tags": [
+      "bocklin",
+      "treasury",
+      "merge",
+      "bocklinsanctum",
+      "aldens",
+      "liberation",
+      "battle",
+      "morph",
+      "lynarias",
+      "hammer",
+      "castle",
+      "princess",
+      "brittanys",
+      "dress"
+    ],
+    "path": "Other/MergeShops/BocklinTreasuryMerge.cs",
+    "size": 8164,
+    "fileName": "BocklinTreasuryMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BocklinTreasuryMerge.cs"
   },
   {
     "name": "Haku War Merge",
@@ -18345,7 +18388,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelper[WIP].cs",
-    "size": 11187,
+    "size": 11342,
     "fileName": "MergeTemplateHelper[WIP].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelper[WIP].cs"
   },
