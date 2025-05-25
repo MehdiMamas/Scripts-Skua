@@ -25980,6 +25980,73 @@ case ""Example Item"":
 
     "
 },
+{
+    "Vindicator Archer's Hat",
+    @"
+case ""Vindicator Archer's Hat"":
+                    DFM.BuyAllMerge(req.Name);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Thronekeeper's Rune",
+    @"
+case ""Thronekeeper's Rune"":
+                    Core.FarmingLogger(""Thronekeeper's Rune"", quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(92791);
+                    // Members get x2, non-members get x1 drops
+                    Core.RegisterQuests(Core.IsMember ? 10266 : 10267);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
+                    {
+                        Core.HuntMonster(""bocklinsanctum"", ""Thronekeeper"", ""Black Armorial Fleur"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Champion Lynaria Armor",
+    @"
+case ""Champion Lynaria Armor"":
+                    BocklinGroveM.BuyAllMerge(""Champion Lynaria Armor"");
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Valen's Knightly Armor",
+    @"
+case ""Valen's Knightly Armor"":
+                    BocklinArmoryM.BuyAllMerge(""Valen's Knightly Armor"");
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "King Alteon's Armor Fragment",
+    @"
+case ""King Alteon's Armor Fragment"":
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(93763);
+                    Core.HuntMonster(""alteonfight"", ""King Alteon"", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Scion's Regalia",
+    @"
+case ""Scion's Regalia"":
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(93762);
+                    Core.HuntMonster(""bocklinsanctum"", ""Tarnished Scion"", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic)
