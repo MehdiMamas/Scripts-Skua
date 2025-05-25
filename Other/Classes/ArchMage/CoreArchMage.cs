@@ -318,7 +318,7 @@ public class CoreArchMage
     #endregion
 
     #region Materials
-    public void MysticScribingKit(int quant = 1)
+    public void MysticScribingKit(int quant = 99)
     {
         if (Core.CheckInventory(73327, quant))
         {
@@ -374,7 +374,7 @@ public class CoreArchMage
         }
     }
 
-    public void PrismaticEther(int quant = 1)
+    public void PrismaticEther(int quant = 99)
     {
         if (Core.CheckInventory(73333, quant))
         {
@@ -400,7 +400,7 @@ public class CoreArchMage
         }
     }
 
-    public void ArcaneLocus(int quant = 1)
+    public void ArcaneLocus(int quant = 99)
     {
         if (Core.CheckInventory(73339, quant))
         {
@@ -448,9 +448,9 @@ public class CoreArchMage
 
         Core.FarmingLogger("Unbound Tome", quant);
 
-        MysticScribingKit(Math.Max(0, quant - (Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Mystic Scribing Kit")?.Quantity ?? 0)));
-        PrismaticEther(Math.Max(0, quant - (Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Prismatic Ether")?.Quantity ?? 0)));
-        ArcaneLocus(Math.Max(0, quant - (Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Arcane Locus")?.Quantity ?? 0)));
+        MysticScribingKit(quant);
+        PrismaticEther(quant);
+        ArcaneLocus(quant);
 
         Core.AddDrop("Unbound Tome");
 
