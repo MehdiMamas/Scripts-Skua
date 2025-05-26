@@ -50,8 +50,6 @@ public class Butler2
     bool isGoto = false;
     bool initializationDone = false;
     int RoomNumber = 0;
-    int retryCount = 0;
-    int retryLimit = 5;
     public int b_hibernationTimer = 0;
     public bool b_shouldHibernate = true;
 
@@ -95,7 +93,7 @@ public class Butler2
         if (!int.TryParse(Bot.Config?.Get<string>("roomNumber"), out int roomNr))
         {
             Core.Logger("Please set a valid room number in the configuration.", "Invalid Room Number", messageBox: true);
-            Bot.Config.Configure(); // Opens the config UI for user input
+            Bot.Config?.Configure(); // Opens the config UI for user input
             Bot.Stop(false); // Stops the bot but allows cleanup
         }
         else
@@ -434,6 +432,11 @@ public class Butler2
 
     void Hibernate(string? playername, int roomNr, int hibernateTimer = 60)
     {
+        if (playername == null)
+        {
+            Core.Logger("You need to set a player name.");
+            return;
+        }
         ButlerTokenSource = new CancellationTokenSource();
         _cancellationToken = ButlerTokenSource.Token;
 
@@ -475,7 +478,7 @@ public class Butler2
             }
 
             // Try to locate the player
-            if (Army.tryGoto(playername, out PlayerInfo P, roomNr) && P != null)
+            if (Army.tryGoto(playername, out PlayerInfo? P, roomNr) && P != null)
             {
                 Core.Logger($"{playername} found!");
                 break;
@@ -603,7 +606,8 @@ public class Butler2
             string? warningMessage = data[2]?.ToString();
             LockedZone = true;
 
-            Core.Logger($"Warning: {warningMessage.Replace("player", $"Player: \"{playerToFollow}\"")}, proceeding with fallback handling.");
+            if (!string.IsNullOrEmpty(warningMessage))
+                Core.Logger($"Warning: {warningMessage.Replace("player", $"Player: \"{playerToFollow}\"")}, proceeding with fallback handling.");
             gotoTry++;
         }
 
