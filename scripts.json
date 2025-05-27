@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 164669,
+    "size": 165991,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -14506,7 +14506,7 @@
       "null"
     ],
     "path": "Other/MergeShops/ByrodaxMerge.cs",
-    "size": 4450,
+    "size": 3958,
     "fileName": "ByrodaxMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ByrodaxMerge.cs"
   },
@@ -23729,7 +23729,7 @@
       "armaments"
     ],
     "path": "Hollowborn/MergeShops/DawnFortressMerge.cs",
-    "size": 11405,
+    "size": 11062,
     "fileName": "DawnFortressMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/DawnFortressMerge.cs"
   },
