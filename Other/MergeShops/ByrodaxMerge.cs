@@ -28,7 +28,7 @@ public class ByrodaxMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Space Jetsam", "Space Flotsam"});
+        Core.BankingBlackList.AddRange(new[] { "Space Jetsam", "Space Flotsam" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -62,25 +62,15 @@ public class ByrodaxMerge
                 #endregion
 
                 case "Space Jetsam":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.KillMonster("byrodax", "r9", "Right", "Byro-Dax Monstrosity", "Space Jetsam", quant, log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
-                    Core.CancelRegisteredQuests();
+                    Core.KillMonster("byrodax", "r9", "Right", "Byro-Dax Monstrosity", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Space Flotsam":
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("byrodax", "Security Droid", "Space Flotsam", 150, log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
-                    Core.CancelRegisteredQuests();
+                    Core.HuntMonster("byrodax", "Security Droid", req.Name, isTemp: req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
             }
