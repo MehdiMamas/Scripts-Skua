@@ -87,22 +87,19 @@ public class DawnFortressMerge
                     break;
 
                 case "Vindicator Soldier's Hair":
-                    Core.FarmingLogger(req.Name, quant);
-                    Core.HuntMonster("neofortress", "Vindicator Soldier", req.Name, quant, false, false);
+                    Core.HuntMonster("neofortress", "Vindicator Soldier", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Vindicator Scout's Bow":
-                    Core.FarmingLogger(req.Name, quant);
-                    Core.HuntMonster("neofortress", "Vindicator Recruit", req.Name, quant, false, false);
+                    Core.HuntMonster("neofortress", "Vindicator Recruit", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Blessed Sigil of Vindication":
                 case "Hammer of Vindication":
                 case "Hammers of Vindication":
-                    Core.FarmingLogger(req.Name, quant);
-                    Core.HuntMonster("neofortress", "Vindicator General", req.Name, quant, false, false);
+                    Core.HuntMonster("neofortress", "Vindicator General", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -111,7 +108,7 @@ public class DawnFortressMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.EnsureAcceptmultiple( new[ ]{ 7553, 7555});
+                        Core.EnsureAcceptmultiple(new[] { 7553, 7555 });
                         Core.KillMonster("shadowrealm", "r2", "Left", "Gargrowl", "Darkseed", 8, log: false);
                         Core.KillMonster("shadowrealm", "r2", "Left", "Shadow Guardian", "Shadow Medallion", 5, log: false);
                         Core.EnsureComplete(7553);
@@ -121,22 +118,19 @@ public class DawnFortressMerge
                     break;
 
                 case "Bone Dust":
-                    Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Farm.BattleUnderB(req.Name, quant);
+                    Farm.BattleUnderB(req.Name, quant);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
 
                 case "Gilded Scout's Quiver":
-                    Core.HuntMonster("neofortress", "Vindicator Recruit", req.Name, isTemp: false);
+                    Core.HuntMonster("neofortress", "Vindicator Recruit", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Blessed Rune of Vindication":
                 case "Battlegear of Vindication":
-                    Core.HuntMonster("neofortress", "Vindicator General", req.Name, isTemp: false);
+                    Core.HuntMonster("neofortress", "Vindicator General", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
