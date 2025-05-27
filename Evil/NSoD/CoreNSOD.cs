@@ -61,8 +61,11 @@ public class CoreNSOD
 
         if (!Core.CheckInventory("Necrotic Sword of Doom"))
         {
-            Core.Logger("NSoD: Step #1/16: Barium (MineCrafting Daily)");
-            Barium();
+            if (!Core.CheckInventory("Necrotic Sword's Blade"))
+            {
+                Core.Logger("NSoD: Step #1/16: Barium (MineCrafting Daily)");
+                Barium();
+            }
 
             bool preFarmEnabled = Bot.Config?.Get<bool>("PreFarm") ?? false;
 
@@ -74,15 +77,15 @@ public class CoreNSOD
             else
                 Core.Logger("NSoD: PreFarm Steps skipped, continuing with the farm.");
 
-            Core.Logger("NSoD: Step #10/16: NSBlade.");
-            NSBlade();
-            Core.Logger("NSoD: Step #11/16: NSHilt.");
-            NSHilt();
-            Core.Logger("NSoD: Step #12/16: NSAura.");
+            Core.Logger("NSoD: Step #10/16: NSAura.");
             NSAura();
+            Core.Logger("NSoD: Step #11/16: NSBlade.");
+            NSBlade();
+            Core.Logger("NSoD: Step #12/16: NSHilt.");
+            NSHilt();
             Core.Logger("NSoD: Step #13/16: ULTRA Sepulchure for \"Doom Heart\"");
             Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false, publicRoom: true);
-            Core.Logger("NSoD: Step #14/16: Void Auras x800");
+            Core.Logger("NSoD: Step #14/16: Void Auras x800 to complete the merge");
             VoidAuras(800);
 
             Core.Logger("NSoD: Step #15/16: NSoD purchase");
@@ -260,6 +263,7 @@ public class CoreNSOD
         BariumOfDoom(1);
         VoidAuras(200);
         Core.BuyItem("shadowfall", 793, "Necrotic Sword's Blade");
+        Bot.Wait.ForPickup("Necrotic Sword's Blade");
     }
 
     public void NSHilt()
@@ -272,6 +276,7 @@ public class CoreNSOD
         BonesVoidRealm(1);
         VoidAuras(200);
         Core.BuyItem("shadowfall", 793, "Necrotic Sword's Hilt");
+        Bot.Wait.ForPickup("Necrotic Sword's Hilt");
     }
 
     public void NSAura()
@@ -284,6 +289,7 @@ public class CoreNSOD
         TimeLordNecro(1);
         VoidAuras(300);
         Core.BuyItem("shadowfall", 793, "Necrotic Sword's Aura");
+        Bot.Wait.ForPickup("Necrotic Sword's Aura");
     }
 
     public void EnergizedBlade()
@@ -296,6 +302,7 @@ public class CoreNSOD
         BariumOfDoom(1);
         VoidAuras(100);
         Core.BuyItem("shadowfall", 793, "Energized Blade");
+        Bot.Wait.ForPickup("Energized Blade");
     }
 
     public void EnergizedHilt()
@@ -308,6 +315,7 @@ public class CoreNSOD
         BonesVoidRealm(1);
         VoidAuras(100);
         Core.BuyItem("shadowfall", 793, "Energized Hilt");
+        Bot.Wait.ForPickup("Energized Hilt");
     }
 
     public void EnergizedAura()
@@ -320,6 +328,7 @@ public class CoreNSOD
         TimeLordNecro(1);
         VoidAuras(150);
         Core.BuyItem("shadowfall", 793, "Energized Aura");
+        Bot.Wait.ForPickup("Energized Aura");
     }
 
     public void FindBlade()
@@ -334,6 +343,7 @@ public class CoreNSOD
         BariumOfDoom(1);
         VoidAuras(10);
         Core.EnsureComplete(4433);
+        Bot.Wait.ForPickup("Unenhanced Doom Blade");
     }
 
     public void FindHilt()
@@ -350,6 +360,7 @@ public class CoreNSOD
         BonesVoidRealm(50);
         VoidAuras(10);
         Core.EnsureComplete(4434);
+        Bot.Wait.ForPickup("Unenhanced Hilt");
     }
 
     public void FindAura()
@@ -371,6 +382,7 @@ public class CoreNSOD
         TimeLordNecro(1);
         VoidAuras(10);
         Core.EnsureComplete(Core.CheckInventory(8012) ? 4435 : 4436);
+        Bot.Wait.ForPickup("Unenhanced Aura");
     }
 
     #endregion
@@ -385,6 +397,8 @@ public class CoreNSOD
         Core.CheckInventory("Barium", quant);
         VoidAuras(quant * 50);
         Core.BuyItem("shadowfall", 793, "Barium of Doom");
+        Bot.Wait.ForPickup("Barium of Doom");
+
     }
 
     private void Barium()
@@ -417,6 +431,7 @@ public class CoreNSOD
         Farm.BattleUnderB("Bone Dust", quant * 50);
         VoidAuras(quant * 50);
         Core.BuyItem("shadowfall", 793, "Bones from the Void Realm", quant);
+        Bot.Wait.ForPickup("Bones from the Void Realm");
     }
 
     public void TimeLordNecro(int quant)
@@ -428,6 +443,7 @@ public class CoreNSOD
         ScrollDarkArts(quant);
         VoidAuras(quant * 100);
         Core.BuyItem("shadowfall", 793, "Time Lord's Necronomicon", quant);
+        Bot.Wait.ForPickup("Time Lord's Necronomicon");
     }
 
     public void CavernCelestite(int quant)
@@ -442,6 +458,7 @@ public class CoreNSOD
 
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("bosschallenge", "Colossal Primarch", "Primarch's Hilt", quant, false, publicRoom: true);
+        Bot.Wait.ForPickup("Primarch's Hilt");
     }
 
     public void BladeEssence(int quant)
@@ -451,6 +468,7 @@ public class CoreNSOD
 
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("chaoscrypt", "Chaorrupted Armor", "Blade Essence", quant, false);
+        Bot.Wait.ForPickup("Blade Essence");
     }
 
     public void CHourglass(int quant)
@@ -461,6 +479,7 @@ public class CoreNSOD
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("mqlesson", "Dragonoid", "Dragonoid of Hours", isTemp: false, publicRoom: true);
         Core.HuntMonster("timespace", "Chaos Lord Iadoa", "Chaorrupted Hourglass", quant, false, publicRoom: true);
+        Bot.Wait.ForPickup("Chaorrupted Hourglass");
     }
 
     public void ScrollDarkArts(int quant)
@@ -470,26 +489,92 @@ public class CoreNSOD
 
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("epicvordred", "Ultra Vordred", "(Necro) Scroll of Dark Arts", quant, false, publicRoom: true);
+        Bot.Wait.ForPickup("(Necro) Scroll of Dark Arts");
     }
 
     private void PreFarmSteps()
     {
-        Core.Logger("NSoD: PreFarm Step #1/9: VoidAuras (Quantity: 7500)");
-        VoidAuras(7500);
+        if (Core.CheckInventory("Necrotic Sword of Doom"))
+            return;
+
+        int TotalVAs = 0; // Requirements will add VAs to this amount for a final calculation.
+
+        int MergeRequirement = 800; // Always needed to merge NSoD
+
+        int HiltVA = 2910;  // 250 (200 + 50 (bone from the void realm x1)) for >> (NS)
+                            // + 150 (100 + 50 (bone from the void realm x1))for >> (E) 
+                            // + 2510 (bone from the void realm x50 + 10 for quest) (UE)
+
+        int BladeVA = 460;  // 250 (NS) + 150 (E) + 10(quest) + 50(Barium of doom) for >> (UE)
+        int AuraVA = 760    // NS + E Aura
+                    + 2500  // Extra UE Hilt bones
+                    + 60    // Extra UE Blade
+                    + 10;   // Misc quest
+
+        Core.Logger("NSoD: PreFarm Step #1/9: Hilt, Blade, and Aura VA Calculation");
+
+        // HILT
+        Core.Logger("NSoD: PreFarm Step #1.1/9: NSOD Hilt VoidAura Calculation");
+        if (Core.CheckInventory("Unenhanced Hilt"))
+            HiltVA -= 2510;
+        else if (Core.CheckInventory("Energized Hilt"))
+            HiltVA -= 2760;
+        else if (Core.CheckInventory("Necrotic Sword's Hilt"))
+            HiltVA = 0;
+
+        TotalVAs += HiltVA;
+        Core.Logger($"Total added to count for Hilt: {HiltVA}");
+
+        // AURA
+        Core.Logger("NSoD: PreFarm Step #1.2/9: NSOD Aura VoidAura Calculation");
+        if (Core.CheckInventory("Unenhanced Aura"))
+            AuraVA -= 2670 + 250 + 400;
+        else if (Core.CheckInventory("Energized Aura"))
+            AuraVA -= 400;
+        else if (Core.CheckInventory("Necrotic Sword's Aura"))
+            AuraVA = 0;
+
+        TotalVAs += AuraVA;
+        Core.Logger($"Total added to count for Aura: {AuraVA}");
+
+        // BLADE
+        Core.Logger("NSoD: PreFarm Step #1.3/9: NSOD Blade VoidAura Calculation");
+        if (Core.CheckInventory("Unenhanced Blade"))
+            BladeVA -= 460;
+        else if (Core.CheckInventory("Energized Blade"))
+            BladeVA -= 250;
+        else if (Core.CheckInventory("Necrotic Sword's Blade"))
+            BladeVA = 0;
+
+        TotalVAs += BladeVA;
+        Core.Logger($"Total added to count for Blade: {BladeVA}");
+
+        TotalVAs += MergeRequirement;
+
+        Core.Logger($"NSoD: PreFarm Step #1.4/9: Total VoidAuras to farm for Hilt, Blade, Aura, and Merge (subtracting for what is already owned): {TotalVAs}");
+        VoidAuras(TotalVAs);
+
         Core.Logger("NSoD: PreFarm Step #2/9: CavernCelestite (Quantity: 1600)");
         CavernCelestite(1600);
+
         Core.Logger("NSoD: PreFarm Step #3/9: BattleUnderB - Bone Dust (Quantity: 5100)");
         Farm.BattleUnderB("Bone Dust", 5100);
+
         Core.Logger("NSoD: PreFarm Step #4/9: BattleUnderB - Undead Energy (Quantity: 10000)");
         Farm.BattleUnderB("Undead Energy", 10000);
+
         Core.Logger("NSoD: PreFarm Step #5/9: PrimarchHilt (Quantity: 2)");
         PrimarchHilt(2);
+
         Core.Logger("NSoD: PreFarm Step #6/9: BladeEssence (Quantity: 2)");
         BladeEssence(2);
+
         Core.Logger("NSoD: PreFarm Step #7/9: CHourglass (Quantity: 31)");
         CHourglass(31);
+
         Core.Logger("NSoD: PreFarm Step #8/9: ScrollDarkArts (Quantity: 4)");
         ScrollDarkArts(4);
+
         Core.Logger("NSoD: PreFarm Step #9/9: ULTRA Sepulchure");
         Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false, publicRoom: true);
     }
