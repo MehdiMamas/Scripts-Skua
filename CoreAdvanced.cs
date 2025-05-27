@@ -116,6 +116,7 @@ public class CoreAdvanced
 
     private void _BuyItem(string map, int shopID, ShopItem item, int quant = 1, int shopquant = 1, int shopItemID = 1, int index = 0, bool Log = true)
     {
+
         int shopQuant = item.Quantity; // Quantity per purchase from the shop
         string shopName = Bot.Shops.Name; // Store the currently loaded shop name
         if (item.Requirements != null)
@@ -186,6 +187,7 @@ public class CoreAdvanced
                     {
                         Core.DebugLogger(this, $"shopItem {shopItem} bundlesToBuy, {totalBundlesNeeded}");
                         BuyItem(map, shopID, req.ID, totalBundlesNeeded, shopItemID, Log: Log);
+                        Bot.Wait.ForPickup(req.ID);
                     }
                     // Else return and hope it hits the `findingredients` area. when the req.name isnt in the shop.
                     else
@@ -776,7 +778,7 @@ public class CoreAdvanced
                     (itemBlackList != null && itemBlackList.Any(x => x.ToLower() == item.Name.ToLower())))
                 continue;
 
-            if (Core.IsMember || !item.Upgrade)
+            if (Core.IsMember || !item.Upgrade || item.Requirements.Any(x => x != null && Bot.Shops.Items.Any(x => x != null && x.Upgrade && !Core.IsMember)))
             {
                 if (mode == 3)
                 {
@@ -797,6 +799,7 @@ public class CoreAdvanced
 
         if (items.Count == 0)
         {
+            Core.Logger($"Found {items.Count} items to purchase from shop [{shopID}] on map [{map}].");
             HandleNoItemsFound(mode, memSkipped);
             return;
         }
@@ -804,13 +807,21 @@ public class CoreAdvanced
 
         int t = 1;
 
-        // Process each item for purchase
+        // Process each item for purchase (with 1 retry)
         for (int i = 0; i < 2; i++)
         {
             foreach (ShopItem item in items)
             {
                 if (Core.CheckInventory(item.ID, toInv: false))
+                    continue;
+
+                if (item.Upgrade && !Core.IsMember)
                 {
+                    Core.Logger($"Skipping {item.Name} [{item.ID}] as it is member-only.");
+                    if (items.Count <= 1)
+                    {
+                        return;
+                    }
                     continue;
                 }
 
@@ -818,15 +829,15 @@ public class CoreAdvanced
                 {
                     Core.Logger($"Farming to buy {item.Name} (#{t}/{items.Count})");
                 }
-            Retry:
-                foreach (ItemBase Req in item.Requirements)
+
+                int Regrab = 0;
+            ReGrabMissingRequirements:
+                foreach (ItemBase req in item.Requirements)
                 {
-                    while (!Bot.ShouldExit && !Core.CheckInventory(Req.ID, Req.Quantity))
-                    {
-                        EnsureShopLoaded(map, shopID);
-                        HandleItemRequirements(Req, Req.Quantity, findIngredients);
-                    }
+                    EnsureShopLoaded(map, shopID);
+                    HandleItemRequirements(req, req.Quantity, findIngredients);
                 }
+
 
                 if (item.Requirements.All(x => x != null && Core.CheckInventory(x.ID, x.Quantity)))
                 {
@@ -836,13 +847,29 @@ public class CoreAdvanced
                     // Attempt to purchase the required quantity of the shop item
                     BuyItem(map, shopID, item.ID, shopItemID: item.ShopItemID, Log: Log);
                     Bot.Wait.ForPickup(item.ID);
+                    if (Core.CheckInventory(item.ID, item.Quantity))
+                        Regrab = 0;
+                    else goto ReGrabMissingRequirements;
+                }
+                else
+                {
+                    if (Regrab > 5)
+                    {
+                        Core.Logger($"Failed to meet requirements for {item.Name} [{item.ID}] after multiple attempts. Skipping this item.");
+                        continue;
+                    }
+                    Regrab++;
+                    goto ReGrabMissingRequirements; // For things like Gold Vouchers/DragonStones we may have used?
                 }
 
-                // Retry if the purchase was unsuccessful
                 if (!Core.CheckInventory(item.ID, toInv: false))
                 {
-                    Core.Logger($"{item.Name} [{item.ID}] Failed to buy from shop [{shopID}].. hmm let's retry this whole thing (WE GO AGAIN)");
-                    goto Retry;
+                    IEnumerable<string> missing = item.Requirements
+                        .Where(x => !Core.CheckInventory(x.ID, x.Quantity))
+                        .Select(x => $"\"{x.Name} x{x.Quantity}\"");
+
+                    Core.Logger($"Failed to meet requirements for {item.Name} [{item.ID}] due to missing: {string.Join(", ", missing)}.");
+                    return;
                 }
             }
         }
@@ -872,15 +899,13 @@ public class CoreAdvanced
         void HandleItemRequirements(ItemBase Req, int ReqQuant, Action findIngredients)
         {
             if (Core.CheckInventory(Req.ID, ReqQuant))
-            {
-                Core.Logger($"You already have {Req.Name} [{Req.ID}] x{ReqQuant}.");
                 return;
-            }
-
+            Core.DebugLogger(this);
             EnsureShopLoaded(map, shopID);
             ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == Req.ID);
             if (wasinshop != null)
             {
+                Core.DebugLogger(this);
                 Core.Logger($"Attempting to get {Req.Name} [{Req.ID}] x{ReqQuant} from shop [{shopID}].");
                 while (!Bot.ShouldExit && !Core.CheckInventory(Req.ID, ReqQuant))
                 {
@@ -898,6 +923,7 @@ public class CoreAdvanced
             }
             else if (wasinshop == null)
             {
+                Core.DebugLogger(this);
                 // Items not in the shop, so we have to get it externally
                 externalItem = Req;
                 externalQuant = Req.Quantity;
@@ -919,6 +945,7 @@ public class CoreAdvanced
                 findIngredients();
                 Bot.Wait.ForPickup(externalItem.ID);
             }
+            Bot.Wait.ForPickup(Req.ID);
         }
 
         void IngredientWasintheShop(ShopItem item, int craftingQ)
@@ -934,7 +961,6 @@ public class CoreAdvanced
             if (Core.CheckInventory(item.ID, item.Quantity))
                 return;
 
-            Retry:
             // Ensure shop is loaded before proceeding
             EnsureShopLoaded(map, shopID);
             foreach (ItemBase req in item.Requirements)
@@ -952,7 +978,11 @@ public class CoreAdvanced
                     ReqQuant = Math.Min(ReqQuant, wasinshop.MaxStack);
                     // for requirements that are in the shop, but are just buyable with gold. (excludes ac buyable items)
                     if (wasinshop.Requirements.Count <= 0 && wasinshop.Cost <= 0)
+                    {
                         BuyItem(map, shopID, wasinshop.ID, ReqQuant, shopItemID: wasinshop.ShopItemID, Log: Log);
+                        Bot.Wait.ForPickup(wasinshop.ID);
+                    }
+
                     else IngredientWasintheShop(wasinshop, ReqQuant);
                     continue;
                 }
@@ -987,13 +1017,11 @@ public class CoreAdvanced
 
                 // Attempt to purchase the Requirement of Main / Sub-Main item
                 BuyItem(map, shopID, item.ID, craftingQ, shopItemID: item.ShopItemID, Log: Log);
+                Bot.Wait.ForPickup(item.ID);
             }
             else
-            {
-                // If the purchase was unsuccessful, retry the process
-                Core.Logger($"Failed to meet requirements for {item.Name} [{item.ID}], Retrying the farm (items may have been used).");
-                goto Retry;
-            }
+                // If the purchase was unsuccessful, log the failure
+                Core.Logger($"Failed to meet requirements for {item.Name} [{item.ID}].");
         }
 
         void HandleNoItemsFound(int mode, bool memSkipped)

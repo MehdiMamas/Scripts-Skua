@@ -69,7 +69,7 @@ public class ByrodaxMerge
 
                 case "Space Flotsam":
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("byrodax", "Security Droid", req.Name, isTemp: req.Temp);
+                    Core.HuntMonster("byrodax", "Security Droid", req.Name, req.Quantity, isTemp: req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
