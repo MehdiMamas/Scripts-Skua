@@ -66,11 +66,13 @@ public class CoreNSOD
 
             bool preFarmEnabled = Bot.Config?.Get<bool>("PreFarm") ?? false;
 
-            if (preFarmEnabled)
+            if (preFarmEnabled && !Core.CheckInventory(new[] { "Necrotic Sword's Blade", "Necrotic Sword's Hilt", "Necrotic Sword's Aura" }, any: true))
             {
                 Core.Logger("NSoD: PreFarm Steps:");
                 PreFarmSteps();
             }
+            else
+                Core.Logger("NSoD: PreFarm Steps skipped, continuing with the farm.");
 
             Core.Logger("NSoD: Step #10/16: NSBlade.");
             NSBlade();
@@ -79,12 +81,13 @@ public class CoreNSOD
             Core.Logger("NSoD: Step #12/16: NSAura.");
             NSAura();
             Core.Logger("NSoD: Step #13/16: ULTRA Sepulchure for \"Doom Heart\"");
-            Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false, publicRoom: true, log: false);
+            Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false, publicRoom: true);
             Core.Logger("NSoD: Step #14/16: Void Auras x800");
             VoidAuras(800);
 
             Core.Logger("NSoD: Step #15/16: NSoD purchase");
             Core.BuyItem("shadowfall", 793, "Necrotic Sword of Doom");
+            Bot.Wait.ForPickup("Necrotic Sword of Doom");
             Core.Logger("NSoD: Step #16/16: NSoD Enhancement");
         }
 
@@ -92,9 +95,8 @@ public class CoreNSOD
         {
             Core.Logger("Getting the NSOD character page badge");
             Core.EnsureAccept(7652);
-            Core.HuntMonster("graveyard", "Skeletal Warrior", "Arcane Parchment", log: false);
+            Core.HuntMonster("graveyard", "Skeletal Warrior", "Arcane Parchment");
             Core.EnsureComplete(7652);
-            Core.Relogin();
         }
 
         if (!Core.CheckInventory(14474) && !Core.IsMember)
@@ -117,7 +119,7 @@ public class CoreNSOD
         {
             Core.Logger("NBOD: Step #3: Kill Flibbitiestgibbet for \"Void Essentia\"");
             Core.Logger("Flibbitiestgibbet is a very tough monster, I hope you brought your army/butler/friends!");
-            Core.KillMonster("voidflibbi", "Enter", "Spawn", "Flibbitiestgibbet", "Void Essentia", isTemp: false, log: false);
+            Core.KillMonster("voidflibbi", "Enter", "Spawn", "Flibbitiestgibbet", "Void Essentia", isTemp: false);
         }
 
         Core.Logger("NBOD: Step #4: Buy NBoD");
@@ -181,9 +183,9 @@ public class CoreNSOD
         Core.RegisterQuests(4438);
         while (!Core.CheckInventory("Void Aura", quant))
         {
-            Core.KillMonster("reddeath", "r2", "Left", "*", "Mirror Essence", 175, false, log: false);
-            Core.KillMonster("neverworldb", "r2", "Left", "*", "Twisted Essence", 25, false, log: false);
-            Core.HuntMonster("doomwar", "Zombie King Alteon", "Transposed Essence", 1, false, log: false);
+            Core.KillMonster("reddeath", "r2", "Left", "*", "Mirror Essence", 175, false);
+            Core.KillMonster("neverworldb", "r2", "Left", "*", "Twisted Essence", 25, false);
+            Core.HuntMonster("doomwar", "Zombie King Alteon", "Transposed Essence", 1, false);
 
             Bot.Wait.ForPickup("Void Aura");
             Core.Logger($"Void Auras: ({Bot.Inventory.GetQuantity("Void Aura")}/{quant})");
@@ -216,7 +218,7 @@ public class CoreNSOD
             Core.EnsureAccept(4432);
 
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster("timespace", "Astral Ephemerite", "Astral Ephemerite Essence", Essencequant, false, log: false);
+            Core.HuntMonster("timespace", "Astral Ephemerite", "Astral Ephemerite Essence", Essencequant, false);
 
             HuntMonsterBatch(Essencequant, false, false, true,
                    ("necrocavern", 5, "Chaos Vordred Essence"),
@@ -439,7 +441,7 @@ public class CoreNSOD
             return;
 
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("bosschallenge", "Colossal Primarch", "Primarch's Hilt", quant, false, publicRoom: true, log: false);
+        Core.HuntMonster("bosschallenge", "Colossal Primarch", "Primarch's Hilt", quant, false, publicRoom: true);
     }
 
     public void BladeEssence(int quant)
@@ -448,7 +450,7 @@ public class CoreNSOD
             return;
 
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("chaoscrypt", "Chaorrupted Armor", "Blade Essence", quant, false, log: false);
+        Core.HuntMonster("chaoscrypt", "Chaorrupted Armor", "Blade Essence", quant, false);
     }
 
     public void CHourglass(int quant)
@@ -457,8 +459,8 @@ public class CoreNSOD
             return;
 
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("mqlesson", "Dragonoid", "Dragonoid of Hours", isTemp: false, publicRoom: true, log: false);
-        Core.HuntMonster("timespace", "Chaos Lord Iadoa", "Chaorrupted Hourglass", quant, false, publicRoom: true, log: false);
+        Core.HuntMonster("mqlesson", "Dragonoid", "Dragonoid of Hours", isTemp: false, publicRoom: true);
+        Core.HuntMonster("timespace", "Chaos Lord Iadoa", "Chaorrupted Hourglass", quant, false, publicRoom: true);
     }
 
     public void ScrollDarkArts(int quant)
@@ -467,7 +469,7 @@ public class CoreNSOD
             return;
 
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("epicvordred", "Ultra Vordred", "(Necro) Scroll of Dark Arts", quant, false, publicRoom: true, log: false);
+        Core.HuntMonster("epicvordred", "Ultra Vordred", "(Necro) Scroll of Dark Arts", quant, false, publicRoom: true);
     }
 
     private void PreFarmSteps()
@@ -489,7 +491,7 @@ public class CoreNSOD
         Core.Logger("NSoD: PreFarm Step #8/9: ScrollDarkArts (Quantity: 4)");
         ScrollDarkArts(4);
         Core.Logger("NSoD: PreFarm Step #9/9: ULTRA Sepulchure");
-        Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false, publicRoom: true, log: false);
+        Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false, publicRoom: true);
     }
 
 
