@@ -6530,7 +6530,7 @@ public class CoreBots
         // Jump to a viable cell (or retry)
         IEnumerable<string> viableCells = Bot.Map.Cells?.Except(BlackListedJumptoCells.Concat(blackListedCells)) ?? Enumerable.Empty<string>();
         (string, string) cellPad = viableCells.Any()
-            ? (viableCells.First(), "Left")
+            ? (viableCells.First(), Bot.Map.Name == "battleon" ? "Spawn" : "Left")
             : (Bot.Player.Cell, Bot.Player.Pad);
         PerformJump(cellPad, viableCells.Any() ? 1 : 2);
     }
