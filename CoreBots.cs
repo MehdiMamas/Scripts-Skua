@@ -186,26 +186,80 @@ public class CoreBots
         #region Required things that must be done before starting the Script
         if (changeTo)
         {
+            //Start scripts Safely by starting them in the house ( or whitemap if house desnt exist) if the start map is battleon 
+            if (new[] { "battleon", "oaklore", "bludrutbrawl" }.Any(m => Bot.Map.Name.Equals(m, StringComparison.OrdinalIgnoreCase)))
+            {
+                if (Bot.House.Items.Any(h => h.Equipped))
+                {
+                    string? toSend = null;
+                    Bot.Events.ExtensionPacketReceived += modifyPacket;
+                    Bot.Send.Packet($"%xt%zm%house%1%{Username()}%");
+                    Bot.Wait.ForMapLoad("house");
+                    Task.Run(() =>
+                    {
+                        Bot.Wait.ForMapLoad("house");
+                        if (Bot.Wait.ForTrue(() => toSend != null, 20))
+                            Bot.Send.ClientPacket(toSend!, "json");
+                        Bot.Events.ExtensionPacketReceived -= modifyPacket;
+                        for (int i = 0; i < 7; i++)
+                            Bot.Send.ClientServer(" ", "");
+                    });
+
+                    void modifyPacket(dynamic packet)
+                    {
+                        string type = packet["params"].type;
+                        dynamic data = packet["params"].dataObj;
+                        if ((type is not null and "json") && (data.houseData is not null))
+                        {
+                            toSend = $"{{\"t\":\"xt\",\"b\":{{\"r\":-1,\"o\":{{\"cmd\":\"moveToArea\",\"areaName\":\"house\",\"uoBranch\":{JsonConvert.SerializeObject(data.uoBranch)},\"strMapFileName\":\"{data.strMapFileName}\",\"intType\":\"1\",\"monBranch\":[],\"houseData\":{Regex.Replace(JsonConvert.SerializeObject(data.houseData), Username(), "Skua user", RegexOptions.IgnoreCase)},\"sExtra\":\"\",\"areaId\":{data.areaId},\"strMapName\":\"house\"}}}}}}";
+                            Bot.Events.ExtensionPacketReceived -= modifyPacket;
+                        }
+                    }
+                }
+                else Bot.Send.Packet($"%xt%zm%cmd%1%tfer%{Username()}%whitemap-{PrivateRoomNumber}%");
+            }
+
             // Open Bank on startup ensuring current window is `Bank`, then load the bank information.
             if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
                 Bot.Bank.Open();
             Bot.Bank.Load();
             Bot.Bank.Loaded = true;
 
-            // Oaklore is Broke as fffff. So we'll move you somewhere else to start the script.
-            if (Bot.Map.Name != null && Bot.Map.Name == "oaklore")
-            {
-                Bot.Wait.ForMapLoad("oaklore");
-                Logger("We started in oaklore... starting scripts here can cause \"issues\"... we're not sure why this happens... but hopefully this fixes that.\n \tTeleporting to \"battleon\"\n\n");
-                Join("battleon-100000");
-            }
-            if (Bot.Map.Name != null && Bot.Map.Name == "bludrutbrawl")
-            {
-                Bot.Wait.ForMapLoad("bludrutbrawl");
-                Logger("We started in bludrutbrawl... starting scripts here can cause \"issues\"... we're not sure why this happens... but hopefully this fixes that.\n \tTeleporting to \"battleon\"\n\n");
-                Join("battleon-100000");
-            }
+            #region Social Privacy Options
+            bool warned = false;
 
+            Dictionary<string, string> socialOptionsToDisable = new()
+                {
+                    { "bGoto", "Goto" },
+                    { "bParty", "Party invites" },
+                    { "bFriend", "Friend invites" },
+                    { "bDuel", "Duel invites" },
+                    { "bGuild", "Guild invites" },
+                    { "bWhisper", "Whisper" },
+                    { "bProf", "Censor Profanity" }
+                };
+
+            foreach (KeyValuePair<string, string> entry in socialOptionsToDisable)
+            {
+                string key = entry.Key;
+                string label = entry.Value;
+
+                bool value = Bot.Flash.GetGameObject<bool>($"uoPref.{key}");
+                if (value)
+                {
+                    if (!warned)
+                    {
+                        Logger("Turning certain \"Social\" options off to help protect you");
+                        warned = true;
+                    }
+
+                    Logger($"Turning off: {label}");
+                    SendPackets($"%xt%zm%cmd%1%uopref%{key}%false%");
+                    Bot.Sleep(500);
+                }
+            }
+            GC.Collect();
+            #endregion Social Privacy Options         
         }
 
 
@@ -341,8 +395,8 @@ public class CoreBots
                     }
 
                     // Identity Protection
-                    // Bot.Options.CustomName = "SKUA BOT";
-                    // Bot.Options.CustomGuild = "HTTPS://AUQW.TK/";
+                    // Bot.Options.CustomName = "SkuaLabRat";
+                    // Bot.Options.CustomGuild = "Skua-side Squad";
 
                     // Holiday Handlers
                     AprilFools();
