@@ -6,6 +6,8 @@ tags: merge, shop, generator, helper, developer
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/Tools/ForDevelopers/CaseStorage.cs
+
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 using Skua.Core.Models;
@@ -21,89 +23,60 @@ public class MergeTemplateHelper
     public CoreBots Core => CoreBots.Instance;
     public CoreAdvanced Adv = new();
     public static CoreAdvanced sAdv = new();
-
     public string OptionsStorage = "MergeTemplateHelper";
+
     public List<IOption> Options = new()
     {
-        new Option<string>("", "Dev-Only", "This bot is to help us make merge bots, the average user wont find any use in this bot", ""),
+        new Option<string>("", "Dev-Only", "This bot is to help us make merge bots, the average user won't find any use in this bot", ""),
         new Option<string>("", " ", "", ""),
         new Option<string>("mapName", "Map", "Map of the Merge Shop, please capitalize it properly", ""),
         new Option<int>("shopID", "Shop ID", "ID of the Merge Shop", 0),
         new Option<bool>("genFile", "Generate File", "Generate a MergeTemplate based bot, output will be in \\Scripts\\WIP\\", true)
     };
 
-    public void ScriptMain(IScriptInterface bot)
+    // Blacklist tags to filter out common irrelevant words from item names
+    private readonly string[] tagsBlacklist =
     {
-        Helper();
-    }
-
-    // no caps
-    private string[] tagsBlacklist =
-    {
-        // Words
-        "the",
-        "and",
-        "of",
-        "or",
-        "dual",
-        "&amp;",
-        "&",
-
-        // helms
-        "hair",
-        "helm",
-        "hat",
-        "locks",
-        "visage",
-        "helmet",
-        "spike",
-        "spikes",
-        "hood",
-        "hooded",
-        "mask",
-
-        // other gear
-        "armor",
-        "cape",
-        "rune",
-        "aura",
-
-        // weapon types
-        // no need to add the multiplied variant of a word if its just an additional s
-        "staff",
-        "staves",
-        "dagger",
-        "sword",
-        "gauntlet",
-        "gun",
-        "revolver",
-        "blade",
-        "wand",
-        "polearm",
-        "axe",
-        
-
-        // misc
+        "the", "and", "of", "or", "dual", "&amp;", "&",
+        "hair", "helm", "hat", "locks", "visage", "helmet", "spike", "spikes", "hood", "hooded", "mask",
+        "armor", "cape", "rune", "aura",
+        "staff", "staves", "dagger", "sword", "gauntlet", "gun", "revolver", "blade", "wand", "polearm", "axe",
         "gate"
     };
 
+    private readonly string caseStoragePath = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Tools", "ForDevelopers", "CaseStorage.cs");
+
+    // Static stored cases dictionary loaded once
+    public static Dictionary<string, string> StoredCases { get; private set; } = CaseStorage.Cases.ToDictionary(x => x.Key, x => string.Join("\n", x.Value));
+
+    // Mutable local copy if needed
+    private Dictionary<string, string> storedCases = StoredCases;
+
+    public void ScriptMain(IScriptInterface bot) => Helper();
+
+    /// <summary>
+    /// Main helper to generate merge template script based on shop data.
+    /// </summary>
     public void Helper()
     {
-        string? map = Bot.Config!.Get<string>("mapName")?.ToLower();
-        int shopID = Bot.Config.Get<int>("shopID");
-        bool genFile = Bot.Config!.Get<bool>("genFile");
+        string map = Bot.Config?.Get<string>("mapName")?.ToLower() ?? string.Empty;
+        int shopID = Bot.Config?.Get<int>("shopID") ?? 0;
+        bool genFile = Bot.Config?.Get<bool>("genFile") ?? false;
 
-        if (shopID == 0 || string.IsNullOrEmpty(map) || string.IsNullOrWhiteSpace(map))
+        if (shopID == 0 || string.IsNullOrWhiteSpace(map))
         {
-            Core.Logger("Please fill in the starting form");
+            Core.Logger("Please fill in the starting form: valid Map and ShopID are required.");
             return;
         }
 
-        List<ShopItem> shopItems = Core.GetShopItems(map, shopID);
+        LoadStoredCases();
 
-        shopItems = shopItems.GroupBy(item => item.ID)
-                             .Select(group => group.First())
-                             .ToList();
+        // Get unique shop items by ID
+        List<ShopItem> shopItems = Core.GetShopItems(map, shopID)
+            .GroupBy(item => item.ID)
+            .Select(g => g.First())
+            .ToList();
+
 
         string output = string.Empty;
         HashSet<string> processedRequirements = new();
@@ -113,10 +86,10 @@ public class MergeTemplateHelper
         string[] multipliedTagsBlacklist = tagsBlacklist.Select(x => x + 's').ToArray();
 
         string scriptInfo =
-            "/*\n" +
-            $"name: {scriptName}\n" +
-            $"description: This bot will farm the items belonging to the selected mode for the {scriptName} [{shopID}] in /{map}\n" +
-            $"tags: ";
+           "/*\n" +
+           $"name: {scriptName}\n" +
+           $"description: This bot will farm the items belonging to the selected mode for the {scriptName} [{shopID}] in /{map}\n" +
+           $"tags: ";
         List<string> tags = scriptName.ToLower().Split(' ').ToList();
         tags.Add(map);
 
@@ -128,51 +101,77 @@ public class MergeTemplateHelper
             shopItemNames.Add("    {");
         }
 
+        List<string> globalFallbackCases = new();
+        List<string> globalKnownCases = new();
+
         foreach (ShopItem item in shopItems)
         {
-            //if "Gold Voucher xxxx" becomes an issue remove it from this line.
             if (item.Requirements == null || item.Name.StartsWith("Gold Voucher"))
                 continue;
 
             shopItemNames.Add($"        new Option<bool>(\"{item.ID}\", \"{item.Name}\", \"Mode: [select] only\\nShould the bot buy \\\"{item.Name}\\\" ?\", false),");
-            tags.AddRange(item.Name.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => new string(x.Where(char.IsLetter).ToArray())).Except(tags).Except(tagsBlacklist).Except(multipliedTagsBlacklist));
+
+            tags.AddRange(item.Name.ToLower()
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => new string(x.Where(char.IsLetter).ToArray()))
+                .Except(tags)
+                .Except(tagsBlacklist)
+                .Except(multipliedTagsBlacklist));
 
             foreach (ItemBase req in item.Requirements)
             {
-                // Check if the requirement has already been processed
-                if (!shopItems.Any(_item => _item.ID == req.ID) && !processedRequirements.Contains(req.Name))
-                {
-                    if (!genFile)
-                    {
-                        output += $"\t- {req.Name}\n";
+                if (processedRequirements.Contains(req.Name) || shopItems.Exists(_item => _item.ID == req.ID))
+                    continue;
 
-                        Bot.Log($"case \"{req.Name}\":");
-                        Bot.Log("    //dostuff");
-                        Bot.Log("    break;");
-                        Bot.Log("");
-                    }
-                    else
-                    {
-                        output += $"\n                case \"{req.Name}\":\n";
-                        output += "                    Core.FarmingLogger(req.Name, quant);\n";
-                        output += "                    Core.EquipClass(ClassType.Farm);\n";
-                        output += "                    Core.AddDrop(req.ID);\n";
-                        output += "                    Core.RegisterQuests(0000);\n";
-                        output += "                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))\n";
-                        output += "                    {\n";
-                        output += "                        Core.HuntMonster(\"map\", \"MonsterName\", \"QuestItem\", \"quant\", isTemp: false);\n";
-                        output += "                        Core.Logger(\"This item is not setup yet\");\n";
-                        output += "                        Bot.Wait.ForPickup(req.Name);\n";
-                        output += "                    }\n";
-                        output += "                    Core.CancelRegisteredQuests();\n";
-                        output += "                    break;\n";
-                        itemsToLearn.Add(req.Name);
-                    }
-                    // Add the requirement name to the processed set
-                    processedRequirements.Add(req.Name);
+                processedRequirements.Add(req.Name);
+                itemsToLearn.Add(req.Name);
+
+                if (storedCases.TryGetValue(req.Name, out string? caseCode))
+                    globalKnownCases.Add(caseCode.TrimEnd());
+                else
+                {
+                    globalFallbackCases.Add($@"
+                case ""{req.Name}"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {{
+                        Core.Logger(""{req.Name}"" requires membership to farm, skipping."");
+                        return;
+                    }}
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(0000); // TODO: Replace with actual quest ID
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {{
+                        Core.HuntMonster(""map"", ""MonsterName"", ""item"", 1, isTemp: false);
+                        Bot.Wait.ForPickup(req.Name);
+                    }}
+                    Core.CancelRegisteredQuests();
+                    break;
+            ");
+
                 }
+
             }
         }
+
+        // Output fallback region first
+        if (globalFallbackCases.Count > 0)
+        {
+            output += "\n#region Items not setup\n";
+            output += string.Join('\n', globalFallbackCases);
+            output += "#endregion\n";
+        }
+
+        // Output known cases region next
+        if (globalKnownCases.Count > 0)
+        {
+            output += "\n#region Known items\n";
+            output += string.Join('\n', globalKnownCases);
+            output += "\n#endregion\n";
+        }
+        shopItemNames.Add("   };");
 
         if (!genFile)
         {
@@ -212,7 +211,6 @@ public class MergeTemplateHelper
         }
         MergeTemplate[startIndex] = $"        Adv.StartBuyAllMerge(\"{map.ToLower()}\", {shopID}, findIngredients, buyOnlyThis, buyMode: buyMode);";
 
-        shopItemNames.Add("    };");
 
         scriptInfo += tags.Join(", ") + "\n*/";
 
@@ -224,11 +222,68 @@ public class MergeTemplateHelper
                             .Concat(new[] { "}" })
                             .ToArray();
 
+
         string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP", className + ".cs");
         Directory.CreateDirectory(Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP"));
         Core.WriteFile(path, content);
         if (Bot.ShowMessageBox($"File has been generated. Path is {path}\n\nPress OK to open the file",
                                                 "File Generated", "OK").Text == "OK")
             Process.Start("explorer", path);
+    }
+
+    /// <summary>
+    /// Loads stored cases from the specified file path.
+    /// </summary>
+    private void LoadStoredCases()
+    {
+        if (!File.Exists(caseStoragePath))
+        {
+            Core.Logger($"Case storage file not found at {caseStoragePath}.");
+            StoredCases = new Dictionary<string, string>();
+            return;
+        }
+
+        try
+        {
+            string[] lines = File.ReadAllLines(caseStoragePath);
+            string? currentItem = null;
+            List<string> currentCaseLines = new();
+
+            foreach (string line in lines)
+            {
+                if (line.TrimStart().StartsWith("case \""))
+                {
+                    if (currentItem != null && currentCaseLines.Count > 0)
+                        StoredCases[currentItem] = string.Join("\n", currentCaseLines);
+
+                    currentCaseLines.Clear();
+
+                    int start = line.IndexOf('"') + 1;
+                    int end = line.IndexOf('"', start);
+                    currentItem = line[start..end];
+                    currentCaseLines.Add(line);
+                }
+                else if (currentItem != null)
+                {
+                    currentCaseLines.Add(line);
+                    if (line.Trim() == "break;")
+                    {
+                        StoredCases[currentItem] = string.Join("\n", currentCaseLines);
+                        currentItem = null;
+                        currentCaseLines.Clear();
+                    }
+                }
+            }
+
+            if (currentItem != null && currentCaseLines.Count > 0)
+                StoredCases[currentItem] = string.Join("\n", currentCaseLines);
+
+            Core.Logger($"Loaded {StoredCases.Count} stored cases from CaseStorage.");
+        }
+        catch (System.Exception ex)
+        {
+            Core.Logger($"Failed to load stored cases: {ex.Message}");
+            StoredCases = new Dictionary<string, string>();
+        }
     }
 }
