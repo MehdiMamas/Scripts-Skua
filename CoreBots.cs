@@ -110,6 +110,9 @@ public class CoreBots
 
     private const string DiscordLink = "https://discord.gg/CKKbk2zr3p";
 
+
+    private Stopwatch? _scriptStopwatch;
+
     #endregion
 
     #region Start/Stop
@@ -127,6 +130,8 @@ public class CoreBots
             Bot.Events.ScriptStopping += CrashDetector;
             SkuaVersionChecker("1.2.4.0");
 
+            // Start the stopwatch for timing the script run
+            _scriptStopwatch = Stopwatch.StartNew();
             DeleteCompiledScript();
 
             loadedBot = Bot.Manager.LoadedScript.Replace("\\", "/").Split("/Scripts/").Last().Replace(".cs", "");
@@ -406,7 +411,12 @@ public class CoreBots
                 });
             }
         }
-
+        if (!changeTo && _scriptStopwatch != null)
+        {
+            _scriptStopwatch.Stop();
+            Logger($"Script ran for {_scriptStopwatch.Elapsed:hh\\:mm\\:ss}");
+            _scriptStopwatch = null;
+        }
     }
 
     // Whether the player is a Member (set to true if necessary during setOptions)
