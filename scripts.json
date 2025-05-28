@@ -12867,6 +12867,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Badges/StoryARC.cs"
   },
   {
+    "name": "Void Tablet Treasure Hunt",
+    "description": "This script will complete the Void Tablet Treasure Hunt, which rewards Void Medulla Makila.",
+    "tags": [
+      "void tablet",
+      "treasure hunt",
+      "museum",
+      "valencia",
+      "void gem",
+      "void-walking",
+      "void-walking potion",
+      "void",
+      "void shop",
+      "void medulla makilla"
+    ],
+    "path": "Other/TreasureHunts/VoidTablet.cs",
+    "size": 2162,
+    "fileName": "VoidTablet.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/TreasureHunts/VoidTablet.cs"
+  },
+  {
     "name": "Dark Scroll Treasure Hunt",
     "description": "such a treasure hunt condensed to (by lucK) 2 minutes of your time...",
     "tags": [
