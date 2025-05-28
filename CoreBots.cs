@@ -257,7 +257,7 @@ public class CoreBots
                         Logger("Turning certain \"Social\" options off to help protect you");
                         warned = true;
                     }
-                    if (label == "bGoto" && loadedBot.ToLower().Contains("butler"))
+                    if (label == "Goto" && !loadedBot.ToLower().Contains("butler"))
                         continue;
 
                     Logger($"Turning off: {label}");
