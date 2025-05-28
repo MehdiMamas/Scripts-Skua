@@ -252,6 +252,8 @@ public class CoreBots
                         Logger("Turning certain \"Social\" options off to help protect you");
                         warned = true;
                     }
+                    if (label == "bGoto" && loadedBot.Contains("butler"))
+                        continue;
 
                     Logger($"Turning off: {label}");
                     SendPackets($"%xt%zm%cmd%1%uopref%{key}%false%");
