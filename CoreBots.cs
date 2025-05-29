@@ -4500,29 +4500,12 @@ public class CoreBots
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
-        if (Bot.Map.Name != "escherion")
-            Join("escherion", publicRoom: publicRoom);
-        if (Bot.Player.Cell != "Boss")
-            Jump("Boss", "Left");
-
         if (!FromSupplies)
             if (item is not null && log)
                 FarmingLogger(item, quant);
 
         if (item is not null && !isTemp)
             AddDrop(item);
-
-        bool PreFarmKill = false;
-
-        Monster? Staff = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID is 2);
-        Monster? Escherion = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID is 3);
-        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
-        {
-            Bot.Options.AggroMonsters = true;
-            //hide players to reduce lag (Trust Tato)
-            Bot.Options.HidePlayers = true;
-        }
-        else Bot.Options.AggroMonsters = false;
 
         if (item is null)
         {
@@ -4533,69 +4516,72 @@ public class CoreBots
         }
         else
         {
-            while (!Bot.ShouldExit && isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))
-                _KillEscherion(item, isTemp);
+            _KillEscherion(item, quant, isTemp);
 
             Rest();
-            if (!isTemp)
-                Bot.Wait.ForPickup(item);
-            else Bot.Wait.ForDrop(item);
         }
 
-        void _KillEscherion(string? item = null, bool isTemp = false)
+        void _KillEscherion(string? item = null, int quant = 1, bool isTemp = false)
         {
-            if (Bot.Map.Name is not "escherion")
+            #region new staff killing method
+            bool StaffRespawn = false;
+            Bot.Options.AggroMonsters = true;
+            Bot.Events.ExtensionPacketReceived += RespawnListener;
+            Bot.Events.MonsterKilled += KilledMonsterListener;
+            while (!Bot.ShouldExit && isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))
             {
-                Join("escherion");
-                Bot.Wait.ForMapLoad("escherion");
-                Sleep();
-            }
-
-            if (Bot.Player.Cell is not "Boss")
-            {
-                Jump("Boss");
-                Bot.Wait.ForCellChange("Boss");
-                Sleep();
-            }
-
-            // Initialize combat (to set hp)
-            if (!PreFarmKill && Staff is not null)
-            {
-                Bot.Kill.Monster(Staff);
-                PreFarmKill = true;
-            }
-
-            Staff = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID is 2);
-            Escherion = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID is 3);
-
-            if (Staff is not null && Escherion is not null)
-            {
-                Monster? target = Staff.State is 1 or 2 ? Staff : Escherion is not null && Staff.State is 0 ? Escherion : null;
-                if (target is not null)
-                    Bot.Combat.Attack(target);
-            }
-            Sleep();
-
-            // Sell voucher area
-            if (item != "Voucher of Nulgath" && SellVoucher && CheckInventory("Voucher of Nulgath"))
-            {
-                while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
+                while (!Bot.ShouldExit && !Bot.Player.Alive)
                 {
-                    Bot.Combat.CancelTarget();
-                    Bot.Wait.ForCombatExit();
-                    JumpWait();
                     Sleep();
                 }
 
-                if (Bot.Player.Gold < 100000000)
-                {
-                    Bot.Wait.ForPickup("Voucher of Nulgath");
-                    SellItem("Voucher of Nulgath", all: true);
-                    Bot.Wait.ForItemSell();
-                }
-            }
-            DoSwindlesReturnArea(ReturnDuring, ReturnItem);
+                if (Bot.Map.Name != "escherion")
+                    Join("escherion");
+                if (Bot.Player.Cell != "Boss")
+                    Jump("Boss", "Left");
 
+                if (!KilledMonsters.Contains(2))
+                {
+                    Bot.Kill.Monster(2);
+                    if (Bot.Player.HasTarget && Bot.Player.Target.MapID == 2)
+                        Bot.Combat.CancelTarget();
+                }
+                if (StaffRespawn)
+                {
+                    Bot.Kill.Monster(2);
+                    if (Bot.Player.HasTarget && Bot.Player.Target.MapID == 2)
+                        Bot.Combat.CancelTarget();
+                    StaffRespawn = false;
+                }
+                else Bot.Combat.Attack(3);
+                Sleep(500);
+
+                // Sell voucher area
+                if (item != "Voucher of Nulgath" && SellVoucher && CheckInventory("Voucher of Nulgath"))
+                {
+                    while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
+                    {
+                        Bot.Combat.CancelTarget();
+                        Bot.Wait.ForCombatExit();
+                        JumpWait();
+                        Sleep();
+                    }
+
+                    if (Bot.Player.Gold < 100000000)
+                    {
+                        Bot.Wait.ForPickup("Voucher of Nulgath");
+                        SellItem("Voucher of Nulgath", all: true);
+                        Bot.Wait.ForItemSell();
+                    }
+                }
+                DoSwindlesReturnArea(ReturnDuring, ReturnItem);
+            }
+            Bot.Options.AggroMonsters = false;
+            Bot.Events.ExtensionPacketReceived -= RespawnListener;
+            Bot.Events.MonsterKilled -= KilledMonsterListener;
+            if (!isTemp && item != null)
+                Bot.Wait.ForPickup(item);
+            #endregion new staff killing method
         }
 
         Bot.Options.AttackWithoutTarget = false;
