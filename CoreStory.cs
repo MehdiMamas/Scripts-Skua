@@ -777,8 +777,11 @@ public class CoreStory
             {
                 if (Bot.ShouldExit) break;
 
-                Bot.Combat.Attack(targetMonster);
-                Bot.Wait.ForMonsterDeath();
+                Bot.Combat.Attack(targetMonster.MapID);
+                Bot.Wait.ForMonsterDeath(targetMonster.MapID);
+
+                while (Bot.Player.HasTarget && !Bot.ShouldExit)
+                    Bot.Wait.ForMonsterDeath(targetMonster.MapID);
 
                 if (Bot.Player.HasTarget)
                     Bot.Combat.CancelTarget();
