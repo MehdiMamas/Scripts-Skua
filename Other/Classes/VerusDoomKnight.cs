@@ -258,7 +258,7 @@ public class VerusDoomKnightClass
             Class: selectedClass,
             item: "Maw of the Sea",
             quant: 10,
-            isTemp: true
+            isTemp: false
         );
         Adv.GearStore(true, true);
     }
