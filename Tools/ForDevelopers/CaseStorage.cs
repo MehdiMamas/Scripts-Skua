@@ -766,7 +766,7 @@ case ""Guardian Patent"":
                         Adv.BuyItem(""museum"", 53, ""Guardian Patent"");
                         break;
                     }
-                    else Core.Logger(""Active Aqw Guardian Acc Requiored for this Item."");
+                    else Core.Logger(""Active Aq Guardian Acc Required for this Item."");
                     break;
     "
 },
