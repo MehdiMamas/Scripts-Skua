@@ -4528,7 +4528,7 @@ public class CoreBots
             Bot.Options.AggroMonsters = true;
             Bot.Events.ExtensionPacketReceived += RespawnListener;
             Bot.Events.MonsterKilled += KilledMonsterListener;
-            while (!Bot.ShouldExit && isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))
+            while (!Bot.ShouldExit && (item == null || (isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))))
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                 {
@@ -4543,13 +4543,13 @@ public class CoreBots
                 if (!KilledMonsters.Contains(2))
                 {
                     Bot.Kill.Monster(2);
-                    if (Bot.Player.HasTarget && Bot.Player.Target.MapID == 2)
+                    if (Bot.Player.HasTarget && Bot.Player.Target != null && Bot.Player.Target.MapID == 2)
                         Bot.Combat.CancelTarget();
                 }
                 if (StaffRespawn)
                 {
                     Bot.Kill.Monster(2);
-                    if (Bot.Player.HasTarget && Bot.Player.Target.MapID == 2)
+                    if (Bot.Player.HasTarget && Bot.Player.Target != null && Bot.Player.Target.MapID == 2)
                         Bot.Combat.CancelTarget();
                     StaffRespawn = false;
                 }
