@@ -181,6 +181,15 @@ public class CoreBots
         Bot.Lite.DisableRedWarning = true;
         Bot.Lite.CharacterSelectScreen = false;
 
+        // Some maps are codded horrible and the animations can cause lag or freezes, so we'll turn all the animations off
+        Bot.Lite.FreezeMonsterPosition = true;
+        Bot.Lite.DisableMonsterAnimation = true;
+        Bot.Lite.DisableDamageStrobe = true;
+        Bot.Lite.DisableSelfAnimation = true;
+        Bot.Lite.DisableWeaponAnimation = true;
+        Bot.Lite.DisableSkillAnimation = true;
+        Bot.Lite.DisableSkillAnimations = true;
+
         //adding sommore
         Bot.Lite.SmoothBackground = true;
         Bot.Lite.ShowMonsterType = true;
