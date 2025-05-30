@@ -6719,8 +6719,6 @@ public class CoreBots
                 JumpWait();
                 map = strippedMap + "-999999";
                 tryJoin();
-                while (!Bot.Inventory.IsEquipped(71529))
-                    Sleep();
                 break;
 
             case "desoloth":
