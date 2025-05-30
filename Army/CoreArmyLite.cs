@@ -1471,7 +1471,6 @@ public class CoreArmyLite
             return false;
         }
 
-        Core.Logger("Attempting /goto");
         int retry = 0;
 
         // Handle locked zones by subscribing to the event if necessary
