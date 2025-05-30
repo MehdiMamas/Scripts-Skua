@@ -137,9 +137,9 @@ public class CoreSDKA
             Core.ToBank("Experimental Dark Item");
         }
 
-        if (!Story.QuestProgression(Core.IsMember ? 2086 : 2087))
+        if (!Story.QuestProgression(Core.CheckInventory(8523) ? 2086 : 2087))
         {
-            Core.EnsureAccept(Core.IsMember ? 2086 : 2087);
+            Core.EnsureAccept(Core.CheckInventory(8523) ? 2086 : 2087);
 
             // Check if DoomKnight Class is missing for non-members or members without either version (AC or non-AC)
             if (!Core.IsMember && !Core.CheckInventory(2083) || Core.IsMember && !Core.CheckInventory(new[] { 8523, 2083 }, any: true))
@@ -167,7 +167,7 @@ public class CoreSDKA
             Core.EquipClass(ClassType.Solo);
 
             // Complete the quest for obtaining the class
-            Core.EnsureComplete(Core.IsMember ? 2086 : 2087);
+            Core.EnsureComplete(Core.CheckInventory(8523) ? 2086 : 2087);
 
             // Bank non-solo classes if equipped
             if (Core.SoloClass != "DoomKnight")
