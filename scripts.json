@@ -1775,7 +1775,7 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 30539,
+    "size": 30700,
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -2348,6 +2348,21 @@
     "size": 1619,
     "fileName": "ShadowGates.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ShadowGates.cs"
+  },
+  {
+    "name": "Base Camp Storyline",
+    "description": "This will complete the storyline in /basecamp.",
+    "tags": [
+      "story",
+      "quest",
+      "base camp",
+      "basecamp",
+      "puff"
+    ],
+    "path": "Story/BaseCamp.cs",
+    "size": 2196,
+    "fileName": "BaseCamp.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/BaseCamp.cs"
   },
   {
     "name": "Shadow Slayer",
@@ -7673,6 +7688,49 @@
     "size": 5963,
     "fileName": "CastleGaherisMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CastleGaherisMerge.cs"
+  },
+  {
+    "name": "Portals Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Portals Merge [2585] in /basecamp",
+    "tags": [
+      "portals",
+      "merge",
+      "basecamp",
+      "portal",
+      "to",
+      "grand",
+      "inquisitor",
+      "darkon",
+      "beast",
+      "headed",
+      "dracolich",
+      "red",
+      "dragon",
+      "shadowfall",
+      "fortress",
+      "swordhaven",
+      "castle",
+      "hydra",
+      "challenge",
+      "kathool",
+      "mana",
+      "golem",
+      "escherion",
+      "chaos",
+      "king",
+      "alteon",
+      "azalith",
+      "doom",
+      "vault",
+      "slugbutter",
+      "nulgaths",
+      "hidden",
+      "grotto"
+    ],
+    "path": "Other/MergeShops/PortalsMerge.cs",
+    "size": 11425,
+    "fileName": "PortalsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/PortalsMerge.cs"
   },
   {
     "name": "Thirdspell Merge",
@@ -20215,7 +20273,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 867993,
+    "size": 872365,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
