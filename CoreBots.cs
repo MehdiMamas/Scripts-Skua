@@ -7769,10 +7769,11 @@ public class CoreBots
                 {
                     case "warning":
                         string b = Convert.ToString(packet);
-                        if (b.Contains("is not available."))
+                        if (b.Contains("is not available.") || b.Contains("map is locked until event begins"))
                         {
                             if (log)
-                                Logger($" \"{map}\" is currently seasonal map. Check Wiki.");
+                                Logger($"[{map}] Seasonal Message: {data[2]}");
+
                             seasonalMessageProc = true;
                             Bot.Events.ExtensionPacketReceived -= MapIsNotAvailableListener;
                         }
