@@ -181,14 +181,6 @@ public class CoreBots
         Bot.Lite.DisableRedWarning = true;
         Bot.Lite.CharacterSelectScreen = false;
 
-        // Some maps are codded horrible and the animations can cause lag or freezes, so we'll turn all the animations off
-        Bot.Lite.FreezeMonsterPosition = true;
-        Bot.Lite.DisableMonsterAnimation = true;
-        Bot.Lite.DisableDamageStrobe = true;
-        Bot.Lite.DisableSelfAnimation = true;
-        Bot.Lite.DisableWeaponAnimation = true;
-        Bot.Lite.DisableSkillAnimation = true;
-        Bot.Lite.DisableSkillAnimations = true;
 
         //adding sommore
         Bot.Lite.SmoothBackground = true;
@@ -274,6 +266,7 @@ public class CoreBots
                     Bot.Sleep(500);
                 }
             }
+
             GC.Collect();
             #endregion Social Privacy Options         
         }
@@ -340,20 +333,6 @@ public class CoreBots
                     Bot.Send.Packet("%xt%zm%afk%1%false%");
                     Sleep();
                     bool TimerRunning = false;
-                    //int afkCount = 0;
-                    //Bot.Events.PlayerAFK += eventAFK;
-
-                    //void eventAFK()
-                    //{
-                    //    afkCount++;
-                    //    int localCount = afkCount;
-                    //    Sleep(300000);
-                    //    if (Bot.Player.AFK && afkCount == localCount)
-                    //    {
-                    //        Bot.Options.AutoRelogin = true;
-                    //        Bot.Servers.Logout();
-                    //    }
-                    //}
                     Bot.Handlers.RegisterHandler(5000, b =>
                     {
                         if (b.Player.AFK && !TimerRunning)
@@ -405,6 +384,16 @@ public class CoreBots
                     if (AntiLag)
                     {
                         Bot.Options.LagKiller = changeTo;
+                        
+                        // Some maps are codded horrible and the animations can cause lag or freezes, so we'll turn all the animations off
+                        Bot.Lite.FreezeMonsterPosition = changeTo;
+                        Bot.Lite.DisableMonsterAnimation = changeTo;
+                        Bot.Lite.DisableDamageStrobe = changeTo;
+                        Bot.Lite.DisableSelfAnimation = changeTo;
+                        Bot.Lite.DisableWeaponAnimation = changeTo;
+                        Bot.Lite.DisableSkillAnimation = changeTo;
+                        Bot.Lite.DisableSkillAnimations = changeTo;
+
                         Bot.Flash.SetGameObject("stage.frameRate", 10);
                         if (!Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
                             Bot.Flash.CallGameFunction("world.toggleMonsters");
@@ -412,7 +401,7 @@ public class CoreBots
 
                     // Identity Protection
                     // Bot.Options.CustomName = "SkuaLabRat";
-                    // Bot.Options.CustomGuild = "Skua-side Squad";
+                    // Bot.Options.CustomGuild = "Skua-cide Squad";
 
                     // Holiday Handlers
                     AprilFools();
