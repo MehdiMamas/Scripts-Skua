@@ -11,6 +11,8 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Players;
 using Skua.Core.Options;
+using System.Text.RegularExpressions;
+
 
 public class Butler2
 {
@@ -34,6 +36,7 @@ public class Butler2
         new Option<bool>("copyWalk", "Copy Walk", "Set to true if you want to move to the same position of the player you follow.", false),
         new Option<string>("roomNumber", "Room Number", "Insert the room number which will be used when looking through Locked Zones.", "999999"),
         new Option<string>("hibernationTimer", "Hibernate Timer", "How many seconds should the bot wait before trying to /goto again?\nIf set to 0, it will not hibernate at all.", "60"),
+        new Option<bool>("unlockAllMaps", "Unlock All Maps", "Grants access to all maps, even if your account hasn't completed the required quests.", false)
     };
 
     private CancellationTokenSource? ButlerTokenSource;
@@ -146,6 +149,15 @@ public class Butler2
         Bot.Events.ExtensionPacketReceived += MapHandler;
         Core.DebugLogger(this);
         Bot.Events.ExtensionPacketReceived += LockedZoneListener;
+
+
+        if (Bot.Config!.Get<bool>("unlockAllMaps"))
+        {
+            Core.DebugLogger(this);
+            string scriptsRoot = GetScriptsRoot();
+            UnlockAllMaps(scriptsRoot);
+            Core.DebugLogger(this);
+        }
 
         Core.DebugLogger(this);
         StartButler(playerName, roomNr, hibernateTimer: b_hibernationTimer);
@@ -655,5 +667,55 @@ public class Butler2
         Core.Logger("Anti-AFK engaged");
         Core.Sleep(1500);
         Bot.Send.Packet("%xt%zm%afk%1%false%");
+    }
+
+    public string GetScriptsRoot()
+    {
+        // Get the user's Documents folder
+        string documentsDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        // Build the path to Skua\Scripts
+        string skuaScriptsDir = Path.Combine(documentsDir, "Skua", "Scripts");
+        Core.Logger($"[Butler] Scanning root folder: {skuaScriptsDir}");
+        return skuaScriptsDir;
+    }
+
+    public List<int> ExtractQuestIDsFromScripts(string scriptsRoot)
+    {
+        var questIDs = new HashSet<int>();
+        var regex = new Regex(@"Core\.isCompletedBefore\s*\(\s*(\d+)\s*\)");
+
+        // Only scan Scripts/Seasonal and Scripts/Story
+        string[] subfolders = { "Seasonal", "Story" };
+        foreach (var subfolder in subfolders)
+        {
+            string folderPath = Path.Combine(scriptsRoot, subfolder);
+            if (!Directory.Exists(folderPath))
+            {
+                Core.Logger($"[Butler] Folder does not exist: {folderPath}");
+                continue;
+            }
+
+            var files = Directory.GetFiles(folderPath, "*.cs", SearchOption.AllDirectories);
+            foreach (var file in files)
+            {
+                foreach (var line in File.ReadLines(file))
+                {
+                    var match = regex.Match(line);
+                    if (match.Success && int.TryParse(match.Groups[1].Value, out int questID))
+                        questIDs.Add(questID);
+                }
+            }
+        }
+        return questIDs.ToList();
+    }
+    public void UnlockAllMaps(string scriptsRoot)
+    {
+        var questIDs = ExtractQuestIDsFromScripts(scriptsRoot);
+        Core.Logger($"[Butler] Unlocking {questIDs.Count} maps by updating their final quests...");
+        foreach (var questID in questIDs)
+        {
+            Bot.Quests.UpdateQuest(questID);
+            Core.Logger($"[Butler] Updated quest {questID}");
+        }
     }
 }
