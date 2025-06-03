@@ -77,7 +77,7 @@ public class CoreSepulchure
         }
 
         // Pass for Real 6338
-         if (!Story.QuestProgression(6338))
+        if (!Story.QuestProgression(6338))
         {
             Core.EnsureAccept(6338);
             //this cell is required for `Passcode A`, but everything can be goten here.. unlike elsewhere
@@ -389,7 +389,7 @@ public class CoreSepulchure
         Story.KillQuest(6546, "noxustower", "Lightguard Paladin");
 
         // Illusory Disguise 6547
-        Story.KillQuest(6547, "noxustower", new[] { "Slimeskull", "Lightguard Caster", "Doomwood Treeant",  });
+        Story.KillQuest(6547, "noxustower", new[] { "Slimeskull", "Lightguard Caster", "Doomwood Treeant" });
 
         // Test the Disguise 6548
         Story.MapItemQuest(6548, "noxustower", 6019);
