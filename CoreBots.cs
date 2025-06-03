@@ -384,7 +384,7 @@ public class CoreBots
                     if (AntiLag)
                     {
                         Bot.Options.LagKiller = changeTo;
-                        
+
                         // Some maps are codded horrible and the animations can cause lag or freezes, so we'll turn all the animations off
                         Bot.Lite.FreezeMonsterPosition = changeTo;
                         Bot.Lite.DisableMonsterAnimation = changeTo;
@@ -3912,6 +3912,16 @@ public class CoreBots
 
         if (log && item != null)
             FarmingLogger(item, quant);
+            
+        Bot.Options.AggroAllMonsters = false;
+        //fuck it lets test it.
+        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
+        {
+            Bot.Options.AggroMonsters = true;
+            //hide players to reduce lag (Trust Tato)
+            Bot.Options.HidePlayers = true;
+        }
+        else Bot.Options.AggroMonsters = false;
 
         if (targetMonster == null)
         {
@@ -3950,6 +3960,7 @@ public class CoreBots
                     Join(map);
                 if (Bot.Player.Cell != targetMonster.Cell)
                     Jump(targetMonster.Cell);
+
                 Bot.Combat.Attack(targetMonster);
                 Sleep();
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
@@ -3959,6 +3970,28 @@ public class CoreBots
                 Rest();
             Bot.Wait.ForPickup(item);
         }
+
+        #region exit aggro
+        Bot.Options.AttackWithoutTarget = false;
+        Bot.Options.AggroAllMonsters = false;
+        Bot.Options.AggroMonsters = false;
+
+        // Filter out blacklisted cells, cells with monsters, and prioritize based on conditions
+        string? targetCell = Bot.Map.Cells
+            .Where(c => c != null &&
+                        !BlackListedJumptoCells.Contains(c) &&
+                        !Bot.Monsters.MapMonsters.Any(monster => monster != null && monster.Cell == c))
+            .FirstOrDefault(c => c != null &&
+                                 (Bot.Map.Cells.Count(cell => cell.Contains("Enter")) > 1 || !c.Contains("Enter")))
+            ?? "Enter";
+
+        Bot.Map.Jump(targetCell, targetCell == "Enter" ? "Spawn" : "Left");
+        Bot.Wait.ForCellChange(targetCell);
+        Sleep();
+        JumpWait();
+        Rest();
+        Bot.Options.HidePlayers = false;
+        #endregion exit aggro
     }
 
     //Non-Choose Variants
