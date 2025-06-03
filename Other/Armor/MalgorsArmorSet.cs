@@ -75,7 +75,6 @@ public class MalgorsArmorSet
         }
 
         Adv.GearStore();
-        Core.BossClass("Chaos Avenger");
 
         while (!Bot.ShouldExit && !Core.CheckInventory(items))
         {
