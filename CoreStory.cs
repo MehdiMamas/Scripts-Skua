@@ -693,12 +693,12 @@ public class CoreStory
             {
                 for (int i = CurrentRequirements.Count - 1; i >= 0; i--)
                 {
-                    if (j == 0 && Core.CheckInventory(CurrentRequirements[i].Name, CurrentRequirements[i].Quantity))
+                    if (j == 0 && Core.CheckInventory(CurrentRequirements[i].ID, CurrentRequirements[i].Quantity))
                     {
                         CurrentRequirements.RemoveAt(i);
                         continue;
                     }
-                    if (j != 0 && Core.CheckInventory(CurrentRequirements[i].Name))
+                    if (j != 0 && Core.CheckInventory(CurrentRequirements[i].ID, CurrentRequirements[i].Quantity))
                     {
                         if (_RepeatCheck(ref repeat, i))
                         {
