@@ -28,7 +28,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 369614,
+    "size": 369628,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -849,7 +849,7 @@
       "perpetuum"
     ],
     "path": "Other/CelestialOfMysteries.cs",
-    "size": 3689,
+    "size": 3674,
     "fileName": "CelestialOfMysteries.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/CelestialOfMysteries.cs"
   },
@@ -3735,7 +3735,7 @@
       "null"
     ],
     "path": "ShadowsOfWar/CoreSoWMats.cs",
-    "size": 6009,
+    "size": 5994,
     "fileName": "CoreSoWMats.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/ShadowsOfWar/CoreSoWMats.cs"
   },
@@ -11287,7 +11287,7 @@
       "fifty one"
     ],
     "path": "Other/Various/SinoftheUndying(NoInsignia).cs",
-    "size": 5556,
+    "size": 5541,
     "fileName": "SinoftheUndying(NoInsignia).cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/SinoftheUndying(NoInsignia).cs"
   },
@@ -19105,7 +19105,7 @@
       "atlasfalls"
     ],
     "path": "Story/Legion/AtlasFalls.cs",
-    "size": 4804,
+    "size": 4789,
     "fileName": "AtlasFalls.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Legion/AtlasFalls.cs"
   },
@@ -19507,7 +19507,7 @@
       "null"
     ],
     "path": "Story/ShadowsOfWar/CoreSoW.cs",
-    "size": 37997,
+    "size": 37982,
     "fileName": "CoreSoW.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ShadowsOfWar/CoreSoW.cs"
   },
@@ -20273,7 +20273,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 872365,
+    "size": 871600,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -22818,7 +22818,7 @@
       "eclipses"
     ],
     "path": "Legion/MergeShops/AtlasFallsGearMerge.cs",
-    "size": 11495,
+    "size": 11480,
     "fileName": "AtlasFallsGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/AtlasFallsGearMerge.cs"
   },
