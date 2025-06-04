@@ -43,7 +43,8 @@ public class ArmyMartialArtist
         Core.BankingBlackList.AddRange(Loot);
         Core.SetOptions();
 
-        Setup();
+         Core.Logger("This script has been disabled by the author as it is not working as intended. " +
+     "There are current no plans to fix army scripts -- use grim from the `#grimlite-ligma-info` channel on disc.");
 
         Core.SetOptions(false);
     }
