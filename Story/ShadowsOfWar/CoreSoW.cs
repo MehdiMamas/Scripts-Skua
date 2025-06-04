@@ -116,7 +116,7 @@ public class CoreSoW
             Bot.Options.AttackWithoutTarget = true;
             Core.EnsureAccept(6852);
             Adv.GearStore();
-            Core.BossClass("Chaos Avenger");
+            Core.BossClass();
             Core.HuntMonster("malgor", "Malgor", "Defeat Malgor", log: false);
             Adv.GearStore(true);
             Bot.Options.AttackWithoutTarget = false;

@@ -69,7 +69,7 @@ public class CelestialOfMysteries
 
         // Cervus Dente
         if (!Core.CheckInventory("Cervus Dente", 35))
-            Core.BossClass("Chaos Avenger");
+            Core.BossClass();
         Core.HuntMonster("infernalarena", "Cervus Malus", "Cervus Dente", 35, false);
 
         // Infernal Incantation

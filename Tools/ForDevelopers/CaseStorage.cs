@@ -2391,7 +2391,6 @@ case ""Atlas Regalia"":
                     Core.FarmingLogger(req.Name, quant);
                     if (Core.CheckInventory(""Chaos Avenger""))
                     {
-                        Core.BossClass(""Chaos Avenger"");
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
                             Core.HuntMonsterQuest(10137, ""atlasfalls"", ""King Zedek"");
@@ -11258,7 +11257,6 @@ case ""Drained Skye Obelisk"":
     @"
 case ""Tainted Blade of Na'al"":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.BossClass(Core.CheckInventory(""Void HighLord (IoDA)"") ? ""Void HighLord (IoDA)"" : ""Void Highlord"");
                     Core.HuntMonster(""infernalarena"", ""Na'al"", req.Name, quant, false, false);
                     break;
     "
@@ -11268,7 +11266,6 @@ case ""Tainted Blade of Na'al"":
     @"
 case ""Champion's Seal"":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.BossClass(Core.CheckInventory(""Void HighLord (IoDA)"") ? ""Void HighLord (IoDA)"" : ""Void Highlord"");
                     Core.HuntMonster(""infernalarena"", ""Na'al"", req.Name, quant, false, false);
                     break;
     "
@@ -11278,7 +11275,6 @@ case ""Champion's Seal"":
     @"
 case ""Tainted Dagger of Na'al"":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.BossClass(Core.CheckInventory(""Void HighLord (IoDA)"") ? ""Void HighLord (IoDA)"" : ""Void Highlord"");
                     Core.HuntMonster(""infernalarena"", ""Na'al"", req.Name, quant, false, false);
                     break;
     "
@@ -11288,8 +11284,6 @@ case ""Tainted Dagger of Na'al"":
     @"
 case ""Cervus Dente"":
                     Core.FarmingLogger(req.Name, quant);
-                    if (Core.CheckInventory(new[] { ""Legion DoomKnight"", ""Classic Legion DoomKnight"" }, any: true))
-                        Core.BossClass(Core.CheckInventory(""Legion DoomKnight"") ? ""Legion DoomKnight"" : ""Classic Legion DoomKnight"");
                     Core.HuntMonster(""infernalarena"", ""Cervus Malus"", req.Name, quant, false, false);
                     break;
     "
@@ -11329,7 +11323,6 @@ case ""Axe of the Infernal Defiler"":
     @"
 case ""Infernal Incantation"":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.BossClass(""Dragon of Time"");
                     Core.HuntMonster(""infernalarena"", ""Key of Sholemoh"", req.Name, quant, false, false);
                     break;
     "

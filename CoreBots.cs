@@ -7814,7 +7814,7 @@ public class CoreBots
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
             JumpWait();
 
-        string[] classesToCheck = new[] { "TimeKeeper", "Verus DoomKnight", "Void Highlord", "Void HighLord (IoDA)", "Yami no Ronin", "ArchPaladin" };
+        string[] classesToCheck = new[] { "TimeKeeper", "TimeKiller", "Verus DoomKnight", "Void Highlord", "Void HighLord (IoDA)", "Yami no Ronin", "ArchPaladin" };
         if (!string.IsNullOrEmpty(additionalClass) && CheckInventory(additionalClass))
         {
             Unbank(additionalClass);
