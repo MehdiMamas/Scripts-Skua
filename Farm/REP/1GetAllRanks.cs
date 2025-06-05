@@ -9,6 +9,7 @@ tags: all reps, reputation, rank, all ranks, farm, rep, reps
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Story/LordsofChaos/Core13LoC.cs    
 //cs_include Scripts/Story/ThroneofDarkness/CoreToD.cs
+//cs_include Scripts/Story/Glacera.cs
 
 using Skua.Core.Interfaces;
 public class GetAllRanks
@@ -20,6 +21,7 @@ public class GetAllRanks
     public CoreAdvanced Adv = new();
     public CoreToD TOD = new();
     public Core13LoC LOC => new();
+    public GlaceraStory Glac => new();
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -40,6 +42,7 @@ public class GetAllRanks
         Core.Logger("Doing Required Stories for the reps, let tato know if another is required.");
         TOD.CompleteToD();
         LOC.Complete13LOC();
+        Glac.DoAll();
         // Commented out do to PvP (with farm class or deaths) is still broke appearnly :thumbsup:
         // TOD.DeathPitPVP();
 
