@@ -7,6 +7,7 @@ tags: all reps, reputation, rank, all ranks, farm, rep, reps
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreDailies.cs
 //cs_include Scripts/Story/LordsofChaos/Core13LoC.cs    
 //cs_include Scripts/Story/ThroneofDarkness/CoreToD.cs
 //cs_include Scripts/Story/Glacera.cs
