@@ -805,7 +805,7 @@ public class Grimgaol
 
 
         int skillIndex = 0;
-        int[] skillList = Adv.uDauntless() ?  new int[] { 1, 2, 4, 2, 3, 2 } : new int[] { 1, 2, 3, 4 };
+        int[] skillList = Adv.uDauntless() ? new int[] { 1, 2, 4, 2, 3, 2 } : new int[] { 1, 2, 3, 4 };
         int[] priorityIDs = { 7, 8, 9 };
 
         while (!Bot.ShouldExit)
@@ -1164,16 +1164,6 @@ public class Grimgaol
             }
         }
 
-        string? dauntless = Bot.Config.Get<string>("Dauntless");
-        if (!string.IsNullOrWhiteSpace(dauntless))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
-            {
-                Core.Equip(dauntless);
-                Core.Sleep(1500);
-            }
-        }
-
         string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
         {
@@ -1183,27 +1173,6 @@ public class Grimgaol
                 Core.Sleep(1500);
             }
         }
-
-        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
-        if (!string.IsNullOrWhiteSpace(luckHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
-            {
-                Core.Equip(luckHelm);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
-        if (!string.IsNullOrWhiteSpace(animaHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
-            {
-                Core.Equip(animaHelm);
-                Core.Sleep(1500);
-            }
-        }
-
         string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
         {
@@ -1213,17 +1182,6 @@ public class Grimgaol
                 Core.Sleep(1500);
             }
         }
-
-        string? vainglory = Bot.Config.Get<string>("Vainglory");
-        if (!string.IsNullOrWhiteSpace(vainglory))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
-            {
-                Core.Equip(vainglory);
-                Core.Sleep(1500);
-            }
-        }
-
 
         int skillIndex = 0;
         int[] skillList = { 1, 2, 4, 2, 3, 2 };
