@@ -3561,7 +3561,7 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 92929,
+    "size": 95617,
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -11142,7 +11142,7 @@
       "farm"
     ],
     "path": "Other/FarmJoeKits/JoePrepsForUltras.cs",
-    "size": 23964,
+    "size": 24003,
     "fileName": "JoePrepsForUltras.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/JoePrepsForUltras.cs"
   },
