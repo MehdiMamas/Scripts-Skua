@@ -1747,7 +1747,8 @@ public class CoreNation
     /// </summary>
     /// <param name="quant">Desired quantity, 100 = max stack</param>
     /// <param name="betrayalBlade"></param>
-    public void KisstheVoid(int quant = 100, string? betrayalBlade = null)
+    /// <param name="KeepVoucher"></param>
+    public void KisstheVoid(int quant = 100, string? betrayalBlade = null, bool KeepVoucher = false)
     {
         if (betrayalBlade == null ? Core.CheckInventory("Blood Gem of the Archfiend", quant) : Core.CheckInventory(betrayalBlade))
             return;
@@ -1760,7 +1761,39 @@ public class CoreNation
         else
             Core.FarmingLogger(betrayalBlade, 1);
 
-        int i = 1;
+        //warning for idiots that wont read it
+        Core.Logger("if Swindles is enabled, it will only accept the quest when it has the required Unis it needs");
+
+        bool sellMemVoucher = Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher) && _sellMemVoucher == true;
+        bool returnPolicyDuringSupplies = Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies == true;
+
+        if (KeepVoucher && sellMemVoucher)
+        {
+            Core.Logger("KeepVoucher is enabled via the script, Overriding Cbo Setting, Voucher of Nulgath will be kept");
+            sellMemVoucher = false; // If KeepVoucher is enabled, don't sell the voucher}
+        }
+
+        if (sellMemVoucher == true && Bot.Player.Gold >= 100000000)
+        {
+            Core.Logger("Gold is capped, no reason to sell Vouchers");
+            sellMemVoucher = false;
+        }
+
+        Core.Logger($"Do Return Policy?: {returnPolicyDuringSupplies}\n" +
+                       $"Sell Voucher of Nulgath: {sellMemVoucher}");
+
+        Core.AddDrop(
+            SuppliesRewards
+                .Concat(sellMemVoucher ? new string[] { "Voucher of Nulgath" } : Enumerable.Empty<string>())
+                .Append("Relic of Chaos")
+                .Concat(returnPolicyDuringSupplies
+                    ? new string[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20), "Receipt of Swindle" }
+                    : Enumerable.Empty<string>()
+                )
+                .ToArray()
+        );
+
+        Core.RegisterQuests(2857);
 
         while (!Bot.ShouldExit && (betrayalBlade == null ? !Core.CheckInventory("Blood Gem of the Archfiend", quant) : !Core.CheckInventory(betrayalBlade)))
         {
@@ -1780,7 +1813,31 @@ public class CoreNation
             string itemToPickup = betrayalBlade ?? "Blood Gem of the Archfiend";
             Bot.Wait.ForDrop(itemToPickup);
             Bot.Wait.ForPickup(itemToPickup);
-            Core.Logger($"Completed x{i++}");
+
+
+
+            if (sellMemVoucher && Core.CheckInventory("Voucher of Nulgath"))
+            {
+                while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
+                {
+                    Core.Jump("Enter", "Spawn");
+                    Core.Sleep();
+                    if (Bot.Player.Cell == "Enter")
+                        break;
+                }
+                if (Bot.Player.Gold < 100000000)
+                {
+                    Bot.Wait.ForPickup("Voucher of Nulgath");
+                    Core.SellItem("Voucher of Nulgath", KeepVoucher ? 1 : 0, !KeepVoucher);
+                    Bot.Wait.ForItemSell();
+                }
+            }
+
+            // if `Blood Gem of the Archfiend` isnt max stack, do the quest if enabled.
+            if (!Core.CheckInventory("Blood Gem of the Archfiend", 100))
+                DoSwindlesReturnArea(returnPolicyDuringSupplies, "Blood Gem of the Archfiend");
+            if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
+                Core.EnsureCompleteMulti(4778);
 
             if (betrayalBlade == null)
             {
