@@ -20505,10 +20505,13 @@
       "soulstealer",
       "horned",
       "void",
-      "executioner"
+      "executioner",
+      "blood",
+      "star",
+      "archfiend"
     ],
     "path": "Nation/MergeShops/NationMerge.cs",
-    "size": 3760,
+    "size": 4703,
     "fileName": "NationMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/NationMerge.cs"
   },
