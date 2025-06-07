@@ -1,13 +1,19 @@
 /*
 name: Nation Merge
 description: This bot will farm the items belonging to the selected mode for the Nation Merge [1206] in /shadowblast
-tags: nation, merge, shadowblast, polish, pet, soulstealer, horned, void, executioner
+tags: nation, merge, shadowblast, polish, pet, soulstealer, horned, void, executioner, blood, star, archfiend
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreDailies.cs
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Nation/NationLoyaltyRewarded.cs
+//cs_include Scripts/Good/BLOD/CoreBLOD.cs
+//cs_include Scripts/Evil/SDKA/CoreSDKA.cs
+//cs_include Scripts/Story/BattleUnder.cs
+//cs_include Scripts/Other/Classes/Necromancer.cs
+//cs_include Scripts/Evil/NSoD/CoreNSOD.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -21,6 +27,7 @@ public class NationMerge
     private static CoreAdvanced sAdv = new();
     private CoreNation Nation = new();
     private NationLoyaltyRewarded NLR = new();
+    private CoreNSOD NSOD = new();
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -32,7 +39,7 @@ public class NationMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Diamond Badge of Nulgath", "Emblem of Nulgath", "Diamond of Nulgath" });
+        Core.BankingBlackList.AddRange(new[] { "Diamond Badge of Nulgath", "Emblem of Nulgath", "Blood Gem of the Archfiend", "Totem of Nulgath", "Void Aura", "Archfiend's Favor" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -64,6 +71,8 @@ public class NationMerge
                     break;
                 #endregion
 
+                #region Known items
+
                 case "Diamond Badge of Nulgath":
                     NLR.FarmQuest(new string[] { req.Name }, quant);
                     break;
@@ -72,15 +81,27 @@ public class NationMerge
                     Nation.EmblemofNulgath(quant);
                     break;
 
-                case "Diamond of Nulgath":
-                    Nation.FarmDiamondofNulgath(quant);
+                case "Blood Gem of the Archfiend":
+                    Nation.FarmBloodGem(quant);
                     break;
+
+                case "Totem of Nulgath":
+                    Nation.FarmTotemofNulgath(quant);
+                    break;
+
+                case "Void Aura":
+                    NSOD.VoidAuras(quant);
+                    break;
+
+                case "Archfiend's Favor":
+                    Nation.ApprovalAndFavor(0, quant);
+                    break;
+                    #endregion
 
             }
         }
     }
 
-    
     public List<IOption> Select = new()
     {
         new Option<bool>("33172", "Polish Pet", "Mode: [select] only\nShould the bot buy \"Polish Pet\" ?", false),
@@ -88,5 +109,6 @@ public class NationMerge
         new Option<bool>("33177", "Nation SoulStealer Hood", "Mode: [select] only\nShould the bot buy \"Nation SoulStealer Hood\" ?", false),
         new Option<bool>("33178", "Nation SoulStealer Horned Hood", "Mode: [select] only\nShould the bot buy \"Nation SoulStealer Horned Hood\" ?", false),
         new Option<bool>("33162", "Void Executioner", "Mode: [select] only\nShould the bot buy \"Void Executioner\" ?", false),
-    };
+        new Option<bool>("67269", "Blood Star of the Archfiend", "Mode: [select] only\nShould the bot buy \"Blood Star of the Archfiend\" ?", false),
+   };
 }
