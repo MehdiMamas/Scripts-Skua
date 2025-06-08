@@ -12813,6 +12813,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/SummerBreak/BlazingBeach.cs"
   },
   {
+    "name": "SunkenCity",
+    "description": "Does the quests from /SunkenCity",
+    "tags": [
+      "sunkencity",
+      "sunken city",
+      "story",
+      "weekly"
+    ],
+    "path": "Seasonal/SummerBreak/SunkenCity.cs",
+    "size": 1618,
+    "fileName": "SunkenCity.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/SummerBreak/SunkenCity.cs"
+  },
+  {
     "name": "Summer Break Merge",
     "description": "This will farm the Summer Break items.",
     "tags": [
