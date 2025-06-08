@@ -1224,7 +1224,6 @@ public class CoreArmyLite
     {
         Bot.Events.PlayerAFK += PlayerAFK;
 
-        Core.DebugLogger(this);
         #region Initialization and Setup
         if (string.IsNullOrEmpty(playerName) || playerName == "Insert Name")
         {
@@ -1280,19 +1279,16 @@ public class CoreArmyLite
 
         while (!Bot.ShouldExit)
         {
-            Core.DebugLogger(this);
             #region Ignore me
             // Try to /goto the player with retry logic
             while (!tryGoto(playerName, out playerObject, roomNr) && playerObject != null && retryCount < retryLimit)
             {
-                Core.DebugLogger(this);
                 // Increment retry count and log the attempt
                 retryCount++;
                 Core.Logger($"Attempt {retryCount} to find {playerName} failed. Retrying...");
 
                 // Handle combat disengagement and fallback
                 // ExitCombat();
-                Core.DebugLogger(this);
 
                 // Join fallback map if /goto fails
                 if (Bot.House.Items.Any(h => h.Equipped))
@@ -1324,7 +1320,6 @@ public class CoreArmyLite
                 }
                 else Bot.Send.Packet($"%xt%zm%cmd%1%tfer%{Core.Username()}%whitemap-{Core.PrivateRoomNumber}%");
 
-                Core.DebugLogger(this);
                 Core.Logger($"Could not find {playerName}. Ensure they are on the same server.", "tryGoto");
 
                 if (b_shouldHibernate)
@@ -1336,14 +1331,11 @@ public class CoreArmyLite
                 // Enter hibernation retry loop
                 while (!Bot.ShouldExit)
                 {
-                    Core.DebugLogger(this, "Enter hibernation retry loop");
                     if (b_shouldHibernate)
                     {
-                        Core.DebugLogger(this, "b_shouldHibernate");
                         // Sleep for the hibernate period
                         for (int t = 0; t < hibernateTimer; t++)
                         {
-                            Core.DebugLogger(this, "hibernateTimer" + hibernateTimer);
                             Core.Sleep(1000);
                             if (Bot.ShouldExit)
                                 break;
@@ -1353,7 +1345,6 @@ public class CoreArmyLite
                     // Retry /goto after hibernation
                     if (tryGoto(playerName, out playerObject, roomNr) && playerObject != null)
                     {
-                        Core.DebugLogger(this);
                         break;
                     }
 
@@ -1361,7 +1352,6 @@ public class CoreArmyLite
                     elapsedMinutes += hibernateTimer;
                     if (elapsedMinutes >= 300)
                     {
-                        Core.DebugLogger(this);
                         Core.Logger($"Bot has been hibernating for {elapsedMinutes / 60} minutes.");
                         elapsedMinutes = 0;
                     }
@@ -1376,7 +1366,6 @@ public class CoreArmyLite
                 }
                 if (tryGoto(playerName, out playerObject, roomNr) && playerObject != null)
                 {
-                    Core.DebugLogger(this);
                     Core.Logger($"{playerName} found!");
                     break;
                 }
@@ -1391,7 +1380,6 @@ public class CoreArmyLite
             // Check for break on specific map
             if (b_breakOnMap != null && b_breakOnMap == Bot.Map.Name)
             {
-                Core.DebugLogger(this, "b_breakOnMap??");
                 b_breakOnMap = null;
                 break;
             }
@@ -1414,7 +1402,6 @@ public class CoreArmyLite
 
                 if (!string.IsNullOrEmpty(attackPriority))
                 {
-                    Core.DebugLogger(this, "Attack priority lsit isnt empty, attack priority is " + attackPriority);
                     if (!Bot.Combat.StopAttacking)
                         PriorityAttack();
                 }
@@ -1435,7 +1422,6 @@ public class CoreArmyLite
                     Bot.Wait.ForCellChange(playerObject?.Cell ?? Bot.Player.Cell);
                     Core.Sleep();
                     Bot.Player.SetSpawnPoint();
-                    Core.DebugLogger(this, "Jumped to player");
                 }
 
             }
@@ -1479,75 +1465,57 @@ public class CoreArmyLite
 
         while (!Bot.ShouldExit)
         {
-            Core.DebugLogger(this);
             if (Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null && playerObject.Cell == Bot.Player.Cell)
             {
-                Core.DebugLogger(this);
                 return true;
             }
-            Core.DebugLogger(this);
             Core.JumpWait();
             Core.Sleep();
             Bot.Player.Goto(userName);
             Core.Sleep();
-            Core.DebugLogger(this);
             playerObject = Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null ? playerObject : null;
             if (Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null)
             {
                 if (playerObject != null && playerObject?.Cell == Bot.Player.Cell)
                 {
-                    Core.DebugLogger(this);
                     return true;
                 }
 
                 string targetCell = playerObject?.Cell ?? Bot.Player.Cell;
                 string targetPad = playerObject?.Pad ?? Bot.Player.Pad;
 
-                Core.DebugLogger(this);
                 Bot.Map.Jump(targetCell, targetPad, false);
-                Core.DebugLogger(this);
                 Bot.Wait.ForCellChange(targetCell);
-                Core.DebugLogger(this);
                 Core.Sleep();
                 playerObject = Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null ? playerObject : null;
 
-                Core.DebugLogger(this);
                 if (playerObject != null && playerObject?.Cell == Bot.Player.Cell)
                 {
-                    Core.DebugLogger(this);
                     return true;
                 }
-                Core.DebugLogger(this);
             }
 
-            Core.DebugLogger(this);
 
             if (playerObject != null && playerObject.Cell == Bot.Player.Cell)
             {
-                Core.DebugLogger(this);
                 return true;
             }
             // Check for locked zone warning and handle it accordingly
             if (LockedZoneWarning)
             {
-                Core.DebugLogger(this);
                 break;
             }
-            Core.DebugLogger(this);
 
             if (++retry >= 5)
                 break;
             Core.Sleep(1000);
 
-            Core.DebugLogger(this);
         }
 
         // Handle locked zone scenario
         if (b_doLockedMaps && LockedZoneWarning && !insideLockedMaps)
         {
-            Core.DebugLogger(this);
             LockedZoneWarning = false;
-            Core.DebugLogger(this, $"{LockedZoneWarning}");
             LockedMaps(userName, false, roomNumber); // Handle the locked zone logic
             Core.ToggleAggro(true);
             Bot.Events.ExtensionPacketReceived -= LockedZoneListener;
@@ -1611,7 +1579,6 @@ public class CoreArmyLite
         if (Pname != null)
             b_playerName = Pname;
 
-        Core.DebugLogger(this, b_playerName);
 
         string playerLogPath = Path.Combine(CoreBots.ButlerLogDir, b_playerName + ".txt");
         if (File.Exists(playerLogPath))
@@ -1619,10 +1586,12 @@ public class CoreArmyLite
             string? targetMap = File.ReadLines(playerLogPath).FirstOrDefault();
             if (targetMap != null)
             {
-                Core.DebugLogger(this);
                 Core.Join($"{targetMap}-{RoomNumber}");
                 if (Bot.Map.PlayerExists(b_playerName!))
+                {
+                    Core.Logger($"Found {b_playerName} in /{Bot.Map.Name}");
                     return;
+                }
             }
         }
 
@@ -1639,7 +1608,6 @@ public class CoreArmyLite
         new { Map = "voidnerfkitten", LevelRequired = 80 }
     };
 
-        Core.DebugLogger(this);
         int maptry = 0;
         int mapCount = _LockedMapsList.Count == 0
             ? (Core.IsMember ? NonMemMaps.Length + MemMaps.Length + EventMaps.Length + levelLockedMaps.Length
@@ -1650,15 +1618,25 @@ public class CoreArmyLite
         {
             foreach (string map in EventMaps)
             {
+                if (Bot.ShouldExit)
+                    return;
                 if (!Core.isSeasonalMapActive(map)) continue;
 
-                Core.Logger($"[{maptry++.ToString("D2")}/{mapCount}] Searching /{map}", "LockedZoneHandler");
-                Core.Join($"{map}-{RoomNumber}");
-                if (Bot.Map.PlayerExists(b_playerName!)) return;
+                Core.Logger($"[{maptry++:D2}/{mapCount}] Searching /{map}", "LockedZoneHandler");
+                if (Bot.Map.Name != map)
+                    Core.Join($"{map}-{RoomNumber}");
+                Core.Sleep();
+                if (Bot.Map.PlayerExists(b_playerName!))
+                {
+                    Core.Logger($"Found {b_playerName} in /{map}");
+                    return;
+                }
             }
 
             foreach (var mapInfo in levelLockedMaps)
             {
+                if (Bot.ShouldExit)
+                    return;
                 if (Bot.Player.Level < mapInfo.LevelRequired)
                 {
                     Core.Logger($"Level too low for /{mapInfo.Map} (required: {mapInfo.LevelRequired}, current: {Bot.Player.Level})");
@@ -1666,7 +1644,9 @@ public class CoreArmyLite
                 }
 
                 Core.Logger($"[{maptry++:D2}/{mapCount}] Searching /{mapInfo.Map}", "LockedZoneHandler");
-                Core.Join($"{mapInfo.Map}-{RoomNumber}");
+                if (Bot.Map.Name != mapInfo.Map)
+                    Core.Join($"{mapInfo.Map}-{RoomNumber}");
+                Core.Sleep();
                 if (Bot.Map.PlayerExists(b_playerName!))
                 {
                     Core.Logger($"Found {b_playerName} in /{mapInfo.Map}");
@@ -1676,8 +1656,12 @@ public class CoreArmyLite
 
             foreach (string map in NonMemMaps)
             {
+                if (Bot.ShouldExit)
+                    return;
                 Core.Logger($"[{maptry++:D2}/{mapCount}] Searching /{map}", "LockedZoneHandler");
-                Core.Join($"{map}-{RoomNumber}");
+                if (Bot.Map.Name != map)
+                    Core.Join($"{map}-{RoomNumber}");
+                Core.Sleep();
                 if (Bot.Map.PlayerExists(b_playerName!))
                 {
                     Core.Logger($"Found {b_playerName} in /{map}");
@@ -1689,8 +1673,12 @@ public class CoreArmyLite
             {
                 foreach (string map in MemMaps)
                 {
+                    if (Bot.ShouldExit)
+                        return;
                     Core.Logger($"[{maptry++:D2}/{mapCount}] Searching /{map}", "LockedZoneHandler");
-                    Core.Join($"{map}-{RoomNumber}");
+                    if (Bot.Map.Name != map)
+                        Core.Join($"{map}-{RoomNumber}");
+                    Core.Sleep();
                     if (Bot.Map.PlayerExists(b_playerName!))
                     {
                         Core.Logger($"Found {b_playerName} in /{map}");
@@ -1703,10 +1691,17 @@ public class CoreArmyLite
         {
             foreach (string map in _LockedMapsList)
             {
-                Core.Logger($"[{maptry++.ToString("D2")}/{mapCount}] Searching /{map}", "LockedZoneHandler");
+                if (Bot.ShouldExit)
+                    return;
+                Core.Logger($"[{maptry++:D2}/{mapCount}] Searching /{map}", "LockedZoneHandler");
                 if (Bot.Map.Name != map)
                     Core.Join($"{map}-{RoomNumber}");
-                if (Bot.Map.PlayerExists(b_playerName!)) return;
+                Core.Sleep();
+                if (Bot.Map.PlayerExists(b_playerName!))
+                {
+                    Core.Logger($"Found {b_playerName} in /{map}");
+                    return;
+                }
             }
         }
 
