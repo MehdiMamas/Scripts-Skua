@@ -12,7 +12,11 @@ using Skua.Core.Models.Items;
 using Skua.Core.Models.Players;
 using Skua.Core.Options;
 using System.Text.RegularExpressions;
-
+using Skua.Core.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.Diagnostics;
+using System.Collections.Concurrent;
 
 public class Butler2
 {
@@ -53,7 +57,6 @@ public class Butler2
     bool isGoto = false;
     bool initializationDone = false;
     int RoomNumber = 0;
-    public int b_hibernationTimer = 0;
     public bool b_shouldHibernate = true;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -68,7 +71,6 @@ public class Butler2
     public void DoButler(string? playerName, bool log = false)
     {
         // Core.DL_Enable();
-        Core.DebugLogger(this);
         // Initialize the CancellationTokenSource and get the Token
         ButlerTokenSource = new CancellationTokenSource();
         _cancellationToken = ButlerTokenSource.Token;
@@ -81,16 +83,6 @@ public class Butler2
             return;
         }
         else playerToFollow = playerName;
-
-        // Hibernation Timer
-        if (!int.TryParse(Bot.Config?.Get<string>("hibernationTimer"), out b_hibernationTimer))
-            b_hibernationTimer = 0; // Default to 0 if parsing fails
-
-        Core.Logger($"Hibernation Timer: " + (b_hibernationTimer > 0 ? $"Enabled" + $" ({b_hibernationTimer} seconds)" : "Disabled"));
-
-        if (b_hibernationTimer <= 0)
-            b_shouldHibernate = false;
-
 
         // Room Number
         if (!int.TryParse(Bot.Config?.Get<string>("roomNumber"), out int roomNr))
@@ -143,31 +135,21 @@ public class Butler2
 
         // EQUIP CLASS & START BUTLER MODE
         Core.EquipClass(Bot.Config!.Get<ClassType>("classType"));
-        Core.DebugLogger(this);
         Bot.Events.PlayerAFK += PlayerAFK;
-        Core.DebugLogger(this);
         Bot.Events.ExtensionPacketReceived += MapHandler;
-        Core.DebugLogger(this);
-        Bot.Events.ExtensionPacketReceived += LockedZoneListener;
-
 
         if (Bot.Config!.Get<bool>("unlockAllMaps"))
         {
-            Core.DebugLogger(this);
-            string scriptsRoot = GetScriptsRoot();
-            UnlockAllMaps(scriptsRoot);
-            Core.DebugLogger(this);
+            UnlockAllMaps();
         }
 
-        Core.DebugLogger(this);
-        StartButler(playerName, roomNr, hibernateTimer: b_hibernationTimer);
-        Core.DebugLogger(this);
+        StartButler(playerName, roomNr);
 
         // --- Call GoToPlayer at script start if not in same map as player ---
-        if (!string.IsNullOrEmpty(playerName) && !Bot.Map.PlayerExists(playerName))
+        if (!string.IsNullOrEmpty(playerName) && !Bot.Map.PlayerNames.Contains(playerName))
         {
             isGoto = true;
-            Task.Run(async () => await GoToPlayer(playerName, _cancellationToken));
+            Task.Run(() => GoToPlayer(playerName, _cancellationToken));
         }
         Core.Logger($"Butler started for player {playerName}");
         Core.Sleep(5000);
@@ -178,360 +160,274 @@ public class Butler2
         int skillIndex = 0;
         int[] skillList = { 1, 2, 3, 4 };
 
-        while (!Bot.ShouldExit)
+        while (!Bot.ShouldExit && !ButlerTokenSource.IsCancellationRequested && (!isGoto || !LockedZone))
         {
             #region ignore this
-            if (Bot.ShouldExit)
-            {
-                Core.Logger("Bot is exiting, canceling Butler task...");
-                StopButler();
-                return;
-            }
 
             if (!Bot.Player.LoggedIn)
             {
                 Core.Logger("You are not logged in.");
                 return;
             }
+
             #endregion ignore this
             Bot.Wait.ForMapLoad(Bot.Map.Name);
-            if (Bot.Monsters.CurrentAvailableMonsters.Any() && !isGoto)
-            {
-                Core.DebugLogger(this);
-                if (Army._attackPriority.Count > 0)
-                {
-                    Core.DebugLogger(this);
-                    if (!Bot.Combat.StopAttacking)
-                        Army.PriorityAttack();
-                }
-                else
-                {
-                    Core.DebugLogger(this);
-                    if (!Bot.Combat.StopAttacking)
-                    {
-                        Core.DebugLogger(this);
-                        Bot.Combat.Attack("*"); // Attack any monster if no priority exists
-                        Core.Sleep();
-                    }
-                }
 
-                // Use skills in rotation
-                Bot.Skills.UseSkill(skillList[skillIndex]);
-                skillIndex = (skillIndex + 1) % skillList.Length;
-                Core.Sleep();
+            if (!Bot.Map.TryGetPlayer(playerName, out PlayerInfo? player) || isGoto)
+                Task.Run(() => GoToPlayer(playerName, _cancellationToken));
 
-                // Handle locked zone scenario
-                if (Bot.Config!.Get<bool>("lockedMaps") == true && LockedZone)
-                {
-                    Core.DebugLogger(this);
-                    LockedZone = false;
-                    Army.LockedMaps(playerName, RoomNumber: RoomNumber);
-                    Core.Sleep();
-                }
-            }
-            // Handle locked zone scenario outside of monsters being alive
-            else if (Bot.Config!.Get<bool>("lockedMaps") == true && LockedZone)
+            if (isGoto || LockedZone)
             {
-                Core.DebugLogger(this);
-                Army.LockedMaps(playerName, RoomNumber: RoomNumber);
                 LockedZone = false;
-                Core.Sleep();
+                Bot.Wait.ForTrue(() => player != null, 20);
             }
 
+            if (Army._attackPriority.Count > 0)
+            {
+                if (!Bot.Combat.StopAttacking)
+                    Army.PriorityAttack();
+            }
+            else if (!Bot.Combat.StopAttacking)
+                Bot.Combat.Attack("*");
+
+            // Use skills in rotation
+            Bot.Skills.UseSkill(skillList[skillIndex]);
+            skillIndex = (skillIndex + 1) % skillList.Length;
+
+            Core.Sleep();
         }
         StopButler();
     }
 
     public void StartButler(string? playerName, int roomnr, int hibernateTimer = 1)
     {
-        // Initialize the CancellationTokenSource and get the Token
         ButlerTokenSource = new CancellationTokenSource();
         _cancellationToken = ButlerTokenSource.Token;
 
-        Core.DebugLogger(this);
-        // Start Butler task
         Task.Run(async () =>
         {
-            Core.DebugLogger(this);
             while (!Bot.ShouldExit && !ButlerTokenSource.IsCancellationRequested)
             {
-                Core.DebugLogger(this);
-                if (playerName == null)
+                if (string.IsNullOrWhiteSpace(playerName))
                 {
                     Core.Logger("You need to set a player name.");
                     StopButler();
                     return;
                 }
 
-                await Task.Delay(Core.ActionDelay * 2);
-
-                // Check if the bot should exit
-                if (Bot.ShouldExit)
+                if (Bot.ShouldExit || ButlerTokenSource.IsCancellationRequested)
                 {
-                    Core.DebugLogger(this);
                     Core.Logger("Bot is exiting, canceling Butler task...");
-                    ButlerTokenSource?.Cancel(); // Explicitly cancel
+                    ButlerTokenSource?.Cancel();
                     StopButler();
                     return;
                 }
 
-                // Check if the player is logged in
                 if (!Bot.Player.LoggedIn)
                 {
-                    Core.DebugLogger(this);
                     Core.Logger("You are not logged in.");
                     StopButler();
                     return;
                 }
 
-                if (needJump || Bot.Map.PlayerExists(playerName))
+                await Task.Delay(Core.ActionDelay * 2);
+
+                if (needJump || Bot.Map.PlayerNames.Contains(playerName))
                 {
-                    Core.DebugLogger(this);
                     if (!initializationDone)
                     {
-                        Core.DebugLogger(this);
-                        if (!Bot.Map.TryGetPlayer(playerName, out PlayerInfo? player) || player == null || player.Cell == null || player.Pad == null)
-                        {
-                            Core.DebugLogger(this);
+                        if (!Bot.Map.TryGetPlayer(playerName, out PlayerInfo? player) ||
+                            player?.Cell == null || player.Pad == null)
                             continue;
-                        }
 
                         if (!string.IsNullOrEmpty(player.Cell))
                             cellJump ??= player.Cell;
                         if (!string.IsNullOrEmpty(player.Pad))
                             padJump ??= player.Pad;
 
-                        Core.DebugLogger(this, $"{player.Cell}, {player.Pad}");
-
                         if (cellJump != null && padJump != null)
-                        {
-                            Core.DebugLogger(this);
                             initializationDone = true;
-                        }
                     }
-                    Core.DebugLogger(this);
 
                     if (cellJump != null && padJump != null)
                     {
-                        Core.Jump(cellJump, padJump);
+                        if (Bot.Player.Cell != cellJump)
+                        {
+                            Bot.Map.Jump(cellJump, padJump, false);
+                            Bot.Wait.ForCellChange(cellJump);
+                        }
                     }
                     else
                     {
-                        Core.DebugLogger(this);
                         Core.Logger("Jumping to player failed, cell or pad is null.");
                         continue;
                     }
-                    Core.DebugLogger(this);
+
                     needJump = false;
                     if (initializationDone)
                         continue;
-
                 }
 
-                if (!Bot.Map.PlayerExists(playerName) && LockedZone && isGoto)
+                if (!Bot.Map.PlayerNames.Contains(playerName) && !Bot.ShouldExit || !ButlerTokenSource.IsCancellationRequested)
                 {
-                    Core.DebugLogger(this);
-                    if (Bot.Player.Cell != "Enter")
-                        Bot.Map.Jump("Enter", "Spawn");
-                    Core.DebugLogger(this);
-                    await GoToPlayer(playerName, _cancellationToken);
-                }
-
-
-                if (!Bot.Map.PlayerExists(playerName) && !LockedZone && isGoto)
-                {
-                    Core.DebugLogger(this);
-                    if (followedPlayerCell == null)
+                    if (!LockedZone && isGoto)
                     {
-                        Core.DebugLogger(this);
-                        Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad);
+                        if (Bot.Player.Cell != "Enter")
+                        {
+                            Bot.Map.Jump("Enter", "Spawn", autoCorrect: false);
+                            Bot.Wait.ForCellChange(cellJump);
+                        }
+                        GoToPlayer(playerName, _cancellationToken);
                     }
-                    Core.DebugLogger(this);
-                    await GoToPlayer(playerName, _cancellationToken);
-                }
 
-                Core.DebugLogger(this);
-
-                // Reset and log if successfully moved *if* goto is true
-                Core.DebugLogger(this);
-                if (Bot.Player.Cell == followedPlayerCell && isGoto == true)
-                {
-                    Core.DebugLogger(this);
-                    Core.Logger("Successfully moved to player, resetting gotoTry.");
-                    Core.DebugLogger(this);
-                    gotoTry = 0;  // Reset the counter properly
-                    Core.DebugLogger(this);
-                }
-                Core.DebugLogger(this);
-                isGoto = false;
-
-                if (ButlerTokenSource.IsCancellationRequested)
-                {
-                    Core.Logger("Stopping Butler loop. Max retries reached or token cancled.");
-                    StopButler();
-                    return;
-                }
-
-
-                Bot.Events.ExtensionPacketReceived -= MapHandler;
-                Bot.Events.ExtensionPacketReceived -= LockedZoneListener;
-                if (gotoTry >= maxTry)
-                {
-                    Core.DebugLogger(this);
-                    if (b_shouldHibernate && b_hibernationTimer > 0)
+                    if (LockedZone)
                     {
-                        Core.DebugLogger(this);
-                        Core.Logger($"Max retries reached ({maxTry}). Entering \"Hibernate\" mode.");
-                        Bot.Sleep(1000);
-                        Hibernate(playerName, roomnr, hibernateTimer: b_hibernationTimer);
-                        gotoTry = 0; // Reset the counter after hibernation
+                        LockedZone = false;
+                        isGoto = false;
+                        Army.LockedMaps(playerName, RoomNumber: RoomNumber);
+                    }
+                }
+
+                if (followedPlayerCell != null && Bot.Player.Cell == followedPlayerCell && isGoto)
+                {
+                    Core.Logger("Successfully moved to player, resetting gotoTry.");
+                    gotoTry = 0;
+                    isGoto = false;
+                }
+
+                if (gotoTry > 5 && b_shouldHibernate)
+                {
+                    if (gotoTry >= maxTry)
+                    {
+                        Core.Logger($"Max retries reached ({maxTry}). Forcing \"Hibernate\" mode.");
+                        b_shouldHibernate = true;
                     }
                     else
-                        gotoTry = 0; // Reset the counter if not hibernating                  
-                }
-                Core.DebugLogger(this);
-                Bot.Events.ExtensionPacketReceived += MapHandler;
-                Bot.Events.ExtensionPacketReceived += LockedZoneListener;
+                    {
+                        Core.Logger((gotoTry >= 1 ? "Continuing" : "Entering") + " hibernation mode...");
+                    }
 
-                // Add a small delay to prevent fast iterations
-                await Task.Delay(200);
-                Core.DebugLogger(this);
+                    isGoto = false;
+
+                    if (Hibernate(playerName))
+                        gotoTry = 0;
+                }
+
+                await Task.Delay(Core.ActionDelay * 2);
             }
-        }, cancellationToken: _cancellationToken);
+        }, _cancellationToken);
     }
 
-    public async Task GoToPlayer(string name, CancellationToken cancellationToken)
+    public void GoToPlayer(string name, CancellationToken cancellationToken)
     {
-        Core.DebugLogger(this);
-        if (isGoto == false)
-        {
-            Core.DebugLogger(this);
+        ButlerTokenSource = new CancellationTokenSource();
+        _cancellationToken = ButlerTokenSource.Token;
+
+        if (!isGoto)
             return;
-        }
 
-        while (!Bot.ShouldExit && !Bot.Player.Alive && ButlerTokenSource != null && !ButlerTokenSource.IsCancellationRequested)
-        {
-            await Task.Delay(500, cancellationToken);
-        }
+        while (!Bot.ShouldExit && !Bot.Player.Alive && ButlerTokenSource?.IsCancellationRequested == false)
+            Task.Delay(500, cancellationToken);
 
-        // Stop Butler if max retries are reached
-        if (gotoTry >= maxTry || ButlerTokenSource == null || ButlerTokenSource.IsCancellationRequested)
+        if (ButlerTokenSource?.IsCancellationRequested != false)
         {
-            Core.DebugLogger(this);
-            Core.Logger("token canceled.");
+            Core.Logger("Token canceled.");
             StopButler();
-            return;
         }
 
         if (Bot.Map.PlayerExists(name))
         {
-            Core.DebugLogger(this);
             LockedZone = false;
+            isGoto = false;
+            b_shouldHibernate = false;
             gotoTry = 0;
-            Army.LockedMaps(name, true, RoomNumber);
         }
-
-        Core.DebugLogger(this);
-        if (!LockedZone)
-            Core.Logger($"Going to player: {name}");
 
         Bot.Send.Packet($"%xt%zm%cmd%1%goto%{name}%");
-        Core.DebugLogger(this);
-        await Task.Delay(LockedZone ? 2500 : 1500, cancellationToken);
-        Core.DebugLogger(this);
-        isGoto = false; // Reset isGoto after attempting to go to the player
+        Task.Delay(LockedZone ? 2500 : 1500, cancellationToken);
+        return;
+
+
     }
 
-    void Hibernate(string? playername, int roomNr, int hibernateTimer = 60)
+    bool Hibernate(string? playername)
     {
-        if (playername == null)
-        {
-            Core.Logger("You need to set a player name.");
-            return;
-        }
-        ButlerTokenSource = new CancellationTokenSource();
+        ButlerTokenSource = new();
         _cancellationToken = ButlerTokenSource.Token;
 
-        if (Bot.ShouldExit || !Bot.Player.LoggedIn || Bot.Map.PlayerExists(playername))
-            return;
-
-        if (b_shouldHibernate)
-            Core.Logger($"Bot will hibernate and retry every {hibernateTimer} seconds.", "tryGoto");
-
-        #region Hibernation
-
-        DateTime startHibernateTime = DateTime.Now;
-        int lastLoggedMinute = -1;
-        int retryCount = 0;
-        int retryLimit = 10;
-
-        while (!Bot.ShouldExit)
+        if (string.IsNullOrWhiteSpace(playername) || Bot.ShouldExit || !Bot.Player.LoggedIn)
         {
-            Core.DebugLogger(this, "Enter hibernation retry loop");
+            Core.Logger("You need to set a player name.");
+            StopButler();
+            Bot.Stop(false);
+            return false;
+        }
 
-            if (b_shouldHibernate)
+        DateTime startTime = DateTime.Now;
+        int lastLoggedMinute = -1;
+
+        while (!Bot.ShouldExit && !ButlerTokenSource.IsCancellationRequested && !Bot.Map.PlayerNames.Contains(playername))
+        {
+            if (LockedZone)
             {
-                for (int t = 0; t < hibernateTimer; t++)
-                {
-                    Core.Sleep(1000);
-                    if (Bot.ShouldExit)
-                        break;
-
-                    TimeSpan elapsed = DateTime.Now - startHibernateTime;
-                    int elapsedMinutes = (int)elapsed.TotalMinutes;
-
-                    if (elapsedMinutes > 0 && elapsedMinutes % 5 == 0 && elapsedMinutes != lastLoggedMinute)
-                    {
-                        Core.DebugLogger(this);
-                        Core.Logger($"Bot has been hibernating for {elapsedMinutes} minutes.");
-                        lastLoggedMinute = elapsedMinutes;
-                    }
-                }
-            }
-
-            // Try to locate the player
-            if (Army.tryGoto(playername, out PlayerInfo? P, roomNr) && P != null)
-            {
-                Core.Logger($"{playername} found!");
+                b_shouldHibernate = false;
                 break;
             }
 
-            retryCount++;
-            if (retryCount >= retryLimit)
+            if (!b_shouldHibernate)
+                continue;
+
+            for (int i = 0; i < 5; i++)
             {
-                Core.Logger($"Unable to locate {playername} after {retryLimit} attempts, increasing hibernation delay.");
-                hibernateTimer += 5;
-                retryCount = 0; // Optional: reset counter after adjusting delay
+                Core.Sleep(1000);
+                GoToPlayer(playerToFollow, _cancellationToken);
+
+                if (Bot.ShouldExit || ButlerTokenSource.IsCancellationRequested || Bot.Map.PlayerNames.Contains(playername))
+                {
+                    b_shouldHibernate = false;
+                    break;
+                }
+
+                int minutesElapsed = (int)(DateTime.Now - startTime).TotalMinutes;
+                if (minutesElapsed > 0 && minutesElapsed != lastLoggedMinute)
+                {
+                    Core.Logger($"Bot has been hibernating for {minutesElapsed} minute{(minutesElapsed == 1 ? "" : "s")}.");
+                    lastLoggedMinute = minutesElapsed;
+                }
             }
         }
 
-        #endregion Hibernation
+        return true;
     }
 
     public void StopButler()
     {
-        // Initialize the CancellationTokenSource and get the Token
-        ButlerTokenSource = new CancellationTokenSource();
-        _cancellationToken = ButlerTokenSource.Token;
-
-        // Ensure proper cancellation and cleanup
         if (ButlerTokenSource != null)
         {
-            ButlerTokenSource.Cancel();  // Explicitly cancel the token
-            ButlerTokenSource.Dispose(); // Clean up resources
-            ButlerTokenSource = null; // Set it to null
+            if (!ButlerTokenSource.IsCancellationRequested)
+                ButlerTokenSource.Cancel();
+            ButlerTokenSource.Dispose();
+            ButlerTokenSource = null;
         }
+
+        _cancellationToken = default;
+
         Bot.Events.ExtensionPacketReceived -= MapHandler;
-        Bot.Events.ExtensionPacketReceived -= LockedZoneListener;
         Bot.Events.PlayerAFK -= PlayerAFK;
-        GC.Collect(); // Clean up to free up memory
+
+        GC.Collect();
         Core.Logger("Butler task has been canceled.");
     }
 
     public void MapHandler(dynamic packet)
     {
+        ButlerTokenSource = new();
+        _cancellationToken = ButlerTokenSource.Token;
+
         string type = packet["params"].type;
         dynamic data = packet["params"].dataObj;
+        string? playerName = Bot.Config!.Get<string>("playerName");
+        if (string.IsNullOrEmpty(playerName)) return;
         // Handle str-type packets with data containing movement information
         if (type == "str" && data.Count >= 4)
         {
@@ -546,23 +442,18 @@ public class Butler2
                     followedPlayerCell = null;
                     Core.Logger($"Detected {playerToFollow} left the map. Attempting to follow...");
                     isGoto = true; // Only set here, not in the main loop
-                    if (Bot.Player.Cell != "Enter")
-                        Bot.Map.Jump("Enter", "Spawn");
-
-                    Task.Run(async () => await GoToPlayer(playerToFollow, _cancellationToken));
                 }
-                return; // Prevent further processing for this packet
+                return;
             }
 
-            string? playerName = Bot.Config!.Get<string>("playerName");
-            if (string.IsNullOrEmpty(playerName)) return;
 
             // Check if the packet matches the followed player
             if (data[0]?.ToString() == "uotls" && data[2]?.ToString().ToLower() == playerName.ToLower())
             {
+                isGoto = true; // Only set here, not in the main loop
                 string? movementData = data[3]?.ToString();
                 if (string.IsNullOrEmpty(movementData)) return;
-
+                followedPlayerCell = null;
                 string[] movementParts = movementData.Split(',', StringSplitOptions.TrimEntries);
                 string? cell = null, pad = null;
                 int x = 0, y = 0, sp = 0;
@@ -601,14 +492,26 @@ public class Butler2
                     needJump = true;
                     cellJump = cell;
                     padJump = pad;
+                    // V for debug purp. v
                     // Core.Logger($"Need to Jump to Cell: {cellJump}, Pad: {padJump}");
-                    Core.Jump(cellJump, padJump);
+                    if (!string.IsNullOrEmpty(cell))
+                    {
+                        if (Bot.Player.Cell != cell || Bot.Player.Pad != pad)
+                        {
+                            Bot.Map.Jump(cellJump, padJump, false);
+                            Bot.Wait.ForCellChange(cellJump);
+                        }
+                        followedPlayerCell = null;
+
+                    }
                 }
                 // If only tx/ty are present, it's a walk
                 else if (xSuccess && ySuccess)
                 {
                     Bot.Flash.Call("walkTo", x, y, sp);
                     Core.Logger($"Walking to X: {x}, Y: {y}, Speed: {sp}");
+                    isGoto = false;
+                    followedPlayerCell = null;
                 }
             }
         }
@@ -616,13 +519,26 @@ public class Butler2
         else if (data[0]?.ToString() == "warning")
         {
             string? warningMessage = data[2]?.ToString();
-            LockedZone = true;
 
             if (!string.IsNullOrEmpty(warningMessage))
-                Core.Logger($"Warning: {warningMessage.Replace("player", $"Player: \"{playerToFollow}\"")}, proceeding with fallback handling.");
-            gotoTry++;
+            {
+                if (warningMessage.Contains("Locked zone"))
+                {
+                    Core.Logger($"{playerToFollow} is in a Locked map (cannot goto player). Scanning Locked maps for player");
+                    b_shouldHibernate = false;
+                    LockedZone = true;
+                }
+                else if (warningMessage.Contains("Please slow down. Last action was too soon!"))
+                {
+                    // do nothing
+                }
+                else
+                {
+                    LockedZone = false;
+                    b_shouldHibernate = true;
+                }
+            }
         }
-
 
         // Handle json-type packets with moveToArea command
         else if (type == "json" && data.cmd.ToString() == "moveToArea" && data.uoBranch != null)
@@ -639,29 +555,6 @@ public class Butler2
         }
     }
 
-    public void LockedZoneListener(dynamic packet)
-    {
-        string type = packet["params"].type;
-        dynamic data = packet["params"].dataObj;
-
-        if (type is not null and "str")
-        {
-            string cmd = data[0];
-            switch (cmd)
-            {
-                case "warning":
-                    string LockerZonePacket = Convert.ToString(packet);
-                    if (LockerZonePacket.Contains("a Locked zone.") || LockerZonePacket.Contains("is not available.") || LockerZonePacket.Contains("room is full"))
-                    {
-                        Bot.Events.ExtensionPacketReceived -= MapHandler;
-                        Bot.Events.ExtensionPacketReceived -= LockedZoneListener;
-                        LockedZone = true;
-                    }
-                    break;
-            }
-        }
-    }
-
     public void PlayerAFK()
     {
         Core.Logger("Anti-AFK engaged");
@@ -669,24 +562,65 @@ public class Butler2
         Bot.Send.Packet("%xt%zm%afk%1%false%");
     }
 
-    public string GetScriptsRoot()
+    public void UnlockAllMaps()
     {
-        // Get the user's Documents folder
-        string documentsDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        // Build the path to Skua\Scripts
-        string skuaScriptsDir = Path.Combine(documentsDir, "Skua", "Scripts");
-        Core.Logger($"[Butler] Scanning root folder: {skuaScriptsDir}");
-        return skuaScriptsDir;
+        ButlerTokenSource = new();
+        _cancellationToken = ButlerTokenSource.Token;
+
+        Stopwatch stopwatchTotal = Stopwatch.StartNew();
+
+        string scriptsRoot = ClientFileSources.SkuaScriptsDIR;
+        string questDataPath = Path.Combine(scriptsRoot, "QuestData.json");
+
+        Stopwatch stopwatchExtraction = Stopwatch.StartNew();
+        Dictionary<int, (int Slot, int Value)> questData = ExtractQuestDataFromScripts(scriptsRoot, questDataPath);
+        stopwatchExtraction.Stop();
+        Core.Logger($"[Profiling] Quest data extraction took {stopwatchExtraction.ElapsedMilliseconds} ms");
+
+        var lastQuestsPerSlot = questData
+            .Where(q => q.Value.Slot >= 0 && q.Value.Value >= 0)
+            .GroupBy(q => q.Value.Slot)
+            .Select(g => g.OrderByDescending(q => q.Value.Value).First())
+            .ToList();
+
+        Core.Logger($"[Butler] Unlocking {lastQuestsPerSlot.Count} maps by updating their final quests per slot in batches...");
+
+        const int batchSize = 30;
+        for (int i = 0; i < lastQuestsPerSlot.Count; i += batchSize)
+        {
+            var batch = lastQuestsPerSlot.Skip(i).Take(batchSize);
+
+            Stopwatch stopwatchBatch = Stopwatch.StartNew();
+
+            foreach ((int id, (int slot, int value)) in batch)
+            {
+                if (!Core.isCompletedBefore(id))
+                {
+                    Bot.Quests.UpdateQuest(id);
+                    Bot.Sleep(Core.ActionDelay + Bot.Random.Next(100, 300));
+                }
+            }
+
+            stopwatchBatch.Stop();
+            Core.Logger($"[Profiling] Batch {(i / batchSize) + 1} processing took {FormatElapsedTime(stopwatchBatch.Elapsed)}");
+
+
+            GC.Collect();
+        }
+
+        stopwatchTotal.Stop();
+        Core.Logger($"[Profiling] UnlockAllMaps total time: {FormatElapsedTime(stopwatchTotal.Elapsed)}");
+
     }
-
-    public List<int> ExtractQuestIDsFromScripts(string scriptsRoot)
+    public Dictionary<int, (int Slot, int Value)> ExtractQuestDataFromScripts(string scriptsRoot, string questDataPath)
     {
-        var questIDs = new HashSet<int>();
-        var regex = new Regex(@"Core\.isCompletedBefore\s*\(\s*(\d+)\s*\)");
+        ButlerTokenSource = new();
+        _cancellationToken = ButlerTokenSource.Token;
 
-        // Only scan Scripts/Seasonal and Scripts/Story
-        string[] subfolders = { "Seasonal", "Story" };
-        foreach (var subfolder in subfolders)
+        var questIDs = new HashSet<int>();
+        Regex regex = new(@"Core\.isCompletedBefore\s*\(\s*(\d+)\s*\)");
+
+        foreach (string subfolder in new[] { "Seasonal", "Story" })
         {
             string folderPath = Path.Combine(scriptsRoot, subfolder);
             if (!Directory.Exists(folderPath))
@@ -695,27 +629,49 @@ public class Butler2
                 continue;
             }
 
-            var files = Directory.GetFiles(folderPath, "*.cs", SearchOption.AllDirectories);
-            foreach (var file in files)
+            foreach (string file in Directory.GetFiles(folderPath, "*.cs", SearchOption.AllDirectories))
             {
-                foreach (var line in File.ReadLines(file))
+                foreach (string line in File.ReadLines(file))
                 {
-                    var match = regex.Match(line);
+                    Match match = regex.Match(line);
                     if (match.Success && int.TryParse(match.Groups[1].Value, out int questID))
                         questIDs.Add(questID);
                 }
             }
         }
-        return questIDs.ToList();
-    }
-    public void UnlockAllMaps(string scriptsRoot)
-    {
-        var questIDs = ExtractQuestIDsFromScripts(scriptsRoot);
-        Core.Logger($"[Butler] Unlocking {questIDs.Count} maps by updating their final quests...");
-        foreach (var questID in questIDs)
+
+        if (!File.Exists(questDataPath))
         {
-            Bot.Quests.UpdateQuest(questID);
-            Core.Logger($"[Butler] Updated quest {questID}");
+            Core.Logger($"[Butler] QuestData.json not found: {questDataPath}");
+            return new();
         }
+
+        ConcurrentDictionary<int, (int Slot, int Value)> result = new();
+        string json = File.ReadAllText(questDataPath);
+
+        var options = new ParallelOptions
+        {
+            MaxDegreeOfParallelism = Environment.ProcessorCount
+        };
+
+        Parallel.ForEach(JArray.Parse(json).Cast<JObject>(), options, quest =>
+        {
+            int id = quest["ID"]?.Value<int>() ?? -1;
+            if (!questIDs.Contains(id))
+                return;
+
+            int slot = quest["Slot"]?.Value<int>() ?? -1;
+            int value = quest["Value"]?.Value<int>() ?? -1;
+
+            if (id > 0 && slot >= 0 && value >= 0)
+                result.TryAdd(id, (slot, value));
+        });
+
+        return result.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
     }
+
+    private static string FormatElapsedTime(TimeSpan ts) =>
+        $"{(int)ts.TotalHours:D2}hrs {ts.Minutes:D2}mns {ts.Seconds:D2}sec {ts.Milliseconds:D3}ms";
+
+
 }
