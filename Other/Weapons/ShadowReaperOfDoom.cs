@@ -34,7 +34,6 @@ public class SRoD
         LoC.Xiang();
 
         Core.EquipClass(ClassType.Solo);
-        Core.RegisterQuests(3188);
         Core.HuntMonsterMapID("mirrorportal", 1, "Mirror Realm Token", 300, false);
         Core.CancelRegisteredQuests();
         Core.KillMonster("overworld", "boss1", "Left", "Undead Artix", "Undead Paladin Token", isTemp: false);
