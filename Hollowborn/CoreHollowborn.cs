@@ -89,8 +89,7 @@ public class CoreHollowborn
         Core.FarmingLogger("Hollowborn Lycan Claw", quant);
         Core.EquipClass(ClassType.Solo);
         Core.RegisterQuests(9489);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Hollowborn Lycan Claw", quant))
-            Core.HuntMonster("hbchallenge", "Hollowborn Lycan", "Chipped Claw");
+        Core.KillMonster("hbchallenge", "r9", "Left", "*", "Hollowborn Lycan Claw", quant, isTemp: false);
         Bot.Wait.ForPickup("Hollowborn Lycan Claw");
         Core.CancelRegisteredQuests();
 
@@ -102,7 +101,7 @@ public class CoreHollowborn
         Core.EquipClass(ClassType.Solo);
         Core.RegisterQuests(9488);
         while (!Bot.ShouldExit && !Core.CheckInventory("Hollowborn Vampire Fang", quant))
-            Core.HuntMonster("hbchallenge", "Hollowborn Vampire", "Shattered Fang");
+            Core.KillMonster("hbchallenge", "r8", "Left", "Hollowborn Vampire", "Hollowborn Vampire Fang", quant, isTemp: false);
         Bot.Wait.ForPickup("Hollowborn Vampire Fang");
         Core.CancelRegisteredQuests();
     }
@@ -112,11 +111,8 @@ public class CoreHollowborn
         Core.FarmingLogger("Hollowborn Residue", quant);
         Core.EquipClass(ClassType.Farm);
         Core.RegisterQuests(8996); //Hazardous Hybrid 8996
-        while (!Bot.ShouldExit && !Core.CheckInventory("Hollowborn Residue", quant))
-        {
-            Core.KillMonster("hbchallenge", "r5", "Left", "Chaoroot Compound", "Inert Charoot", 8);
-            Bot.Wait.ForPickup("Hollowborn Residue");
-        }
+        Core.KillMonster("hbchallenge", "r5", "Left", "*", "Hollowborn Residue", quant, isTemp: false);
+        Bot.Wait.ForPickup("Hollowborn Residue");
         Core.CancelRegisteredQuests();
     }
 
@@ -125,11 +121,8 @@ public class CoreHollowborn
         Core.FarmingLogger("Hollowborn Writ", quant);
         Core.EquipClass(ClassType.Farm);
         Core.RegisterQuests(8418);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Hollowborn Writ", quant))
-        {
-            Core.KillMonster("hbchallenge", "r3", "Right", "Judge's Minion", "Judge's Minion Judged", 12);
-            Bot.Wait.ForPickup("Hollowborn Writ");
-        }
+        Core.KillMonster("hbchallenge", "r3", "Right", "Judge's Minion", "Hollowborn Writ", quant, isTemp: false);
+        Bot.Wait.ForPickup("Hollowborn Writ");
         Core.CancelRegisteredQuests();
     }
 }
