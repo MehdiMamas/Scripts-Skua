@@ -57,22 +57,7 @@ public class HBClassPrep
     {
         Core.Logger("These are just some preparations for the Hollowborn Class, not a full guide nor probably *everything* required, but it should be enough to get you started on the grind.");
 
-        Core.Logger("Getting Bone Dust out of the way");
-        // Farm.BoneSomeDust();
 
-        Core.Logger("Maxing Hollowborn Materials");
-        HB.HardcoreContract();
-        Core.ToBank(55157); // Lae's Hardcore Contract
-        HB.HumanSoul();
-        Core.ToBank("Human Soul"); 
-        HB.FreshSouls();
-        Core.ToBank("Unidentified 36", "Fresh Soul");
-        HollowSoul.GetYaSoulsHeeeere();
-        Core.ToBank("Hollow Soul");
-        SoulEssence.SoulEssence();
-        Core.ToBank("Soul Essence");
-        SoulSand.SoulSand();
-        Core.ToBank("Soul Sand");
         HB.HBLycanClaw();
         Core.ToBank("Hollowborn Lycan Claw");
         HB.HBVampireFang();
@@ -81,7 +66,21 @@ public class HBClassPrep
         Core.ToBank("Hollowborn Residue");
         HB.HBWrit();
         Core.ToBank("Hollowborn Writ");
+        Core.Logger("Maxing Hollowborn Materials");
+        HB.HardcoreContract();
+        Core.ToBank(55157); // Lae's Hardcore Contract
+        HB.HumanSoul();
+        Core.ToBank("Human Soul");
+        HB.FreshSouls();
+        Core.ToBank("Unidentified 36", "Fresh Soul");
+        HollowSoul.GetYaSoulsHeeeere();
+        Core.ToBank("Hollow Soul");
+        SoulEssence.SoulEssence();
+        Core.ToBank("Soul Essence");
+        SoulSand.SoulSand();
+        Core.ToBank("Soul Sand");
 
+        Core.Logger("You're finished.. for now!");
         // HBLK.Draftless(CoreHollowbornLichKing.DraftlessRewards.Soul_Fragment, false, 18);
         // HBLK.FlowStress(CoreHollowbornLichKing.FlowStressRewards.Lich_King_Fragment, false, 18);
 
@@ -108,5 +107,9 @@ public class HBClassPrep
         // CoreLegionRev.ConquestWreath();
         // CoreLegionRev.RevenantSpellscroll();
         // CoreLegionRev.ExaltedCrown();
+
+
+        // Core.Logger("Relaxing with some Dusty bones [ Bone Dust]");
+        // Farm.BoneSomeDust();
     }
 }
