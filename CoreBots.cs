@@ -785,10 +785,12 @@ public class CoreBots
     }
 
     /// <summary>
-    /// Checks if there is enough space in the inventory for specified items and logs a message if space is insufficient.
+    /// Checks if there is enough space in the inventory for the specified items
+    /// and logs a message if space is insufficient. Attempts to bank misc AC items
+    /// to free up required slots.
     /// </summary>
-    /// <param name="counter">Reference to a counter variable tracking successful checks.</param>
-    /// <param name="items">Items to check for space in the inventory.</param>
+    /// <param name="counter">Reference to a counter tracking how many items are already in inventory.</param>
+    /// <param name="items">Array of item names to check space for.</param>
     public void CheckSpaces(ref int counter, params string[] items)
     {
         foreach (string item in items)
@@ -796,96 +798,99 @@ public class CoreBots
                 counter++;
 
         int requiredSlots = items.Length - counter;
+
+        // Attempt to bank misc AC items to free up space if needed
+        if (requiredSlots > 1 && Bot.Inventory.FreeSlots < requiredSlots)
+            BankACMisc(requiredSlots);
+
+        // Re-check free slots and alert if still insufficient
         if (Bot.Inventory.FreeSlots < requiredSlots)
-            Logger($"Not enough free slot{(requiredSlots != 1 ? "s" : "")}, please clear {requiredSlots} slot{(requiredSlots != 1 ? "s" : "")}", messageBox: true, stopBot: true);
+        {
+            string plural = requiredSlots != 1 ? "s" : "";
+            Logger($"Not enough free slot{plural}, please clear {requiredSlots} slot{plural}",
+                messageBox: true, stopBot: true);
+        }
     }
 
+
     /// <summary>
-    /// Moves specified items by their names from the inventory to the bank.
+    /// Moves specified items by their names from the bank to inventory or house,
+    /// skipping items that are equipped, in use, or not present in any location.
+    /// Only applicable for whitelisted categories; retries each move up to 20 times.
+    /// Logs success or failure for each item.
     /// </summary>
     /// <param name="items">
-    /// Array of item names to transfer to the bank. Items will be skipped if
-    /// they are equipped, in use, or not present in the inventory. Skips blacklisted
-    /// or non-bankable categories.
+    /// Array of item names to transfer from the bank. Items will be skipped if
+    /// they are already in inventory, house, or not found anywhere.
     /// </param>
-    /// <remarks>
-    /// Only whitelisted item categories are moved, and house items are handled
-    /// separately from inventory items. Attempts each move up to 5 times for
-    /// reliability and logs each success or failure.
-    /// </remarks>
     public void Unbank(params string[] items)
     {
         if (items == null || items.Length == 0)
-        {
             return;
-        }
 
         if (Bot.Player.InCombat)
-        {
             JumpWait();
-        }
 
-        int RequiredSpaces = items.Count();
+        int requiredSpaces = items.Length;
+
         foreach (string item in items)
         {
-            if (Bot.House.Contains(item) || Bot.Inventory.Contains(item)
-                || (!Bot.Inventory.Contains(item) && !Bot.House.Contains(item) && !Bot.Bank.Contains(item)))
+            // Skip if item is already in house or inventory, or nowhere at all (not found in any)
+            bool inHouse = Bot.House.Contains(item);
+            bool inInventory = Bot.Inventory.Contains(item);
+            bool inBank = Bot.Bank.Contains(item);
+            if (inHouse || inInventory || (!inHouse && !inInventory && !inBank))
             {
-                RequiredSpaces--;
-                continue; // Skip the item if it's in house or bank, or nowhere (not in any of the 3 places)
+                requiredSpaces--;
+                continue;
             }
 
-            if (Bot.Bank.Contains(item) && (!Bot.Inventory.Contains(item) || !Bot.House.Contains(item)))
+            // Check inventory space before attempting to unbank
+            if (inBank && (!inInventory || !inHouse))
             {
                 if (Bot.Inventory.FreeSlots <= 0 && Bot.Inventory.Slots != 0 && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots)
                 {
-                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please Make {RequiredSpaces} space(s), and restart the bot", messageBox: true, stopBot: true);
+                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please make {requiredSpaces} space(s), and restart the bot", messageBox: true, stopBot: true);
                     return;
                 }
 
-                bool isHouseItem = Bot.Bank.TryGetItem(item, out InventoryItem? x) &&
-                                  x != null &&
-                                  (x.CategoryString == "House" || x.CategoryString == "Wall Item" || x.CategoryString == "Floor Item");
+                bool isHouseItem = Bot.Bank.TryGetItem(item, out InventoryItem? bankItem) &&
+                                   bankItem != null &&
+                                   (bankItem.CategoryString == "House" || bankItem.CategoryString == "Wall Item" || bankItem.CategoryString == "Floor Item");
+
+                bool success = false;
 
                 if (isHouseItem)
                 {
-                    bool success = false;
-                    for (int i = 0; i < 20; i++) // Retry up to 20 times
+                    for (int i = 0; i < 20; i++)
                     {
-                        SendPackets($"%xt%zm%bankToInv%{Bot.Map.RoomID}%{x!.ID}%{x.CharItemID}%");
-                        Sleep(); // Wait for a short period before checking
+                        SendPackets($"%xt%zm%bankToInv%{Bot.Map.RoomID}%{bankItem.ID}%{bankItem.CharItemID}%");
+                        Sleep();
                         if (Bot.House.Contains(item))
                         {
                             success = true;
                             break;
                         }
                     }
-
-                    if (!success)
-                    {
-                        Logger($"Failed to unbank {item}, skipping it");
-                        continue;
-                    }
                 }
                 else
                 {
-                    bool success = false;
-                    for (int i = 0; i < 20; i++) // Retry up to 20 times
+                    for (int i = 0; i < 20; i++)
                     {
                         Bot.Bank.EnsureToInventory(item);
-                        Sleep(); // Wait for a short period before checking
+                        Sleep();
                         if (Bot.Inventory.Contains(item))
                         {
                             success = true;
                             break;
                         }
                     }
+                }
 
-                    if (!success)
-                    {
-                        Logger($"Failed to unbank {item}, skipping it");
-                        continue;
-                    }
+                if (!success)
+                {
+                    Logger($"Failed to unbank {item}, skipping it");
+                    continue;
                 }
 
                 Logger($"{item} moved from bank");
@@ -894,131 +899,112 @@ public class CoreBots
     }
 
     /// <summary>
-    /// Transfers specified items by their unique IDs from the bank to the inventory.
+    /// Transfers specified items by their unique IDs from the bank to inventory.
+    /// Skips items already in inventory, house, or not found in bank.
+    /// Retries each transfer up to 20 times, logging success or failure.
     /// </summary>
-    /// <param name="itemIDs">
-    /// Array of item IDs to transfer from the bank. Items will be skipped if
-    /// they are already in the inventory, house, or cannot be found in the bank.
-    /// </param>
-    /// <remarks>
-    /// Ensures that items can be transferred by checking inventory space, 
-    /// and retries failed transfers up to 20 times before skipping.
-    /// Provides detailed logging for each success or failure.
-    /// </remarks>
+    /// <param name="itemIDs">Array of item IDs to transfer from bank.</param>
     public void Unbank(params int[] itemIDs)
     {
-        if (itemIDs == null || itemIDs.Length == 0 || !itemIDs.Any(x => x != 0))
+        if (itemIDs == null || itemIDs.Length == 0 || !itemIDs.Any(id => id != 0))
             return;
 
         if (Bot.Player.InCombat)
             JumpWait();
 
-        int RequiredSpaces = itemIDs.Count();
-        foreach (int item in itemIDs)
+        int requiredSpaces = itemIDs.Length;
+
+        foreach (int itemID in itemIDs)
         {
-            if (Bot.House.Contains(item) || Bot.Inventory.Contains(item)
-                || !Bot.Inventory.Contains(item) && !Bot.House.Contains(item) && !Bot.Bank.Contains(item))
+            bool inHouse = Bot.House.Contains(itemID);
+            bool inInventory = Bot.Inventory.Contains(itemID);
+            bool inBank = Bot.Bank.Contains(itemID);
+
+            // Skip if item is already in house or inventory, or nowhere at all
+            if (inHouse || inInventory || (!inHouse && !inInventory && !inBank))
             {
-                RequiredSpaces--;
-                continue; // Skip the item if it's in house or bank, or nowhere (not in any of the 3 places)
+                requiredSpaces--;
+                continue;
             }
 
-            if (Bot.Bank.Contains(item) && (!Bot.Inventory.Contains(item) || !Bot.House.Contains(item)))
+            if (inBank && (!inInventory || !inHouse))
             {
-                ItemBase? itemString = Bot.Bank.Items?.FirstOrDefault(x => x?.ID == item);
-                if (itemString == null)
+                ItemBase? bankItem = Bot.Bank.Items?.FirstOrDefault(x => x?.ID == itemID);
+                if (bankItem == null)
                 {
-                    Logger($"Failed to find item with ID {item}, skipping it");
+                    Logger($"Failed to find item with ID {itemID}, skipping it");
                     continue;
                 }
+
                 if (Bot.Inventory.FreeSlots <= 0 && Bot.Inventory.Slots != 0 && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots)
                 {
-                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please Make {RequiredSpaces} space(s), and restart the bot", messageBox: true, stopBot: true);
+                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please make {requiredSpaces} space(s), and restart the bot",
+                        messageBox: true, stopBot: true);
                     return;
                 }
 
-                bool isHouseItem = Bot.Bank.TryGetItem(item, out InventoryItem? x) &&
-                                  x != null &&
-                                  (x.CategoryString == "House" || x.CategoryString == "Wall Item" || x.CategoryString == "Floor Item");
+                bool isHouseItem = Bot.Bank.TryGetItem(itemID, out InventoryItem? invItem) &&
+                                   invItem != null &&
+                                   (invItem.CategoryString == "House" || invItem.CategoryString == "Wall Item" || invItem.CategoryString == "Floor Item");
 
+                bool success = false;
                 if (isHouseItem)
                 {
-                    bool success = false;
-                    for (int i = 0; i < 20; i++) // Retry up to 20 times
+                    for (int i = 0; i < 20; i++)
                     {
-                        SendPackets($"%xt%zm%bankToInv%{Bot.Map.RoomID}%{x!.ID}%{x.CharItemID}%");
-                        Sleep(); // Wait for a short period before checking
-                        if (Bot.House.Contains(item))
+                        SendPackets($"%xt%zm%bankToInv%{Bot.Map.RoomID}%{invItem!.ID}%{invItem.CharItemID}%");
+                        Sleep();
+                        if (Bot.House.Contains(itemID))
                         {
                             success = true;
                             break;
                         }
-                    }
-
-                    if (!success)
-                    {
-                        Logger($"Failed to unbank {itemString.Name}, skipping it");
-                        continue;
                     }
                 }
                 else
                 {
-                    bool success = false;
-                    for (int i = 0; i < 20; i++) // Retry up to 20 times
+                    for (int i = 0; i < 20; i++)
                     {
-                        Bot.Bank.EnsureToInventory(item);
-                        Sleep(); // Wait for a short period before checking
-                        if (Bot.Inventory.Contains(item))
+                        Bot.Bank.EnsureToInventory(itemID);
+                        Sleep();
+                        if (Bot.Inventory.Contains(itemID))
                         {
                             success = true;
                             break;
                         }
                     }
-
-                    if (!success)
-                    {
-                        Logger($"Failed to unbank {itemString.Name}, skipping it");
-                        continue;
-                    }
                 }
 
-                Logger($"{itemString.Name} moved from bank");
+                if (!success)
+                {
+                    Logger($"Failed to unbank {bankItem.Name}, skipping it");
+                    continue;
+                }
+
+                Logger($"{bankItem.Name} moved from bank");
             }
         }
-
     }
 
     /// <summary>
-    /// Transfers specified items from the inventory to the bank by item name.
+    /// Transfers specified items by name from inventory/house to bank.
+    /// Skips equipped, blacklisted, or nonexistent items.
+    /// Retries up to 5 times on failures. Handles house items separately.
     /// </summary>
-    /// <param name="items">
-    /// An array of item names to move to the bank. Items are ignored if they are
-    /// equipped, excluded by the blacklist, or do not exist in the inventory.
-    /// </param>
-    /// <remarks>
-    /// The method ensures only items from specified whitelisted categories or
-    /// items marked as "Coins" are moved. Attempts each transfer up to 5 times
-    /// if the initial move fails and logs any unsuccessful attempts.
-    /// 
-    /// House items are transferred separately, bypassing the normal inventory-to-bank process.
-    /// Certain items specified in the Extras array are also excluded from being banked.
-    /// </remarks>
+    /// <param name="items">Item names to move to bank.</param>
     public void ToBank(params string[] items)
     {
-        if (items == null || !items.Any(x => !string.IsNullOrEmpty(x)))
-        {
+        if (items == null || !items.Any(name => !string.IsNullOrEmpty(name)))
             return;
-        }
 
         JumpWait();
 
-        // Whitelist categories and items
         List<ItemCategory> whiteList = new() { ItemCategory.Note, ItemCategory.Item, ItemCategory.Resource, ItemCategory.QuestItem };
-        int?[] Extras = { 18927, 38575 }; // Items that shouldn't be banked
+        int?[] Extras = { 18927, 38575 }; // Blacklisted item IDs
 
         foreach (string? item in items)
         {
-            if (item == null || item == SoloClass || item == FarmClass || FarmGear.Contains(item) || SoloGear.Contains(item))
+            if (string.IsNullOrEmpty(item) || item == SoloClass || item == FarmClass || FarmGear.Contains(item) || SoloGear.Contains(item))
                 continue;
 
             if (Bot.Inventory.IsEquipped(item) || Bot.House.IsEquipped(item))
@@ -1026,49 +1012,50 @@ public class CoreBots
                 Logger($"Can't bank an equipped item: {item}");
                 continue;
             }
-            else if ((!Bot.Inventory.Contains(item) || !Bot.House.Contains(item)) && Bot.Bank.Contains(item))
+
+            bool inBank = Bot.Bank.Contains(item);
+            bool inInventoryOrHouse = Bot.Inventory.Contains(item) || Bot.House.Contains(item);
+            if (inBank && !inInventoryOrHouse)
             {
                 Logger($"Item {item} is already in the bank, skipping it");
                 continue;
             }
-            else if (!Bot.Inventory.Items.Concat(Bot.House.Items).Any(x => x.Name == item))
+
+            ItemBase? inventoryItem = Bot.Inventory.Items.Concat(Bot.House.Items).FirstOrDefault(x => x?.Name == item);
+            if (inventoryItem == null)
             {
                 Logger($"{item} not found in inventory, skipping it");
                 continue;
             }
 
-            ItemBase? inventoryItem = Bot.Inventory.Items.Concat(Bot.House.Items).FirstOrDefault(x => x != null && x.Name == item);
-            bool itemIsForHouse = Bot.House.TryGetItem(item, out InventoryItem? _item) &&
-                                            _item != null &&
-                                            (_item.CategoryString == "House" || _item.CategoryString == "Wall Item" || _item.CategoryString == "Floor Item");
+            bool itemIsForHouse = Bot.House.TryGetItem(item, out InventoryItem? houseItem) &&
+                                  houseItem != null &&
+                                  (houseItem.CategoryString == "House" || houseItem.CategoryString == "Wall Item" || houseItem.CategoryString == "Floor Item");
 
-
-
-            // Check if item is in whitelist and not in blacklist or Extras
-            if ((inventoryItem?.Category != null && whiteList.Contains(inventoryItem.Category) || inventoryItem?.Coins == true) &&
-                !BankingBlackList.Contains(item) &&
-                !Extras.Contains(inventoryItem?.ID) &&
-                Bot.Inventory.Contains(item) ||
-                (itemIsForHouse && Bot.House.Contains(item) &&
-                _item?.Equipped != true))
+            // Check whitelist, blacklist, and Extras exclusions
+            if (((whiteList.Contains(inventoryItem.Category)) || inventoryItem.Coins) &&
+                !BankingBlackList.Contains(item) && !Extras.Contains(inventoryItem.ID) &&
+                (Bot.Inventory.Contains(item) || (itemIsForHouse && Bot.House.Contains(item) && houseItem?.Equipped != true)))
             {
                 if (!itemIsForHouse)
                 {
                     for (int i = 0; i < 5 && !Bot.Inventory.EnsureToBank(item); i++)
                         Sleep();
+
                     if (!Bot.Inventory.EnsureToBank(item) && !Bot.Bank.Contains(item))
                     {
                         Logger($"Failed to bank {item}, skipping it");
                         continue;
                     }
                 }
-                else if (itemIsForHouse)
+                else
                 {
-                    if (_item != null)
+                    if (houseItem != null)
                     {
-                        SendPackets($"%xt%zm%bankFromInv%{Bot.Map.RoomID}%{_item.ID}%{_item.CharItemID}%");
+                        SendPackets($"%xt%zm%bankFromInv%{Bot.Map.RoomID}%{houseItem.ID}%{houseItem.CharItemID}%");
                         Bot.Wait.ForTrue(() => !Bot.House.Contains(item), 20);
-                        if (Bot.House.Items.Any(x => x.Name == item))
+
+                        if (Bot.House.Items.Any(x => x?.Name == item))
                         {
                             Logger($"Failed to bank {item} in house bank, skipping it");
                             continue;
@@ -1082,61 +1069,40 @@ public class CoreBots
     }
 
     /// <summary>
-    /// Transfers specified items from the inventory to the bank by item ID.
+    /// Transfers specified items by ID from inventory/house to bank.
+    /// Skips equipped, blacklisted, or nonexistent items.
+    /// Retries up to 20 times on failures. Handles house items separately.
     /// </summary>
-    /// <param name="items">
-    /// An array of item IDs to move to the bank. Items are ignored if they are
-    /// equipped, excluded by the blacklist, or do not exist in the inventory.
-    /// </param>
-    /// <remarks>
-    /// Ensures only items from whitelisted categories or items marked as "Coins" are moved.
-    /// Retries each item transfer up to 20 times if an attempt fails and logs unsuccessful attempts.
-    /// House items are transferred separately to the house bank.
-    /// </remarks>
+    /// <param name="items">Item IDs to move to bank.</param>
     public void ToBank(params int[] items)
     {
-        if (items == null || !items.Any(x => x > 0))
-        {
+        if (items == null || !items.Any(id => id > 0))
             return;
-        }
 
         JumpWait();
 
-        // Whitelist categories and items
         List<ItemCategory> whiteList = new() { ItemCategory.Note, ItemCategory.Item, ItemCategory.Resource, ItemCategory.QuestItem };
-        int?[] Extras = { 18927, 38575 }; // Items that shouldn't be banked
+        int?[] Extras = { 18927, 38575 }; // Blacklisted item IDs
 
         foreach (int itemID in items)
         {
             if (itemID <= 0 || Extras.Contains(itemID) || Bot.Inventory.IsEquipped(itemID) || (Bot.House != null && Bot.House.IsEquipped(itemID)))
                 continue;
 
-            // Check if the item exists in Inventory or House
-            ItemBase? inventoryItem = Bot.Inventory.Items?.Concat(Bot.House?.Items ?? Enumerable.Empty<ItemBase>())
-                                         .FirstOrDefault(x => x != null && x.ID == itemID);
-
+            ItemBase? inventoryItem = Bot.Inventory.Items.Concat(Bot.House?.Items ?? Enumerable.Empty<ItemBase>())
+                                             .FirstOrDefault(x => x?.ID == itemID);
             if (inventoryItem == null)
             {
                 Logger($"Item with ID {itemID} not found in Inventory or House.");
                 continue;
             }
 
-            // Check if the item is equipped
-            if (Bot.Inventory.IsEquipped(itemID) || (Bot.House != null && Bot.House.IsEquipped(itemID)))
-            {
-                Logger($"Can't bank an equipped item: {inventoryItem?.Name ?? $"ID: {itemID}"}");
-                continue;
-            }
-
-            // Determine if it's a House item
             bool itemIsForHouse = Bot.House?.Items?.Any(x => x?.ID == itemID &&
                                                            (x.CategoryString == "House" ||
                                                             x.CategoryString == "Wall Item" ||
                                                             x.CategoryString == "Floor Item")) ?? false;
 
-            // Whitelist and Blacklist checks
-            if ((inventoryItem?.Category != null && whiteList.Contains(inventoryItem.Category)) ||
-                inventoryItem?.Coins == true &&
+            if ((whiteList.Contains(inventoryItem.Category) || inventoryItem.Coins) &&
                 !BankingBlackList.Contains(inventoryItem.Name))
             {
                 if (!itemIsForHouse)
@@ -1161,7 +1127,6 @@ public class CoreBots
                 }
                 else
                 {
-                    // Handle House Items
                     InventoryItem? houseItem = Bot.House?.Items?.FirstOrDefault(x => x?.ID == itemID);
                     if (houseItem != null)
                     {
@@ -1186,27 +1151,24 @@ public class CoreBots
     }
 
     /// <summary>
-    /// Transfers specified items from the inventory to the house bank by item name.
+    /// Transfers specified items by name from house inventory to house bank.
+    /// Skips equipped items, restricted classes, or nonexistent items.
     /// </summary>
-    /// <param name="items">
-    /// An array of item names to move to the house bank. Items are ignored if
-    /// they are equipped, set as restricted classes, or do not exist in the house inventory.
-    /// </param>
-    /// <remarks>
-    /// This method ensures each item is properly transferred to the house bank and
-    /// logs any unsuccessful attempts. Restricted classes are defined by the variables 
-    /// <c>SoloClass</c> and <c>FarmClass</c>, which are skipped during processing.
-    /// </remarks>
+    /// <param name="items">Item names to move to house bank.</param>
     public void ToHouseBank(params string[] items)
     {
-        if (!items.Any(x => !string.IsNullOrEmpty(x)))
+        if (items == null || !items.Any(name => !string.IsNullOrEmpty(name)))
             return;
 
         JumpWait();
 
         foreach (string? item in items)
         {
-            if (item == SoloClass || item == FarmClass || !Bot.House.Items.Any(x => x != null && x.Name == item && (!x.Coins || x.Equipped)))
+            if (string.IsNullOrEmpty(item) || item == SoloClass || item == FarmClass)
+                continue;
+
+            bool itemExists = Bot.House.Items.Any(x => x?.Name == item && (!x.Coins || !x.Equipped));
+            if (!itemExists)
                 continue;
 
             if (Bot.House.Contains(item))
@@ -1216,45 +1178,42 @@ public class CoreBots
                     Logger($"Failed to bank {item}, skipping it");
                     continue;
                 }
+
                 Logger($"{item} moved to house bank");
             }
         }
     }
 
     /// <summary>
-    /// Transfers specified items from the inventory to the house bank by item ID.
+    /// Transfers specified items by ID from house inventory to house bank.
+    /// Skips equipped items or nonexistent items.
     /// </summary>
-    /// <param name="items">
-    /// An array of item IDs to move to the house bank. Items are ignored if
-    /// they are equipped or do not exist in the house inventory.
-    /// </param>
-    /// <remarks>
-    /// This method performs a series of checks for each item ID to ensure it is
-    /// eligible for transfer. Equipped items are skipped, and each item is 
-    /// transferred and logged individually. Any unsuccessful attempts to move 
-    /// items are logged for review.
-    /// </remarks>
+    /// <param name="items">Item IDs to move to house bank.</param>
     public void ToHouseBank(params int[] items)
     {
-        if (items == null || items.Length == 0 || !items.Any(x => x != 0))
+        if (items == null || !items.Any(id => id > 0))
             return;
 
         JumpWait();
 
-        foreach (int item in items)
+        foreach (int itemID in items)
         {
-            // Skip items that are equipped or not AC tagged
-            if (item == 0 || Bot.House.Items.Any(x => x.ID == item && (x.Equipped || !x.Coins)))
+            if (itemID == 0)
                 continue;
 
-            if (Bot.House.Contains(item))
+            bool itemExists = Bot.House.Items.Any(x => x?.ID == itemID && (!x.Equipped && x.Coins));
+            if (!itemExists)
+                continue;
+
+            if (Bot.House.Contains(itemID))
             {
-                if (!Bot.House.EnsureToBank(item))
+                if (!Bot.House.EnsureToBank(itemID))
                 {
-                    Logger($"Failed to bank {item}, skipping it");
+                    Logger($"Failed to bank {itemID}, skipping it");
                     continue;
                 }
-                Logger($"{item} moved to house bank");
+
+                Logger($"{itemID} moved to house bank");
             }
         }
     }
@@ -1471,6 +1430,7 @@ public class CoreBots
         dynamic getData(int itemID, int shopItemID = 0)
         {
             dynamic[]? shopItems = Bot.Flash.GetGameObject<dynamic[]>("world.shopinfo.items");
+
             if (shopItems != null)
             {
                 foreach (dynamic i in shopItems)
@@ -1489,6 +1449,15 @@ public class CoreBots
         {
             if (item == null)
                 return false;
+
+            if (!HasSpace && !CheckInventory(item.ID, toInv: false))
+            {
+                // Attempt to bank something
+                BankACMisc(1);
+                // Recheck for space
+                if (!HasSpace)
+                    return false;
+            }
 
             //Achievement Check
             int achievementID = Bot.Flash.GetGameObject<int>("world.shopinfo.iIndex");
@@ -1631,27 +1600,22 @@ public class CoreBots
     /// </summary>
     /// <param name="map">The name of the map to join.</param>
     /// <param name="shopID">The ID of the shop to load.</param>
-    /// <param name="item">The shop item to check. If <c>null</c>, the method returns 0.</param>
+    /// <param name="item">The shop item to check. If <c>null</c>, returns 0.</param>
     /// <returns>
     /// The maximum quantity of the item that can be purchased, or 0 if the item is not found or an error occurs.
     /// </returns>
     /// <remarks>
-    ///This method joins the specified map, ensures the player is out of combat, loads the shop, and retrieves the item's maximum buy quantity. 
-    /// Ensure the shop and map names are correct before calling this method.
-    /// Example:
-    /// <code>
-    /// int maxQuantity = Core.MaxBuyQuant("map", shopID, Bot.Shops.Items.FirstOrDefault(x => x.ShopItemID == ShopItemID));
-    /// </code>
+    /// Joins the map, ensures the player is out of combat, loads the shop, and retrieves the item's maximum buy quantity.
     /// </remarks>
     public int MaxBuyQuant(string map, int shopID, ShopItem? item)
     {
         if (item == null)
-            return 0; // Return early if no item provided.
+            return 0;
 
         Join(map);
         Bot.Wait.ForMapLoad(map);
 
-        // Ensure player is out of combat
+        // Wait until out of combat, cancelling any targets
         while (!Bot.ShouldExit && Bot.Player.InCombat)
         {
             if (Bot.Player.HasTarget)
@@ -1660,28 +1624,30 @@ public class CoreBots
             Sleep();
         }
 
-        // Load shop data
+        // Load the specified shop with retries
         int retry = 0;
-        while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+        while (!Bot.ShouldExit && Bot.Shops.ID != shopID && retry < 20)
         {
             Bot.Shops.Load(shopID);
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
             Sleep(1000);
-            if (Bot.Shops.ID == shopID || retry == 20)
-                break;
-            else retry++;
+            retry++;
         }
-        retry = 0;
+        if (Bot.Shops.ID != shopID)
+        {
+            Logger($"Failed to load shop {shopID} after {retry} attempts.", "MaxBuyQuant");
+            return 0;
+        }
 
-        // Try to fetch shop item data with retries
+        // Attempt to fetch shop item data with retries
         dynamic? sItem = null;
         for (int i = 0; i < 5; i++)
         {
             sItem = InitializeWithRetries(() => GetShopItemData(item.ID, item.ShopItemID));
             if (sItem != null)
                 break;
-            Sleep(1000); // Wait before retrying
+            Sleep(1000);
         }
 
         if (sItem == null)
@@ -1690,10 +1656,11 @@ public class CoreBots
             return 0;
         }
 
-        Sleep(1000); // Extra delay to prevent race conditions
+        Sleep(1000); // Prevent potential race conditions
 
-        // Wait for BuyItem cooldown and fetch maximum buy quantity
         Bot.Wait.ForActionCooldown(GameActions.BuyItem);
+
+        // Deserialize and call Flash function to get max buy quantity
         return Bot.Flash.CallGameFunction<int>(
             "world.maximumShopBuys",
             JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(sItem))!
@@ -1703,6 +1670,9 @@ public class CoreBots
     /// <summary>
     /// Fetches the shop item data from the game's shop information.
     /// </summary>
+    /// <param name="itemID">The item ID to search for.</param>
+    /// <param name="shopItemID">Optional shop item ID to match (default 0 means ignore).</param>
+    /// <returns>The dynamic shop item data if found; otherwise, null.</returns>
     private dynamic? GetShopItemData(int itemID, int shopItemID = 0)
     {
         dynamic[]? shopItems = Bot.Flash.GetGameObject<dynamic[]>("world.shopinfo.items");
@@ -1716,14 +1686,13 @@ public class CoreBots
         {
             if (item?.ItemID == itemID &&
                 (shopItemID == 0 || item?.ShopItemID == shopItemID))
-            {
                 return item;
-            }
         }
 
         Logger($"Shop item data not found for ItemID {itemID}, ShopItemID {shopItemID}.", "GetShopItemData");
         return null;
     }
+
 
     private void _CheckInventorySpace()
     {
@@ -1772,57 +1741,6 @@ public class CoreBots
         }
     }
 
-
-    // private int _CalcBuyQuantity(ShopItem item, int requestedAmount)
-    // {
-    //     if (requestedAmount > item.MaxStack)
-    //     {
-    //         Logger($"Requested {requestedAmount}, but max stack for {item.Name} is {item.MaxStack}. Fix the calling script.", "BuyItem");
-    //         Bot.Stop(true);
-    //     }
-
-    //     int itemStackSize = item.Quantity;
-    //     int currentStock = Bot.Inventory.GetQuantity(item.ID);
-    //     int neededAmount = requestedAmount;
-    //     Logger($"itemStackSize: {itemStackSize}");
-    //     Logger($"requestedAmount: {requestedAmount}");
-    //     Logger($"neededAmount: {neededAmount}");
-
-    //     if (CheckInventory(item.ID, requestedAmount))
-    //     {
-    //         Logger($"Already have enough of {item.Name} ({currentStock}/{requestedAmount}).");
-    //         return 0;
-    //     }
-
-    //     // Round up to the nearest multiple of itemStackSize
-    //     int buyAmount = (int)Math.Ceiling((double)neededAmount / itemStackSize) * itemStackSize;
-
-    //     // Ensure buyAmount does not exceed MaxStack
-    //     int maxCanBuy = item.MaxStack - currentStock;
-    //     buyAmount = Math.Min(buyAmount, maxCanBuy - (maxCanBuy % itemStackSize)); // Adjust to nearest valid multiple
-
-    //     // If we still can't reach the requested amount, sell extra to make space
-    //     if (buyAmount < neededAmount)
-    //     {
-    //         int excess = (currentStock + buyAmount) % itemStackSize;
-    //         if (excess > 0)
-    //         {
-    //             Logger($"Selling {excess} {item.Name} to fit a proper stack.");
-    //             SellItem(item.Name, excess);
-    //             buyAmount += excess; // Now we can buy the exact amount
-    //         }
-    //     }
-
-    //     if (buyAmount <= 0)
-    //     {
-    //         Logger($"Cannot buy more {item.Name}, max stack reached ({currentStock}/{item.MaxStack}).");
-    //         return 0;
-    //     }
-
-    //     Logger($"Final purchase amount for {item.Name}: {buyAmount}");
-    //     return buyAmount;
-    // }
-
     private int _CalcBuyQuantity(ShopItem item, int requestedAmount)
     {
         if (requestedAmount > item.MaxStack)
@@ -1831,56 +1749,55 @@ public class CoreBots
             Bot.Stop(true);
         }
 
-        // Unbank it if its in bank
+        // Unbank the item if it's in bank but not in inventory
         if (Bot.Bank.Contains(item.ID) && !Bot.Inventory.Contains(item.ID))
             Unbank(item.ID);
 
         int itemStackSize = item.Quantity == 302500 ? 1 : item.Quantity;
-        // Cocant (make take everything into a giant array, and then find the current quantity if its null, default to 0)
-        int currentStock = Bot.Inventory.Items
-        .Concat(Bot.Bank.Items)
-        .Concat(Bot.House.Items)
-        .Concat(Bot.House.Items)
-        .Concat(Bot.TempInv.Items) // Because fucking why not
-        .FirstOrDefault(x => x.ID == item.ID)?.Quantity ?? 0;
-        // int neededAmount = requestedAmount - currentStock; // Calculate how much more is needed
 
-        // Check if all requirements are met before proceeding
+        // Aggregate all relevant inventories and get current quantity for the item
+        int currentStock = Bot.Inventory.Items
+            .Concat(Bot.Bank.Items)
+            .Concat(Bot.House.Items)
+            .Concat(Bot.TempInv.Items)
+            .FirstOrDefault(x => x.ID == item.ID)?.Quantity ?? 0;
+
+        // Check requirements for the item before purchasing
         foreach (var req in item.Requirements)
         {
-            int totalNeeded = requestedAmount / itemStackSize * req.Quantity;  // Adjust required amount for stack size
+            int totalNeeded = requestedAmount / itemStackSize * req.Quantity;
 
-            // Cocant (make take everything into a giant array, and then find the current quantity if its null, default to 0)
-            int reqCurrent = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).Concat(Bot.TempInv.Items /* because fucking why not*/ ).FirstOrDefault(x => x.ID == req.ID)?.Quantity ?? 0; //
+            int reqCurrent = Bot.Inventory.Items
+                .Concat(Bot.Bank.Items)
+                .Concat(Bot.House.Items)
+                .Concat(Bot.TempInv.Items)
+                .FirstOrDefault(x => x.ID == req.ID)?.Quantity ?? 0;
 
-            Logger($"req: {req.Name}, totalNeeded: {totalNeeded}, reqCurrent: {reqCurrent}");
+            Logger($"Requirement {req.Name}: needed {totalNeeded}, current {reqCurrent}");
             if (reqCurrent < totalNeeded)
             {
                 Logger($"Missing {req.Name} ({reqCurrent}/{totalNeeded}). Cannot proceed with purchase.");
-                return 0; // Stop the buy process if requirements are not met
+                return 0; // Requirements not met; abort purchase
             }
         }
 
-        // Calculate the buy amount, ensuring we don't exceed the required total
+        // Calculate how many items to buy in multiples of the stack size
         int buyAmount = (int)Math.Ceiling((double)requestedAmount / itemStackSize) * itemStackSize;
 
-        // Ensure buyAmount does not exceed the maximum stack
+        // Ensure buyAmount does not exceed remaining max stack capacity
         int maxCanBuy = item.MaxStack - currentStock;
-        buyAmount = Math.Min(buyAmount, maxCanBuy - (maxCanBuy % itemStackSize)); // Round to nearest valid stack size
+        buyAmount = Math.Min(buyAmount, maxCanBuy - (maxCanBuy % itemStackSize)); // Round down to valid stack multiple
 
-        // Ensure that the total bought amount matches the requestedAmount
         if (buyAmount + currentStock > requestedAmount)
-        {
             buyAmount = (int)Math.Ceiling((double)requestedAmount / itemStackSize) * itemStackSize;
-        }
 
         if (buyAmount <= 0)
         {
             Logger($"Cannot buy more {item.Name}, max stack reached ({currentStock}/{item.MaxStack}).");
-            return 0; // Stop if no further items can be bought
+            return 0;
         }
 
-        // Disable Logger till needed
+        // Uncomment for debugging final buy amount
         // Logger($"Final purchase amount for {item.Name}: {buyAmount}");
         return buyAmount;
     }
@@ -2750,13 +2667,28 @@ public class CoreBots
             return false;
         }
 
-        bool hasAllItems = true;
+        if (!quest.Requirements.All(req => Bot.Inventory.Contains(req.ID, req.Quantity)))
+        {
+            string missing = string.Join(", ", quest.Requirements
+                .Where(req => !CheckInventory(req.ID, req.Quantity))
+                .Select(req => $"\"{req.Name}\""));
+
+            if (quest.Requirements.Any(x => Bot.Bank.Contains(x.ID)))
+            {
+                Logger($"Missing turnin requirements, and it seems to be in the bank, restart the script *or* stop the script, unbank w/e it is, and restart the script.");
+            }
+            else Logger($"Missing {missing}");
+            return false;
+        }
+
+        bool hasAllRewardItems = true;
         bool questCompleted = false;
 
         // Filter the rewards based on the itemList if provided
         IEnumerable<ItemBase> rewards = itemList == null
             ? quest.Rewards
             : quest.Rewards.Where(item => itemList.Contains(item.Name));
+
 
         foreach (ItemBase item in rewards)
         {
@@ -2766,11 +2698,16 @@ public class CoreBots
             // Check if no space in inventory and item isn't in the inventory
             if (!HasSpace && !CheckInventory(item.ID, toInv: false))
             {
-                Logger($"Skipping item \"{item.Name}\" from quest [{questID}] due to not having space, and it's not being in the inventory.");
-                continue;
+                // Attempt to make a spot by banking an item.
+                BankACMisc(1);
+                if (!HasSpace)
+                {
+                    Logger($"Skipping item \"{item.Name}\" from quest [{questID}] due to not having space, and it's not being in the inventory.");
+                    continue;
+                }
             }
 
-            hasAllItems = false;
+            hasAllRewardItems = false;
 
             if (!Bot.Quests.EnsureComplete(questID, item.ID))
                 continue;
@@ -2789,7 +2726,7 @@ public class CoreBots
             questCompleted = true;
         }
 
-        if (hasAllItems)
+        if (hasAllRewardItems)
         {
             Logger($"Quest [{questID}] not completed. All rewards already owned.");
             return false;
@@ -3912,7 +3849,7 @@ public class CoreBots
 
         if (log && item != null)
             FarmingLogger(item, quant);
-            
+
         Bot.Options.AggroAllMonsters = false;
         //fuck it lets test it.
         if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
@@ -6106,14 +6043,20 @@ public class CoreBots
     }
 
     /// <summary>
-    /// Banks miscellaneous AC-tagged inventory items.
+    /// Banks miscellaneous AC-tagged inventory items from specific allowed categories,
+    /// excluding equipped items, blacklisted names, and explicitly exempt item IDs.
+    /// Also includes <see cref="ItemCategory.ServerUse"/> if no boosts are active,
+    /// and optional CBO flags (e.g., doGoldBoost, doRepBoost) are disabled.
     /// </summary>
-    public void BankACMisc()
+    /// <param name="RequiredSpaces">
+    /// Optional limit on how many items to bank; if set to 0, all matching items are banked.
+    /// </param>
+    public void BankACMisc(int RequiredSpaces = 0)
     {
-        // Items to never bank
+        // Items to never bank (e.g., important consumables)
         int[] exemptIDs = { 18927, 38575 }; // Treasure Potion, Dark Potion
 
-        // Allowed categories for inventory items
+        // Allowed inventory categories
         List<ItemCategory> allowedCategories = new()
     {
         ItemCategory.Note,
@@ -6122,13 +6065,16 @@ public class CoreBots
         ItemCategory.QuestItem
     };
 
-        // Optionally include ServerUse if boosts aren't active
-        if (!Bot.Boosts.Enabled && (CBO_Active() || !new[] { "doGoldBoost", "doClassBoost", "doRepBoost", "doExpBoost" }
-            .Any(flag => CBOBool(flag, out bool enabled) && enabled)))
+        // Include ServerUse if boosts are not active
+        if (!Bot.Boosts.Enabled &&
+            (CBO_Active() || !new[] { "doGoldBoost", "doClassBoost", "doRepBoost", "doExpBoost" }
+                .Any(flag => CBOBool(flag, out bool enabled) && enabled)))
+        {
             allowedCategories.Add(ItemCategory.ServerUse);
+        }
 
-        // --- Inventory: Misc AC items to bank ---
-        var toBank = Bot.Inventory.Items
+        // Filter AC-tagged misc items to bank
+        var toBankItems = Bot.Inventory.Items
             .Where(item =>
                 item is not null &&
                 item.Coins &&
@@ -6136,14 +6082,19 @@ public class CoreBots
                 allowedCategories.Contains(item.Category) &&
                 !BankingBlackList.Contains(item.Name) &&
                 !exemptIDs.Contains(item.ID))
-            .Select(item => item.ID)
             .ToArray();
 
-        if (toBank.Length > 0)
-        {
-            Logger("Banking misc AC items", toBank.Length + " items");
-            ToBank(toBank);
-        }
+        if (toBankItems.Length == 0)
+            return;
+
+        var selected = RequiredSpaces > 0
+            ? toBankItems.Take(RequiredSpaces).ToArray()
+            : toBankItems;
+
+        string names = string.Join(", ", selected.Select(item => $"\"{item.Name}\""));
+        Logger($"Banking misc AC items [{selected.Length} items]: {names}");
+
+        ToBank(selected.Select(item => item.ID).ToArray());
     }
 
     /// <summary>
@@ -6166,21 +6117,44 @@ public class CoreBots
 
 
     /// <summary>
-    /// Banks unenhanced AdventureCoins (AC) gear based on specified whitelist and conditions.
+    /// Banks unenhanced AdventureCoins (AC) gear items from whitelisted categories or weapons,
+    /// excluding equipped items and those in SoloGear or FarmGear.
+    /// Optionally limits how many items are banked based on RequiredSpaces.
     /// </summary>
-    public void BankACUnenhancedGear()
+    /// <param name="RequiredSpaces">Max number of items to bank; 0 means all.</param>
+    public void BankACUnenhancedGear(int RequiredSpaces = 0)
     {
-        List<ItemCategory> Whitelisted = new() { ItemCategory.Class, ItemCategory.Helm, ItemCategory.Cape };
-        ToBank(Bot.Inventory.Items.Where(i =>
-            (Whitelisted.Contains(i.Category) ||
-            i.ItemGroup == "Weapon") &&
-            i.Coins &&
-            i.EnhancementLevel == 0 &&
-            !i.Equipped &&
-            !SoloGear.Contains(i.Name) &&
-            !FarmGear.Contains(i.Name)
-        ).Select(i => i.ID).ToArray());
+        List<ItemCategory> whitelistedCategories = new()
+    {
+        ItemCategory.Class,
+        ItemCategory.Helm,
+        ItemCategory.Cape
+    };
+
+        var toBankItems = Bot.Inventory.Items
+            .Where(item =>
+                item is not null &&
+                item.Coins &&
+                item.EnhancementLevel == 0 &&
+                !item.Equipped &&
+                (whitelistedCategories.Contains(item.Category) || item.ItemGroup == "Weapon") &&
+                !SoloGear.Contains(item.Name) &&
+                !FarmGear.Contains(item.Name))
+            .ToArray();
+
+        if (toBankItems.Length == 0)
+            return;
+
+        var selected = RequiredSpaces > 0
+            ? toBankItems.Take(RequiredSpaces).ToArray()
+            : toBankItems;
+
+        string namesWithQty = string.Join(", ", selected.Select(i => $"\"{i.Name} x{i.Quantity}\""));
+
+        Logger($"Banking unenhanced AC gear [{selected.Length} items]: {namesWithQty}");
+        ToBank(selected.Select(i => i.ID).ToArray());
     }
+
 
     public Option<bool> SkipOptions = new("SkipOption", "Skip this window next time", "You will be able to return to this screen via [Scripts] -> [Edit Script Options] if you wish to change anything.", false);
     public bool DontPreconfigure = true;
