@@ -43,8 +43,8 @@ public class Butler2
         new Option<bool>("unlockAllMaps", "Unlock All Maps", "Grants access to all maps, even if your account hasn't completed the required quests.", false)
     };
 
-    private CancellationTokenSource? ButlerTokenSource;
-    private CancellationToken _cancellationToken;
+    CancellationTokenSource? ButlerTokenSource;
+    CancellationToken _cancellationToken;
 
     int gotoTry = 0;
     const int maxTry = 20;
@@ -58,17 +58,18 @@ public class Butler2
     bool initializationDone = false;
     int RoomNumber = 0;
     public bool b_shouldHibernate = true;
+    List<string> CustomMaps = new();
 
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions(disableClassSwap: true);
-        DoButler(Bot.Config!.Get<string>("playerName"));
+        DoButler(Bot.Config!.Get<string>("playerName"), cancellationToken: _cancellationToken);
 
         Core.SetOptions(false, disableClassSwap: true);
     }
 
 
-    public void DoButler(string? playerName, bool log = false)
+    public void DoButler(string? playerName, bool log = false, CancellationToken cancellationToken = default)
     {
         // Core.DL_Enable();
         // Initialize the CancellationTokenSource and get the Token
@@ -119,12 +120,15 @@ public class Butler2
             Army._attackPriority.AddRange(attackPriorityItems);
         }
 
-        // Process CustomLockedMapList and add to Army._CustomLockedMapList
         if (!string.IsNullOrEmpty(CustomLockedMapList))
         {
-            var lockedMaps = CustomLockedMapList.Split(',', StringSplitOptions.TrimEntries).Where(s => !string.IsNullOrEmpty(s)).ToArray();  // Convert to array
-            Army._LockedMapsList.AddRange(lockedMaps);
+            CustomMaps = CustomLockedMapList
+                .Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+
+            Core.Logger($"Custom locked maps added: {string.Join(", ", CustomMaps)}");
         }
+
 
         // Process quests and register them
         if (!string.IsNullOrEmpty(quests))
@@ -143,13 +147,13 @@ public class Butler2
             UnlockAllMaps();
         }
 
-        StartButler(playerName, roomNr);
+        StartButler(playerName, roomNr, cancellationToken: cancellationToken);
 
         // --- Call GoToPlayer at script start if not in same map as player ---
         if (!string.IsNullOrEmpty(playerName) && !Bot.Map.PlayerNames.Contains(playerName))
         {
             isGoto = true;
-            Task.Run(() => GoToPlayer(playerName, _cancellationToken));
+            Task.Run(() => GoToPlayer(playerName, _cancellationToken), cancellationToken);
         }
         Core.Logger($"Butler started for player {playerName}");
         Core.Sleep(5000);
@@ -174,7 +178,7 @@ public class Butler2
             Bot.Wait.ForMapLoad(Bot.Map.Name);
 
             if (!Bot.Map.TryGetPlayer(playerName, out PlayerInfo? player) || isGoto)
-                Task.Run(() => GoToPlayer(playerName, _cancellationToken));
+                Task.Run(() => GoToPlayer(playerName, _cancellationToken), cancellationToken);
 
             if (isGoto || LockedZone)
             {
@@ -196,10 +200,10 @@ public class Butler2
 
             Core.Sleep();
         }
-        StopButler();
+        StopButler(cancellationToken);
     }
 
-    public void StartButler(string? playerName, int roomnr, int hibernateTimer = 1)
+    public void StartButler(string? playerName, int roomnr, int hibernateTimer = 1, CancellationToken cancellationToken = default)
     {
         ButlerTokenSource = new CancellationTokenSource();
         _cancellationToken = ButlerTokenSource.Token;
@@ -284,7 +288,7 @@ public class Butler2
                     {
                         LockedZone = false;
                         isGoto = false;
-                        Army.LockedMaps(playerName, RoomNumber: RoomNumber);
+                        Army.LockedMaps(playerName, ButlerTokenSource.IsCancellationRequested, RoomNumber, CustomMaps);
                     }
                 }
 
@@ -318,7 +322,7 @@ public class Butler2
         }, _cancellationToken);
     }
 
-    public void GoToPlayer(string name, CancellationToken cancellationToken)
+    public void GoToPlayer(string name, CancellationToken cancellationToken = default)
     {
         ButlerTokenSource = new CancellationTokenSource();
         _cancellationToken = ButlerTokenSource.Token;
@@ -332,7 +336,7 @@ public class Butler2
         if (ButlerTokenSource?.IsCancellationRequested != false)
         {
             Core.Logger("Token canceled.");
-            StopButler();
+            StopButler(cancellationToken);
         }
 
         if (Bot.Map.PlayerExists(name))
@@ -350,7 +354,7 @@ public class Butler2
 
     }
 
-    bool Hibernate(string? playername)
+    bool Hibernate(string? playername, CancellationToken cancellationToken = default)
     {
         ButlerTokenSource = new();
         _cancellationToken = ButlerTokenSource.Token;
@@ -358,7 +362,7 @@ public class Butler2
         if (string.IsNullOrWhiteSpace(playername) || Bot.ShouldExit || !Bot.Player.LoggedIn)
         {
             Core.Logger("You need to set a player name.");
-            StopButler();
+            StopButler(cancellationToken);
             Bot.Stop(false);
             return false;
         }
@@ -400,7 +404,7 @@ public class Butler2
         return true;
     }
 
-    public void StopButler()
+    public void StopButler(CancellationToken cancellationToken = new())
     {
         if (ButlerTokenSource != null)
         {

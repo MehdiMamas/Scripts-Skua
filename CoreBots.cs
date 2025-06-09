@@ -8738,6 +8738,23 @@ public class CoreBots
 
     private List<string> CBOList = new();
 
+    public string MeasureExecutionTime(Action action)
+    {
+        Stopwatch sw = new();
+        sw.Start();
+        action();
+        sw.Stop();
+
+        var elapsed = sw.Elapsed;
+        string result = $"Min: {elapsed.Minutes} Sec: {elapsed.Seconds} Ms: {elapsed.Milliseconds}";
+
+        Logger(result, "MeasureExecutionTime");
+
+        return result;
+    }
+
+
+
     public bool OneTimeMessage(string internalName, string message, bool messageBox = true, bool forcedMessageBox = false, bool yesAndNo = false)
     {
         if (OTM_Contains(internalName))

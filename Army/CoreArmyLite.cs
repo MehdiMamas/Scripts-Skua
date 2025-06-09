@@ -1568,28 +1568,55 @@ public class CoreArmyLite
         }
     }
 
-    public void LockedMaps(string Pname, bool Cancel = false, int RoomNumber = 100000)
+    public void LockedMaps(string Pname, bool Cancel = false, int RoomNumber = 100000, List<string>? LockedMapList = null)
     {
+        LockedMapList ??= new();
+        LockedMapList.AddRange(_LockedMapsList.ToArray());
         if (Cancel || Bot.Map.PlayerExists(Pname))
         {
             Core.Logger($"Already at {Pname} or Cancel is true, stopping LockedMaps.", "LockedMaps");
             return;
         }
 
+        // Flatten any comma-separated entries
+        LockedMapList = LockedMapList
+            .SelectMany(entry => entry.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
+            .ToList();
+
+        _LockedMapsList.AddRange(LockedMapList.Where(map => !_LockedMapsList.Contains(map)));
+
+        if (_LockedMapsList.Count > 0)
+            Core.Logger($"Custom locked maps added: {string.Join(", ", LockedMapList)}");
+
+
         if (Pname != null)
             b_playerName = Pname;
-
 
         string playerLogPath = Path.Combine(CoreBots.ButlerLogDir, b_playerName + ".txt");
         if (File.Exists(playerLogPath))
         {
+            PlayerInfo? foundPlayer = null;
             string? targetMap = File.ReadLines(playerLogPath).FirstOrDefault();
             if (targetMap != null)
             {
-                Core.Join($"{targetMap}-{RoomNumber}");
-                if (Bot.Map.PlayerExists(b_playerName!))
+                if (Bot.Map.Name != targetMap)
                 {
-                    Core.Logger($"Found {b_playerName} in /{Bot.Map.Name}");
+                    Core.JumpWait();
+                    Bot.Map.Join($"{targetMap}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Wait.ForMapLoad(targetMap);
+                }
+                Core.MeasureExecutionTime(() =>
+              {
+                  if (Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                  {
+                      foundPlayer = _PO;
+                      return;
+                  }
+              });
+
+                if (foundPlayer != null)
+                {
+                    Core.Logger($"Found {b_playerName} in /{targetMap}");
                     return;
                 }
             }
@@ -1597,7 +1624,7 @@ public class CoreArmyLite
 
         string[] NonMemMaps = { "tercessuinotlim", "doomvaultb", "doomvault", "shadowrealmpast", "battlegrounda", "battlegroundb", "battlegroundc", "battlegroundd", "battlegrounde", "battlegroundf", "doomwood", "shadowrealm", "confrontation", "darkoviaforest", "ledgermayne", "hollowdeep", "hyperium", "willowcreek", "voidflibbi", "voidnightbane", "championdrakath", "ultraezrajal", "ultrawarden", "ultraengineer", "ultradage", "ultratyndarius", "ultranulgath", "ultradrago", "ultradarkon", "ultraspeaker" };
         string[] MemMaps = { "shadowlordpast", "binky", "superlowe" };
-        string[] EventMaps = { /* e.g., "yoshino" */ };
+        string[] EventMaps = Array.Empty<string>();
 
         var levelLockedMaps = new[]
         {
@@ -1608,65 +1635,120 @@ public class CoreArmyLite
         new { Map = "voidnerfkitten", LevelRequired = 80 }
     };
 
-        int maptry = 0;
-        int mapCount = _LockedMapsList.Count == 0
+        int maptry = 1;
+        int mapCount = LockedMapList.Count == 0
+        // If count = 0, add all resticted maps, else do the custom maps only.
             ? (Core.IsMember ? NonMemMaps.Length + MemMaps.Length + EventMaps.Length + levelLockedMaps.Length
                              : NonMemMaps.Length + EventMaps.Length + levelLockedMaps.Length)
-            : _LockedMapsList.Count;
+            : LockedMapList.Count;
 
-        if (_LockedMapsList.Count == 0)
+        if (LockedMapList.Count == 0)
         {
             foreach (string map in EventMaps)
             {
                 if (Bot.ShouldExit)
                     return;
+
                 if (!Core.isSeasonalMapActive(map)) continue;
 
-                Core.Logger($"[{maptry++:D2}/{mapCount}] Searching /{map}", "LockedZoneHandler");
+                PlayerInfo? foundPlayer = null;
+                Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => LockedMapList");
+
                 if (Bot.Map.Name != map)
-                    Core.Join($"{map}-{RoomNumber}");
+                {
+                    Bot.Map.Join($"{map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Wait.ForMapLoad(map);
+                }
+
                 Core.Sleep();
-                if (Bot.Map.PlayerExists(b_playerName!))
+
+                Core.MeasureExecutionTime(() =>
+                {
+                    if (Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    {
+                        foundPlayer = _PO;
+                        return;
+                    }
+                });
+
+                if (foundPlayer != null)
                 {
                     Core.Logger($"Found {b_playerName} in /{map}");
                     return;
                 }
+                else continue;
             }
 
             foreach (var mapInfo in levelLockedMaps)
             {
                 if (Bot.ShouldExit)
                     return;
+
                 if (Bot.Player.Level < mapInfo.LevelRequired)
                 {
                     Core.Logger($"Level too low for /{mapInfo.Map} (required: {mapInfo.LevelRequired}, current: {Bot.Player.Level})");
                     continue;
                 }
 
-                Core.Logger($"[{maptry++:D2}/{mapCount}] Searching /{mapInfo.Map}", "LockedZoneHandler");
+                PlayerInfo? foundPlayer = null;
+                Core.Logger($"[{maptry++:D2}/{mapCount:D2}] Searching /{mapInfo.Map}", "LockedZoneHandler =>  !LockedMapList");
+
                 if (Bot.Map.Name != mapInfo.Map)
-                    Core.Join($"{mapInfo.Map}-{RoomNumber}");
+                {
+                    Bot.Map.Join($"{mapInfo.Map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Wait.ForMapLoad(mapInfo.Map);
+                }
+
                 Core.Sleep();
-                if (Bot.Map.PlayerExists(b_playerName!))
+
+                Core.MeasureExecutionTime(() =>
+                {
+                    if (Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    {
+                        foundPlayer = _PO;
+                        return;
+                    }
+                });
+
+                if (foundPlayer != null)
                 {
                     Core.Logger($"Found {b_playerName} in /{mapInfo.Map}");
                     return;
                 }
+                else continue;
             }
 
             foreach (string map in NonMemMaps)
             {
                 if (Bot.ShouldExit)
                     return;
-                Core.Logger($"[{maptry++:D2}/{mapCount}] Searching /{map}", "LockedZoneHandler");
+
+                Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => LockedMapList");
+
+                PlayerInfo? foundPlayer = null;
                 if (Bot.Map.Name != map)
-                    Core.Join($"{map}-{RoomNumber}");
+                {
+                    Bot.Map.Join($"{map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Wait.ForMapLoad(map);
+                }
+
                 Core.Sleep();
-                if (Bot.Map.PlayerExists(b_playerName!))
+
+                Core.MeasureExecutionTime(() =>
+                {
+                    if (Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    {
+                        foundPlayer = _PO;
+                        return;
+                    }
+                });
+
+                if (foundPlayer != null)
                 {
                     Core.Logger($"Found {b_playerName} in /{map}");
                     return;
                 }
+                else continue;
             }
 
             if (Core.IsMember)
@@ -1675,15 +1757,33 @@ public class CoreArmyLite
                 {
                     if (Bot.ShouldExit)
                         return;
-                    Core.Logger($"[{maptry++:D2}/{mapCount}] Searching /{map}", "LockedZoneHandler");
+
+                    PlayerInfo? foundPlayer = null;
+                    Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => LockedMapList");
+
                     if (Bot.Map.Name != map)
-                        Core.Join($"{map}-{RoomNumber}");
+                    {
+                        Bot.Map.Join($"{map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                        Bot.Wait.ForMapLoad(map);
+                    }
+
                     Core.Sleep();
-                    if (Bot.Map.PlayerExists(b_playerName!))
+
+                    Core.MeasureExecutionTime(() =>
+                {
+                    if (Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    {
+                        foundPlayer = _PO;
+                        return;
+                    }
+                });
+
+                    if (foundPlayer != null)
                     {
                         Core.Logger($"Found {b_playerName} in /{map}");
                         return;
                     }
+                    else continue;
                 }
             }
         }
@@ -1691,17 +1791,35 @@ public class CoreArmyLite
         {
             foreach (string map in _LockedMapsList)
             {
-                if (Bot.ShouldExit)
+                if (Bot.ShouldExit || LockedMapList.Count <= 0)
                     return;
-                Core.Logger($"[{maptry++:D2}/{mapCount}] Searching /{map}", "LockedZoneHandler");
+
+                Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => Custom LockedMapList");
+
+                PlayerInfo? foundPlayer = null;
                 if (Bot.Map.Name != map)
-                    Core.Join($"{map}-{RoomNumber}");
+                {
+                    Bot.Map.Join($"{map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Wait.ForMapLoad(map);
+                }
+
                 Core.Sleep();
-                if (Bot.Map.PlayerExists(b_playerName!))
+
+                Core.MeasureExecutionTime(() =>
+                {
+                    if (Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    {
+                        foundPlayer = _PO;
+                        return;
+                    }
+                });
+
+                if (foundPlayer != null)
                 {
                     Core.Logger($"Found {b_playerName} in /{map}");
                     return;
                 }
+                else continue;
             }
         }
 
