@@ -33,8 +33,12 @@ public class LordOfOrder
 
     public void GetLoO(bool rankUpClass = true, bool getExtras = false)
     {
+
+        // LOO Quest ItemID: 50741
+        // LOO Collector Chest ItemID: 50576
+
         // Check if the item is already in inventory or if extras are needed
-        if ((Core.CheckInventory(50741, toInv: false) && !getExtras) ||
+        if ((Core.CheckInventory(new[] { 50741, 50576 }, any: true, toInv: false) && !getExtras) ||
             (getExtras && Core.CheckInventory(Core.QuestRewards(7165), toInv: false)))
         {
             if (rankUpClass)
