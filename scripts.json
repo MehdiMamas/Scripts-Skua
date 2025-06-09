@@ -533,7 +533,7 @@
       "khasaanda"
     ],
     "path": "Dailies/LordOfOrder.cs",
-    "size": 10296,
+    "size": 10406,
     "fileName": "LordOfOrder.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Dailies/LordOfOrder.cs"
   },
@@ -772,9 +772,33 @@
       "null"
     ],
     "path": "Hollowborn/CoreHollowborn.cs",
-    "size": 2355,
+    "size": 4365,
     "fileName": "CoreHollowborn.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/CoreHollowborn.cs"
+  },
+  {
+    "name": "Hollowborn Class Preparation",
+    "description": "Automates the farming of essential materials for the Hollowborn class, including Hollowborn, Legion, and Soul-based items. Not a full guide but enough to prepare for major requirements.",
+    "tags": [
+      "hollowborn",
+      "class",
+      "preparation",
+      "soul essence",
+      "hollow soul",
+      "legion",
+      "farming",
+      "lich king",
+      "dark caster",
+      "lae",
+      "writ",
+      "residue",
+      "fangs",
+      "claws"
+    ],
+    "path": "Hollowborn/HBClassPrep.cs",
+    "size": 4245,
+    "fileName": "HBClassPrep.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HBClassPrep.cs"
   },
   {
     "name": "coin collector set",
