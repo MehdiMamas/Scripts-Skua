@@ -8398,7 +8398,7 @@
       "null"
     ],
     "path": "Other/MergeShops/MirrorRealmMerge.cs",
-    "size": 9307,
+    "size": 9260,
     "fileName": "MirrorRealmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/MirrorRealmMerge.cs"
   },
@@ -11519,7 +11519,7 @@
       "paladin"
     ],
     "path": "Other/Weapons/ShadowReaperOfDoom.cs",
-    "size": 1330,
+    "size": 1295,
     "fileName": "ShadowReaperOfDoom.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Weapons/ShadowReaperOfDoom.cs"
   },
@@ -20287,7 +20287,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 871600,
+    "size": 871553,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -22191,7 +22191,7 @@
       "realm"
     ],
     "path": "Army/Various/ArmyMirrorRealmToken.cs",
-    "size": 2277,
+    "size": 2238,
     "fileName": "ArmyMirrorRealmToken.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/Various/ArmyMirrorRealmToken.cs"
   },
