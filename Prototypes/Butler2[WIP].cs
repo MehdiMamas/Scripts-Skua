@@ -59,6 +59,7 @@ public class Butler2
     int RoomNumber = 0;
     public bool b_shouldHibernate = true;
     List<string> CustomMaps = new();
+    List<string> attackPriorityItems = new();
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -116,8 +117,12 @@ public class Butler2
         // Process attackPriority and add to Army._attackPriority
         if (!string.IsNullOrEmpty(attackPriority))
         {
-            var attackPriorityItems = attackPriority.Split(',', StringSplitOptions.TrimEntries).Where(s => !string.IsNullOrEmpty(s)).ToArray();
+            attackPriorityItems = attackPriority
+                .Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+
             Army._attackPriority.AddRange(attackPriorityItems);
+            Core.Logger($"Attack Prio. added: {string.Join(", ", attackPriorityItems)}");
         }
 
         if (!string.IsNullOrEmpty(CustomLockedMapList))
@@ -186,11 +191,8 @@ public class Butler2
                 Bot.Wait.ForTrue(() => player != null, 20);
             }
 
-            if (Army._attackPriority.Count > 0)
-            {
-                if (!Bot.Combat.StopAttacking)
-                    Army.PriorityAttack();
-            }
+            if (attackPriorityItems.Count > 0 && !Bot.Combat.StopAttacking)
+                Army.PriorityAttack(attackPriorityItems);
             else if (!Bot.Combat.StopAttacking)
                 Bot.Combat.Attack("*");
 

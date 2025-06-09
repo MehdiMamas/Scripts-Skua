@@ -1402,8 +1402,15 @@ public class CoreArmyLite
 
                 if (!string.IsNullOrEmpty(attackPriority))
                 {
+                    List<string> Mons = new();
+                    if (!string.IsNullOrEmpty(attackPriority))
+                    {
+                        var attackPriorityItems = attackPriority
+                            .Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                        Mons.AddRange(attackPriorityItems);
+                    }
                     if (!Bot.Combat.StopAttacking)
-                        PriorityAttack();
+                        PriorityAttack(Mons);
                 }
                 #endregion ignore this
                 else
@@ -1572,6 +1579,8 @@ public class CoreArmyLite
     {
         LockedMapList ??= new();
         LockedMapList.AddRange(_LockedMapsList.ToArray());
+        PlayerInfo? foundPlayer = null;
+        GC.Collect();
         if (Cancel || Bot.Map.PlayerExists(Pname))
         {
             Core.Logger($"Already at {Pname} or Cancel is true, stopping LockedMaps.", "LockedMaps");
@@ -1595,7 +1604,6 @@ public class CoreArmyLite
         string playerLogPath = Path.Combine(CoreBots.ButlerLogDir, b_playerName + ".txt");
         if (File.Exists(playerLogPath))
         {
-            PlayerInfo? foundPlayer = null;
             string? targetMap = File.ReadLines(playerLogPath).FirstOrDefault();
             if (targetMap != null)
             {
@@ -1651,7 +1659,6 @@ public class CoreArmyLite
 
                 if (!Core.isSeasonalMapActive(map)) continue;
 
-                PlayerInfo? foundPlayer = null;
                 Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => LockedMapList");
 
                 if (Bot.Map.Name != map)
@@ -1669,7 +1676,7 @@ public class CoreArmyLite
                         foundPlayer = _PO;
                         return;
                     }
-                });
+                }, $"{b_playerName} found in: ");
 
                 if (foundPlayer != null)
                 {
@@ -1690,7 +1697,6 @@ public class CoreArmyLite
                     continue;
                 }
 
-                PlayerInfo? foundPlayer = null;
                 Core.Logger($"[{maptry++:D2}/{mapCount:D2}] Searching /{mapInfo.Map}", "LockedZoneHandler =>  !LockedMapList");
 
                 if (Bot.Map.Name != mapInfo.Map)
@@ -1708,7 +1714,7 @@ public class CoreArmyLite
                         foundPlayer = _PO;
                         return;
                     }
-                });
+                }, $"{b_playerName} found in: ");
 
                 if (foundPlayer != null)
                 {
@@ -1725,7 +1731,6 @@ public class CoreArmyLite
 
                 Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => LockedMapList");
 
-                PlayerInfo? foundPlayer = null;
                 if (Bot.Map.Name != map)
                 {
                     Bot.Map.Join($"{map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
@@ -1741,7 +1746,7 @@ public class CoreArmyLite
                         foundPlayer = _PO;
                         return;
                     }
-                });
+                }, $"{b_playerName} found in: ");
 
                 if (foundPlayer != null)
                 {
@@ -1758,7 +1763,6 @@ public class CoreArmyLite
                     if (Bot.ShouldExit)
                         return;
 
-                    PlayerInfo? foundPlayer = null;
                     Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => LockedMapList");
 
                     if (Bot.Map.Name != map)
@@ -1776,7 +1780,7 @@ public class CoreArmyLite
                         foundPlayer = _PO;
                         return;
                     }
-                });
+                }, $"{b_playerName} found in: ");
 
                     if (foundPlayer != null)
                     {
@@ -1796,7 +1800,6 @@ public class CoreArmyLite
 
                 Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => Custom LockedMapList");
 
-                PlayerInfo? foundPlayer = null;
                 if (Bot.Map.Name != map)
                 {
                     Bot.Map.Join($"{map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
@@ -1812,7 +1815,7 @@ public class CoreArmyLite
                         foundPlayer = _PO;
                         return;
                     }
-                });
+                }, $"{b_playerName} found in: ");
 
                 if (foundPlayer != null)
                 {
@@ -1856,30 +1859,28 @@ public class CoreArmyLite
         }
     }
 
-    public void PriorityAttack()
+    public void PriorityAttack(List<string>? mons = null)
     {
-        // If there's an attack priority list, search for a priority monster to attack
-        if (_attackPriority?.Count > 0)
+        if (_attackPriority != null)
         {
-            foreach (string mon in _attackPriority)
-            {
-                string formattedMonName = mon.FormatForCompare();
-
-                // Find the first matching priority monster in the same cell
-                Monster? priorityMonster = Bot.Monsters.CurrentMonsters
-                    .FirstOrDefault(m => m.Name?.FormatForCompare() == formattedMonName && m.Cell == Bot.Player.Cell);
-
-                if (priorityMonster != null)
-                {
-                    Bot.Combat.Attack(priorityMonster); // Attack the priority monster
-                    Core.Sleep(); // Pause after attacking
-                    return; // Exit if a priority monster was found and attacked
-                }
-            }
+            mons ??= new List<string>();
+            mons.AddRange(_attackPriority);
         }
 
-        // If no priority monster was found, attack any available monster
-        Bot.Combat.Attack("*");
+        if (mons?.Count > 0)
+        {
+            foreach (string mon in mons)
+            {
+                Monster? priorityMonster = Bot.Monsters.CurrentMonsters
+                    .FirstOrDefault(m => m.Name?.FormatForCompare() == mon.FormatForCompare() && m.Cell == Bot.Player.Cell) ?? null;
+
+                if (priorityMonster != null)
+                    Bot.Kill.Monster(priorityMonster.MapID);
+                else Bot.Kill.Monster("*");
+            }
+        }
+        else Bot.Combat.Attack("*");
+
     }
 
     private async void MapNumberParses(string map)

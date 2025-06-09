@@ -4494,14 +4494,9 @@ public class CoreBots
             #region new staff killing method
             bool StaffRespawn = false;
             Bot.Options.AggroMonsters = true;
-            Bot.Events.ExtensionPacketReceived += RespawnListener;
-            Bot.Events.MonsterKilled += KilledMonsterListener;
             while (!Bot.ShouldExit && (item == null || (isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))))
             {
-                while (!Bot.ShouldExit && !Bot.Player.Alive)
-                {
-                    Sleep();
-                }
+                while (!Bot.ShouldExit && !Bot.Player.Alive) Sleep();
 
                 if (Bot.Map.Name != "escherion")
                     Join("escherion");
@@ -4545,8 +4540,6 @@ public class CoreBots
                 DoSwindlesReturnArea(ReturnDuring, ReturnItem);
             }
             Bot.Options.AggroMonsters = false;
-            Bot.Events.ExtensionPacketReceived -= RespawnListener;
-            Bot.Events.MonsterKilled -= KilledMonsterListener;
             if (!isTemp && item != null)
                 Bot.Wait.ForPickup(item);
             #endregion new staff killing method
@@ -4559,7 +4552,7 @@ public class CoreBots
         JumpWait();
         Rest();
         Bot.Options.HidePlayers = false;
-
+        
         void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
         {
             // Return if the policy isn't active or required items are missing
@@ -8738,7 +8731,7 @@ public class CoreBots
 
     private List<string> CBOList = new();
 
-    public string MeasureExecutionTime(Action action)
+    public string MeasureExecutionTime(Action action, string PrefixMessage = null)
     {
         Stopwatch sw = new();
         sw.Start();
@@ -8746,7 +8739,7 @@ public class CoreBots
         sw.Stop();
 
         var elapsed = sw.Elapsed;
-        string result = $"Min: {elapsed.Minutes} Sec: {elapsed.Seconds} Ms: {elapsed.Milliseconds}";
+        string result = PrefixMessage + $"Min: {elapsed.Minutes} Sec: {elapsed.Seconds} Ms: {elapsed.Milliseconds}";
 
         Logger(result, "MeasureExecutionTime");
 
