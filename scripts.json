@@ -28,7 +28,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 367445,
+    "size": 367182,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -1416,7 +1416,7 @@
       "goto"
     ],
     "path": "Prototypes/Butler2[WIP].cs",
-    "size": 25891,
+    "size": 26028,
     "fileName": "Butler2[WIP].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Butler2[WIP].cs"
   },
@@ -3586,7 +3586,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 74032,
+    "size": 74054,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/CoreArmyLite.cs"
   },
