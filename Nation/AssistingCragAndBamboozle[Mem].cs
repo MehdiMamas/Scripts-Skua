@@ -83,9 +83,13 @@ public class AssistingCragAndBamboozle
 
             // ReCheck Sparrow's Blood
             if (!Core.CheckInventory(5584))
-                Core.Logger("This bot requires you to have at least 1 Sparrow's Blood", stopBot: true);
+            {
+                continueFarming = false;
+                Core.Logger("This bot requires you to have at least 1 Sparrow's Blood");
+                return;
+            }
 
-            Nation.EssenceofNulgath(20);    
+            Nation.EssenceofNulgath(20);
             Nation.ApprovalAndFavor(100, 100);
 
             //medal required to get seals
