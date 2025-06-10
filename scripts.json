@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 34968,
+    "size": 35182,
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreStory.cs"
   },
@@ -28,7 +28,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 367182,
+    "size": 367915,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 54624,
+    "size": 54658,
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreDailies.cs"
   },
@@ -150,7 +150,7 @@
       "decay"
     ],
     "path": "Farm/BuyScrolls.cs",
-    "size": 4510,
+    "size": 4545,
     "fileName": "BuyScrolls.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/BuyScrolls.cs"
   },
@@ -672,7 +672,7 @@
       "null"
     ],
     "path": "Darkon/CoreDarkon.cs",
-    "size": 14331,
+    "size": 14637,
     "fileName": "CoreDarkon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/CoreDarkon.cs"
   },
@@ -1361,7 +1361,7 @@
       "drops"
     ],
     "path": "Other/MasterofYourCraft.cs",
-    "size": 2227,
+    "size": 2261,
     "fileName": "MasterofYourCraft.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MasterofYourCraft.cs"
   },
@@ -1987,7 +1987,7 @@
       "starsinc"
     ],
     "path": "Story/StarSinc.cs",
-    "size": 4488,
+    "size": 4442,
     "fileName": "StarSinc.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/StarSinc.cs"
   },
@@ -3279,7 +3279,7 @@
       "seasonal"
     ],
     "path": "Tools/CheckArmyRoles.cs",
-    "size": 26142,
+    "size": 26176,
     "fileName": "CheckArmyRoles.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/CheckArmyRoles.cs"
   },
@@ -3383,7 +3383,7 @@
       "null"
     ],
     "path": "Nation/AssistingCragAndBamboozle[Mem].cs",
-    "size": 6682,
+    "size": 6750,
     "fileName": "AssistingCragAndBamboozle[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/AssistingCragAndBamboozle[Mem].cs"
   },
@@ -3432,7 +3432,7 @@
       "escherion"
     ],
     "path": "Nation/SuppliesToSpinTheWheelofChance.cs",
-    "size": 7767,
+    "size": 7835,
     "fileName": "SuppliesToSpinTheWheelofChance.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/SuppliesToSpinTheWheelofChance.cs"
   },
@@ -3585,7 +3585,7 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 95617,
+    "size": 95685,
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -17318,7 +17318,7 @@
       "null"
     ],
     "path": "Story/SepulchureSaga/CoreSepulchure.cs",
-    "size": 15723,
+    "size": 15757,
     "fileName": "CoreSepulchure.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/SepulchureSaga/CoreSepulchure.cs"
   },
@@ -20230,7 +20230,7 @@
       "weekly"
     ],
     "path": "Tools/ForDevelopers/TreasureHunterGenerator.cs",
-    "size": 6407,
+    "size": 6441,
     "fileName": "TreasureHunterGenerator.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/TreasureHunterGenerator.cs"
   },
@@ -21224,7 +21224,7 @@
       "null"
     ],
     "path": "Nation/Various/VoidSpartan.cs",
-    "size": 2810,
+    "size": 2845,
     "fileName": "VoidSpartan.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/VoidSpartan.cs"
   },
@@ -21280,7 +21280,7 @@
       "void chasm"
     ],
     "path": "Nation/Various/PrimeFiendShard.cs",
-    "size": 10146,
+    "size": 10350,
     "fileName": "PrimeFiendShard.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/PrimeFiendShard.cs"
   },
@@ -21876,7 +21876,7 @@
       "army"
     ],
     "path": "Army/Classes/DragonofTimeArmy.cs",
-    "size": 32439,
+    "size": 32440,
     "fileName": "DragonofTimeArmy.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/Classes/DragonofTimeArmy.cs"
   },
@@ -21961,7 +21961,7 @@
       "legion arena"
     ],
     "path": "Army/ArmyLegion/ArmyLegionToken.cs",
-    "size": 17987,
+    "size": 18021,
     "fileName": "ArmyLegionToken.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/ArmyLegion/ArmyLegionToken.cs"
   },
@@ -22151,7 +22151,7 @@
       "seven circles war"
     ],
     "path": "Army/ArmyFarm/ArmyGold.cs",
-    "size": 11495,
+    "size": 11564,
     "fileName": "ArmyGold.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/ArmyFarm/ArmyGold.cs"
   },
@@ -22166,7 +22166,7 @@
       "aggro"
     ],
     "path": "Army/ArmyFarm/ArmyLeveling.cs",
-    "size": 12618,
+    "size": 12687,
     "fileName": "ArmyLeveling.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/ArmyFarm/ArmyLeveling.cs"
   },
@@ -22386,7 +22386,7 @@
       "rewards"
     ],
     "path": "Army/Quests/ArmyUniqueQuarry.cs",
-    "size": 8042,
+    "size": 8205,
     "fileName": "ArmyUniqueQuarry.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/Quests/ArmyUniqueQuarry.cs"
   },
@@ -22542,7 +22542,7 @@
       "do it yourself"
     ],
     "path": "Army/Templates/ArmyAggromonCreatorAutoReward.cs",
-    "size": 10107,
+    "size": 10141,
     "fileName": "ArmyAggromonCreatorAutoReward.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/Templates/ArmyAggromonCreatorAutoReward.cs"
   },
@@ -24696,7 +24696,7 @@
       "null"
     ],
     "path": "Seasonal/Mogloween/GearSets/HeadlessHorsemanGear.cs",
-    "size": 5397,
+    "size": 5433,
     "fileName": "HeadlessHorsemanGear.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/GearSets/HeadlessHorsemanGear.cs"
   },
@@ -27721,7 +27721,7 @@
       "member"
     ],
     "path": "Story/LordsofChaos/ChoasFinaleBonus[Mem]/DeadlyDungeon[Mem].cs",
-    "size": 3750,
+    "size": 3778,
     "fileName": "DeadlyDungeon[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/LordsofChaos/ChoasFinaleBonus[Mem]/DeadlyDungeon[Mem].cs"
   },
@@ -28780,7 +28780,7 @@
       "null"
     ],
     "path": "Templates/Examples/BasicFunctionality/HowToUseAwhile.cs",
-    "size": 6582,
+    "size": 6617,
     "fileName": "HowToUseAwhile.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Templates/Examples/BasicFunctionality/HowToUseAwhile.cs"
   },
@@ -28824,7 +28824,7 @@
       "null"
     ],
     "path": "Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs",
-    "size": 2061,
+    "size": 5872,
     "fileName": "EmptyTemplate[Basics].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs"
   },
