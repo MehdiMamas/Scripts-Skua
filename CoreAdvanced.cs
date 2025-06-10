@@ -879,19 +879,33 @@ public class CoreAdvanced
             ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == Req.ID);
             if (wasinshop != null)
             {
-                Core.Logger($"Attempting to get {Req.Name} [{Req.ID}] x{ReqQuant} from shop [{shopID}].");
+                Core.Logger($"Item: \"{Req.Name}  [{Req.ID}\"] is in the shop!");
                 while (!Bot.ShouldExit && !Core.CheckInventory(Req.ID, ReqQuant))
                 {
                     // for requirements that are in the shop, but are just buyable with gold. (excludes ac buyable items)
-                    if (wasinshop.Requirements.Count <= 0 && wasinshop.Cost <= 0)
+                    if (wasinshop.Requirements.Count <= 0 && (wasinshop.Coins && wasinshop.Cost <= 0 || !wasinshop.Coins)) //|| wasinshop.Name.Contains("Gold Voucher") || wasinshop.Name.Contains("Dragon Runestone"))
                     {
-                        BuyItem(map, shopID, wasinshop.ID, ReqQuant, shopItemID: wasinshop.ShopItemID, Log: Log);
-                        Bot.Wait.ForPickup(wasinshop.ID);
+                        // // Handle special cases for Gold Vouchers and Dragon Runestones
+                        // if (wasinshop.Name.Contains("Gold Voucher"))
+                        // {
+                        //     Farm.Voucher(wasinshop.Name, ReqQuant);
+                        //     return;
+                        // }
+                        // if (wasinshop.Name.Contains("Dragon Runestone"))
+                        // {
+                        //     Farm.DragonRunestone(ReqQuant);
+                        //     return;
+                        // }
+
+                        // Otherwise buy the item directly
+                        BuyItem(map, shopID, Req.ID, ReqQuant, shopItemID: wasinshop.ShopItemID, Log: Log);
+                        Bot.Wait.ForPickup(Req.ID);
                     }
                     else IngredientWasintheShop(wasinshop, ReqQuant);
                     if (Core.CheckInventory(Req.ID, ReqQuant))
                         break;
-                    else Core.Logger($"Failed to meet requirements for \"{wasinshop.Name}\" [{wasinshop.ID}] x{ReqQuant}, Retrying the farm (items may have been used).");
+                    else
+                        Core.Logger($"Failed to meet requirements for \"{Req.Name}\" [{Req.ID}] x{ReqQuant}, Retrying the farm (items may have been used).");
                 }
             }
             else if (wasinshop == null)
