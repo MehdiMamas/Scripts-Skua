@@ -256,8 +256,8 @@ for pick item later:
 Core.EnsureAcceptmultiple(true, QuestIDs);
         foreach (int Q in QuestIDs)
         {
-            Quest? QuestItems = Bot.Quests.EnsureLoad(Q);
-            foreach (ItemBase item in QuestItems!.Rewards)
+            Quest? questItems = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(Q));
+            foreach (ItemBase item in questItems!.Rewards)
             {
                 var validItemandQuants = ItemandQuants
                     .Where(t => !Core.CheckInventory(t.Item1, t.Item2));

@@ -29,9 +29,9 @@ public class CoreDarkon
 
     public void FirstErrand(int Quantity = 222, bool MaxStack = false)
     {
-        Quest? Quest = Bot.Quests.EnsureLoad(7324);
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7324));
         if (MaxStack)
-            Quantity = Quest?.Rewards.FirstOrDefault(x => x.Name == "Darkon's Receipt")?.MaxStack ?? Quantity;
+            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Darkon's Receipt")?.MaxStack ?? Quantity;
 
         if (Core.CheckInventory("Darkon's Receipt", Quantity))
             return;
@@ -48,9 +48,9 @@ public class CoreDarkon
 
     public void SecondErrand(int Quantity = 222, bool escapeWhile = false, bool MaxStack = false)
     {
-        Quest? Quest = Bot.Quests.EnsureLoad(7325);
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7325));
         if (MaxStack)
-            Quantity = Quest?.Rewards.FirstOrDefault(x => x.Name == "Darkon's Receipt")?.MaxStack ?? Quantity;
+            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Darkon's Receipt")?.MaxStack ?? Quantity;
         if (Core.CheckInventory("Darkon's Receipt", Quantity))
             return;
 
@@ -93,9 +93,9 @@ public class CoreDarkon
 
     public void ThirdErrand(int Quantity = 222, bool MaxStack = false)
     {
-        Quest? Quest = Bot.Quests.EnsureLoad(7326);
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7326));
         if (MaxStack)
-            Quantity = Quest?.Rewards.FirstOrDefault(x => x.Name == "Darkon's Receipt")?.MaxStack ?? Quantity;
+            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Darkon's Receipt")?.MaxStack ?? Quantity;
         if (Core.CheckInventory("Darkon's Receipt", Quantity))
             return;
 
@@ -117,9 +117,9 @@ public class CoreDarkon
 
     public void Teeth(int Quantity = 300, bool MaxStack = false)
     {
-        Quest? Quest = Bot.Quests.EnsureLoad(7780);
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7780));
         if (MaxStack)
-            Quantity = Quest?.Rewards.FirstOrDefault(x => x.Name == "Teeth")?.MaxStack ?? Quantity;
+            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Teeth")?.MaxStack ?? Quantity;
 
         if (Core.CheckInventory("Teeth", Quantity))
             return;
@@ -143,9 +143,9 @@ public class CoreDarkon
 
     public void LasGratitude(int Quantity = 300, bool MaxStack = false)
     {
-        Quest? Quest = Bot.Quests.EnsureLoad(8001);
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8001));
         if (MaxStack)
-            Quantity = Quest?.Rewards.FirstOrDefault(x => x.Name == "La's Gratitude")?.MaxStack ?? Quantity;
+            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "La's Gratitude")?.MaxStack ?? Quantity;
 
         if (Core.CheckInventory("La's Gratitude", Quantity))
             return;
@@ -167,9 +167,9 @@ public class CoreDarkon
 
     public void AstravianMedal(int Quantity = 300, bool MaxStack = false)
     {
-        Quest? Quest = Bot.Quests.EnsureLoad(8257);
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8257));
         if (MaxStack)
-            Quantity = Quest?.Rewards.FirstOrDefault(x => x.Name == "Astravian Medal")?.MaxStack ?? Quantity;
+            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Astravian Medal")?.MaxStack ?? Quantity;
 
         if (Core.CheckInventory("Astravian Medal", Quantity))
             return;
@@ -195,9 +195,9 @@ public class CoreDarkon
 
     public void AMelody(int Quantity = 300, bool MaxStack = false)
     {
-        Quest? Quest = Bot.Quests.EnsureLoad(8396);
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8396));
         if (MaxStack)
-            Quantity = Quest?.Rewards.FirstOrDefault(x => x.Name == "A Melody")?.MaxStack ?? Quantity;
+            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "A Melody")?.MaxStack ?? Quantity;
 
         if (Core.CheckInventory("A Melody", Quantity))
             return;
@@ -220,9 +220,9 @@ public class CoreDarkon
 
     public void BanditsCorrespondence(int Quantity = 3000, bool MaxStack = false)
     {
-        Quest? Quest = Bot.Quests.EnsureLoad(8531);
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8531));
         if (MaxStack)
-            Quantity = Quest?.Rewards.FirstOrDefault(x => x.Name == "Bandit's Correspondence")?.MaxStack ?? Quantity;
+            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Bandit's Correspondence")?.MaxStack ?? Quantity;
 
         if (Core.CheckInventory("Bandit's Correspondence", Quantity))
             return;
@@ -247,9 +247,9 @@ public class CoreDarkon
 
     public void SukisPrestiege(int Quantity = 300, bool MaxStack = false)
     {
-        Quest? Quest = Bot.Quests.EnsureLoad(8602);
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8602));
         if (MaxStack)
-            Quantity = Quest?.Rewards.FirstOrDefault(x => x.Name == "Suki's Prestige")?.MaxStack ?? Quantity;
+            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Suki's Prestige")?.MaxStack ?? Quantity;
 
         if (Core.CheckInventory("Suki's Prestige", Quantity))
             return;
@@ -274,9 +274,9 @@ public class CoreDarkon
 
     public void AncientRemnant(int Quantity = 300, bool MaxStack = false)
     {
-        Quest? Quest = Bot.Quests.EnsureLoad(8641);
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8641));
         if (MaxStack)
-            Quantity = Quest?.Rewards.FirstOrDefault(x => x.Name == "Ancient Remnant")?.MaxStack ?? Quantity;
+            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Ancient Remnant")?.MaxStack ?? Quantity;
 
         if (Core.CheckInventory("Ancient Remnant", Quantity))
             return;
@@ -302,11 +302,11 @@ public class CoreDarkon
 
     public void WheelofFortune(int FlowerQuantity = 1000, int ScaleQuantity = 1000, bool MaxStack = false)
     {
-        Quest? Quest = Bot.Quests.EnsureLoad(8688);
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8688));
         if (MaxStack)
         {
-            FlowerQuantity = Quest?.Rewards.FirstOrDefault(x => x.Name == "Mourning Flower")?.MaxStack ?? FlowerQuantity;
-            ScaleQuantity = Quest?.Rewards.FirstOrDefault(x => x.Name == "Jus Divinum Scale")?.MaxStack ?? ScaleQuantity;
+            FlowerQuantity = quest.Rewards.FirstOrDefault(x => x.Name == "Mourning Flower")?.MaxStack ?? FlowerQuantity;
+            ScaleQuantity = quest.Rewards.FirstOrDefault(x => x.Name == "Jus Divinum Scale")?.MaxStack ?? ScaleQuantity;
         }
 
         if (Core.CheckInventory("Mourning Flower", FlowerQuantity) && Core.CheckInventory("Jus Divinum Scale", ScaleQuantity))

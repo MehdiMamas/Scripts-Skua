@@ -55,7 +55,7 @@ public class AssistingCragAndBamboozle
         if (!Core.IsMember || !Core.CheckInventory(Nation.CragName) || !Core.CheckInventory("Sparrow's Blood") && !Daily.CheckDailyv2(803, true, true, "Sparrow's Blood"))
             return;
 
-        ItemBase? Item = Bot.Quests.EnsureLoad(5817)?.Rewards
+        ItemBase? Item = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(5817))?.Rewards
             .FirstOrDefault(r => (int)reward == -1
             ? r.Quantity < r.MaxStack
             : r.ID == (int)reward);
@@ -104,7 +104,7 @@ public class AssistingCragAndBamboozle
 
                     string? rewardName = rewardEnum.ToString().Replace("_", " ");
                 Retry5817:
-                    Quest? quest = Bot.Quests.EnsureLoad(5817);
+                    Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(5817));
 
                     if (quest != null)
                     {

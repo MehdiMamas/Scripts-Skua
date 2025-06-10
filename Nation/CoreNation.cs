@@ -1017,7 +1017,7 @@ public class CoreNation
             return;
 
         Retry7551:
-        Quest? Swindles = Bot.Quests.EnsureLoad(7551);
+        Quest? Swindles = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
         if (Swindles == null)
         {
             Core.Logger("Failed to load quest 7551, retrying...");
@@ -1026,7 +1026,7 @@ public class CoreNation
         }
 
     Retry2859:
-        Quest? Assistant = Bot.Quests.EnsureLoad(2859);
+        Quest? Assistant = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2859));
         if (Assistant == null)
         {
             Core.Logger("Failed to load quest 2859, retrying...");

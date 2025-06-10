@@ -50,7 +50,7 @@ public class SuppliesToSpinTheWheelofChance
         SwindlesReturnItem = SwindlesReturnItem == "All" ? null : SwindlesReturnItem;
     Retry2857:
         // Load quests
-        Quest? Supplies = Bot.Quests.EnsureLoad(2857);
+        Quest? Supplies = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2857));
         if (Supplies == null)
         {
             Core.Logger("Failed to load quest 2857.");
@@ -59,7 +59,7 @@ public class SuppliesToSpinTheWheelofChance
         }
 
     Retry7551:
-        Quest? SwindlesReturn = Bot.Quests.EnsureLoad(7551);
+        Quest? SwindlesReturn = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
         if (SwindlesReturn == null)
         {
             Core.Logger("Failed to load quest 7551.");

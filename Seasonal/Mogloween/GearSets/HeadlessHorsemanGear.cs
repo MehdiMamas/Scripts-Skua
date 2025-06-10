@@ -59,7 +59,7 @@ public class HeadlessHorsemanGear
 
         foreach (int QuestID in QuestIDs)
         {
-            Quest QuestData = Core.EnsureLoad(QuestID);
+            Quest? QuestData = Core.InitializeWithRetries( () => Core.EnsureLoad(QuestID));
 
             if (!Core.CheckInventory(Core.QuestRewards(QuestID)))
             {

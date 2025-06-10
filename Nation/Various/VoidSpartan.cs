@@ -47,7 +47,7 @@ public class VoidSpartan
     {
         Core.AddDrop(Nation.bagDrops.Concat(Rewards).Concat(new[] { "Zee's Red Jasper", "Fiend Cloak of Nulgath" }).ToArray());
 
-        Quest QuestData = Core.EnsureLoad(5982);
+        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(5982));
         ItemBase? Item = Core.EnsureLoad(5982).Rewards.Find(x => x.Name == item);
 
         if (item == null)

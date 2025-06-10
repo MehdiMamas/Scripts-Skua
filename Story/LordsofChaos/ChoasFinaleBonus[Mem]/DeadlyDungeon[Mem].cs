@@ -83,7 +83,7 @@ public class DeadlyDungeon
         if (!Story.QuestProgression(3698))
         {
             Core.EnsureAccept(3698);
-            Quest? quest = Bot.Quests.EnsureLoad(3698);
+            Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(3698));
 
             if (quest != null)
             {

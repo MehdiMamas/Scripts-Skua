@@ -123,7 +123,7 @@ public class ArmyLegionToken
                 foreach (int Q in PetQuests)
                 {
                     // Load quest and check if it exists
-                    Quest? firstQID = Bot.Quests.EnsureLoad(Q);
+                    Quest? firstQID = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(Q));
                     if (firstQID != null)
                     {
                         // Get the accept requirement item for the quest

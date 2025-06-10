@@ -37,15 +37,15 @@ public class BuyScrolls
     public void BuyScroll(Scrolls scroll, int quant = -1, bool useMysticParchment = false)
     {
         useMysticParchment = useMysticParchment || Bot.Config!.Get<bool>("UseMysticParchment");
-        Quest questData = Core.EnsureLoad((int)scroll);
-        string scrollName = questData.Rewards.First().Name;
-        int maxStack = questData.Rewards.First().MaxStack;
+        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad((int)scroll));
+        string scrollName = QuestData.Rewards.First().Name;
+        int maxStack = QuestData.Rewards.First().MaxStack;
         quant = quant == -1 ? maxStack : quant;
 
         if (Core.CheckInventory(scrollName, quant))
             return;
 
-        string ink = questData.Requirements.First().Name;
+        string ink = QuestData.Requirements.First().Name;
 
         Core.Logger($"Getting you {quant}x {scrollName}");
         Core.AddDrop(scrollName);
@@ -73,8 +73,8 @@ public class BuyScrolls
         while (!Bot.ShouldExit && !Core.CheckInventory(scrollName, quant))
         {
             gatherMaterials();
-            Core.EnsureAccept(questData.ID);
-            Core.EnsureCompleteMulti(questData.ID);
+            Core.EnsureAccept(QuestData.ID);
+            Core.EnsureCompleteMulti(QuestData.ID);
             Bot.Wait.ForPickup(scrollName);
             Core.FarmingLogger(scrollName, quant);
         }

@@ -1093,7 +1093,7 @@ public class CoreBots
                                              .FirstOrDefault(x => x?.ID == itemID);
             if (inventoryItem == null)
             {
-                Logger($"Item with ID {itemID} not found in Inventory or House.");
+                // Logger($"Item with ID {itemID} not found in Inventory or House.");
                 continue;
             }
 
@@ -1493,7 +1493,7 @@ public class CoreBots
                     List<int> ids = v.Where(x => x.Name == questName).Select(q => q.ID).ToList();
                     if (ids.Any())
                     {
-                        List<Quest> quests = EnsureLoad(ids.Where(q => !isCompletedBefore(q)).ToArray());
+                        List<Quest> quests = InitializeWithRetries(() => EnsureLoad(ids.Where(q => !isCompletedBefore(q)).ToArray()));
                         if (quests.Any())
                         {
                             string s = string.Empty;
@@ -2373,7 +2373,7 @@ public class CoreBots
                         continue;
                     }
 
-                    Quest? q = Bot.Quests.EnsureLoad(quest.ID);
+                    Quest? q =  Bot.Quests.EnsureLoad(quest.ID);
 
                     await Task.Delay(ActionDelay * 2);
 
@@ -2811,6 +2811,7 @@ public class CoreBots
         if (toReturn == null)
         {
             Bot.Quests.Load(questID);
+            Bot.Wait.ForTrue(() => Bot.Quests.Tree.Contains(x => x.ID == questID), () => Bot.Quests.Load(questID), 20);
             toReturn = Bot.Quests.Tree.Find(x => x.ID == questID) ?? _EnsureLoad1() ?? _EnsureLoad2();
 
             if (toReturn == null)
@@ -2972,11 +2973,20 @@ public class CoreBots
         if (questIDs.Length == 0)
             return Array.Empty<string>();
         List<string> toReturn = new();
-        foreach (Quest q in EnsureLoad(questIDs))
+        if (questIDs.Length <= 15)
         {
-            if (q.Rewards == null || q.Rewards.Count == 0)
-                continue;
-            toReturn.AddRange(q.Rewards.Select(i => i.Name));
+            Bot.Quests.Load(questIDs);
+            Bot.Wait.ForTrue(() => questIDs.All(id => Bot.Quests.Tree.Any(q => q.ID == id)), 20);
+            toReturn.AddRange(Bot.Quests.Tree.Where(q => questIDs.Contains(q.ID)).SelectMany(q => q.Rewards.Select(i => i.Name)));
+        }
+        else
+        {
+            foreach (Quest q in EnsureLoad(questIDs))
+            {
+                if (q.Rewards == null || q.Rewards.Count == 0)
+                    continue;
+                toReturn.AddRange(q.Rewards.Select(i => i.Name));
+            }
         }
         return toReturn.ToArray();
     }
@@ -3079,10 +3089,10 @@ public class CoreBots
 
         string questName = quest.Name ?? $"{QuestID}";
 
-        bool CheckCompletion(Quest questData)
+        bool CheckCompletion(Quest? QuestData)
         {
-            bool complete = questData.Slot < 0 ||
-                Bot.Flash.CallGameFunction<int>("world.getQuestValue", questData.Slot) >= questData.Value;
+            bool complete = QuestData.Slot < 0 ||
+                Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot) >= QuestData.Value;
 
             // Commented out to reduce spam
             // Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
@@ -3118,7 +3128,7 @@ public class CoreBots
             CancelRegisteredQuests();
 
         // Defining all the lists to be used=
-        List<Quest> questData = EnsureLoad(questIDs);
+        List<Quest> questData = InitializeWithRetries(() => EnsureLoad(questIDs));
         Dictionary<Quest, int> chooseQuests = new();
         Dictionary<Quest, int> nonChooseQuests = new();
 
@@ -3207,7 +3217,7 @@ public class CoreBots
     /// <param name="questID">ID of the quest to accept</param>
     public bool EnsureAcceptOld(int questID)
     {
-        Quest QuestData = EnsureLoad(questID);
+        Quest? QuestData = InitializeWithRetries(() => EnsureLoad(questID));
 
         if (QuestData.Upgrade && !IsMember)
             Logger($"\"{QuestData.Name}\" [{questID}] is member-only, stopping the bot.", stopBot: true);
@@ -3228,7 +3238,7 @@ public class CoreBots
     /// <param name="questIDs">IDs of the quests</param>
     public void EnsureAcceptOld(params int[] questIDs)
     {
-        List<Quest> QuestData = EnsureLoad(questIDs);
+        List<Quest> QuestData = InitializeWithRetries(() => EnsureLoad(questIDs));
         foreach (Quest quest in QuestData)
         {
             if (quest.Upgrade && !IsMember)
@@ -3275,7 +3285,7 @@ public class CoreBots
         if (questID <= 0)
             return false;
         Bot.Sleep(ActionDelay);
-        Quest quest = EnsureLoad(questID);
+        Quest? quest = InitializeWithRetries(() => EnsureLoad(questID));
         if (quest is not null)
         {
             foreach (ItemBase item in quest.Rewards)
@@ -3307,7 +3317,7 @@ public class CoreBots
     /// <param name="itemID">ID of the choose-able reward item</param>
     public int EnsureCompleteMultiOld(int questID, int amount = -1, int itemID = -1)
     {
-        var q = EnsureLoad(questID);
+        Quest q = InitializeWithRetries(() => EnsureLoad(questID));
 
         int turnIns = 0;
         if (q.Once || !String.IsNullOrEmpty(q.Field))
@@ -4002,7 +4012,7 @@ public class CoreBots
     /// <param name="log">Whether to log the hunting process.</param>
     public void HuntMonsterQuest(int questId, string? mapName = null, string? monsterName = null, bool log = false)
     {
-        Quest? quest = Bot.Quests.EnsureLoad(questId);
+        Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questId));
         if (quest == null)
         {
             Logger($"Quest {questId} not found");
@@ -4552,7 +4562,7 @@ public class CoreBots
         JumpWait();
         Rest();
         Bot.Options.HidePlayers = false;
-        
+
         void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
         {
             // Return if the policy isn't active or required items are missing
@@ -7686,7 +7696,7 @@ public class CoreBots
         */
 
         // Ensure the quest is loaded
-        Quest? quest = Bot.Quests.EnsureLoad(QuestID);
+        Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(QuestID));
 
         // Check if the quest is active
         if (Bot.Quests.Active.Contains(quest!))

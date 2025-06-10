@@ -504,7 +504,7 @@ public class CheckArmyRoles
 
         foreach (var (Name, ID) in ForgeQuests)
         {
-            var quest = Bot.Quests.EnsureLoad(ID);
+            var quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(ID));
             if (quest != null)
             {
                 if (Core.isCompletedBefore(quest.ID))

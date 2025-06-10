@@ -56,7 +56,7 @@ public class CoreStory
     /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
     public void KillQuest(int QuestID, string MapName, string MonsterName, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-        Quest QuestData = Core.EnsureLoad(QuestID);
+        Quest? QuestData = Core.InitializeWithRetries( () => Core.EnsureLoad(QuestID));
         if (QuestProgression(QuestID, GetReward, Reward))
         {
             return;
@@ -93,7 +93,7 @@ public class CoreStory
     public void KillQuest(int QuestID, string MapName, string[] MonsterNames, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
 
-        Quest QuestData = Core.EnsureLoad(QuestID);
+        Quest? QuestData = Core.InitializeWithRetries( () => Core.EnsureLoad(QuestID));
         if (QuestProgression(QuestID, GetReward, Reward))
         {
             return;
@@ -277,9 +277,9 @@ public class CoreStory
 
     public void QuestComplete(int questID) => TryComplete(Core.EnsureLoad(questID), true);
 
-    private void TryComplete(Quest questData, bool autoCompleteQuest)
+    private void TryComplete(Quest? QuestData, bool autoCompleteQuest)
     {
-        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(questData.ID));
+        Quest? questData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestData.ID));
         if (!Bot.Quests.CanComplete(questData.ID))
         {
             return;
@@ -317,7 +317,7 @@ public class CoreStory
             CBO_Checked = true;
         }
 
-        Quest QuestData = Core.EnsureLoad(QuestID);
+        Quest? QuestData = Core.InitializeWithRetries( () => Core.EnsureLoad(QuestID));
 
         int timeout = 0;
         while (!Bot.Quests.IsUnlocked(QuestID))
@@ -444,7 +444,7 @@ public class CoreStory
 
     public void LegacyQuestManager(Action questLogic, params int[] questIDs)
     {
-        List<Quest> questData = Core.EnsureLoad(questIDs);
+        List<Quest> questData = Core.InitializeWithRetries(() => Core.EnsureLoad(questIDs));
         List<LegacyQuestObject> whereToGet = new();
 
         //Core.DL_Enable();
@@ -452,7 +452,7 @@ public class CoreStory
         foreach (Quest quest in questData)
         {
             List<ItemBase> desiredQuestReward = quest.Rewards.Where(r => questData.Any(q => q.AcceptRequirements.Any(a => a.ID == r.ID || a.Name == r.Name))).ToList();
-            int requiredQuestID = questData.Find((q => q.Rewards.Any(r => quest.AcceptRequirements != null && quest.AcceptRequirements.Any(a => a.ID == r.ID || a.Name == r.Name))))?.ID ?? 0;
+            int requiredQuestID = questData.Find(q => q.Rewards.Any(r => quest.AcceptRequirements != null && quest.AcceptRequirements.Any(a => a.ID == r.ID || a.Name == r.Name)))?.ID ?? 0;
             List<ItemBase>? requiredQuestReward = quest.AcceptRequirements?.Where(r => questData.Any(q => q.Rewards.Any(a => a.ID == r.ID || a.Name == r.Name)))?.ToList();
 
             Core.DebugLogger(this, $"{quest.ID}\t\t");
@@ -505,7 +505,7 @@ public class CoreStory
                 Core.Logger("runQuestData is NULL");
                 return;
             }
-            Quest questData = Core.EnsureLoad(questID);
+            Quest? questData = Core.InitializeWithRetries( () => Core.EnsureLoad(questID));
 
             int[] requiredReward = runQuestData.requiredQuestReward!.Select(i => i.ID).ToArray();
             if (runQuestData.desiredQuestReward.Count == 0 && questID != finalItemQuest.desiredQuestID)
@@ -802,11 +802,11 @@ public class CoreStory
         if (questID > 0 && questID != lastQuestID)
         {
             lastQuestID = questID;
-            Quest quest = Core.EnsureLoad(questID);
+            Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(questID));
 
             List<string> reqItems = new();
-            quest.AcceptRequirements.ForEach(item => reqItems.Add(item.Name));
-            quest.Requirements.ForEach(item =>
+            quest?.AcceptRequirements.ForEach(item => reqItems.Add(item.Name));
+            quest?.Requirements.ForEach(item =>
             {
                 if (!CurrentRequirements.Where(i => i.Name == item.Name).Any())
                 {

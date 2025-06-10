@@ -61,7 +61,7 @@ public class CoreSepulchure
         // False Hoods 6337
         if (!Story.QuestProgression(6337))
         {
-            Quest? dothis = Bot.Quests.EnsureLoad(6337);
+            Quest? dothis = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(6337));
             if (dothis != null)
             {
                 Core.EnsureAccept(dothis.ID);

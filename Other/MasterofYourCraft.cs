@@ -41,7 +41,7 @@ public class MasterofYourCraft
 
     public void Moyc()
     {
-        var quest = Bot.Quests.EnsureLoad(3051);
+        var quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(3051));
         if (quest == null)
         {
             Core.Logger("Quest \"Master of Your Craft\" not found", stopBot: true);

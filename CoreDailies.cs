@@ -656,7 +656,7 @@ public class CoreDailies
         else Core.ChainComplete(1239);
 
 
-        var questData = Core.EnsureLoad(1238);
+        var questData = Core.InitializeWithRetries(() => Core.EnsureLoad(1238));
         if (Core.CheckInventory(questData.Rewards.Select(x => x.Name).ToArray(), toInv: false))
             return;
 

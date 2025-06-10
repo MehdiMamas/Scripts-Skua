@@ -97,7 +97,7 @@ public class HowToUseAwhile
 
                 case "QuestData":
                     // Requires an additional using at the top: "using Skua.Core.Models.Quests;"
-                    Quest QuestData = Core.EnsureLoad(0000);
+                    Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(0000));
                     // Quest drops, accept requirements, and items required to complete all in one list
                     List<ItemBase> QuestDropsandRequirements = QuestData.Rewards.Concat(QuestData.AcceptRequirements).Concat(QuestData.Requirements).ToList();
 

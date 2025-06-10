@@ -255,7 +255,7 @@ public class DoTArmy
             DoQuest10();
 
         // List<string> PreQuestInv = Bot.Inventory.Items.Select(x => x.Name).ToList();
-        // Quest QuestData = Core.EnsureLoad(7716);
+        // Quest? QuestData = Core.EnsureLoad(7716);
         // Core.TrashCan(QuestData.Requirements.Where(x => !x.Temp).Select(y => y.Name).ToArray());
         // Core.ToBank(Bot.Inventory.Items.Select(x => x.Name).ToList().Except(PreQuestInv).ToArray());
     }
