@@ -656,7 +656,12 @@ public class CoreDailies
         else Core.ChainComplete(1239);
 
 
-        var questData = Core.InitializeWithRetries(() => Core.EnsureLoad(1238));
+        Quest? questData = Core.InitializeWithRetries(() => Core.EnsureLoad(1238));
+        if (questData == null)
+        {
+            Core.Logger($"Failed to load quest {1238}");
+            return;
+        }
         if (Core.CheckInventory(questData.Rewards.Select(x => x.Name).ToArray(), toInv: false))
             return;
 
