@@ -155,7 +155,7 @@ public class Butler2
         StartButler(playerName, roomNr, cancellationToken: cancellationToken);
 
         // --- Call GoToPlayer at script start if not in same map as player ---
-        if (!string.IsNullOrEmpty(playerName) && !Bot.Map.PlayerNames.Contains(playerName))
+        if (!string.IsNullOrEmpty(playerName) && Bot.Map.PlayerNames != null && !Bot.Map.PlayerNames.Contains(playerName))
         {
             isGoto = true;
             Task.Run(() => GoToPlayer(playerName, _cancellationToken), cancellationToken);
@@ -238,7 +238,7 @@ public class Butler2
 
                 await Task.Delay(Core.ActionDelay * 2);
 
-                if (needJump || Bot.Map.PlayerNames.Contains(playerName))
+                if (needJump || (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Contains(playerName)))
                 {
                     if (!initializationDone)
                     {
@@ -274,11 +274,11 @@ public class Butler2
                         continue;
                 }
 
-                if (!Bot.Map.PlayerNames.Contains(playerName) && !Bot.ShouldExit || !ButlerTokenSource.IsCancellationRequested)
+                if (Bot.Map.PlayerNames != null && !Bot.Map.PlayerNames.Contains(playerName) && !Bot.ShouldExit || !ButlerTokenSource.IsCancellationRequested)
                 {
                     if (!LockedZone && isGoto)
                     {
-                        if (Bot.Player.Cell != "Enter")
+                        if (Bot.Player.Cell != "Enter" && cellJump != null)
                         {
                             Bot.Map.Jump("Enter", "Spawn", autoCorrect: false);
                             Bot.Wait.ForCellChange(cellJump);
@@ -372,7 +372,7 @@ public class Butler2
         DateTime startTime = DateTime.Now;
         int lastLoggedMinute = -1;
 
-        while (!Bot.ShouldExit && !ButlerTokenSource.IsCancellationRequested && !Bot.Map.PlayerNames.Contains(playername))
+        while (!Bot.ShouldExit && !ButlerTokenSource.IsCancellationRequested && Bot.Map.PlayerNames != null && !Bot.Map.PlayerNames.Contains(playername))
         {
             if (LockedZone)
             {
@@ -386,7 +386,12 @@ public class Butler2
             for (int i = 0; i < 5; i++)
             {
                 Core.Sleep(1000);
-                GoToPlayer(playerToFollow, _cancellationToken);
+                if (playerToFollow != null)
+                    GoToPlayer(playerToFollow, _cancellationToken);
+                else
+                {
+                    Core.Logger("No player to follow.");
+                }
 
                 if (Bot.ShouldExit || ButlerTokenSource.IsCancellationRequested || Bot.Map.PlayerNames.Contains(playername))
                 {

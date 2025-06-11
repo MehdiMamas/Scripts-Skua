@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 35182,
+    "size": 36247,
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreStory.cs"
   },
@@ -28,7 +28,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 367915,
+    "size": 369145,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 54658,
+    "size": 54789,
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreDailies.cs"
   },
@@ -150,7 +150,7 @@
       "decay"
     ],
     "path": "Farm/BuyScrolls.cs",
-    "size": 4545,
+    "size": 4712,
     "fileName": "BuyScrolls.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/BuyScrolls.cs"
   },
@@ -672,7 +672,7 @@
       "null"
     ],
     "path": "Darkon/CoreDarkon.cs",
-    "size": 14637,
+    "size": 14820,
     "fileName": "CoreDarkon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/CoreDarkon.cs"
   },
@@ -1440,7 +1440,7 @@
       "goto"
     ],
     "path": "Prototypes/Butler2[WIP].cs",
-    "size": 26028,
+    "size": 26336,
     "fileName": "Butler2[WIP].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Butler2[WIP].cs"
   },
@@ -3610,7 +3610,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 74054,
+    "size": 74198,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -8375,6 +8375,32 @@
     "size": 5743,
     "fileName": "SunsetTreasuresMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SunsetTreasuresMerge.cs"
+  },
+  {
+    "name": "Adeptis Pslams Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Adeptis Pslams Merge [2588] in /sunkencity",
+    "tags": [
+      "adeptis",
+      "pslams",
+      "merge",
+      "sunkencity",
+      "riptide",
+      "helicoprion",
+      "adept",
+      "lure",
+      "caeruleum",
+      "newborn",
+      "chimeric",
+      "aurichalcum",
+      "lance",
+      "ceremonial",
+      "trident",
+      "enlightened"
+    ],
+    "path": "Other/MergeShops/AdeptisPslamsMerge.cs",
+    "size": 5398,
+    "fileName": "AdeptisPslamsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/AdeptisPslamsMerge.cs"
   },
   {
     "name": "Deimos Den Rewards Merge",
@@ -21224,7 +21250,7 @@
       "null"
     ],
     "path": "Nation/Various/VoidSpartan.cs",
-    "size": 2845,
+    "size": 2998,
     "fileName": "VoidSpartan.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/VoidSpartan.cs"
   },
@@ -22151,7 +22177,7 @@
       "seven circles war"
     ],
     "path": "Army/ArmyFarm/ArmyGold.cs",
-    "size": 11564,
+    "size": 11694,
     "fileName": "ArmyGold.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/ArmyFarm/ArmyGold.cs"
   },
@@ -22166,7 +22192,7 @@
       "aggro"
     ],
     "path": "Army/ArmyFarm/ArmyLeveling.cs",
-    "size": 12687,
+    "size": 12826,
     "fileName": "ArmyLeveling.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/ArmyFarm/ArmyLeveling.cs"
   },

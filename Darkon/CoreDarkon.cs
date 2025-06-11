@@ -303,6 +303,11 @@ public class CoreDarkon
     public void WheelofFortune(int FlowerQuantity = 1000, int ScaleQuantity = 1000, bool MaxStack = false)
     {
         Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8688));
+        if (quest is null)
+        {
+            Core.Logger("Quest 8688 not found, please ensure you have the Elegy of Madness story completed.");
+            return;
+        }
         if (MaxStack)
         {
             FlowerQuantity = quest.Rewards.FirstOrDefault(x => x.Name == "Mourning Flower")?.MaxStack ?? FlowerQuantity;

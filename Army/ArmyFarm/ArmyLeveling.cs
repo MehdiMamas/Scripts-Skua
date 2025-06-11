@@ -307,6 +307,11 @@ public class ArmyLeveling
     void RequiredQuest(string map, int Quest)
     {
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(Quest));
+        if (QuestData == null)
+        {
+            Core.Logger($"Failed to load quest {Quest} in {map}.");
+            return;
+        }
         if (Core.isCompletedBefore(Quest))
         {
             Core.Logger($"{QuestData.Name} [ {QuestData.ID}] Already unlocked! onto the gains.");
