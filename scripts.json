@@ -6092,7 +6092,7 @@
       "null"
     ],
     "path": "Other/Classes/LightCaster.cs",
-    "size": 1954,
+    "size": 2132,
     "fileName": "LightCaster.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/LightCaster.cs"
   },
@@ -6188,7 +6188,7 @@
       "all"
     ],
     "path": "Other/Classes/0AllClasses.cs",
-    "size": 28099,
+    "size": 28370,
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
@@ -24191,6 +24191,17 @@
     "size": 2010,
     "fileName": "BlazeBinder.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/Daily-Classes/BlazeBinder.cs"
+  },
+  {
+    "name": "NoHollowbornClass",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Other/Classes/NoClassClasses/NoHollowbornClass.cs",
+    "size": 1549,
+    "fileName": "NoHollowbornClass.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/NoClassClasses/NoHollowbornClass.cs"
   },
   {
     "name": "Drakel Warlord (Member) Class",
