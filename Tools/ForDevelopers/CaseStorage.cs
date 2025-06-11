@@ -26058,7 +26058,7 @@ case ""Ingredients?"":
     "Binky Companion",
     @"
 case ""Binky Companion"":
-                    Core.FarmingLogger(""Ingredients?"", quant);
+                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(52925);
                     Core.HuntMonster(""doomvault"", ""Binky"", req.Name, quant, req.Temp, false, true);
@@ -26135,7 +26135,7 @@ case ""Chaos King Crown"":
     "Chaos Lord Alteon",
     @"
 case ""Chaos Lord Alteon"":
-                    Core.FarmingLogger(""Chaos King Crown"", quant);
+                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(20671);
                     Core.HuntMonster(""swordhavenfalls"", ""Chaos Lord Alteon"", req.Name, quant, req.Temp, false);
@@ -26150,6 +26150,58 @@ case ""Tainted Soul"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(4960);
                     Core.HuntMonster(""evilmarsh"", ""Tainted Soul"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Sea Creature Membrane",
+    @"
+case ""Sea Creature Membrane"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(93822);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
+                    {
+                        Core.HuntMonsterQuest(10275, ""sunkencity"", ""Merdrathoolian"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
+{
+    "Oxidized Steel",
+    @"
+case ""Oxidized Steel"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(93823);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
+                    {
+                        Core.HuntMonsterQuest(10276, ""sunkencity"", ""Nereid Princess"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
+{
+    "Riptide Helicoprion",
+    @"
+case ""Riptide Helicoprion"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(94014);
+                    Core.HuntMonster(""sunkencity"", ""Nereid Princess"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Riptide Helicoprion Helm",
+    @"
+case ""Riptide Helicoprion Helm"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(94014);
+                    Core.HuntMonster(""sunkencity"", ""Nereid Princess"", req.Name, quant, req.Temp, false);
                     break;
     "
 },
