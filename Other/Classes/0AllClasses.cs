@@ -4,7 +4,7 @@ description: This script will get all of the classes that are currently farmable
 tags: all classes, class, farm, complete, all
 */
 
- #region  includes
+#region  includes
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreDailies.cs
@@ -467,6 +467,9 @@ public class AllClasses
         CheckAndExecute("Shadow Dragon Shinobi", () => SDS.GetClass(rankUpClass));
         CheckAndExecute("Pumpkin Lord", () => PL.GetClass(rankUpClass));
         CheckAndExecute("Vampire Lord", () => VL.GetClass(rankUpClass));
+        Bot.Quests.UpdateQuest(8298); // "No Hollowborn Class" quest, this is required to get the class ( if you havent done the questline)
+        CheckAndExecute("No Hollowborn Class", () => Core.HuntMonster("trygve", "Gramiel", "No Hollowborn Class", isTemp: false));
+
         Adv.GearStore(true, true);
         Core.ToBank(new[] { "Alpha Pirate", "Dark Lord", "Evolved Leprechaun", "Exalted Harbinger", "Frostval Barbarian", "Legion SwordMaster Assassin", "Northlands Monk", "Pirate", "Shadow Dragon Shinobi", "Pumpkin Lord", "Vampire Lord" });
 

@@ -40,8 +40,12 @@ public class LightCaster
 
     public void GetLC(bool rankUpClass = true)
     {
-        if (Core.CheckInventory(38153))
-            return;
+        if (Core.CheckInventory("LightCaster"))
+        {
+            if (rankUpClass && !Core.CheckInventory("LightCaster", 10))
+                Adv.RankUpClass("LightCaster");
+            return; // Already have the class, no need to
+        }
 
         Core.AddDrop("LightCaster", "Aranx's Pure Light");
 
@@ -50,7 +54,7 @@ public class LightCaster
         AODS.GetAoDS();
         LOT.GetLoT();
         BB.GetBurningBlade();
-        LM.GetLM(false);        
+        LM.GetLM(false);
         BBOA.GetBBoA();
 
 
