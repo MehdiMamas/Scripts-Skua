@@ -862,6 +862,11 @@ public class CoreBots
 
                 if (isHouseItem)
                 {
+                    if (bankItem == null)
+                    {
+                        Logger($"Failed to get bank item for '{item}', skipping.");
+                        continue;
+                    }
                     for (int i = 0; i < 20; i++)
                     {
                         SendPackets($"%xt%zm%bankToInv%{Bot.Map.RoomID}%{bankItem.ID}%{bankItem.CharItemID}%");
@@ -1493,15 +1498,18 @@ public class CoreBots
                     List<int> ids = v.Where(x => x.Name == questName).Select(q => q.ID).ToList();
                     if (ids.Any())
                     {
-                        List<Quest> quests = InitializeWithRetries(() => EnsureLoad(ids.Where(q => !isCompletedBefore(q)).ToArray()));
-                        if (quests.Any())
+                        List<Quest>? quests = InitializeWithRetries(() => EnsureLoad(ids.Where(q => !isCompletedBefore(q)).ToArray()));
+                        if (quests == null || !quests.Any())
                         {
-                            string s = string.Empty;
-                            quests.ForEach(q => s += $"[{q.ID}] |");
-                            bool one = quests.Count == 1;
-                            Logger($"Cannot buy {item.Name} from {shopID} because you havn't completed the {(one ? "" : "one of ")}following quest{(one ? "" : "s")}: \"{questName}\" {s[..^2]}", "CanBuy");
+                            Logger($"Cannot buy {item.Name} from {shopID} because you haven't completed the quest: \"{questName}\"", "CanBuy");
                             return false;
                         }
+
+                        // If there are still incomplete quests, list them
+                        string questList = string.Join(" | ", quests.Select(q => $"[{q.ID}]"));
+                        bool one = quests.Count == 1;
+                        Logger($"Cannot buy {item.Name} from {shopID} because you haven't completed {(one ? "" : "one of ")}the following quest{(one ? "" : "s")}: \"{questName}\" {questList}", "CanBuy");
+                        return false;
                     }
                 }
             }
@@ -2373,7 +2381,7 @@ public class CoreBots
                         continue;
                     }
 
-                    Quest? q =  Bot.Quests.EnsureLoad(quest.ID);
+                    Quest? q = Bot.Quests.EnsureLoad(quest.ID);
 
                     await Task.Delay(ActionDelay * 2);
 
@@ -3091,6 +3099,11 @@ public class CoreBots
 
         bool CheckCompletion(Quest? QuestData)
         {
+            if (QuestData == null)
+            {
+                Logger($"❌ Quest data for {questName} [{QuestID}] is null.");
+                return false;
+            }
             bool complete = QuestData.Slot < 0 ||
                 Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot) >= QuestData.Value;
 
@@ -3128,7 +3141,12 @@ public class CoreBots
             CancelRegisteredQuests();
 
         // Defining all the lists to be used=
-        List<Quest> questData = InitializeWithRetries(() => EnsureLoad(questIDs));
+        List<Quest>? questData = InitializeWithRetries(() => EnsureLoad(questIDs));
+        if (questData == null || !questData.Any())
+        {
+            Logger("No quests found to register.");
+            return;
+        }
         Dictionary<Quest, int> chooseQuests = new();
         Dictionary<Quest, int> nonChooseQuests = new();
 
@@ -3218,6 +3236,11 @@ public class CoreBots
     public bool EnsureAcceptOld(int questID)
     {
         Quest? QuestData = InitializeWithRetries(() => EnsureLoad(questID));
+        if (QuestData == null)
+        {
+            Logger($"Failed to load quest with ID {questID} after multiple attempts.");
+            return false;
+        }
 
         if (QuestData.Upgrade && !IsMember)
             Logger($"\"{QuestData.Name}\" [{questID}] is member-only, stopping the bot.", stopBot: true);
@@ -3238,7 +3261,13 @@ public class CoreBots
     /// <param name="questIDs">IDs of the quests</param>
     public void EnsureAcceptOld(params int[] questIDs)
     {
-        List<Quest> QuestData = InitializeWithRetries(() => EnsureLoad(questIDs));
+        List<Quest>? QuestData = InitializeWithRetries(() => EnsureLoad(questIDs));
+
+        if (QuestData == null || !QuestData.Any())
+        {
+            Logger("No quests found to accept.");
+            return;
+        }
         foreach (Quest quest in QuestData)
         {
             if (quest.Upgrade && !IsMember)
@@ -3317,7 +3346,12 @@ public class CoreBots
     /// <param name="itemID">ID of the choose-able reward item</param>
     public int EnsureCompleteMultiOld(int questID, int amount = -1, int itemID = -1)
     {
-        Quest q = InitializeWithRetries(() => EnsureLoad(questID));
+        Quest? q = InitializeWithRetries(() => EnsureLoad(questID));
+        if (q == null)
+        {
+            Logger($"Failed to load quest with ID {questID} after multiple attempts.");
+            return 0;
+        }
 
         int turnIns = 0;
         if (q.Once || !String.IsNullOrEmpty(q.Field))
@@ -8741,7 +8775,7 @@ public class CoreBots
 
     private List<string> CBOList = new();
 
-    public string MeasureExecutionTime(Action action, string PrefixMessage = null)
+    public string MeasureExecutionTime(Action action, string? PrefixMessage = null)
     {
         Stopwatch sw = new();
         sw.Start();
