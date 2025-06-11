@@ -194,6 +194,8 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Other/Classes/SovereignOfStorms.cs
 //cs_include Scripts/Other/Classes/Sentinal.cs
 //cs_include Scripts/Other/Classes/MartialArtist.cs
+//cs_include Scripts/Other/Classes/NoClassClasses/NoHollowbornClass.cs
+//cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
 #endregion includes
 
 using Skua.Core.Interfaces;
@@ -262,6 +264,7 @@ public class AllClasses
     private ShadowDragonShinobi SDS = new();
     private PumpkinLord PL = new();
     private VampireLord VL = new();
+    private NoHollowbornClass NHBC = new();
     #endregion Seasonal
 
     #region Various
@@ -467,8 +470,7 @@ public class AllClasses
         CheckAndExecute("Shadow Dragon Shinobi", () => SDS.GetClass(rankUpClass));
         CheckAndExecute("Pumpkin Lord", () => PL.GetClass(rankUpClass));
         CheckAndExecute("Vampire Lord", () => VL.GetClass(rankUpClass));
-        Bot.Quests.UpdateQuest(8298); // "No Hollowborn Class" quest, this is required to get the class ( if you havent done the questline)
-        CheckAndExecute("No Hollowborn Class", () => Core.HuntMonster("trygve", "Gramiel", "No Hollowborn Class", isTemp: false));
+        CheckAndExecute("No Hollowborn Class", () => NHBC.GetNHBC(rankUpClass));
 
         Adv.GearStore(true, true);
         Core.ToBank(new[] { "Alpha Pirate", "Dark Lord", "Evolved Leprechaun", "Exalted Harbinger", "Frostval Barbarian", "Legion SwordMaster Assassin", "Northlands Monk", "Pirate", "Shadow Dragon Shinobi", "Pumpkin Lord", "Vampire Lord" });
