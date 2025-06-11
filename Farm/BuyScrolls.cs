@@ -38,6 +38,11 @@ public class BuyScrolls
     {
         useMysticParchment = useMysticParchment || Bot.Config!.Get<bool>("UseMysticParchment");
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad((int)scroll));
+        if (QuestData is null)
+        {
+            Core.Logger($"Quest for {scroll} not found, please report this to the devs.");
+            return;
+        }
         string scrollName = QuestData.Rewards.First().Name;
         int maxStack = QuestData.Rewards.First().MaxStack;
         quant = quant == -1 ? maxStack : quant;
