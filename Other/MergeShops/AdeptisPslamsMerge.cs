@@ -67,7 +67,7 @@ public class AdeptisPslamsMerge
                 #region Items not setup
 
                 case "Sea Creature Membrane":
-                    Core.FarmingLogger("Sea Creature Membrane", quant);
+                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(93822);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
@@ -79,7 +79,7 @@ public class AdeptisPslamsMerge
 
 
                 case "Oxidized Steel":
-                    Core.FarmingLogger("Oxidized Steel", quant);
+                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(93823);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
@@ -92,7 +92,7 @@ public class AdeptisPslamsMerge
 
                 case "Riptide Helicoprion":
                 case "Riptide Helicoprion Helm":
-                    Core.FarmingLogger("Riptide Helicoprion", quant);
+                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(94014);
                     Core.HuntMonster("sunkencity", "Nereid Princess", req.Name, quant, req.Temp, false);
