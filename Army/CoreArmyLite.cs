@@ -1615,7 +1615,7 @@ public class CoreArmyLite
                 }
                 Core.MeasureExecutionTime(() =>
               {
-                  if (Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                  if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
                   {
                       foundPlayer = _PO;
                       return;
@@ -1671,7 +1671,7 @@ public class CoreArmyLite
 
                 Core.MeasureExecutionTime(() =>
                 {
-                    if (Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
                     {
                         foundPlayer = _PO;
                         return;
@@ -1709,7 +1709,7 @@ public class CoreArmyLite
 
                 Core.MeasureExecutionTime(() =>
                 {
-                    if (Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
                     {
                         foundPlayer = _PO;
                         return;
@@ -1741,7 +1741,7 @@ public class CoreArmyLite
 
                 Core.MeasureExecutionTime(() =>
                 {
-                    if (Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
                     {
                         foundPlayer = _PO;
                         return;
@@ -1775,7 +1775,7 @@ public class CoreArmyLite
 
                     Core.MeasureExecutionTime(() =>
                 {
-                    if (Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
                     {
                         foundPlayer = _PO;
                         return;
@@ -1810,7 +1810,7 @@ public class CoreArmyLite
 
                 Core.MeasureExecutionTime(() =>
                 {
-                    if (Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
                     {
                         foundPlayer = _PO;
                         return;
