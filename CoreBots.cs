@@ -2819,7 +2819,6 @@ public class CoreBots
         if (toReturn == null)
         {
             Bot.Quests.Load(questID);
-            Bot.Wait.ForTrue(() => Bot.Quests.Tree.Contains(x => x.ID == questID), () => Bot.Quests.Load(questID), 20);
             toReturn = Bot.Quests.Tree.Find(x => x.ID == questID) ?? _EnsureLoad1() ?? _EnsureLoad2();
 
             if (toReturn == null)
@@ -2984,7 +2983,6 @@ public class CoreBots
         if (questIDs.Length <= 15)
         {
             Bot.Quests.Load(questIDs);
-            Bot.Wait.ForTrue(() => questIDs.All(id => Bot.Quests.Tree.Any(q => q.ID == id)), 20);
             toReturn.AddRange(Bot.Quests.Tree.Where(q => questIDs.Contains(q.ID)).SelectMany(q => q.Rewards.Select(i => i.Name)));
         }
         else
