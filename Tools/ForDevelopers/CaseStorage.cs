@@ -13947,7 +13947,7 @@ case ""Anqa's Feather"":
                     Core.AddDrop(new[] { ""Glowing Ember"", ""Golden Firebird's Spear"", ""Golden Firebird's Blade"", ""Golden Firebird's Blades"", ""Miniature Phoenix Guest"" });
                     Core.RegisterQuests(9752);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster(""sunsetdunes"", ""Anqa"", req.Name, quant, req.Temp);
+                        Core.HuntMonster(""sunsetdunes"", ""Firebird Anqa"", req.Name, quant, req.Temp);
                     Core.CancelRegisteredQuests();
                     break;
     "
@@ -13962,7 +13962,7 @@ case ""Glowing Ember"":
                     Core.AddDrop(new[] { ""Glowing Ember"", ""Golden Firebird's Spear"", ""Golden Firebird's Blade"", ""Golden Firebird's Blades"", ""Miniature Phoenix Guest"" });
                     Core.RegisterQuests(9752);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster(""sunsetdunes"", ""Anqa"", req.Name, quant, req.Temp);
+                        Core.HuntMonster(""sunsetdunes"", ""Firebird Anqa"", req.Name, quant, req.Temp);
                     Core.CancelRegisteredQuests();
                     break;
     "
@@ -13977,7 +13977,7 @@ case ""Golden Firebird's Spear"":
                     Core.AddDrop(new[] { ""Glowing Ember"", ""Golden Firebird's Spear"", ""Golden Firebird's Blade"", ""Golden Firebird's Blades"", ""Miniature Phoenix Guest"" });
                     Core.RegisterQuests(9752);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster(""sunsetdunes"", ""Anqa"", req.Name, quant, req.Temp);
+                        Core.HuntMonster(""sunsetdunes"", ""Firebird Anqa"", req.Name, quant, req.Temp);
                     Core.CancelRegisteredQuests();
                     break;
     "
@@ -13992,7 +13992,7 @@ case ""Golden Firebird's Blade"":
                     Core.AddDrop(new[] { ""Glowing Ember"", ""Golden Firebird's Spear"", ""Golden Firebird's Blade"", ""Golden Firebird's Blades"", ""Miniature Phoenix Guest"" });
                     Core.RegisterQuests(9752);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster(""sunsetdunes"", ""Anqa"", req.Name, quant, req.Temp);
+                        Core.HuntMonster(""sunsetdunes"", ""Firebird Anqa"", req.Name, quant, req.Temp);
                     Core.CancelRegisteredQuests();
                     break;
     "
@@ -14007,7 +14007,7 @@ case ""Golden Firebird's Blades"":
                     Core.AddDrop(new[] { ""Glowing Ember"", ""Golden Firebird's Spear"", ""Golden Firebird's Blade"", ""Golden Firebird's Blades"", ""Miniature Phoenix Guest"" });
                     Core.RegisterQuests(9752);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster(""sunsetdunes"", ""Anqa"", req.Name, quant, req.Temp);
+                        Core.HuntMonster(""sunsetdunes"", ""Firebird Anqa"", req.Name, quant, req.Temp);
                     Core.CancelRegisteredQuests();
                     break;
     "
@@ -14022,7 +14022,7 @@ case ""Miniature Phoenix Guest"":
                     Core.AddDrop(new[] { ""Glowing Ember"", ""Golden Firebird's Spear"", ""Golden Firebird's Blade"", ""Golden Firebird's Blades"", ""Miniature Phoenix Guest"" });
                     Core.RegisterQuests(9752);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster(""sunsetdunes"", ""Anqa"", req.Name, quant, req.Temp);
+                        Core.HuntMonster(""sunsetdunes"", ""Firebird Anqa"", req.Name, quant, req.Temp);
                     Core.CancelRegisteredQuests();
                     break;
     "

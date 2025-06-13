@@ -76,7 +76,7 @@ public class SunsetTreasuresMerge
                     Core.AddDrop(new[] { "Glowing Ember", "Golden Firebird's Spear", "Golden Firebird's Blade", "Golden Firebird's Blades", "Miniature Phoenix Guest" });
                     Core.RegisterQuests(9752);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster("sunsetdunes", "Anqa", req.Name, quant, req.Temp);
+                        Core.HuntMonster("sunsetdunes", "Firebird Anqa", req.Name, quant, req.Temp);
                     Core.CancelRegisteredQuests();
                     break;
             }
