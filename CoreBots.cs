@@ -124,6 +124,8 @@ public class CoreBots
     /// <param name="disableClassSwap"></param>
     public void SetOptions(bool changeTo = true, bool disableClassSwap = false)
     {
+        EnforceInvariantCulture();
+
         // These things need to be set and checked before anything else
         if (changeTo)
         {
@@ -3781,12 +3783,12 @@ public class CoreBots
     /// <param name="publicRoom">Whether to use a public room.</param>
     public void HuntMonster(string map, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
     {
+        string trimmedMonster = monster.Trim();
+
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
         Join(map, publicRoom: publicRoom);
-
-        //*insurance**
         Bot.Wait.ForMapLoad(map);
 
         Bot.Options.AggroAllMonsters = false;
@@ -3794,24 +3796,43 @@ public class CoreBots
         if (item is not null && !isTemp)
             AddDrop(item);
 
-        Monster? FindMonster()
-        {
-            return Bot.Monsters.MapMonsters.Find(x => x != null && x.Name.FormatForCompare() == monster.FormatForCompare());
-        }
+        Monster? FindMonster() =>
+            Bot.Monsters.MapMonsters.Find(x => x != null && x.Name.FormatForCompare() == trimmedMonster.FormatForCompare());
 
         Monster? targetMonster = FindMonster();
 
         if (targetMonster == null)
         {
-            Logger($"Monster {monster} not found in /{map}.");
-            return;
+            Logger($"Monster \"{monster}\" not found in /{map}.");
+
+            // Fallback to first partial name match (case-insensitive)
+            Monster? fallback = Bot.Monsters.MapMonsters
+                .FirstOrDefault(x => x?.Name?.Contains(trimmedMonster, StringComparison.OrdinalIgnoreCase) == true);
+
+            if (fallback != null)
+            {
+                Logger($"⚠️ Monster name may have been updated to \"{fallback.Name}\". " +
+                       $"This mob will be used instead of \"{monster}\". " +
+                       $"If this is incorrect, please ping Tato or Bogalj.");
+                targetMonster = fallback;
+            }
+            else
+            {
+                string[] visible = Bot.Monsters.MapMonsters
+                    .Where(x => !string.IsNullOrWhiteSpace(x?.Name))
+                    .Select(x => $"\"{x!.Name}\"")
+                    .Distinct()
+                    .ToArray();
+
+                Logger($"❌ No approximate match found for {monster}. Visible monsters in /{map}: {string.Join(", ", visible)}");
+                return;
+            }
         }
 
-        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
+        if (Bot.Map.PlayerNames?.Any(x => x != Bot.Player.Username) == true)
         {
             Bot.Options.AggroMonsters = true;
-            //hide players to reduce lag (Trust Tato)
-            Bot.Options.HidePlayers = true;
+            Bot.Options.HidePlayers = true; // Trust Tato — reduces lag
         }
         else Bot.Options.AggroMonsters = false;
 
@@ -3834,30 +3855,37 @@ public class CoreBots
 
             bool ded = false;
             Bot.Events.MonsterKilled += b => ded = true;
-            while (!Bot.ShouldExit && !ded || isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))
+
+            while (!Bot.ShouldExit && (!ded || (isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))))
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                     Sleep();
+
                 if (Bot.Player.Cell != targetMonster.Cell)
                     Jump(targetMonster.Cell);
+
                 Bot.Combat.Attack(targetMonster);
                 Sleep();
+
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                     break;
             }
+
             Bot.Options.AttackWithoutTarget = false;
             ToggleAggro(false);
+
+            // Attempt to jump back to an 'Enter' or usable cell
             Bot.Map.Jump(
-                Bot.Map.Cells.FirstOrDefault(c => c.ToLower().Contains("enter"))
-                ?? Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank") && !c.ToLower().Contains("enter"))
-                ?? "Enter",
+                Bot.Map.Cells.FirstOrDefault(c => c.ToLower().Contains("enter")) ??
+                Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank") && !c.ToLower().Contains("enter")) ??
+                "Enter",
                 "Spawn"
             );
+
             Bot.Options.AggroMonsters = false;
             JumpWait();
             Rest();
             Bot.Options.HidePlayers = false;
-
         }
     }
 
@@ -9149,6 +9177,17 @@ public class CoreBots
     }
 
     #endregion
+
+    // English only force:
+    private static void EnforceInvariantCulture()
+    {
+        CultureInfo english = CultureInfo.InvariantCulture;
+        CultureInfo.DefaultThreadCurrentCulture = english;
+        CultureInfo.DefaultThreadCurrentUICulture = english;
+        Thread.CurrentThread.CurrentCulture = english;
+        Thread.CurrentThread.CurrentUICulture = english;
+    }
+
 
     #region Messing with players
 
