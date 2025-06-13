@@ -6576,11 +6576,7 @@ public class CoreBots
                 break;
 
             case "xantown":
-                string[]? cells = Bot.Map.Cells?.Where(x => x != "r3").ToArray();
-                if (cells != null)
-                {
-                    blackListedCells.UnionWith(cells);
-                }
+                blackListedCells.UnionWith(new[] { "r1", "r2", "r3", "r4", "r5", "r6", "r7", "r8", "r9", "r10", "r11", "r12", "Cut1", "Cut2", "Blank", "Wait", "Enter" });
                 break;
 
             case "darkoviaforest":
@@ -6661,7 +6657,7 @@ public class CoreBots
         {
             for (int i = 0; i < jumpCount; i++)
             {
-                Bot.Map.Jump(cellPad.Cell, cellPad.Pad);
+                Bot.Map.Jump(cellPad.Cell, cellPad.Pad, PrivateRooms ? true : false);
                 Bot.Wait.ForTrue(() => Bot.Player.Cell == cellPad.Cell, 20);
             }
 
