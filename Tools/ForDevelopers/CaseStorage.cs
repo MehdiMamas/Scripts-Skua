@@ -26205,6 +26205,52 @@ case ""Riptide Helicoprion Helm"":
                     break;
     "
 },
+{
+    "Grimskull's Favor",
+    @"
+case ""Grimskull's Favor"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger(""Grimskull's Favor requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(10282, 10283);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster(""lichwar"", ""Noxus Warrior"", log: false);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Noxus' Favor",
+    @"
+case ""Noxus' Favor"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger(""Noxus' Favor requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(10278, 10279);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster(""lichwar"", ""Grim Soldier"", log: false);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic)
