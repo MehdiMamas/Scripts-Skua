@@ -13091,6 +13091,42 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DoomMerge.cs"
   },
   {
+    "name": "Live at Yulgars Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Live at Yulgars Merge [377] in /yulgar",
+    "tags": [
+      "live",
+      "at",
+      "yulgars",
+      "merge",
+      "yulgar",
+      "both",
+      "directions",
+      "groupie",
+      "trollok",
+      "fan",
+      "shirt",
+      "blue",
+      "hero",
+      "",
+      "cordless",
+      "mic",
+      "vinyl",
+      "record",
+      "platinum",
+      "wreckord",
+      "stand",
+      "dread",
+      "trolluk",
+      "azalea",
+      "rocks",
+      "guy"
+    ],
+    "path": "Other/MergeShops/LiveatYulgarsMerge.cs",
+    "size": 4944,
+    "fileName": "LiveatYulgarsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/LiveatYulgarsMerge.cs"
+  },
+  {
     "name": "Corrupted Gem Blade",
     "description": "does 'Drudgen the Salesman' for \"Corrupted Gem Blade\"",
     "tags": [
