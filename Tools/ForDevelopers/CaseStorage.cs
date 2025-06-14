@@ -26251,6 +26251,29 @@ case ""Noxus' Favor"":
                     break;
     "
 },
+{
+    "Platinum Album Shard",
+    @"
+case ""Platinum Album Shard"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(4199,
+                        (""boxes"", ""Sneevil Boxer"", ClassType.Farm),
+                        (""greenguardwest"", ""Slime"", ClassType.Farm));
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic)
