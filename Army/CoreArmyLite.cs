@@ -192,13 +192,12 @@ public class CoreArmyLite
             Bot.Config!.Get<string>($"player{i}");
         }
 
-        int partySize = Players().Length;
-        Core.Logger($"Party Size: {partySize}");
+        Core.Logger($"Party Size: {PartySize()}");
 
         if (map != null)
         {
-            Core.Join(map);
-            waitForPartyCell(_cell, _pad, partySize);
+            Core.Join(map, _cell ?? "Enter", _pad ?? "Spawn");
+            waitForPartyCell("Enter", "Spawn", PartySize());
         }
 
         List<string> _AggroMonCells = this._AggroMonCells;
@@ -220,7 +219,8 @@ public class CoreArmyLite
             {
                 try
                 {
-                    Bot.Send.Packet(AggroMonPacket(AggroMonMapIDs.ToArray()));
+                    if (Bot.Player.Alive)
+                        Bot.Send.Packet(AggroMonPacket(AggroMonMapIDs.ToArray()));
                     await Task.Delay(AggroMonPacketDelay);
                 }
                 catch { }
@@ -830,32 +830,40 @@ public class CoreArmyLite
         }
 
         Core.Logger($"Final list of players: {string.Join(", ", Players())}");
-
+        List<string> missingPlayers = new();
         // Wait for party players to be ready
         while (!Bot.ShouldExit &&
          cell != null &&
          Bot.Map.CellPlayers != null &&
          Bot.Map.PlayerNames != null &&
-         Bot.Map.PlayerNames.Count(x => Players().Contains(x)) != Players().Length)
+         Bot.Map.PlayerNames.Count(x => Players().Contains(x.ToLower())) != PartySize())        
         {
             Core.Sleep();
 
             if (cell != null && Bot.Map.PlayerNames != null)
             {
-                List<string> missingPlayers = Players().Except(Bot.Map.PlayerNames).ToList();
+                missingPlayers =
+               Players()
+               .Except(Bot.Map.PlayerNames.Select(x => x.ToLower().Trim()).Concat(new[] { Bot.Player.Username.ToLower().Trim() }))
+               .ToList();
 
-                // Fail-safe for bugged lobby: if we're the only missing player, log and break
-                if (missingPlayers.Count == 1 && missingPlayers[0] == Core.Username())
+
+                if (missingPlayers.Count == 0)
                 {
-                    Core.Logger("Bugged lobby: we're the only one missing?");
+                    Core.Logger($"All players are ready in cell {cell}.");
                     break;
                 }
 
                 // Log player readiness status if players are missing
                 if (missingPlayers.Count > 0)
                 {
-                    Bot.Log($"[Players Ready: {Bot.Map.PlayerNames.Count(x => Players().Contains(x))}/{Players().Length}] " +
+                    Bot.Log($"[Players Ready: {Bot.Map.PlayerNames.Count(x => Players().Contains(x))}/{PartySize()}] " +
                             $"Missing: {string.Join(", ", missingPlayers)}");
+                }
+                else
+                {
+                    Bot.Log($"[Players Ready: {Bot.Map.PlayerNames.Count(x => Players().Contains(x))}/{PartySize()}] " +
+                            $"All players are ready in cell {cell}.");
                 }
             }
         }
@@ -892,7 +900,7 @@ public class CoreArmyLite
 
         return players.ToArray();
     }
-    public int PartySize() => Players() == null ? 0 : Players().Length;
+    public int PartySize() => Players() == null ? 0 : Players().Where(x => !string.IsNullOrEmpty(x)).Count();
 
     // public void waitForParty(string map, string? item = null, int playerMax = -1)
     // {
