@@ -571,7 +571,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 75259,
+    "size": 75630,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -4329,6 +4329,20 @@
     "size": 1912,
     "fileName": "ArmyBattleUnderB.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/ArmyFarm/ArmyBattleUnderB.cs"
+  },
+  {
+    "name": "ArmyLichWarGoldXP",
+    "description": "Uses your army to gather gold and XP",
+    "tags": [
+      "gold",
+      "xp",
+      "army",
+      "battleunderb"
+    ],
+    "path": "Army/ArmyFarm/ArmyLichWarGoldXP.cs",
+    "size": 2467,
+    "fileName": "ArmyLichWarGoldXP.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/ArmyFarm/ArmyLichWarGoldXP.cs"
   },
   {
     "name": "Army Gold",
