@@ -8306,7 +8306,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 875070,
+    "size": 875928,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -8389,7 +8389,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelper.cs",
-    "size": 11550,
+    "size": 11580,
     "fileName": "MergeTemplateHelper.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelper.cs"
   },
@@ -13089,6 +13089,42 @@
     "size": 9840,
     "fileName": "DoomMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DoomMerge.cs"
+  },
+  {
+    "name": "Live at Yulgars Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Live at Yulgars Merge [377] in /yulgar",
+    "tags": [
+      "live",
+      "at",
+      "yulgars",
+      "merge",
+      "yulgar",
+      "both",
+      "directions",
+      "groupie",
+      "trollok",
+      "fan",
+      "shirt",
+      "blue",
+      "hero",
+      "",
+      "cordless",
+      "mic",
+      "vinyl",
+      "record",
+      "platinum",
+      "wreckord",
+      "stand",
+      "dread",
+      "trolluk",
+      "azalea",
+      "rocks",
+      "guy"
+    ],
+    "path": "Other/MergeShops/LiveatYulgarsMerge.cs",
+    "size": 4944,
+    "fileName": "LiveatYulgarsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/LiveatYulgarsMerge.cs"
   },
   {
     "name": "Corrupted Gem Blade",
