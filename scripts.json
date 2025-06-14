@@ -9365,6 +9365,29 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DeepTunnelMerge.cs"
   },
   {
+    "name": "Noxus War Spoils Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Noxus War Spoils Merge [2589] in /lichwar",
+    "tags": [
+      "noxus",
+      "war",
+      "spoils",
+      "merge",
+      "lichwar",
+      "psychophant",
+      "horned",
+      "morph",
+      "wings",
+      "psychophants",
+      "spear",
+      "noxious",
+      "beast"
+    ],
+    "path": "Other/MergeShops/NoxusWarSpoilsMerge.cs",
+    "size": 4802,
+    "fileName": "NoxusWarSpoilsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/NoxusWarSpoilsMerge.cs"
+  },
+  {
     "name": "Crulons Wedding Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Crulons Wedding Merge [2472] in /crulonwed",
     "tags": [
@@ -12582,6 +12605,31 @@
     "size": 3821,
     "fileName": "DwobosMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DwobosMerge.cs"
+  },
+  {
+    "name": "Grimskulls War Spoils Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Grimskulls War Spoils Merge [2590] in /lichwar",
+    "tags": [
+      "grimskulls",
+      "war",
+      "spoils",
+      "merge",
+      "lichwar",
+      "grimskull",
+      "psychophant",
+      "halo",
+      "morph",
+      "wings",
+      "grim",
+      "psychophants",
+      "scythe",
+      "fists",
+      "fist"
+    ],
+    "path": "Other/MergeShops/GrimskullsWarSpoilsMerge.cs",
+    "size": 5069,
+    "fileName": "GrimskullsWarSpoilsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/GrimskullsWarSpoilsMerge.cs"
   },
   {
     "name": "BeleensChaosFuzzyMerge",
