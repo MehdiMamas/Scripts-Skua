@@ -150,7 +150,8 @@ public class Grimgaol
         // weaponons
         new Option<string>("Valiance", "Weapon: Valiance", "insert name of your Valiance weapon", ""),
         new Option<string>("Dauntless", "Weapon: Dauntless", "insert name of your Dauntless weapon", ""),
-
+        new Option<string>("Elysium", "Weapon: Elysium", "insert name of your Elysium weapon", ""),
+      
         // helm
         new Option<string>("WizHelm", "Helm: WizHelm", "insert name of your WizHelm helm", ""),
         new Option<string>("LuckHelm", "Helm: LuckHelm", "insert name of your LuckHelm helm", ""),
@@ -732,9 +733,21 @@ public class Grimgaol
         {
             return;
         }
-        Core.Equip(Adv.uDauntless() ? "Dragon of Time" : "Void Highlord");
+
+        bool UseDot = Adv.uDauntless();
+        Core.Equip(UseDot ? "Dragon of Time" : "Void Highlord");
         string? valiance = Bot.Config!.Get<string>("Valiance");
-        if (!string.IsNullOrWhiteSpace(valiance))
+        string? elysium = Bot.Config!.Get<string>("Elysium");
+
+        if (UseDot && !string.IsNullOrWhiteSpace(elysium))
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(elysium))
+            {
+                Core.Equip(elysium);
+                Core.Sleep(1500);
+            }
+        }
+        else if (!string.IsNullOrWhiteSpace(valiance))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
             {
@@ -1115,7 +1128,16 @@ public class Grimgaol
         }
         Core.Equip("Dragon of Time");
         string? valiance = Bot.Config!.Get<string>("Valiance");
-        if (!string.IsNullOrWhiteSpace(valiance))
+        string? elysium = Bot.Config!.Get<string>("Elysium");
+        if (!string.IsNullOrWhiteSpace(elysium))
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(elysium))
+            {
+                Core.Equip(elysium);
+                Core.Sleep(1500);
+            }
+        }
+        else if (!string.IsNullOrWhiteSpace(valiance))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
             {
