@@ -125,7 +125,7 @@ public class MergeTemplateHelper
 
                 processedRequirements.Add(req.Name);
                 itemsToLearn.Add(req.Name);
-
+                string template = "{req.Name}";
                 if (storedCases.TryGetValue(req.Name, out string? caseCode))
                     globalKnownCases.Add(caseCode.TrimEnd());
                 else
@@ -134,7 +134,7 @@ public class MergeTemplateHelper
                 case ""{req.Name}"":
                     if (req.Upgrade && !Core.IsMember)
                     {{
-                        Core.Logger(""{req.Name}"" requires membership to farm, skipping."");
+                        Core.Logger($""{template} requires membership to farm, skipping."");
                         return;
                     }}
 
@@ -147,8 +147,8 @@ public class MergeTemplateHelper
                         Core.HuntMonster(""map"", ""MonsterName"", ""item"", 1, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }}
-                    Core.CancelRegisteredQuests();
-                    break;
+            Core.CancelRegisteredQuests();
+            break;
             ");
 
                 }
