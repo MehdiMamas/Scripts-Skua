@@ -368,6 +368,17 @@ public class CoreArmyLite
     public Option<string> player8 = new("player8", "Account #8", "Name of one of your accounts.", "");
     public Option<string> player9 = new("player9", "Account #9", "Name of one of your accounts.", "");
     public Option<string> player10 = new("player10", "Account #10", "Name of one of your accounts.", "");
+    public Option<string> player11 = new("player11", "Account #11", "Name of one of your accounts.", "");
+    public Option<string> player12 = new("player12", "Account #12", "Name of one of your accounts.", "");
+    public Option<string> player13 = new("player13", "Account #13", "Name of one of your accounts.", "");
+    public Option<string> player14 = new("player14", "Account #14", "Name of one of your accounts.", "");
+    public Option<string> player15 = new("player15", "Account #15", "Name of one of your accounts.", "");
+    public Option<string> player16 = new("player16", "Account #16", "Name of one of your accounts.", "");
+    public Option<string> player17 = new("player17", "Account #17", "Name of one of your accounts.", "");
+    public Option<string> player18 = new("player18", "Account #18", "Name of one of your accounts.", "");
+    public Option<string> player19 = new("player19", "Account #19", "Name of one of your accounts.", "");
+    public Option<string> player20 = new("player20", "Account #20", "Name of one of your accounts.", "");
+
 
     public Option<int> packetDelay = new(
         "PacketDelay", "Delay for Packet Spam", "Sets the delay for the Packet Spam\n" +
