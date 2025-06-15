@@ -1196,6 +1196,17 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Chaos/AscendedDrakathGear.cs"
   },
   {
+    "name": "MoreSkullsWorldBoss",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Prototypes/MoreSkullsWorldBoss.cs",
+    "size": 3223,
+    "fileName": "MoreSkullsWorldBoss.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/MoreSkullsWorldBoss.cs"
+  },
+  {
     "name": "Grimgoal",
     "description": "Goes through teh grimgaol dungeon... Testing Phase",
     "tags": [
