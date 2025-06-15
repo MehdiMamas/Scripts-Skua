@@ -33,21 +33,22 @@ public class MoreSkullsWorldBoss
 
     public void Setup()
     {
-        Bot.Events.RunToArea += Event_RunToArea;
+        Bot.Events.ExtensionPacketReceived += Fuckyou;
         Core.EquipClass(ClassType.Solo);
         Core.AddDrop("Pristine Skull");
         if (Core.isCompletedBefore(10286))
             Core.RegisterQuests(10286);
+
         Bot.Options.AttackWithoutTarget = true;
+
         while (!Bot.ShouldExit)
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
-            {
                 Bot.Sleep(1000);
-            }
 
             if (Bot.Map.Name != "MoreSkulls")
-                Core.Join($"MoreSkulls", "r2", "Left");
+                Core.Join("MoreSkulls", "r2", "Left");
+
             if (Bot.Player.Cell != "r2")
                 Core.Jump("r2");
 
@@ -60,45 +61,96 @@ public class MoreSkullsWorldBoss
             }
             Bot.Sleep(500);
         }
+
+        Bot.Events.ExtensionPacketReceived -= Fuckyou;
         Bot.Options.AttackWithoutTarget = false;
-        Bot.Events.RunToArea -= Event_RunToArea;
     }
 
-    void Event_RunToArea(string zone)
+    DateTime lastZoneChange = DateTime.MinValue;
+    readonly TimeSpan ZoneChangeCooldown = TimeSpan.FromSeconds(2);
+    string currentZone = "";
+    Task? zoneMovementTask;
+
+    void Fuckyou(dynamic packet)
     {
-        switch (zone.ToLower())
+        string? type = packet["params"]?.type;
+        if (type != "json")
+            return;
+
+        dynamic? data = packet["params"]?.dataObj;
+        string? cmd = data?.cmd?.ToString();
+        if (cmd != "event")
+            return;
+
+        dynamic? args = data?.args;
+        if (args == null)
         {
-            case "a":
-                if (Bot.Player.Position.X >= 685 && Bot.Player.Position.X <= 869
-                    && Bot.Player.Position.Y >= 400 && Bot.Player.Position.Y <= 409)
-                    return; // Already in Zone A, no need to move
-
-                // Zone A area: x: 685–869, y: 400–409
-                Bot.Player.WalkTo(
-                    Bot.Random.Next(685, 870),  // max is exclusive
-                    Bot.Random.Next(400, 410),
-                    speed: 8
-                );
-                Bot.Events.RunToArea += Event_RunToArea;
-                break;
-
-            case "b":
-                // Zone B area: x: 646–861, y: 333–367
-                if (Bot.Player.Position.X >= 646 && Bot.Player.Position.X <= 861
-                    && Bot.Player.Position.Y >= 333 && Bot.Player.Position.Y <= 367)
-                    return; // Already in Zone B, no need to move
-
-                Bot.Player.WalkTo(
-                    Bot.Random.Next(646, 862),
-                    Bot.Random.Next(333, 368),
-                    speed: 8
-                );
-                Bot.Events.RunToArea += Event_RunToArea;
-                break;
-
-            case null:
-                break;
+            Core.Logger("[Fuckyou] args is null");
+            return;
         }
+
+        string? zone = args.zoneSet?.ToString()?.Trim();
+        if (string.IsNullOrEmpty(zone))
+        {
+            Core.Logger("[Fuckyou] zoneSet missing or empty");
+            return;
+        }
+
+        if (zone == currentZone)
+        {
+            Core.Logger($"[Fuckyou] Already in zone {zone}, skipping");
+            return;
+        }
+
+        if (DateTime.Now - lastZoneChange < ZoneChangeCooldown)
+        {
+            Core.Logger($"[Fuckyou] Zone change throttled: {zone}");
+            return;
+        }
+
+        currentZone = zone;
+        lastZoneChange = DateTime.Now;
+        Core.Logger($"[Fuckyou] zoneSet = {zone}");
+
+        // Cancel ongoing movement task if any, then start new
+        if (zoneMovementTask is { IsCompleted: false })
+            return; // Avoid overlapping moves - or optionally cancel with a CancellationToken if you want to support that
+
+        zoneMovementTask = Task.Run(async () =>
+        {
+            await Task.Delay(300); // Let frame settle, helps on Wi-Fi lag
+
+            int x = 0, y = 0;
+            switch (zone)
+            {
+                case "A":
+                    if (Bot.Player.Position.X >= 685 && Bot.Player.Position.X <= 869 &&
+                        Bot.Player.Position.Y >= 400 && Bot.Player.Position.Y <= 409)
+                        return;
+
+                    x = Bot.Random.Next(685, 870);
+                    y = Bot.Random.Next(400, 410);
+                    Core.Logger($"[Fuckyou] Moving to Zone A: ({x}, {y})");
+                    break;
+
+                case "B":
+                    if (Bot.Player.Position.X >= 646 && Bot.Player.Position.X <= 861 &&
+                        Bot.Player.Position.Y >= 333 && Bot.Player.Position.Y <= 367)
+                        return;
+
+                    x = Bot.Random.Next(646, 862);
+                    y = Bot.Random.Next(333, 368);
+                    Core.Logger($"[Fuckyou] Moving to Zone B: ({x}, {y})");
+                    break;
+
+                default:
+                    Core.Logger($"[Fuckyou] Unknown zone: {zone}");
+                    return;
+            }
+
+            Bot.Player.WalkTo(x, y, speed: 8);
+        });
     }
+
 
 }
