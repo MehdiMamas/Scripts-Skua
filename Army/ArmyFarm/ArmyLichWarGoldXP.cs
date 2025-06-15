@@ -64,7 +64,7 @@ public class ArmyLichWarGoldXP
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
-        Core.RegisterQuests(10282, 10283, 10284);
+        Core.RegisterQuests(10278, 10279, 10280, 10282, 10283, 10284);
         Core.EquipClass(ClassType.Farm);
         string[] cells = new[] { "r2", "r3", "r4", "r5", "r6", "r7", "r8", "r9" };
         Army.AggroMonCells(cells.Take(Army.PartySize()).ToArray());
