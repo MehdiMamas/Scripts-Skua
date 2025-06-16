@@ -50,7 +50,7 @@ public class AAWithMove
         switch (boss)
         {
             case PickYourBoss.NightmareCarnax:
-                FarmDarkCarnax(AttemptSoloNMCarnax ? true : false);
+                FarmDarkCarnax(AttemptSoloNMCarnax);
                 break;
 
             case PickYourBoss.UltraDage:
