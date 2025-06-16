@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 140570,
+    "size": 140548,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -6615,7 +6615,7 @@
       "reps"
     ],
     "path": "Farm/REP/1GetAllRanks.cs",
-    "size": 1939,
+    "size": 2320,
     "fileName": "1GetAllRanks.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/1GetAllRanks.cs"
   },
