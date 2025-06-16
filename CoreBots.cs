@@ -1490,7 +1490,7 @@ public class CoreBots
                 return false;
             }
 
-            //Quest Check
+            // Quest Check
             string? questName = Bot.Flash.GetGameObject<List<dynamic>>("world.shopinfo.items")?.Find(d => d.ItemID == item.ID)?.sQuest;
             if (!string.IsNullOrEmpty(questName))
             {
@@ -1498,24 +1498,21 @@ public class CoreBots
                 if (v != null)
                 {
                     List<int> ids = v.Where(x => x.Name == questName).Select(q => q.ID).ToList();
-                    if (ids.Any())
+                    List<int> incompleteIDs = ids.Where(q => !isCompletedBefore(q)).ToList();
+                    if (incompleteIDs.Any())
                     {
-                        List<Quest>? quests = InitializeWithRetries(() => EnsureLoad(ids.Where(q => !isCompletedBefore(q)).ToArray()));
-                        if (quests == null || !quests.Any())
+                        List<Quest>? quests = InitializeWithRetries(() => EnsureLoad(incompleteIDs.ToArray()));
+                        if (quests != null && quests.Any())
                         {
-                            Logger($"Cannot buy {item.Name} from {shopID} because you haven't completed the quest: \"{questName}\"", "CanBuy");
+                            string questList = string.Join(" | ", quests.Select(q => $"[{q.ID}]"));
+                            bool one = quests.Count == 1;
+                            Logger($"Cannot buy {item.Name} from {shopID} because you haven't completed {(one ? "" : "one of ")}the following quest{(one ? "" : "s")}: \"{questName}\" {questList}", "CanBuy");
                             return false;
                         }
-
-                        // If there are still incomplete quests, list them
-                        string questList = string.Join(" | ", quests.Select(q => $"[{q.ID}]"));
-                        bool one = quests.Count == 1;
-                        Logger($"Cannot buy {item.Name} from {shopID} because you haven't completed {(one ? "" : "one of ")}the following quest{(one ? "" : "s")}: \"{questName}\" {questList}", "CanBuy");
-                        return false;
                     }
                 }
             }
-
+            
             //Rep check
             if (!string.IsNullOrEmpty(item.Faction) && item.Faction != "None")
             {
