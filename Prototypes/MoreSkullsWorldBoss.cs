@@ -48,8 +48,7 @@ public class MoreSkullsWorldBoss
         Bot.Events.ExtensionPacketReceived += Fuckyou;
         Core.EquipClass(ClassType.Solo);
         Core.AddDrop("Pristine Skull");
-        if (Core.isCompletedBefore(10286))
-            Core.RegisterQuests(10286);
+        Core.RegisterQuests(10286);
 
         Bot.Options.AttackWithoutTarget = true;
         Core.FarmingLogger("Pristine Skull", target);
