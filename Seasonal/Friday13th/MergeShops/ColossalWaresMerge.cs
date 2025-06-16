@@ -45,7 +45,6 @@ public class ColossalWaresMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
-        Bot.Quests.UpdateQuest(10281);
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("moreskulls", 2591, findIngredients, buyOnlyThis, buyMode: buyMode);
 
