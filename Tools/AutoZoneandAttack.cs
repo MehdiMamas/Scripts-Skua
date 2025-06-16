@@ -45,8 +45,8 @@ public class AAWithMove
     // Entry point for auto-move depending on current map
     public void AutoMove()
     {
-        PickYourBoss boss = Bot.Config.Get<PickYourBoss>("PickYourBoss");
-        bool AttemptSoloNMCarnax = Bot.Config.Get<bool>("AttemptSoloNMCarnax");
+        PickYourBoss boss = Bot.Config!.Get<PickYourBoss>("PickYourBoss");
+        bool AttemptSoloNMCarnax = Bot.Config!.Get<bool>("AttemptSoloNMCarnax");
         switch (boss)
         {
             case PickYourBoss.NightmareCarnax:
