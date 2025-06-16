@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 140570,
+    "size": 140548,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -1202,7 +1202,7 @@
       "null"
     ],
     "path": "Prototypes/MoreSkullsWorldBoss.cs",
-    "size": 3223,
+    "size": 5305,
     "fileName": "MoreSkullsWorldBoss.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/MoreSkullsWorldBoss.cs"
   },
@@ -6615,7 +6615,7 @@
       "reps"
     ],
     "path": "Farm/REP/1GetAllRanks.cs",
-    "size": 1939,
+    "size": 2320,
     "fileName": "1GetAllRanks.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/1GetAllRanks.cs"
   },
@@ -8331,7 +8331,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 875928,
+    "size": 876885,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -26506,6 +26506,33 @@
     "size": 5849,
     "fileName": "ShadowMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/ShadowMerge.cs"
+  },
+  {
+    "name": "Colossal Wares Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Colossal Wares Merge [2591] in /moreskulls",
+    "tags": [
+      "colossal",
+      "wares",
+      "merge",
+      "moreskulls",
+      "deathbound",
+      "knight",
+      "thorn",
+      "crown",
+      "skull",
+      "shroud",
+      "vestal",
+      "gold",
+      "awakened",
+      "vordred",
+      "plate",
+      "nictos",
+      "necronomicon"
+    ],
+    "path": "Seasonal/Friday13th/MergeShops/ColossalWaresMerge.cs",
+    "size": 7063,
+    "fileName": "ColossalWaresMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/ColossalWaresMerge.cs"
   },
   {
     "name": "Gonna Getcha Merge",

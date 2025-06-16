@@ -1306,7 +1306,7 @@ public class CoreFarms
     #endregion Misc
 
     #region Reputation
-    public void GetAllRanks()
+    public void GetAllRanks(bool doDeathPit = true)
     {
         ToggleBoost(BoostType.Reputation);
 
@@ -1364,9 +1364,11 @@ public class CoreFarms
         TrollREP();
         VampireREP();
         YokaiREP();
-        //Death Pit scripts here because they take alot of time and kill script efficieny
-        // DeathPitBrawlREP();
-        // DeathPitArenaREP();
+        if (doDeathPit)
+        {
+            DeathPitBrawlREP();
+            DeathPitArenaREP();
+        }
 
         ToggleBoost(BoostType.Reputation, false);
     }

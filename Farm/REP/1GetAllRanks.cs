@@ -14,6 +14,8 @@ tags: all reps, reputation, rank, all ranks, farm, rep, reps
 //cs_include Scripts/Story/QueenofMonsters/Extra/BrightOak.cs
 
 using Skua.Core.Interfaces;
+using Skua.Core.Options;
+
 public class GetAllRanks
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
@@ -25,18 +27,25 @@ public class GetAllRanks
     public Core13LoC LOC => new();
     public GlaceraStory Glac => new();
     public BrightOak BrightOak = new();
+    public bool DontPreconfigure = true;
+    public string OptionsStorage = "GetAllRanks";
+    public List<IOption> Options = new()
+    {
+        new Option<bool>("doDeathPit", "Do Death Pit", "Should the bot farm Death Pit Brawl and Death Pit Arena reputations?", true)
+    };
+
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
 
-        DoGetAllRanks();
+        DoGetAllRanks(Bot.Config!.Get<bool>("doDeathPit"));
 
         Core.SetOptions(false);
     }
 
 
-    public void DoGetAllRanks()
+    public void DoGetAllRanks(bool doDeathPit = true)
     {
         //Adv.BestGear(GenericGearBoost.dmgAll);
         //Adv.BestGear(GenericGearBoost.rep);
@@ -52,7 +61,7 @@ public class GetAllRanks
         // TOD.DeathPitPVP();
 
 
-        Farm.GetAllRanks();
+        Farm.GetAllRanks(doDeathPit);
 
     }
 }

@@ -26274,6 +26274,50 @@ case ""Platinum Album Shard"":
                     break;
     "
 },
+{
+    "Pristine Skull",
+    @"
+case ""Pristine Skull"":
+                    MSWB.Setup(quant);
+                    break;
+    "
+},
+{
+    "Vordred's Armor",
+    @"
+case ""Vordred's Armor"":
+                    VA.GetVordredsArmor(true);
+                    Adv.BuyItem(""stonewood"", 2063, req.Name);
+                    break;
+    "
+},
+{
+    "Vordred's Helm",
+    @"
+case ""Vordred's Helm"":
+                    VA.GetVordredsArmor(true);
+                    Adv.BuyItem(""stonewood"", 2063, req.Name);
+                    break;
+    "
+},
+{
+    "Vordred's Chestpiece",
+    @"
+case ""Vordred's Chestpiece"":
+                    VA.GetVordredsArmor(true);
+                    Adv.BuyItem(""stonewood"", 2063, req.Name);
+                    break;
+    "
+},
+{
+    "Vordred's Cape",
+    @"
+case ""Vordred's Cape"":
+                    VA.GetVordredsArmor(true);
+                    Adv.BuyItem(""stonewood"", 2063, req.Name);
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic)
