@@ -1246,24 +1246,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Butler2[WIP].cs"
   },
   {
-    "name": "Auto Attack with Auto Movement",
-    "description": "This bot will automatically move to the right locations for Nightmare Carnax and Ultra Dage",
-    "tags": [
-      "nightmare",
-      "carnax",
-      "ultra",
-      "dage",
-      "auto",
-      "attack",
-      "movement",
-      "tool"
-    ],
-    "path": "Tools/AutoAttackWithMove.cs",
-    "size": 2622,
-    "fileName": "AutoAttackWithMove.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/AutoAttackWithMove.cs"
-  },
-  {
     "name": "Choose Best Gear",
     "description": "Select a boost type you want to optimize for, and the bot will find and equip the best combination of gear for that boost.",
     "tags": [
@@ -1411,6 +1393,20 @@
     "size": 2798,
     "fileName": "YandereStalker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/YandereStalker.cs"
+  },
+  {
+    "name": "Auto Zone and ttack",
+    "description": "This tool will automatically move to the specified zones and attack monsters.",
+    "tags": [
+      "autozone",
+      "nightmare carnax",
+      "ultradage",
+      "moreskulls"
+    ],
+    "path": "Tools/AutoZoneandAttack.cs",
+    "size": 9650,
+    "fileName": "AutoZoneandAttack.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/AutoZoneandAttack.cs"
   },
   {
     "name": "Evaluate Account",
@@ -3121,7 +3117,7 @@
       "dark-carnax"
     ],
     "path": "Story/DarkCarnax.cs",
-    "size": 3921,
+    "size": 4940,
     "fileName": "DarkCarnax.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/DarkCarnax.cs"
   },
@@ -25111,7 +25107,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/CoreArchMage.cs",
-    "size": 22215,
+    "size": 24179,
     "fileName": "CoreArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/CoreArchMage.cs"
   },
