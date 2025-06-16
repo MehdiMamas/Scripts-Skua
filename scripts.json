@@ -26469,33 +26469,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/OdditiesMerge.cs"
   },
   {
-    "name": "Colossal Wares Merge",
-    "description": "This bot will farm the items belonging to the selected mode for the Colossal Wares Merge [2591] in /moreskulls",
-    "tags": [
-      "colossal",
-      "wares",
-      "merge",
-      "moreskulls",
-      "deathbound",
-      "knight",
-      "thorn",
-      "crown",
-      "skull",
-      "shroud",
-      "vestal",
-      "gold",
-      "awakened",
-      "vordred",
-      "plate",
-      "nictos",
-      "necronomicon"
-    ],
-    "path": "Seasonal/Friday13th/MergeShops/ColossalWaresMerge[MEM].cs",
-    "size": 7102,
-    "fileName": "ColossalWaresMerge[MEM].cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/ColossalWaresMerge[MEM].cs"
-  },
-  {
     "name": "Valarian's Merge",
     "description": "This will get all or selected items on this merge shop.",
     "tags": [
@@ -26533,6 +26506,33 @@
     "size": 5849,
     "fileName": "ShadowMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/ShadowMerge.cs"
+  },
+  {
+    "name": "Colossal Wares Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Colossal Wares Merge [2591] in /moreskulls",
+    "tags": [
+      "colossal",
+      "wares",
+      "merge",
+      "moreskulls",
+      "deathbound",
+      "knight",
+      "thorn",
+      "crown",
+      "skull",
+      "shroud",
+      "vestal",
+      "gold",
+      "awakened",
+      "vordred",
+      "plate",
+      "nictos",
+      "necronomicon"
+    ],
+    "path": "Seasonal/Friday13th/MergeShops/ColossalWaresMerge.cs",
+    "size": 7102,
+    "fileName": "ColossalWaresMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/ColossalWaresMerge.cs"
   },
   {
     "name": "Gonna Getcha Merge",
