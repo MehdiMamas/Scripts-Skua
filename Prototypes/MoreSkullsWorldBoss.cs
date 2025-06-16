@@ -6,9 +6,10 @@ tags: null
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Army/CoreArmyLite.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;
+using Skua.Core.Models.Quests;
 using Skua.Core.Options;
 
 public class MoreSkullsWorldBoss
@@ -17,22 +18,33 @@ public class MoreSkullsWorldBoss
     private CoreBots Core => CoreBots.Instance;
     private CoreFarms Farm = new();
     private CoreAdvanced Adv => new();
-    private CoreArmyLite Army = new();
-
-
+    private int GetMaxPristineSkull()
+    {
+        Quest? quest = Bot.Quests.EnsureLoad(10286);
+        if (quest == null)
+        {
+            Core.Logger("Quest 10286 not found, returning default max stack of 1");
+            return 1; // Default max stack if quest is not found
+        }
+        ItemBase? reward = quest.Rewards.FirstOrDefault(r => r.Name == "Pristine Skull");
+        return reward?.MaxStack ?? 1;
+    }
     public void ScriptMain(IScriptInterface bot)
     {
         Core.BankingBlackList.Add("Pristine Skull");
         Core.SetOptions();
 
         Core.OneTimeMessage("WARNING", "During the script, when it Does the zone bit, there will be a momentary Freeze (blame flash), dw about it itll continue", true, true);
-        Setup();
+        Setup(GetMaxPristineSkull());
 
         Core.SetOptions(false);
     }
 
-    public void Setup()
+    public void Setup(int? quant = null)
     {
+        int target = quant ?? GetMaxPristineSkull();
+        if (Core.CheckInventory("Pristine Skull", target))
+            return;
         Bot.Events.ExtensionPacketReceived += Fuckyou;
         Core.EquipClass(ClassType.Solo);
         Core.AddDrop("Pristine Skull");
@@ -40,8 +52,8 @@ public class MoreSkullsWorldBoss
             Core.RegisterQuests(10286);
 
         Bot.Options.AttackWithoutTarget = true;
-
-        while (!Bot.ShouldExit)
+        Core.FarmingLogger("Pristine Skull", target);
+        while (!Bot.ShouldExit && !Core.CheckInventory("Pristine Skull", target))
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
                 Bot.Sleep(1000);
