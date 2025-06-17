@@ -562,27 +562,19 @@ public class CoreArchMage
         }
     }
 
+    private DateTime lastMove = DateTime.MinValue;
+    private readonly TimeSpan moveCooldown = TimeSpan.FromSeconds(2);
+    private string currentZone = "";
+    private Task? moveTask;
+
     private void MoveNightmareCarnax(string zone)
     {
-        string zoneLower = zone.ToLower();
-
-        if (zoneLower == currentZone)
-        {
+        string zoneLower = zone?.ToLower() ?? "";
+        if (zoneLower == currentZone || DateTime.Now - lastMove < moveCooldown || (moveTask is { IsCompleted: false }))
             return;
-        }
-
-        if (DateTime.Now - lastMove < moveCooldown)
-        {
-            return;
-        }
 
         currentZone = zoneLower;
         lastMove = DateTime.Now;
-
-        if (moveTask is { IsCompleted: false })
-        {
-            return;
-        }
 
         moveTask = Task.Run(async () =>
         {
@@ -601,14 +593,12 @@ public class CoreArchMage
             await Task.Delay(2500);
         });
     }
+
     private void FarmDarkCarnax(bool attemptSolo = true)
     {
         if (Core.CheckInventory("Calamitous Ruin"))
-        {
             return;
-        }
 
-        Core.FarmingLogger("Calamitous Ruin");
         Core.AddDrop("Synthetic Viscera");
         Core.Jump("Boss", "Left");
         Bot.Player.SetSpawnPoint();
@@ -616,6 +606,7 @@ public class CoreArchMage
         Bot.Options.AttackWithoutTarget = true;
 
         Bot.Events.RunToArea += MoveNightmareCarnax;
+
         if (attemptSolo)
         {
             if (Core.CheckInventory("Dragon of Time"))
@@ -651,8 +642,8 @@ public class CoreArchMage
                 Bot.Wait.ForMonsterDeath();
                 Bot.Combat.CancelTarget();
             }
-
         }
+
         Core.CancelRegisteredQuests();
         Bot.Options.AttackWithoutTarget = false;
         Adv.GearStore(true);
@@ -660,14 +651,6 @@ public class CoreArchMage
         Bot.Events.RunToArea -= MoveNightmareCarnax;
     }
 
-
-
-
-    // Shared fields for movement throttling and async task tracking
-    private DateTime lastMove = DateTime.MinValue;
-    private readonly TimeSpan moveCooldown = TimeSpan.FromSeconds(2);
-    private string currentZone = "";
-    private Task? moveTask;
 
     private readonly string[] RequiredItems = {
         "ArchMage",

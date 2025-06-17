@@ -6,6 +6,7 @@ tags: null
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+using System.Linq.Expressions;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;
@@ -23,7 +24,6 @@ public class MoreSkullsWorldBoss
         Quest? quest = Bot.Quests.EnsureLoad(10286);
         if (quest == null)
         {
-            Core.Logger("Quest 10286 not found, returning default max stack of 1");
             return 1; // Default max stack if quest is not found
         }
         ItemBase? reward = quest.Rewards.FirstOrDefault(r => r.Name == "Pristine Skull");
@@ -39,14 +39,16 @@ public class MoreSkullsWorldBoss
 
         Core.SetOptions(false);
     }
+    CancellationTokenSource? moveTokenSource;
 
     public void Setup(int? quant = null)
     {
         int target = quant ?? GetMaxPristineSkull();
         if (Core.CheckInventory("Pristine Skull", target))
             return;
+
+        moveTokenSource = new CancellationTokenSource(); // Create token
         Bot.Events.ExtensionPacketReceived += Fuckyou;
-        Core.EquipClass(ClassType.Solo);
         Core.AddDrop("Pristine Skull");
         Core.RegisterQuests(10286);
 
@@ -73,6 +75,9 @@ public class MoreSkullsWorldBoss
             Bot.Sleep(500);
         }
 
+        // Cleanup
+        moveTokenSource?.Cancel(); // Cancel any ongoing move task
+        moveTokenSource?.Dispose();
         Bot.Events.ExtensionPacketReceived -= Fuckyou;
         Bot.Options.AttackWithoutTarget = false;
     }
@@ -84,6 +89,9 @@ public class MoreSkullsWorldBoss
 
     void Fuckyou(dynamic packet)
     {
+        if (moveTokenSource?.IsCancellationRequested ?? true)
+            return; // Token already cancelled, script likely ended
+
         string? type = packet["params"]?.type;
         if (type != "json")
             return;
@@ -94,74 +102,78 @@ public class MoreSkullsWorldBoss
             return;
 
         dynamic? args = data?.args;
-        if (args == null)
-        {
-            Core.Logger("[Fuckyou] args is null");
+        string? zone = args?.zoneSet?.ToString()?.Trim();
+        if (string.IsNullOrEmpty(zone) || zone == currentZone)
             return;
-        }
-
-        string? zone = args.zoneSet?.ToString()?.Trim();
-        if (string.IsNullOrEmpty(zone))
-        {
-            Core.Logger("[Fuckyou] zoneSet missing or empty");
-            return;
-        }
-
-        if (zone == currentZone)
-        {
-            Core.Logger($"[Fuckyou] Already in zone {zone}, skipping");
-            return;
-        }
 
         if (DateTime.Now - lastZoneChange < ZoneChangeCooldown)
-        {
-            Core.Logger($"[Fuckyou] Zone change throttled: {zone}");
             return;
-        }
 
         currentZone = zone;
         lastZoneChange = DateTime.Now;
-        Core.Logger($"[Fuckyou] zoneSet = {zone}");
 
-        // Cancel ongoing movement task if any, then start new
+        // Skip if a task is still running
         if (zoneMovementTask is { IsCompleted: false })
-            return; // Avoid overlapping moves - or optionally cancel with a CancellationToken if you want to support that
+            return;
 
+        CancellationToken token = moveTokenSource!.Token;
         zoneMovementTask = Task.Run(async () =>
-        {
-            await Task.Delay(300); // Let frame settle, helps on Wi-Fi lag
-
-            int x = 0, y = 0;
-            switch (zone)
             {
-                case "A":
-                    if (Bot.Player.Position.X >= 685 && Bot.Player.Position.X <= 869 &&
-                        Bot.Player.Position.Y >= 400 && Bot.Player.Position.Y <= 409)
-                        return;
+                // Randomize the delay to avoid being too predictable
+                await Task.Delay(Bot.Random.Next(500, 1500), token);
 
-                    x = Bot.Random.Next(685, 870);
-                    y = Bot.Random.Next(400, 410);
-                    Core.Logger($"[Fuckyou] Moving to Zone A: ({x}, {y})");
-                    break;
+                int x, y;
 
-                case "B":
-                    if (Bot.Player.Position.X >= 646 && Bot.Player.Position.X <= 861 &&
-                        Bot.Player.Position.Y >= 333 && Bot.Player.Position.Y <= 367)
-                        return;
+                // Determine the coordinates based on the zone
+                // Zones are defined by their names, e.g., "A", "B", etc. ( gotten from the packet data via Packets > Intercepter)
+                switch (zone)
+                {
+                    case "A":
+                        if (Bot.Player.Position.X >= 741 && Bot.Player.Position.X <= 832 &&
+                            Bot.Player.Position.Y >= 402 && Bot.Player.Position.Y <= 446)
+                            return;
 
-                    x = Bot.Random.Next(646, 862);
-                    y = Bot.Random.Next(333, 368);
-                    Core.Logger($"[Fuckyou] Moving to Zone B: ({x}, {y})");
-                    break;
+                        x = Bot.Random.Next(741, 833);
+                        y = Bot.Random.Next(402, 447);
+                        break;
 
-                default:
-                    Core.Logger($"[Fuckyou] Unknown zone: {zone}");
+                    case "B":
+                        if (Bot.Player.Position.X >= 721 && Bot.Player.Position.X <= 819 &&
+                            Bot.Player.Position.Y >= 330 && Bot.Player.Position.Y <= 371)
+                            return;
+
+                        x = Bot.Random.Next(721, 820);
+                        y = Bot.Random.Next(330, 372);
+                        break;
+
+                    default:
+                        return; // Do nothing on unknown zone
+                }
+
+                if (token.IsCancellationRequested ||
+                    (Bot.Player.Position.X == x && Bot.Player.Position.Y == y))
                     return;
-            }
 
-            Bot.Player.WalkTo(x, y, speed: 8);
-        });
+                Bot.Player.WalkTo(x, y);
+                await Task.Delay(500, token);
+            }, token);
+
     }
+
+
+
+    public async Task WaitForTrueAsync(Func<bool> condition, int checkIntervalMs = 100, CancellationToken? token = null)
+    {
+        while (!condition())
+        {
+            if (token?.IsCancellationRequested == true)
+                return;
+
+            await Task.Delay(checkIntervalMs, token ?? CancellationToken.None);
+        }
+    }
+
+
 
 
 }

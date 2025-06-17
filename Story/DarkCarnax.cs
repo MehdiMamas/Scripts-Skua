@@ -75,8 +75,7 @@ public class DarkCarnaxStory
 
         Bot.Options.AttackWithoutTarget = true;
 
-        RunToAreaHandler zoneHandler = DarkCarnaxMove;
-        Bot.Events.RunToArea += zoneHandler;
+        Bot.Events.RunToArea += DarkCarnaxMove;
 
         if (Core.CheckInventory("Dragon of Time"))
         {
@@ -101,33 +100,23 @@ public class DarkCarnaxStory
         Bot.Options.AttackWithoutTarget = false;
         Adv.GearStore(true);
 
-        Bot.Events.RunToArea -= zoneHandler; // clean unsubscribe
+        Bot.Events.RunToArea -= DarkCarnaxMove;
     }
 
     private void DarkCarnaxMove(string zone)
     {
-        string zoneLower = zone.ToLower();
-
+        string zoneLower = zone?.ToLower() ?? "";
         if (zoneLower == currentCarnaxZone)
-        {
-            Core.Logger($"[DarkCarnaxMove] Already moving in zone '{zoneLower}', skipping");
             return;
-        }
 
         if (DateTime.Now - lastCarnaxMove < CarnaxMoveCooldown)
-        {
-            Core.Logger($"[DarkCarnaxMove] Move throttled for zone '{zoneLower}'");
             return;
-        }
 
         currentCarnaxZone = zoneLower;
         lastCarnaxMove = DateTime.Now;
 
         if (carnaxMovementTask is { IsCompleted: false })
-        {
-            Core.Logger("[DarkCarnaxMove] Movement task still running, skipping new move");
             return;
-        }
 
         carnaxMovementTask = Task.Run(async () =>
         {
@@ -141,10 +130,9 @@ public class DarkCarnaxStory
                 _ => Bot.Random.Next(325, 601)
             };
 
-            Core.Logger($"[DarkCarnaxMove] Moving to ({x}, {y}) in zone '{zoneLower}'");
             Bot.Player.WalkTo(x, y);
 
-            await Task.Delay(Bot.Random.Next(1500, 2500));// Allow time for move + animations
+            await Task.Delay(Bot.Random.Next(1500, 2500));
         });
     }
 

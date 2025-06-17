@@ -35,13 +35,6 @@ public class AAWithMove
         Core.SetOptions(false);
     }
 
-
-    // Shared fields for movement throttling and async task tracking
-    private DateTime lastMove = DateTime.MinValue;
-    private readonly TimeSpan moveCooldown = TimeSpan.FromSeconds(2);
-    private string currentZone = "";
-    private Task? moveTask;
-
     // Entry point for auto-move depending on current map
     public void AutoMove()
     {
@@ -68,8 +61,11 @@ public class AAWithMove
 
     #region DarkCarnax Farming
 
+    private CancellationTokenSource? darkCarnaxCts;
+
     private void FarmDarkCarnax(bool attemptSolo)
     {
+        darkCarnaxCts = new();
         Core.AddDrop("Synthetic Viscera");
         Core.Jump("Boss", "Left");
         Bot.Player.SetSpawnPoint();
@@ -77,6 +73,7 @@ public class AAWithMove
         Bot.Options.AttackWithoutTarget = true;
 
         Bot.Events.RunToArea += MoveNightmareCarnax;
+
         if (attemptSolo)
         {
             if (Core.CheckInventory("Dragon of Time"))
@@ -112,66 +109,76 @@ public class AAWithMove
                 Bot.Wait.ForMonsterDeath();
                 Bot.Combat.CancelTarget();
             }
-
         }
+
+        darkCarnaxCts.Cancel();
+        Bot.Events.RunToArea -= MoveNightmareCarnax;
         Core.CancelRegisteredQuests();
         Bot.Options.AttackWithoutTarget = false;
         Adv.GearStore(true);
-
-        Bot.Events.RunToArea -= MoveNightmareCarnax;
     }
+
+    private Task? moveTask;
+    private string currentZone = "";
+    private DateTime lastMove = DateTime.MinValue;
+    private readonly TimeSpan moveCooldown = TimeSpan.FromSeconds(2);
 
     private void MoveNightmareCarnax(string zone)
     {
+        if (darkCarnaxCts == null || darkCarnaxCts.IsCancellationRequested)
+            return;
+
         string zoneLower = zone.ToLower();
 
         if (zoneLower == currentZone)
-        {
             return;
-        }
 
         if (DateTime.Now - lastMove < moveCooldown)
-        {
             return;
-        }
+
+        if (moveTask is { IsCompleted: false })
+            return;
 
         currentZone = zoneLower;
         lastMove = DateTime.Now;
 
-        if (moveTask is { IsCompleted: false })
-        {
-            return;
-        }
-
+        CancellationToken token = darkCarnaxCts.Token;
         moveTask = Task.Run(async () =>
         {
-            await Task.Delay(300);
-
-            int y = Bot.Random.Next(380, 475);
-            int x = zoneLower switch
+            try
             {
-                "a" => Bot.Random.Next(600, 931),
-                "b" => Bot.Random.Next(25, 326),
-                _ => Bot.Random.Next(325, 601)
-            };
+                await Task.Delay(300, token);
 
-            Bot.Player.WalkTo(x, y);
+                int y = Bot.Random.Next(380, 475);
+                int x = zoneLower switch
+                {
+                    "a" => Bot.Random.Next(600, 931),
+                    "b" => Bot.Random.Next(25, 326),
+                    _ => Bot.Random.Next(325, 601)
+                };
 
-            await Task.Delay(2500);
-        });
+                if (!token.IsCancellationRequested)
+                    Bot.Player.WalkTo(x, y);
+
+                await Task.Delay(2500, token);
+            }
+            catch (OperationCanceledException) { /* Graceful cancellation */ }
+        }, token);
     }
 
     #endregion
 
     #region UltraDage Farming
 
+    private CancellationTokenSource? ultraDageCts;
+
     private void FarmUltraDage()
     {
+        ultraDageCts = new();
         Core.AddDrop("Dage the Evil Insignia");
         Core.Jump("Boss", "Right");
         Bot.Player.SetSpawnPoint();
         Bot.Events.RunToArea += MoveUltraDage;
-
         Bot.Options.AttackWithoutTarget = true;
 
         while (!Bot.ShouldExit)
@@ -183,6 +190,7 @@ public class AAWithMove
                 Core.Join("UltraDage", "Boss", "Right");
             if (Bot.Player.Cell != "Boss")
                 Core.Jump("Boss", "Right");
+
             if (!Bot.Player.HasTarget)
                 Bot.Combat.Attack("*");
             else
@@ -192,61 +200,69 @@ public class AAWithMove
             }
         }
 
+        ultraDageCts.Cancel();
         Bot.Events.RunToArea -= MoveUltraDage;
+        Bot.Options.AttackWithoutTarget = false;
     }
 
     private void MoveUltraDage(string zone)
     {
+        if (ultraDageCts == null || ultraDageCts.IsCancellationRequested)
+            return;
+
         string zoneLower = zone.ToLower();
 
         if (zoneLower == currentZone)
-        {
             return;
-        }
 
         if (DateTime.Now - lastMove < moveCooldown)
-        {
             return;
-        }
+
+        if (moveTask is { IsCompleted: false })
+            return;
 
         currentZone = zoneLower;
         lastMove = DateTime.Now;
 
-        if (moveTask is { IsCompleted: false })
-        {
-            return;
-        }
-
+        CancellationToken token = ultraDageCts.Token;
         moveTask = Task.Run(async () =>
         {
-            await Task.Delay(300);
-
-            int y = zoneLower switch
+            try
             {
-                "a" => Bot.Random.Next(400, 410),
-                "b" => Bot.Random.Next(410, 415),
-                _ => Bot.Random.Next(300, 420)
-            };
+                await Task.Delay(300, token);
 
-            int x = zoneLower switch
-            {
-                "a" => Bot.Random.Next(40, 175),
-                "b" => Bot.Random.Next(760, 930),
-                _ => Bot.Random.Next(480, 500)
-            };
+                int y = zoneLower switch
+                {
+                    "a" => Bot.Random.Next(400, 410),
+                    "b" => Bot.Random.Next(410, 415),
+                    _ => Bot.Random.Next(300, 420)
+                };
 
-            Bot.Player.WalkTo(x, y);
+                int x = zoneLower switch
+                {
+                    "a" => Bot.Random.Next(40, 175),
+                    "b" => Bot.Random.Next(760, 930),
+                    _ => Bot.Random.Next(480, 500)
+                };
 
-            await Task.Delay(2500);
-        });
+                if (!token.IsCancellationRequested)
+                    Bot.Player.WalkTo(x, y);
+
+                await Task.Delay(2500, token);
+            }
+            catch (OperationCanceledException) { }
+        }, token);
     }
 
     #endregion
 
     #region MoreSkulls Farming (Setup + Movement)
 
+    private CancellationTokenSource? moreSkullsCts;
+
     public void SetupMoreSkulls()
     {
+        moreSkullsCts = new();
         Bot.Events.ExtensionPacketReceived += Fuckyou;
         Core.AddDrop("Pristine Skull");
         if (Core.isCompletedBefore(10286))
@@ -276,12 +292,16 @@ public class AAWithMove
             Bot.Sleep(500);
         }
 
+        moreSkullsCts.Cancel();
         Bot.Events.ExtensionPacketReceived -= Fuckyou;
         Bot.Options.AttackWithoutTarget = false;
     }
 
     private void Fuckyou(dynamic packet)
     {
+        if (moreSkullsCts == null || moreSkullsCts.IsCancellationRequested)
+            return;
+
         string? type = packet["params"]?.type;
         if (type != "json")
             return;
@@ -305,43 +325,49 @@ public class AAWithMove
         if (DateTime.Now - lastMove < moveCooldown)
             return;
 
-        currentZone = zone;
-        lastMove = DateTime.Now;
-
         if (moveTask is { IsCompleted: false })
             return;
 
+        currentZone = zone;
+        lastMove = DateTime.Now;
+
+        CancellationToken token = moreSkullsCts.Token;
         moveTask = Task.Run(async () =>
         {
-            await Task.Delay(300);
-
-            int x = 0, y = 0;
-            switch (zone.ToUpper())
+            try
             {
-                case "A":
-                    if (Bot.Player.Position.X >= 685 && Bot.Player.Position.X <= 869 &&
-                        Bot.Player.Position.Y >= 400 && Bot.Player.Position.Y <= 409)
+                await Task.Delay(300, token);
+
+                int x = 0, y = 0;
+                switch (zone.ToUpper())
+                {
+                    case "A":
+                        if (Bot.Player.Position.X >= 685 && Bot.Player.Position.X <= 869 &&
+                            Bot.Player.Position.Y >= 400 && Bot.Player.Position.Y <= 409)
+                            return;
+
+                        x = Bot.Random.Next(685, 870);
+                        y = Bot.Random.Next(400, 410);
+                        break;
+
+                    case "B":
+                        if (Bot.Player.Position.X >= 646 && Bot.Player.Position.X <= 861 &&
+                            Bot.Player.Position.Y >= 333 && Bot.Player.Position.Y <= 367)
+                            return;
+
+                        x = Bot.Random.Next(646, 862);
+                        y = Bot.Random.Next(333, 368);
+                        break;
+
+                    default:
                         return;
+                }
 
-                    x = Bot.Random.Next(685, 870);
-                    y = Bot.Random.Next(400, 410);
-                    break;
-
-                case "B":
-                    if (Bot.Player.Position.X >= 646 && Bot.Player.Position.X <= 861 &&
-                        Bot.Player.Position.Y >= 333 && Bot.Player.Position.Y <= 367)
-                        return;
-
-                    x = Bot.Random.Next(646, 862);
-                    y = Bot.Random.Next(333, 368);
-                    break;
-
-                default:
-                    return;
+                if (!token.IsCancellationRequested)
+                    Bot.Player.WalkTo(x, y, speed: 8);
             }
-
-            Bot.Player.WalkTo(x, y, speed: 8);
-        });
+            catch (OperationCanceledException) { }
+        }, token);
     }
 
     #endregion
