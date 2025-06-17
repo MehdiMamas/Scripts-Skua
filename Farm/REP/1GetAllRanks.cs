@@ -58,8 +58,8 @@ public class GetAllRanks
         BrightOak.doall(true);
         Core.Logger("when doing the `Glacera` storyline, you may have to restart it in the middle of the quests due to ae's bullshit how it keeps another quest locked even though the preivosu is completed till you relog");
         Glac.DoAll();
-        // Commented out do to PvP (with farm class or deaths) is still broke appearnly :thumbsup:
-        // TOD.DeathPitPVP();
+        if (doDeathPit)
+            TOD.DeathPitPVP();
 
 
         Farm.GetAllRanks(doDeathPit);
