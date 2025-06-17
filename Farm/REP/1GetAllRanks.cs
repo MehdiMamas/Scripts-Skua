@@ -31,7 +31,8 @@ public class GetAllRanks
     public string OptionsStorage = "GetAllRanks";
     public List<IOption> Options = new()
     {
-        new Option<bool>("doDeathPit", "Do Death Pit", "Should the bot farm Death Pit Brawl and Death Pit Arena reputations?", true)
+        new Option<bool>("doDeathPit", "Do Death Pit", "Should the bot farm Death Pit Brawl and Death Pit Arena reputations?", true),
+        CoreBots.Instance.SkipOptions // Skip options when set
     };
 
 
