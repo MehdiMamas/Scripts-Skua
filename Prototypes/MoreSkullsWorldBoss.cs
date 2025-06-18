@@ -56,8 +56,7 @@ public class MoreSkullsWorldBoss
         Core.FarmingLogger("Pristine Skull", target);
         while (!Bot.ShouldExit && !Core.CheckInventory("Pristine Skull", target))
         {
-            while (!Bot.ShouldExit && !Bot.Player.Alive)
-                Bot.Sleep(1000);
+            while (!Bot.ShouldExit && !Bot.Player.Alive) { }
 
             if (Bot.Map.Name != "MoreSkulls")
                 Core.Join("MoreSkulls", "r2", "Left");
