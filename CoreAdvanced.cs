@@ -797,7 +797,7 @@ public class CoreAdvanced
         }
         #endregion
 
-        int t = 1;
+        int t = 0;
         // Why did we need the `for ( int i = 0; i < 2; i++)`?
 
         foreach (ShopItem item in items!)
