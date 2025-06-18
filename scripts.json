@@ -1202,7 +1202,7 @@
       "null"
     ],
     "path": "Prototypes/MoreSkullsWorldBoss.cs",
-    "size": 5305,
+    "size": 5762,
     "fileName": "MoreSkullsWorldBoss.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/MoreSkullsWorldBoss.cs"
   },
@@ -1404,7 +1404,7 @@
       "moreskulls"
     ],
     "path": "Tools/AutoZoneandAttack.cs",
-    "size": 9650,
+    "size": 11032,
     "fileName": "AutoZoneandAttack.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/AutoZoneandAttack.cs"
   },
@@ -3117,7 +3117,7 @@
       "dark-carnax"
     ],
     "path": "Story/DarkCarnax.cs",
-    "size": 4940,
+    "size": 4423,
     "fileName": "DarkCarnax.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/DarkCarnax.cs"
   },
@@ -25107,7 +25107,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/CoreArchMage.cs",
-    "size": 24179,
+    "size": 23929,
     "fileName": "CoreArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/CoreArchMage.cs"
   },
