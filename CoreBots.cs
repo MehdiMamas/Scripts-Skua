@@ -1512,7 +1512,7 @@ public class CoreBots
                     }
                 }
             }
-            
+
             //Rep check
             if (!string.IsNullOrEmpty(item.Faction) && item.Faction != "None")
             {
@@ -2981,12 +2981,12 @@ public class CoreBots
         List<string> toReturn = new();
         if (questIDs.Length <= 15)
         {
-            Bot.Quests.Load(questIDs);
+            InitializeWithRetries(() => EnsureLoad(questIDs));
             toReturn.AddRange(Bot.Quests.Tree.Where(q => questIDs.Contains(q.ID)).SelectMany(q => q.Rewards.Select(i => i.Name)));
         }
         else
         {
-            foreach (Quest q in EnsureLoad(questIDs))
+            foreach (Quest q in InitializeWithRetries(() => EnsureLoad(questIDs)))
             {
                 if (q.Rewards == null || q.Rewards.Count == 0)
                     continue;
