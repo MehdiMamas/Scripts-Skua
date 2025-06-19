@@ -2989,12 +2989,10 @@ public class CoreBots
             List<Quest>? quests = InitializeWithRetries(() => EnsureLoad(questIDs));
             if (quests != null)
             {
-                foreach (Quest q in quests)
-                {
-                    if (q?.Rewards == null || q.Rewards.Count == 0)
-                        continue;
-                    toReturn.AddRange(q.Rewards.Select(i => i.Name));
-                }
+                toReturn.AddRange(quests?.SelectMany(q =>
+                q.Rewards?.Count > 0 ? q.Rewards.Select(i => i.Name) : Enumerable.Empty<string>())
+                ?? Array.Empty<string>());
+
             }
             else
             {
