@@ -2986,11 +2986,20 @@ public class CoreBots
         }
         else
         {
-            foreach (Quest q in InitializeWithRetries(() => EnsureLoad(questIDs)))
+            List<Quest>? quests = InitializeWithRetries(() => EnsureLoad(questIDs));
+            if (quests != null)
             {
-                if (q.Rewards == null || q.Rewards.Count == 0)
-                    continue;
-                toReturn.AddRange(q.Rewards.Select(i => i.Name));
+                foreach (Quest q in quests)
+                {
+                    if (q?.Rewards == null || q.Rewards.Count == 0)
+                        continue;
+                    toReturn.AddRange(q.Rewards.Select(i => i.Name));
+                }
+            }
+            else
+            {
+                Logger($"Failed to load quests with IDs: {string.Join(", ", questIDs)}", "QuestRewards");
+                return Array.Empty<string>();
             }
         }
         return toReturn.ToArray();
