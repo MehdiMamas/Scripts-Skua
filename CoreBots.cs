@@ -2674,10 +2674,10 @@ public class CoreBots
             return false;
         }
 
-        if (!quest.Requirements.All(req => Bot.Inventory.Contains(req.ID, req.Quantity)))
+        if (!quest.Requirements.All(req => req != null && CheckInventory(req.ID, req.Quantity)))
         {
             string missing = string.Join(", ", quest.Requirements
-                .Where(req => !CheckInventory(req.ID, req.Quantity))
+                .Where(req => req != null && !CheckInventory(req.ID, req.Quantity))
                 .Select(req => $"\"{req.Name}\""));
 
             if (quest.Requirements.Any(x => Bot.Bank.Contains(x.ID)))
