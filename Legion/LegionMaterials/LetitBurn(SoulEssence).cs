@@ -49,7 +49,9 @@ public class LetItBurn
             return;
 
         Core.AddDrop("Soul Essence");
-        Core.AddDrop(rewards);
+        if (ChooseItem > 0)
+            Core.AddDrop(ChooseItem);
+        else Core.AddDrop(rewards);
         Core.FarmingLogger("Soul Essence", quant);
 
         Farm.Experience(65);
