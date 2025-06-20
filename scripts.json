@@ -26557,15 +26557,32 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/DeadflyMerge.cs"
   },
   {
-    "name": "Fabyo's Spooky Merge",
-    "description": "This will get all or selected items on this merge shop.",
+    "name": "Fabyos Spooky Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Fabyos Spooky Merge [2135] in /oddities",
     "tags": [
-      "fabyos-spooky-merge",
-      "friday-the-13th",
-      "seasonal"
+      "fabyos",
+      "spooky",
+      "merge",
+      "oddities",
+      "goth",
+      "pirate",
+      "musician",
+      "tophat",
+      "",
+      "beard",
+      "unicorn",
+      "commander",
+      "commanders",
+      "gothic",
+      "decorator",
+      "decorators",
+      "bloodmoon",
+      "musicians",
+      "peculiar",
+      "nail"
     ],
     "path": "Seasonal/Friday13th/MergeShops/FabyosSpookyMerge.cs",
-    "size": 5301,
+    "size": 5609,
     "fileName": "FabyosSpookyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Friday13th/MergeShops/FabyosSpookyMerge.cs"
   },
