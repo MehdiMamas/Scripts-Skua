@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 370571,
+    "size": 370593,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -8145,7 +8145,7 @@
       "null"
     ],
     "path": "Legion/LegionMaterials/LetitBurn(SoulEssence).cs",
-    "size": 1866,
+    "size": 2305,
     "fileName": "LetitBurn(SoulEssence).cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionMaterials/LetitBurn(SoulEssence).cs"
   },
@@ -22126,7 +22126,7 @@
       "null"
     ],
     "path": "Story/ThroneofDarkness/CoreToD.cs",
-    "size": 47655,
+    "size": 47643,
     "fileName": "CoreToD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ThroneofDarkness/CoreToD.cs"
   },
