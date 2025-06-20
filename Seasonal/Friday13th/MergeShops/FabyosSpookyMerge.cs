@@ -1,7 +1,7 @@
 /*
-name: Fabyo's Spooky Merge
-description: This will get all or selected items on this merge shop.
-tags: fabyos-spooky-merge, friday-the-13th, seasonal
+name: Fabyos Spooky Merge
+description: This bot will farm the items belonging to the selected mode for the Fabyos Spooky Merge [2135] in /oddities
+tags: fabyos, spooky, merge, oddities, goth, pirate, musician, tophat, , beard, unicorn, commander, commanders, gothic, decorator, decorators, bloodmoon, musicians, peculiar, nail
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -41,7 +41,7 @@ public class FabyosSpookyMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
-       F13.Oddities();
+        F13.Oddities();
 
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("oddities", 2135, findIngredients, buyOnlyThis, buyMode: buyMode);
@@ -107,5 +107,6 @@ public class FabyosSpookyMerge
         new Option<bool>("70199", "Gothic Decorator's Hair", "Mode: [select] only\nShould the bot buy \"Gothic Decorator's Hair\" ?", false),
         new Option<bool>("70200", "Bloodmoon Musician", "Mode: [select] only\nShould the bot buy \"Bloodmoon Musician\" ?", false),
         new Option<bool>("70201", "Gothic Musician's Beard", "Mode: [select] only\nShould the bot buy \"Gothic Musician's Beard\" ?", false),
-    };
+        new Option<bool>("13047", "Peculiar... Nail?", "Mode: [select] only\nShould the bot buy \"Peculiar... Nail?\" ?", false),
+   };
 }
