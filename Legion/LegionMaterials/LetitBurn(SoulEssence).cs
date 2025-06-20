@@ -32,31 +32,50 @@ public class LetItBurn
         Core.SetOptions(false);
     }
 
-    private readonly string[] rewards = { "Legion Undead Spawn", "Legion Undead Visor", "Legion Forge Banisher", "Legion Spawn Bonker" };
+    private readonly string[] rewards =
+    {
+        "Legion Undead Spawn",
+        "Legion Undead Visor",
+        "Legion Forge Banisher",
+        "Legion Spawn Bonker"
+    };
 
-    public void SoulEssence(int quant = 50)
+    public void SoulEssence(int quant = 50, int ChooseItem = 0)
     {
         if (Core.CheckInventory("Soul Essence", quant))
             return;
 
+        if (ChooseItem > 0 && Core.CheckInventory(ChooseItem))
+            return;
+
         Core.AddDrop("Soul Essence");
         Core.AddDrop(rewards);
-        int i = 1;
+        Core.FarmingLogger("Soul Essence", quant);
 
         Farm.Experience(65);
         Bon.GetLegionBonfire();
 
-        Core.FarmingLogger("Soul Essence", quant);
         Core.EquipClass(ClassType.Solo);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Soul Essence", quant))
+
+        while (!Bot.ShouldExit && !Core.CheckInventory("Soul Essence", quant) && (ChooseItem <= 0 || !Core.CheckInventory(ChooseItem)))
         {
             Core.EnsureAccept(7992);
             Core.HuntMonster("dagefortress", "Grrrberus", "Grrberus' Flame");
             SSand.SoulSand(3);
-            if (!Core.CheckInventory(rewards))
-                Core.EnsureCompleteChoose(7992, rewards);
-            else Core.EnsureComplete(7992);
-            Core.Logger($"Completed x{i++}");
+
+            if (ChooseItem > 0)
+            {
+                if (!rewards.All(x => Core.CheckInventory(x, toInv: false)))
+                    Core.EnsureCompleteChoose(7992, rewards.Where(x => !Core.CheckInventory(x)).ToArray());
+                else
+                    Core.EnsureComplete(7992);
+            }
+            else
+            {
+                Core.EnsureComplete(7992);
+            }
+
+            Bot.Wait.ForPickup("Soul Essence");
         }
     }
 }
