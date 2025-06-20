@@ -1326,7 +1326,27 @@ public class CoreAdvanced
             Bot.Sleep(2000);
         }
     }
-   
+
+    /* Example:
+     Adv.KillWithAura(
+            map: "kitsune",
+            cell: "Boss",
+            pad: "Left",
+            monster: "kitsune",
+            auraNames: new[] { "Shapeshifted" },
+            auraReactions: new Dictionary<string, Action>
+            {
+                ["Shapeshifted"] = () => Core.Logger("Aura: Shapeshifted", "Example"),
+            },
+            item: "Fox Tail",
+            quant: 3,
+            log: true,
+            ItemToUse: 0,
+            SafeItem: 0,
+            cancellationToken: CancellationToken.None
+        );
+        */
+
     #endregion WIP/Proof of Concept Methods(W.I.P)
 
     #endregion

@@ -6624,6 +6624,10 @@ public class CoreBots
                 blackListedCells.UnionWith(new[] { "R1", "Enter" });
                 break;
 
+            case "kitsune":
+                blackListedCells.UnionWith(new[] { "Quest" });
+                break;
+
             case "portalundead":
                 blackListedCells.UnionWith(new[] { "Portal", "Gate" });
                 break;
