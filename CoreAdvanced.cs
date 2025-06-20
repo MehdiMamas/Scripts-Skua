@@ -5,11 +5,13 @@ tags: null
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
+using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Models;
 using Skua.Core.Models.Items;
@@ -1192,6 +1194,140 @@ public class CoreAdvanced
         if (!forAuto)
             GearStore(true);
     }
+
+    #region WIP/Proof of Concept Methods(W.I.P)
+    /// <summary>
+    /// Kills a monster while monitoring for a specific aura.
+    /// </summary>
+    public void KillWithAura(
+        string map, string cell, string pad, string monster,
+        string[] auraNames,
+        Dictionary<string, Action>? auraReactions = null,
+        string? item = null, int quant = 1, bool isTemp = false, bool log = true,
+        int ItemToUse = 0, int SafeItem = 0,
+        CancellationToken cancellationToken = default)
+    {
+        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant)))
+            return;
+
+        DateTime lastAuraTrigger = DateTime.MinValue;
+        TimeSpan auraCooldown = TimeSpan.FromSeconds(0);
+        monster = monster.Trim().FormatForCompare();
+
+        Bot.Events.ExtensionPacketReceived += AuraListener;
+
+        #region Setup Item Equip (optional)
+        if (ItemToUse > 0)
+        {
+            int fallbackPotion = 1749;
+            int equipSafe = SafeItem > 0 ? SafeItem : fallbackPotion;
+
+            if (!Core.CheckInventory(equipSafe))
+                BuyItem("embersea", 1100, fallbackPotion, 10, 1, 17966);
+
+            EquipRetry(equipSafe);
+            Core.Equip(ItemToUse);
+        }
+        #endregion
+
+        if (item == null)
+        {
+            if (log)
+                Core.Logger($"Killing {monster}");
+            Bot.Kill.Monster(monster);
+        }
+        else
+        {
+            if (!isTemp)
+                Core.AddDrop(item);
+            if (log)
+                Core.FarmingLogger(item, quant);
+
+            while (!Bot.ShouldExit && !Core.CheckInventory(item, quant) && !cancellationToken.IsCancellationRequested)
+            {
+                while (!Bot.ShouldExit && !Bot.Player.Alive && !cancellationToken.IsCancellationRequested) { }
+
+                if (Bot.Map.Name != map)
+                    Core.Join(map, cell, pad);
+                if (Bot.Player.Cell != cell)
+                    Core.Jump(cell, pad);
+
+                Bot.Combat.Attack(monster);
+                Bot.Sleep(500);
+
+                if (isTemp ? Bot.TempInv.Contains(item, quant) : (Bot.Inventory.Contains(item, quant) || Bot.Bank.Contains(item, quant)))
+                    break;
+            }
+        }
+
+        Bot.Events.ExtensionPacketReceived -= AuraListener;
+
+        void AuraListener(dynamic packet)
+        {
+            if (cancellationToken.IsCancellationRequested)
+                return;
+
+            if ((string?)packet["params"]?.type != "json")
+                return;
+
+            dynamic data = packet["params"]?.dataObj;
+            if (data?.cmd?.ToString() != "ct" || data?.a is null)
+                return;
+
+            foreach (dynamic a in data.a)
+            {
+                string? auraName = a?.aura?["nam"]?.ToString();
+                if (string.IsNullOrEmpty(auraName) || !auraNames.Contains(auraName))
+                    continue;
+
+                // Throttle cooldown
+                if (DateTime.Now - lastAuraTrigger < auraCooldown)
+                    continue;
+
+                lastAuraTrigger = DateTime.Now;
+
+                if (auraReactions != null && auraReactions.TryGetValue(auraName, out Action? reaction))
+                {
+                    Bot.Log($"Invoking reaction for aura: {auraName}");
+                    try
+                    {
+                        reaction?.Invoke();
+                    }
+                    catch (Exception ex)
+                    {
+                        Core.Logger($"Exception during aura reaction '{auraName}': {ex}");
+                    }
+                }
+                else
+                {
+                    // fallback switch logic if no reaction found
+                    switch (auraName)
+                    {
+                        case "Shapeshifted":
+                            Bot.Log($"Detected aura (switch fallback): {auraName}");
+                            break;
+
+                        default:
+                            Core.Logger($"Unhandled aura (switch fallback): {auraName}");
+                            break;
+                    }
+                }
+
+                break; // react to only one aura per packet
+            }
+        }
+
+        void EquipRetry(int id)
+        {
+            Core.Equip(id);
+            Bot.Wait.ForTrue(() => Bot.Inventory.IsEquipped(id), 20);
+            Bot.Sleep(2000);
+            Core.Equip(id); // Flash refresh workaround
+            Bot.Sleep(2000);
+        }
+    }
+   
+    #endregion WIP/Proof of Concept Methods(W.I.P)
 
     #endregion
 
@@ -3340,6 +3476,7 @@ public class CoreAdvanced
                 case "mindbreaker":
                 case "mystical dark caster":
                 case "naval commander":
+                case "lich":
                 case "necromancer":
                 case "ninja warrior":
                 case "no class":
@@ -3509,6 +3646,7 @@ public class CoreAdvanced
                 case "master ranger":
                 case "mechajouster":
                 case "necromancer":
+                case "lich":
                 case "ninja warrior":
                 case "not a mod":
                 case "overworld chronomancer":
@@ -3800,6 +3938,13 @@ public class CoreAdvanced
     }
 
     #endregion
+}
+
+
+public enum Auras
+{
+    Shapeshifted,
+    stuff2
 }
 
 public enum GenericGearBoost
