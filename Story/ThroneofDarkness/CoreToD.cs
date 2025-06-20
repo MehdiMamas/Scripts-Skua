@@ -28,7 +28,7 @@ public class CoreToD
         if (Core.IsMember)
             questIDs = questIDs.Concat(new[] { 5010, 5022, 5083 }).ToArray();
         Core.EnsureLoad(questIDs);
-        if (questIDs.All(qID => Core.isCompletedBefore(qID)))
+        if (questIDs.All(Core.isCompletedBefore))
             return;
 
         Story.PreLoad(this);
