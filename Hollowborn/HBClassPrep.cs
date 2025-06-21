@@ -55,61 +55,91 @@ public class HBClassPrep
 
     public void ClassPrep()
     {
-        Core.Logger("These are just some preparations for the Hollowborn Class, not a full guide nor probably *everything* required, but it should be enough to get you started on the grind.");
-
-
-        HB.HBLycanClaw();
-        Core.ToBank("Hollowborn Lycan Claw");
-        HB.HBVampireFang();
-        Core.ToBank("Hollowborn Vampire Fang");
-        HB.HBHollowbornResidue();
-        Core.ToBank("Hollowborn Residue");
-        HB.HBWrit();
-        Core.ToBank("Hollowborn Writ");
-        Core.Logger("Maxing Hollowborn Materials");
-        HB.HardcoreContract();
-        Core.ToBank(55157); // Lae's Hardcore Contract
-        HB.HumanSoul();
-        Core.ToBank("Human Soul");
-        HB.FreshSouls();
-        Core.ToBank("Unidentified 36", "Fresh Soul");
         HollowSoul.GetYaSoulsHeeeere();
-        Core.ToBank("Hollow Soul");
-        SoulEssence.SoulEssence();
-        Core.ToBank("Soul Essence");
-        SoulSand.SoulSand();
-        Core.ToBank("Soul Sand");
+        GetVindicatorBadge();
+        GetGraceOrb();
+        GetVindicatorCrest();
+        GetGramielsEmblem();
 
-        Core.Logger("You're finished.. for now!");
-        // HBLK.Draftless(CoreHollowbornLichKing.DraftlessRewards.Soul_Fragment, false, 18);
-        // HBLK.FlowStress(CoreHollowbornLichKing.FlowStressRewards.Lich_King_Fragment, false, 18);
+        // Optional/conditional:
+        // HB.FarmGramielInsignia(5); // If needed later
+        // HB.FarmCondensedGrace(1);  // Final combine step
+    }
 
-        // Core.Logger("Maxing \"Most\" Legion materials");
+    void GetVindicatorBadge(int quant = 300)
+    {
+        const string item = "Vindicator Badge";
+        if (Core.CheckInventory(item, quant))
+            return;
 
-        // // Make sure they're part of the legion
-        // CL.JoinLegion();
+        Core.FarmingLogger(item, quant);
+        Core.AddDrop(item, "Eagle Heart", "Boar Heart", "Vindicator Seal");
+        Core.EquipClass(ClassType.Farm);
+        Core.RegisterQuests(8299);
 
-        // Materials
-        // CL.ApprovalAndFavor();
-        // CL.FarmLegionToken();
-        // CL.EmblemofDage();
-        // CL.DarkToken();
-        // CL.BoneSigil();
-        // CL.DarkToken();
-        // CL.DiamondTokenofDage();
-        // CL.ObsidianRock();
-        // CoreYnR.YokaiSwordScroll();
+        while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
+        {
+            Core.KillMonster("trygve", "r2", "Left", "Blood Eagle", "Eagle Heart", 8);
+            Core.KillMonster("trygve", "r4", "Left", "Rune Boar", "Boar Heart", 8);
+            Core.HuntMonster("trygve", "Gramiel", "Vindicator Seal");
+            Bot.Wait.ForPickup(item);
+        }
 
-        // // Keep pvp as the last, as it takes **FUCKING FOREVER**
-        // CL.DagePvP();
+        Core.CancelRegisteredQuests();
+    }
 
-        // Core.Logger("Maxing Legion Reventant Materials");
-        // CoreLegionRev.ConquestWreath();
-        // CoreLegionRev.RevenantSpellscroll();
-        // CoreLegionRev.ExaltedCrown();
+    void GetGraceOrb(int quant = 510)
+    {
+        const string item = "Grace Orb";
+        if (Core.CheckInventory(item, quant))
+            return;
 
+        Core.FarmingLogger(item, quant);
+        Core.AddDrop(item, "Grace Extracted");
+        Core.EquipClass(ClassType.Farm);
+        Core.RegisterQuests(9291);
 
-        // Core.Logger("Relaxing with some Dusty bones [ Bone Dust]");
-        // Farm.BoneSomeDust();
+        while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
+        {
+            Core.HuntMonster("neofortress", "Vindicator Recruit", "Grace Extracted", 20);
+            Bot.Wait.ForPickup(item);
+        }
+
+        Core.CancelRegisteredQuests();
+    }
+
+    void GetVindicatorCrest(int quant = 300)
+    {
+        const string item = "Vindicator Crest";
+        if (Core.CheckInventory(item, quant))
+            return;
+
+        Core.FarmingLogger(item, quant);
+        Core.AddDrop(item, "Vindicated Blades", "Vindicated Chain", "Vindicated Scripture");
+        Core.EquipClass(ClassType.Farm);
+        Core.RegisterQuests(9865);
+
+        while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
+        {
+            Core.HuntMonsterMapID("neotower", 12, "Vindicated Blades");
+            Core.HuntMonsterMapID("neotower", 17, "Vindicated Chain");
+            Core.HuntMonsterMapID("neotower", 28, "Vindicated Scripture");
+            Bot.Wait.ForPickup(item);
+        }
+
+        Core.CancelRegisteredQuests();
+    }
+
+    void GetGramielsEmblem(int quant = 1000)
+    {
+        const string item = "Gramiel's Emblem";
+        if (Core.CheckInventory(item, quant))
+            return;
+
+        Core.FarmingLogger(item, quant);
+        Core.AddDrop(item);
+        Core.EquipClass(ClassType.Solo);
+
+        Core.HuntMonster("dawnsanctum", "Celestial Gramiel", item, quant);
     }
 }
