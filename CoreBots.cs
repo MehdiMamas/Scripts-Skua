@@ -7104,6 +7104,15 @@ public class CoreBots
                 Bot.Wait.ForCellChange(cell ?? "Enter");
                 break;
 
+            case "doomhaven":
+                if (isCompletedBefore(2097) && !string.IsNullOrEmpty(cell) && cell == "Enter")
+                {
+                    cell = "r19";
+                    pad = "Left";
+                }
+                tryJoin();
+                break;
+
             #endregion
 
             #region Always Private
