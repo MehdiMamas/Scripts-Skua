@@ -1270,8 +1270,11 @@ public class CoreAdvanced
             if ((string?)packet["params"]?.type != "json")
                 return;
 
-            dynamic data = packet["params"]?.dataObj;
+            dynamic? data = packet["params"]?.dataObj;
             if (data?.cmd?.ToString() != "ct" || data?.a is null)
+                return;
+
+            if (data == null)
                 return;
 
             foreach (dynamic a in data.a)
