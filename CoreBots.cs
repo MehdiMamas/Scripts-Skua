@@ -5083,7 +5083,35 @@ public class CoreBots
         if (item == null) throw new ArgumentNullException(nameof(item));
 
         bool HasItem() => isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity);
-        IEnumerable<Monster> FindMonsters() => Bot.Monsters.CurrentAvailableMonsters.Where(x => x != null && x.Cell == cell && x.Name.FormatForCompare() == name.Name.FormatForCompare());
+        IEnumerable<Monster> FindMonsters(string targetName) => Bot.Monsters.CurrentAvailableMonsters
+            .Where(x => x != null && x.Cell == cell && x.Name.FormatForCompare() == targetName);
+
+        string trimmedName = name.Name.Trim().FormatForCompare();
+        if (!Bot.Monsters.CurrentAvailableMonsters.Any(x => x != null && x.Name.FormatForCompare() == trimmedName))
+        {
+            Logger($"Monster \"{name.Name}\" not found in current cell.");
+            Monster? fallback = Bot.Monsters.CurrentAvailableMonsters
+                .FirstOrDefault(x => x?.Cell == cell && x?.Name?.Contains(trimmedName, StringComparison.OrdinalIgnoreCase) == true);
+
+            if (fallback != null)
+            {
+                Logger($"⚠️ Cell [{cell}] | Monster name may have been updated to \"{fallback.Name}\". " +
+                       $"This mob will be used instead of \"{name.Name}\". " +
+                       $"If this is incorrect, please ping Tato or Bogalj.");
+                name = fallback;
+            }
+            else
+            {
+                string[] visible = Bot.Monsters.CurrentAvailableMonsters
+                    .Where(x => x?.Cell == cell && !string.IsNullOrWhiteSpace(x?.Name))
+                    .Select(x => $"\"{x!.Name}\"")
+                    .Distinct()
+                    .ToArray();
+
+                Logger($"❌ No approximate match found for {name.Name}. Visible monsters in cell {cell}: {string.Join(", ", visible)}");
+                return;
+            }
+        }
 
         void MoveToCell(Monster monster)
         {
@@ -5102,7 +5130,7 @@ public class CoreBots
 
         while (!Bot.ShouldExit && !HasItem())
         {
-            List<Monster> monsters = FindMonsters().ToList();
+            List<Monster> monsters = FindMonsters(trimmedName).ToList();
             if (!monsters.Any())
             {
                 Sleep(); // No monsters found, wait a bit before retrying
@@ -5136,15 +5164,91 @@ public class CoreBots
             Bot.Wait.ForPickup(item);
     }
 
+    public void _KillForItem(string name, int itemID = 0, int quantity = 1, bool isTemp = false, bool rejectElse = false, bool log = true, string? cell = null)
+    {
+        string trimmedName = name.Trim().FormatForCompare();
+
+        if (itemID != 0 && (isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity)))
+            return;
+
+        if (log)
+            FarmingLogger(itemID.ToString(), quantity);
+
+        while (!Bot.ShouldExit && (isTemp ? !Bot.TempInv.Contains(itemID, quantity) : !CheckInventory(itemID, quantity)))
+        {
+            bool ded = false;
+            Bot.Events.MonsterKilled += b => ded = true;
+            while (!Bot.ShouldExit && !ded && itemID > 0 && (isTemp ? !Bot.TempInv.Contains(itemID, quantity) : !CheckInventory(itemID, quantity)))
+            {
+                IEnumerable<Monster> candidates = Bot.Monsters.MapMonsters
+                    .Where(x => x != null && x.Cell == cell && x.Name.FormatForCompare() == trimmedName);
+
+                if (!candidates.Any())
+                {
+                    Logger($"Monster \"{name}\" not found in /{Bot.Map.Name}.");
+                    Monster? fallback = Bot.Monsters.MapMonsters
+                        .FirstOrDefault(x => x?.Cell == cell && x?.Name?.Contains(trimmedName, StringComparison.OrdinalIgnoreCase) == true);
+
+                    if (fallback != null)
+                    {
+                        Logger($"⚠️ Map [{Bot.Map.Name}] | Monster name may have been updated to \"{fallback.Name}\". " +
+                               $"This mob will be used instead of \"{name}\". " +
+                               $"If this is incorrect, please ping Tato or Bogalj.");
+                        name = fallback.Name;
+                        trimmedName = name.Trim().FormatForCompare();
+                        candidates = new[] { fallback };
+                    }
+                    else
+                    {
+                        string[] visible = Bot.Monsters.MapMonsters
+                            .Where(x => !string.IsNullOrWhiteSpace(x?.Name))
+                            .Select(x => $"\"{x!.Name}\"")
+                            .Distinct()
+                            .ToArray();
+
+                        Logger($"❌ No approximate match found for {name}. Visible monsters in /{Bot.Map.Name}: {string.Join(", ", visible)}");
+                        return;
+                    }
+                }
+
+                foreach (Monster monster in candidates)
+                {
+                    if (cell != null && Bot.Player.Cell != cell)
+                    {
+                        Jump(cell, "Left");
+                        Bot.Wait.ForCellChange(cell);
+                    }
+                    if (!Bot.Combat.StopAttacking)
+                        Bot.Combat.Attack(monster.Name);
+
+                    Sleep();
+
+                    if (isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity))
+                        break;
+                }
+            }
+
+            if (isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity))
+                break;
+            Sleep();
+
+            if (rejectElse)
+                Bot.Drops.RejectExcept(itemID);
+
+            if (itemID > 0)
+                Bot.Wait.ForPickup(itemID);
+        }
+    }
+  
     public void _KillForItem(string name, string? item = null, int quantity = 1, bool isTemp = false, bool rejectElse = false, bool log = true, string? cell = null)
     {
+        string trimmedName = name.Trim();
+
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
-        {
             return;
-        }
-        if (log && item != null)
-            if (name != "*")
-                Logger($"Attacking Monster: {name}, for {item}  {dynamicQuant(item, isTemp)}/{quantity}");
+
+        if (log && item != null && name != "*")
+            Logger($"Attacking Monster: {name}, for {item}  {dynamicQuant(item, isTemp)}/{quantity}");
 
         while (!Bot.ShouldExit && item != null && (isTemp ? !Bot.TempInv.Contains(item, quantity) : !CheckInventory(item, quantity)))
         {
@@ -5157,7 +5261,8 @@ public class CoreBots
 
                     bool ded = false;
                     Bot.Events.MonsterKilled += b => ded = true;
-                    while (!Bot.ShouldExit && !ded || isTemp ? !Bot.TempInv.Contains(item, quantity) : !CheckInventory(item, quantity))
+
+                    while (!Bot.ShouldExit && !ded || (isTemp ? !Bot.TempInv.Contains(item, quantity) : !CheckInventory(item, quantity)))
                     {
                         if (cell != null && Bot.Player.Cell != cell)
                             Jump(cell, "Left");
@@ -5176,92 +5281,74 @@ public class CoreBots
             }
             else
             {
-                if (item != null)
+                List<Monster> matchingMonsters = Bot.Monsters.MapMonsters
+                    .Where(x => x != null && x.Cell == cell && x.Name.FormatForCompare() == trimmedName.FormatForCompare())
+                    .ToList();
+
+                if (!matchingMonsters.Any())
                 {
-                    foreach (Monster targetMonster in Bot.Monsters.MapMonsters.Where(x => x != null && x.Cell == cell && x.Name.FormatForCompare() == name.FormatForCompare()))
+                    Logger($"Monster \"{name}\" not found in current cell.");
+
+                    Monster? fallback = Bot.Monsters.MapMonsters
+                        .FirstOrDefault(x => x?.Name?.Contains(trimmedName, StringComparison.OrdinalIgnoreCase) == true);
+
+                    if (fallback != null)
                     {
-                        if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
-                            break;
+                        Logger($"\u26a0\ufe0f Monster name may have been updated to \"{fallback.Name}\". This mob will be used instead of \"{name}\". If incorrect, ping Tato or Bogalj.");
+                        matchingMonsters.Add(fallback);
+                    }
+                    else
+                    {
+                        string[] visible = Bot.Monsters.MapMonsters
+                            .Where(x => !string.IsNullOrWhiteSpace(x?.Name))
+                            .Select(x => $"\"{x!.Name}\"")
+                            .Distinct()
+                            .ToArray();
 
-                        bool ded = false;
-                        Bot.Events.MonsterKilled += b => ded = true;
-                        while (!Bot.ShouldExit && !ded || isTemp ? !Bot.TempInv.Contains(item, quantity) : !CheckInventory(item, quantity))
-                        {
-                            if (cell != null && Bot.Player.Cell != cell)
-                            {
-                                Jump(cell, "Left");
-                                Bot.Wait.ForCellChange(cell);
-                                Sleep();
-                            }
-                            if (!Bot.Combat.StopAttacking)
-                                Bot.Combat.Attack(targetMonster);
-
-                            if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
-                                break;
-                        }
-
-                        if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
-                            break;
-                        Sleep();
+                        Logger($"\u274c No approximate match found for {name}. Visible monsters: {string.Join(", ", visible)}");
+                        return;
                     }
                 }
-                else
+
+                foreach (Monster targetMonster in matchingMonsters)
                 {
-                    Logger("Item is null.");
-                    return;
+                    if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
+                        break;
+
+                    bool ded = false;
+                    Bot.Events.MonsterKilled += b => ded = true;
+
+                    while (!Bot.ShouldExit && !ded || (isTemp ? !Bot.TempInv.Contains(item, quantity) : !CheckInventory(item, quantity)))
+                    {
+                        if (cell != null && Bot.Player.Cell != cell)
+                        {
+                            Jump(cell, "Left");
+                            Bot.Wait.ForCellChange(cell);
+                            Sleep();
+                        }
+
+                        if (!Bot.Combat.StopAttacking)
+                            Bot.Combat.Attack(targetMonster);
+
+                        if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
+                            break;
+
+                        Sleep();
+                    }
+
+                    if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
+                        break;
                 }
 
-                if (rejectElse)
-                    if (item != null)
-                        Bot.Drops.RejectExcept(item);
+                if (rejectElse && item != null)
+                    Bot.Drops.RejectExcept(item);
             }
+
             if (item != null)
             {
                 Bot.Wait.ForDrop(item);
                 Bot.Wait.ForPickup(item);
             }
-        }
-
-    }
-    public void _KillForItem(string name, int itemID = 0, int quantity = 1, bool isTemp = false, bool rejectElse = false, bool log = true, string? cell = null)
-    {
-        if (itemID != 0 && (isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity)))
-        {
-            return;
-        }
-        if (log)
-            FarmingLogger(itemID.ToString(), quantity);
-
-        while (!Bot.ShouldExit && (isTemp ? !Bot.TempInv.Contains(itemID, quantity) : !CheckInventory(itemID, quantity)))
-        {
-            bool ded = false;
-            Bot.Events.MonsterKilled += b => ded = true;
-            while (!Bot.ShouldExit && !ded && itemID > 0 && (isTemp ? !Bot.TempInv.Contains(itemID, quantity) : !CheckInventory(itemID, quantity)))
-            {
-                if (cell != null && Bot.Player.Cell != cell)
-                {
-                    Jump(cell, "Left");
-                    Bot.Wait.ForCellChange(cell);
-                }
-                if (!Bot.Combat.StopAttacking)
-                    Bot.Combat.Attack(name);
-
-                Sleep();
-
-                if (isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity))
-                    break;
-            }
-
-            if (isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity))
-                break;
-            Sleep();
-
-            if (rejectElse)
-                Bot.Drops.RejectExcept(itemID);
-
-            if (itemID > 0)
-                Bot.Wait.ForPickup(itemID);
-
         }
     }
 
