@@ -210,7 +210,7 @@ public class DawnsanctumMerge
             while (!Bot.ShouldExit && !Core.CheckInventory("Vindicator Badge", quant))
             {
                 Core.EquipClass(ClassType.Farm);
-                Core.KillMonster("trygve", "r2", "Left", "Blood Eagle", "Eagle Heart", 8);
+                Core.KillMonster("trygve", "r3", "Left", "Blood Eagle", "Eagle Heart", 8);
                 Core.KillMonster("trygve", "r4", "Left", "Rune Boar", "Boar Heart", 8);
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("trygve", "Gramiel", "Vindicator Seal");

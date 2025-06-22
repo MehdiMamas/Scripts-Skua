@@ -79,7 +79,7 @@ public class HBClassPrep
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
-            Core.KillMonster("trygve", "r2", "Left", "Blood Eagle", "Eagle Heart", 8);
+            Core.KillMonster("trygve", "r3", "Left", "Blood Eagle", "Eagle Heart", 8);
             Core.KillMonster("trygve", "r4", "Left", "Rune Boar", "Boar Heart", 8);
             Core.HuntMonster("trygve", "Gramiel", "Vindicator Seal");
             Bot.Wait.ForPickup(item);
