@@ -1562,7 +1562,7 @@ public class CoreNation
                 DiamondExchange();
         NewWorldsNewOpportunities("Unidentified 13", quant); //1minute turning  = 1x guaranteed
         VoidKightSwordQuest("Unidentified 13", quant);
-        NulgathLarvae("Unidentified 13", quant);
+        Supplies("Unidentified 13", quant);
     }
 
     /// <summary>
