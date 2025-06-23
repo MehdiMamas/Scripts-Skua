@@ -7411,17 +7411,24 @@ public class CoreBots
 
             case "onslaughttower":
                 tryJoin();
-                if (!CheckInventory(2047))
+                while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(2047))
                 {
-                    SendPackets("%xt%zm%getMapItem%169031%67%");
-                    Sleep(2500);
-                    SendPackets("%xt%zm%equipItem%169031%2047%");
+                    if (!CheckInventory(2047))
+                    {
+                        SendPackets($"%xt%zm%getMapItem%{Bot.Map.RoomID}%67%");
+                        Sleep(2500);
+                        SendPackets($"%xt%zm%equipItem%{Bot.Map.RoomID}%2047%");
+                    }
+                    else
+                    {
+                        JumpWait();
+                        SendPackets($"%xt%zm%equipItem%{Bot.Map.RoomID}%2047%");
+                    }
+                    Sleep();
+                    if (Bot.Inventory.IsEquipped(2047))
+                        break;
                 }
-                else
-                {
-                    JumpWait();
-                    SendPackets("%xt%zm%equipItem%169031%2047%");
-                }
+                Bot.Wait.ForItemEquip(2047);
                 break;
 
 
