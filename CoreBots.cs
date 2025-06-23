@@ -118,567 +118,190 @@ public class CoreBots
     #region Start/Stop
 
     #region Old SetOptions (revert if needed)
-    // // <summary>
-    // // Set common bot options to desired value
-    // // </summary>
-    // // <param name="changeTo">Value the options will be changed to</param>
-    // // <param name="disableClassSwap"></param>
-    // public void SetOptions(bool changeTo = true, bool disableClassSwap = false)
-    // {
-    //     EnforceInvariantCulture();
-
-    //     // These things need to be set and checked before anything else
-    //     if (changeTo)
-    //     {
-    //         #region Initial Startup Items
-    //         Bot.Events.ScriptStopping += CrashDetector;
-    //         SkuaVersionChecker("1.2.4.0");
-
-    //         // Start the stopwatch for timing the script run
-    //         _scriptStopwatch = Stopwatch.StartNew();
-    //         DeleteCompiledScript();
-
-    //         loadedBot = Bot.Manager.LoadedScript.Replace("\\", "/").Split("/Scripts/").Last().Replace(".cs", "");
-    //         Logger($"Bot Started [{loadedBot}]");
-    //         if (Bot.Config != null && Bot.Config.Options.Contains(SkipOptions) && !Bot.Config.Get<bool>(SkipOptions))
-    //             Bot.Config.Configure();
-
-    //         if (!Bot.Player.LoggedIn)
-    //         {
-    //             if (Bot.Servers.CachedServers.Any())
-    //             {
-    //                 Logger("Auto Login triggered");
-    //                 try
-    //                 {
-    //                     if (!Bot.Servers.EnsureRelogin(Bot.Options.ReloginServer ?? Bot.Servers.CachedServers[0]?.Name ?? "Twilly"))
-    //                         Logger("Please log-in before starting the bot.\nIf you are already logged in but are receiving this message regardless, please re-install CleanFlash", messageBox: true, stopBot: true);
-    //                     Sleep(5000);
-    //                 }
-    //                 catch
-    //                 {
-    //                     Logger("Please log-in before starting the bot.\nIf you are already logged in but are receiving this message regardless, please re-install CleanFlash", messageBox: true, stopBot: true);
-    //                 }
-    //             }
-    //             else Logger("Please log-in before starting the bot.\nIf you are already logged in but are receiving this message regardless, please re-install CleanFlash", messageBox: true, stopBot: true);
-    //         }
-    //         Bot.Wait.ForTrue(() => Bot.Player.Loaded, 10);
-    //         ReadCBO();
-    //         #endregion Initial Startup Items
-
-    //         #region These things need to be taken care of too, but less priority
-    //         SetOptionsAsync();
-
-    //         Bot.Options.HuntDelay = HuntDelay;
-
-    //         if (BankMiscAC)
-    //             BankACMisc();
-
-    //         if (BankUnenhancedACGear)
-    //             BankACUnenhancedGear();
-
-    //         EquipmentBeforeBot.AddRange(Bot.Inventory.Items.Where(i => i.Equipped).Select(x => x.Name));
-    //         currentClass = ClassType.None;
-    //         usingSoloGeneric = SoloClass.ToLower() == "generic";
-    //         usingFarmGeneric = FarmClass.ToLower() == "generic";
-    //         EquipClass(disableClassSwap ? ClassType.None : ClassType.Solo);
-
-    //         Bot.Events.ScriptStopping += StopBotEvent;
-
-    //         // Alive Check handling
-    //         Bot.Events.MapChanged += CleanKilledMonstersList;
-    //         Bot.Events.MonsterKilled += KilledMonsterListener;
-    //         Bot.Events.ExtensionPacketReceived += RespawnListener;
-
-    //         Bot.Drops.Start();
-    //         Logger("Bot Configured");
-
-    //         // Bunch of things that are done in the background and you dont need the bot to wait for 
-    //         void SetOptionsAsync()
-    //         {
-    //             #region Handlers
-    //             Task.Run(() =>
-    //             {
-    //                 Task.Run(() =>
-    //                 {
-    //                     if (OneTimeMessage("discordV11",
-    //                             "Our discord server was recently deleted again (March 29th 2023), click yes if you wish to (re-)join the server",
-    //                             true, true, true))
-    //                         Process.Start("explorer", DiscordLink);
-    //                 });
-
-    //                 // Butler directory cleaning
-    //                 if (Directory.Exists(ButlerLogDir))
-    //                 {
-    //                     if (File.Exists(ButlerLogPath()))
-    //                         File.Delete(ButlerLogPath());
-
-    //                     string[] files = Directory.GetFiles(ButlerLogDir);
-    //                     if (files.Any(x => x.Contains("~!") && x.Split("~!").First() == Username().ToLower()))
-    //                         File.Delete(files.First(x => x.Contains("~!") && x.Split("~!").First() == Username().ToLower()));
-    //                 }
-
-    //                 // AFK Handler
-    //                 Bot.Send.Packet("%xt%zm%afk%1%false%");
-    //                 Sleep();
-    //                 bool TimerRunning = false;
-    //                 Bot.Handlers.RegisterHandler(5000, b =>
-    //                 {
-    //                     if (b.Player.AFK && !TimerRunning)
-    //                     {
-    //                         TimerRunning = true;
-    //                         Sleep(300000);
-    //                         if (b.Player.AFK)
-    //                         {
-    //                             b.Options.AutoRelogin = true;
-    //                             b.Servers.Logout();
-    //                         }
-    //                         TimerRunning = false;
-    //                     }
-    //                 }, "AFK Handler");
-
-    //                 // Settin Loaded Quest Limiter
-    //                 Bot.Handlers.RegisterHandler(3000, b =>
-    //                 {
-    //                     if (Bot.Quests.Tree.Count > LoadedQuestLimit)
-    //                     {
-    //                         Bot.Flash.SetGameObject("world.questTree", new ExpandoObject());
-    //                     }
-    //                 }, "Quest-Limit Handler");
-
-    //                 // Prison Detector
-    //                 if (loadedBot.Replace("\\", "/") != "Tools/Butler")
-    //                 {
-    //                     Bot.Events.MapChanged += PrisonDetector;
-    //                     void PrisonDetector(string map)
-    //                     {
-    //                         if (map.ToLower() == "prison" && !joinedPrison && !prisonListernerActive)
-    //                         {
-    //                             prisonListernerActive = true;
-    //                             Bot.Options.AutoRelogin = false;
-    //                             Bot.Servers.Logout();
-    //                             string message = "You were teleported to /prison by someone other than the bot. We disconnected you and stopped the bot out of precaution.\n" +
-    //                                              "Be ware that you might have received a ban, as this is a method moderators use to see if you're botting." +
-    //                                              (!PrivateRooms || PrivateRoomNumber < 1000 || PublicDifficult ? "\nGuess you should have stayed out of public rooms!" : string.Empty);
-    //                             Logger(message);
-    //                             Bot.ShowMessageBox(message, "Unauthorized joining of /prison detected!", "Oh fuck!");
-    //                             Bot.Stop(true);
-    //                         }
-    //                     }
-    //                 }
-
-    //                 #endregion Handlers
-
-    //                 // Anti-lag option
-    //                 if (AntiLag)
-    //                 {
-    //                     Bot.Options.LagKiller = changeTo;
-
-    //                     // Some maps are codded horrible and the animations can cause lag or freezes, so we'll turn all the animations off
-    //                     Bot.Lite.FreezeMonsterPosition = changeTo;
-    //                     Bot.Lite.DisableMonsterAnimation = changeTo;
-    //                     Bot.Lite.DisableDamageStrobe = changeTo;
-    //                     Bot.Lite.DisableSelfAnimation = changeTo;
-    //                     Bot.Lite.DisableWeaponAnimation = changeTo;
-    //                     Bot.Lite.DisableSkillAnimation = changeTo;
-    //                     Bot.Lite.DisableSkillAnimations = changeTo;
-
-    //                     Bot.Flash.SetGameObject("stage.frameRate", 10);
-    //                     if (!Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
-    //                         Bot.Flash.CallGameFunction("world.toggleMonsters");
-    //                 }
-
-    //                 // Identity Protection
-    //                 // Bot.Options.CustomName = "SkuaLabRat";
-    //                 // Bot.Options.CustomGuild = "Skua-cide Squad";
-
-    //                 // Holiday Handlers
-    //                 AprilFools();
-
-    //                 //Fucking with specific people
-    //                 UserSpecificMessages();
-    //             });
-    //         }
-    //         #endregion These things need to be taken care of too, but less priority
-
-    //         #region Required things that must be done before starting the Script
-    //         //Start scripts Safely by starting them in the house ( or whitemap if house desnt exist) if the start map is battleon 
-    //         if (new[] { "battleon", "oaklore", "bludrutbrawl" }.Any(m => Bot.Map.Name.Equals(m, StringComparison.OrdinalIgnoreCase)))
-    //         {
-    //             if (Bot.House.Items.Any(h => h.Equipped))
-    //             {
-    //                 string? toSend = null;
-    //                 Bot.Events.ExtensionPacketReceived += modifyPacket;
-    //                 Bot.Send.Packet($"%xt%zm%house%1%{Username()}%");
-    //                 Bot.Wait.ForMapLoad("house");
-    //                 Task.Run(() =>
-    //                 {
-    //                     Bot.Wait.ForMapLoad("house");
-    //                     if (Bot.Wait.ForTrue(() => toSend != null, 20))
-    //                         Bot.Send.ClientPacket(toSend!, "json");
-    //                     Bot.Events.ExtensionPacketReceived -= modifyPacket;
-    //                     for (int i = 0; i < 7; i++)
-    //                         Bot.Send.ClientServer(" ", "");
-    //                 });
-
-    //                 void modifyPacket(dynamic packet)
-    //                 {
-    //                     string type = packet["params"].type;
-    //                     dynamic data = packet["params"].dataObj;
-    //                     if ((type is not null and "json") && (data.houseData is not null))
-    //                     {
-    //                         toSend = $"{{\"t\":\"xt\",\"b\":{{\"r\":-1,\"o\":{{\"cmd\":\"moveToArea\",\"areaName\":\"house\",\"uoBranch\":{JsonConvert.SerializeObject(data.uoBranch)},\"strMapFileName\":\"{data.strMapFileName}\",\"intType\":\"1\",\"monBranch\":[],\"houseData\":{Regex.Replace(JsonConvert.SerializeObject(data.houseData), Username(), "Skua user", RegexOptions.IgnoreCase)},\"sExtra\":\"\",\"areaId\":{data.areaId},\"strMapName\":\"house\"}}}}}}";
-    //                         Bot.Events.ExtensionPacketReceived -= modifyPacket;
-    //                     }
-    //                 }
-    //             }
-    //             else Bot.Send.Packet($"%xt%zm%cmd%1%tfer%{Username()}%whitemap-{PrivateRoomNumber}%");
-    //         }
-
-    //         // Open Bank on startup ensuring current window is `Bank`, then load the bank information.
-    //         if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
-    //             Bot.Bank.Open();
-    //         Bot.Bank.Load();
-    //         Bot.Bank.Loaded = true;
-
-
-    //         #endregion Required things that must be done before starting the Script
-
-    //     }
-
-    //     #region Social Privacy Options
-    //     CBOBool("AntiLag", out bool enablePrivacySettings);
-    //     Logger($"enablePrivacySettings enabled: {enablePrivacySettings}");
-    //     if (!enablePrivacySettings)
-    //     {
-    //         Logger("Anti-Lag in CBO is off. Skipping privacy settings.");
-    //     }
-    //     else
-    //     {
-    //         bool disabling = changeTo;
-    //         bool warned = false;
-
-    //         foreach ((string key, string label) in new Dictionary<string, string>
-    //         {
-    //             { "bGoto", "Goto" },
-    //             { "bParty", "Party invites" },
-    //             { "bFriend", "Friend invites" },
-    //             { "bDuel", "Duel invites" },
-    //             { "bGuild", "Guild invites" },
-    //             { "bWhisper", "Whisper" }
-    //         })
-    //         {
-    //             if (label == "Goto" && !loadedBot.ToLower().Contains("butler"))
-    //                 continue;
-
-    //             bool current = Bot.Flash.GetGameObject<bool>($"uoPref.{key}");
-    //             if (disabling ? current : !current)
-    //             {
-    //                 if (disabling && !warned)
-    //                 {
-    //                     Logger("Turning certain \"Social\" options off to help protect you");
-    //                     warned = true;
-    //                 }
-
-    //                 Logger($"{(disabling ? "Turning off" : "Re-enabling")}: {label}");
-    //                 SendPackets($"%xt%zm%cmd%1%uopref%{key}%{(!disabling).ToString().ToLower()}%");
-    //                 Bot.Sleep(500);
-    //             }
-    //         }
-
-    //         if (disabling)
-    //             GC.Collect();
-    //     }
-    //     #endregion Social Privacy Options
-
-    //     #region Various Bot.Options Settings
-    //     // Set the member status
-    //     IsMember = isUpgraded();
-
-    //     // Common Options
-    //     Bot.Options.PrivateRooms = false;
-    //     Bot.Options.AttackWithoutTarget = false;
-    //     Bot.Options.SafeTimings = changeTo;
-    //     Bot.Options.RestPackets = changeTo && ShouldRest;
-    //     Bot.Options.AutoRelogin = true;
-    //     Bot.Options.InfiniteRange = changeTo;
-    //     Bot.Options.SkipCutscenes = changeTo;
-    //     Bot.Options.QuestAcceptAndCompleteTries = AcceptandCompleteTries;
-    //     Bot.Drops.RejectElse = changeTo;
-    //     Bot.Lite.UntargetDead = changeTo;
-    //     Bot.Lite.UntargetSelf = changeTo;
-    //     Bot.Lite.ReacceptQuest = false;
-    //     Bot.Lite.DisableRedWarning = true;
-    //     Bot.Lite.CharacterSelectScreen = false;
-
-
-    //     //adding sommore
-    //     Bot.Lite.SmoothBackground = true;
-    //     Bot.Lite.ShowMonsterType = true;
-    //     Bot.Lite.CustomDropsUI = true;
-    //     #endregion Various Bot.Options Settings
-
-    //     CollectData(changeTo);
-
-    //     if (!changeTo && _scriptStopwatch != null)
-    //     {
-    //         _scriptStopwatch.Stop();
-    //         Logger($"Script ran for {_scriptStopwatch.Elapsed:hh\\:mm\\:ss}");
-    //         _scriptStopwatch = null;
-    //     }
-    // }
-
-    #endregion Old SetOptions (revert if needed)
-
-
-    #region New SetOptions
-
-    private static readonly string DiscordMessageKey = "discordV11";
-    private static readonly string PrisonMapName = "prison";
-    private static readonly string PrisonDetectorEventName = "PrisonDetector";
-    private static readonly string ButlerScriptName = "Tools/Butler";
-
-    private CancellationTokenSource? _setOptionsCts;
-    private readonly object _stopwatchLock = new();
-    private Stopwatch? _scriptStopwatch;
-
+    // <summary>
+    // Set common bot options to desired value
+    // </summary>
+    // <param name="changeTo">Value the options will be changed to</param>
+    // <param name="disableClassSwap"></param>
     public void SetOptions(bool changeTo = true, bool disableClassSwap = false)
     {
         EnforceInvariantCulture();
 
-        bool isStarting = changeTo;
-
-        if (isStarting)
+        // These things need to be set and checked before anything else
+        if (changeTo)
         {
             #region Initial Startup Items
             Bot.Events.ScriptStopping += CrashDetector;
             SkuaVersionChecker("1.2.4.0");
 
-            lock (_stopwatchLock)
-            {
-                _scriptStopwatch?.Stop();
-                _scriptStopwatch = Stopwatch.StartNew();
-            }
-
+            // Start the stopwatch for timing the script run
+            _scriptStopwatch = Stopwatch.StartNew();
             DeleteCompiledScript();
 
-            loadedBot = Bot.Manager.LoadedScript.Replace("\\", "/")
-                           .Split("/Scripts/").Last()
-                           .Replace(".cs", "");
-            Logger("Bot Started [" + loadedBot + "]", "SetOptions");
-
-            if (Bot.Config is { Options: { } } && Bot.Config.Options.Contains(SkipOptions) && !Bot.Config.Get<bool>(SkipOptions))
+            loadedBot = Bot.Manager.LoadedScript.Replace("\\", "/").Split("/Scripts/").Last().Replace(".cs", "");
+            Logger($"Bot Started [{loadedBot}]");
+            if (Bot.Config != null && Bot.Config.Options.Contains(SkipOptions) && !Bot.Config.Get<bool>(SkipOptions))
                 Bot.Config.Configure();
 
             if (!Bot.Player.LoggedIn)
             {
                 if (Bot.Servers.CachedServers.Any())
                 {
-                    Logger("Auto Login triggered", "SetOptions");
+                    Logger("Auto Login triggered");
                     try
                     {
-                        string server = Bot.Options.ReloginServer
-                            ?? Bot.Servers.CachedServers.FirstOrDefault()?.Name
-                            ?? "Twilly";
-
-                        if (!Bot.Servers.EnsureRelogin(server))
-                            Logger("Please log-in before starting the bot.\nIf already logged in but still seeing this message, please re-install CleanFlash", "SetOptions",
-                                messageBox: true, stopBot: true);
-
+                        if (!Bot.Servers.EnsureRelogin(Bot.Options.ReloginServer ?? Bot.Servers.CachedServers[0]?.Name ?? "Twilly"))
+                            Logger("Please log-in before starting the bot.\nIf you are already logged in but are receiving this message regardless, please re-install CleanFlash", messageBox: true, stopBot: true);
                         Sleep(5000);
                     }
-                    catch (Exception ex)
+                    catch
                     {
-                        Logger("Auto login failed: " + ex.Message, "SetOptions");
-                        Logger("Please log-in before starting the bot.\nIf already logged in but still seeing this message, please re-install CleanFlash", "SetOptions",
-                            messageBox: true, stopBot: true);
+                        Logger("Please log-in before starting the bot.\nIf you are already logged in but are receiving this message regardless, please re-install CleanFlash", messageBox: true, stopBot: true);
                     }
                 }
-                else
-                {
-                    Logger("Please log-in before starting the bot.\nIf already logged in but still seeing this message, please re-install CleanFlash", "SetOptions",
-                        messageBox: true, stopBot: true);
-                }
+                else Logger("Please log-in before starting the bot.\nIf you are already logged in but are receiving this message regardless, please re-install CleanFlash", messageBox: true, stopBot: true);
             }
             Bot.Wait.ForTrue(() => Bot.Player.Loaded, 10);
             ReadCBO();
             #endregion Initial Startup Items
 
-            #region Background Setup (Less Priority)
+            #region These things need to be taken care of too, but less priority
+            SetOptionsAsync();
 
-            // Cancel any previous background tasks before starting new ones
-            _setOptionsCts?.Cancel();
-            _setOptionsCts = new CancellationTokenSource();
+            Bot.Options.HuntDelay = HuntDelay;
 
+            if (BankMiscAC)
+                BankACMisc();
+
+            if (BankUnenhancedACGear)
+                BankACUnenhancedGear();
+
+            EquipmentBeforeBot.AddRange(Bot.Inventory.Items.Where(i => i.Equipped).Select(x => x.Name));
+            currentClass = ClassType.None;
+            usingSoloGeneric = SoloClass.ToLower() == "generic";
+            usingFarmGeneric = FarmClass.ToLower() == "generic";
+            EquipClass(disableClassSwap ? ClassType.None : ClassType.Solo);
+
+            Bot.Events.ScriptStopping += StopBotEvent;
+
+            // Alive Check handling
+            Bot.Events.MapChanged += CleanKilledMonstersList;
+            Bot.Events.MonsterKilled += KilledMonsterListener;
+            Bot.Events.ExtensionPacketReceived += RespawnListener;
+
+            Bot.Drops.Start();
+            Logger("Bot Configured");
+
+            // Bunch of things that are done in the background and you dont need the bot to wait for 
             void SetOptionsAsync()
             {
-                CancellationToken token = _setOptionsCts.Token;
-
+                #region Handlers
                 Task.Run(() =>
                 {
-                    if (token.IsCancellationRequested)
-                        return;
-
-                    // Discord Join Prompt
-                    if (OneTimeMessage(DiscordMessageKey,
-                        "Our discord server was recently deleted again (March 29th 2023), click yes if you wish to (re-)join the server",
-                        true, true, true))
+                    Task.Run(() =>
                     {
-                        Process.Start("explorer", DiscordLink);
-                    }
+                        if (OneTimeMessage("discordV11",
+                                "Our discord server was recently deleted again (March 29th 2023), click yes if you wish to (re-)join the server",
+                                true, true, true))
+                            Process.Start("explorer", DiscordLink);
+                    });
 
-                    if (token.IsCancellationRequested)
-                        return;
-
-                    // Butler Directory Cleaning
+                    // Butler directory cleaning
                     if (Directory.Exists(ButlerLogDir))
                     {
                         if (File.Exists(ButlerLogPath()))
                             File.Delete(ButlerLogPath());
 
-                        var files = Directory.GetFiles(ButlerLogDir);
-                        string userPrefix = Username().ToLower() + "~!";
-
-                        var fileToDelete = files.FirstOrDefault(f => f.Contains("~!") && f.StartsWith(userPrefix));
-                        if (fileToDelete != null)
-                            File.Delete(fileToDelete);
+                        string[] files = Directory.GetFiles(ButlerLogDir);
+                        if (files.Any(x => x.Contains("~!") && x.Split("~!").First() == Username().ToLower()))
+                            File.Delete(files.First(x => x.Contains("~!") && x.Split("~!").First() == Username().ToLower()));
                     }
-
-                    if (token.IsCancellationRequested)
-                        return;
 
                     // AFK Handler
                     Bot.Send.Packet("%xt%zm%afk%1%false%");
                     Sleep();
-
-                    bool timerRunning = false;
+                    bool TimerRunning = false;
                     Bot.Handlers.RegisterHandler(5000, b =>
                     {
-                        if (token.IsCancellationRequested)
-                            return false;
-
-                        if (b.Player.AFK && !timerRunning)
+                        if (b.Player.AFK && !TimerRunning)
                         {
-                            timerRunning = true;
-                            Sleep(300_000);
+                            TimerRunning = true;
+                            Sleep(300000);
                             if (b.Player.AFK)
                             {
                                 b.Options.AutoRelogin = true;
                                 b.Servers.Logout();
                             }
-                            timerRunning = false;
+                            TimerRunning = false;
                         }
-                        return true;
                     }, "AFK Handler");
 
-                    if (token.IsCancellationRequested)
-                        return;
-
-                    // Quest Limit Handler
-                    Bot.Handlers.RegisterHandler(3000, _ =>
+                    // Settin Loaded Quest Limiter
+                    Bot.Handlers.RegisterHandler(3000, b =>
                     {
-                        if (token.IsCancellationRequested)
-                            return false;
-
                         if (Bot.Quests.Tree.Count > LoadedQuestLimit)
+                        {
                             Bot.Flash.SetGameObject("world.questTree", new ExpandoObject());
-
-                        return true;
+                        }
                     }, "Quest-Limit Handler");
 
-                    if (token.IsCancellationRequested)
-                        return;
-
-                    // Prison Detector (skip for Butler)
-                    if (!loadedBot.Replace("\\", "/").Equals(ButlerScriptName, StringComparison.OrdinalIgnoreCase))
+                    // Prison Detector
+                    if (loadedBot.Replace("\\", "/") != "Tools/Butler")
                     {
-                        Bot.Events.MapChanged -= PrisonDetector;
                         Bot.Events.MapChanged += PrisonDetector;
-                    }
-
-                    void PrisonDetector(string map)
-                    {
-                        if (token.IsCancellationRequested)
+                        void PrisonDetector(string map)
                         {
-                            Bot.Events.MapChanged -= PrisonDetector;
-                            return;
-                        }
-
-                        if (map.Equals(PrisonMapName, StringComparison.OrdinalIgnoreCase) && !joinedPrison && !prisonListernerActive)
-                        {
-                            prisonListernerActive = true;
-                            Bot.Options.AutoRelogin = false;
-                            Bot.Servers.Logout();
-
-                            string message =
-                                "You were teleported to /prison by someone other than the bot. We disconnected you and stopped the bot out of precaution.\n" +
-                                "Be aware that you might have received a ban, as this is a method moderators use to see if you're botting." +
-                                (!PrivateRooms || PrivateRoomNumber < 1000 || PublicDifficult
-                                    ? "\nGuess you should have stayed out of public rooms!"
-                                    : string.Empty);
-                            Logger("" + message, "SetOptions");
-                            Bot.ShowMessageBox(message, "Unauthorized joining of /prison detected!", "Oh fuck!");
-                            Bot.Stop(true);
+                            if (map.ToLower() == "prison" && !joinedPrison && !prisonListernerActive)
+                            {
+                                prisonListernerActive = true;
+                                Bot.Options.AutoRelogin = false;
+                                Bot.Servers.Logout();
+                                string message = "You were teleported to /prison by someone other than the bot. We disconnected you and stopped the bot out of precaution.\n" +
+                                                 "Be ware that you might have received a ban, as this is a method moderators use to see if you're botting." +
+                                                 (!PrivateRooms || PrivateRoomNumber < 1000 || PublicDifficult ? "\nGuess you should have stayed out of public rooms!" : string.Empty);
+                                Logger(message);
+                                Bot.ShowMessageBox(message, "Unauthorized joining of /prison detected!", "Oh fuck!");
+                                Bot.Stop(true);
+                            }
                         }
                     }
 
-                    if (token.IsCancellationRequested)
-                        return;
+                    #endregion Handlers
 
-                    // Anti-lag toggles
+                    // Anti-lag option
                     if (AntiLag)
                     {
-                        Bot.Options.LagKiller = isStarting;
+                        Bot.Options.LagKiller = changeTo;
 
-                        Bot.Lite.FreezeMonsterPosition = isStarting;
-                        Bot.Lite.DisableMonsterAnimation = isStarting;
-                        Bot.Lite.DisableDamageStrobe = isStarting;
-                        Bot.Lite.DisableSelfAnimation = isStarting;
-                        Bot.Lite.DisableWeaponAnimation = isStarting;
-                        Bot.Lite.DisableSkillAnimation = isStarting;
-                        Bot.Lite.DisableSkillAnimations = isStarting;
+                        // Some maps are codded horrible and the animations can cause lag or freezes, so we'll turn all the animations off
+                        Bot.Lite.FreezeMonsterPosition = changeTo;
+                        Bot.Lite.DisableMonsterAnimation = changeTo;
+                        Bot.Lite.DisableDamageStrobe = changeTo;
+                        Bot.Lite.DisableSelfAnimation = changeTo;
+                        Bot.Lite.DisableWeaponAnimation = changeTo;
+                        Bot.Lite.DisableSkillAnimation = changeTo;
+                        Bot.Lite.DisableSkillAnimations = changeTo;
 
                         Bot.Flash.SetGameObject("stage.frameRate", 10);
                         if (!Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
                             Bot.Flash.CallGameFunction("world.toggleMonsters");
                     }
 
-                    if (token.IsCancellationRequested)
-                        return;
+                    // Identity Protection
+                    // Bot.Options.CustomName = "SkuaLabRat";
+                    // Bot.Options.CustomGuild = "Skua-cide Squad";
 
+                    // Holiday Handlers
                     AprilFools();
+
+                    //Fucking with specific people
                     UserSpecificMessages();
-
-                }, token);
+                });
             }
+            #endregion These things need to be taken care of too, but less priority
 
-            SetOptionsAsync();
-
-            Bot.Options.HuntDelay = HuntDelay;
-
-            if (BankMiscAC) BankACMisc();
-            if (BankUnenhancedACGear) BankACUnenhancedGear();
-
-            EquipmentBeforeBot.AddRange(Bot.Inventory.Items.Where(i => i.Equipped).Select(i => i.Name));
-            currentClass = ClassType.None;
-
-            usingSoloGeneric = SoloClass.Equals("generic", StringComparison.OrdinalIgnoreCase);
-            usingFarmGeneric = FarmClass.Equals("generic", StringComparison.OrdinalIgnoreCase);
-
-            EquipClass(disableClassSwap ? ClassType.None : ClassType.Solo);
-
-            Bot.Events.ScriptStopping += StopBotEvent;
-
-            Bot.Events.MapChanged += CleanKilledMonstersList;
-            Bot.Events.MonsterKilled += KilledMonsterListener;
-            Bot.Events.ExtensionPacketReceived += RespawnListener;
-
-            Bot.Drops.Start();
-            Logger("Bot Configured", "SetOptions");
-
-            #endregion Background Setup
-
-            #region Required Pre-Start Actions
-            // Start script safely in house or whitemap if starting map is battleon
+            #region Required things that must be done before starting the Script
+            //Start scripts Safely by starting them in the house ( or whitemap if house desnt exist) if the start map is battleon 
             if (new[] { "battleon", "oaklore", "bludrutbrawl" }.Any(m => Bot.Map.Name.Equals(m, StringComparison.OrdinalIgnoreCase)))
             {
                 if (Bot.House.Items.Any(h => h.Equipped))
@@ -687,7 +310,6 @@ public class CoreBots
                     Bot.Events.ExtensionPacketReceived += modifyPacket;
                     Bot.Send.Packet($"%xt%zm%house%1%{Username()}%");
                     Bot.Wait.ForMapLoad("house");
-
                     Task.Run(() =>
                     {
                         Bot.Wait.ForMapLoad("house");
@@ -700,66 +322,50 @@ public class CoreBots
 
                     void modifyPacket(dynamic packet)
                     {
-                        if (packet["params"].type == "json" && packet["params"].dataObj.houseData != null)
+                        string type = packet["params"].type;
+                        dynamic data = packet["params"].dataObj;
+                        if ((type is not null and "json") && (data.houseData is not null))
                         {
-                            toSend = JsonConvert.SerializeObject(new
-                            {
-                                t = "xt",
-                                b = new
-                                {
-                                    r = -1,
-                                    o = new
-                                    {
-                                        cmd = "moveToArea",
-                                        areaName = "house",
-                                        uoBranch = packet["params"].dataObj.uoBranch,
-                                        strMapFileName = packet["params"].dataObj.strMapFileName,
-                                        intType = "1",
-                                        monBranch = Array.Empty<object>(),
-                                        houseData = Regex.Replace(JsonConvert.SerializeObject(packet["params"].dataObj.houseData), Username(), "Skua user", RegexOptions.IgnoreCase),
-                                        sExtra = "",
-                                        areaId = packet["params"].dataObj.areaId,
-                                        strMapName = "house"
-                                    }
-                                }
-                            });
+                            toSend = $"{{\"t\":\"xt\",\"b\":{{\"r\":-1,\"o\":{{\"cmd\":\"moveToArea\",\"areaName\":\"house\",\"uoBranch\":{JsonConvert.SerializeObject(data.uoBranch)},\"strMapFileName\":\"{data.strMapFileName}\",\"intType\":\"1\",\"monBranch\":[],\"houseData\":{Regex.Replace(JsonConvert.SerializeObject(data.houseData), Username(), "Skua user", RegexOptions.IgnoreCase)},\"sExtra\":\"\",\"areaId\":{data.areaId},\"strMapName\":\"house\"}}}}}}";
+                            Bot.Events.ExtensionPacketReceived -= modifyPacket;
                         }
                     }
                 }
                 else Bot.Send.Packet($"%xt%zm%cmd%1%tfer%{Username()}%whitemap-{PrivateRoomNumber}%");
             }
 
-            // Ensure bank window open and loaded
+            // Open Bank on startup ensuring current window is `Bank`, then load the bank information.
             if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
                 Bot.Bank.Open();
             Bot.Bank.Load();
             Bot.Bank.Loaded = true;
 
-            #endregion Required Pre-Start Actions
+
+            #endregion Required things that must be done before starting the Script
+
         }
 
         #region Social Privacy Options
         CBOBool("AntiLag", out bool enablePrivacySettings);
-
+        Logger($"enablePrivacySettings enabled: {enablePrivacySettings}");
         if (!enablePrivacySettings)
         {
-            if (isStarting)  // Only log when starting the script
-                Logger("Anti-Lag in CBO is off. Skipping privacy settings.", "SetOptions");
+            Logger("Anti-Lag in CBO is off. Skipping privacy settings.");
         }
         else
         {
-            bool disabling = isStarting;
+            bool disabling = changeTo;
             bool warned = false;
 
             foreach ((string key, string label) in new Dictionary<string, string>
-        {
-            { "bGoto", "Goto" },
-            { "bParty", "Party invites" },
-            { "bFriend", "Friend invites" },
-            { "bDuel", "Duel invites" },
-            { "bGuild", "Guild invites" },
-            { "bWhisper", "Whisper" }
-        })
+            {
+                { "bGoto", "Goto" },
+                { "bParty", "Party invites" },
+                { "bFriend", "Friend invites" },
+                { "bDuel", "Duel invites" },
+                { "bGuild", "Guild invites" },
+                { "bWhisper", "Whisper" }
+            })
             {
                 if (label == "Goto" && !loadedBot.ToLower().Contains("butler"))
                     continue;
@@ -769,11 +375,11 @@ public class CoreBots
                 {
                     if (disabling && !warned)
                     {
-                        Logger("Turning certain \"Social\" options off to help protect you", "SetOptions");
+                        Logger("Turning certain \"Social\" options off to help protect you");
                         warned = true;
                     }
 
-                    Logger($"{(disabling ? "Turning off" : "Re-enabling")}: {label}", "SetOptions");
+                    Logger($"{(disabling ? "Turning off" : "Re-enabling")}: {label}");
                     SendPackets($"%xt%zm%cmd%1%uopref%{key}%{(!disabling).ToString().ToLower()}%");
                     Bot.Sleep(500);
                 }
@@ -785,48 +391,442 @@ public class CoreBots
         #endregion Social Privacy Options
 
         #region Various Bot.Options Settings
+        // Set the member status
         IsMember = isUpgraded();
 
+        // Common Options
         Bot.Options.PrivateRooms = false;
         Bot.Options.AttackWithoutTarget = false;
-        Bot.Options.SafeTimings = isStarting;
-        Bot.Options.RestPackets = isStarting && ShouldRest;
+        Bot.Options.SafeTimings = changeTo;
+        Bot.Options.RestPackets = changeTo && ShouldRest;
         Bot.Options.AutoRelogin = true;
-        Bot.Options.InfiniteRange = isStarting;
-        Bot.Options.SkipCutscenes = isStarting;
+        Bot.Options.InfiniteRange = changeTo;
+        Bot.Options.SkipCutscenes = changeTo;
         Bot.Options.QuestAcceptAndCompleteTries = AcceptandCompleteTries;
-        Bot.Drops.RejectElse = isStarting;
-        Bot.Lite.UntargetDead = isStarting;
-        Bot.Lite.UntargetSelf = isStarting;
+        Bot.Drops.RejectElse = changeTo;
+        Bot.Lite.UntargetDead = changeTo;
+        Bot.Lite.UntargetSelf = changeTo;
         Bot.Lite.ReacceptQuest = false;
         Bot.Lite.DisableRedWarning = true;
         Bot.Lite.CharacterSelectScreen = false;
 
+
+        //adding sommore
         Bot.Lite.SmoothBackground = true;
         Bot.Lite.ShowMonsterType = true;
         Bot.Lite.CustomDropsUI = true;
         #endregion Various Bot.Options Settings
 
-        CollectData(isStarting);
+        CollectData(changeTo);
 
-        if (!isStarting)
+        if (!changeTo && _scriptStopwatch != null)
         {
-            lock (_stopwatchLock)
-            {
-                if (_scriptStopwatch != null)
-                {
-                    _scriptStopwatch.Stop();
-                    Logger("Script ran for " + _scriptStopwatch.Elapsed.ToString(@"hh\:mm\:ss"), "SetOptions");
-                    _scriptStopwatch = null;
-                }
-            }
-
-            // Cancel background async tasks on stop
-            _setOptionsCts?.Cancel();
-            _setOptionsCts = null;
+            _scriptStopwatch.Stop();
+            Logger($"Script ran for {_scriptStopwatch.Elapsed:hh\\:mm\\:ss}");
+            _scriptStopwatch = null;
         }
     }
-    #endregion New SetOptions
+
+    #endregion Old SetOptions (revert if needed)
+
+
+    // #region New SetOptions
+
+    // private static readonly string DiscordMessageKey = "discordV11";
+    // private static readonly string PrisonMapName = "prison";
+    // private static readonly string PrisonDetectorEventName = "PrisonDetector";
+    // private static readonly string ButlerScriptName = "Tools/Butler";
+
+    // private CancellationTokenSource? _setOptionsCts;
+    // private readonly object _stopwatchLock = new();
+    // private Stopwatch? _scriptStopwatch;
+
+    // public void SetOptions(bool changeTo = true, bool disableClassSwap = false)
+    // {
+    //     EnforceInvariantCulture();
+
+    //     bool isStarting = changeTo;
+
+    //     if (isStarting)
+    //     {
+    //         #region Initial Startup Items
+    //         Bot.Events.ScriptStopping += CrashDetector;
+    //         SkuaVersionChecker("1.2.4.0");
+
+    //         lock (_stopwatchLock)
+    //         {
+    //             _scriptStopwatch?.Stop();
+    //             _scriptStopwatch = Stopwatch.StartNew();
+    //         }
+
+    //         DeleteCompiledScript();
+
+    //         loadedBot = Bot.Manager.LoadedScript.Replace("\\", "/")
+    //                        .Split("/Scripts/").Last()
+    //                        .Replace(".cs", "");
+    //         Logger("Bot Started [" + loadedBot + "]", "SetOptions");
+
+    //         if (Bot.Config is { Options: { } } && Bot.Config.Options.Contains(SkipOptions) && !Bot.Config.Get<bool>(SkipOptions))
+    //             Bot.Config.Configure();
+
+    //         if (!Bot.Player.LoggedIn)
+    //         {
+    //             if (Bot.Servers.CachedServers.Any())
+    //             {
+    //                 Logger("Auto Login triggered", "SetOptions");
+    //                 try
+    //                 {
+    //                     string server = Bot.Options.ReloginServer
+    //                         ?? Bot.Servers.CachedServers.FirstOrDefault()?.Name
+    //                         ?? "Twilly";
+
+    //                     if (!Bot.Servers.EnsureRelogin(server))
+    //                         Logger("Please log-in before starting the bot.\nIf already logged in but still seeing this message, please re-install CleanFlash", "SetOptions",
+    //                             messageBox: true, stopBot: true);
+
+    //                     Sleep(5000);
+    //                 }
+    //                 catch (Exception ex)
+    //                 {
+    //                     Logger("Auto login failed: " + ex.Message, "SetOptions");
+    //                     Logger("Please log-in before starting the bot.\nIf already logged in but still seeing this message, please re-install CleanFlash", "SetOptions",
+    //                         messageBox: true, stopBot: true);
+    //                 }
+    //             }
+    //             else
+    //             {
+    //                 Logger("Please log-in before starting the bot.\nIf already logged in but still seeing this message, please re-install CleanFlash", "SetOptions",
+    //                     messageBox: true, stopBot: true);
+    //             }
+    //         }
+    //         Bot.Wait.ForTrue(() => Bot.Player.Loaded, 10);
+    //         ReadCBO();
+    //         #endregion Initial Startup Items
+
+    //         #region Background Setup (Less Priority)
+
+    //         // Cancel any previous background tasks before starting new ones
+    //         _setOptionsCts?.Cancel();
+    //         _setOptionsCts = new CancellationTokenSource();
+
+    //         void SetOptionsAsync()
+    //         {
+    //             CancellationToken token = _setOptionsCts.Token;
+
+    //             Task.Run(() =>
+    //             {
+    //                 if (token.IsCancellationRequested)
+    //                     return;
+
+    //                 // Discord Join Prompt
+    //                 if (OneTimeMessage(DiscordMessageKey,
+    //                     "Our discord server was recently deleted again (March 29th 2023), click yes if you wish to (re-)join the server",
+    //                     true, true, true))
+    //                 {
+    //                     Process.Start("explorer", DiscordLink);
+    //                 }
+
+    //                 if (token.IsCancellationRequested)
+    //                     return;
+
+    //                 // Butler Directory Cleaning
+    //                 if (Directory.Exists(ButlerLogDir))
+    //                 {
+    //                     if (File.Exists(ButlerLogPath()))
+    //                         File.Delete(ButlerLogPath());
+
+    //                     var files = Directory.GetFiles(ButlerLogDir);
+    //                     string userPrefix = Username().ToLower() + "~!";
+
+    //                     var fileToDelete = files.FirstOrDefault(f => f.Contains("~!") && f.StartsWith(userPrefix));
+    //                     if (fileToDelete != null)
+    //                         File.Delete(fileToDelete);
+    //                 }
+
+    //                 if (token.IsCancellationRequested)
+    //                     return;
+
+    //                 // AFK Handler
+    //                 Bot.Send.Packet("%xt%zm%afk%1%false%");
+    //                 Sleep();
+
+    //                 bool timerRunning = false;
+    //                 Bot.Handlers.RegisterHandler(5000, b =>
+    //                 {
+    //                     if (token.IsCancellationRequested)
+    //                         return false;
+
+    //                     if (b.Player.AFK && !timerRunning)
+    //                     {
+    //                         timerRunning = true;
+    //                         Sleep(300_000);
+    //                         if (b.Player.AFK)
+    //                         {
+    //                             b.Options.AutoRelogin = true;
+    //                             b.Servers.Logout();
+    //                         }
+    //                         timerRunning = false;
+    //                     }
+    //                     return true;
+    //                 }, "AFK Handler");
+
+    //                 if (token.IsCancellationRequested)
+    //                     return;
+
+    //                 // Quest Limit Handler
+    //                 Bot.Handlers.RegisterHandler(3000, _ =>
+    //                 {
+    //                     if (token.IsCancellationRequested)
+    //                         return false;
+
+    //                     if (Bot.Quests.Tree.Count > LoadedQuestLimit)
+    //                         Bot.Flash.SetGameObject("world.questTree", new ExpandoObject());
+
+    //                     return true;
+    //                 }, "Quest-Limit Handler");
+
+    //                 if (token.IsCancellationRequested)
+    //                     return;
+
+    //                 // Prison Detector (skip for Butler)
+    //                 if (!loadedBot.Replace("\\", "/").Equals(ButlerScriptName, StringComparison.OrdinalIgnoreCase))
+    //                 {
+    //                     Bot.Events.MapChanged -= PrisonDetector;
+    //                     Bot.Events.MapChanged += PrisonDetector;
+    //                 }
+
+    //                 void PrisonDetector(string map)
+    //                 {
+    //                     if (token.IsCancellationRequested)
+    //                     {
+    //                         Bot.Events.MapChanged -= PrisonDetector;
+    //                         return;
+    //                     }
+
+    //                     if (map.Equals(PrisonMapName, StringComparison.OrdinalIgnoreCase) && !joinedPrison && !prisonListernerActive)
+    //                     {
+    //                         prisonListernerActive = true;
+    //                         Bot.Options.AutoRelogin = false;
+    //                         Bot.Servers.Logout();
+
+    //                         string message =
+    //                             "You were teleported to /prison by someone other than the bot. We disconnected you and stopped the bot out of precaution.\n" +
+    //                             "Be aware that you might have received a ban, as this is a method moderators use to see if you're botting." +
+    //                             (!PrivateRooms || PrivateRoomNumber < 1000 || PublicDifficult
+    //                                 ? "\nGuess you should have stayed out of public rooms!"
+    //                                 : string.Empty);
+    //                         Logger("" + message, "SetOptions");
+    //                         Bot.ShowMessageBox(message, "Unauthorized joining of /prison detected!", "Oh fuck!");
+    //                         Bot.Stop(true);
+    //                     }
+    //                 }
+
+    //                 if (token.IsCancellationRequested)
+    //                     return;
+
+    //                 // Anti-lag toggles
+    //                 if (AntiLag)
+    //                 {
+    //                     Bot.Options.LagKiller = isStarting;
+
+    //                     Bot.Lite.FreezeMonsterPosition = isStarting;
+    //                     Bot.Lite.DisableMonsterAnimation = isStarting;
+    //                     Bot.Lite.DisableDamageStrobe = isStarting;
+    //                     Bot.Lite.DisableSelfAnimation = isStarting;
+    //                     Bot.Lite.DisableWeaponAnimation = isStarting;
+    //                     Bot.Lite.DisableSkillAnimation = isStarting;
+    //                     Bot.Lite.DisableSkillAnimations = isStarting;
+
+    //                     Bot.Flash.SetGameObject("stage.frameRate", 10);
+    //                     if (!Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
+    //                         Bot.Flash.CallGameFunction("world.toggleMonsters");
+    //                 }
+
+    //                 if (token.IsCancellationRequested)
+    //                     return;
+
+    //                 AprilFools();
+    //                 UserSpecificMessages();
+
+    //             }, token);
+    //         }
+
+    //         SetOptionsAsync();
+
+    //         Bot.Options.HuntDelay = HuntDelay;
+
+    //         if (BankMiscAC) BankACMisc();
+    //         if (BankUnenhancedACGear) BankACUnenhancedGear();
+
+    //         EquipmentBeforeBot.AddRange(Bot.Inventory.Items.Where(i => i.Equipped).Select(i => i.Name));
+    //         currentClass = ClassType.None;
+
+    //         usingSoloGeneric = SoloClass.Equals("generic", StringComparison.OrdinalIgnoreCase);
+    //         usingFarmGeneric = FarmClass.Equals("generic", StringComparison.OrdinalIgnoreCase);
+
+    //         EquipClass(disableClassSwap ? ClassType.None : ClassType.Solo);
+
+    //         Bot.Events.ScriptStopping += StopBotEvent;
+
+    //         Bot.Events.MapChanged += CleanKilledMonstersList;
+    //         Bot.Events.MonsterKilled += KilledMonsterListener;
+    //         Bot.Events.ExtensionPacketReceived += RespawnListener;
+
+    //         Bot.Drops.Start();
+    //         Logger("Bot Configured", "SetOptions");
+
+    //         #endregion Background Setup
+
+    //         #region Required Pre-Start Actions
+    //         // Start script safely in house or whitemap if starting map is battleon
+    //         if (new[] { "battleon", "oaklore", "bludrutbrawl" }.Any(m => Bot.Map.Name.Equals(m, StringComparison.OrdinalIgnoreCase)))
+    //         {
+    //             if (Bot.House.Items.Any(h => h.Equipped))
+    //             {
+    //                 string? toSend = null;
+    //                 Bot.Events.ExtensionPacketReceived += modifyPacket;
+    //                 Bot.Send.Packet($"%xt%zm%house%1%{Username()}%");
+    //                 Bot.Wait.ForMapLoad("house");
+
+    //                 Task.Run(() =>
+    //                 {
+    //                     Bot.Wait.ForMapLoad("house");
+    //                     if (Bot.Wait.ForTrue(() => toSend != null, 20))
+    //                         Bot.Send.ClientPacket(toSend!, "json");
+    //                     Bot.Events.ExtensionPacketReceived -= modifyPacket;
+    //                     for (int i = 0; i < 7; i++)
+    //                         Bot.Send.ClientServer(" ", "");
+    //                 });
+
+    //                 void modifyPacket(dynamic packet)
+    //                 {
+    //                     if (packet["params"].type == "json" && packet["params"].dataObj.houseData != null)
+    //                     {
+    //                         toSend = JsonConvert.SerializeObject(new
+    //                         {
+    //                             t = "xt",
+    //                             b = new
+    //                             {
+    //                                 r = -1,
+    //                                 o = new
+    //                                 {
+    //                                     cmd = "moveToArea",
+    //                                     areaName = "house",
+    //                                     uoBranch = packet["params"].dataObj.uoBranch,
+    //                                     strMapFileName = packet["params"].dataObj.strMapFileName,
+    //                                     intType = "1",
+    //                                     monBranch = Array.Empty<object>(),
+    //                                     houseData = Regex.Replace(JsonConvert.SerializeObject(packet["params"].dataObj.houseData), Username(), "Skua user", RegexOptions.IgnoreCase),
+    //                                     sExtra = "",
+    //                                     areaId = packet["params"].dataObj.areaId,
+    //                                     strMapName = "house"
+    //                                 }
+    //                             }
+    //                         });
+    //                     }
+    //                 }
+    //             }
+    //             else Bot.Send.Packet($"%xt%zm%cmd%1%tfer%{Username()}%whitemap-{PrivateRoomNumber}%");
+    //         }
+
+    //         // Ensure bank window open and loaded
+    //         if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
+    //             Bot.Bank.Open();
+    //         Bot.Bank.Load();
+    //         Bot.Bank.Loaded = true;
+
+    //         #endregion Required Pre-Start Actions
+    //     }
+
+    //     #region Social Privacy Options
+    //     CBOBool("AntiLag", out bool enablePrivacySettings);
+
+    //     if (!enablePrivacySettings)
+    //     {
+    //         if (isStarting)  // Only log when starting the script
+    //             Logger("Anti-Lag in CBO is off. Skipping privacy settings.", "SetOptions");
+    //     }
+    //     else
+    //     {
+    //         bool disabling = isStarting;
+    //         bool warned = false;
+
+    //         foreach ((string key, string label) in new Dictionary<string, string>
+    //     {
+    //         { "bGoto", "Goto" },
+    //         { "bParty", "Party invites" },
+    //         { "bFriend", "Friend invites" },
+    //         { "bDuel", "Duel invites" },
+    //         { "bGuild", "Guild invites" },
+    //         { "bWhisper", "Whisper" }
+    //     })
+    //         {
+    //             if (label == "Goto" && !loadedBot.ToLower().Contains("butler"))
+    //                 continue;
+
+    //             bool current = Bot.Flash.GetGameObject<bool>($"uoPref.{key}");
+    //             if (disabling ? current : !current)
+    //             {
+    //                 if (disabling && !warned)
+    //                 {
+    //                     Logger("Turning certain \"Social\" options off to help protect you", "SetOptions");
+    //                     warned = true;
+    //                 }
+
+    //                 Logger($"{(disabling ? "Turning off" : "Re-enabling")}: {label}", "SetOptions");
+    //                 SendPackets($"%xt%zm%cmd%1%uopref%{key}%{(!disabling).ToString().ToLower()}%");
+    //                 Bot.Sleep(500);
+    //             }
+    //         }
+
+    //         if (disabling)
+    //             GC.Collect();
+    //     }
+    //     #endregion Social Privacy Options
+
+    //     #region Various Bot.Options Settings
+    //     IsMember = isUpgraded();
+
+    //     Bot.Options.PrivateRooms = false;
+    //     Bot.Options.AttackWithoutTarget = false;
+    //     Bot.Options.SafeTimings = isStarting;
+    //     Bot.Options.RestPackets = isStarting && ShouldRest;
+    //     Bot.Options.AutoRelogin = true;
+    //     Bot.Options.InfiniteRange = isStarting;
+    //     Bot.Options.SkipCutscenes = isStarting;
+    //     Bot.Options.QuestAcceptAndCompleteTries = AcceptandCompleteTries;
+    //     Bot.Drops.RejectElse = isStarting;
+    //     Bot.Lite.UntargetDead = isStarting;
+    //     Bot.Lite.UntargetSelf = isStarting;
+    //     Bot.Lite.ReacceptQuest = false;
+    //     Bot.Lite.DisableRedWarning = true;
+    //     Bot.Lite.CharacterSelectScreen = false;
+
+    //     Bot.Lite.SmoothBackground = true;
+    //     Bot.Lite.ShowMonsterType = true;
+    //     Bot.Lite.CustomDropsUI = true;
+    //     #endregion Various Bot.Options Settings
+
+    //     CollectData(isStarting);
+
+    //     if (!isStarting)
+    //     {
+    //         lock (_stopwatchLock)
+    //         {
+    //             if (_scriptStopwatch != null)
+    //             {
+    //                 _scriptStopwatch.Stop();
+    //                 Logger("Script ran for " + _scriptStopwatch.Elapsed.ToString(@"hh\:mm\:ss"), "SetOptions");
+    //                 _scriptStopwatch = null;
+    //             }
+    //         }
+
+    //         // Cancel background async tasks on stop
+    //         _setOptionsCts?.Cancel();
+    //         _setOptionsCts = null;
+    //     }
+    // }
+    // #endregion New SetOptions
 
 
 
@@ -9324,6 +9324,7 @@ public class CoreBots
     }
 
     private List<string> CBOList = new();
+    private Stopwatch _scriptStopwatch;
 
     public string MeasureExecutionTime(Action action, string? PrefixMessage = null)
     {
