@@ -366,7 +366,12 @@ public class CoreNation
     /// <param name="quant">Desired Item quantity</param>
     public void SwindleReturn(string? item = null, int quant = 1000)
     {
-        Quest quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7551));
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7551));
+        if (quest == null)
+        {
+            Core.Logger("Swindles Return Policy quest not found.");
+            return;
+        }
         ItemBase? Item = quest.Rewards.FirstOrDefault(x => x.Name == item);
 
         if (Item == null || Core.CheckInventory(Item.Name, quant))
