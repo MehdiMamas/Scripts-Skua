@@ -45,7 +45,12 @@ public class SwindlesReturnPolicy
 
         if (!getAll)
         {
-            Quest quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7551));
+            Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7551));
+            if (quest == null)
+            {
+                Core.Logger("Quest 7551 not found.");
+                return;
+            }
             ItemBase? item = quest.Rewards.FirstOrDefault(x => x.Name == reward!.Value.ToString().Replace("_", " "));
             if (item == null)
             {
@@ -57,7 +62,13 @@ public class SwindlesReturnPolicy
         }
         else
         {
-            Quest quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7551));
+            Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7551));
+            if (quest == null)
+            {
+                Core.Logger("Quest 7551 not found.");
+                return;
+            }
+
             Core.Logger("Maxing All Rewards from Swindles return:\n" +
                 string.Join('\n', quest.Rewards.Select(r =>
                 {
