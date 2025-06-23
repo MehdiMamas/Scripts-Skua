@@ -125,7 +125,6 @@ public class CoreBots
     public void SetOptions(bool changeTo = true, bool disableClassSwap = false)
     {
         EnforceInvariantCulture();
-        bool isStarting = changeTo;
         // These things need to be set and checked before anything else
 
         if (changeTo)
@@ -164,12 +163,14 @@ public class CoreBots
         }
         ReadCBO();
         #region Social Privacy Options
-        CBOBool("AntiLag", out bool enablePrivacySettings);
-
-        if (!enablePrivacySettings)
+        bool isStarting = changeTo;
+        CBOBool("AntiLag", out bool AntiLagisOn);
+        if (!AntiLagisOn)
         {
-            if (isStarting)  // Only log when starting the script
+            if (isStarting == true)  // Only log when starting the script
+            {
                 Logger("[SetOptions] Anti-Lag in CBO is off. Skipping privacy settings.");
+            }
         }
         else
         {
@@ -278,44 +279,6 @@ public class CoreBots
             Bot.Bank.Load();
             Bot.Bank.Loaded = true;
 
-            #region Social Privacy Options
-            bool warned = false;
-
-            Dictionary<string, string> socialOptionsToDisable = new()
-                {
-                    { "bGoto", "Goto" },
-                    { "bParty", "Party invites" },
-                    { "bFriend", "Friend invites" },
-                    { "bDuel", "Duel invites" },
-                    { "bGuild", "Guild invites" },
-                    { "bWhisper", "Whisper" },
-                    { "bProf", "Censor Profanity" }
-                };
-
-            foreach (KeyValuePair<string, string> entry in socialOptionsToDisable)
-            {
-                string key = entry.Key;
-                string label = entry.Value;
-
-                bool value = Bot.Flash.GetGameObject<bool>($"uoPref.{key}");
-                if (value)
-                {
-                    if (!warned)
-                    {
-                        Logger("Turning certain \"Social\" options off to help protect you");
-                        warned = true;
-                    }
-                    if (label == "Goto" && !loadedBot.ToLower().Contains("butler"))
-                        continue;
-
-                    Logger($"Turning off: {label}");
-                    SendPackets($"%xt%zm%cmd%1%uopref%{key}%false%");
-                    Bot.Sleep(500);
-                }
-            }
-
-            GC.Collect();
-            #endregion Social Privacy Options         
         }
 
 
