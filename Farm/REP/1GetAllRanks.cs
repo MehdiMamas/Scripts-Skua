@@ -50,7 +50,7 @@ public class GetAllRanks
     {
         //Adv.BestGear(GenericGearBoost.dmgAll);
         //Adv.BestGear(GenericGearBoost.rep);
-
+        doDeathPit = Bot.Config!.Get<bool>("doDeathPit");
         //Required Stories add when needed.
         Core.Logger("Doing Required Stories for the reps, let tato know if another is required.");
         TOD.CompleteToD();
