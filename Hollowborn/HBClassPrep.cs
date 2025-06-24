@@ -28,6 +28,7 @@ tags: hollowborn, class, preparation, soul essence, hollow soul, legion, farming
 //cs_include Scripts/Hollowborn/Materials/HollowSoul.cs
 //cs_include Scripts/Legion/LegionMaterials/SoulSand.cs
 //cs_include Scripts/Legion/LegionMaterials/LetitBurn(SoulEssence).cs
+//cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
 
 using Skua.Core.Interfaces;
 
@@ -44,6 +45,7 @@ public class HBClassPrep
     public LetItBurn SoulEssence = new();
     public CoreHollowbornLichKing HBLK = new();
     public HollowSoul HollowSoul = new();
+    private CoreHollowbornStory HBS = new();
 
 
     public void ScriptMain(IScriptInterface bot)
@@ -114,6 +116,7 @@ public class HBClassPrep
         if (Core.CheckInventory(item, quant))
             return;
 
+        HBS.NeoTower();
         Core.FarmingLogger(item, quant);
         Core.AddDrop(item, "Vindicated Blades", "Vindicated Chain", "Vindicated Scripture");
         Core.EquipClass(ClassType.Farm);
