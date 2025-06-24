@@ -265,8 +265,8 @@ public class AAWithMove
         moreSkullsCts = new();
         Bot.Events.ExtensionPacketReceived += Fuckyou;
         Core.AddDrop("Pristine Skull");
-        if (Core.isCompletedBefore(10287))
-            Core.RegisterQuests(10287);
+        if (Core.isCompletedBefore(10288))
+            Core.RegisterQuests(10288);
 
         Bot.Options.AttackWithoutTarget = true;
 

@@ -21,7 +21,7 @@ public class MoreSkullsWorldBoss
     private CoreAdvanced Adv => new();
     private int GetMaxPristineSkull()
     {
-        Quest? quest = Bot.Quests.EnsureLoad(10287);
+        Quest? quest = Bot.Quests.EnsureLoad(10288);
         if (quest == null)
         {
             return 1; // Default max stack if quest is not found
@@ -50,7 +50,7 @@ public class MoreSkullsWorldBoss
         moveTokenSource = new CancellationTokenSource(); // Create token
         Bot.Events.ExtensionPacketReceived += Fuckyou;
         Core.AddDrop("Pristine Skull");
-        Core.RegisterQuests(10287);
+        Core.RegisterQuests(10288);
 
         Bot.Options.AttackWithoutTarget = true;
         Core.FarmingLogger("Pristine Skull", target);
