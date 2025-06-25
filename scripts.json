@@ -2714,7 +2714,7 @@
       "eclipse"
     ],
     "path": "Story/VictorMatsuri.cs",
-    "size": 7842,
+    "size": 7939,
     "fileName": "VictorMatsuri.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/VictorMatsuri.cs"
   },
@@ -9847,6 +9847,34 @@
     "size": 4795,
     "fileName": "ElfhameMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ElfhameMerge.cs"
+  },
+  {
+    "name": "Festival of Victors Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Festival of Victors Merge [2592] in /victormatsuri",
+    "tags": [
+      "festival",
+      "of",
+      "victors",
+      "merge",
+      "victormatsuri",
+      "elvish",
+      "yukata",
+      "matsuri",
+      "higasa",
+      "vampiric",
+      "crimson",
+      "wings",
+      "",
+      "chochin",
+      "sensu",
+      "floating",
+      "midnight",
+      "morph"
+    ],
+    "path": "Other/MergeShops/FestivalofVictorsMerge.cs",
+    "size": 6956,
+    "fileName": "FestivalofVictorsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FestivalofVictorsMerge.cs"
   },
   {
     "name": "Crownsreach50ChestMerge",
