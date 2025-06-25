@@ -117,6 +117,15 @@ public class VictorMatsuri
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant)))
             return;
 
+        if (!Core.CheckInventory("Legion Revenant") || !Adv.uPraxis() || !Adv.uPenitence())
+        {
+            Core.Logger("You need to have the Legion Revenant class, Penitence and Praxis enhancements to kill Masakado with this script.");
+            return;
+        }
+
+        Core.Equip("Legion Revenant");
+        Adv.EnhanceEquipped(EnhancementType.Wizard, CapeSpecial.Penitence, Adv.CurrentHelmSpecial(), WeaponSpecial.Praxis);
+
         DateTime lastAuraTrigger = DateTime.MinValue;
         TimeSpan auraCooldown = TimeSpan.FromSeconds(0);
         monster = monster.Trim().FormatForCompare();
