@@ -2699,6 +2699,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Guru.cs"
   },
   {
+    "name": "Victor Matsuri",
+    "description": "This script will complete the Empress Ai No Miko's questline in /victormatsuri.",
+    "tags": [
+      "victor matsuri",
+      "victormatsuri",
+      "empress ai no miko",
+      "ai no miko",
+      "matsuri",
+      "victor",
+      "rite of ascension",
+      "rite",
+      "victor of the festival",
+      "eclipse"
+    ],
+    "path": "Story/VictorMatsuri.cs",
+    "size": 7842,
+    "fileName": "VictorMatsuri.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/VictorMatsuri.cs"
+  },
+  {
     "name": "Dragon Fable Origins Story",
     "description": "This will finish the Dragon Fable Origins Story.",
     "tags": [
