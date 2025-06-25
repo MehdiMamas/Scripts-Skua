@@ -155,7 +155,8 @@ public class CoreFarms
 
         Core.EquipClass(ClassType.Farm);
         Core.SavedState();
-        Core.Logger($"Farming {goldQuant} gold using HonorHall Method");
+        Core.Logger($"Farming {goldQuant:N0} gold using HonorHall Method");
+
 
         Core.RegisterQuests(3992, 3993);
         while (!Bot.ShouldExit && Bot.Player.Gold < goldQuant)
@@ -173,7 +174,7 @@ public class CoreFarms
 
         Core.EquipClass(ClassType.Farm);
         Core.SavedState();
-        Core.Logger($"Farming {goldQuant} gold using \"A Lovely An-Sewer [Love Potion]\" method");
+        Core.Logger($"Farming {goldQuant:N0} gold using \"A Lovely An-Sewer [Love Potion]\" method");
 
         #region  Side Quests that require stories and may not be unlocked:
         List<int> QuestIDs = new() { 9643 };
@@ -205,7 +206,7 @@ public class CoreFarms
 
         Core.EquipClass(ClassType.Farm);
         Core.SavedState();
-        Core.Logger($"Farming {goldQuant} gold using BattleGroundE Method");
+        Core.Logger($"Farming {goldQuant:N0} gold using BattleGroundE Method");
 
         Core.RegisterQuests(3991, 3992);
         while (!Bot.ShouldExit && Bot.Player.Gold < goldQuant)
@@ -231,7 +232,7 @@ public class CoreFarms
         Core.AddDrop("Berserker Bunny");
         Core.EquipClass(ClassType.Solo);
         Core.SavedState();
-        Core.Logger($"Farming {goldQuant}  using BerserkerBunny Method");
+        Core.Logger($"Farming {goldQuant:N0}  using BerserkerBunny Method");
 
         Core.RegisterQuests(236);
         while (!Bot.ShouldExit && Bot.Player.Gold < goldQuant)
@@ -259,7 +260,7 @@ public class CoreFarms
         Core.EquipClass(ClassType.Farm);
         ToggleBoost(BoostType.Gold);
         Core.SavedState();
-        Core.Logger($"Farming {goldQuant}  using DarkWarLegion Method");
+        Core.Logger($"Farming {goldQuant:N0}  using DarkWarLegion Method");
 
         Core.RegisterQuests(8584, 8585);
         while (!Bot.ShouldExit && Bot.Player.Gold < goldQuant)
@@ -1520,7 +1521,6 @@ public class CoreFarms
         int shopID = 0;
 
         Core.FarmingLogger(Voucher, quant);
-        // Map voucher types based on the voucher amount (e.g., 500, 25, 7.5)
 
         switch (Voucher)
         {
@@ -1549,7 +1549,7 @@ public class CoreFarms
                 return;
         }
 
-        // Load shop data
+        // Load shop safely
         int retry = 0;
         while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
         {
@@ -1563,34 +1563,40 @@ public class CoreFarms
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
             Core.Sleep(1000);
-            if (Bot.Shops.ID == shopID || retry == 20)
-            {
+            if (Bot.Shops.ID == shopID || retry++ >= 20)
                 break;
-            }
-            else retry++;
         }
 
-        // Ensure the correct Item is found in the shop
-        ShopItem? item = Bot.Shops.Items.FirstOrDefault(x => x != null && x.Name == Voucher);
-
-        // If the item was found, proceed to buy it
-        if (item != null)
-        {
-            int vouchervalue = int.Parse(item.Name.Split(' ')[2].Replace("k", "000"));
-
-            int amountToBuy = Math.Min(quant, item.MaxStack);
-            if (amountToBuy <= 0)
-                return;
-
-            Gold(amountToBuy * vouchervalue);
-
-            Core.BuyItem(map, shopID, item.Name, amountToBuy);
-        }
-
-        // Else, log that the item was not found
-        else
+        ShopItem? item = Bot.Shops.Items.FirstOrDefault(x => x?.Name == Voucher);
+        if (item == null)
         {
             Core.Logger($"Item \"{Voucher}\" not found in the shop.");
+            return;
+        }
+
+        int current = Bot.Inventory.GetQuantity(Voucher);
+        int needed = Math.Min(item.MaxStack, quant - current);
+        if (needed <= 0)
+            return;
+
+        // Extract voucher value in gold (e.g. "500k" => 500000)
+        int valuePerItem = int.Parse(item.Name.Split(' ')[2].Replace("k", "000"));
+        const int goldCap = 100_000_000;
+
+        while (!Bot.ShouldExit && needed > 0)
+        {
+            // Max amount that fits within the 100M cap
+            int maxBuyable = Math.Min(needed, goldCap / valuePerItem);
+            if (maxBuyable <= 0)
+            {
+                Core.Logger($"Cannot buy any '{Voucher}' without exceeding the gold cap.");
+                return;
+            }
+
+            Gold(maxBuyable * valuePerItem);
+            Core.BuyItem(map, shopID, item.Name, maxBuyable);
+
+            needed -= maxBuyable;
         }
     }
 
