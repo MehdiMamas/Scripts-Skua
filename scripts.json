@@ -4338,20 +4338,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/ArmyFarm/ArmyBattleUnderB.cs"
   },
   {
-    "name": "ArmyLichWarGoldXP",
-    "description": "Uses your army to gather gold and XP",
-    "tags": [
-      "gold",
-      "xp",
-      "army",
-      "battleunderb"
-    ],
-    "path": "Army/ArmyFarm/ArmyLichWarGoldXP.cs",
-    "size": 2488,
-    "fileName": "ArmyLichWarGoldXP.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/ArmyFarm/ArmyLichWarGoldXP.cs"
-  },
-  {
     "name": "Army Gold",
     "description": "Uses different methods with your army to farm gold.",
     "tags": [
