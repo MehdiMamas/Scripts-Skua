@@ -57,6 +57,7 @@ public class HBClassPrep
 
     public void ClassPrep()
     {
+        HBS.DoAll();
         HollowSoul.GetYaSoulsHeeeere();
         GetVindicatorBadge();
         GetGraceOrb();
@@ -116,7 +117,6 @@ public class HBClassPrep
         if (Core.CheckInventory(item, quant))
             return;
 
-        HBS.NeoTower();
         Core.FarmingLogger(item, quant);
         Core.AddDrop(item, "Vindicated Blades", "Vindicated Chain", "Vindicated Scripture");
         Core.EquipClass(ClassType.Farm);
