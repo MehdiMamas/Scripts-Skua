@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 140548,
+    "size": 140804,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -8312,7 +8312,7 @@
       "voucher"
     ],
     "path": "Tools/NooneAskeforThese/BuyAllGoldVouchers.cs",
-    "size": 5598,
+    "size": 1395,
     "fileName": "BuyAllGoldVouchers.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/NooneAskeforThese/BuyAllGoldVouchers.cs"
   },
