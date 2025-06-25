@@ -28,9 +28,9 @@ public class VictorMatsuri
         Core.SetOptions(false);
     }
 
-    public void Storyline()
+    public void Storyline(bool merge = false)
     {
-        if (Core.isCompletedBefore(10295))
+        if (merge ? Core.isCompletedBefore(10291) : Core.isCompletedBefore(10295))
             return;
 
         Story.PreLoad(this);
@@ -62,6 +62,8 @@ public class VictorMatsuri
                 ("victormatsuri", UseableMonsters[1], ClassType.Solo));
         }
 
+        if (merge)
+            return;
 
         // 10292 | Embodiment of Scarlet
         if (!Story.QuestProgression(10292))
