@@ -50,7 +50,7 @@ public class MoreSkullsWorldBoss
         moveTokenSource = new CancellationTokenSource(); // Create token
         Bot.Events.ExtensionPacketReceived += Fuckyou;
         Core.AddDrop("Pristine Skull");
-        Core.RegisterQuests(10288);
+        Core.RegisterQuests(Core.IsMember ? 10289 : 10288);
         Bot.Options.AttackWithoutTarget = true;
         Core.FarmingLogger("Pristine Skull", target);
         while (!Bot.ShouldExit && !Core.CheckInventory("Pristine Skull", target))
