@@ -45,6 +45,11 @@ public class HBVNonInsig
 
         if (!Core.CheckInventory(reqName, 4))
         {
+            if (!Bot.Quests.IsAvailable(10299))
+            {
+                Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
+                return;
+            }
             // Death's Power
             if (!Core.CheckInventory("Death's Power"))
             {
