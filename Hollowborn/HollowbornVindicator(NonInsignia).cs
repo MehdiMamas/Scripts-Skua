@@ -11,6 +11,7 @@ tags: hollowborn, class, hv,hollowborn vindicator, vindicator, gramiel, non insi
 //cs_include Scripts/Hollowborn/CoreHollowborn.cs
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Hollowborn/Materials/HollowSoul.cs
+//cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
 
 using Skua.Core.Interfaces;
 
@@ -20,6 +21,7 @@ public class HBVNonInsig
     public CoreBots Core => CoreBots.Instance;
     public CoreAdvanced Adv = new();
     private HollowSoul HS = new();
+    private CoreHollowbornStory HBS = new();
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -37,6 +39,7 @@ public class HBVNonInsig
             return;
         }
 
+        HBS.DawnSanctum();
         string reqName = Core.QuestRewards(10299)[0];
         Core.AddDrop(reqName);
 
