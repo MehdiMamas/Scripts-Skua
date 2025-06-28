@@ -2201,7 +2201,7 @@
     "tags": [
       "hollowborn",
       "class",
-      "hv",
+      "hbv",
       "hollowborn vindicator",
       "vindicator",
       "gramiel",
@@ -2209,7 +2209,7 @@
       "ultragramielhub"
     ],
     "path": "Hollowborn/HollowbornVindicator(NonInsignia).cs",
-    "size": 5255,
+    "size": 5256,
     "fileName": "HollowbornVindicator(NonInsignia).cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornVindicator(NonInsignia).cs"
   },
