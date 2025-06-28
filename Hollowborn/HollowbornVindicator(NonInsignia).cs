@@ -56,7 +56,7 @@ public class HBVNonInsig
             {
                 Core.AddDrop("Death's Power");
                 Core.EquipClass(ClassType.Solo);
-                Core.KillMonster("shadowattack", "Boss", "Left", "Death", "Death's Power", 1, true);
+                Core.KillMonster("shadowattack", "Boss", "Left", "Death", "Death's Power", 1, false);
             }
 
             // Hollow Soul
