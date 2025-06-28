@@ -50,6 +50,7 @@ public class HBVNonInsig
                 Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
                 return;
             }
+            Core.EnsureAccept(10299);
             // Death's Power
             if (!Core.CheckInventory("Death's Power"))
             {
@@ -73,7 +74,7 @@ public class HBVNonInsig
             // Vindicator Crest
             GetVindicatorCrest(100);
 
-            Core.ChainComplete(10299);
+            Core.EnsureComplete(10299);
             Bot.Wait.ForPickup(reqName);
         }
 

@@ -52,6 +52,7 @@ public class HBVInsig
                 Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
                 return;
             }
+            Core.EnsureAccept(10300);
             // Death's Power
             if (!Core.CheckInventory("Death's Power"))
             {
@@ -76,7 +77,7 @@ public class HBVInsig
             HBV.GetVindicatorCrest(5);
 
             if (Core.CheckInventory("Gramiel the Graceful's Insignia", 5))
-                Core.ChainComplete(10300);
+                Core.EnsureComplete(10300);
             else
             {
                 Core.Logger($"You need 5x Gramiel the Graceful's Insignia to get the class using this script.");
