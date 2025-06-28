@@ -7007,25 +7007,23 @@ public class CoreBots
                 break;
 
             case "onslaughttower":
-                tryJoin();
-                while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(2047))
+
+                if (!isCompletedBefore(2627))
                 {
-                    if (!CheckInventory(2047))
-                    {
-                        SendPackets($"%xt%zm%getMapItem%{Bot.Map.RoomID}%67%");
-                        Sleep(2500);
-                        SendPackets($"%xt%zm%equipItem%{Bot.Map.RoomID}%2047%");
-                    }
-                    else
-                    {
-                        JumpWait();
-                        SendPackets($"%xt%zm%equipItem%{Bot.Map.RoomID}%2047%");
-                    }
+                    //if quest prog. isnt upto [2621], it wont get the temp item for the temp armor
+                    Bot.Quests.UpdateQuest(2621);
+                    tryJoin();
+                    Logger("Equiping armor for the toxic area");
                     Sleep();
-                    if (Bot.Inventory.IsEquipped(2047))
-                        break;
+                    Bot.Map.GetMapItem(68);
+                    Sleep();
+                    SendPackets($"%xt%zm%equipItem%{Bot.Map.RoomID}%2096%");
+                    Bot.Wait.ForItemEquip(2096);
+                    Sleep();
                 }
-                Bot.Wait.ForItemEquip(2047);
+                else
+                    tryJoin();
+
                 break;
 
 
