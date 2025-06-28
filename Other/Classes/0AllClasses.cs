@@ -196,6 +196,7 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Other/Classes/MartialArtist.cs
 //cs_include Scripts/Other/Classes/NoClassClasses/NoHollowbornClass.cs
 //cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
+//cs_include Scripts/Hollowborn/HollowbornVindicator(NonInsignia).cs
 #endregion includes
 
 using Skua.Core.Interfaces;
@@ -300,6 +301,7 @@ public class AllClasses
     private ArchPaladin AP = new();
     private ChaosAvengerClass CAV = new();
     private DragonOfTime DOT = new();
+    private HBVNonInsig HBV = new();
     private LightCaster LC = new();
     private CoreLR LR = new();
     private SovereignOfStorms SOS = new();
@@ -548,10 +550,11 @@ public class AllClasses
 
         // Classes that take to long to farm for a bank class:
         CheckAndExecute("Arcana Invoker", () => AI.GetAI(rankUpClass));
+        CheckAndExecute("Hollowborn Vindicator", () => HBV.GetClass(rankUpClass)); // Non Insignia
         CheckAndExecute("ShadowScythe General", Daily.ShadowScytheClass);
         CheckAndExecute("Sovereign of Storms", () => SOS.GetSOS(rankUpClass));
         Adv.GearStore(true, true);
-        Core.ToBank(new[] { "Grim Necromancer", "SkyCharged Grenadier", "Sentinel", "LightCaster", "Legion Revenant", "Exalted Soul Cleaver", "Chaos Avenger", "Archmage", "Verus DoomKnight", "Arcana Invoker", "ShadowScythe General", "Sovereign of Storms" });
+        Core.ToBank(new[] { "Grim Necromancer", "SkyCharged Grenadier", "Sentinel", "LightCaster", "Legion Revenant", "Exalted Soul Cleaver", "Chaos Avenger", "Archmage", "Verus DoomKnight", "Arcana Invoker", "Hollowborn Vindicator", "ShadowScythe General", "Sovereign of Storms" });
 
         Core.Logger("=== AC / Special Requirement / Army Classes - Completed! ===");
     }
