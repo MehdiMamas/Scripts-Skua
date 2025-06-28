@@ -70,7 +70,13 @@ public class HBVInsig
             // Vindicator Crest
             HBV.GetVindicatorCrest(5);
 
-            Core.ChainComplete(10300);
+            if (Core.CheckInventory("Gramiel the Graceful's Insignia", 5))
+                Core.ChainComplete(10300);
+            else
+            {
+                Core.Logger($"You need 5x Gramiel the Graceful's Insignia to get the class using this script.");
+                return;
+            }
             Bot.Wait.ForPickup(reqName);
         }
 
