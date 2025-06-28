@@ -2177,28 +2177,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornReapersScythe.cs"
   },
   {
-    "name": "Hollowborn Class Preparation",
-    "description": "Automates the farming of essential materials for the Hollowborn class, including Hollowborn, Legion, and Soul-based items. Not a full guide but enough to prepare for major requirements.",
+    "name": "Hollowborn Vindicator Class (Non Insignia)",
+    "description": "Farms Hollowborn Vindicator Class.",
     "tags": [
       "hollowborn",
       "class",
-      "preparation",
-      "soul essence",
-      "hollow soul",
-      "legion",
-      "farming",
-      "lich king",
-      "dark caster",
-      "lae",
-      "writ",
-      "residue",
-      "fangs",
-      "claws"
+      "hv",
+      "hollowborn vindicator",
+      "vindicator",
+      "gramiel",
+      "non insignia",
+      "ultragramielhub"
     ],
-    "path": "Hollowborn/HBClassPrep.cs",
-    "size": 5173,
-    "fileName": "HBClassPrep.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HBClassPrep.cs"
+    "path": "Hollowborn/HollowbornVindicator(NonInsignia).cs",
+    "size": 4835,
+    "fileName": "HollowbornVindicator(NonInsignia).cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornVindicator(NonInsignia).cs"
   },
   {
     "name": "Hollowborn Oblivion Blade",
