@@ -66,6 +66,7 @@ public class HBVNonInsig
             GetVindicatorCrest(100);
 
             Core.ChainComplete(10299);
+            Bot.Wait.ForPickup(reqName);
         }
 
         if (!Core.CheckInventory(reqName, 4))
