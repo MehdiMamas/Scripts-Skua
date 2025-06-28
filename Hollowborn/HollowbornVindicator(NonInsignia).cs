@@ -1,7 +1,7 @@
 /*
 name: Hollowborn Vindicator Class (Non Insignia)
 description: Farms Hollowborn Vindicator Class.
-tags: hollowborn, class, hv,hollowborn vindicator, vindicator, gramiel, non insignia,ultragramielhub
+tags: hollowborn, class, hbv,hollowborn vindicator, vindicator, gramiel, non insignia,ultragramielhub
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
