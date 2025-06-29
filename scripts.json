@@ -19909,6 +19909,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/GraceOrb.cs"
   },
   {
+    "name": "Gramiel's Emblem",
+    "description": "Farms \"Gramiel's Emblem\"",
+    "tags": [
+      "gramiel",
+      "emblem",
+      "hollowborn",
+      "vindicator",
+      "farm"
+    ],
+    "path": "Hollowborn/Materials/GramielsEmblem.cs",
+    "size": 1344,
+    "fileName": "GramielsEmblem.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/GramielsEmblem.cs"
+  },
+  {
     "name": "Death's Power",
     "description": "Farms \"Death's Power\"",
     "tags": [
