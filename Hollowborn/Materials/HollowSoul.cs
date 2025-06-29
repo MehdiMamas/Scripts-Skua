@@ -37,9 +37,7 @@ public class HollowSoul
             return;
 
         Core.FarmingLogger("Hollow Soul", HSQuant);
-        Core.EquipClass(ClassType.Farm);
-        Core.RegisterQuests(7553, 7555);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Hollow Soul", HSQuant))
-            Core.KillMonster("shadowrealm", "r2", "Left", "*", log: false);
+        Core.EquipClass(ClassType.Solo);
+        Core.KillMonster("shadowrealm", "r9", "Left", "*", "Hollow Soul", HSQuant, false);
     }
 }
