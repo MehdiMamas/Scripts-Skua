@@ -19890,7 +19890,7 @@
       "farm"
     ],
     "path": "Hollowborn/Materials/VindicatorCrest.cs",
-    "size": 1672,
+    "size": 1668,
     "fileName": "VindicatorCrest.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/VindicatorCrest.cs"
   },
@@ -19904,7 +19904,7 @@
       "farm"
     ],
     "path": "Hollowborn/Materials/GraceOrb.cs",
-    "size": 1469,
+    "size": 1465,
     "fileName": "GraceOrb.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/GraceOrb.cs"
   },
@@ -19934,9 +19934,33 @@
       "hollowborn"
     ],
     "path": "Hollowborn/Materials/HollowSoul.cs",
-    "size": 1162,
+    "size": 1213,
     "fileName": "HollowSoul.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/HollowSoul.cs"
+  },
+  {
+    "name": "Max Hollowborn Materials",
+    "description": "Farms the maximum quantity of all Hollowborn materials.",
+    "tags": [
+      "hollowborn",
+      "vindicator",
+      "farm",
+      "max",
+      "materials",
+      "hbv",
+      "hollow soul",
+      "deaths power",
+      "death's power",
+      "grace orb",
+      "gramiels emblem",
+      "gramiel's emblem",
+      "vindicator crest",
+      "vindicator badge"
+    ],
+    "path": "Hollowborn/Materials/0MaxMats.cs",
+    "size": 1428,
+    "fileName": "0MaxMats.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/0MaxMats.cs"
   },
   {
     "name": "Vindicator Badge",
@@ -19948,7 +19972,7 @@
       "farm"
     ],
     "path": "Hollowborn/Materials/VindicatorBadge.cs",
-    "size": 1330,
+    "size": 1326,
     "fileName": "VindicatorBadge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/VindicatorBadge.cs"
   },
