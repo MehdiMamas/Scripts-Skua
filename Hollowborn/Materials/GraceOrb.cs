@@ -9,7 +9,7 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Quests;
 using Skua.Core.Models.Items;
 
-public class GraceOrbFarm
+public class GraceOrb
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;

@@ -9,7 +9,7 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Quests;
 using Skua.Core.Models.Items;
 
-public class VindicatorBadgeFarm
+public class VindicatorBadge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;

@@ -4,24 +4,26 @@ description: Farms "Hollow Soul"
 tags: hollow soul, shadowrealm, hollowborn
 */
 //cs_include Scripts/CoreBots.cs
-//cs_include Scripts/CoreFarms.cs
-//cs_include Scripts/CoreDailies.cs
-//cs_include Scripts/CoreStory.cs
-//cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Hollowborn/CoreHollowborn.cs
-//cs_include Scripts/Nation/CoreNation.cs
 
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Quests;
+using Skua.Core.Models.Items;
 
 public class HollowSoul
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreAdvanced Adv = new();
-    public CoreHollowborn HB = new();
-    public CoreNation Nation = new();
 
+    private int GetMax()
+    {
+        Quest? quest = Bot.Quests.EnsureLoad(10299);
+        if (quest == null)
+        {
+            return 1; // Default max stack if quest is not found
+        }
+        ItemBase? req = quest.Requirements.FirstOrDefault(r => r.Name == "Vindicator Badge");
+        return req?.MaxStack ?? 1;
+    }
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
@@ -31,8 +33,9 @@ public class HollowSoul
         Core.SetOptions(false);
     }
 
-    public void GetYaSoulsHeeeere(int HSQuant = 2500)
+    public void GetYaSoulsHeeeere(int? quant = null)
     {
+        int HSQuant = quant ?? GetMax();
         if (Core.CheckInventory("Hollow Soul", HSQuant))
             return;
 

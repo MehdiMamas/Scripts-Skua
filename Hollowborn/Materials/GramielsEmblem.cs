@@ -10,7 +10,7 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Quests;
 using Skua.Core.Models.Items;
 
-public class GramielsEmblemFarm
+public class GramielsEmblem
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
