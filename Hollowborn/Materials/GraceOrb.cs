@@ -36,7 +36,7 @@ public class GraceOrbFarm
         if (Core.CheckInventory("Grace Orb", orbQuant))
             return;
 
-        Core.EnsureAccept(Core.IsMember ? 10297 : 9291);
+        Core.RegisterQuests(Core.IsMember ? 10297 : 9291);
         Core.AddDrop("Grace Orb", "Grace Extracted");
         Core.FarmingLogger("Grace Orb", orbQuant);
         Core.EquipClass(ClassType.Farm);
@@ -47,7 +47,7 @@ public class GraceOrbFarm
             Bot.Wait.ForPickup("Grace Orb");
         }
 
-        Core.EnsureComplete(Core.IsMember ? 10297 : 9291);
+        Core.CancelRegisteredQuests();
         Bot.Wait.ForPickup("Grace Orb");
     }
 }
