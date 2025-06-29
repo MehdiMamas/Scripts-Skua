@@ -45,12 +45,8 @@ public class HBVNonInsig
 
         if (!Core.CheckInventory(reqName, 4))
         {
-            if (!Bot.Quests.IsAvailable(10299))
-            {
-                Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
-                return;
-            }
             Core.EnsureAccept(10299);
+
             // Death's Power
             if (!Core.CheckInventory("Death's Power"))
             {
@@ -62,9 +58,6 @@ public class HBVNonInsig
             // Hollow Soul
             HS.GetYaSoulsHeeeere(1500);
 
-            // Vindicator Badge
-            GetVindicatorBadge(200);
-
             // Grace Orb
             GetGraceOrb(400);
 
@@ -74,7 +67,16 @@ public class HBVNonInsig
             // Vindicator Crest
             GetVindicatorCrest(100);
 
-            Core.EnsureComplete(10299);
+            // Vindicator Badge
+            GetVindicatorBadge(200);
+
+            if (!Bot.Quests.IsAvailable(10299))
+            {
+                Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
+                return;
+            }
+            else
+                Core.EnsureComplete(10299);
             Bot.Wait.ForPickup(reqName);
         }
 
@@ -165,6 +167,6 @@ public class HBVNonInsig
         Core.AddDrop(item);
         Core.EquipClass(ClassType.Solo);
 
-        Core.HuntMonster("dawnsanctum", "Celestial Gramiel", item, quant);
+        Core.HuntMonster("dawnsanctum", "Celestial Gramiel", item, quant, false);
     }
 }

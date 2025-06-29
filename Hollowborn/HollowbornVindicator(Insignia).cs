@@ -47,12 +47,8 @@ public class HBVInsig
 
         if (!Core.CheckInventory(reqName, 4))
         {
-            if (!Bot.Quests.IsAvailable(10300))
-            {
-                Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
-                return;
-            }
             Core.EnsureAccept(10300);
+
             // Death's Power
             if (!Core.CheckInventory("Death's Power"))
             {
@@ -64,9 +60,6 @@ public class HBVInsig
             // Hollow Soul
             HS.GetYaSoulsHeeeere(75);
 
-            // Vindicator Badge
-            HBV.GetVindicatorBadge(10);
-
             // Grace Orb
             HBV.GetGraceOrb(20);
 
@@ -76,13 +69,20 @@ public class HBVInsig
             // Vindicator Crest
             HBV.GetVindicatorCrest(5);
 
-            if (Core.CheckInventory("Gramiel the Graceful's Insignia", 5))
-                Core.EnsureComplete(10300);
-            else
+            // Vindicator Badge
+            HBV.GetVindicatorBadge(10);
+
+            if (!Core.CheckInventory("Gramiel the Graceful's Insignia", 5))
             {
-                Core.Logger($"You need 5x Gramiel the Graceful's Insignia to get the class using this script.");
+                Core.Logger($"You need 5x Gramiel the Graceful's Insignia to complete the quest.");
                 return;
             }
+            if (!Bot.Quests.IsAvailable(10300))
+            {
+                Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
+                return;
+            }
+            Core.EnsureComplete(10300);
             Bot.Wait.ForPickup(reqName);
         }
 
