@@ -11,11 +11,11 @@ tags: hollowborn, class, hbv,hollowborn vindicator, vindicator, gramiel, non ins
 //cs_include Scripts/Hollowborn/CoreHollowborn.cs
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Hollowborn/Materials/HollowSoul.cs
-//cs_include Scripts/Hollowborn\Materials\VindicatorBadge.cs
-//cs_include Scripts/Hollowborn\Materials\DeathsPower.cs
-//cs_include Scripts/Hollowborn\Materials\GraceOrb.cs
-//cs_include Scripts/Hollowborn\Materials\GramielsEmblem.cs
-//cs_include Scripts/Hollowborn\Materials\VindicatorCrest.cs
+//cs_include Scripts/Hollowborn/Materials/VindicatorBadge.cs
+//cs_include Scripts/Hollowborn/Materials/DeathsPower.cs
+//cs_include Scripts/Hollowborn/Materials/GraceOrb.cs
+//cs_include Scripts/Hollowborn/Materials/GramielsEmblem.cs
+//cs_include Scripts/Hollowborn/Materials/VindicatorCrest.cs
 //cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
 
 

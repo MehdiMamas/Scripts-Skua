@@ -4,12 +4,12 @@ description: Farms the maximum quantity of all Hollowborn materials.
 tags: hollowborn, vindicator, farm, max, materials, hbv, hollow soul, deaths power, death's power, grace orb, gramiels emblem,gramiel's emblem, vindicator crest, vindicator badge
 */
 //cs_include Scripts/CoreBots.cs
-//cs_include Scripts/Hollowborn\Materials\VindicatorBadge.cs
-//cs_include Scripts/Hollowborn\Materials\DeathsPower.cs
-//cs_include Scripts/Hollowborn\Materials\GraceOrb.cs
-//cs_include Scripts/Hollowborn\Materials\GramielsEmblem.cs
-//cs_include Scripts/Hollowborn\Materials\VindicatorCrest.cs
-//cs_include Scripts/Hollowborn\Materials\HollowSoul.cs
+//cs_include Scripts/Hollowborn/Materials/VindicatorBadge.cs
+//cs_include Scripts/Hollowborn/Materials/DeathsPower.cs
+//cs_include Scripts/Hollowborn/Materials/GraceOrb.cs
+//cs_include Scripts/Hollowborn/Materials/GramielsEmblem.cs
+//cs_include Scripts/Hollowborn/Materials/VindicatorCrest.cs
+//cs_include Scripts/Hollowborn/Materials/HollowSoul.cs
 
 using Skua.Core.Interfaces;
 

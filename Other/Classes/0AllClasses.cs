@@ -197,11 +197,11 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Other/Classes/NoClassClasses/NoHollowbornClass.cs
 //cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
 //cs_include Scripts/Hollowborn/HollowbornVindicator(NonInsignia).cs
-//cs_include Scripts/Hollowborn\Materials\VindicatorBadge.cs
-//cs_include Scripts/Hollowborn\Materials\DeathsPower.cs
-//cs_include Scripts/Hollowborn\Materials\GraceOrb.cs
-//cs_include Scripts/Hollowborn\Materials\GramielsEmblem.cs
-//cs_include Scripts/Hollowborn\Materials\VindicatorCrest.cs
+//cs_include Scripts/Hollowborn/Materials/VindicatorBadge.cs
+//cs_include Scripts/Hollowborn/Materials/DeathsPower.cs
+//cs_include Scripts/Hollowborn/Materials/GraceOrb.cs
+//cs_include Scripts/Hollowborn/Materials/GramielsEmblem.cs
+//cs_include Scripts/Hollowborn/Materials/VindicatorCrest.cs
 #endregion includes
 
 using Skua.Core.Interfaces;
