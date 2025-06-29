@@ -19881,6 +19881,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/CoreHollowbornChaosEnvoy.cs"
   },
   {
+    "name": "Vindicator Crest",
+    "description": "Farms \"Vindicator Crest\"",
+    "tags": [
+      "vindicator crest",
+      "hollowborn",
+      "vindicator",
+      "farm"
+    ],
+    "path": "Hollowborn/Materials/VindicatorCrest.cs",
+    "size": 1672,
+    "fileName": "VindicatorCrest.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/VindicatorCrest.cs"
+  },
+  {
     "name": "Grace Orb",
     "description": "Farms \"Grace Orb\"",
     "tags": [
@@ -19890,7 +19904,7 @@
       "farm"
     ],
     "path": "Hollowborn/Materials/GraceOrb.cs",
-    "size": 1487,
+    "size": 1469,
     "fileName": "GraceOrb.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/GraceOrb.cs"
   },
