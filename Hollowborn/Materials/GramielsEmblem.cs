@@ -1,4 +1,3 @@
-
 /*
 name: Gramiel's Emblem
 description: Farms "Gramiel's Emblem"
