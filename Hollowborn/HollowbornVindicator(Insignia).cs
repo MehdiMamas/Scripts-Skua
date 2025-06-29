@@ -53,6 +53,21 @@ public class HBVInsig
         {
             Core.EnsureAccept(10300);
 
+            // Vindicator Crest
+            HBV.GetVindicatorCrest(5);
+
+            // Gramiel's Emblem
+            HBV.GetGramielsEmblem(15);
+
+            // Grace Orb
+            HBV.GetGraceOrb(20);
+
+            // Vindicator Badge
+            HBV.GetVindicatorBadge(10);
+
+            // Hollow Soul
+            HS.GetYaSoulsHeeeere(75);
+
             // Death's Power
             if (!Core.CheckInventory("Death's Power"))
             {
@@ -60,21 +75,6 @@ public class HBVInsig
                 Core.EquipClass(ClassType.Solo);
                 Core.KillMonster("shadowattack", "Boss", "Left", "Death", "Death's Power", 1, false);
             }
-
-            // Hollow Soul
-            HS.GetYaSoulsHeeeere(75);
-
-            // Grace Orb
-            HBV.GetGraceOrb(20);
-
-            // Gramiel's Emblem
-            HBV.GetGramielsEmblem(15);
-
-            // Vindicator Crest
-            HBV.GetVindicatorCrest(5);
-
-            // Vindicator Badge
-            HBV.GetVindicatorBadge(10);
 
             if (!Core.CheckInventory("Gramiel the Graceful's Insignia", 5))
             {

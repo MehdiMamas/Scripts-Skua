@@ -49,6 +49,21 @@ public class HBVNonInsig
         {
             Core.EnsureAccept(10299);
 
+            // Vindicator Crest
+            GetVindicatorCrest(100);
+
+            // Gramiel's Emblem
+            GetGramielsEmblem(300);
+
+            // Grace Orb
+            GetGraceOrb(400);
+
+            // Vindicator Badge
+            GetVindicatorBadge(200);
+
+            // Hollow Soul
+            HS.GetYaSoulsHeeeere(1500);
+
             // Death's Power
             if (!Core.CheckInventory("Death's Power"))
             {
@@ -56,21 +71,6 @@ public class HBVNonInsig
                 Core.EquipClass(ClassType.Solo);
                 Core.KillMonster("shadowattack", "Boss", "Left", "Death", "Death's Power", 1, false);
             }
-
-            // Hollow Soul
-            HS.GetYaSoulsHeeeere(1500);
-
-            // Grace Orb
-            GetGraceOrb(400);
-
-            // Gramiel's Emblem
-            GetGramielsEmblem(300);
-
-            // Vindicator Crest
-            GetVindicatorCrest(100);
-
-            // Vindicator Badge
-            GetVindicatorBadge(200);
 
             if (!Bot.Quests.IsAvailable(10299))
             {
