@@ -11,7 +11,11 @@ tags: hollowborn, class, hbv,hollowborn vindicator, vindicator, gramiel,insignia
 //cs_include Scripts/Hollowborn/CoreHollowborn.cs
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Hollowborn/Materials/HollowSoul.cs
-//cs_include Scripts/Hollowborn/HollowbornVindicator(NonInsignia).cs
+//cs_include Scripts/Hollowborn/Materials/VindicatorBadge.cs
+//cs_include Scripts/Hollowborn/Materials/DeathsPower.cs
+//cs_include Scripts/Hollowborn/Materials/GraceOrb.cs
+//cs_include Scripts/Hollowborn/Materials/GramielsEmblem.cs
+//cs_include Scripts/Hollowborn/Materials/VindicatorCrest.cs
 //cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
 
 using Skua.Core.Interfaces;
@@ -21,10 +25,15 @@ public class HBVInsig
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public CoreAdvanced Adv = new();
+    private CoreFarms Farm = new();
     private HollowSoul HS = new();
     private HBVNonInsig HBV = new();
     private CoreHollowbornStory HBS = new();
-    private CoreFarms Farm = new();
+    private VindicatorBadge VB = new();
+    private DeathsPower DP = new();
+    private GraceOrb GO = new();
+    private GramielsEmblem GE = new();
+    private VindicatorCrest VC = new();
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -54,27 +63,22 @@ public class HBVInsig
             Core.EnsureAccept(10300);
 
             // Vindicator Crest
-            HBV.GetVindicatorCrest(5);
+            VC.GetVindicatorCrest(5);
 
             // Gramiel's Emblem
-            HBV.GetGramielsEmblem(15);
+            GE.GetGramielsEmblem(15);
 
             // Grace Orb
-            HBV.GetGraceOrb(20);
+            GO.GetGraceOrb(20);
 
             // Vindicator Badge
-            HBV.GetVindicatorBadge(10);
+            VB.GetVindicatorBadge(10);
 
             // Hollow Soul
             HS.GetYaSoulsHeeeere(75);
 
             // Death's Power
-            if (!Core.CheckInventory("Death's Power"))
-            {
-                Core.AddDrop("Death's Power");
-                Core.EquipClass(ClassType.Solo);
-                Core.KillMonster("shadowattack", "Boss", "Left", "Death", "Death's Power", 1, false);
-            }
+            DP.GetDP(1);
 
             if (!Core.CheckInventory("Gramiel the Graceful's Insignia", 5))
             {

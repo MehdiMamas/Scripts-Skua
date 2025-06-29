@@ -11,7 +11,13 @@ tags: hollowborn, class, hbv,hollowborn vindicator, vindicator, gramiel, non ins
 //cs_include Scripts/Hollowborn/CoreHollowborn.cs
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Hollowborn/Materials/HollowSoul.cs
+//cs_include Scripts/Hollowborn\Materials\VindicatorBadge.cs
+//cs_include Scripts/Hollowborn\Materials\DeathsPower.cs
+//cs_include Scripts/Hollowborn\Materials\GraceOrb.cs
+//cs_include Scripts/Hollowborn\Materials\GramielsEmblem.cs
+//cs_include Scripts/Hollowborn\Materials\VindicatorCrest.cs
 //cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
+
 
 using Skua.Core.Interfaces;
 
@@ -20,9 +26,14 @@ public class HBVNonInsig
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public CoreAdvanced Adv = new();
+    private CoreFarms Farm = new();
     private HollowSoul HS = new();
     private CoreHollowbornStory HBS = new();
-    private CoreFarms Farm = new();
+    private VindicatorBadge VB = new();
+    private DeathsPower DP = new();
+    private GraceOrb GO = new();
+    private GramielsEmblem GE = new();
+    private VindicatorCrest VC = new();
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -50,27 +61,22 @@ public class HBVNonInsig
             Core.EnsureAccept(10299);
 
             // Vindicator Crest
-            GetVindicatorCrest(100);
+            VC.GetVindicatorCrest(100);
 
             // Gramiel's Emblem
-            GetGramielsEmblem(300);
+            GE.GetGramielsEmblem(300);
 
             // Grace Orb
-            GetGraceOrb(400);
+            GO.GetGraceOrb(400);
 
             // Vindicator Badge
-            GetVindicatorBadge(200);
+            VB.GetVindicatorBadge(200);
 
             // Hollow Soul
             HS.GetYaSoulsHeeeere(1500);
 
             // Death's Power
-            if (!Core.CheckInventory("Death's Power"))
-            {
-                Core.AddDrop("Death's Power");
-                Core.EquipClass(ClassType.Solo);
-                Core.KillMonster("shadowattack", "Boss", "Left", "Death", "Death's Power", 1, false);
-            }
+            DP.GetDP(1);
 
             if (!Bot.Quests.IsAvailable(10299))
             {
@@ -93,82 +99,5 @@ public class HBVNonInsig
         if (rankUpClass)
             Adv.RankUpClass("Hollowborn Vindicator");
 
-    }
-
-    public void GetVindicatorBadge(int quant = 300)
-    {
-        const string item = "Vindicator Badge";
-        if (Core.CheckInventory(item, quant))
-            return;
-
-        Core.FarmingLogger(item, quant);
-        Core.AddDrop(item, "Eagle Heart", "Boar Heart", "Vindicator Seal");
-        Core.EquipClass(ClassType.Farm);
-        Core.RegisterQuests(8299);
-
-        while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
-        {
-            Core.KillMonster("trygve", "r3", "Left", "Blood Eagle", "Eagle Heart", 8);
-            Core.KillMonster("trygve", "r4", "Left", "Rune Boar", "Boar Heart", 8);
-            Core.HuntMonster("trygve", "Gramiel", "Vindicator Seal");
-            Bot.Wait.ForPickup(item);
-        }
-
-        Core.CancelRegisteredQuests();
-    }
-
-    public void GetGraceOrb(int quant = 510)
-    {
-        const string item = "Grace Orb";
-        if (Core.CheckInventory(item, quant))
-            return;
-
-        Core.FarmingLogger(item, quant);
-        Core.AddDrop(item, "Grace Extracted");
-        Core.EquipClass(ClassType.Farm);
-        Core.RegisterQuests(9291);
-
-        while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
-        {
-            Core.HuntMonster("neofortress", "Vindicator Recruit", "Grace Extracted", 20);
-            Bot.Wait.ForPickup(item);
-        }
-
-        Core.CancelRegisteredQuests();
-    }
-
-    public void GetVindicatorCrest(int quant = 300)
-    {
-        const string item = "Vindicator Crest";
-        if (Core.CheckInventory(item, quant))
-            return;
-
-        Core.FarmingLogger(item, quant);
-        Core.AddDrop(item, "Vindicated Blades", "Vindicated Chain", "Vindicated Scripture");
-        Core.EquipClass(ClassType.Farm);
-        Core.RegisterQuests(9865);
-
-        while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
-        {
-            Core.HuntMonsterMapID("neotower", 12, "Vindicated Blades");
-            Core.HuntMonsterMapID("neotower", 17, "Vindicated Chain");
-            Core.HuntMonsterMapID("neotower", 28, "Vindicated Scripture");
-            Bot.Wait.ForPickup(item);
-        }
-
-        Core.CancelRegisteredQuests();
-    }
-
-    public void GetGramielsEmblem(int quant = 1000)
-    {
-        const string item = "Gramiel's Emblem";
-        if (Core.CheckInventory(item, quant))
-            return;
-
-        Core.FarmingLogger(item, quant);
-        Core.AddDrop(item);
-        Core.EquipClass(ClassType.Solo);
-
-        Core.HuntMonster("dawnsanctum", "Celestial Gramiel", item, quant, false);
     }
 }
