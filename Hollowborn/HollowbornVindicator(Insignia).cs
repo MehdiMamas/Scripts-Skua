@@ -24,6 +24,7 @@ public class HBVInsig
     private HollowSoul HS = new();
     private HBVNonInsig HBV = new();
     private CoreHollowbornStory HBS = new();
+    private CoreFarms Farm = new();
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -40,6 +41,9 @@ public class HBVInsig
                 Adv.RankUpClass("Hollowborn Vindicator");
             return;
         }
+
+        Farm.Experience(80);
+        Farm.HollowbornREP();
 
         HBS.DawnSanctum();
         string reqName = Core.QuestRewards(10300)[0];
