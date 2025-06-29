@@ -19939,6 +19939,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/HollowSoul.cs"
   },
   {
+    "name": "Vindicator Badge",
+    "description": "Farms \"Vindicator Badge\"",
+    "tags": [
+      "vindicator",
+      "badge",
+      "hollowborn",
+      "farm"
+    ],
+    "path": "Hollowborn/Materials/VindicatorBadge.cs",
+    "size": 1330,
+    "fileName": "VindicatorBadge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/VindicatorBadge.cs"
+  },
+  {
     "name": "Lesser Hollowborn Caladbolg",
     "description": "This script will get Lesser Hollowborn Caladbolg by completing \"How Much For One Rib?\" quest.",
     "tags": [
