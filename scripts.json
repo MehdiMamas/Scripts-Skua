@@ -19881,6 +19881,37 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/CoreHollowbornChaosEnvoy.cs"
   },
   {
+    "name": "Grace Orb",
+    "description": "Farms \"Grace Orb\"",
+    "tags": [
+      "grace orb",
+      "hollowborn",
+      "vindicator",
+      "farm"
+    ],
+    "path": "Hollowborn/Materials/GraceOrb.cs",
+    "size": 1487,
+    "fileName": "GraceOrb.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/GraceOrb.cs"
+  },
+  {
+    "name": "Death's Power",
+    "description": "Farms \"Death's Power\"",
+    "tags": [
+      "death's power",
+      "deaths power",
+      "death",
+      "power",
+      "shadowattack",
+      "death",
+      "hollowborn"
+    ],
+    "path": "Hollowborn/Materials/DeathsPower.cs",
+    "size": 1376,
+    "fileName": "DeathsPower.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/DeathsPower.cs"
+  },
+  {
     "name": "Hollow Soul",
     "description": "Farms \"Hollow Soul\"",
     "tags": [
