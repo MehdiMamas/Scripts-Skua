@@ -14,16 +14,17 @@ public class HollowSoul
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
 
-    private int GetMax()
+    private int GetMax(int QuestID, string? item)
     {
-        Quest? quest = Bot.Quests.EnsureLoad(10299);
+        Quest? quest = Bot.Quests.EnsureLoad(QuestID);
         if (quest == null)
         {
             return 1; // Default max stack if quest is not found
         }
-        ItemBase? req = quest.Requirements.FirstOrDefault(r => r.Name == "Vindicator Badge");
+        ItemBase? req = quest.Requirements.FirstOrDefault(r => r.Name == item);
         return req?.MaxStack ?? 1;
     }
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
@@ -35,7 +36,7 @@ public class HollowSoul
 
     public void GetYaSoulsHeeeere(int? quant = null)
     {
-        int HSQuant = quant ?? GetMax();
+        int HSQuant = quant ?? GetMax(10299, "Hollow Soul");
         if (Core.CheckInventory("Hollow Soul", HSQuant))
             return;
 
