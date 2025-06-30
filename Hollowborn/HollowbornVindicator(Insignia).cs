@@ -17,6 +17,7 @@ tags: hollowborn, class, hbv,hollowborn vindicator, vindicator, gramiel,insignia
 //cs_include Scripts/Hollowborn/Materials/GramielsEmblem.cs
 //cs_include Scripts/Hollowborn/Materials/VindicatorCrest.cs
 //cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
+//cs_include Scripts/Hollowborn/HollowbornVindicator(NonInsignia).cs
 
 using Skua.Core.Interfaces;
 
