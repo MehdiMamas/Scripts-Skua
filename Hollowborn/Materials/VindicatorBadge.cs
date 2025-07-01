@@ -46,9 +46,9 @@ public class VindicatorBadge
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, badgeQuant))
         {
-            Core.KillMonster("trygve", "r3", "Left", "Blood Eagle", "Eagle Heart", 8);
-            Core.KillMonster("trygve", "r4", "Left", "Rune Boar", "Boar Heart", 8);
-            Core.HuntMonster("trygve", "Gramiel", "Vindicator Seal");
+            Core.KillMonster("trygve", "r3", "Left", "Blood Eagle", "Eagle Heart", 8, log: false);
+            Core.KillMonster("trygve", "r4", "Left", "Rune Boar", "Boar Heart", 8, log: false);
+            Core.HuntMonster("trygve", "Gramiel", "Vindicator Seal", log: false);
             Bot.Wait.ForPickup(item);
         }
 
