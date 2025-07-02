@@ -795,14 +795,37 @@ public class CoreNation
         Core.Logger($"Do Return Policy?: {returnPolicyDuringSupplies}\n" +
                        $"Sell Voucher of Nulgath: {sellMemVoucher}");
 
+
+
+        // Core.RegisterQuests(
+        //     item != Uni(13) && Core.CheckInventory(38261)  // Checks for "Swindle Bilk's To Go Hut"
+        //         ? Core.CheckInventory("Drudgen the Assistant")
+        //             ? new int[] { 870, 2857, 9542 }
+        //             : new int[] { 2857, 9542 }
+        //         : new int[] { 2857 }
+        // );
+
         // Register quests based on item check and inventory status
-        Core.RegisterQuests(
-            item != Uni(13) && Core.CheckInventory(38261)  // Checks for "Swindle Bilk's To Go Hut"
-                ? Core.CheckInventory("Drudgen the Assistant")
-                    ? new int[] { 870, 2857, 9542 }
-                    : new int[] { 2857, 9542 }
-                : new int[] { 2857 }
-        );
+        /*
+        870  - Contract Exchange - Drudgen the Assistant
+        2857 - Supplies to Spin The Wheel of Chance - no requirements
+        9542 - Swindle's Bonus Deal - Swindle Bilk's To Go Hut
+        */
+
+        List<int> QuestToRegister = new();
+
+        // Always include 2857
+        QuestToRegister.Add(2857);
+
+        // If not farming Uni(13) and has Swindle Bilk's To Go Hut, add 9542
+        if (item != Uni(13) && Core.CheckInventory(38261))
+            QuestToRegister.Add(9542);
+
+        // Also add 870 if Drudgen the Assistant is in inventory
+        if (Core.CheckInventory("Drudgen the Assistant"))
+            QuestToRegister.Add(870);
+
+        Core.RegisterQuests(QuestToRegister.ToArray());
 
         Core.AddDrop(
                 // Add Supplies Item if it's not null
@@ -1223,9 +1246,9 @@ public class CoreNation
         Core.AddDrop("Relic of Chaos", "Tainted Core");
         Core.AddDrop(string.IsNullOrEmpty(item) ? bagDrops : new string[] { item });
 
-        bool hasOBoNPet = Core.IsMember && Core.CheckInventory("Oblivion Blade of Nulgath") &&
-                          Bot.Inventory.Items.Any(obon => obon.Category == ItemCategory.Pet && obon.Name == "Oblivion Blade of Nulgath");
-        if (hasOBoNPet || Core.CheckInventory("Oblivion Blade of Nulgath Pet (Rare)"))
+        bool hasOBoNPet = Core.IsMember && Core.CheckInventory(new[] { 4809, 5373 }, any: true);
+
+        if (hasOBoNPet)
             Core.AddDrop("Tainted Soul");
 
         bool returnPolicyDuringSupplies = Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies == true;
@@ -1262,21 +1285,24 @@ public class CoreNation
         // Choose the appropriate quest based on pet availability
         List<int> QuestToRegister = new();
 
-        // Base List with only {CraigName} owned
+        // 609 - Bamboozle vs Drudgen
+        // 2857 - Supplies to Spin The Wheel of Chance
         QuestToRegister.AddRange(new[] { 2857, 609 });
 
-        if (Core.CheckInventory("Oblivion Blade of Nulgath Pet (Rare)") && Core.IsMember)
-            QuestToRegister.Add(599);
+        if (Core.IsMember && hasOBoNPet)
+        {
+            // 599 - The Dark Deal (Rare) - Oblivion Blade of Nulgath Pet (Rare)
+            // 2561 - The Dark Deal - Oblivion Blade of Nulgath (non rare)
+            QuestToRegister.Add(Core.CheckInventory(4809) ? 599 : 2561);
+        }
 
+        // 7551 - Swindle's Return Policy
         if (returnPolicyDuringSupplies)
             QuestToRegister.Add(7551);
 
-        // Swindle Bilk's To Go Hut
+        // 9542 - Swindle's Bonus Deal - Swindle Bilk's To Go Hut
         if (Core.CheckInventory(38261))
             QuestToRegister.Add(9542);
-
-        if (hasOBoNPet)
-            QuestToRegister.Add(2561);
 
         // Register unique quests only
         Core.RegisterQuests(QuestToRegister.Distinct().ToArray());
