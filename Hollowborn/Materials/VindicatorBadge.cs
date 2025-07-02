@@ -40,10 +40,18 @@ public class VindicatorBadge
             return;
 
         Core.FarmingLogger(item, badgeQuant);
-        Core.AddDrop(item);
-        Core.EquipClass(ClassType.Solo);
+        Core.AddDrop(item, "Eagle Heart", "Boar Heart", "Vindicator Seal");
+        Core.EquipClass(ClassType.Farm);
+        Core.RegisterQuests(Core.IsMember ? 10296 : 8299);
 
-        Core.HuntMonster("dawnsanctum", "Vindicator", item, badgeQuant, false);
-        Bot.Wait.ForPickup(item);
+        while (!Bot.ShouldExit && !Core.CheckInventory(item, badgeQuant))
+        {
+            Core.KillMonster("trygve", "r3", "Left", "Blood Eagle", "Eagle Heart", 8, log: false);
+            Core.KillMonster("trygve", "r4", "Left", "Rune Boar", "Boar Heart", 8, log: false);
+            Core.HuntMonster("trygve", "Gramiel", "Vindicator Seal", log: false);
+            Bot.Wait.ForPickup(item);
+        }
+
+        Core.CancelRegisteredQuests();
     }
 }

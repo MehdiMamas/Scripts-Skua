@@ -44,9 +44,9 @@ public class VindicatorCrest
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, crestQuant))
         {
-            Core.HuntMonsterMapID("neotower", 12, "Vindicated Blades");
-            Core.HuntMonsterMapID("neotower", 17, "Vindicated Chain");
-            Core.HuntMonsterMapID("neotower", 28, "Vindicated Scripture");
+            Core.HuntMonsterMapID("neotower", 12, "Vindicated Blades", log: false);
+            Core.HuntMonsterMapID("neotower", 17, "Vindicated Chain", log: false);
+            Core.HuntMonsterMapID("neotower", 28, "Vindicated Scripture", log: false);
             Bot.Wait.ForPickup(item);
         }
 
