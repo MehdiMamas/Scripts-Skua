@@ -35,7 +35,7 @@ public class ArchPaladin
         Core.SetOptions(false);
     }
 
-    public void GetAP(bool rankUpClass = true)
+    public void GetAP(bool rankUpClass = true, bool ArmorOnly = false)
     {
         if (Core.CheckInventory(36920))
         {
@@ -214,6 +214,10 @@ public class ArchPaladin
             Core.HuntMonster("infernalspire", "Malxas", "Forbidden Demon Seal", isTemp: false);
             Core.EnsureComplete(5470);
         }
+        
+        if (ArmorOnly)
+        
+            return;
 
         Core.BuyItem("darkthronehub", 1303, 36920, shopItemID: 21833);
         if (rankUpClass)

@@ -524,7 +524,7 @@ public class UnlockForgeEnhancements
         Core.EnsureAccept(8741);
 
         Seppy.GravelynsDoomFireToken();
-        AP.GetAP(false); //purely for the last quest "Sacred Magic: Eden"
+        AP.GetAP(false, true); //purely for the last quest "Sacred Magic: Eden"
 
         if (!Core.isCompletedBefore(7165))
         {
