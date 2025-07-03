@@ -10381,10 +10381,15 @@
       "ryokus",
       "masters",
       "ryoku",
-      "morph"
+      "morph",
+      "squoglin",
+      "pet",
+      "bulba",
+      "moglin",
+      "charmoglin"
     ],
     "path": "Other/MergeShops/SuperSlayinMerge.cs",
-    "size": 4595,
+    "size": 5000,
     "fileName": "SuperSlayinMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SuperSlayinMerge.cs"
   },
