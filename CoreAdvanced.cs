@@ -3656,6 +3656,7 @@ public class CoreAdvanced
                 case "savage glaceran warlord":
                 case "glacial warlord":
                 case "great thief":
+                case "hollowborn vindicator member preview":
                 case "immortal chronomancer":
                 case "imperial chunin":
                 case "infinite dark caster":
