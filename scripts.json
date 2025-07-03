@@ -19285,7 +19285,7 @@
   },
   {
     "name": "HBP - The Post Summoning",
-    "description": "does the 'the post summoning' part of hollowborn doomKnight",
+    "description": "does the 'the post summoning' part of hollowborn Paladin",
     "tags": [
       "hollowborn paladin",
       "hollowborn",
@@ -19293,7 +19293,7 @@
       "hollowborn paladin character page badge"
     ],
     "path": "Hollowborn/HollowbornPaladin/ThePostSummoning.cs",
-    "size": 1342,
+    "size": 1339,
     "fileName": "ThePostSummoning.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornPaladin/ThePostSummoning.cs"
   },
