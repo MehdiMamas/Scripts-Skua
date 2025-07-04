@@ -1350,7 +1350,8 @@ public class CoreNation
                     }
                 }
 
-                DoSwindlesReturnArea(returnPolicyDuringSupplies, item);
+                DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem ?? quest.Rewards
+                    .FirstOrDefault(x => x != null && x.Quantity < x.MaxStack)?.Name);
 
                 if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
                     Core.EnsureCompleteMulti(4778);
