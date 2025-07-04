@@ -4728,12 +4728,9 @@ public class CoreBots
                 KillVath();
         }
         Bot.Options.AttackWithoutTarget = false;
-        ToggleAggro(false);
-        Jump();
         Bot.Options.AggroMonsters = false;
-        JumpWait();
-        Rest();
         Bot.Options.HidePlayers = false;
+        JumpWait();
         void KillVath()
         {
             if (Bot.Map.Name is not "stalagbite")
@@ -6669,6 +6666,11 @@ public class CoreBots
 
         switch (Bot.Map.Name)
         {
+
+            case "stalagbite":
+                blackListedCells.UnionWith(new[] { "Enter", "r1", "CutShow" });
+                break;
+
             case "hbchallenge":
                 blackListedCells.UnionWith(new[] { "r7" });
                 break;
