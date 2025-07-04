@@ -33,22 +33,47 @@ public class SevenCircles
 
         //Canto IV
         Story.KillQuest(7968, "sevencircles", "Limbo Guard");
+
         //Canto V
         Story.KillQuest(7969, "sevencircles", "Luxuria Guard");
+
         //Gone With the Wind
-        Story.KillQuest(7970, "sevencircles", new[] { "Limbo Guard", "Luxuria Guard", "Limbo Guard" });
+        if (!Story.QuestProgression(7970))
+        {
+            Core.EnsureAccept(7970);
+            Core.HuntMonster("sevencircleswar", "Limbo Guard", "Aura of Power");
+            Core.HuntMonster("sevencircleswar", "Luxuria Guard", "Aura of Pleasure");
+            Core.HuntMonster("sevencircleswar", "Limbo Guard", "Aura of Happiness");
+            Core.EnsureComplete(7970);
+        }
+
         //Lest Ye Be Destroyed    
         Story.KillQuest(7971, "sevencircles", "Luxuria");
+
         //Canto VI
         Story.MapItemQuest(7972, "sevencircles", 8206, 3);
+
         //HeckHound
         Story.KillQuest(7973, "sevencircles", "Gluttony Guard");
+
         //Glutton  for Punishment
         Story.KillQuest(7974, "sevencircles", "Gluttony");
+
         //Canto VII
         Story.KillQuest(7975, "sevencircles", "Avarice Guard");
+
         //Greed the Room
         Story.KillQuest(7976, "sevencircles", new[] { "Limbo Guard", "Luxuria Guard", "Gluttony Guard", "Avarice Guard" });
+        if (!Story.QuestProgression(7976))
+        {
+            Core.EnsureAccept(7976);
+            Core.HuntMonster("sevencircles", "Limbo Guard", "Limbo Guards Defeated", 2);
+            Core.HuntMonster("sevencircles", "Luxuria Guard", "Lust Guards Defeated", 2);
+            Core.HuntMonster("sevencircles", "Gluttony Guard", "Gluttony Guard Defeated");
+            Core.HuntMonster("sevencircles", "Avarice Guard", "Avarice Guards Defeated", 2);
+            Core.EnsureComplete(7976);
+        }
+
         //Ava-risky Business
         Story.KillQuest(7977, "sevencircles", "Avarice");
     }
@@ -61,11 +86,14 @@ public class SevenCircles
         Circles();
 
         Core.AddDrop("Essence of Treachery", "Essence of Violence", "Souls of Heresy", "Essence of Wrath");
+        
         //Guards of Wrath
         Core.EquipClass(ClassType.Farm);
         Story.KillQuest(7979, "sevencircleswar", "Wrath Guard");
+
         //War Medals
         Story.KillQuest(7980, "sevencircleswar", "Wrath Guard");
+
         //Mega War Medals
         Story.KillQuest(7981, "sevencircleswar", "Wrath Guard");
 
@@ -76,23 +104,30 @@ public class SevenCircles
         //Wrath Against the Machine  
         Core.EquipClass(ClassType.Solo);
         Story.KillQuest(7982, "sevencircleswar", "Wrath");
+
         //Blasphemy? Blasphe-you!
         Core.EquipClass(ClassType.Farm);
         Story.KillQuest(7983, "sevencircleswar", "Heresy Guard");
+
         //Violence's Gatekeeper
         Core.EquipClass(ClassType.Solo);
         Story.KillQuest(7984, "sevencircleswar", "Violence's Gatekeeper");
+
         //Meaningless Violence
         Core.EquipClass(ClassType.Farm);
         Story.KillQuest(7985, "sevencircleswar", "Violence Guard");
+
         //Geryon, Not Gary On!
         Core.EquipClass(ClassType.Solo);
         Story.KillQuest(7986, "sevencircleswar", "Geryon");
+
         //Violence
         Story.KillQuest(7987, "sevencircleswar", "Violence");
+
         //Where the Trea-sun Don't Shine
         Core.EquipClass(ClassType.Farm);
         Story.KillQuest(7988, "sevencircleswar", "Treachery Guard");
+
         //Hanged for Treason
         Core.EquipClass(ClassType.Solo);
         Story.KillQuest(7989, "sevencircleswar", "Treachery");
