@@ -771,8 +771,8 @@ public class CoreAdvanced
                     (itemBlackList != null && itemBlackList.Any(x => x.ToLower() == item.Name.ToLower())))
                 continue;
 
-            if (Core.IsMember || !item.Upgrade
-            || item.Requirements.Any(x => x != null && Bot.Shops.Items.Any(x => x != null && x.Upgrade && !Core.IsMember)))
+            if (Core.IsMember && (item.Upgrade
+            || item.Requirements.Any(x => x != null && x.Upgrade || Bot.Shops.Items.Any(x => x != null && x.Upgrade))))
             {
                 if (mode == 3)
                 {
