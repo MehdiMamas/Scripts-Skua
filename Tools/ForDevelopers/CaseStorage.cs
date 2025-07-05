@@ -26381,6 +26381,102 @@ case ""Midnight Silk"":
                     break;
     "
 },
+{
+    "Silver Victory Laurel",
+    @"
+case ""Silver Victory Laurel"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    List<int> svlQuests = new();
+                    if (Core.IsMember && Bot.Quests.IsAvailable(10304))
+                        svlQuests.Add(10304);
+                    if (Bot.Quests.IsAvailable(10303))
+                        svlQuests.Add(10303);
+                    if (svlQuests.Count > 0)
+                    {
+                        Core.RegisterQuests(svlQuests.ToArray());
+                        for (int i = 0; i < svlQuests.Count; i++)
+                        {
+                            Core.HuntMonster(""coliseum"", ""Nethersea Shark"", ""Level 25 Boss Defeated"", log: false);
+                            Bot.Wait.ForPickup(req.Name);
+                        }
+                        Core.CancelRegisteredQuests();
+                    }
+                    Core.HuntMonster(""coliseum"", ""Nethersea Shark"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Gold Victory Laurel",
+    @"
+case ""Gold Victory Laurel"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    List<int> gvlQuests = new();
+                    if (Core.IsMember && Bot.Quests.IsAvailable(10306))
+                        gvlQuests.Add(10306);
+                    if (Bot.Quests.IsAvailable(10305))
+                        gvlQuests.Add(10305);
+                    if (gvlQuests.Count > 0)
+                    {
+                        Core.RegisterQuests(gvlQuests.ToArray());
+                        for (int i = 0; i < gvlQuests.Count; i++)
+                        {
+                            Core.HuntMonster(""coliseum"", ""Void Dragon"", ""Level 50 Boss Defeated"", log: false);
+                            Bot.Wait.ForPickup(req.Name);
+                        }
+                        Core.CancelRegisteredQuests();
+                    }
+                    Core.HuntMonster(""coliseum"", ""Void Dragon"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Platinum Victory Laurel",
+    @"
+case ""Platinum Victory Laurel"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    List<int> pvlQuests = new();
+                    if (Core.IsMember && Bot.Quests.IsAvailable(10308))
+                        pvlQuests.Add(10308);
+                    if (Bot.Quests.IsAvailable(10307))
+                        pvlQuests.Add(10307);
+                    if (pvlQuests.Count > 0)
+                    {
+                        Core.RegisterQuests(pvlQuests.ToArray());
+                        for (int i = 0; i < pvlQuests.Count; i++)
+                        {
+                            Core.HuntMonster(""coliseum"", ""Chimera"", ""Level 75 Boss Defeated"", log: false);
+                            Bot.Wait.ForPickup(req.Name);
+                        }
+                        Core.CancelRegisteredQuests();
+                    }
+                    Core.HuntMonster(""coliseum"", ""Chimera"", req.Name, quant, false, false);
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic)
