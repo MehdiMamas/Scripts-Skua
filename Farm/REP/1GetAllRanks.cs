@@ -40,7 +40,7 @@ public class GetAllRanks
     {
         Core.SetOptions();
 
-        DoGetAllRanks(Bot.Config!.Get<bool>("doDeathPit"));
+        DoGetAllRanks();
 
         Core.SetOptions(false);
     }
@@ -51,6 +51,7 @@ public class GetAllRanks
         //Adv.BestGear(GenericGearBoost.dmgAll);
         //Adv.BestGear(GenericGearBoost.rep);
         doDeathPit = Bot.Config!.Get<bool>("doDeathPit");
+        Core.Logger($"Doing all Reputations to Rank 10, Death Pit: {doDeathPit}");
         //Required Stories add when needed.
         Core.Logger("Doing Required Stories for the reps, let tato know if another is required.");
         TOD.CompleteToD();
