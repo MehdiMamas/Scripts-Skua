@@ -50,8 +50,6 @@ public class GetAllRanks
     {
         //Adv.BestGear(GenericGearBoost.dmgAll);
         //Adv.BestGear(GenericGearBoost.rep);
-        doDeathPit = Bot.Config!.Get<bool>("doDeathPit");
-        Core.Logger($"Doing all Reputations to Rank 10, Death Pit: {doDeathPit}");
         //Required Stories add when needed.
         Core.Logger("Doing Required Stories for the reps, let tato know if another is required.");
         TOD.CompleteToD();
@@ -59,6 +57,8 @@ public class GetAllRanks
         BrightOak.doall(true);
         Core.Logger("when doing the `Glacera` storyline, you may have to restart it in the middle of the quests due to ae's bullshit how it keeps another quest locked even though the preivosu is completed till you relog");
         Glac.DoAll();
+        doDeathPit = Bot.Config!.Get<bool>("doDeathPit");
+        Core.Logger($"Doing all Reputations to Rank 10, Death Pit: {doDeathPit}");
         if (doDeathPit)
             TOD.DeathPitPVP();
 
