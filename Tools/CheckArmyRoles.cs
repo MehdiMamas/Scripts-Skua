@@ -61,6 +61,7 @@ public class CheckArmyRoles
                         $"Extra Secutity: Account Item Count: {Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).Count()}\n" +
                         $"Ｅｎｈａｎｃｅｍｅｎｔｓ\n" +
                         $"(Victor of War) Valiance:\t\t\t\t{Checkbox(Core.isCompletedBefore(8741))}\n" +
+                        $"(Conductor of War) Arcana:\t\t\t\t{Checkbox(Core.isCompletedBefore(8741))}\n" +
                         $"(Conductor of War) Arcana's Concerto:\t\t{Checkbox(Core.isCompletedBefore(8742))}\n" +
                         $"(Deliverance of War) Elysium:\t\t\t{Checkbox(Core.isCompletedBefore(8821))}\n" +
                         $"(Reflectionist of War) Examen:\t\t\t{Checkbox(Core.isCompletedBefore(8825))}\n" +
@@ -78,6 +79,7 @@ public class CheckArmyRoles
                         "(Diviner of War) " + importantItemCheckbox(3, "Arcana Invoker") +
                         "(Tempest of War) " + importantItemCheckbox(2, "Sovereign of Storms") +
                         "(Autist Of War) " + importantItemCheckbox(3, "Martial Artist") +
+                        "(Vindicator of War) " + importantItemCheckbox(2, "Hollowborn Vindicator") +
 
                         $"Ｗｅａｐｏｎｓ\n" +
                         "(Prisoner of War) " + importantItemCheckbox(1, "Hollowborn Reaper's Scythe") +
@@ -91,6 +93,7 @@ public class CheckArmyRoles
                         "(Deacon of War) " + importantItemCheckbox(2, "Dual Exalted Apotheosis") +
                         "(Celestial of War) " + importantItemCheckbox(1, "Greatblade of the Entwined Eclipse") +
                         "(Starlight of War) " + importantItemCheckbox(2, "Star Light of the Empyrean", "Star Lights of the Empyrean") +
+                        "(Mysteries of War) " + importantItemCheckbox(2, "Sin of the Underworld") +
 
                         $"Ａｒｍｏｒ\n" +
                         $"(Ascendant of War) Awescended:\t\t\t{Checkbox(Core.isCompletedBefore(8042))}\n" +
