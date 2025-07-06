@@ -26477,6 +26477,158 @@ case ""Platinum Victory Laurel"":
                     break;
     "
 },
+{
+    "Trygve's Testament",
+    @"
+case ""Trygve's Testament"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""trygve"", ""Gramiel"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Fortress' Faith",
+    @"
+case ""Fortress' Faith"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""neofortress"", ""Vindicator General"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Tower's Trisagion",
+    @"
+case ""Tower's Trisagion"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""neotower"", ""Vindicator Assassin"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Sanctum's Salvation",
+    @"
+case ""Sanctum's Salvation"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""dawnsanctum"", ""Grandmaster Gramiel"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Grandmaster Gramiel",
+    @"
+case ""Grandmaster Gramiel"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""dawnsanctum"", ""Grandmaster Gramiel"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Grandmaster Gramiel Hair",
+    @"
+case ""Grandmaster Gramiel Hair"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""dawnsanctum"", ""Grandmaster Gramiel"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Celestial Gramiel Wings",
+    @"
+case ""Celestial Gramiel Wings"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""dawnsanctum"", ""Grandmaster Gramiel"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Gramiel the Graceful's Insignia",
+    @"
+case ""Gramiel the Graceful's Insignia"":
+                    Core.Logger($""{req.Name} requires army, skipping..."");
+                    break;
+    "
+},
+{
+    "Gramiel's Glorified Enoch",
+    @"
+case ""Gramiel's Glorified Enoch"":
+                    DM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Dawn Vindicator Castle",
+    @"
+case ""Dawn Vindicator Castle"":
+                    DM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Condensed Grace",
+    @"
+case ""Condensed Grace"":
+                    if (Bot.Quests.IsAvailable(10299))
+                        HBV.GetClass(false, true, quant);
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic)
