@@ -41,9 +41,9 @@ public class SevenCircles
         if (!Story.QuestProgression(7970))
         {
             Core.EnsureAccept(7970);
-            Core.HuntMonster("sevencircleswar", "Limbo Guard", "Aura of Power");
-            Core.HuntMonster("sevencircleswar", "Luxuria Guard", "Aura of Pleasure");
-            Core.HuntMonster("sevencircleswar", "Limbo Guard", "Aura of Happiness");
+            Core.HuntMonster("sevencircles", "Limbo Guard", "Aura of Power");
+            Core.HuntMonster("sevencircles", "Luxuria Guard", "Aura of Pleasure");
+            Core.HuntMonster("sevencircles", "Limbo Guard", "Aura of Happiness");
             Core.EnsureComplete(7970);
         }
 
