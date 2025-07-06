@@ -42,11 +42,11 @@ public class HBVNonInsig
         Core.SetOptions(false);
     }
 
-    public void GetClass(bool rankUpClass = true)
+    public void GetClass(bool rankUpClass = true, bool merge = false, int quant = 0)
     {
-        if (Core.CheckInventory(94357))
+        if ((!merge && Core.CheckInventory(94357)) || (merge && Core.CheckInventory("Condensed Grace", quant)))
         {
-            if (rankUpClass)
+            if (!merge && rankUpClass)
                 Adv.RankUpClass("Hollowborn Vindicator");
             return;
         }
@@ -56,7 +56,7 @@ public class HBVNonInsig
         string reqName = Core.QuestRewards(10299)[0];
         Core.AddDrop(reqName);
 
-        if (!Core.CheckInventory(reqName, 4))
+        if (!Core.CheckInventory(reqName, merge ? quant : 4))
         {
             Core.EnsureAccept(10299);
 
