@@ -5856,14 +5856,32 @@ public class CoreBots
     /// </exception>
     public void Relogin()
     {
-        if (Bot.Options.ReloginServer == null || !Bot.Servers.EnsureRelogin(Bot.Options.ReloginServer))
+        while (true)
         {
+            if (Bot.Options.ReloginServer != null && Bot.Servers.EnsureRelogin(Bot.Options.ReloginServer))
+                break;
+
             var servers = Bot.Servers.GetServers(true).Result;
             if (servers.Count == 0)
+            {
                 Logger("Failed to relogin: could not fetch server details" + (Bot.Options.ReloginServer == null ? '.' : " or the find the server you've set in Options > Game."), messageBox: true, stopBot: true);
-            Bot.Servers.EnsureRelogin((Bot.Player.IsMember == true)
-                ? servers.First(s => s.Name != "Class Test Realm" && s.PlayerCount < s.MaxPlayers && s.Online).Name
-                : servers.First(s => s.Name != "Class Test Realm" && !s.Upgrade && s.PlayerCount < s.MaxPlayers && s.Online).Name);
+                return;
+            }
+
+            string? serverName = (Bot.Player.IsMember == true)
+                ? servers.FirstOrDefault(s => s.Name != "Class Test Realm" && s.PlayerCount < s.MaxPlayers && s.Online)?.Name
+                : servers.FirstOrDefault(s => s.Name != "Class Test Realm" && !s.Upgrade && s.PlayerCount < s.MaxPlayers && s.Online)?.Name;
+
+            if (serverName == null)
+            {
+                Logger("No suitable server found for relogin.", messageBox: true, stopBot: true);
+                return;
+            }
+
+            if (Bot.Servers.EnsureRelogin(serverName))
+                break;
+
+            Sleep(5000); // Wait 5 seconds before retrying
         }
     }
 
