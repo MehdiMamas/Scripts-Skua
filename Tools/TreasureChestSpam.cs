@@ -114,13 +114,13 @@ public class TreasureChestSpam
         void LoadShop()
         {   // Load shop data
             int retry = 0;
-            while (!Bot.ShouldExit && Bot.Shops.ID != 325)
+            while (!Bot.ShouldExit && Bot.Shops.ID != 314)
             {
-                Bot.Shops.Load(325);
+                Bot.Shops.Load(314);
                 Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-                Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 325, 20);
+                Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 314, 20);
                 Core.Sleep(1000);
-                if (Bot.Shops.ID == 325 || retry == 20)
+                if (Bot.Shops.ID == 314 || retry == 20)
                     break;
                 else retry++;
             }
@@ -135,7 +135,7 @@ public class TreasureChestSpam
             if (Bot.Map.Name != "battleon")
                 Core.Join("battleon");
             LoadShop();
-            if (!Bot.Shops.IsLoaded || Bot.Shops.ID != 325)
+            if (!Bot.Shops.IsLoaded || Bot.Shops.ID != 314)
             {
                 Core.Logger("Shop not loaded, retrying...");
                 LoadShop();
