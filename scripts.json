@@ -2209,7 +2209,7 @@
       "ultragramielhub"
     ],
     "path": "Hollowborn/HollowbornVindicator(NonInsignia).cs",
-    "size": 3098,
+    "size": 3231,
     "fileName": "HollowbornVindicator(NonInsignia).cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornVindicator(NonInsignia).cs"
   },
@@ -19637,6 +19637,42 @@
     "size": 9294,
     "fileName": "ArkariesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/ArkariesMerge.cs"
+  },
+  {
+    "name": "Gramiels Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Gramiels Merge [2593] in /ultragramielhub",
+    "tags": [
+      "gramiels",
+      "merge",
+      "ultragramielhub",
+      "celestial",
+      "gramiel",
+      "robes",
+      "gaze",
+      "halo",
+      "ascended",
+      "wings",
+      "grace",
+      "orb",
+      "orbs",
+      "divine",
+      "enoch",
+      "pet",
+      "battle",
+      "hollowborn",
+      "vindicator",
+      "spear",
+      "empowered",
+      "grandmaster",
+      "dawn",
+      "fortress",
+      "vindicators",
+      "chosen"
+    ],
+    "path": "Hollowborn/MergeShops/GramielsMerge.cs",
+    "size": 10004,
+    "fileName": "GramielsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/GramielsMerge.cs"
   },
   {
     "name": "Neotower Merge",
