@@ -70,7 +70,7 @@ public class DoomPirateHouseMerge
                     Core.RegisterQuests(9355);
                     Core.EquipClass(ClassType.Solo);
                     Core.Join("doompirate", "r5", "Left");
-                    while (!Bot.ShouldExit && !Core.CheckInventory("Gallaeon's Piece of Eight", 99))
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                     Restartkills:
                         while (!Bot.ShouldExit && Bot.Player.Cell != "r5")
