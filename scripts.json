@@ -13629,6 +13629,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/BringTheCheer.cs"
   },
   {
+    "name": "Non SpellCrafta Scroll Buyer",
+    "description": "This script will buy the selected scrolls from the Terminus Temple.",
+    "tags": [
+      "scroll",
+      "nsc",
+      "life steal",
+      "dark flare",
+      "nightmares",
+      "terminus temple"
+    ],
+    "path": "Other/Various/NonSpellCraftaScrollBuyer.cs",
+    "size": 2508,
+    "fileName": "NonSpellCraftaScrollBuyer.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/NonSpellCraftaScrollBuyer.cs"
+  },
+  {
     "name": "DecorateYourSpace",
     "description": "null",
     "tags": [
