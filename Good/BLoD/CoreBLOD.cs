@@ -549,10 +549,14 @@ public class CoreBLOD
                 forgeKeyQuest = 2135;
                 break;
         }
-        ;
-        if (Core.CheckInventory(fullMetalName))
-            return;
 
+        if (Core.CheckInventory(fullMetalName))
+        {
+            Core.Logger($"You already have {fullMetalName}, skipping upgrade.");
+            return;
+        }
+
+        // Getting the name of the metal used to upgrade
         string upgradeMetalName = fullMetalName.Split(' ')[..2].Join(' ');
         Core.FarmingLogger(fullMetalName, 1);
 

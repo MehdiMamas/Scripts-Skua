@@ -127,7 +127,7 @@ public class CoreLegion
 
             //More then one item of the same name as drop btoh temp and non-temp.
             while (!Bot.ShouldExit && !Core.CheckInventory(33257))
-                Core.KillMonster("dflesson", "r12", "Right", "Fluffy the Dracolich", log: false, publicRoom: true);
+                Core.KillMonster("dflesson", "r12", "Right", "Fluffy the Dracolich", publicRoom: true);
 
             //Adv.BestGear(RacialGearBoost.Dragonkin);
             Core.HuntMonster("lair", "Red Dragon", "Red Dragon's Fang");
@@ -310,7 +310,7 @@ public class CoreLegion
         // A Single Rib
         Core.RegisterQuests(3393);
         while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
-            Core.HuntMonster("doomvault", "Binky", "Dark Unicorn Rib", isTemp: false, log: false);
+            Core.HuntMonster("doomvault", "Binky", "Dark Unicorn Rib", isTemp: false);
         Core.CancelRegisteredQuests();
         Core.ToBank(Core.QuestRewards(3393, 3394));
 
@@ -570,7 +570,7 @@ public class CoreLegion
         Core.AddDrop("Legion Token");
         Core.AddDrop(300, 11189, 11190);
         while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
-            Core.KillMonster("lair", "End", "Right", "Red Dragon", log: false);
+            Core.KillMonster("lair", "End", "Right", "Red Dragon");
         Core.CancelRegisteredQuests();
         Core.ToBank(11189, 11190);
     }
@@ -600,7 +600,7 @@ public class CoreLegion
         Core.RegisterQuests(6742, 6743);
         Core.AddDrop("Legion Token", "Bone Sigil");
         while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
-            Core.KillMonster("legionarena", "Boss", "Left", "Legion Fiend Rider", log: false);
+            Core.KillMonster("legionarena", "Boss", "Left", "Legion Fiend Rider");
         Core.CancelRegisteredQuests();
         Core.ToBank("Bone Sigil");
     }
@@ -621,7 +621,7 @@ public class CoreLegion
         Core.AddDrop("Legion Token");
         Core.ConfigureAggro();
         while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
-            Core.KillMonster("dreadrock", "r3", "Bottom", "*", "Dreadrock Enemy Recruited", 6, log: false);
+            Core.KillMonster("dreadrock", "r3", "Bottom", "*", "Dreadrock Enemy Recruited", 6);
         Core.ConfigureAggro(false);
         Core.CancelRegisteredQuests();
     }
@@ -754,7 +754,7 @@ public class CoreLegion
         if (!Story.QuestProgression(789))
         {
             Core.EnsureAccept(789);
-            Core.HuntMonster("greenguardwest", "Black Knight", "Black Knight's Eternal Contract", log: false);
+            Core.HuntMonster("greenguardwest", "Black Knight", "Black Knight's Eternal Contract");
             Core.EnsureComplete(789);
         }
 
@@ -773,7 +773,7 @@ public class CoreLegion
         if (!Story.QuestProgression(791))
         {
             Core.EnsureAccept(791);
-            Core.HuntMonster("battleunderb", "Undead Champion", "Ravaged Champion Soul", 80, isTemp: false, log: false);
+            Core.HuntMonster("battleunderb", "Undead Champion", "Ravaged Champion Soul", 80, isTemp: false);
             Core.EnsureComplete(791);
         }
 
@@ -811,8 +811,8 @@ public class CoreLegion
         while (!Bot.ShouldExit && !Core.CheckInventory("Obsidian Rock", quant))
         {
             if (Core.IsMember)
-                Core.HuntMonster("hydra", "Fire Imp", "Obsidian Deposit", 10, log: false);
-            else Core.KillMonster("firestorm", "r8", "Left", "Firestorm Hatchling", "Obsidian Deposit", 10, log: false);
+                Core.HuntMonster("hydra", "Fire Imp", "Obsidian Deposit", 10);
+            else Core.KillMonster("firestorm", "r8", "Left", "Firestorm Hatchling", "Obsidian Deposit", 10);
 
             Bot.Wait.ForPickup("Obsidian Rock");
         }
