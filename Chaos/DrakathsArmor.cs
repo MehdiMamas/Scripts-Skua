@@ -73,28 +73,44 @@ public class DrakathArmorBot
             return;
 
         Core.AddDrop("Dage's Scroll Fragment", "Treasure Chest", "Face of Chaos", "Get Your Original Drakath's Armor");
-
         Core.EnsureAccept(3882);
-        Farm.ChaosREP();
-        if (!Core.CheckInventory("Dage's Scroll Fragment", 13))
-        {
-            Daily.DagesScrollFragment();
-        }
+        Core.Logger("Getting Quest Accept Requirement: Blinding Light of Destiny");
         BLOD.BlindingLightOfDestiny();
+        if (!Core.CheckInventory("Blinding Light of Destiny"))
+        {
+            Core.Logger("You do not own \"Blinding Light of Destiny\". We'll Farm the materials, but you still need top run this again to get BLoD.");
+        }
+
+        // Get Accept Requirement: Blind Light of Destiny
+        Farm.ChaosREP();
+
+        Farm.BladeofAweREP(6, farmBoA: true);
+        Nation.FarmUni13(3);
         Adv.BuyItem("hyperspace", 194, "Le Chocolat");
         Core.EquipClass(ClassType.Farm);
         Core.KillMonster("swordhavenundead", "Left", "Right", "*", "Treasure Chest", 100, false);
         Core.EquipClass(ClassType.Solo);
         Core.KillMonster("ultradrakath", "r1", "Left", "Champion of Chaos", "Face of Chaos", isTemp: false, publicRoom: true);
-        Nation.FarmUni13(3);
-        Farm.BladeofAweREP(6, farmBoA: true);
 
         if (!Core.CheckInventory("Dage's Scroll Fragment", 13))
-            Core.Logger($"You own \"Dage's Scroll Fragment\" ({Bot.Inventory.GetQuantity("Dage's Scroll Fragment")}/13) [Daily Quest]. Bot can not continue.");
-        else Core.EnsureComplete(3882);
+        {
+            Daily.DagesScrollFragment();
+            if (!Core.CheckInventory("Dage's Scroll Fragment", 13))
+            {
+                Core.Logger("Important", "You do not own \"Dage's Scroll Fragment\". We'll Farm the materials, but you still need to run this again to get Dage's Scroll Fragment -- tomorrow.");
+            }
+        }
 
-        //wait and pickup drop (if not already picked up)
-        Bot.Wait.ForDrop("Get Your Original Drakath's Armor");
-        Bot.Wait.ForPickup("Get Your Original Drakath's Armor");
+        if (!Core.CheckInventory("Dage's Scroll Fragment", 13) && !Core.CheckInventory("Blinding Light of Destiny"))
+            Core.Logger("Important", $"Dage's Scroll Fragment: {Core.dynamicQuant("Dage's Scroll Fragment", false)}/13\n" +
+            $"Blinding Light of Destiny: {Core.dynamicQuant("Blinding Light of Destiny", false)}/1");
+        else
+        {
+            Core.EnsureComplete(3882); // Complete Quest: Get Your Original Drakath's Armor
+
+            //wait and pickup drop (if not already picked up)
+            Bot.Wait.ForDrop("Get Your Original Drakath's Armor");
+            Bot.Wait.ForPickup("Get Your Original Drakath's Armor");
+        }
     }
 }
