@@ -20,6 +20,7 @@ tags: hollowborn, class, hbv,hollowborn vindicator, vindicator, gramiel, non ins
 
 
 using Skua.Core.Interfaces;
+using Skua.Core.Options;
 
 public class HBVNonInsig
 {
@@ -35,6 +36,15 @@ public class HBVNonInsig
     private GramielsEmblem GE = new();
     private VindicatorCrest VC = new();
 
+    public string OptionsStorage = "FarmerJoePet";
+    public bool DontPreconfigure = true;
+    public List<IOption> Options = new()
+    {
+        new Option<bool>("FarmExtra", "Farm Next Weeks Mats", "Save yourself some time", true),
+        CoreBots.Instance.SkipOptions,
+    };
+
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
@@ -42,7 +52,7 @@ public class HBVNonInsig
         Core.SetOptions(false);
     }
 
-    public void GetClass(bool rankUpClass = true, bool merge = false, int quant = 0)
+    public void GetClass(bool rankUpClass = true, bool merge = false, int quant = 0, bool FarmNextWeeks = false)
     {
         if ((!merge && Core.CheckInventory(94357)) || (merge && Core.CheckInventory("Condensed Grace", quant)))
         {
@@ -50,6 +60,7 @@ public class HBVNonInsig
                 Adv.RankUpClass("Hollowborn Vindicator");
             return;
         }
+        FarmNextWeeks = Bot.Config!.Get<bool>("FarmExtra");
         Farm.Experience(80);
         Farm.HollowbornREP();
         HBS.DawnSanctum();
@@ -81,6 +92,10 @@ public class HBVNonInsig
             if (!Bot.Quests.IsAvailable(10299))
             {
                 Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
+                if (FarmNextWeeks)
+                    this.FarmNextWeeks();
+                else
+                    Core.Logger($"run the script next on: {DateTime.Now.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")}");
                 return;
             }
             else
@@ -90,7 +105,11 @@ public class HBVNonInsig
 
         if (!Core.CheckInventory(reqName, 4))
         {
-            Core.Logger($"You need 4x {reqName} to get the class. Run the script next week.");
+            Core.Logger($"You need 4x {reqName} to get the class. Run the script next week on: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
+            if (FarmNextWeeks)
+                this.FarmNextWeeks();
+            else
+                Core.Logger($"run the script next on: {DateTime.Now.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")}");
             return;
         }
         else
@@ -99,5 +118,17 @@ public class HBVNonInsig
         if (rankUpClass)
             Adv.RankUpClass("Hollowborn Vindicator");
 
+    }
+
+    void FarmNextWeeks()
+    {
+        Core.Logger("Farming next week's requirements for Hollowborn Vindicator Class.");
+        VC.GetVindicatorCrest(100);
+        GE.GetGramielsEmblem(300);
+        GO.GetGraceOrb(400);
+        VB.GetVindicatorBadge(200);
+        HS.GetYaSoulsHeeeere(1500);
+        DP.GetDP(1);
+        Core.Logger("Next week's requirements for Hollowborn Vindicator Class have been farmed.");
     }
 }
