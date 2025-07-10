@@ -550,12 +550,6 @@ public class CoreBLOD
                 break;
         }
 
-        if (Core.CheckInventory(fullMetalName))
-        {
-            Core.Logger($"You already have {fullMetalName}, skipping upgrade.");
-            return;
-        }
-
         // Getting the name of the metal used to upgrade
         string upgradeMetalName = fullMetalName.Split(' ')[..2].Join(' ');
         Core.FarmingLogger(fullMetalName, 1);
