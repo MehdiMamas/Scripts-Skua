@@ -2564,7 +2564,7 @@
   },
   {
     "name": "Aria's Greenhouse Story",
-    "description": "This will finish the Aria's Greenhouse quests.",
+    "description": "This will finish the Aria's and Kylokos' Greenhouse quests.",
     "tags": [
       "story",
       "quest",
@@ -2574,10 +2574,13 @@
       "water",
       "fire",
       "energy",
-      "ariagreenhouse"
+      "ariagreenhouse",
+      "starfest",
+      "star festival",
+      "kylokos"
     ],
     "path": "Story/AriaGreenhouse.cs",
-    "size": 8921,
+    "size": 11176,
     "fileName": "AriaGreenhouse.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AriaGreenhouse.cs"
   },
