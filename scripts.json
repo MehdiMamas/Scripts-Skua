@@ -10336,6 +10336,42 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/InfernalParadiseMerge.cs"
   },
   {
+    "name": "Starhunt Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Starhunt Merge [2598] in /ariagreenhouse",
+    "tags": [
+      "starhunt",
+      "merge",
+      "ariagreenhouse",
+      "astromancers",
+      "apprentice",
+      "astro",
+      "gift",
+      "i",
+      "ii",
+      "astral",
+      "weapon",
+      "fireworks",
+      "qipao",
+      "elegant",
+      "festival",
+      "star",
+      "crimson",
+      "staredge",
+      "suhail",
+      "staredges",
+      "novablade",
+      "persei",
+      "novablades",
+      "spectral",
+      "saiph",
+      "alnitak"
+    ],
+    "path": "Other/MergeShops/StarhuntMerge.cs",
+    "size": 6095,
+    "fileName": "StarhuntMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/StarhuntMerge.cs"
+  },
+  {
     "name": "CruxShadowsMerge",
     "description": "null",
     "tags": [
