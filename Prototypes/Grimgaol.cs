@@ -187,6 +187,7 @@ public class Grimgaol
 
     private void DoGrimGaol()
     {
+        #region Enhancement setup & Equipment 
         // Classes
         Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky);
         Adv.EnhanceItem("Verus DoomKnight", EnhancementType.Lucky);
@@ -252,7 +253,7 @@ public class Grimgaol
             Core.Logger($"- {penitence}: Lucky (Penitence)");
         if (!string.IsNullOrWhiteSpace(vainglory))
             Core.Logger($"- {vainglory}: Lucky (Vainglory)");
-
+        #endregion
 
         while (!Bot.ShouldExit)
         {
@@ -353,9 +354,13 @@ public class Grimgaol
         Core.ChainComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9467) : 9466);
         Bot.Wait.ForQuestComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9467) : 9466);
         Core.Sleep(1500);
+        Bot.Map.Join("whitemap-999999", "Enter", "Spawn", autoCorrect: false);
+        Bot.Wait.ForMapLoad("whitemap");
+        Core.Sleep(1500);
         Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol{(Core.PrivateRoomNumber > 0 ? "-" + Core.PrivateRoomNumber : "")}%");
         Core.Sleep(4000);
         Bot.Wait.ForMapLoad("grimgaol");
+        Core.Sleep(1500);
     }
 
     private void Enter()
