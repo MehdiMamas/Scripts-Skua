@@ -1,7 +1,7 @@
 /*
 name: Aria's Greenhouse Story
-description: This will finish the Aria's Greenhouse quests.
-tags: story, quest, aria, greenhouse, nature,water,fire,energy,ariagreenhouse
+description: This will finish the Aria's and Kylokos' Greenhouse quests.
+tags: story, quest, aria, greenhouse, nature,water,fire,energy,ariagreenhouse,starfest,star festival,kylokos
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
@@ -30,6 +30,7 @@ public class AriaGreenhouse
         Water();
         Fire();
         Energy();
+        Kylokos();
     }
 
     public void Nature()
@@ -346,6 +347,96 @@ public class AriaGreenhouse
 
         // 10223 | King of the Tempest
         Story.MapItemQuest(10223, "terminagrove", 14406);
+
+
+    }
+
+    public void Kylokos()
+    {
+        if (Core.isCompletedBefore(10318))
+            return;
+
+        Story.PreLoad(this);
+
+
+        // 10309 | Epsilon Tau
+        if (!Story.QuestProgression(10309))
+        {
+            Core.HuntMonsterQuest(10309,
+                ("starfield", "Nova Seed", ClassType.Farm));
+        }
+
+
+        // 10310 | Fixed Earth
+        if (!Story.QuestProgression(10310))
+        {
+            Core.HuntMonsterQuest(10310,
+                ("hedgemaze", "Minotaur", ClassType.Farm));
+        }
+
+
+        // 10311 | Fable Fall
+        if (!Story.QuestProgression(10311))
+        {
+            Core.HuntMonsterQuest(10311,
+                ("fableforest", "Fire Elemental", ClassType.Farm));
+        }
+
+
+        // 10312 | Delta Andromedae
+        if (!Story.QuestProgression(10312))
+        {
+            Core.HuntMonsterQuest(10312,
+                ("ashray", "Kitefin Shark Bait", ClassType.Farm));
+        }
+
+
+        // 10313 | Beta Arietis
+        if (!Story.QuestProgression(10313))
+        {
+            Core.HuntMonsterQuest(10313,
+                ("kolyaban", "Tentacled Darkblood", ClassType.Farm));
+        }
+
+
+        // 10314 | 35 Arietis
+        if (!Story.QuestProgression(10314))
+        {
+            Core.HuntMonsterQuest(10314,
+                ("comet", "Vaderix", ClassType.Farm));
+        }
+
+
+        // 10315 | Fractured Pleiades
+        if (!Story.QuestProgression(10315))
+        {
+            Core.HuntMonsterQuest(10315,
+                ("atlaspromenade", "Atlas Light Magus", ClassType.Solo));
+        }
+
+
+        // 10316 | Lambda Ori
+        if (!Story.QuestProgression(10316))
+        {
+            Core.HuntMonsterQuest(10316,
+                ("victormatsuri", "Kitsune Himawari", ClassType.Solo));
+        }
+
+
+        // 10317 | Delta Ori
+        if (!Story.QuestProgression(10317))
+        {
+            Core.HuntMonsterQuest(10317,
+                ("hakuwar", "Long Kukol'nyy", ClassType.Solo));
+        }
+
+
+        // 10318 | Western Moon Mansions
+        if (!Story.QuestProgression(10318))
+        {
+            Core.HuntMonsterQuest(10318,
+                ("yokaiportal", "Kitsune Spirits", ClassType.Farm));
+        }
 
 
     }

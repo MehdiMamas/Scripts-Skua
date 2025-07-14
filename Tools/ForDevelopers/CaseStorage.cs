@@ -26629,6 +26629,28 @@ case ""Condensed Grace"":
                     break;
     "
 },
+{
+    "Delta Fragment",
+    @"
+case ""Delta Fragment"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10318,
+                                        (""yokaiportal"", ""Kitsune Spirits"", ClassType.Farm));
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic)
