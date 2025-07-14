@@ -1178,10 +1178,10 @@ public class Core13LoC
         if (!Story.QuestProgression(1470))
         {
             Core.EnsureAccept(1470);
-            Core.HuntMonster("dreamnexus", "Dark Wyvern", "Wyvern Scales", 5);
-            Core.HuntMonster("dreamnexus", "Dark Wyvern", "Wyvern Claws", 5);
-            Core.HuntMonster("dreamnexus", "Aether Serpent", "Serpent Fangs", 5);
-            Core.HuntMonster("dreamnexus", "Aether Serpent", "Serpent Hair", 5);
+            Core.HuntMonster("dreamnexus", "Dark Wyvern", "Wyvern Scales", 2);
+            Core.HuntMonster("dreamnexus", "Dark Wyvern", "Wyvern Claws", 2);
+            Core.HuntMonster("dreamnexus", "Aether Serpent", "Serpent Fangs", 2);
+            Core.HuntMonster("dreamnexus", "Aether Serpent", "Serpent Hair", 2);
             Core.EnsureComplete(1470);
         }
 
