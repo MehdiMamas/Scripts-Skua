@@ -1652,18 +1652,20 @@ public class CoreFarms
                     Core.BuyItem("alchemy", 397, 11478, 10, 1235);
                 }
 
-                else if (FactionRank("Alchemy") < 5)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Jera, trait: AlchemyTraits.hOu);
+                AlchemyPacket(
+                "Dragon Scale",
+                "Ice Vapor",
+                        // If Alchemy rank is less than 5, use Jera rune
+                        FactionRank("Alchemy") < 5
+                            ? AlchemyRunes.Jera
+                        // Else if rank is less than 8 (but >= 5), use Fehu rune
+                        : FactionRank("Alchemy") < 8
+                            ? AlchemyRunes.Fehu
+                            // Else (rank is 8 or higher), use Gebo rune
+                            : AlchemyRunes.Gebo,
+                trait: AlchemyTraits.hOu);
 
-                // Uruz is Currently Broke 
-                // else if (FactionRank("Alchemy") < 5)
-                //     AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Uruz, trait: AlchemyTraits.Hea);
 
-                else if (FactionRank("Alchemy") < 8)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Fehu, trait: AlchemyTraits.hOu);
-
-                else if (FactionRank("Alchemy") >= 8)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Gebo, trait: AlchemyTraits.hOu);
             }
             else
             {
@@ -1672,17 +1674,19 @@ public class CoreFarms
                     Core.KillMonster("lair", "Hole", "Center", "*", isTemp: false, log: false);
                 Core.KillMonster("lair", "Enter", "Spawn", "*", "Ice Vapor", 30, isTemp: false, log: false);
 
-                if (FactionRank("Alchemy") < 3)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Jera, trait: AlchemyTraits.hOu);
+                AlchemyPacket(
+                "Dragon Scale",
+                "Ice Vapor",
+                        // If Alchemy rank is less than 5, use Jera rune
+                        FactionRank("Alchemy") < 5
+                            ? AlchemyRunes.Jera
+                        // Else if rank is less than 8 (but >= 5), use Fehu rune
+                        : FactionRank("Alchemy") < 8
+                            ? AlchemyRunes.Fehu
+                            // Else (rank is 8 or higher), use Gebo rune
+                            : AlchemyRunes.Gebo,
+                trait: AlchemyTraits.hOu);
 
-                if (FactionRank("Alchemy") < 5)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Uruz, trait: AlchemyTraits.hOu);
-
-                if (FactionRank("Alchemy") < 8)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Fehu, trait: AlchemyTraits.hOu);
-
-                if (FactionRank("Alchemy") >= 8)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Gebo, trait: AlchemyTraits.hOu);
             }
             Core.Logger($"Iteration {i++} completed");
         }
