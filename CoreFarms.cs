@@ -1440,7 +1440,7 @@ public class CoreFarms
         if (YMB)
             Core.Logger("\"YouMadBro\" Mode: Enabled (this will only buy 1 Dragon Runestone as it doesnt use it :D)");
         Core.Join("alchemy");
-        int i = 0;
+        int i = 1;
         if (loop)
         {
             while (!Bot.ShouldExit && Core.CheckInventory(new[] { reagent1, reagent2, "Dragon Runestone" }))
@@ -1508,7 +1508,7 @@ public class CoreFarms
         Cri = 11,
         Dex = 12,
         Wis = 13,
-        Hea = 14
+        Hea = 14 // Health Potion
         //more to be added by request
     };
 
@@ -1652,17 +1652,18 @@ public class CoreFarms
                     Core.BuyItem("alchemy", 397, 11478, 10, 1235);
                 }
 
-                if (FactionRank("Alchemy") < 3)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Jera, trait: CoreFarms.AlchemyTraits.hOu);
-
                 else if (FactionRank("Alchemy") < 5)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Uruz, trait: CoreFarms.AlchemyTraits.hOu);
+                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Jera, trait: AlchemyTraits.hOu);
+
+                // Uruz is Currently Broke 
+                // else if (FactionRank("Alchemy") < 5)
+                //     AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Uruz, trait: AlchemyTraits.Hea);
 
                 else if (FactionRank("Alchemy") < 8)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Fehu, trait: CoreFarms.AlchemyTraits.hOu);
+                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Fehu, trait: AlchemyTraits.hOu);
 
                 else if (FactionRank("Alchemy") >= 8)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Gebo, trait: CoreFarms.AlchemyTraits.hOu);
+                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Gebo, trait: AlchemyTraits.hOu);
             }
             else
             {
@@ -1672,16 +1673,16 @@ public class CoreFarms
                 Core.KillMonster("lair", "Enter", "Spawn", "*", "Ice Vapor", 30, isTemp: false, log: false);
 
                 if (FactionRank("Alchemy") < 3)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Jera, trait: CoreFarms.AlchemyTraits.hOu);
+                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Jera, trait: AlchemyTraits.hOu);
 
                 if (FactionRank("Alchemy") < 5)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Uruz, trait: CoreFarms.AlchemyTraits.hOu);
+                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Uruz, trait: AlchemyTraits.hOu);
 
                 if (FactionRank("Alchemy") < 8)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Fehu, trait: CoreFarms.AlchemyTraits.hOu);
+                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Fehu, trait: AlchemyTraits.hOu);
 
                 if (FactionRank("Alchemy") >= 8)
-                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Gebo, trait: CoreFarms.AlchemyTraits.hOu);
+                    AlchemyPacket("Dragon Scale", "Ice Vapor", AlchemyRunes.Gebo, trait: AlchemyTraits.hOu);
             }
             Core.Logger($"Iteration {i++} completed");
         }

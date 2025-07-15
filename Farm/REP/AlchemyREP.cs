@@ -16,7 +16,8 @@ public class AlchemyREP
     public string OptionsStorage = "AlchemyREP";
     public List<IOption> Options = new()
     {
-        new Option<bool>("goldMethod", "use Gold?", "Using gold (cost 7.000.000 without boosts rank 1 to 10)", false)
+        new Option<bool>("goldMethod", "use Gold?", "Using gold (cost 7.000.000 without boosts rank 1 to 10)", false),
+        CoreBots.Instance.SkipOptions,
     };
 
     //Gold Voucher 500k x6 (3.000.000 Gold) => 30x Dragon Runestone => Dragon Scale & Ice Vapor x30
