@@ -140,7 +140,7 @@ public class Grimgaol
     private UnlockForgeEnhancements Forge = new();
 
     public string OptionsStorage = "Grimgaol";
-    public bool DontSetOptions = true;
+    public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         // VHL : luck
