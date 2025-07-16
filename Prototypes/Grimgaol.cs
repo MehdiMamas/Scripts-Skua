@@ -148,6 +148,7 @@ public class Grimgaol
         // Dragon of Time : Healer
 
         // weaponons
+        CoreBots.Instance.SkipOptions,
         new Option<string>("Valiance", "Weapon: Valiance", "insert name of your Valiance weapon", ""),
         new Option<string>("Dauntless", "Weapon: Dauntless", "insert name of your Dauntless weapon", ""),
         new Option<string>("Elysium", "Weapon: Elysium", "insert name of your Elysium weapon", ""),
@@ -160,7 +161,6 @@ public class Grimgaol
         // cape
         new Option<string>("Penitence", "Cape: Penitence", "insert name of your Penitence cape", ""),
         new Option<string>("Vainglory", "Cape: Vainglory", "insert name of your Vainglory cape", ""),
-        CoreBots.Instance.SkipOptions
     };
 
     public void ScriptMain(IScriptInterface Bot)
