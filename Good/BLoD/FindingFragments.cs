@@ -21,6 +21,7 @@ public class FindingFragments_Any
     private CoreStory Story = new();
 
     public string OptionStorage = "Finding_FragmentsV2";
+    public bool DontSetOptions = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
