@@ -160,6 +160,7 @@ public class Grimgaol
         // cape
         new Option<string>("Penitence", "Cape: Penitence", "insert name of your Penitence cape", ""),
         new Option<string>("Vainglory", "Cape: Vainglory", "insert name of your Vainglory cape", ""),
+        CoreBots.Instance.SkipOptions
     };
 
     public void ScriptMain(IScriptInterface Bot)
