@@ -111,8 +111,8 @@ public class CoreShadowofDoom
         if (!Story.QuestProgression(9441))
         {
             Core.EnsureAccept(9441);
-            Core.HuntMonster("camlan", "Sleih", "Cracked Light Crystal");
             Core.HuntMonster("camlan", "Bellona", "Crushed Light Pendant");
+            Core.HuntMonster("camlan", "Sleih", "Cracked Light Crystal");
             Core.EnsureComplete(9441);
         }
 
