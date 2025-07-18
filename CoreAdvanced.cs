@@ -3771,6 +3771,8 @@ public class CoreAdvanced
                 case "guardian":
                 case "heavy metal necro":
                 case "heavy metal rockstar":
+                case "hollowborn vindicator":
+                case "Hollowborn Vindicator Member Preview":
                 case "hobo highlord":
                 case "lord of order":
                 case "legendary hero":
