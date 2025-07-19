@@ -800,7 +800,7 @@ public class CoreAOR
         TerminaTemple(coldThunder: true);
     }
 
-    //mostly for `Skye's Lightning` for the Merge
+    // Mostly for `Skye's Lightning` for the Merge
     public void ColdThunderBoss(string? item = null, int quant = 1, bool isTemp = true)
     {
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant)))
@@ -810,17 +810,11 @@ public class CoreAOR
             return;
         }
 
+        // Reset potion flags
+        bool needsPotion = false;
+        bool potionApplied = false;
+
         Bot.Events.ExtensionPacketReceived += Listener;
-        // if (Core.CheckInventory("Dragon of Time"))
-        // {
-        //     Adv.GearStore();
-        //     Core.Logger("Ohh..? you have DoT :O.. this is appearntly soloable");
-        //     //insurance vv
-        //     Core.Unbank("Dragon of Time");
-        //     Core.Equip("Dragon of Time");
-        //     if (Bot.Player.Alive && Bot.Player.CurrentClass.Name == "Dragon of Time")
-        //         Bot.Skills.StartAdvanced("Dragon of Time", true, ClassUseMode.Solo);
-        // }
 
         if (!isTemp && item != null)
             Core.AddDrop(item);
@@ -850,7 +844,39 @@ public class CoreAOR
             if (Bot.Player.Cell != "r3")
                 Core.Jump("r3");
 
-            Bot.Combat.Attack("*");
+            // Check if potion is needed and handle it
+            if (needsPotion && !potionApplied)
+            {
+                Core.Logger("Detected 'The skies rumble. Prepare yourself!' - applying Bananach's Last Will potion...");
+
+                // Keep trying to use potion until it's successfully applied
+                while (!Bot.ShouldExit && needsPotion && !potionApplied)
+                {
+                    Bot.Combat.CancelAutoAttack();
+                    Bot.Combat.CancelTarget();
+                    Core.UsePotion();
+                    Core.Sleep(200); // Small delay to allow potion to apply
+
+                    // Check if Bananach's Last Will potion was applied
+                    // You might need to adjust the aura name based on what this potion actually provides
+                    if (Bot.Self.HasActiveAura("Bananach's Last Will"))
+                    {
+                        potionApplied = true;
+                        needsPotion = false;
+                        Core.Logger("Bananach's Last Will potion successfully applied!");
+                    }
+                    else
+                    {
+                        Core.Sleep(100); // Brief pause before retrying
+                    }
+                }
+            }
+
+            // Only attack if no potion is needed or potion has been applied
+            if (!needsPotion || potionApplied)
+            {
+                Bot.Combat.Attack("*");
+            }
 
             if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant)))
             {
@@ -861,6 +887,11 @@ public class CoreAOR
             Core.Sleep();
         }
         Bot.Events.ExtensionPacketReceived -= Listener;
+
+        // Reset potion flags
+        needsPotion = false;
+        potionApplied = false;
+
         Core.JumpWait();
         Adv.GearStore(true);
 
@@ -883,7 +914,9 @@ public class CoreAOR
 
                                 if (a.msg is not null && (string)a.msg is "The skies rumble. Prepare yourself!")
                                 {
-                                    Core.UsePotion();
+                                    needsPotion = true;
+                                    potionApplied = false;
+                                    Core.Logger("Event detected: The skies rumble. Prepare yourself! - Potion needed.");
                                 }
                             }
                         }
