@@ -482,15 +482,15 @@ public class CoreArchMage
         }
 
         Core.AddDrop("Unbound Thread");
-        while (!Bot.ShouldExit && !Core.CheckInventory("Unbound Thread", 100))
+        while (!Bot.ShouldExit && !Core.CheckInventory("Unbound Thread", quant))
         {
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("DeadLines", "Frenzied Mana", "Captured Mana", 8);
             Core.HuntMonster("DeadLines", "Shadowfall Warrior", "Armor Scrap", 8);
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("DeadLines", "Eternal Dragon", "Eternal Dragon Scale");
-            Bot.Wait.ForPickup("Unbound Thread");
         }
+        Bot.Wait.ForPickup("Unbound Thread");
         Core.CancelRegisteredQuests();
     }
     #endregion

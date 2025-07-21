@@ -115,7 +115,10 @@ public class CoreSoWMats
     public void PrismaticSeams(int Quantity = 2000)
     {
         if (Core.CheckInventory("Prismatic Seams", Quantity))
+        {
+            Core.Logger($"You already have {Quantity} Prismatic Seams, skipping farming.");
             return;
+        }
 
         SoW.TimestreamWar();
 
@@ -124,7 +127,7 @@ public class CoreSoWMats
         Core.EquipClass(ClassType.Farm);
 
         Core.RegisterQuests(8814, 8815);
-        Core.KillMonster("Streamwar", "r3a", "Left", "*", "Prismatic Seams", Quantity, false);
+        Core.KillMonster("Streamwar", "r3a", "Left", "*", "Prismatic Seams", Quantity, false, false);
         Bot.Wait.ForPickup("Prismatic Seams");
         Core.CancelRegisteredQuests();
     }
