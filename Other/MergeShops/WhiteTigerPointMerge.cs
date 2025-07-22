@@ -6,6 +6,7 @@ tags: whitetigerpoint, merge, whitetigerpoint, aureate, white, tiger, starbound,
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/Story/WhiteTigerPoint.cs
+//cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
@@ -16,9 +17,9 @@ public class WhiteTigerPointMerge
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
     private CoreFarms Farm = new();
+    private whitetigerpoint whitetigerpoint = new();
     private CoreAdvanced Adv = new();
     private static CoreAdvanced sAdv = new();
-    private whitetigerpoint whitetigerpoint = new();
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
