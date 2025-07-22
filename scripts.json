@@ -2563,6 +2563,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/DarkCarnax.cs"
   },
   {
+    "name": "WhiteTigerPoint",
+    "description": "Does the quests in /whitetigerpoint.",
+    "tags": [
+      "whitetigerpoint",
+      "storyline",
+      "story",
+      "white tiger point",
+      "white tiger point storyline"
+    ],
+    "path": "Story/WhiteTigerPoint.cs",
+    "size": 3286,
+    "fileName": "WhiteTigerPoint.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/WhiteTigerPoint.cs"
+  },
+  {
     "name": "Aria's Greenhouse Story",
     "description": "This will finish the Aria's and Kylokos' Greenhouse quests.",
     "tags": [
@@ -10554,6 +10569,31 @@
     "size": 6796,
     "fileName": "DeepTunnelMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DeepTunnelMerge.cs"
+  },
+  {
+    "name": "WhiteTigerPoint Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the WhiteTigerPoint Merge [2600] in /whitetigerpoint",
+    "tags": [
+      "whitetigerpoint",
+      "merge",
+      "whitetigerpoint",
+      "aureate",
+      "white",
+      "tiger",
+      "starbound",
+      "morph",
+      "cowl",
+      "starstruck",
+      "komokutens",
+      "star",
+      "spear",
+      "byakko",
+      "house"
+    ],
+    "path": "Other/MergeShops/WhiteTigerPointMerge.cs",
+    "size": 5314,
+    "fileName": "WhiteTigerPointMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/WhiteTigerPointMerge.cs"
   },
   {
     "name": "Nova Shrine Gifts Merge",
