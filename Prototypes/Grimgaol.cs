@@ -147,7 +147,10 @@ public class Grimgaol
         // VDK : luck
         // Dragon of Time : Healer
 
-        // weaponons
+        // Skip Options
+        CoreBots.Instance.SkipOptions,
+
+        // weapons
         CoreBots.Instance.SkipOptions,
         new Option<string>("Valiance", "Weapon: Valiance", "insert name of your Valiance weapon", ""),
         new Option<string>("Dauntless", "Weapon: Dauntless", "insert name of your Dauntless weapon", ""),
@@ -165,29 +168,35 @@ public class Grimgaol
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        // Setoptions is disable due to how we'l be using skills, so we have todo it like this:
-        //transfered stuff from core to a void below, it wont affect the script
         SetOptions();
-
-        // Options Check
-        CheckConfig();
-
-        //Prerequisites
-        Prereqs();
-
-        // Class Check
-        if (!Core.CheckInventory(new[] { "Dragon of Time", "Void Highlord", "Verus DoomKnight" }))
-        {
-            Core.Logger("You need to have the following classes: Dragon of Time, Void Highlord, Verus DoomKnight", stopBot: true);
-        }
 
         DoGrimGaol();
 
         Bot.Stop();
     }
 
-    private void DoGrimGaol()
+    public void DoGrimGaol(int rank = 10)
     {
+        if (Farm.FactionRank("Grimskull Trolling") >= rank)
+        {
+            Core.Logger($"You already have rank {rank} Grimskull Trolling reputation.");
+            return;
+        }
+        
+        Core.Logger("Checking prerequisites and configurations...");
+        CheckConfig();
+        Prereqs();
+        Core.Logger("Prerequisites and configurations checked successfully.");
+
+        Core.Logger($"Farming rank {rank} Grimskull Trolling reputation.");
+
+
+        if (!Core.CheckInventory(new[] { "Dragon of Time", "Void Highlord", "Verus DoomKnight" }))
+        {
+            Core.Logger("You need to have the following classes: Dragon of Time, Void Highlord, Verus DoomKnight", stopBot: true);
+        }
+
+
         #region Enhancement setup & Equipment 
         // Classes
         Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky);
@@ -256,7 +265,7 @@ public class Grimgaol
             Core.Logger($"- {vainglory}: Lucky (Vainglory)");
         #endregion
 
-        while (!Bot.ShouldExit)
+        while (!Bot.ShouldExit && Farm.FactionRank("Grimskull Trolling") < rank)
         {
             if (Bot.Map.Name.ToLower() == "grimgaol")
             {
@@ -740,24 +749,25 @@ public class Grimgaol
             return;
         }
 
-        bool UseDot = Adv.uDauntless();
-        Core.Equip(UseDot ? "Dragon of Time" : "Void Highlord");
         string? valiance = Bot.Config!.Get<string>("Valiance");
-        string? elysium = Bot.Config!.Get<string>("Elysium");
+        string? elysium = Bot.Config.Get<string>("Elysium");
+        string? dauntless = Bot.Config.Get<string>("Dauntless");
 
-        if (UseDot && !string.IsNullOrWhiteSpace(elysium))
+        // Determine weapon based on availability and unlocks
+        string? weapon =
+            Adv.uElysium() && !string.IsNullOrWhiteSpace(elysium) ? elysium :
+            Adv.uDauntless() && !string.IsNullOrWhiteSpace(dauntless) ? dauntless :
+            !string.IsNullOrWhiteSpace(valiance) ? valiance : null;
+
+        // Equip based on which group the weapon came from
+        Core.Equip((weapon == elysium || weapon == dauntless) ? "Dragon of Time" : "Void Highlord");
+
+        // Ensure the weapon is equipped
+        if (!string.IsNullOrWhiteSpace(weapon))
         {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(elysium))
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(weapon))
             {
-                Core.Equip(elysium);
-                Core.Sleep(1500);
-            }
-        }
-        else if (!string.IsNullOrWhiteSpace(valiance))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
-            {
-                Core.Equip(valiance);
+                Core.Equip(weapon);
                 Core.Sleep(1500);
             }
         }
