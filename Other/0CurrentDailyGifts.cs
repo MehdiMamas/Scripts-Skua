@@ -73,7 +73,7 @@ public class CurrentDailyGifts
             GetGift(Permanent, "dflesson", "Fluffy the Dracolich", "Zurvana's Blessing", "Zurvana's Wrath", "Zurvana's Wrath", "Zurvana's Pity", "Zurvana's Pity");
             GetGift(Permanent, "mqlesson", "Dragonoid", "Dragonoid Edge", "Dragonoid Edges");
             GetGift(Permanent, "aqw3d", "Trolluk", "Underworld Anguish Scythe");
-            GetGift(Permanent, "lavarockbay", "Kalayo", "Lavarock Orb Pet");
+            // GetGift(Permanent, "lavarockbay", "Kalayo", "Lavarock Orb Pet");
             // GetGift(Permanent, "burningbeach", "Lava Guardian", "Burnt Ember Scrap Pet");
             GetGift(Permanent, "twilightzone", "Leviathan", "Fallen Leviathan's Spear", "Staff of the Twilight Sea God", "Sea Dragon's Scimitars", "Sea Dragon's Scimitar");
 
