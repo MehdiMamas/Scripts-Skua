@@ -5,7 +5,6 @@ tags: whitetigerpoint, storyline, story, white tiger point, white tiger point st
 */
 
 //cs_include Scripts/CoreBots.cs
-//cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
 
