@@ -200,6 +200,7 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/VasalkarLairWar.cs
 
 //cs_include Scripts/Story/WatchTower.cs
+//cs_include Scripts/Story/WhiteTigerPoint.cs
 //cs_include Scripts/Story/WillowCreek.cs
 
 //cs_include Scripts/Story/XansLair.cs
@@ -428,6 +429,7 @@ public class AllStories
     public LairWar LairWar = new(); //VasalkarLairWar.cs
 
     public WatchTower WatchTower = new();
+    public whitetigerpoint WhiteTigerPoint = new();
     public WillowCreek WillowCreek = new();
 
     public XansLair Xans = new();
@@ -992,6 +994,9 @@ public class AllStories
 
         WatchTower.StoryLine();
         Core.Logger($"Story: WatchTower - Complete");
+
+        WhiteTigerPoint.DoStory();
+        Core.Logger($"Story: White Tiger Point - Complete");
 
         WillowCreek.StoryLine();
         Core.Logger($"Story: Willow Creek - Complete");
