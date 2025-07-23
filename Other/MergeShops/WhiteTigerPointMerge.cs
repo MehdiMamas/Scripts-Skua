@@ -86,7 +86,6 @@ public class WhiteTigerPointMerge
                         Core.HuntMonster("whitetigerpoint", "Byakko", req.Name, quant, req.Temp);
                         Bot.Wait.ForPickup(req.Name);
                     }
-                    Core.CancelRegisteredQuests();
                     break;
                     #endregion
 
