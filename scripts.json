@@ -2689,7 +2689,7 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 30700,
+    "size": 30895,
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -4027,7 +4027,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 888729,
+    "size": 893579,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -8337,7 +8337,7 @@
       "farm"
     ],
     "path": "Other/FarmJoeKits/JoePrepsForUltras.cs",
-    "size": 24003,
+    "size": 24049,
     "fileName": "JoePrepsForUltras.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/JoePrepsForUltras.cs"
   },
@@ -10591,7 +10591,7 @@
       "house"
     ],
     "path": "Other/MergeShops/WhiteTigerPointMerge.cs",
-    "size": 5314,
+    "size": 5300,
     "fileName": "WhiteTigerPointMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/WhiteTigerPointMerge.cs"
   },
