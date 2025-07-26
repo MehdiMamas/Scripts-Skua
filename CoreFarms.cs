@@ -2727,7 +2727,7 @@ public class CoreFarms
 
     void RunDeathPitBrawl(string item = "Death Pit Token", int quant = 1, int rank = 10, bool canSoloBoss = true)
     {
-        foreach (int QID in new[] { 5156, 5157, 5165 })
+        foreach (int QID in new[] { 5153, 5156, 5157, 5165 })
         {
             if (Bot.Quests.IsUnlocked(QID))
                 Core.RegisterQuests(QID);
