@@ -6082,11 +6082,15 @@ public class CoreBots
 
                     Bot.Flash.CallGameFunction("toggleItemEquip", dItem);
                     Sleep(1500);
+                    if (Bot.Inventory.IsEquipped(item.ID))
+                        Logger($"Equipped item: {item.Name} (ID: {item.ID})");
                     break;
 
                 default:
                     Bot.Inventory.EquipItem(item.ID);
                     Sleep(1500);
+                    if (Bot.Inventory.IsEquipped(item.ID))
+                        Logger($"Equipped item: {item.Name} (ID: {item.ID})");
                     break;
             }
 
