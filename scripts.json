@@ -4487,7 +4487,7 @@
       "verata's necronomicon"
     ],
     "path": "Farm/REP/GrimskullTrollingRep.cs",
-    "size": 7353,
+    "size": 7394,
     "fileName": "GrimskullTrollingRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/GrimskullTrollingRep.cs"
   },
@@ -12477,6 +12477,34 @@
     "size": 5393,
     "fileName": "SpiritHunterMerge[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SpiritHunterMerge[Mem].cs"
+  },
+  {
+    "name": "Magnis Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Magnis Merge [2602] in /thelimacity",
+    "tags": [
+      "magnis",
+      "merge",
+      "thelimacity",
+      "mindbreaker",
+      "paladin",
+      "w",
+      "shield",
+      "mindbreakers",
+      "winged",
+      "morph",
+      "paladins",
+      "faceplate",
+      "heroic",
+      "ground",
+      "spear",
+      "",
+      "mana",
+      "solace"
+    ],
+    "path": "Other/MergeShops/MagnisMerge.cs",
+    "size": 12015,
+    "fileName": "MagnisMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/MagnisMerge.cs"
   },
   {
     "name": "KagesMerge[mem-non-ac]",
