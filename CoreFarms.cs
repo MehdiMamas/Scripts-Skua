@@ -1307,7 +1307,7 @@ public class CoreFarms
     #endregion Misc
 
     #region Reputation
-    public void GetAllRanks(bool doDeathPit = true)
+    public void GetAllRanks(bool doDeathPit)
     {
         ToggleBoost(BoostType.Reputation);
 
@@ -1364,6 +1364,7 @@ public class CoreFarms
         TreasureHunterREP();
         TrollREP();
         VampireREP();
+        YewMountainsREP();
         YokaiREP();
         if (doDeathPit)
         {
@@ -3551,6 +3552,23 @@ public class CoreFarms
             Core.HuntMonster("safiria", "Twisted Paw", "Twisted Paw's Head", log: false);
             Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
         }
+        Core.CancelRegisteredQuests();
+        ToggleBoost(BoostType.Reputation, false);
+        Core.SavedState(false);
+    }
+
+    public void YewMountainsREP(int rank = 10)
+    {
+        if (FactionRank("Yew Mountains") >= rank)
+            return;
+
+        Core.EquipClass(ClassType.Farm);
+        ToggleBoost(BoostType.Reputation);
+        Core.Logger($"Farming rank {rank} for Yew Mountains");
+
+        Core.RegisterQuests(10334); // In Your Dreams
+        while (!Bot.ShouldExit && FactionRank("Yew Mountains") < rank)
+            Core.KillMonster("somnia", "r9", "Left", "*");
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);

@@ -27,6 +27,8 @@ public class GetAllRanks
     public Core13LoC LOC => new();
     public GlaceraStory Glac => new();
     public BrightOak BrightOak = new();
+
+
     public bool DontPreconfigure = true;
     public string OptionsStorage = "GetAllRanks";
     public List<IOption> Options = new()
@@ -46,7 +48,7 @@ public class GetAllRanks
     }
 
 
-    public void DoGetAllRanks(bool doDeathPit = true)
+    public void DoGetAllRanks()
     {
         //Adv.BestGear(GenericGearBoost.dmgAll);
         //Adv.BestGear(GenericGearBoost.rep);
@@ -57,11 +59,10 @@ public class GetAllRanks
         BrightOak.doall(true);
         Core.Logger("when doing the `Glacera` storyline, you may have to restart it in the middle of the quests due to ae's bullshit how it keeps another quest locked even though the preivosu is completed till you relog");
         Glac.DoAll();
-        doDeathPit = Bot.Config!.Get<bool>("doDeathPit");
+        bool doDeathPit = Bot.Config!.Get<bool>("doDeathPit");
         Core.Logger($"Doing all Reputations to Rank 10, Death Pit: {doDeathPit}");
         if (doDeathPit)
             TOD.DeathPitPVP();
-
 
         Farm.GetAllRanks(doDeathPit);
 
