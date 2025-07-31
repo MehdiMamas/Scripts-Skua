@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 140693,
+    "size": 141297,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -4791,6 +4791,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/ArcangroveREP.cs"
   },
   {
+    "name": "Yew Mountains REP",
+    "description": "This script will farm Yew Mountains REP to rank 10.",
+    "tags": [
+      "yew mountains",
+      "rep",
+      "reputation",
+      "farm"
+    ],
+    "path": "Farm/REP/YewMountainsRep.cs",
+    "size": 577,
+    "fileName": "YewMountainsRep.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/YewMountainsRep.cs"
+  },
+  {
     "name": "Alchemy REP",
     "description": "This script will farm Alchemy reputation to rank 10.",
     "tags": [
@@ -4833,7 +4847,7 @@
       "reps"
     ],
     "path": "Farm/REP/1GetAllRanks.cs",
-    "size": 2417,
+    "size": 2402,
     "fileName": "1GetAllRanks.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/1GetAllRanks.cs"
   },
