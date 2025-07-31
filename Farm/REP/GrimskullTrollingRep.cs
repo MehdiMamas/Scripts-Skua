@@ -137,6 +137,7 @@ public class GrimskullTrollingRep
     public Grimgaol GrimGaolRun = new();
     public static Grimgaol GGrimGaolRun = new();
 
+    public bool DontPreconfigure = true;
     public string OptionsStorage = GGrimGaolRun.OptionsStorage;
     public List<IOption> Options = GGrimGaolRun.Options;
 
