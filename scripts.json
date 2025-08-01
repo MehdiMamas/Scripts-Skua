@@ -66,6 +66,17 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/MoreSkullsWorldBoss.cs"
   },
   {
+    "name": "LichPreFarm",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Prototypes/LichClassPreFarm.cs",
+    "size": 7950,
+    "fileName": "LichClassPreFarm.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/LichClassPreFarm.cs"
+  },
+  {
     "name": "Butler",
     "description": "This will follow a player and copy their actions and do attack actions.",
     "tags": [
@@ -100,7 +111,7 @@
       "beta"
     ],
     "path": "Prototypes/Grimgaol.cs",
-    "size": 49174,
+    "size": 57028,
     "fileName": "Grimgaol.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
@@ -4487,7 +4498,7 @@
       "verata's necronomicon"
     ],
     "path": "Farm/REP/GrimskullTrollingRep.cs",
-    "size": 7661,
+    "size": 7658,
     "fileName": "GrimskullTrollingRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/GrimskullTrollingRep.cs"
   },
