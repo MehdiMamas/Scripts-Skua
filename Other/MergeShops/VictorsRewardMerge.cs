@@ -1,7 +1,7 @@
 /*
 name: Victors Reward Merge
 description: This bot will farm the items belonging to the selected mode for the Victors Reward Merge [2594] in /coliseum
-tags: victors, reward, merge, coliseum, floating, sapphire, orbs, manifestation, void, phantasm, tail, black, moon, deep, marauder, berserker, morph, fugitive, mutative, orb, pet, rippling, katana, katanas, sheathed, ivory, thorn, crux, nyx, cruxes, violet, sharp, crew, cut, professional, acidic, raylock, abandoned, undead, skull, arena, forked, scorpions, stinger, ominous, bloodstaff, arrogant, angel, spines
+tags: victors, reward, merge, coliseum, floating, sapphire, orbs, manifestation, void, phantasm, tail, black, moon, deep, marauder, berserker, morph, fugitive, mutative, orb, pet, rippling, katana, katanas, sheathed, ivory, thorn, crux, nyx, cruxes, violet, sharp, crew, cut, professional, acidic, raylock, abandoned, undead, skull, arena, forked, scorpions, stinger, ominous, bloodstaff, arrogant, angel, spines, gilded, gunslinger, bounty, hunter, ornate, gold, pistol, pistols, shotgun, rush, knife, knives, beard, , backup
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -189,5 +189,19 @@ public class VictorsRewardMerge
         new Option<bool>("90244", "Ominous BloodStaff", "Mode: [select] only\nShould the bot buy \"Ominous BloodStaff\" ?", false),
         new Option<bool>("90245", "Arrogant BloodStaff", "Mode: [select] only\nShould the bot buy \"Arrogant BloodStaff\" ?", false),
         new Option<bool>("91109", "Angel of the Void Spines", "Mode: [select] only\nShould the bot buy \"Angel of the Void Spines\" ?", false),
+        new Option<bool>("93398", "Gilded Gunslinger", "Mode: [select] only\nShould the bot buy \"Gilded Gunslinger\" ?", false),
+        new Option<bool>("93399", "Gilded Bounty Hunter", "Mode: [select] only\nShould the bot buy \"Gilded Bounty Hunter\" ?", false),
+        new Option<bool>("93411", "Ornate Gold Pistol", "Mode: [select] only\nShould the bot buy \"Ornate Gold Pistol\" ?", false),
+        new Option<bool>("93412", "Ornate Gold Pistols", "Mode: [select] only\nShould the bot buy \"Ornate Gold Pistols\" ?", false),
+        new Option<bool>("93413", "Ornate Gold Shotgun", "Mode: [select] only\nShould the bot buy \"Ornate Gold Shotgun\" ?", false),
+        new Option<bool>("93414", "Gold Rush Knife", "Mode: [select] only\nShould the bot buy \"Gold Rush Knife\" ?", false),
+        new Option<bool>("93415", "Gold Rush Knives", "Mode: [select] only\nShould the bot buy \"Gold Rush Knives\" ?", false),
+        new Option<bool>("93416", "Ornate Gold Guns", "Mode: [select] only\nShould the bot buy \"Ornate Gold Guns\" ?", false),
+        new Option<bool>("93401", "Gilded Gunslinger Hair", "Mode: [select] only\nShould the bot buy \"Gilded Gunslinger Hair\" ?", false),
+        new Option<bool>("93402", "Gilded Gunslinger Locks", "Mode: [select] only\nShould the bot buy \"Gilded Gunslinger Locks\" ?", false),
+        new Option<bool>("93403", "Gilded Gunslinger Beard", "Mode: [select] only\nShould the bot buy \"Gilded Gunslinger Beard\" ?", false),
+        new Option<bool>("93405", "Gilded Gunslinger Hat + Locks", "Mode: [select] only\nShould the bot buy \"Gilded Gunslinger Hat + Locks\" ?", false),
+        new Option<bool>("93406", "Gilded Gunslinger Hat", "Mode: [select] only\nShould the bot buy \"Gilded Gunslinger Hat\" ?", false),
+        new Option<bool>("93410", "Back-Up Ornate Gold Shotgun", "Mode: [select] only\nShould the bot buy \"Back-Up Ornate Gold Shotgun\" ?", false),
    };
 }
