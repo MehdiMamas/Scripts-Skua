@@ -1482,7 +1482,7 @@ public class CoreBots
             }
 
             //Member Check
-            if (item.Upgrade && !IsMember)
+            if (item.Upgrade && !Bot.Player.IsMember)
             {
                 Logger($"Cannot buy {item.Name} from {shopID} because you aren't a member.", "CanBuy");
                 return false;
@@ -2324,7 +2324,7 @@ public class CoreBots
                 continue;
             }
 
-            if (q.Upgrade && !IsMember)
+            if (q.Upgrade && !Bot.Player.IsMember)
             {
                 Logger($"Quest {questID} requires membership, but the player is not a member.");
                 continue;
@@ -2484,7 +2484,7 @@ public class CoreBots
             return false;
         }
 
-        if (QuestData.Upgrade && !IsMember)
+        if (QuestData.Upgrade && !Bot.Player.IsMember)
             Logger($"\"{QuestData.Name}\" [{questID}] is member-only, stopping the bot.", stopBot: true);
 
         if (questID <= 0)
@@ -2542,7 +2542,7 @@ public class CoreBots
 
         foreach (Quest quest in QuestData)
         {
-            if (quest.Upgrade && !IsMember)
+            if (quest.Upgrade && !Bot.Player.IsMember)
                 Logger($"\"{quest.Name}\" [{quest.ID}] is member-only, stopping the bot.", stopBot: true);
 
             if (Bot.Quests.IsInProgress(quest.ID) || quest.ID <= 0)
@@ -3252,7 +3252,7 @@ public class CoreBots
             return false;
         }
 
-        if (QuestData.Upgrade && !IsMember)
+        if (QuestData.Upgrade && !Bot.Player.IsMember)
             Logger($"\"{QuestData.Name}\" [{questID}] is member-only, stopping the bot.", stopBot: true);
 
         if (Bot.Quests.IsInProgress(questID))
@@ -3280,7 +3280,7 @@ public class CoreBots
         }
         foreach (Quest quest in QuestData)
         {
-            if (quest.Upgrade && !IsMember)
+            if (quest.Upgrade && !Bot.Player.IsMember)
                 Logger($"\"{quest.Name}\" [{quest.ID}] is member-only, stopping the bot.", stopBot: true);
 
             if (Bot.Quests.IsInProgress(quest.ID) || quest.ID <= 0)
@@ -6773,7 +6773,7 @@ public class CoreBots
                 break;
         }
 
-        if (!IsMember)
+        if (!Bot.Player.IsMember)
             blackListedCells.Add("Eggs");
 
         // Jump to a viable cell (or retry)
