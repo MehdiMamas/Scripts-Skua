@@ -459,13 +459,13 @@ public class CoreSDKA
                     Bot.Wait.ForPickup("Calamitous Chromium");
                 }
                 Core.FarmingLogger("Calamitous Chromium of Doom");
-                PinpointDaggers();
+                OmninousAura();
                 DoomKnightWK("Corrupt Spirit Orb", 5);
                 Core.BuyItem("dwarfhold", 434, "Calamitous Chromium of Doom");
             }
             if (!Core.CheckInventory("Diabolical Aura"))
             {
-                PinpointDaggers(25);
+                OmninousAura(25);
                 DoomMerge("Diabolical Aura");
             }
             Core.FarmingLogger("Broadsword of Bane");
@@ -479,7 +479,7 @@ public class CoreSDKA
         {
             Core.FarmingLogger("Shadow Broadsword of Bane");
             DoomKnightWK("Corrupt Spirit Orb");
-            PinpointDaggers(1);
+            OmninousAura(1);
             DoomSoldierWK();
             DoomMerge("Shadow Broadsword of Bane");
         }
@@ -522,7 +522,7 @@ public class CoreSDKA
                     Bot.Wait.ForPickup("Reprehensible Rhodium");
                 }
                 Core.FarmingLogger("Reprehensible Rhodium of Doom");
-                PinpointDaggers();
+                OmninousAura();
                 DoomKnightWK("Corrupt Spirit Orb", 5);
                 Core.BuyItem("dwarfhold", 434, "Reprehensible Rhodium of Doom");
             }
@@ -558,7 +558,7 @@ public class CoreSDKA
             return;
 
         PinpointBow(500, 250);
-        PinpointDaggers(125);
+        OmninousAura(125);
         PinpointBroadsword(75);
 
         Core.Logger(Core.CheckInventory("Doom Aura") ? "Doom Aura found." : "Farming for Doom Aura");
@@ -582,15 +582,39 @@ public class CoreSDKA
         Bot.Wait.ForPickup("Sepulchure's DoomKnight Armor");
     }
 
-    public void PinpointDaggers(int quant = 5)
+    public void OmninousAura(int quant = 5)
     {
         if (Core.CheckInventory("Ominous Aura", quant))
             return;
 
-        if (!Core.CheckInventory("Necrotic Daggers of Destruction", 1)) // Assuming third argument is toInv
-            NecroticDaggers();
+        // Substitute "Necrotic Daggers of Destruction"
+        // with "Necrotic Mace of Misery" or "Necrotic Scythe of Scourge" if the player has it
 
-        PinpointthePieces(2181, new[] { "Ominous Aura" }, new[] { quant });
+        // List of weapons in in order of best rates [Best to worst]
+        string[] Weapons = { "Necrotic Daggers of Destruction", "Necrotic Mace of Misery", "Necrotic Scythe of Scourge" };
+        string Weapon = Weapons.FirstOrDefault(w => Core.CheckInventory(w)) ?? "Necrotic Daggers of Destruction";
+        switch (Weapon)
+        {
+            case "Necrotic Daggers of Destruction":
+                if (!Core.CheckInventory("Necrotic Daggers of Destruction"))
+                    NecroticDaggers();
+
+                PinpointthePieces(2181, new[] { "Ominous Aura" }, new[] { quant });
+                break;
+
+            case "Necrotic Mace of Misery":
+                if (Core.CheckInventory("Necrotic Mace of Misery"))
+                    PinpointthePieces(2185, new[] { "Ominous Aura" }, new[] { quant });
+                break;
+
+            case "Necrotic Scythe of Scourge":
+                if (Core.CheckInventory("Necrotic Scythe of Scourge"))
+                    PinpointthePieces(2184, new[] { "Ominous Aura" }, new[] { quant });
+                break;  
+
+            default:
+                break;
+        }
     }
 
     public void PinpointBroadsword(int quant = 1)
