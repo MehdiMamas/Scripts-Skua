@@ -11678,6 +11678,36 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SpoilsofLightMerge.cs"
   },
   {
+    "name": "Castle Whistler Spoils Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Castle Whistler Spoils Merge [2607] in /castlewhistler",
+    "tags": [
+      "castle",
+      "whistler",
+      "spoils",
+      "merge",
+      "castlewhistler",
+      "king",
+      "dark",
+      "antlered",
+      "armorial",
+      "crown",
+      "darkness",
+      "unknown",
+      "winters",
+      "dirges",
+      "midsummer",
+      "rhapsodies",
+      "pavane",
+      "fantasia",
+      "dirge",
+      "rhapsody"
+    ],
+    "path": "Other/MergeShops/CastleWhistlerSpoilsMerge.cs",
+    "size": 5336,
+    "fileName": "CastleWhistlerSpoilsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CastleWhistlerSpoilsMerge.cs"
+  },
+  {
     "name": "Fox Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Fox Merge [1179] in /rivensylth",
     "tags": [
