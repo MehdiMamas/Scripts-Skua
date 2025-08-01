@@ -50,13 +50,11 @@ public class MoreSkullsWorldBoss
         moveTokenSource = new CancellationTokenSource(); // Create token
         Bot.Events.ExtensionPacketReceived += Fuckyou;
         Core.AddDrop("Pristine Skull");
-        Core.RegisterQuests(Core.IsMember ? 10289 : 10288);
         Bot.Options.AttackWithoutTarget = true;
         Core.FarmingLogger("Pristine Skull", target);
         while (!Bot.ShouldExit && !Core.CheckInventory("Pristine Skull", target))
         {
-            if (!Core.isCompletedBefore(10287))
-                Core.EnsureAccept(10287);
+            Core.EnsureAccept(!Core.isCompletedBefore(10288) ? 10287 : Core.IsMember ? 10289 : 10288);
             while (!Bot.ShouldExit && !Bot.Player.Alive) { }
 
             if (Bot.Map.Name != "MoreSkulls")
@@ -72,8 +70,9 @@ public class MoreSkullsWorldBoss
                 Bot.Wait.ForMonsterDeath();
                 Bot.Combat.CancelTarget();
             }
-            if (!Core.isCompletedBefore(10287))
-                Core.EnsureComplete(10287);
+
+            Core.EnsureComplete(!Core.isCompletedBefore(10288) ? 10287 : Core.IsMember ? 10289 : 10288);
+
             Bot.Sleep(500);
         }
 
