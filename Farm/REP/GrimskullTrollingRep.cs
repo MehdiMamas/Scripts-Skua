@@ -156,13 +156,17 @@ public class GrimskullTrollingRep
 
         Core.Logger($"Farming rank {rank}");
 
+        // Extra rep | Beat Up Master For My Enjoyment [9469]
+        if (Bot.Quests.IsUnlocked(9469))
+            Core.RegisterQuests(9469);
+
         while (!Bot.ShouldExit && Farm.FactionRank("Grimskull Trolling") < rank)
         {
-            Core.EnsureAccept(9467);
+            Core.EnsureAccept(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9466) : 9467);
             GrimGaolRun.DoGrimGaol();
-            Core.Join("whitemap");  
+            Core.Join("whitemap");
             Core.Sleep(5000);
-            Core.EnsureComplete(9467);
+            Core.EnsureComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9466) : 9467);
         }
 
         Core.CancelRegisteredQuests();
