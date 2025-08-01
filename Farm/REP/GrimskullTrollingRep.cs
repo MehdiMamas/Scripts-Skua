@@ -135,11 +135,11 @@ public class GrimskullTrollingRep
     public CoreBots Core => CoreBots.Instance;
     public CoreFarms Farm = new();
     public Grimgaol GrimGaolRun = new();
-    public static Grimgaol GGrimGaolRun = new();
+    public static Grimgaol GRunOptions = new();
 
     public bool DontPreconfigure = true;
-    public string OptionsStorage = GGrimGaolRun.OptionsStorage;
-    public List<IOption> Options = GGrimGaolRun.Options;
+    public string OptionsStorage = GRunOptions.OptionsStorage;
+    public List<IOption> Options = GRunOptions.Options;
 
     public void ScriptMain(IScriptInterface Bot)
     {
