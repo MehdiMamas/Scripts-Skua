@@ -4027,7 +4027,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 893579,
+    "size": 897056,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -11152,10 +11152,25 @@
       "bloodstaff",
       "arrogant",
       "angel",
-      "spines"
+      "spines",
+      "gilded",
+      "gunslinger",
+      "bounty",
+      "hunter",
+      "ornate",
+      "gold",
+      "pistol",
+      "pistols",
+      "shotgun",
+      "rush",
+      "knife",
+      "knives",
+      "beard",
+      "",
+      "backup"
     ],
     "path": "Other/MergeShops/VictorsRewardMerge.cs",
-    "size": 11449,
+    "size": 13477,
     "fileName": "VictorsRewardMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/VictorsRewardMerge.cs"
   },
