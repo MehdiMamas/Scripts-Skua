@@ -1519,7 +1519,7 @@ public class Grimgaol
         #endregion Grimgaol Prereqs
     }
 
-    private void SetOptions()
+    public void SetOptions()
     {
         #region SetOptions
 
