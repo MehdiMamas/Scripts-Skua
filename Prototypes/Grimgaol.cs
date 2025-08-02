@@ -332,11 +332,15 @@ public class Grimgaol
             }
 
             Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol-100000%");
+            // Core.Sleep(4000);
             Bot.Wait.ForMapLoad("grimgaol");
             Bot.Wait.ForCellChange("Enter");
             Bot.Wait.ForCellChange("Cut1");
-            Bot.Map.Jump("Enter", "Left", autoCorrect: false);
-            Bot.Wait.ForCellChange("Enter");
+            if (Bot.Player.Cell != "Enter")
+            {
+                Bot.Map.Jump("Enter", "Left", autoCorrect: false);
+                Bot.Wait.ForCellChange("Enter");
+            }
 
             Init();
             LogRun();
