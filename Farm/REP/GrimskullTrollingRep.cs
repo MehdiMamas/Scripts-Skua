@@ -143,7 +143,9 @@ public class GrimskullTrollingRep
 
     public void ScriptMain(IScriptInterface Bot)
     {
+        Core.SetOptions();
         DoGrimskullTrollingRep(10);
+        Core.SetOptions(false);
     }
 
     public void DoGrimskullTrollingRep(int rank = 10)
