@@ -1,7 +1,7 @@
 /*
 name: Lich Class
 description: Gets the Lich Class and its pre-requisites.
-tags: Lich, class, pre-requisites, necromicon, nictos, klaatu, verata, necromicon, shadow lich, frozen lair, legion
+tags: Lich, class, pre-requisites, necronomicon, nictos, klaatu, verata, necromicon, shadow lich, frozen lair, legion
 */
 
 #region Includes Area
@@ -161,7 +161,7 @@ public class Lich
 
     public void Example()
     {
-        // Verata's Necromicon
+        // Verata's Necronomicon
         // Ensure you have the required items for Grimskull Trolling Rep
         if (!Core.CheckInventory("Verata's Necronomicon"))
         {
