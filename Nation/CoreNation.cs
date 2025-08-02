@@ -795,22 +795,7 @@ public class CoreNation
         Core.Logger($"Do Return Policy?: {returnPolicyDuringSupplies}\n" +
                        $"Sell Voucher of Nulgath: {sellMemVoucher}");
 
-
-
-        // Core.RegisterQuests(
-        //     item != Uni(13) && Core.CheckInventory(38261)  // Checks for "Swindle Bilk's To Go Hut"
-        //         ? Core.CheckInventory("Drudgen the Assistant")
-        //             ? new int[] { 870, 2857, 9542 }
-        //             : new int[] { 2857, 9542 }
-        //         : new int[] { 2857 }
-        // );
-
-        // Register quests based on item check and inventory status
-        /*
-        870  - Contract Exchange - Drudgen the Assistant
-        2857 - Supplies to Spin The Wheel of Chance - no requirements
-        9542 - Swindle's Bonus Deal - Swindle Bilk's To Go Hut
-        */
+        Core.Logger($"Item: {item} Quantity: {quant}\n UltraAlteon: {UltraAlteon}\n KeepVoucher: {KeepVoucher}\n AssistantDuring: {AssistantDuring}\n ReturnItem: {ReturnItem} ReturnItemQuant: {ReturnItemQuant}");
 
         List<int> QuestToRegister = new();
 
@@ -851,7 +836,6 @@ public class CoreNation
             // Convert the entire collection to an array for adding to the drop list
             .ToArray()
         );
-
 
         Core.EquipClass(ClassType.Solo);
         if (item == null)
