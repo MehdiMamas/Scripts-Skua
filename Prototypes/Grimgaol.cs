@@ -197,74 +197,112 @@ public class Grimgaol
 
 
         #region Enhancement setup & Equipment 
+
         // Classes
-        Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky);
-        Adv.EnhanceItem("Verus DoomKnight", EnhancementType.Lucky);
-        Adv.EnhanceItem("Dragon of Time", EnhancementType.Healer);
+        if (Core.CheckInventory("Void Highlord"))
+            Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky);
+        else Core.Logger("Void Highlord not found in inventory.");
+
+        if (Core.CheckInventory("Verus DoomKnight"))
+            Adv.EnhanceItem("Verus DoomKnight", EnhancementType.Lucky);
+        else Core.Logger("Verus DoomKnight not found in inventory.");
+
+        if (Core.CheckInventory("Dragon of Time"))
+            Adv.EnhanceItem("Dragon of Time", EnhancementType.Healer);
+        else Core.Logger("Dragon of Time not found in inventory.");
 
         // Weapons
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
-            Adv.EnhanceItem(valiance, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Valiance);
+        {
+            if (Core.CheckInventory(valiance))
+                Adv.EnhanceItem(valiance, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Valiance);
+            else Core.Logger($"Valiance weapon set to \"{valiance}\", but it's not in inventory.");
+        }
 
-        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
-        if (Bot.Config!.Get<string>("Dauntless") == string.Empty)
+        string? dauntless = Bot.Config.Get<string>("Dauntless");
+        if (string.IsNullOrWhiteSpace(dauntless))
+        {
+            dauntless = valiance;
             Core.Logger("Dauntless is not set, using Valiance as fallback.");
-        if (!string.IsNullOrWhiteSpace(dauntless))
-            Adv.EnhanceItem(dauntless, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless);
+        }
+        else
+        {
+            if (Core.CheckInventory(dauntless))
+                Adv.EnhanceItem(dauntless, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless);
+            else Core.Logger($"Dauntless weapon set to \"{dauntless}\", but it's not in inventory.");
+        }
 
         // Helms
-        string? wizHelm = Bot.Config!.Get<string>("WizHelm");
+        string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
-            Adv.EnhanceItem(wizHelm, EnhancementType.Wizard);
+        {
+            if (Core.CheckInventory(wizHelm))
+                Adv.EnhanceItem(wizHelm, EnhancementType.Wizard);
+            else Core.Logger($"WizHelm set to \"{wizHelm}\", but it's not in inventory.");
+        }
 
-        string? luckHelm = Bot.Config!.Get<string>("LuckHelm");
+        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
-            Adv.EnhanceItem(luckHelm, EnhancementType.Lucky);
+        {
+            if (Core.CheckInventory(luckHelm))
+                Adv.EnhanceItem(luckHelm, EnhancementType.Lucky);
+            else Core.Logger($"LuckHelm set to \"{luckHelm}\", but it's not in inventory.");
+        }
 
-        string? animaHelm = Bot.Config!.Get<string>("AnimaHelm");
+        string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
-            Adv.EnhanceItem(animaHelm, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.Anima);
+        {
+            if (Core.CheckInventory(animaHelm))
+                Adv.EnhanceItem(animaHelm, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.Anima);
+            else Core.Logger($"AnimaHelm set to \"{animaHelm}\", but it's not in inventory.");
+        }
 
         // Capes
-        string? penitence = Bot.Config!.Get<string>("Penitence");
+        string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
-            Adv.EnhanceItem(penitence, EnhancementType.Lucky, CapeSpecial.Penitence);
+        {
+            if (Core.CheckInventory(penitence))
+                Adv.EnhanceItem(penitence, EnhancementType.Lucky, CapeSpecial.Penitence);
+            else Core.Logger($"Penitence cape set to \"{penitence}\", but it's not in inventory.");
+        }
 
-        string? vainglory = Bot.Config!.Get<string>("Vainglory");
+        string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
-            Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory);
+        {
+            if (Core.CheckInventory(vainglory))
+                Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory);
+            else Core.Logger($"Vainglory cape set to \"{vainglory}\", but it's not in inventory.");
+        }
+
+        // Toggle rep boost (usually global)
         Farm.ToggleBoost(BoostType.Reputation);
 
+        // Log summary
         Core.Logger("Gear Enhancements:");
-        Core.Logger($"Classes:");
-        Core.Logger($"- Void Highlord: Lucky");
-        Core.Logger($"- Verus DoomKnight: Lucky");
-        Core.Logger($"- Dragon of Time: Healer");
+        Core.Logger("- Void Highlord: Lucky");
+        Core.Logger("- Verus DoomKnight: Lucky");
+        Core.Logger("- Dragon of Time: Healer");
 
-        if (!string.IsNullOrWhiteSpace(valiance))
-            Core.Logger($"Weapons:");
-        if (!string.IsNullOrWhiteSpace(valiance))
+        if (Core.CheckInventory(valiance))
             Core.Logger($"- {valiance}: Lucky (Valiance)");
-        if (!string.IsNullOrWhiteSpace(dauntless))
+        if (Core.CheckInventory(dauntless))
             Core.Logger($"- {dauntless}: Lucky (Dauntless)");
 
-        if (!string.IsNullOrWhiteSpace(wizHelm) || !string.IsNullOrWhiteSpace(luckHelm) || !string.IsNullOrWhiteSpace(animaHelm))
-            Core.Logger($"Helms:");
-        if (!string.IsNullOrWhiteSpace(wizHelm))
+        if (Core.CheckInventory(wizHelm))
             Core.Logger($"- {wizHelm}: Wizard");
-        if (!string.IsNullOrWhiteSpace(luckHelm))
+        if (Core.CheckInventory(luckHelm))
             Core.Logger($"- {luckHelm}: Lucky");
-        if (!string.IsNullOrWhiteSpace(animaHelm))
+        if (Core.CheckInventory(animaHelm))
             Core.Logger($"- {animaHelm}: Lucky (Anima)");
 
-        if (!string.IsNullOrWhiteSpace(penitence) || !string.IsNullOrWhiteSpace(vainglory))
-            Core.Logger($"Capes:");
-        if (!string.IsNullOrWhiteSpace(penitence))
+        if (Core.CheckInventory(penitence))
             Core.Logger($"- {penitence}: Lucky (Penitence)");
-        if (!string.IsNullOrWhiteSpace(vainglory))
+        if (Core.CheckInventory(vainglory))
             Core.Logger($"- {vainglory}: Lucky (Vainglory)");
+
         #endregion
+
         Bot.Wait.ForTrue(() => Bot.Player.Alive, 1000);
         while (!Bot.ShouldExit && Farm.FactionRank("Grimskull Trolling") < rank)
         {
