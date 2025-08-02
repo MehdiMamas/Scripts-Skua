@@ -153,7 +153,7 @@ public class Lich
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        GrimGaolRun.SetOptions();
+        Core.SetOptions();
 
         Example();
 

@@ -143,7 +143,7 @@ public class GrimskullTrollingRep
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        GrimGaolRun.SetOptions();
+        Core.SetOptions();
         DoGrimskullTrollingRep(10);
         Core.SetOptions(false);
     }
@@ -175,6 +175,7 @@ public class GrimskullTrollingRep
 
             if (!Bot.Quests.IsDailyComplete(9469) && Core.HasWebBadge("SkullCrusher"))
                 Core.EnsureAccept(9469);
+            GC.Collect(); // Collect garbage to free up memory
         }
     }
 }

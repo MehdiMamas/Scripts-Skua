@@ -167,7 +167,7 @@ public class Grimgaol
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        SetOptions();
+        Core.SetOptions();
 
         DoGrimGaol();
 
@@ -199,77 +199,77 @@ public class Grimgaol
         #region Enhancement setup & Equipment 
 
         // Classes
-        if (Core.CheckInventory("Void Highlord"))
-            Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky, logging: false);
-        else Core.Logger("Void Highlord not found in inventory.");
+        // if (Core.CheckInventory("Void Highlord"))
+        //     Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky, logging: false);
+        // else Core.Logger("Void Highlord not found in inventory.");
 
-        if (Core.CheckInventory("Verus DoomKnight"))
-            Adv.EnhanceItem("Verus DoomKnight", EnhancementType.Lucky, logging: false);
-        else Core.Logger("Verus DoomKnight not found in inventory.");
+        // if (Core.CheckInventory("Verus DoomKnight"))
+        //     Adv.EnhanceItem("Verus DoomKnight", EnhancementType.Lucky, logging: false);
+        // else Core.Logger("Verus DoomKnight not found in inventory.");
 
-        if (Core.CheckInventory("Dragon of Time"))
-            Adv.EnhanceItem("Dragon of Time", EnhancementType.Healer, logging: false);
-        else Core.Logger("Dragon of Time not found in inventory.");
+        // if (Core.CheckInventory("Dragon of Time"))
+        //     Adv.EnhanceItem("Dragon of Time", EnhancementType.Healer, logging: false);
+        // else Core.Logger("Dragon of Time not found in inventory.");
 
         // Weapons
         string? valiance = Bot.Config!.Get<string>("Valiance");
-        if (!string.IsNullOrWhiteSpace(valiance))
-        {
-            if (Core.CheckInventory(valiance))
-                Adv.EnhanceItem(valiance, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Valiance, logging: false);
-            else Core.Logger($"Valiance weapon set to \"{valiance}\", but it's not in inventory.");
-        }
+        // if (!string.IsNullOrWhiteSpace(valiance))
+        // {
+        //     if (Core.CheckInventory(valiance))
+        //         Adv.EnhanceItem(valiance, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Valiance, logging: false);
+        //     else Core.Logger($"Valiance weapon set to \"{valiance}\", but it's not in inventory.");
+        // }
 
         // Weapons
         string? dauntless = Bot.Config.Get<string>("Dauntless");
-        if (!string.IsNullOrWhiteSpace(dauntless))
-        {
-            if (Core.CheckInventory(dauntless))
-                Adv.EnhanceItem(dauntless, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless, logging: false);
-            else Core.Logger($"Dauntless weapon set to \"{dauntless}\", but it's not in inventory.");
-        }
+        // if (!string.IsNullOrWhiteSpace(dauntless))
+        // {
+        //     if (Core.CheckInventory(dauntless))
+        //         Adv.EnhanceItem(dauntless, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless, logging: false);
+        //     else Core.Logger($"Dauntless weapon set to \"{dauntless}\", but it's not in inventory.");
+        // }
 
         // Helms
         string? wizHelm = Bot.Config.Get<string>("WizHelm");
-        if (!string.IsNullOrWhiteSpace(wizHelm))
-        {
-            if (Core.CheckInventory(wizHelm))
-                Adv.EnhanceItem(wizHelm, EnhancementType.Wizard, logging: false);
-            else Core.Logger($"WizHelm set to \"{wizHelm}\", but it's not in inventory.");
-        }
+        // if (!string.IsNullOrWhiteSpace(wizHelm))
+        // {
+        //     if (Core.CheckInventory(wizHelm))
+        //         Adv.EnhanceItem(wizHelm, EnhancementType.Wizard, logging: false);
+        //     else Core.Logger($"WizHelm set to \"{wizHelm}\", but it's not in inventory.");
+        // }
 
         string? luckHelm = Bot.Config.Get<string>("LuckHelm");
-        if (!string.IsNullOrWhiteSpace(luckHelm))
-        {
-            if (Core.CheckInventory(luckHelm))
-                Adv.EnhanceItem(luckHelm, EnhancementType.Lucky, logging: false);
-            else Core.Logger($"LuckHelm set to \"{luckHelm}\", but it's not in inventory.");
-        }
+        // if (!string.IsNullOrWhiteSpace(luckHelm))
+        // {
+        //     if (Core.CheckInventory(luckHelm))
+        //         Adv.EnhanceItem(luckHelm, EnhancementType.Lucky, logging: false);
+        //     else Core.Logger($"LuckHelm set to \"{luckHelm}\", but it's not in inventory.");
+        // }
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
-        if (!string.IsNullOrWhiteSpace(animaHelm))
-        {
-            if (Core.CheckInventory(animaHelm))
-                Adv.EnhanceItem(animaHelm, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.Anima, logging: false);
-            else Core.Logger($"AnimaHelm set to \"{animaHelm}\", but it's not in inventory.");
-        }
+        // if (!string.IsNullOrWhiteSpace(animaHelm))
+        // {
+        //     if (Core.CheckInventory(animaHelm))
+        //         Adv.EnhanceItem(animaHelm, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.Anima, logging: false);
+        //     else Core.Logger($"AnimaHelm set to \"{animaHelm}\", but it's not in inventory.");
+        // }
 
         // Capes
         string? penitence = Bot.Config.Get<string>("Penitence");
-        if (!string.IsNullOrWhiteSpace(penitence))
-        {
-            if (Core.CheckInventory(penitence))
-                Adv.EnhanceItem(penitence, EnhancementType.Lucky, CapeSpecial.Penitence, logging: false);
-            else Core.Logger($"Penitence cape set to \"{penitence}\", but it's not in inventory.");
-        }
+        // if (!string.IsNullOrWhiteSpace(penitence))
+        // {
+        //     if (Core.CheckInventory(penitence))
+        //         Adv.EnhanceItem(penitence, EnhancementType.Lucky, CapeSpecial.Penitence, logging: false);
+        //     else Core.Logger($"Penitence cape set to \"{penitence}\", but it's not in inventory.");
+        // }
 
         string? vainglory = Bot.Config.Get<string>("Vainglory");
-        if (!string.IsNullOrWhiteSpace(vainglory))
-        {
-            if (Core.CheckInventory(vainglory))
-                Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory, logging: false);
-            else Core.Logger($"Vainglory cape set to \"{vainglory}\", but it's not in inventory.");
-        }
+        // if (!string.IsNullOrWhiteSpace(vainglory))
+        // {
+        //     if (Core.CheckInventory(vainglory))
+        //         Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory, logging: false);
+        //     else Core.Logger($"Vainglory cape set to \"{vainglory}\", but it's not in inventory.");
+        // }
 
         Farm.ToggleBoost(BoostType.Reputation);
 
@@ -324,7 +324,8 @@ public class Grimgaol
         if (Bot.Player.Cell.ToLower().Contains("cut"))
         {
             Core.Logger($"in {Bot.Player?.Cell} cell, jumping to enter");
-            Core.Jump("Enter", "Left");
+            Bot.Map.Jump("Enter", "Left", autoCorrect: false);
+            Bot.Wait.ForCellChange("Enter");
         }
 
         while (!Bot.ShouldExit && !Bot.TempInv.Contains("Grimskull's Gaol Cleared"))
@@ -336,51 +337,63 @@ public class Grimgaol
                 {
                     case "Enter":
                         Enter();
-                        Core.Jump("r2", "Left");
+                        Bot.Map.Jump("r2", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r2");
                         break;
                     case "r2":
                         R2();
-                        Core.Jump("r3", "Left");
+                        Bot.Map.Jump("r3", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r3");
                         break;
                     case "r4":
                         RVDK(Bot.Player.Cell);
-                        Core.Jump("r5", "Left");
+                        Bot.Map.Jump("r5", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r5");
                         break;
                     case "r5":
                         R5();
-                        Core.Jump("r6", "Left");
+                        Bot.Map.Jump("r6", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r6");
                         break;
                     case "r6":
                         R6();
-                        Core.Jump("r7", "Left");
+                        Bot.Map.Jump("r7", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r7");
                         break;
                     case "r9":
                         R9();
-                        Core.Jump("r10", "Left");
+                        Bot.Map.Jump("r10", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r10");
                         break;
                     case "r10":
                         R10();
-                        Core.Jump("r11", "Left");
+                        Bot.Map.Jump("r11", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r11");
                         break;
                     case "r3":
                         RVDK(Bot.Player.Cell);
-                        Core.Jump("r4", "Left");
+                        Bot.Map.Jump("r4", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r4");
                         break;
                     case "r7":
                         RVDK(Bot.Player.Cell);
-                        Core.Jump("r8", "Left");
+                        Bot.Map.Jump("r8", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r8");
                         break;
                     case "r8":
                         RVDK(Bot.Player.Cell);
-                        Core.Jump("r9", "Left");
+                        Bot.Map.Jump("r9", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r9");
                         break;
                     case "r11":
                         RVDK(Bot.Player.Cell);
-                        Core.Jump("r12", "Left");
+                        Bot.Map.Jump("r12", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r12");
                         break;
                     case "r12":
                         RVDK(Bot.Player.Cell);
-                        Core.Jump("r12a", "Left");
+                        Bot.Map.Jump("r12a", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r12a");
                         break;
                     default:
                         break;
@@ -395,14 +408,10 @@ public class Grimgaol
 
         Core.ChainComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9467) : 9466);
         Bot.Wait.ForQuestComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9467) : 9466);
-        Core.Sleep(1500);
-        Bot.Map.Join("whitemap-999999", "Enter", "Spawn", autoCorrect: false);
-        Bot.Wait.ForMapLoad("whitemap");
-        Core.Sleep(1500);
-        Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol{(Core.PrivateRoomNumber > 0 ? "-" + Core.PrivateRoomNumber : "")}%");
-        Core.Sleep(4000);
+        Core.Join("whitemap-100000");
+        Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol-100000%");
         Bot.Wait.ForMapLoad("grimgaol");
-        Core.Sleep(1500);
+        Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
     }
 
     private void Enter()
@@ -495,7 +504,6 @@ public class Grimgaol
 
         int skillIndex = 0;
         int[] skillList = { 1, 2, 4 };
-
         while (!Bot.ShouldExit)
         {
             if (!Bot.Player.Alive)
@@ -509,12 +517,21 @@ public class Grimgaol
             if (Bot.Player.Cell != "Enter")
             {
                 Core.Logger("jump back to enter");
-                Bot.Map.Jump("Enter", "Left");
+                Bot.Map.Jump("Enter", "Left", autoCorrect: false);
                 Bot.Wait.ForCellChange("Enter");
                 Core.Sleep(1000);
             }
 
-            while (!Bot.ShouldExit && Bot.Target.HasActiveAura("Talon Twisting")) { Bot.Sleep(100); }
+            if (Bot.Target.HasActiveAura("Talon Twisting"))
+            {
+                Bot.Skills.Stop();
+                while (!Bot.ShouldExit && Bot.Target.HasActiveAura("Talon Twisting"))
+                {
+                    Bot.Sleep(100);
+                }
+                skillIndex = 0; // Reset skill index after stopping skills
+                Bot.Skills.Start();
+            }
 
             if (!Bot.Self.HasActiveAura("Shackled") && skillIndex == 0 && Bot.Player.HasTarget)
             {
@@ -858,6 +875,7 @@ public class Grimgaol
             List<Monster> mapMonsters = Bot.Monsters.MapMonsters;
             // List<Aura> targetAuras = Bot.Target?.Auras?.ToList() ?? new List<Aura>();
             Monster? target = null;
+
             foreach (var mon in mapMonsters)
             {
                 if (mon.Cell == playerCell && mon.HP > 0 && mon.State != 0)
@@ -1453,30 +1471,51 @@ public class Grimgaol
 
     private void CheckConfig()
     {
-        // Loop through all Option<string> in Options list
+        // Load config values once
+        string Dauntless = Bot.Config!.Get<string>("Dauntless");
+        string Valiance = Bot.Config!.Get<string>("Valiance");
+        string Elysium = Bot.Config!.Get<string>("Elysium");
+        string WizHelm = Bot.Config!.Get<string>("WizHelm");
+        string LuckHelm = Bot.Config!.Get<string>("LuckHelm");
+        string AnimaHelm = Bot.Config!.Get<string>("AnimaHelm");
+        string Penitence = Bot.Config!.Get<string>("Penitence");
+        string Vainglory = Bot.Config!.Get<string>("Vainglory");
+
+        // Dictionary to map keys to already-loaded variables
+        Dictionary<string, string?> loadedValues = new()
+    {
+        { "Dauntless", Dauntless },
+        { "Valiance", Valiance },
+        { "Elysium", Elysium },
+        { "WizHelm", WizHelm },
+        { "LuckHelm", LuckHelm },
+        { "AnimaHelm", AnimaHelm },
+        { "Penitence", Penitence },
+        { "Vainglory", Vainglory }
+    };
+
         foreach (var opt in Options.OfType<Option<string>>())
         {
-            // Skip the SkipOptions entry
             if (ReferenceEquals(opt, CoreBots.Instance.SkipOptions))
                 continue;
 
-            // Get the config key from the option's name (this will be used to retrieve the value)
             string key = opt.Name;
+            string? label = opt.DisplayName ?? key;
 
-            // Get and trim the value from Bot.Config using the option's Name (key)
-            string? value = Bot.Config?.Get<string>(key)?.Trim();
+            if (!loadedValues.TryGetValue(key, out string? value))
+                continue; // not one of the tracked config values
 
-            // Use DisplayName as the label for the error message
-            string label = opt.DisplayName ?? opt.Name; // Fall back to Name if DisplayName is null
-
-            // If the value is null, empty, or still equal to the default (""), log an error and stop the bot
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrWhiteSpace(value))
             {
-                Core.Logger($"The item with enhancement '{key}' is missing. Please enter its exact in-game name (including capitalization). If unsure, use Tools > Grabber > Inventory to find it.", $"Missing Item: {key}", stopBot: true);
-
+                Core.Logger(
+                    $"The item for enhancement '{key}' is missing.\n"+
+                    "Go to: Scripts > [Edit Script Options], then enter the exact item name (case-sensitive). Use Tools > Grabber > Inventory to get the correct name.",
+                    $"Missing Item: {key}",
+                    stopBot: true);
             }
         }
     }
+
 
     private void Prereqs()
     {
@@ -1527,6 +1566,8 @@ public class Grimgaol
         Bot.Events.MapChanged += Core.CleanKilledMonstersList;
         Bot.Events.MonsterKilled += Core.KilledMonsterListener;
         Bot.Events.ExtensionPacketReceived += Core.RespawnListener;
+
+
         Core.ReadCBO();
 
         Core.IsMember = Bot.Player.IsMember;
