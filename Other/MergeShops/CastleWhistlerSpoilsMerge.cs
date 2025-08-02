@@ -62,7 +62,6 @@ public class CastleWhistlerSpoilsMerge
                     break;
                 #endregion
 
-                #region Items not setup
 
                 // Pigment Powder (handled separately due to different quest IDs and requirements)
                 case "Pigment Powder":
