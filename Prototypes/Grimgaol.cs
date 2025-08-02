@@ -371,13 +371,10 @@ public class Grimgaol
             runTimer.Stop();
             TimeSpan currentTime = runTimer.Elapsed;
 
-            bool isNewPB = currentTime < bestTime;
-            if (isNewPB)
-            {
-                bestTime = currentTime;
-                SaveBestTime(bestTime);
-            }
+            AppendRun(currentTime);
+            bestTime = LoadBestTime(); // Refresh from all runs
 
+            bool isNewPB = currentTime <= bestTime;
             Core.Logger($"Dungeon run took: {currentTime:mm\\:ss\\.fff} | Personal Best: {bestTime:mm\\:ss\\.fff}" +
                         (isNewPB ? " (New PB!)" : ""));
         }
@@ -386,23 +383,28 @@ public class Grimgaol
         {
             string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes.txt");
 
-            if (File.Exists(path))
+            if (!File.Exists(path))
+                return TimeSpan.MaxValue;
+
+            TimeSpan best = TimeSpan.MaxValue;
+
+            foreach (string line in File.ReadAllLines(path))
             {
-                string content = File.ReadAllText(path).Trim();
-                if (TimeSpan.TryParseExact(content, "c", CultureInfo.InvariantCulture, out TimeSpan parsed))
-                    return parsed;
+                if (TimeSpan.TryParseExact(line.Trim(), "c", CultureInfo.InvariantCulture, out TimeSpan parsed) && parsed < best)
+                    best = parsed;
             }
 
-            return TimeSpan.MaxValue;
+            return best;
         }
 
-        void SaveBestTime(TimeSpan pb)
+        void AppendRun(TimeSpan run)
         {
             string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes.txt");
 
             Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            File.WriteAllText(path, pb.ToString("c", CultureInfo.InvariantCulture));
+            File.AppendAllText(path, run.ToString("c", CultureInfo.InvariantCulture) + Environment.NewLine);
         }
+
         Farm.ToggleBoost(BoostType.Reputation, false);
     }
 
