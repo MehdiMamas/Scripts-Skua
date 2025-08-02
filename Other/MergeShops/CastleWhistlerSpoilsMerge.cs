@@ -64,7 +64,33 @@ public class CastleWhistlerSpoilsMerge
 
                 #region Items not setup
 
+                // Pigment Powder (handled separately due to different quest IDs and requirements)
                 case "Pigment Powder":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop("Pigment Powder");
+
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        int questID = Core.isCompletedBefore(10337) ? 10337 : 10336;
+                        Core.EnsureAccept(questID);
+
+                        Core.HuntMonster("castlewhistler", "King of the Dark",
+                            Core.isCompletedBefore(10337) ? "King's Varnish" : "King's Pigment");
+                        Core.EnsureComplete(questID);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+
+                    Core.CancelRegisteredQuests();
+                    break;
+
+                // Shared case for other castlewhistler drops
                 case "Winter's Dirge":
                 case "Midsummer Rhapsody":
                 case "Armorial Crown":
@@ -75,26 +101,17 @@ public class CastleWhistlerSpoilsMerge
                     }
 
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
-                    Core.AddDrop("Pigment Powder", "Armorial Crown", "Winter's Dirge", "Midsummer Rhapsody");
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop("Armorial Crown", "Winter's Dirge", "Midsummer Rhapsody");
+
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        if (req.Name == "Pigment Powder")
-                            Core.EnsureAccept(Core.isCompletedBefore(10337) ? 10337 : 10336);
-                      
-                        // seperate the two quests so that the bot can farm the correct item
-                        Core.HuntMonster("castlewhistler", "King of the Dark", req.Name == "Pigment Powder" ?
-                        (Core.isCompletedBefore(10337) ? "King's Varnish" : "King's Pigment")
-                        : req.Name, quant, req.Temp);
-
-                        if (req.Name == "Pigment Powder")
-                            Core.EnsureComplete(Core.isCompletedBefore(10337) ? 10337 : 10336);
-                       
+                        Core.HuntMonster("castlewhistler", "King of the Dark", req.Name, quant, req.Temp);
                         Bot.Wait.ForPickup(req.Name);
                     }
+
                     Core.CancelRegisteredQuests();
                     break;
-                    #endregion
 
             }
         }
