@@ -126,6 +126,9 @@ using Newtonsoft.Json.Linq;
 using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Auras;
+using System.Diagnostics;
+using Skua.Core.Models;
+using System.Globalization;
 
 public class Grimgaol
 {
@@ -150,17 +153,20 @@ public class Grimgaol
         // Skip Options
         CoreBots.Instance.SkipOptions,
 
-        // weapons
+        // Skip Enhancements
+        new Option<bool>("SkipEnhancements", "Skip Enhancements", "If enabled, will not enhance items for the run.", false),
+
+        // Weapons
         new Option<string>("Valiance", "Weapon: Valiance", "insert name of your Valiance weapon", ""),
         new Option<string>("Dauntless", "Weapon: Dauntless", "insert name of your Dauntless weapon", ""),
         new Option<string>("Elysium", "Weapon: Elysium", "insert name of your Elysium weapon", ""),
       
-        // helm
+        // Helm
         new Option<string>("WizHelm", "Helm: WizHelm", "insert name of your WizHelm helm", ""),
         new Option<string>("LuckHelm", "Helm: LuckHelm", "insert name of your LuckHelm helm", ""),
         new Option<string>("AnimaHelm", "Helm: AnimaHelm", "insert name of your AnimaHelm helm", ""),
         
-        // cape
+        // Cape
         new Option<string>("Penitence", "Cape: Penitence", "insert name of your Penitence cape", ""),
         new Option<string>("Vainglory", "Cape: Vainglory", "insert name of your Vainglory cape", ""),
     };
@@ -200,24 +206,28 @@ public class Grimgaol
 
         // Classes
         if (Core.CheckInventory("Void Highlord"))
-            Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky, logging: false);
-        else Core.Logger("Void Highlord not found in inventory.");
+            if (!Bot.Config!.Get<bool>("SkipEnhancements"))
+                Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky, logging: false);
+            else Core.Logger("Void Highlord not found in inventory.");
 
         if (Core.CheckInventory("Verus DoomKnight"))
-            Adv.EnhanceItem("Verus DoomKnight", EnhancementType.Lucky, logging: false);
-        else Core.Logger("Verus DoomKnight not found in inventory.");
+            if (!Bot.Config!.Get<bool>("SkipEnhancements"))
+                Adv.EnhanceItem("Verus DoomKnight", EnhancementType.Lucky, logging: false);
+            else Core.Logger("Verus DoomKnight not found in inventory.");
 
         if (Core.CheckInventory("Dragon of Time"))
-            Adv.EnhanceItem("Dragon of Time", EnhancementType.Healer, logging: false);
-        else Core.Logger("Dragon of Time not found in inventory.");
+            if (!Bot.Config!.Get<bool>("SkipEnhancements"))
+                Adv.EnhanceItem("Dragon of Time", EnhancementType.Healer, logging: false);
+            else Core.Logger("Dragon of Time not found in inventory.");
 
         // Weapons
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
         {
             if (Core.CheckInventory(valiance))
-                Adv.EnhanceItem(valiance, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Valiance, logging: false);
-            else Core.Logger($"Valiance weapon set to \"{valiance}\", but it's not in inventory.");
+                if (!Bot.Config!.Get<bool>("SkipEnhancements"))
+                    Adv.EnhanceItem(valiance, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Valiance, logging: false);
+                else Core.Logger($"Valiance weapon set to \"{valiance}\", but it's not in inventory.");
         }
 
         // Weapons
@@ -225,8 +235,9 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             if (Core.CheckInventory(dauntless))
-                Adv.EnhanceItem(dauntless, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless, logging: false);
-            else Core.Logger($"Dauntless weapon set to \"{dauntless}\", but it's not in inventory.");
+                if (!Bot.Config!.Get<bool>("SkipEnhancements"))
+                    Adv.EnhanceItem(dauntless, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless, logging: false);
+                else Core.Logger($"Dauntless weapon set to \"{dauntless}\", but it's not in inventory.");
         }
 
         // Helms
@@ -234,24 +245,27 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(wizHelm))
         {
             if (Core.CheckInventory(wizHelm))
-                Adv.EnhanceItem(wizHelm, EnhancementType.Wizard, logging: false);
-            else Core.Logger($"WizHelm set to \"{wizHelm}\", but it's not in inventory.");
+                if (!Bot.Config!.Get<bool>("SkipEnhancements"))
+                    Adv.EnhanceItem(wizHelm, EnhancementType.Wizard, logging: false);
+                else Core.Logger($"WizHelm set to \"{wizHelm}\", but it's not in inventory.");
         }
 
         string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
         {
             if (Core.CheckInventory(luckHelm))
-                Adv.EnhanceItem(luckHelm, EnhancementType.Lucky, logging: false);
-            else Core.Logger($"LuckHelm set to \"{luckHelm}\", but it's not in inventory.");
+                if (!Bot.Config!.Get<bool>("SkipEnhancements"))
+                    Adv.EnhanceItem(luckHelm, EnhancementType.Lucky, logging: false);
+                else Core.Logger($"LuckHelm set to \"{luckHelm}\", but it's not in inventory.");
         }
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
         {
             if (Core.CheckInventory(animaHelm))
-                Adv.EnhanceItem(animaHelm, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.Anima, logging: false);
-            else Core.Logger($"AnimaHelm set to \"{animaHelm}\", but it's not in inventory.");
+                if (!Bot.Config!.Get<bool>("SkipEnhancements"))
+                    Adv.EnhanceItem(animaHelm, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.Anima, logging: false);
+                else Core.Logger($"AnimaHelm set to \"{animaHelm}\", but it's not in inventory.");
         }
 
         // Capes
@@ -259,16 +273,18 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(penitence))
         {
             if (Core.CheckInventory(penitence))
-                Adv.EnhanceItem(penitence, EnhancementType.Lucky, CapeSpecial.Penitence, logging: false);
-            else Core.Logger($"Penitence cape set to \"{penitence}\", but it's not in inventory.");
+                if (!Bot.Config!.Get<bool>("SkipEnhancements"))
+                    Adv.EnhanceItem(penitence, EnhancementType.Lucky, CapeSpecial.Penitence, logging: false);
+                else Core.Logger($"Penitence cape set to \"{penitence}\", but it's not in inventory.");
         }
 
         string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
         {
             if (Core.CheckInventory(vainglory))
-                Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory, logging: false);
-            else Core.Logger($"Vainglory cape set to \"{vainglory}\", but it's not in inventory.");
+                if (!Bot.Config!.Get<bool>("SkipEnhancements"))
+                    Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory, logging: false);
+                else Core.Logger($"Vainglory cape set to \"{vainglory}\", but it's not in inventory.");
         }
 
         Farm.ToggleBoost(BoostType.Reputation);
@@ -297,31 +313,71 @@ public class Grimgaol
             Core.Logger($"- {vainglory}: Lucky (Vainglory)");
 
         #endregion
-
+        Stopwatch runTimer = new();
+        TimeSpan bestTime = TimeSpan.MaxValue;
         while (!Bot.ShouldExit && Farm.FactionRank("Grimskull Trolling") < rank)
         {
+            runTimer.Restart();
 
-            // Extra rep | Daily | Beat Up Master For My Enjoyment [9469]
             if (!Bot.Quests.IsDailyComplete(9469) && Core.HasWebBadge("SkullCrusher"))
                 Core.EnsureAccept(9469);
 
-            // if badge quest isnt done (9466) do that first to unlock 9469 for extra rep
             Core.EnsureAccept(!Core.HasWebBadge("SkullCrusher") ? 9466 : (Core.IsMember ? 9468 : 9467));
 
             if (Bot.Map.Name.ToLower() == "grimgaol")
             {
                 Init();
+                LogRun();
                 continue;
             }
 
-            // always a private room as its a solo dungeon
             Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol-100000%");
             Bot.Wait.ForMapLoad("grimgaol");
             Bot.Wait.ForCellChange("Enter");
             Bot.Wait.ForCellChange("Cut1");
             Bot.Map.Jump("Enter", "Left", autoCorrect: false);
             Bot.Wait.ForCellChange("Enter");
+
             Init();
+            LogRun();
+        }
+
+        void LogRun()
+        {
+            runTimer.Stop();
+            TimeSpan currentTime = runTimer.Elapsed;
+
+            bool isNewPB = currentTime < bestTime;
+            if (isNewPB)
+            {
+                bestTime = currentTime;
+                SaveBestTime(bestTime);
+            }
+
+            Core.Logger($"Dungeon run took: {currentTime:mm\\:ss\\.fff} | Personal Best: {bestTime:mm\\:ss\\.fff}" +
+                        (isNewPB ? " (New PB!)" : ""));
+        }
+
+        TimeSpan LoadBestTime()
+        {
+            string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes.txt");
+
+            if (File.Exists(path))
+            {
+                string content = File.ReadAllText(path).Trim();
+                if (TimeSpan.TryParseExact(content, "c", CultureInfo.InvariantCulture, out TimeSpan parsed))
+                    return parsed;
+            }
+
+            return TimeSpan.MaxValue;
+        }
+
+        void SaveBestTime(TimeSpan pb)
+        {
+            string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes.txt");
+
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllText(path, pb.ToString("c", CultureInfo.InvariantCulture));
         }
         Farm.ToggleBoost(BoostType.Reputation, false);
     }
@@ -537,7 +593,7 @@ public class Grimgaol
                 Core.Sleep(1000);
             }
 
-            if (Bot.Target.HasActiveAura("Talon Twisting"))
+            if (Bot.Player.HasTarget && Bot.Target.HasActiveAura("Talon Twisting"))
             {
                 Bot.Skills.Stop();
                 while (!Bot.ShouldExit && Bot.Target.HasActiveAura("Talon Twisting"))
@@ -547,6 +603,10 @@ public class Grimgaol
                 skillIndex = 0; // Reset skill index after stopping skills
                 Bot.Skills.Start();
             }
+            else if (!Bot.Player.HasTarget)
+            {
+                Bot.Combat.Attack("*");
+            }
 
             if (!Bot.Self.HasActiveAura("Shackled") && skillIndex == 0 && Bot.Player.HasTarget)
             {
@@ -554,17 +614,12 @@ public class Grimgaol
                 skillIndex = (skillIndex + 1) % skillList.Length;
             }
 
-            if (!Bot.Player.HasTarget)
-            {
-                Bot.Combat.Attack("*");
-            }
-
             if (Bot.Player.HasTarget && skillIndex != 0)
             {
                 Bot.Skills.UseSkill(skillList[skillIndex]);
             }
             skillIndex = (skillIndex + 1) % skillList.Length;
-            Core.Sleep(100);
+            Core.Sleep(500);
         }
     }
 
