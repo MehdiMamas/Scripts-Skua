@@ -171,7 +171,7 @@ public class Grimgaol
 
         DoGrimGaol();
 
-        Bot.Stop();
+        Core.SetOptions(false);
     }
 
     public void DoGrimGaol(int rank = 10)
