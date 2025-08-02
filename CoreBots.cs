@@ -3428,7 +3428,10 @@ public class CoreBots
 
         List<Monster> FindMonsters()
         {
-            if (Bot.Player.Cell != cell)
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
+                Sleep();
+                
+            while (!Bot.ShouldExit && Bot.Player.Loaded && Bot.Player.Cell != cell)
             {
                 Bot.Map.Jump(cell, pad);
                 Bot.Wait.ForCellChange(cell);
