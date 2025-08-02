@@ -151,7 +151,6 @@ public class Grimgaol
         CoreBots.Instance.SkipOptions,
 
         // weapons
-        CoreBots.Instance.SkipOptions,
         new Option<string>("Valiance", "Weapon: Valiance", "insert name of your Valiance weapon", ""),
         new Option<string>("Dauntless", "Weapon: Dauntless", "insert name of your Dauntless weapon", ""),
         new Option<string>("Elysium", "Weapon: Elysium", "insert name of your Elysium weapon", ""),
@@ -983,7 +982,7 @@ public class Grimgaol
         int monsIdInt = 10;
         int monsHealth = 40000;
 
-        
+
 
         while (!Bot.ShouldExit)
         {
