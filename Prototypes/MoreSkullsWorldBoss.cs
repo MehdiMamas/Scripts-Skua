@@ -5,8 +5,10 @@ tags: null
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 using System.Linq.Expressions;
+using Newtonsoft.Json.Linq;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;
@@ -19,6 +21,7 @@ public class MoreSkullsWorldBoss
     private CoreBots Core => CoreBots.Instance;
     private CoreFarms Farm = new();
     private CoreAdvanced Adv => new();
+    public CoreStory Story = new();
     private int GetMaxPristineSkull()
     {
         Quest? quest = Bot.Quests.EnsureLoad(10288);
@@ -43,6 +46,8 @@ public class MoreSkullsWorldBoss
 
     public void Setup(int? quant = null)
     {
+        LichWar();
+
         int target = quant ?? GetMaxPristineSkull();
         if (Core.CheckInventory("Pristine Skull", target))
             return;
@@ -71,7 +76,8 @@ public class MoreSkullsWorldBoss
                 Bot.Combat.CancelTarget();
             }
 
-            Core.EnsureComplete(!Core.isCompletedBefore(10288) ? 10287 : Core.IsMember ? 10289 : 10288);
+            if (Bot.Quests.CanCompleteFullCheck(!Core.isCompletedBefore(10288) ? 10287 : Core.IsMember ? 10289 : 10288))
+                Core.EnsureComplete(!Core.isCompletedBefore(10288) ? 10287 : Core.IsMember ? 10289 : 10288);
 
             Bot.Sleep(500);
         }
@@ -161,8 +167,6 @@ public class MoreSkullsWorldBoss
 
     }
 
-
-
     public async Task WaitForTrueAsync(Func<bool> condition, int checkIntervalMs = 100, CancellationToken? token = null)
     {
         while (!condition())
@@ -174,7 +178,61 @@ public class MoreSkullsWorldBoss
         }
     }
 
+    public void LichWar()
+    {
+        Story.PreLoad(this);
 
+        if (Core.isCompletedBefore(10287))
+            return;
+
+        Adv.GearStore();
+        Core.EquipClass(ClassType.Farm);
+
+        // Grimskull War Medal
+        // Mega Grimskull War Medal
+        if (!Story.QuestProgression(10284 /* Undead Giants */))
+        {
+            Core.EnsureAcceptmultiple(10282, 10283);
+
+            Core.KillMonster("lichwar", "r6", "Left", "*", "Grimskull War Medal", 5);
+            Core.EnsureComplete(10282);
+        }
+
+        // Undead Giants
+        Core.EnsureAccept(10284);
+        Core.HuntMonster("lichwar", "Noxus Giant", "Noxus Giant Slain", 5);
+        Core.EnsureComplete(10284);
+
+        // It Takes Two to Tango        
+        Core.EnsureAccept(10281);
+        Core.HuntMonster("lichwar", "Rax-goreless", "Rax-goreless Defeated");
+        Core.HuntMonster("lichwar", "Armadeddon", "Armadeddon Defeated");
+        Core.EnsureComplete(10281);
+        Adv.GearStore(true);
+    }
+
+
+    private int GetMonsterHP(string monMapID)
+    {
+        try
+        {
+            var jsonData = Bot.Flash.Call("availableMonsters");
+            if (string.IsNullOrEmpty(jsonData)) return 0;
+
+            foreach (var mon in JArray.Parse(jsonData))
+            {
+                if (mon?["MonMapID"]?.ToString() == monMapID)
+                    return mon["intHP"]?.ToObject<int>() ?? 0;
+            }
+        }
+        catch
+        {
+            Core.Logger($"Failed to get HP for monster with MapID {monMapID}. Returning 0.");
+            return 0;
+        }
+
+        return 0;
+    }
 
 
 }
