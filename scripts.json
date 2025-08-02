@@ -66,17 +66,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/MoreSkullsWorldBoss.cs"
   },
   {
-    "name": "LichPreFarm",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Prototypes/LichClassPreFarm.cs",
-    "size": 7950,
-    "fileName": "LichClassPreFarm.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/LichClassPreFarm.cs"
-  },
-  {
     "name": "Butler",
     "description": "This will follow a player and copy their actions and do attack actions.",
     "tags": [
@@ -7460,6 +7449,27 @@
     "size": 10211,
     "fileName": "FrostSpiritReaver.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/FrostSpiritReaver.cs"
+  },
+  {
+    "name": "Lich Class",
+    "description": "Gets the Lich Class and its pre-requisites.",
+    "tags": [
+      "lich",
+      "class",
+      "pre-requisites",
+      "necromicon",
+      "nictos",
+      "klaatu",
+      "verata",
+      "necromicon",
+      "shadow lich",
+      "frozen lair",
+      "legion"
+    ],
+    "path": "Other/Classes/Lich.cs",
+    "size": 11426,
+    "fileName": "Lich.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/Lich.cs"
   },
   {
     "name": "DragonslayerGeneral",
