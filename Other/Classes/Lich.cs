@@ -160,8 +160,14 @@ public class Lich
         Core.SetOptions(false);
     }
 
-    public void Example()
+    public void Example(bool rankUpClass = true)
     {
+        if (Core.CheckInventory("Lich Class"))
+        {
+            if (rankUpClass)
+                Adv.RankUpClass("Lich");
+            return;
+        }
         // Verata's Necronomicon
         // Ensure you have the required items for Grimskull Trolling Rep
         if (!Core.CheckInventory("Verata's Necronomicon"))
@@ -204,6 +210,9 @@ public class Lich
 
 
         }
+
+        if (rankUpClass)
+            Adv.RankUpClass("Lich");
     }
 
     // Create a void for each necropnomicon:
