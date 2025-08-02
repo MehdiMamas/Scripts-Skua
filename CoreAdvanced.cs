@@ -2580,7 +2580,7 @@ public class CoreAdvanced
             foreach (ShopItem enh in shopItems)
             {
                 // Remove enhancments that you dont have access to
-                if ((!Core.IsMember && enh.Upgrade) || (enh.Level > Bot.Player.Level))
+                if ((!Bot.Player.IsMember && enh.Upgrade) || (enh.Level > Bot.Player.Level))
                 {
                     continue;
                 }
@@ -2637,7 +2637,7 @@ public class CoreAdvanced
             }
 
             // Compare with current enhancement
-            if (bestEnhancement.ID == getEnhID(item) && item.EnhancementLevel > 0)
+            if (bestEnhancement.ID == getEnhID(item) && item.EnhancementLevel > 0 && bestEnhancement.Level == item.EnhancementLevel)
             {
                 if (logging)
                     Core.Logger($"Enhancement Canceled:\tBest enhancement is already applied for \"{item.Name}\"");
