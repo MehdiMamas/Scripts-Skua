@@ -300,6 +300,14 @@ public class Grimgaol
 
         while (!Bot.ShouldExit && Farm.FactionRank("Grimskull Trolling") < rank)
         {
+
+            // Extra rep | Daily | Beat Up Master For My Enjoyment [9469]
+            if (!Bot.Quests.IsDailyComplete(9469) && Core.HasWebBadge("SkullCrusher"))
+                Core.EnsureAccept(9469);
+
+            // if badge quest isnt done (9466) do that first to unlock 9469 for extra rep
+            Core.EnsureAccept(!Core.HasWebBadge("SkullCrusher") ? 9466 : (Core.IsMember ? 9468 : 9467));
+
             if (Bot.Map.Name.ToLower() == "grimgaol")
             {
                 Init();
@@ -308,12 +316,11 @@ public class Grimgaol
 
             // always a private room as its a solo dungeon
             Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol-100000%");
+            Bot.Wait.ForMapLoad("grimgaol");
             Bot.Wait.ForCellChange("Enter");
             Bot.Wait.ForCellChange("Cut1");
-            Bot.Map.Jump("Enter", "Left");
+            Bot.Map.Jump("Enter", "Left", autoCorrect: false);
             Bot.Wait.ForCellChange("Enter");
-            Bot.Wait.ForMapLoad("grimgaol");
-            Core.Sleep(1000);
             Init();
         }
         Farm.ToggleBoost(BoostType.Reputation, false);
@@ -330,6 +337,7 @@ public class Grimgaol
 
         while (!Bot.ShouldExit && !Bot.TempInv.Contains("Grimskull's Gaol Cleared"))
         {
+
             jumpToAvailMonster();
             Core.Sleep(500);
             if (Bot.Player != null)
@@ -406,8 +414,15 @@ public class Grimgaol
             Core.Sleep(500);
         }
 
-        Core.ChainComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9467) : 9466);
-        Bot.Wait.ForQuestComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9467) : 9466);
+
+        Core.Join("whitemap");
+
+        Core.EnsureComplete(!Core.HasWebBadge("SkullCrusher") ? 9466 : (Core.IsMember ? 9468 : 9467));
+
+        if (!Bot.Quests.IsDailyComplete(9469) && Core.HasWebBadge("SkullCrusher"))
+            Core.EnsureAccept(9469);
+        GC.Collect(); // Collect garbage to free up memory
+
         Core.Join("whitemap-100000");
         Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol-100000%");
         Bot.Wait.ForMapLoad("grimgaol");

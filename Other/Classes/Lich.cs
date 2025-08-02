@@ -246,7 +246,11 @@ public class Lich
         if (Core.CheckInventory("Verata's Necromicon"))
             return;
 
-        GrimskullTrollingRep.DoGrimskullTrollingRep();
+        if (Farm.FactionRank("Grimskull Trolling") < 10)
+        {
+            Core.Logger("You need to have rank 10 Grimskull Trolling Rep to buy Verata's Necromicon.");
+            GrimGaolRun.DoGrimGaol();
+        }
         Core.BuyItem("gaolcell", 2362, "Verata's Necromicon");
         Bot.Wait.ForPickup("Verata's Necromicon");
     }

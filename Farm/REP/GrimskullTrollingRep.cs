@@ -144,7 +144,7 @@ public class GrimskullTrollingRep
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
-        DoGrimskullTrollingRep(10);
+        DoGrimskullTrollingRep();
         Core.SetOptions(false);
     }
 
@@ -157,25 +157,6 @@ public class GrimskullTrollingRep
         }
 
         Core.Logger($"Farming rank {rank}");
-
-        // Extra rep | Beat Up Master For My Enjoyment [9469]
-        while (!Bot.ShouldExit && Farm.FactionRank("Grimskull Trolling") < rank)
-        {
-            if (!Bot.Quests.IsDailyComplete(9469) && Core.HasWebBadge("SkullCrusher"))
-                Core.EnsureAccept(9469);
-
-            // if badge quest isnt done (9466) do that first to unlock 9469 for extra rep
-            Core.EnsureAccept(!Core.HasWebBadge("SkullCrusher") ? 9466 : (Core.IsMember ? 9468 : 9467));
-
-            GrimGaolRun.DoGrimGaol();
-
-            Core.Join("whitemap");
-
-            Core.EnsureComplete(!Core.HasWebBadge("SkullCrusher") ? 9466 : (Core.IsMember ? 9468 : 9467));
-
-            if (!Bot.Quests.IsDailyComplete(9469) && Core.HasWebBadge("SkullCrusher"))
-                Core.EnsureAccept(9469);
-            GC.Collect(); // Collect garbage to free up memory
-        }
+        GrimGaolRun.DoGrimGaol();
     }
 }
