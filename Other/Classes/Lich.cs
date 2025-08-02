@@ -163,7 +163,7 @@ public class Lich
     {
         // Verata's Necromicon
         // Ensure you have the required items for Grimskull Trolling Rep
-        if (!Core.CheckInventory("Verata's Necromicon"))
+        if (!Core.CheckInventory("Verata's Necronomicon"))
         {
             GrimskullTrollingRep.DoGrimskullTrollingRep();
             Core.BuyItem("gaolcell", 2362, "Verata's Necronomicon");
