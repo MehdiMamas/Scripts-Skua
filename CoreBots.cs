@@ -3434,18 +3434,29 @@ public class CoreBots
                 Bot.Wait.ForCellChange(cell);
             }
 
-            // If monster is "*", return all mobs in the specified cell
+            IEnumerable<Monster> monsters = Bot.Monsters.MapMonsters
+                .Where(x => x?.Cell == cell);
+
             if (monster == "*")
-            {
-                return Bot.Monsters.MapMonsters
-                    .Where(x => x != null && x.Cell == cell)
-                    .ToList();
-            }
-            // Otherwise, return all mobs in the specified cell that match the name (case-insensitive)
-            return Bot.Monsters.MapMonsters
-                .Where(x => x != null && x.Cell == cell && x.Name.FormatForCompare() == monster.FormatForCompare())
-                .ToList() ?? Bot.Monsters.MapMonsters.Where(x => x != null && x.Cell == Bot.Player.Cell).ToList();
+                return monsters.ToList();
+
+            List<Monster> matched = monsters
+                .Where(x => x?.Name.FormatForCompare() == monster.FormatForCompare())
+                .ToList();
+
+            if (matched.Count > 0)
+                return matched;
+
+            // Optional fallbacks
+            matched = Bot.Monsters.MapMonsters
+                .Where(x => x?.Cell == Bot.Player.Cell)
+                .ToList();
+
+            return matched.Count > 0
+                ? matched
+                : Bot.Monsters.MapMonsters.Where(x => x?.Name == monster).ToList();
         }
+
 
         Bot.Options.AggroAllMonsters = false;
         //fuck it lets test it.
