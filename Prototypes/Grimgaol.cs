@@ -207,7 +207,9 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(valiance))
             Adv.EnhanceItem(valiance, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Valiance);
 
-        string? dauntless = Bot.Config!.Get<string>("Dauntless");
+        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
+        if (Bot.Config!.Get<string>("Dauntless") == string.Empty)
+            Core.Logger("Dauntless is not set, using Valiance as fallback.");
         if (!string.IsNullOrWhiteSpace(dauntless))
             Adv.EnhanceItem(dauntless, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless);
 
@@ -231,7 +233,7 @@ public class Grimgaol
 
         string? vainglory = Bot.Config!.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
-        Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory);
+            Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory);
         Farm.ToggleBoost(BoostType.Reputation);
 
         Core.Logger("Gear Enhancements:");
@@ -446,7 +448,7 @@ public class Grimgaol
 
         Core.Logger($"Proceeding to kill: {target.Name}");
         string? valiance = Bot.Config!.Get<string>("Valiance");
-        string? dauntless = Bot.Config!.Get<string>("Dauntless");
+        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
 
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
@@ -591,7 +593,7 @@ public class Grimgaol
             }
         }
 
-        string? dauntless = Bot.Config!.Get<string>("Dauntless");
+        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
@@ -725,7 +727,7 @@ public class Grimgaol
             }
         }
 
-        string? dauntless = Bot.Config!.Get<string>("Dauntless");
+        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
@@ -841,7 +843,7 @@ public class Grimgaol
         Core.Logger($"Proceeding to kill: {target.Name}");
         string? valiance = Bot.Config!.Get<string>("Valiance");
         string? elysium = Bot.Config!.Get<string>("Elysium");
-        string? dauntless = Bot.Config!.Get<string>("Dauntless");
+        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
 
         // Determine weapon based on availability and unlocks
         string? weapon =
@@ -969,7 +971,7 @@ public class Grimgaol
             }
         }
 
-        string? dauntless = Bot.Config!.Get<string>("Dauntless");
+        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
@@ -1146,7 +1148,7 @@ public class Grimgaol
             }
         }
 
-        string? dauntless = Bot.Config!.Get<string>("Dauntless");
+        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
@@ -1380,7 +1382,7 @@ public class Grimgaol
             return;
 
         Core.Logger($"Proceeding to kill: {target.Name}");
-        string? dauntless = Bot.Config!.Get<string>("Dauntless");
+        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
