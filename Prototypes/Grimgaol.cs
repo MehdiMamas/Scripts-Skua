@@ -151,6 +151,7 @@ public class Grimgaol
         CoreBots.Instance.SkipOptions,
 
         // weapons
+        CoreBots.Instance.SkipOptions,
         new Option<string>("Valiance", "Weapon: Valiance", "insert name of your Valiance weapon", ""),
         new Option<string>("Dauntless", "Weapon: Dauntless", "insert name of your Dauntless weapon", ""),
         new Option<string>("Elysium", "Weapon: Elysium", "insert name of your Elysium weapon", ""),
@@ -181,7 +182,7 @@ public class Grimgaol
             Core.Logger($"You already have rank {rank} Grimskull Trolling reputation.");
             return;
         }
-
+        
         Core.Logger("Checking prerequisites and configurations...");
         CheckConfig();
         Prereqs();
@@ -221,17 +222,8 @@ public class Grimgaol
         }
 
         string? dauntless = Bot.Config.Get<string>("Dauntless");
-        if (string.IsNullOrWhiteSpace(dauntless))
-        {
-            dauntless = valiance;
-            Core.Logger("Dauntless is not set, using Valiance as fallback.");
-        }
-        else
-        {
-            if (Core.CheckInventory(dauntless))
-                Adv.EnhanceItem(dauntless, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless);
-            else Core.Logger($"Dauntless weapon set to \"{dauntless}\", but it's not in inventory.");
-        }
+        if (!string.IsNullOrWhiteSpace(dauntless))
+            Adv.EnhanceItem(dauntless, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless);
 
         // Helms
         string? wizHelm = Bot.Config.Get<string>("WizHelm");
@@ -269,13 +261,7 @@ public class Grimgaol
 
         string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
-        {
-            if (Core.CheckInventory(vainglory))
-                Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory);
-            else Core.Logger($"Vainglory cape set to \"{vainglory}\", but it's not in inventory.");
-        }
-
-        // Toggle rep boost (usually global)
+            Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory);
         Farm.ToggleBoost(BoostType.Reputation);
 
         // Log summary
@@ -303,148 +289,91 @@ public class Grimgaol
 
         #endregion
 
-        Bot.Wait.ForTrue(() => Bot.Player.Alive, 1000);
         while (!Bot.ShouldExit && Farm.FactionRank("Grimskull Trolling") < rank)
         {
-            if (Bot.Map.Name.ToLower() != "grimgaol")
+            if (Bot.Map.Name.ToLower() == "grimgaol")
             {
-                //ensure joining of a private room *aways*
-                Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol-100000%");
-                Bot.Wait.ForMapLoad("grimgaol");
-                Bot.Wait.ForCellChange("Enter");
-                Bot.Wait.ForCellChange("Cut1");
-                Bot.Map.Jump("Enter", "reSpawn", autoCorrect: false);
-                Bot.Wait.ForCellChange("Enter");
+                Init();
+                continue;
             }
+            Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol{(Core.PrivateRoomNumber > 0 ? "-" + Core.PrivateRoomNumber : "")}%");
+            Core.Sleep(4000);
+            Bot.Wait.ForCellChange("Enter");
+            Bot.Wait.ForCellChange("Cut1");
+            Bot.Map.Jump("Enter", "Left");
+            Core.Sleep(4000);
+            Bot.Wait.ForCellChange("Enter");
+            Core.Sleep(4000);
+            Bot.Wait.ForMapLoad("grimgaol");
+            Core.Sleep(1000);
             Init();
         }
         Farm.ToggleBoost(BoostType.Reputation, false);
     }
 
-    bool Death = false;
     private void Init()
     {
-    Restart:
-        Death = false;
-        while (!Bot.ShouldExit && !Bot.Player.Alive) { }
-        Bot.Map.Jump("Enter", "reSpawn", autoCorrect: false);
-        Bot.Sleep(1500);
-        Bot.Wait.ForCellChange("Enter");
-        Core.Logger("Starting Grimgaol run...");
+        if (Bot.Player.Cell.ToLower().Contains("cut"))
+        {
+            Core.Logger($"in {Bot.Player?.Cell} cell, jumping to enter");
+            Core.Jump("Enter", "Left");
+        }
+
         while (!Bot.ShouldExit && !Bot.TempInv.Contains("Grimskull's Gaol Cleared"))
         {
+            jumpToAvailMonster();
             Core.Sleep(500);
             if (Bot.Player != null)
                 switch (Bot.Player.Cell)
                 {
                     case "Enter":
-                        Core.Logger($"Room: \"Enter\"");
-                        if (Death)
-                            goto Restart;
-                        else Enter();
-                        Bot.Map.Jump("r2", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r2");
+                        Enter();
+                        Core.Jump("r2", "Left");
                         break;
-
                     case "r2":
-                        Core.Logger($"Room: \"r2\"");
-                        if (Death)
-                            goto Restart;
-                        else R2();
-                        Bot.Map.Jump("r3", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r3");
+                        R2();
+                        Core.Jump("r3", "Left");
                         break;
-
                     case "r4":
-                        Core.Logger($"Room: \"r4\"");
-                        if (Death)
-                            goto Restart;
-                        else RVDK(Bot.Player.Cell);
-                        Bot.Map.Jump("r5", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r5");
+                        RVDK(Bot.Player.Cell);
+                        Core.Jump("r5", "Left");
                         break;
-
                     case "r5":
-                        Core.Logger($"Room: \"r5\"");
-                        if (Death)
-                            goto Restart;
-                        else R5();
-                        Bot.Map.Jump("r6", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r6");
+                        R5();
+                        Core.Jump("r6", "Left");
                         break;
-
                     case "r6":
-                        Core.Logger($"Room: \"r6\"");
-                        if (Death)
-                            goto Restart;
-                        else R6();
-                        Bot.Map.Jump("r7", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r7");
+                        R6();
+                        Core.Jump("r7", "Left");
                         break;
-
                     case "r9":
-                        Core.Logger($"Room: \"r9\"");
-                        if (Death)
-                            goto Restart;
-                        else R9();
-                        Bot.Map.Jump("r10", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r10");
+                        R9();
+                        Core.Jump("r10", "Left");
                         break;
-
                     case "r10":
-                        Core.Logger($"Room: \"r10\"");
-                        if (Death)
-                            goto Restart;
-                        else R10();
-                        Bot.Map.Jump("r11", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r11");
+                        R10();
+                        Core.Jump("r11", "Left");
                         break;
-
                     case "r3":
-                        Core.Logger($"Room: \"r3\"");
-                        if (Death)
-                            goto Restart;
-                        else RVDK(Bot.Player.Cell);
-                        Bot.Map.Jump("r4", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r4");
+                        RVDK(Bot.Player.Cell);
+                        Core.Jump("r4", "Left");
                         break;
-
                     case "r7":
-                        Core.Logger($"Room: \"r7\"");
-                        if (Death)
-                            goto Restart;
-                        else RVDK(Bot.Player.Cell);
-                        Bot.Map.Jump("r8", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r8");
+                        RVDK(Bot.Player.Cell);
+                        Core.Jump("r8", "Left");
                         break;
-
                     case "r8":
-                        Core.Logger($"Room: \"r8\"");
-                        if (Death)
-                            goto Restart;
-                        else RVDK(Bot.Player.Cell);
-                        Bot.Map.Jump("r9", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r9");
+                        RVDK(Bot.Player.Cell);
+                        Core.Jump("r9", "Left");
                         break;
-
                     case "r11":
-                        Core.Logger($"Room: \"r11\"");
-                        if (Death)
-                            goto Restart;
-                        else RVDK(Bot.Player.Cell);
-                        Bot.Map.Jump("r12", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r12");
+                        RVDK(Bot.Player.Cell);
+                        Core.Jump("r12", "Left");
                         break;
-
                     case "r12":
-                        Core.Logger($"Room: \"r12\"");
-                        if (Death)
-                            goto Restart;
-                        else RVDK(Bot.Player.Cell);
-                        Bot.Map.Jump("r12a", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r12a");
+                        RVDK(Bot.Player.Cell);
+                        Core.Jump("r12a", "Left");
                         break;
-
                     default:
                         break;
                 }
@@ -456,8 +385,8 @@ public class Grimgaol
             Core.Sleep(500);
         }
 
-        Core.ChainComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9466) : 9467);
-        Bot.Wait.ForQuestComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9466) : 9467);
+        Core.ChainComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9467) : 9466);
+        Bot.Wait.ForQuestComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9467) : 9466);
         Core.Sleep(1500);
         Bot.Map.Join("whitemap-999999", "Enter", "Spawn", autoCorrect: false);
         Bot.Wait.ForMapLoad("whitemap");
@@ -472,82 +401,83 @@ public class Grimgaol
     {
         if (Bot.ShouldExit) return;
 
-        Core.Sleep(1000);
-
-        jumpToAvailMonster();
-        if (!monsterAvail()) return;
-        if (!Bot.Inventory.IsEquipped("Void Highlord"))
+        if (Bot.Player.Cell != "Enter")
         {
-            Bot.Inventory.EquipItem("Void Highlord");
-            Bot.Wait.ForItemEquip("Void Highlord");
+            Core.Logger("jump to enter");
+            Core.Jump("Enter", "Left");
         }
-        if (target == null)
-            return;
+        Core.Sleep(1000);
+        jumpToAvailMonster();
 
-        Core.Logger($"Proceeding to kill: {target.Name}");
+        if (!monsterAvail()) return;
+
+        Core.Equip("Void Highlord");
         string? valiance = Bot.Config!.Get<string>("Valiance");
-        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
+        if (!string.IsNullOrWhiteSpace(valiance))
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
+            {
+                Core.Equip(valiance);
+                Core.Sleep(1500);
+            }
+        }
 
+        string? dauntless = Bot.Config.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
             {
-                Bot.Inventory.EquipItem(dauntless);
-                Core.Sleep(1500);
-            }
-        }
-        else if (!string.IsNullOrWhiteSpace(valiance))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
-            {
-                Bot.Inventory.EquipItem(valiance);
+                Core.Equip(dauntless);
                 Core.Sleep(1500);
             }
         }
 
-        string? wizHelm = Bot.Config!.Get<string>("WizHelm");
-        string? animaHelm = Bot.Config!.Get<string>("AnimaHelm");
-        string? luckHelm = Bot.Config!.Get<string>("LuckHelm");
+        string? wizHelm = Bot.Config.Get<string>("WizHelm");
+        if (!string.IsNullOrWhiteSpace(wizHelm))
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
+            {
+                Core.Equip(wizHelm);
+                Core.Sleep(1500);
+            }
+        }
+
+        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
+        if (!string.IsNullOrWhiteSpace(luckHelm))
+        {
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
+            {
+                Core.Equip(luckHelm);
+                Core.Sleep(1500);
+            }
+        }
+
+        string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
             {
-                Bot.Inventory.EquipItem(animaHelm);
-                Core.Sleep(1500);
-            }
-        }
-        else if (!string.IsNullOrWhiteSpace(luckHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
-            {
-                Bot.Inventory.EquipItem(luckHelm);
-                Core.Sleep(1500);
-            }
-        }
-        else if (!string.IsNullOrWhiteSpace(wizHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
-            {
-                Bot.Inventory.EquipItem(wizHelm);
+                Core.Equip(animaHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? penitence = Bot.Config!.Get<string>("Penitence");
-        string? vainglory = Bot.Config!.Get<string>("Vainglory");
+        string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
             {
-                Bot.Inventory.EquipItem(penitence);
+                Core.Equip(penitence);
                 Core.Sleep(1500);
             }
         }
-        else if (!string.IsNullOrWhiteSpace(vainglory))
+
+        string? vainglory = Bot.Config.Get<string>("Vainglory");
+        if (!string.IsNullOrWhiteSpace(vainglory))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
             {
-                Bot.Inventory.EquipItem(vainglory);
+                Core.Equip(vainglory);
                 Core.Sleep(1500);
             }
         }
@@ -560,21 +490,16 @@ public class Grimgaol
         {
             if (!Bot.Player.Alive)
             {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                Core.Logger("Player is dead, resetting dungeon.");
                 skillIndex = 0;
                 Bot.Sleep(500);
-                Death = true;
-                return;
+                continue;
             }
-
             if (!monsterAvail()) return;
 
             if (Bot.Player.Cell != "Enter")
             {
                 Core.Logger("jump back to enter");
-                Bot.Map.Jump("Enter", "Left", autoCorrect: false);
-                Bot.Wait.ForCellChange("Enter");
+                Core.Jump("Enter", "Left");
             }
 
             if (Bot.Target.HasActiveAura("Talon Twisting")) continue;
@@ -605,88 +530,80 @@ public class Grimgaol
         if (Bot.Player.Cell != "r2")
         {
             Core.Logger("jump to r2");
-            Bot.Map.Jump("r2", "Left", autoCorrect: false);
-            Bot.Wait.ForCellChange("r2");
+            Core.Jump("r2", "Left");
         }
         Core.Sleep(1000);
         jumpToAvailMonster();
 
         if (!monsterAvail()) return;
-        if (!Bot.Inventory.IsEquipped("Void Highlord"))
-        {
-            Bot.Inventory.EquipItem("Void Highlord");
-            Bot.Wait.ForItemEquip("Void Highlord");
-        }
-        if (target == null)
-            return;
 
-        Core.Logger($"Proceeding to kill: {target.Name}");
+        Core.Equip("Void Highlord");
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
             {
-                Bot.Inventory.EquipItem(valiance);
+                Core.Equip(valiance);
                 Core.Sleep(1500);
             }
         }
 
-        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
+        string? dauntless = Bot.Config.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
             {
-                Bot.Inventory.EquipItem(dauntless);
+                Core.Equip(dauntless);
                 Core.Sleep(1500);
             }
         }
 
-        string? wizHelm = Bot.Config!.Get<string>("WizHelm");
+        string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
             {
-                Bot.Inventory.EquipItem(wizHelm);
+                Core.Equip(wizHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? luckHelm = Bot.Config!.Get<string>("LuckHelm");
+        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
             {
-                Bot.Inventory.EquipItem(luckHelm);
+                Core.Equip(luckHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? animaHelm = Bot.Config!.Get<string>("AnimaHelm");
+        string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
             {
-                Bot.Inventory.EquipItem(animaHelm);
+                Core.Equip(animaHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? penitence = Bot.Config!.Get<string>("Penitence");
+        string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
             {
-                Bot.Inventory.EquipItem(penitence);
+                Core.Equip(penitence);
                 Core.Sleep(1500);
             }
         }
 
-        string? vainglory = Bot.Config!.Get<string>("Vainglory");
+        string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
             {
-                Bot.Inventory.EquipItem(vainglory);
+                Core.Equip(vainglory);
                 Core.Sleep(1500);
             }
         }
@@ -699,12 +616,9 @@ public class Grimgaol
         {
             if (!Bot.Player.Alive)
             {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                Core.Logger("Player is dead, resetting dungeon.");
                 skillIndex = 0;
                 Bot.Sleep(500);
-                Death = true;
-                return;
+                continue;
             }
             if (!monsterAvail()) return;
 
@@ -734,8 +648,7 @@ public class Grimgaol
         if (Bot.Player.Cell != "r4")
         {
             Core.Logger("jump to r4");
-            Bot.Map.Jump("r4", "Left", autoCorrect: false);
-            Bot.Wait.ForCellChange("r4");
+            Core.Jump("r4", "Left");
         }
         Core.Sleep(1000);
         jumpToAvailMonster();
@@ -743,84 +656,73 @@ public class Grimgaol
         {
             return;
         }
-
-
-        if (!Bot.Inventory.IsEquipped("Legion Revenant"))
-        {
-            Bot.Inventory.EquipItem("Legion Revenant");
-            Bot.Wait.ForItemEquip("Legion Revenant");
-        }
-
-        if (target == null)
-            return;
-
-        Core.Logger($"Proceeding to kill: {target.Name}");
+        Core.Equip("Legion Revenant");
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
             {
-                Bot.Inventory.EquipItem(valiance);
+                Core.Equip(valiance);
                 Core.Sleep(1500);
             }
         }
 
-        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
+        string? dauntless = Bot.Config.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
             {
-                Bot.Inventory.EquipItem(dauntless);
+                Core.Equip(dauntless);
                 Core.Sleep(1500);
             }
         }
 
-        string? wizHelm = Bot.Config!.Get<string>("WizHelm");
+        string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
             {
-                Bot.Inventory.EquipItem(wizHelm);
+                Core.Equip(wizHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? luckHelm = Bot.Config!.Get<string>("LuckHelm");
+        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
             {
-                Bot.Inventory.EquipItem(luckHelm);
+                Core.Equip(luckHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? animaHelm = Bot.Config!.Get<string>("AnimaHelm");
+        string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
             {
-                Bot.Inventory.EquipItem(animaHelm);
+                Core.Equip(animaHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? penitence = Bot.Config!.Get<string>("Penitence");
+        string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
             {
-                Bot.Inventory.EquipItem(penitence);
+                Core.Equip(penitence);
                 Core.Sleep(1500);
             }
         }
 
-        string? vainglory = Bot.Config!.Get<string>("Vainglory");
+        string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
             {
-                Bot.Inventory.EquipItem(vainglory);
+                Core.Equip(vainglory);
                 Core.Sleep(1500);
             }
         }
@@ -833,12 +735,9 @@ public class Grimgaol
         {
             if (!Bot.Player.Alive)
             {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                Core.Logger("Player is dead, resetting dungeon.");
                 skillIndex = 0;
                 Bot.Sleep(500);
-                Death = true;
-                return;
+                continue;
             }
             if (!monsterAvail())
             {
@@ -865,8 +764,7 @@ public class Grimgaol
         if (Bot.Player.Cell != "r5")
         {
             Core.Logger("jump to r5");
-            Bot.Map.Jump("r5", "Left", autoCorrect: false);
-            Bot.Wait.ForCellChange("r5");
+            Core.Jump("r5", "Left");
         }
         Core.Sleep(1000);
         jumpToAvailMonster();
@@ -875,13 +773,9 @@ public class Grimgaol
             return;
         }
 
-        if (target == null)
-            return;
-
-        Core.Logger($"Proceeding to kill: {target.Name}");
         string? valiance = Bot.Config!.Get<string>("Valiance");
-        string? elysium = Bot.Config!.Get<string>("Elysium");
-        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
+        string? elysium = Bot.Config.Get<string>("Elysium");
+        string? dauntless = Bot.Config.Get<string>("Dauntless");
 
         // Determine weapon based on availability and unlocks
         string? weapon =
@@ -890,41 +784,38 @@ public class Grimgaol
             !string.IsNullOrWhiteSpace(valiance) ? valiance : null;
 
         // Equip based on which group the weapon came from
-        if (!Bot.Inventory.IsEquipped((weapon == elysium || weapon == dauntless) ? "Dragon of Time" : "Void Highlord"))
-        {
-            Bot.Inventory.EquipItem((weapon == elysium || weapon == dauntless) ? "Dragon of Time" : "Void Highlord");
-            Bot.Wait.ForItemEquip((weapon == elysium || weapon == dauntless) ? "Dragon of Time" : "Void Highlord");
-        }
+        Core.Equip((weapon == elysium || weapon == dauntless) ? "Dragon of Time" : "Void Highlord");
 
         // Ensure the weapon is equipped
         if (!string.IsNullOrWhiteSpace(weapon))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(weapon))
             {
-                Bot.Inventory.EquipItem(weapon);
+                Core.Equip(weapon);
                 Core.Sleep(1500);
             }
         }
 
-        string? wizHelm = Bot.Config!.Get<string>("WizHelm");
+        string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
             {
-                Bot.Inventory.EquipItem(wizHelm);
+                Core.Equip(wizHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? penitence = Bot.Config!.Get<string>("Penitence");
+        string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
             {
-                Bot.Inventory.EquipItem(penitence);
+                Core.Equip(penitence);
                 Core.Sleep(1500);
             }
         }
+
 
         int skillIndex = 0;
         int[] skillList = Adv.uDauntless() ? new int[] { 1, 2, 4, 2, 3, 2 } : new int[] { 1, 2, 3, 4 };
@@ -934,12 +825,9 @@ public class Grimgaol
         {
             if (!Bot.Player.Alive)
             {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                Core.Logger("Player is dead, resetting dungeon.");
                 skillIndex = 0;
                 Bot.Sleep(500);
-                Death = true;
-                return;
+                continue;
             }
             string playerCell = Bot.Player.Cell;
             List<Monster> mapMonsters = Bot.Monsters.MapMonsters;
@@ -982,89 +870,80 @@ public class Grimgaol
         if (Bot.Player.Cell != "r6")
         {
             Core.Logger("jump to r6");
-            Bot.Map.Jump("r6", "Left", autoCorrect: false);
-            Bot.Wait.ForCellChange("r6");
+            Core.Jump("r6", "Left");
         }
         Core.Sleep(1000);
         if (!monsterAvail())
         {
             return;
         }
-        if (!Bot.Inventory.IsEquipped("Void Highlord"))
-        {
-            Bot.Inventory.EquipItem("Void Highlord");
-            Bot.Wait.ForItemEquip("Void Highlord");
-        }
-        if (target == null)
-            return;
-
-        Core.Logger($"Proceeding to kill: {target.Name}");
+        Core.Equip("Void Highlord");
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
             {
-                Bot.Inventory.EquipItem(valiance);
+                Core.Equip(valiance);
                 Core.Sleep(1500);
             }
         }
 
-        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
+        string? dauntless = Bot.Config.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
             {
-                Bot.Inventory.EquipItem(dauntless);
+                Core.Equip(dauntless);
                 Core.Sleep(1500);
             }
         }
 
-        string? wizHelm = Bot.Config!.Get<string>("WizHelm");
+        string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
             {
-                Bot.Inventory.EquipItem(wizHelm);
+                Core.Equip(wizHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? luckHelm = Bot.Config!.Get<string>("LuckHelm");
+        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
             {
-                Bot.Inventory.EquipItem(luckHelm);
+                Core.Equip(luckHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? animaHelm = Bot.Config!.Get<string>("AnimaHelm");
+        string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
             {
-                Bot.Inventory.EquipItem(animaHelm);
+                Core.Equip(animaHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? penitence = Bot.Config!.Get<string>("Penitence");
+        string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
             {
-                Bot.Inventory.EquipItem(penitence);
+                Core.Equip(penitence);
                 Core.Sleep(1500);
             }
         }
 
-        string? vainglory = Bot.Config!.Get<string>("Vainglory");
+        string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
             {
-                Bot.Inventory.EquipItem(vainglory);
+                Core.Equip(vainglory);
                 Core.Sleep(1500);
             }
         }
@@ -1159,89 +1038,80 @@ public class Grimgaol
         if (Bot.Player.Cell != "r9")
         {
             Core.Logger("jump to r9");
-            Bot.Map.Jump("r9", "Left", autoCorrect: false);
-            Bot.Wait.ForCellChange("r9");
+            Core.Jump("r9", "Left");
         }
         Core.Sleep(1000);
         if (!monsterAvail())
         {
             return;
         }
-        if (!Bot.Inventory.IsEquipped("Void Highlord"))
-        {
-            Bot.Inventory.EquipItem("Void Highlord");
-            Bot.Wait.ForItemEquip("Void Highlord");
-        }
-        if (target == null)
-            return;
-
-        Core.Logger($"Proceeding to kill: {target.Name}");
+        Core.Equip("Void Highlord");
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
             {
-                Bot.Inventory.EquipItem(valiance);
+                Core.Equip(valiance);
                 Core.Sleep(1500);
             }
         }
 
-        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
+        string? dauntless = Bot.Config.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
             {
-                Bot.Inventory.EquipItem(dauntless);
+                Core.Equip(dauntless);
                 Core.Sleep(1500);
             }
         }
 
-        string? wizHelm = Bot.Config!.Get<string>("WizHelm");
+        string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
             {
-                Bot.Inventory.EquipItem(wizHelm);
+                Core.Equip(wizHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? luckHelm = Bot.Config!.Get<string>("LuckHelm");
+        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
             {
-                Bot.Inventory.EquipItem(luckHelm);
+                Core.Equip(luckHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? animaHelm = Bot.Config!.Get<string>("AnimaHelm");
+        string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
             {
-                Bot.Inventory.EquipItem(animaHelm);
+                Core.Equip(animaHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? penitence = Bot.Config!.Get<string>("Penitence");
+        string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
             {
-                Bot.Inventory.EquipItem(penitence);
+                Core.Equip(penitence);
                 Core.Sleep(1500);
             }
         }
 
-        string? vainglory = Bot.Config!.Get<string>("Vainglory");
+        string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
             {
-                Bot.Inventory.EquipItem(vainglory);
+                Core.Equip(vainglory);
                 Core.Sleep(1500);
             }
         }
@@ -1256,12 +1126,9 @@ public class Grimgaol
         {
             if (!Bot.Player.Alive)
             {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                Core.Logger("Player is dead, resetting dungeon.");
                 skillIndex = 0;
                 Bot.Sleep(500);
-                Death = true;
-                return;
+                continue;
             }
             if (!monsterAvail())
             {
@@ -1292,31 +1159,21 @@ public class Grimgaol
         if (Bot.Player.Cell != "r10")
         {
             Core.Logger("jump to r10");
-            Bot.Map.Jump("r10", "Left", autoCorrect: false);
-            Bot.Wait.ForCellChange("r10");
+            Core.Jump("r10", "Left");
         }
         Core.Sleep(1000);
         if (!monsterAvail())
         {
             return;
         }
-
-        if (!Bot.Inventory.IsEquipped("Dragon of Time"))
-        {
-            Bot.Inventory.EquipItem("Dragon of Time");
-            Bot.Wait.ForItemEquip("Dragon of Time");
-        }
-        if (target == null)
-            return;
-
-        Core.Logger($"Proceeding to kill: {target.Name}");
+        Core.Equip("Dragon of Time");
         string? valiance = Bot.Config!.Get<string>("Valiance");
         string? elysium = Bot.Config!.Get<string>("Elysium");
         if (!string.IsNullOrWhiteSpace(elysium))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(elysium))
             {
-                Bot.Inventory.EquipItem(elysium);
+                Core.Equip(elysium);
                 Core.Sleep(1500);
             }
         }
@@ -1324,26 +1181,26 @@ public class Grimgaol
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
             {
-                Bot.Inventory.EquipItem(valiance);
+                Core.Equip(valiance);
                 Core.Sleep(1500);
             }
         }
 
-        string? wizHelm = Bot.Config!.Get<string>("WizHelm");
+        string? wizHelm = Bot.Config.Get<string>("WizHelm");
         if (!string.IsNullOrWhiteSpace(wizHelm))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
             {
-                Bot.Inventory.EquipItem(wizHelm);
+                Core.Equip(wizHelm);
                 Core.Sleep(1500);
             }
         }
-        string? penitence = Bot.Config!.Get<string>("Penitence");
+        string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
             {
-                Bot.Inventory.EquipItem(penitence);
+                Core.Equip(penitence);
                 Core.Sleep(1500);
             }
         }
@@ -1358,12 +1215,11 @@ public class Grimgaol
         {
             if (!Bot.Player.Alive)
             {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                Core.Logger("Player is dead, resetting dungeon.");
                 skillIndex = 0;
+                monsId = "16";
+                monsIdInt = 16;
                 Bot.Sleep(500);
-                Death = true;
-                return;
+                continue;
             }
             if (!monsterAvail())
             {
@@ -1403,64 +1259,56 @@ public class Grimgaol
         if (Bot.Player.Cell != cell)
         {
             Core.Logger($"jump to {cell}");
-            Bot.Map.Jump(cell, "Left", autoCorrect: false);
-            Bot.Wait.ForCellChange(cell);
+            Core.Jump(cell, "Left");
         }
 
         jumpToAvailMonster();
 
         if (!monsterAvail()) return;
 
-        if (!Bot.Inventory.IsEquipped("Verus DoomKnight"))
-        {
-            Bot.Inventory.EquipItem("Verus DoomKnight");
-            Bot.Wait.ForItemEquip("Verus DoomKnight");
-        }
-        if (target == null)
-            return;
+        Core.Equip("Verus DoomKnight");
 
-        Core.Logger($"Proceeding to kill: {target.Name}");
-        string? dauntless = Bot.Config!.Get<string>("Dauntless") ?? Bot.Config.Get<string>("Valiance");
+        string? dauntless = Bot.Config!.Get<string>("Dauntless");
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
             {
-                Bot.Inventory.EquipItem(dauntless);
+                Core.Equip(dauntless);
                 Core.Sleep(1500);
             }
         }
 
         if (cell == "r11" || cell == "r12")
         {
-            string? luckHelm = Bot.Config!.Get<string>("LuckHelm");
+            string? luckHelm = Bot.Config.Get<string>("LuckHelm");
             if (!string.IsNullOrWhiteSpace(luckHelm))
             {
                 while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
                 {
-                    Bot.Inventory.EquipItem(luckHelm);
+                    Core.Equip(luckHelm);
                     Core.Sleep(1500);
                 }
             }
         }
         else
         {
-            string? animaHelm = Bot.Config!.Get<string>("AnimaHelm");
+            string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
             if (!string.IsNullOrWhiteSpace(animaHelm))
             {
                 while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
                 {
-                    Bot.Inventory.EquipItem(animaHelm);
+                    Core.Equip(animaHelm);
                     Core.Sleep(1500);
                 }
             }
         }
 
-        string? vainglory = Bot.Config!.Get<string>("Vainglory");
+        string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
             {
-                Bot.Inventory.EquipItem(vainglory);
+                Core.Equip(vainglory);
                 Core.Sleep(1500);
             }
         }
@@ -1472,19 +1320,15 @@ public class Grimgaol
         {
             if (!Bot.Player.Alive)
             {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                Core.Logger("Player is dead, resetting dungeon.");
                 skillIndex = 0;
                 Bot.Sleep(500);
-                Death = true;
-                return;
+                continue;
             }
 
             if (Bot.Player.Cell != cell)
             {
                 Core.Logger($"jump back to {cell}");
-                Bot.Map.Jump(cell, "Left", autoCorrect: false);
-                Bot.Wait.ForCellChange(cell);
+                Core.Jump(cell, "Left");
             }
 
             if (!monsterAvail()) return;
@@ -1520,11 +1364,7 @@ public class Grimgaol
                     return mon["intHP"]?.ToObject<int>() ?? 0;
             }
         }
-        catch
-        {
-            Core.Logger($"Failed to get HP for monster with MapID {monMapID}. Returning 0.");
-            return 0;
-        }
+        catch { }
 
         return 0;
     }
@@ -1543,14 +1383,11 @@ public class Grimgaol
 
     private bool monsterAvailId(int id)
     {
-        string playerCell = Bot.Player.Cell;
-        foreach (var mon in Bot.Monsters.CurrentAvailableMonsters)
+        var playerCell = Bot.Player.Cell;
+        foreach (var mon in Bot.Monsters.MapMonsters)
         {
-            Core.Logger($"Checking monster {mon.Name}[{mon.ID}] at cell {mon.Cell} with HP {mon.HP} and state {mon.State}");
             if (mon.MapID == id && mon.Cell == playerCell && mon.HP > 0 && mon.State != 0)
-            {
                 return true;
-            }
         }
         return false;
     }
@@ -1558,45 +1395,24 @@ public class Grimgaol
     private bool monsterAvail()
     {
         string playerCell = Bot.Player.Cell;
-        foreach (Monster mon in Bot.Monsters.CurrentAvailableMonsters)
+        foreach (var mon in Bot.Monsters.MapMonsters)
         {
             if (mon.Cell == playerCell && mon.HP > 0 && mon.State != 0)
-            {
-                // Core.Logger($"Monster {mon.Name}[{mon.ID}] is available at cell {mon.Cell}");
                 return true;
-            }
         }
         return false;
     }
-
-    private Monster? target;
 
     private void jumpToAvailMonster()
     {
         foreach (var mon in Bot.Monsters.MapMonsters)
         {
-            // Skip invalid targets
-            if (mon.HP <= 0 || mon.State == 0)
-                continue;
-
-
-            // Already at monster
-            if (mon.Cell == Bot.Player.Cell)
+            if (mon.HP > 0 && mon.State != 0)
             {
-                Core.Logger($"Target: {mon.Name} [{mon.ID}]");
-                target = mon;
+                Core.Jump(mon.Cell, "Left");
                 return;
             }
-
-            Core.Logger($"Jumping to monster {mon.Name} [{mon.ID}] at cell {mon.Cell}");
-            Bot.Map.Jump(mon.Cell, "Left", autoCorrect: false);
-            Bot.Wait.ForCellChange(mon.Cell);
-
-            target = mon;
-            return;
         }
-        target = null;
-        Core.Logger("No available monsters found in the current cell.");
     }
 
     private void CheckConfig()
