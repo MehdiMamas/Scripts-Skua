@@ -2032,7 +2032,8 @@ public class CoreAdvanced
     /// <param name="cSpecial"></param>
     /// <param name="hSpecial"></param>
     /// <param name="wSpecial"></param>
-    public void EnhanceItem(string item, EnhancementType type, CapeSpecial cSpecial = CapeSpecial.None, HelmSpecial hSpecial = HelmSpecial.None, WeaponSpecial wSpecial = WeaponSpecial.None)
+    /// <param name="logging"></param>
+    public void EnhanceItem(string item, EnhancementType type, CapeSpecial cSpecial = CapeSpecial.None, HelmSpecial hSpecial = HelmSpecial.None, WeaponSpecial wSpecial = WeaponSpecial.None, bool logging = true)
     {
         if (string.IsNullOrEmpty(item) || (Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance))
             return;
@@ -2063,7 +2064,7 @@ public class CoreAdvanced
 
         try
         {
-            AutoEnhance(new() { SelectedItem }, type, cSpecial, hSpecial, wSpecial);
+            AutoEnhance(new() { SelectedItem }, type, cSpecial, hSpecial, wSpecial, logging);
         }
         catch (Exception e)
         {
@@ -2228,7 +2229,7 @@ public class CoreAdvanced
 
     public readonly ItemCategory[] WeaponCatagories = EnhanceableCatagories[..12];
 
-    private void AutoEnhance(List<InventoryItem> ItemList, EnhancementType type, CapeSpecial cSpecial, HelmSpecial hSpecial, WeaponSpecial wSpecial)
+    private void AutoEnhance(List<InventoryItem> ItemList, EnhancementType type, CapeSpecial cSpecial, HelmSpecial hSpecial, WeaponSpecial wSpecial, bool logging = true)
     {
         // In case the 'CurrentEnhancement()' failed and returned 0
         if (type == 0)
@@ -2515,14 +2516,14 @@ public class CoreAdvanced
             }
 
             if (canEnhance)
-                _AutoEnhance(weapon, shopID, ((int)wSpecial > 6) ? "forge" : null);
+                _AutoEnhance(weapon, shopID, ((int)wSpecial > 6) ? "forge" : null, logging);
             else skipCounter++;
         }
 
         if (skipCounter > 0)
             Core.Logger($"Enhancement Skipped:\t{skipCounter} item{(skipCounter > 1 ? 's' : null)}");
 
-        void _AutoEnhance(InventoryItem item, int shopID, string? map = null)
+        void _AutoEnhance(InventoryItem item, int shopID, string? map = null, bool logging = true)
         {
             bool specialOnCape = item.Category == ItemCategory.Cape && cSpecial != CapeSpecial.None;
             bool specialOnHelm = item.Category == ItemCategory.Helm && hSpecial != HelmSpecial.None;
@@ -2563,12 +2564,15 @@ public class CoreAdvanced
             }
 
             // Logging
-            if (specialOnCape)
-                Core.Logger($"Searching Enhancement:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
-            else if (specialOnWeapon)
-                Core.Logger($"Searching Enhancement:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
-            else
-                Core.Logger($"Searching Enhancement:\t{type} - \"{item.Name}\"");
+            if (logging)
+            {
+                if (specialOnCape)
+                    Core.Logger($"Searching Enhancement:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
+                else if (specialOnWeapon)
+                    Core.Logger($"Searching Enhancement:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
+                else
+                    Core.Logger($"Searching Enhancement:\t{type} - \"{item.Name}\"");
+            }
 
             List<ShopItem> availableEnh = new();
 
@@ -2610,7 +2614,8 @@ public class CoreAdvanced
             ShopItem? bestEnhancement = null;
             if (availableEnh.Count == 0)
             {
-                Core.Logger($"Enhancement Failed:\t\"availableEnh\" is empty");
+                if (logging)
+                    Core.Logger($"Enhancement Failed:\t\"availableEnh\" is empty");
                 return;
             }
             else if (availableEnh.Count == 1)
@@ -2626,14 +2631,16 @@ public class CoreAdvanced
             // Null check
             if (bestEnhancement == null)
             {
-                Core.Logger($"Enhancement Failed:\tCould not find the best enhancement for \"{item.Name}\"");
+                if (logging)
+                    Core.Logger($"Enhancement Failed:\tCould not find the best enhancement for \"{item.Name}\"");
                 return;
             }
 
             // Compare with current enhancement
             if (bestEnhancement.ID == getEnhID(item) && item.EnhancementLevel > 0)
             {
-                Core.Logger($"Enhancement Canceled:\tBest enhancement is already applied for \"{item.Name}\"");
+                if (logging)
+                    Core.Logger($"Enhancement Canceled:\tBest enhancement is already applied for \"{item.Name}\"");
                 return;
             }
 
@@ -2642,12 +2649,20 @@ public class CoreAdvanced
 
             // Final logging
             if (specialOnCape)
-                Core.Logger($"Enhancement Applied:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+            {
+                if (logging)
+                    Core.Logger($"Enhancement Applied:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+            }
             else if (specialOnWeapon)
-                Core.Logger($"Enhancement Applied:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+            {
+                if (logging)
+                    Core.Logger($"Enhancement Applied:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+            }
             else
-                Core.Logger($"Enhancement Applied:\t{type} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
-
+            {
+                if (logging)
+                    Core.Logger($"Enhancement Applied:\t{type} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+            }
             Core.Sleep();
         }
     }
