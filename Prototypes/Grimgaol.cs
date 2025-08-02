@@ -206,28 +206,36 @@ public class Grimgaol
 
         // Classes
         if (Core.CheckInventory("Void Highlord"))
+        {
             if (!Bot.Config!.Get<bool>("SkipEnhancements"))
                 Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky, logging: false);
-            else Core.Logger("Void Highlord not found in inventory.");
+        }
+        else Core.Logger("Void Highlord not found in inventory.");
 
         if (Core.CheckInventory("Verus DoomKnight"))
+        {
             if (!Bot.Config!.Get<bool>("SkipEnhancements"))
                 Adv.EnhanceItem("Verus DoomKnight", EnhancementType.Lucky, logging: false);
-            else Core.Logger("Verus DoomKnight not found in inventory.");
+        }
+        else Core.Logger("Verus DoomKnight not found in inventory.");
 
         if (Core.CheckInventory("Dragon of Time"))
+        {
             if (!Bot.Config!.Get<bool>("SkipEnhancements"))
                 Adv.EnhanceItem("Dragon of Time", EnhancementType.Healer, logging: false);
-            else Core.Logger("Dragon of Time not found in inventory.");
+        }
+        else Core.Logger("Dragon of Time not found in inventory.");
 
         // Weapons
         string? valiance = Bot.Config!.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(valiance))
         {
             if (Core.CheckInventory(valiance))
+            {
                 if (!Bot.Config!.Get<bool>("SkipEnhancements"))
                     Adv.EnhanceItem(valiance, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Valiance, logging: false);
-                else Core.Logger($"Valiance weapon set to \"{valiance}\", but it's not in inventory.");
+            }
+            else Core.Logger($"Valiance weapon set to \"{valiance}\", but it's not in inventory.");
         }
 
         // Weapons
@@ -235,9 +243,11 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             if (Core.CheckInventory(dauntless))
+            {
                 if (!Bot.Config!.Get<bool>("SkipEnhancements"))
                     Adv.EnhanceItem(dauntless, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless, logging: false);
-                else Core.Logger($"Dauntless weapon set to \"{dauntless}\", but it's not in inventory.");
+            }
+            else Core.Logger($"Dauntless weapon set to \"{dauntless}\", but it's not in inventory.");
         }
 
         // Helms
@@ -245,27 +255,33 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(wizHelm))
         {
             if (Core.CheckInventory(wizHelm))
+            {
                 if (!Bot.Config!.Get<bool>("SkipEnhancements"))
                     Adv.EnhanceItem(wizHelm, EnhancementType.Wizard, logging: false);
-                else Core.Logger($"WizHelm set to \"{wizHelm}\", but it's not in inventory.");
+            }
+            else Core.Logger($"WizHelm set to \"{wizHelm}\", but it's not in inventory.");
         }
 
         string? luckHelm = Bot.Config.Get<string>("LuckHelm");
         if (!string.IsNullOrWhiteSpace(luckHelm))
         {
             if (Core.CheckInventory(luckHelm))
+            {
                 if (!Bot.Config!.Get<bool>("SkipEnhancements"))
                     Adv.EnhanceItem(luckHelm, EnhancementType.Lucky, logging: false);
-                else Core.Logger($"LuckHelm set to \"{luckHelm}\", but it's not in inventory.");
+            }
+            else Core.Logger($"LuckHelm set to \"{luckHelm}\", but it's not in inventory.");
         }
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
         if (!string.IsNullOrWhiteSpace(animaHelm))
         {
             if (Core.CheckInventory(animaHelm))
+            {
                 if (!Bot.Config!.Get<bool>("SkipEnhancements"))
                     Adv.EnhanceItem(animaHelm, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.Anima, logging: false);
-                else Core.Logger($"AnimaHelm set to \"{animaHelm}\", but it's not in inventory.");
+            }
+            else Core.Logger($"AnimaHelm set to \"{animaHelm}\", but it's not in inventory.");
         }
 
         // Capes
@@ -273,18 +289,22 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(penitence))
         {
             if (Core.CheckInventory(penitence))
+            {
                 if (!Bot.Config!.Get<bool>("SkipEnhancements"))
                     Adv.EnhanceItem(penitence, EnhancementType.Lucky, CapeSpecial.Penitence, logging: false);
-                else Core.Logger($"Penitence cape set to \"{penitence}\", but it's not in inventory.");
+            }
+            else Core.Logger($"Penitence cape set to \"{penitence}\", but it's not in inventory.");
         }
 
         string? vainglory = Bot.Config.Get<string>("Vainglory");
         if (!string.IsNullOrWhiteSpace(vainglory))
         {
             if (Core.CheckInventory(vainglory))
+            {
                 if (!Bot.Config!.Get<bool>("SkipEnhancements"))
                     Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory, logging: false);
-                else Core.Logger($"Vainglory cape set to \"{vainglory}\", but it's not in inventory.");
+            }
+            else Core.Logger($"Vainglory cape set to \"{vainglory}\", but it's not in inventory.");
         }
 
         Farm.ToggleBoost(BoostType.Reputation);
@@ -397,7 +417,6 @@ public class Grimgaol
 
         while (!Bot.ShouldExit && !Bot.TempInv.Contains("Grimskull's Gaol Cleared"))
         {
-
             jumpToAvailMonster();
             Core.Sleep(500);
             if (Bot.Player != null)
@@ -607,9 +626,11 @@ public class Grimgaol
                 skillIndex = 0; // Reset skill index after stopping skills
                 Bot.Skills.Start();
             }
-            else if (!Bot.Player.HasTarget)
+
+            if (!Bot.Player.HasTarget)
             {
                 Bot.Combat.Attack("*");
+                Core.Sleep();
             }
 
             if (!Bot.Self.HasActiveAura("Shackled") && skillIndex == 0 && Bot.Player.HasTarget)
@@ -622,8 +643,9 @@ public class Grimgaol
             {
                 Bot.Skills.UseSkill(skillList[skillIndex]);
             }
+
             skillIndex = (skillIndex + 1) % skillList.Length;
-            Core.Sleep(500);
+
         }
     }
 
