@@ -143,7 +143,7 @@ public class GrimskullTrollingRep
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.SetOptions();
+        GrimGaolRun.SetOptions();
         DoGrimskullTrollingRep(10);
         Core.SetOptions(false);
     }
@@ -158,7 +158,7 @@ public class GrimskullTrollingRep
 
         Core.Logger($"Farming rank {rank}");
 
-                // Extra rep | Beat Up Master For My Enjoyment [9469]
+        // Extra rep | Beat Up Master For My Enjoyment [9469]
         if (Bot.Quests.IsUnlocked(9469))
             Core.RegisterQuests(9469);
 
@@ -166,7 +166,7 @@ public class GrimskullTrollingRep
         {
             Core.EnsureAccept(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9466) : 9467);
             GrimGaolRun.DoGrimGaol();
-            Core.Join("whitemap");  
+            Core.Join("whitemap");
             Core.Join("whitemap");
             Core.Sleep(5000);
             Core.EnsureComplete(9467);
