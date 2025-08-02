@@ -7457,7 +7457,7 @@
       "lich",
       "class",
       "pre-requisites",
-      "necromicon",
+      "necronomicon",
       "nictos",
       "klaatu",
       "verata",
@@ -7467,7 +7467,7 @@
       "legion"
     ],
     "path": "Other/Classes/Lich.cs",
-    "size": 11432,
+    "size": 11436,
     "fileName": "Lich.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/Lich.cs"
   },
