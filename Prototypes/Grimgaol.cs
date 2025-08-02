@@ -811,6 +811,7 @@ public class Grimgaol
             return;
         }
 
+        #region Equipment Setup
         string? valiance = Bot.Config!.Get<string>("Valiance");
         string? elysium = Bot.Config.Get<string>("Elysium");
         string? dauntless = Bot.Config.Get<string>("Dauntless");
@@ -857,7 +858,7 @@ public class Grimgaol
                 Core.Sleep(1500);
             }
         }
-
+        #endregion Equipment Setup
 
         int skillIndex = 0;
         int[] skillList = Adv.uDauntless() ? new int[] { 1, 2, 4, 2, 3, 2 } : new int[] { 1, 2, 3, 4 };
@@ -1508,7 +1509,7 @@ public class Grimgaol
             if (string.IsNullOrWhiteSpace(value))
             {
                 Core.Logger(
-                    $"The item for enhancement '{key}' is missing.\n"+
+                    $"The item for enhancement '{key}' is missing.\n" +
                     "Go to: Scripts > [Edit Script Options], then enter the exact item name (case-sensitive). Use Tools > Grabber > Inventory to get the correct name.",
                     $"Missing Item: {key}",
                     stopBot: true);
