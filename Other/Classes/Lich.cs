@@ -166,7 +166,7 @@ public class Lich
         if (!Core.CheckInventory("Verata's Necromicon"))
         {
             GrimskullTrollingRep.DoGrimskullTrollingRep();
-            Core.BuyItem("goalcell", 2362, "Verata's Necromicon");
+            Core.BuyItem("gaolcell", 2362, "Verata's Necromicon");
             Bot.Wait.ForPickup("Verata's Necromicon");
         }
 
@@ -237,7 +237,7 @@ public class Lich
             return;
 
         GrimskullTrollingRep.DoGrimskullTrollingRep();
-        Core.BuyItem("goalcell", 2362, "Verata's Necromicon");
+        Core.BuyItem("gaolcell", 2362, "Verata's Necromicon");
         Bot.Wait.ForPickup("Verata's Necromicon");
     }
 
