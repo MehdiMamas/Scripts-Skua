@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 170308,
+    "size": 170786,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -100,7 +100,7 @@
       "beta"
     ],
     "path": "Prototypes/Grimgaol.cs",
-    "size": 51989,
+    "size": 52160,
     "fileName": "Grimgaol.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
@@ -4487,7 +4487,7 @@
       "verata's necronomicon"
     ],
     "path": "Farm/REP/GrimskullTrollingRep.cs",
-    "size": 7804,
+    "size": 7937,
     "fileName": "GrimskullTrollingRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/GrimskullTrollingRep.cs"
   },
@@ -7467,7 +7467,7 @@
       "legion"
     ],
     "path": "Other/Classes/Lich.cs",
-    "size": 11426,
+    "size": 11432,
     "fileName": "Lich.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/Lich.cs"
   },

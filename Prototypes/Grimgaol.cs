@@ -171,7 +171,7 @@ public class Grimgaol
 
         DoGrimGaol();
 
-        Bot.Stop();
+        Core.SetOptions(false);
     }
 
     public void DoGrimGaol(int rank = 10)
@@ -200,15 +200,15 @@ public class Grimgaol
 
         // Classes
         if (Core.CheckInventory("Void Highlord"))
-            Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky);
+            Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky, logging: false);
         else Core.Logger("Void Highlord not found in inventory.");
 
         if (Core.CheckInventory("Verus DoomKnight"))
-            Adv.EnhanceItem("Verus DoomKnight", EnhancementType.Lucky);
+            Adv.EnhanceItem("Verus DoomKnight", EnhancementType.Lucky, logging: false);
         else Core.Logger("Verus DoomKnight not found in inventory.");
 
         if (Core.CheckInventory("Dragon of Time"))
-            Adv.EnhanceItem("Dragon of Time", EnhancementType.Healer);
+            Adv.EnhanceItem("Dragon of Time", EnhancementType.Healer, logging: false);
         else Core.Logger("Dragon of Time not found in inventory.");
 
         // Weapons
@@ -216,7 +216,7 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(valiance))
         {
             if (Core.CheckInventory(valiance))
-                Adv.EnhanceItem(valiance, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Valiance);
+                Adv.EnhanceItem(valiance, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Valiance, logging: false);
             else Core.Logger($"Valiance weapon set to \"{valiance}\", but it's not in inventory.");
         }
 
@@ -225,7 +225,7 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             if (Core.CheckInventory(dauntless))
-                Adv.EnhanceItem(dauntless, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless);
+                Adv.EnhanceItem(dauntless, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless, logging: false);
             else Core.Logger($"Dauntless weapon set to \"{dauntless}\", but it's not in inventory.");
         }
 
@@ -234,7 +234,7 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(wizHelm))
         {
             if (Core.CheckInventory(wizHelm))
-                Adv.EnhanceItem(wizHelm, EnhancementType.Wizard);
+                Adv.EnhanceItem(wizHelm, EnhancementType.Wizard, logging: false);
             else Core.Logger($"WizHelm set to \"{wizHelm}\", but it's not in inventory.");
         }
 
@@ -242,7 +242,7 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(luckHelm))
         {
             if (Core.CheckInventory(luckHelm))
-                Adv.EnhanceItem(luckHelm, EnhancementType.Lucky);
+                Adv.EnhanceItem(luckHelm, EnhancementType.Lucky, logging: false);
             else Core.Logger($"LuckHelm set to \"{luckHelm}\", but it's not in inventory.");
         }
 
@@ -250,7 +250,7 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(animaHelm))
         {
             if (Core.CheckInventory(animaHelm))
-                Adv.EnhanceItem(animaHelm, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.Anima);
+                Adv.EnhanceItem(animaHelm, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.Anima, logging: false);
             else Core.Logger($"AnimaHelm set to \"{animaHelm}\", but it's not in inventory.");
         }
 
@@ -259,7 +259,7 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(penitence))
         {
             if (Core.CheckInventory(penitence))
-                Adv.EnhanceItem(penitence, EnhancementType.Lucky, CapeSpecial.Penitence);
+                Adv.EnhanceItem(penitence, EnhancementType.Lucky, CapeSpecial.Penitence, logging: false);
             else Core.Logger($"Penitence cape set to \"{penitence}\", but it's not in inventory.");
         }
 
@@ -267,7 +267,7 @@ public class Grimgaol
         if (!string.IsNullOrWhiteSpace(vainglory))
         {
             if (Core.CheckInventory(vainglory))
-                Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory);
+                Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory, logging: false);
             else Core.Logger($"Vainglory cape set to \"{vainglory}\", but it's not in inventory.");
         }
 
@@ -1519,7 +1519,7 @@ public class Grimgaol
         #endregion Grimgaol Prereqs
     }
 
-    private void SetOptions()
+    public void SetOptions()
     {
         #region SetOptions
 
