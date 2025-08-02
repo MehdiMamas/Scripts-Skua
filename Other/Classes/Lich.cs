@@ -1,8 +1,10 @@
 /*
-name: LichPreFarm
-description: null
-tags: null
+name: Lich Class
+description: Gets the Lich Class and its pre-requisites.
+tags: Lich, class, pre-requisites, necromicon, nictos, klaatu, verata, necromicon, shadow lich, frozen lair, legion
 */
+
+#region Includes Area
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
@@ -119,6 +121,7 @@ tags: null
 //cs_include Scripts/Story/XansLair.cs
 //cs_include Scripts/Story/Yokai.cs
 //cs_include Scripts/Prototypes/Grimgaol.cs
+#endregion
 
 using System.Threading.Tasks;
 using Skua.Core.Interfaces;
@@ -129,7 +132,7 @@ using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Auras;
 
-public class LichPreFarm
+public class Lich
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
@@ -164,24 +167,120 @@ public class LichPreFarm
         {
             GrimskullTrollingRep.DoGrimskullTrollingRep();
             Core.BuyItem("goalcell", 2362, "Verata's Necromicon");
+            Bot.Wait.ForPickup("Verata's Necromicon");
         }
 
         // Nictos Necronomicon
         if (!Core.CheckInventory("Nicto's Necronomicon"))
         {
             ColossalWaresMerge.BuyAllMerge("Nicto's Necronomicon");
+            Bot.Wait.ForPickup("Nicto's Necronomicon");
+        }
+
+        // Klaatu's Necronomicon
+        Core.AddDrop("Klaatu's Necronomicon");
+        if (!Core.CheckInventory("Klaatu's Necronomicon"))
+        {
+            Core.EnsureAccept(10338);
+            Core.EquipClass(ClassType.Farm);
+            Farm.BattleUnderB(quant: 6666);
+            Farm.EvilREP();
+            Adv.BuyItem("Shadowfall", 89, "Shadow Lich");
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("DarkoviaForest", "Lich of the Stone", "Lich Of The Stone", isTemp: false);
+            Core.HuntMonster("frozenlair", "Legion Lich Lord", "Sapphire Orb", 113, isTemp: false);
+            Core.GetMapItem(14740, 1, "necroproject");
+            Core.EnsureComplete(10338);
+            Bot.Wait.ForPickup("Klaatu's Necronomicon");
         }
 
         // Lich Class
         if (!Core.CheckInventory("Lich Class"))
         {
-           // insert Buy to obtain Lich Class when it releases
-           // Example: Core.BuyItem("lichshop", 1234, "Lich Class");
-           // For now, we will just log a message
-            Core.Logger("Lich Class is not available yet. Please check back later.(ping tato2 when its out)");
+            Core.AddDrop(94824 /* Lich class item ID */);
+            Core.ChainComplete(10339);
+            Bot.Wait.ForPickup("Lich");
+
+
+        }
+    }
+
+    // Create a void for each necropnomicon:
+    public void KlaatuNecropnomicon()
+    {
+        if (Core.CheckInventory("Klaatu's Necronomicon"))
+            return;
+
+        Core.EnsureAccept(10338);
+        Core.EquipClass(ClassType.Farm);
+        Farm.BattleUnderB(quant: 6666);
+        Farm.EvilREP();
+        Adv.BuyItem("Shadowfall", 89, "Shadow Lich");
+        Core.EquipClass(ClassType.Solo);
+        Core.HuntMonster("DarkoviaForest", "Lich of the Stone", "Lich Of The Stone", isTemp: false);
+        Core.HuntMonster("frozenlair", "Legion Lich Lord", "Sapphire Orb", 113, isTemp: false);
+        Core.GetMapItem(14740, 1, "necroproject");
+        Core.EnsureComplete(10338);
+        Bot.Wait.ForPickup("Klaatu's Necronomicon");
+    }
+    public void NictosNecropnomicon()
+    {
+        if (Core.CheckInventory("Nicto's Necronomicon"))
+            return;
+
+        ColossalWaresMerge.BuyAllMerge("Nicto's Necronomicon");
+        Bot.Wait.ForPickup("Nicto's Necronomicon");
+    }
+    public void VeratasNecropnomicon()
+    {
+        if (Core.CheckInventory("Verata's Necromicon"))
+            return;
+
+        GrimskullTrollingRep.DoGrimskullTrollingRep();
+        Core.BuyItem("goalcell", 2362, "Verata's Necromicon");
+        Bot.Wait.ForPickup("Verata's Necromicon");
+    }
+
+    public void LichClass(bool rankup = true)
+    {
+        if (Core.CheckInventory("Lich"))
+        {
+            if (rankup && Core.CheckClassRank(false, "Lich") < 10)
+            {
+                Core.Logger("You have the Lich Class, but not at max rank. Rank up to 10.");
+                Adv.GearStore();
+                Adv.SmartEnhance("Lich");
+                Farm.Experience(rankUpClass: true);
+                Adv.GearStore(true);
+            }
+            return;
+        }
+
+        // Ensure you have the required necropnomicons
+        KlaatuNecropnomicon();
+        NictosNecropnomicon();
+        VeratasNecropnomicon();
+
+        // Complete the quest to get the Lich Class
+        {
+            if (Core.CheckInventory(94824 /* Lich class item ID */))
+            {
+
+                return;
+            }
+            Core.AddDrop(94824 /* Lich class item ID */);
+            Core.ChainComplete(10339);
+            Bot.Wait.ForPickup("Lich");
+
+            if (rankup && Core.CheckClassRank(false, "Lich") < 10)
+            {
+                Core.Logger("Ranking up Lich Class.");
+                Adv.GearStore();
+                Adv.SmartEnhance("Lich");
+                Farm.Experience(rankUpClass: true);
+                Adv.GearStore(true);
+            }
         }
     }
 }
-
-
 
