@@ -3221,6 +3221,7 @@ public class CoreAdvanced
 
                 #region Wizard - Vainglory / Forge - Daunt / Ravenous / Forge - Pneuma / Forge       
                 case "sovereign of storms":
+                case "lich":
                     if (!uVainglory() || !uDauntless() || !uRavenous() || !uPneuma())
                         goto default;
 
@@ -3499,7 +3500,6 @@ public class CoreAdvanced
                 case "mindbreaker":
                 case "mystical dark caster":
                 case "naval commander":
-                case "lich":
                 case "necromancer":
                 case "ninja warrior":
                 case "no class":
@@ -3670,7 +3670,6 @@ public class CoreAdvanced
                 case "master ranger":
                 case "mechajouster":
                 case "necromancer":
-                case "lich":
                 case "ninja warrior":
                 case "not a mod":
                 case "overworld chronomancer":
@@ -3855,6 +3854,7 @@ public class CoreAdvanced
                 case "interstellar knight":
                 case "master of moglins":
                 case "dark master of moglins":
+                case "lich":
                 case "mystical dark caster":
                 case "northlands monk":
                 case "royal battlemage":
