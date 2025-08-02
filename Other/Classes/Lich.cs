@@ -144,6 +144,7 @@ public class Lich
     private ColossalWaresMerge ColossalWaresMerge = new();
     private GrimskullTrollingRep GrimskullTrollingRep = new();
     public static Grimgaol GRunOptions = new();
+    public Grimgaol GrimGaolRun = new();
 
 
     public bool DontPreconfigure = true;
@@ -152,7 +153,7 @@ public class Lich
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.SetOptions();
+        GrimGaolRun.SetOptions();
 
         Example();
 
