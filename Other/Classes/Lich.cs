@@ -166,8 +166,8 @@ public class Lich
         if (!Core.CheckInventory("Verata's Necromicon"))
         {
             GrimskullTrollingRep.DoGrimskullTrollingRep();
-            Core.BuyItem("gaolcell", 2362, "Verata's Necromicon");
-            Bot.Wait.ForPickup("Verata's Necromicon");
+            Core.BuyItem("gaolcell", 2362, "Verata's Necronomicon");
+            Bot.Wait.ForPickup("Verata's Necronomicon");
         }
 
         // Nictos Necronomicon
