@@ -5963,12 +5963,13 @@ public class CoreBots
             className = className.Trim().ToLower();
             // Logger($"Equiped Class: [{equipedClass}], Equiping: [{className}].", "Class Equiper");
 
-            while (equipedClass != className)
+            while (!Bot.ShouldExit && equipedClass != className)
             {
                 if (Bot.Player.InCombat)
                     Bot.Combat.Exit();
 
-                Equip(Bot.Inventory.Items.First(x => x.Name.ToLower().Trim() == className && x.Category == ItemCategory.Class).ID);
+                Equip(Bot.Inventory.Items.Concat(Bot.Bank.Items).First(x => x.Name.ToLower().Trim() == className && x.Category == ItemCategory.Class).ID);
+                Bot.Wait.ForItemEquip(Bot.Inventory.Items.Concat(Bot.Bank.Items).First(x => x.Name.ToLower().Trim() == className && x.Category == ItemCategory.Class).ID);
                 equipedClass = Bot.Player.CurrentClass?.Name.Trim().ToLower();
             }
 
