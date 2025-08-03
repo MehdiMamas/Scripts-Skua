@@ -368,7 +368,8 @@ public class Grimgaol
         GC.Collect(); // Collect garbage to free up memory
         Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol-100000%");
         Bot.Wait.ForMapLoad("grimgaol");
-        Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
+        if (Bot.Player != null)
+            Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
     }
 
     private void Enter()
@@ -1492,10 +1493,10 @@ public class Grimgaol
 
         // Filter non-null and non-whitespace items and cast to non-nullable string
         List<string> requiredItems = gear.Values
-            .Where(item => !string.IsNullOrWhiteSpace(item))
-            .Where(item => !Bot.Inventory.IsEquipped(item) && !Bot.Bank.Contains(item))
-            .Select(item => item!) // Cast string? to string safely after filtering nulls
-            .ToList();
+     .Where(item => !string.IsNullOrWhiteSpace(item))
+     .Select(item => item!) // Cast to non-nullable string
+     .Where(item => !Bot.Inventory.IsEquipped(item) && !Bot.Bank.Contains(item))
+     .ToList();
 
         Core.CheckInventory(requiredItems.ToArray());
 
