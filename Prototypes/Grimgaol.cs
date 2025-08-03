@@ -154,7 +154,7 @@ public class Grimgaol
         CoreBots.Instance.SkipOptions,
 
         // Skip Enhancements
-        new Option<bool>("SkipEnhancements", "Skip Enhancements", "If enabled, will not enhance items for the run.", false),
+        new Option<bool>("SkipEnhancements", "Skip Item Enhancing", "If enabled, will not enhance items for the run (this doesnt mean skip enhancements you dont have... these enhancements are **VERY** important).", false),
 
         // Weapons
         new Option<string>("Valiance", "Weapon: Valiance", "insert name of your Valiance weapon", ""),
