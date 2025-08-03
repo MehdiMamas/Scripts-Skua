@@ -162,13 +162,15 @@ public class Grimgaol
         new Option<string>("Elysium", "Weapon: Elysium", "insert name of your Elysium weapon", ""),
       
         // Helm
-        new Option<string>("WizHelm", "Helm: WizHelm", "insert name of your WizHelm helm", ""),
-        new Option<string>("LuckHelm", "Helm: LuckHelm", "insert name of your LuckHelm helm", ""),
+        new Option<string>("WizHelm", "Helm: WizHelm", "insert name of your Wizard helm", ""),
+        new Option<string>("LuckHelm", "Helm: LuckHelm", "insert name of your Lucky helm", ""),
+        new Option<string>("HealerHelm", "Helm: HealerHelm", "insert name of your Healer helm", ""),
         new Option<string>("AnimaHelm", "Helm: AnimaHelm", "insert name of your AnimaHelm helm", ""),
         
         // Cape
         new Option<string>("Penitence", "Cape: Penitence", "insert name of your Penitence cape", ""),
         new Option<string>("Vainglory", "Cape: Vainglory", "insert name of your Vainglory cape", ""),
+        new Option<string>("HealerCape", "Cape: HealerCape", "insert name of your Healer cape", ""),
     };
 
     public void ScriptMain(IScriptInterface Bot)
@@ -906,68 +908,32 @@ public class Grimgaol
             Core.Sleep(1500);
         }
 
-        string? valiance = Bot.Config!.Get<string>("Valiance");
-        string? dauntless = Bot.Config.Get<string>("Dauntless");
-        if (!string.IsNullOrWhiteSpace(dauntless))
+        string? Elysium = Bot.Config!.Get<string>("Elysium");
+        if (!string.IsNullOrWhiteSpace(Elysium))
         {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(Elysium))
             {
-                Bot.Inventory.EquipItem(dauntless);
-                Core.Sleep(1500);
-            }
-        }
-        else if (!string.IsNullOrWhiteSpace(valiance))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
-            {
-                Bot.Inventory.EquipItem(valiance);
+                Bot.Inventory.EquipItem(Elysium);
                 Core.Sleep(1500);
             }
         }
 
-        string? wizHelm = Bot.Config.Get<string>("WizHelm");
-        string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
-        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
-        if (!string.IsNullOrWhiteSpace(animaHelm))
+        string? HealerHelm = Bot.Config.Get<string>("HealerHelm");
+        if (!string.IsNullOrWhiteSpace(HealerHelm))
         {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(HealerHelm))
             {
-                Bot.Inventory.EquipItem(animaHelm);
-                Core.Sleep(1500);
-            }
-        }
-        else if (!string.IsNullOrWhiteSpace(wizHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
-            {
-                Bot.Inventory.EquipItem(wizHelm);
-                Core.Sleep(1500);
-            }
-        }
-        else if (!string.IsNullOrWhiteSpace(luckHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
-            {
-                Bot.Inventory.EquipItem(luckHelm);
+                Bot.Inventory.EquipItem(HealerHelm);
                 Core.Sleep(1500);
             }
         }
 
-        string? vainglory = Bot.Config.Get<string>("Vainglory");
-        string? penitence = Bot.Config.Get<string>("Penitence");
-        if (!string.IsNullOrWhiteSpace(vainglory))
+        string? HealerCape = Bot.Config.Get<string>("HealerCape");
+        if (!string.IsNullOrWhiteSpace(HealerCape))
         {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(HealerCape))
             {
-                Bot.Inventory.EquipItem(vainglory);
-                Core.Sleep(1500);
-            }
-        }
-        else if (!string.IsNullOrWhiteSpace(penitence))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
-            {
-                Bot.Inventory.EquipItem(penitence);
+                Bot.Inventory.EquipItem(HealerCape);
                 Core.Sleep(1500);
             }
         }
@@ -1228,6 +1194,7 @@ public class Grimgaol
                 Core.Sleep(1500);
             }
         }
+
         string? penitence = Bot.Config.Get<string>("Penitence");
         if (!string.IsNullOrWhiteSpace(penitence))
         {
@@ -1428,11 +1395,13 @@ public class Grimgaol
         { "LuckHelm", Bot.Config.Get<string>("LuckHelm") },
         { "AnimaHelm", Bot.Config.Get<string>("AnimaHelm") },
         { "Penitence", Bot.Config.Get<string>("Penitence") },
-        { "Vainglory", Bot.Config.Get<string>("Vainglory") }
+        { "Vainglory", Bot.Config.Get<string>("Vainglory") },
+        { "HealerHelm", Bot.Config.Get<string>("HealerHelm") },
+        { "HealerCape", Bot.Config.Get<string>("HealerCape") },
     };
 
         // Require critical classes and log what's missing
-        string[] requiredClasses = { "Dragon of Time", "Void Highlord", "Verus DoomKnight", "Legion Revenant" };
+        string[] requiredClasses = { "Dragon of Time", "Void Highlord", "Verus DoomKnight" };
         string[] missingClasses = requiredClasses
             .Where(c => !Core.CheckInventory(c))
             .ToArray();
@@ -1516,18 +1485,20 @@ public class Grimgaol
         EnhanceIfFound("Void Highlord", EnhancementType.Lucky);
         EnhanceIfFound("Verus DoomKnight", EnhancementType.Lucky);
         EnhanceIfFound("Dragon of Time", EnhancementType.Healer);
-        EnhanceIfFound("Legion Revenant", EnhancementType.Wizard);
 
         // Weapon enhancements
         EnhanceIfFound(gear["Valiance"], EnhancementType.Lucky, weapon: WeaponSpecial.Valiance);
         EnhanceIfFound(gear["Dauntless"], EnhancementType.Lucky, weapon: WeaponSpecial.Dauntless);
+        EnhanceIfFound(gear["Elysium"], EnhancementType.Healer, weapon: WeaponSpecial.Elysium);
 
         // Helm enhancements
         EnhanceIfFound(gear["WizHelm"], EnhancementType.Wizard);
         EnhanceIfFound(gear["LuckHelm"], EnhancementType.Lucky);
+        EnhanceIfFound(gear["HealerHelm"], EnhancementType.Healer);
         EnhanceIfFound(gear["AnimaHelm"], EnhancementType.Lucky, helm: HelmSpecial.Anima);
 
         // Cape enhancements
+        EnhanceIfFound(gear["HealerCape"], EnhancementType.Healer);
         EnhanceIfFound(gear["Penitence"], EnhancementType.Lucky, cape: CapeSpecial.Penitence);
         EnhanceIfFound(gear["Vainglory"], EnhancementType.Lucky, cape: CapeSpecial.Vainglory);
 
