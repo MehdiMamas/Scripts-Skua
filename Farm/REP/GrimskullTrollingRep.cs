@@ -156,7 +156,6 @@ public class GrimskullTrollingRep
             return;
         }
 
-        Core.Logger($"Farming rank {rank}");
         GrimGaolRun.DoGrimGaol();
     }
 }
