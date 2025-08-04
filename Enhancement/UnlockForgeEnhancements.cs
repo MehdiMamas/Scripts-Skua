@@ -193,7 +193,7 @@ public class UnlockForgeEnhancements
         if (selectedCapeEnhancements == ForgeQuestCape.None &&
             selectedWeaponEnhancements == ForgeQuestWeapon.None &&
             selectedHelmEnhancements == ForgeQuestHelm.None)
-            Core.Logger("All settings are set to None, no Forge Quest to do. Stopping script.", messageBox: true, stopBot: true);
+            Core.Logger("All settings are set to None, no Forge Quest to do. Stopping script.", stopBot: true);
 
         if (selectedWeaponEnhancements != ForgeQuestWeapon.None)
         {
@@ -555,7 +555,7 @@ public class UnlockForgeEnhancements
 
         if (!Core.isCompletedBefore(8746))
         {
-            Core.Logger("You must have faced Darkon the Conductor and done the weekly quest in order to unlock \"Arcana's Concerto\"", messageBox: true);
+            Core.Logger("You must have faced Darkon the Conductor and done the weekly quest in order to unlock \"Arcana's Concerto\"");
             return;
         }
         PDPPR.FarmPreReqs();
@@ -573,7 +573,7 @@ public class UnlockForgeEnhancements
             Darkon.WheelofFortune(22, 0);
             if (!Core.CheckInventory("Darkon Insignia", 20))
             {
-                Core.Logger(" x20 \"Darkon Insignia\" is Required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot", messageBox: true);
+                Core.Logger(" x20 \"Darkon Insignia\" is Required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot");
                 return;
             }
             else if (Bot.Config!.Get<bool>("UseInsignOnArcanasConcerto"))
@@ -582,12 +582,12 @@ public class UnlockForgeEnhancements
 
         if (!Core.CheckInventory("King Drago Insignia", 5))
         {
-            Core.Logger(" x5 \"King Drago Insignia\" is required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot", messageBox: true);
+            Core.Logger(" x5 \"King Drago Insignia\" is required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot");
             return;
         }
         if (!Core.CheckInventory("Darkon Insignia", 5))
         {
-            Core.Logger(" x5 \"Darkon Insignia\" is required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot", messageBox: true);
+            Core.Logger(" x5 \"Darkon Insignia\" is required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot");
             return;
         }
         if (Bot.Config!.Get<bool>("UseInsignOnArcanasConcerto"))

@@ -3,6 +3,8 @@ name: Дж2सरतϛȠကỊⱣ
 description: Not for everyday use
 tags: do, not, find, me
 */
+
+#region 
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
@@ -116,6 +118,7 @@ tags: do, not, find, me
 //cs_include Scripts/Story/Nation/VoidChasm.cs
 //cs_include Scripts/Nation/MergeShops/NationMerge.cs
 //cs_include Scripts/Nation/NationLoyaltyRewarded.cs
+#endregion
 
 using Skua.Core.Interfaces;
 using Skua.Core.Options;

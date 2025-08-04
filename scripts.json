@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 376066,
+    "size": 376279,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -100,7 +100,7 @@
       "beta"
     ],
     "path": "Prototypes/Grimgaol.cs",
-    "size": 56119,
+    "size": 54986,
     "fileName": "Grimgaol.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
@@ -289,7 +289,7 @@
       "me"
     ],
     "path": "Tools/InsertNameHeresUltraPrep.cs",
-    "size": 19726,
+    "size": 19747,
     "fileName": "InsertNameHeresUltraPrep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/InsertNameHeresUltraPrep.cs"
   },
@@ -441,7 +441,7 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 45021,
+    "size": 44931,
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -13478,7 +13478,7 @@
       "null"
     ],
     "path": "Other/Various/Potions.cs",
-    "size": 21830,
+    "size": 21835,
     "fileName": "Potions.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Various/Potions.cs"
   },

@@ -42,7 +42,7 @@ public class PotionBuyer
         new Option<bool>("FarmEnduranceDraught", "Endurance Draught", "Should the bot Farm Endurance Draught?", false),
 
         //Potion
-        new Option<bool>("FarmMalic", "Malic", "Should the bot Farm Malic Potions?", false),
+        new Option<bool>("FarmMalic", "Malice", "Should the bot Farm Malice Potions?", false),
         new Option<bool>("FarmHonor", "Honor", "Should the bot Farm Honor Potions?", false),
         new Option<bool>("FarmLife", "Life", "Should the bot Potent Life Potion?", false),
         new Option<bool>("FarmBody", "Body", "Should the bot Farm Body Tonics?", false),
@@ -72,7 +72,7 @@ public class PotionBuyer
                             "Potent Revitalize Elixir", "Endurance Draught", "Felicitous Philtre", "Potent Destruction Elixir",
                             "Body Tonic", "Soul Potion", "Unstable Battle Elixir", "Unstable Body Tonic", "Unstable Fate Tonic",
                             "Unstable Keen Elixir", "Unstable Mastery Tonic", "Unstable Might Tonic", "Unstable Wise Tonic",
-                            "Might Tonic", "Malic Potion", "Potent Life Potion"
+                            "Might Tonic", "Malice Potion", "Potent Life Potion"
                         } : null,
                         PotionsFarm: Bot.Config!.Get<bool>("MaxAll") ?
                         new[]
@@ -108,7 +108,7 @@ public class PotionBuyer
             "Potent Revitalize Elixir", "Endurance Draught", "Felicitous Philtre", "Potent Destruction Elixir",
             "Body Tonic", "Soul Potion", "Unstable Battle Elixir", "Unstable Body Tonic",
             "Unstable Fate Tonic", "Unstable Keen Elixir", "Unstable Mastery Tonic",
-            "Unstable Might Tonic", "Unstable Wise Tonic", "Might Tonic", "Malic Potion","Potent Life Potion"
+            "Unstable Might Tonic", "Unstable Wise Tonic", "Might Tonic", "Malice Potion", "Potent Life Potion"
         };
         }
 
