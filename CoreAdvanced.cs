@@ -3236,7 +3236,6 @@ public class CoreAdvanced
 
                 #region Wizard - Vainglory / Forge - Daunt / Ravenous / Forge - Pneuma / Forge       
                 case "sovereign of storms":
-                case "lich":
                     if (!uVainglory() || !uDauntless() || !uRavenous() || !uPneuma())
                         goto default;
 
@@ -3246,6 +3245,19 @@ public class CoreAdvanced
                     hSpecial = uPneuma() ? HelmSpecial.Pneuma : HelmSpecial.Forge;
                     break;
                 #endregion
+
+
+                #region Wizard - Ravenous - Lament - Examen
+                case "lich":
+                    if (!(uRavenous() && uLament() && uExamen()))
+                        goto default;
+
+                    type = EnhancementType.Wizard;
+                    cSpecial = CapeSpecial.Lament;
+                    wSpecial = WeaponSpecial.Ravenous;
+                    hSpecial = HelmSpecial.Examen;
+                    break;
+                #endregion                
                 #endregion
 
                 #region Healer Region
