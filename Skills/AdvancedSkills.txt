@@ -167,7 +167,7 @@ Base = Legion Revenant = 3 | 4 | 1 | 2 = Use if Available
 Base = Legion Revenant Member Test = 3 | 4 | 1 | 2 = Use if Available
 Base = Legion SwordMaster Assassin = 1 | 2 | 3 | 4 = Use if Available
 Base = Leprechaun = 1 | 2 | 3 | 4 = Use if Available
-Base = Lich = 1 | 2 | 3 | 4 = Use if Available
+Base = Lich = 4 | 3 | 4 | 2 | 4 | 1 | 2 | 4 | 1 | 2 | 4 | 1 | 2 = 250
 Base = LightCaster = 3 | 1 | 2 | 4 = Use if Available
 Base = LightCaster Test = 3 | 4 | 1 | 2 | 1 | 2 | 1 | 2 = Use if Available
 Base = LightMage = 3 | 4 | 1 | 2 = 250
