@@ -162,7 +162,7 @@ public class Lich
 
     public void Example(bool rankUpClass = true)
     {
-        if (Core.CheckInventory("Lich Class"))
+        if (Core.CheckInventory("Lich"))
         {
             if (rankUpClass)
                 Adv.RankUpClass("Lich");
