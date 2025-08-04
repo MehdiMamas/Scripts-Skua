@@ -319,13 +319,13 @@ public class Core13LoC
         Story.KillQuest(352, "uppercity", "Cave Lizard");
 
         //Mock the Lock
-        if (!Story.QuestProgression(354))
+        if (!Story.QuestProgression(353))
         {
-            Core.EnsureAccept(354);
+            Core.EnsureAccept(353);
             Core.HuntMonster("dwarfprison", "Balboa", "Balboa Core", 4);
             Core.HuntMonster("dwarfprison", "Albino Bat", "Rusted Claw", 3);
             Core.HuntMonster("dwarfprison", "Chaos Drow", "Magnesium Flare");
-            Core.EnsureComplete(354);
+            Core.EnsureComplete(353);
         }
 
         //Like Butter
