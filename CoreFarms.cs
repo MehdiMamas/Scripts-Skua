@@ -2963,16 +2963,16 @@ public class CoreFarms
 
         Core.RegisterQuests(369); //That Hero Who Chases Slimes 369
         while (!Bot.ShouldExit && FactionRank("Good") < 4)
-            Core.KillMonster("swordhavenbridge", "Bridge", "Left", "*", "Slime in a Jar", 6, log: false);
+            Core.KillMonster("swordhavenbridge", "Bridge", "Left", "*");
         Core.CancelRegisteredQuests();
 
         Core.RegisterQuests(Core.IsMember ? 371 : 372); //Rumble with Grumble 371, Tomb with a View 372
         while (!Bot.ShouldExit && FactionRank("Good") < rank)
         {
             if (!Core.IsMember)
-                Core.KillMonster("castleundead", "Enter", "Spawn", "*", "Chaorrupted Skull", 5, log: false);
+                Core.KillMonster("castleundead", "Enter", "Spawn", "*");
             else
-                Core.KillMonster("sewer", "End", "Left", "Grumble", "Grumble's Fang", log: false);
+                Core.KillMonster("sewer", "End", "Left", "Grumble");
         }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
