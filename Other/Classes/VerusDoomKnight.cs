@@ -180,7 +180,7 @@ public class VerusDoomKnightClass
 
             // Hunt for Void Energy if required
             if (energyNeeded > 0)
-                Core.HuntMonster("thevoid", "Nija", "Void Energy", energyNeeded, isTemp: false);
+                Core.HuntMonster("thevoid", "Ninja", "Void Energy", energyNeeded, isTemp: false);
 
             // Purchase required items.
             Adv.BuyItem("thevoid", 1406, "Xyfrag's Slimy Tooth", 5);
