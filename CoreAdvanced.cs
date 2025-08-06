@@ -2718,7 +2718,7 @@ public class CoreAdvanced
         => Core.isCompletedBefore(9560);
     public bool uHearty()
     {
-        return Core.isCompletedBefore(9466) && Farm.FactionRank("Grimskull") >= 7;
+        return Core.isCompletedBefore(9466) && Farm.FactionRank("Grimskull Trolling") >= 7;
     }
 
     #endregion
