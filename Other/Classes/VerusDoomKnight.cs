@@ -180,11 +180,7 @@ public class VerusDoomKnightClass
 
             // Hunt for Void Energy if required
             if (energyNeeded > 0)
-                Core.HuntMonster("thevoid", "Void Dragon", "Void Energy", energyNeeded, isTemp: false);
-
-            // Prefarm Gold for 8x 500k vouchers (4,000,000 total).
-            if (!Core.CheckInventory("Gold Voucher 500k", 8))
-                Farm.Gold(4000000);
+                Core.HuntMonster("thevoid", "Nija", "Void Energy", energyNeeded, isTemp: false);
 
             // Purchase required items.
             Adv.BuyItem("thevoid", 1406, "Xyfrag's Slimy Tooth", 5);
