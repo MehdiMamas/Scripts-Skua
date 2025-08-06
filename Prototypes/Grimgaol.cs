@@ -835,7 +835,7 @@ public class Grimgaol
         #endregion Equipment Setup
 
         int skillIndex = 0;
-        int[] skillList = Adv.uDauntless() ? new int[] { 1, 2, 4, 2, 3, 2 } : new int[] { 1, 2, 3, 4 };
+        int[] skillList = { 1, 2, 4, 2, 3, 2 };
         int[] priorityIDs = { 7, 8, 9 };
 
         while (!Bot.ShouldExit)
