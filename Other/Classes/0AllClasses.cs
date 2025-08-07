@@ -202,6 +202,10 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Hollowborn/Materials/GraceOrb.cs
 //cs_include Scripts/Hollowborn/Materials/GramielsEmblem.cs
 //cs_include Scripts/Hollowborn/Materials/VindicatorCrest.cs
+//cs_include Scripts/Seasonal/Friday13th/MergeShops/ColossalWaresMerge.cs
+//cs_include Scripts/Farm/REP/GrimskullTrollingRep.cs
+//cs_include Scripts/Prototypes/MoreSkullsWorldBoss.cs
+//cs_include Scripts/Other\Classes\Lich.cs
 #endregion includes
 
 using Skua.Core.Interfaces;
@@ -287,6 +291,7 @@ public class AllClasses
     private GrimNecromancer GN = new();
     private HighSeasCommander HSC = new();
     private InfiniteLegionDC ILDC = new();
+    private Lich lich = new();
     private LightMage LM = new();
     private MechaJouster MJ = new();
     private MartialArtist MA = new();
@@ -556,10 +561,11 @@ public class AllClasses
         // Classes that take to long to farm for a bank class:
         CheckAndExecute("Arcana Invoker", () => AI.GetAI(rankUpClass));
         CheckAndExecute("Hollowborn Vindicator", () => HBV.GetClass(rankUpClass)); // Non Insignia
+        CheckAndExecute("Lich", () => lich.Example(rankUpClass));
         CheckAndExecute("ShadowScythe General", Daily.ShadowScytheClass);
         CheckAndExecute("Sovereign of Storms", () => SOS.GetSOS(rankUpClass));
         Adv.GearStore(true, true);
-        Core.ToBank(new[] { "Grim Necromancer", "SkyCharged Grenadier", "Sentinel", "LightCaster", "Legion Revenant", "Exalted Soul Cleaver", "Chaos Avenger", "Archmage", "Verus DoomKnight", "Arcana Invoker", "Hollowborn Vindicator", "ShadowScythe General", "Sovereign of Storms" });
+        Core.ToBank(new[] { "Grim Necromancer", "SkyCharged Grenadier", "Sentinel", "LightCaster", "Legion Revenant", "Exalted Soul Cleaver", "Chaos Avenger", "Archmage", "Verus DoomKnight", "Arcana Invoker", "Hollowborn Vindicator", "Lich", "ShadowScythe General", "Sovereign of Storms" });
 
         Core.Logger("=== AC / Special Requirement / Army Classes - Completed! ===");
     }
