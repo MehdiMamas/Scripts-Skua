@@ -118,6 +118,8 @@ tags: do, not, find, me
 //cs_include Scripts/Story/Nation/VoidChasm.cs
 //cs_include Scripts/Nation/MergeShops/NationMerge.cs
 //cs_include Scripts/Nation/NationLoyaltyRewarded.cs
+//cs_include Scripts/Story/Legion/DageChallengeStory.cs
+
 #endregion
 
 using Skua.Core.Interfaces;
@@ -135,6 +137,8 @@ public class InsertNameHeresUltraPrep
     private BuyScrolls Scroll = new();
     private BankAllItems BankAllItems = new();
     private UnlockForgeEnhancements UnlockForgeEnhancements = new();
+    private DageChallengeStory DageChallengeStory = new();
+    private readonly CoreLegion Legion = new();
 
     private string[] UltraItems = new[]
     {
@@ -217,6 +221,17 @@ public class InsertNameHeresUltraPrep
     public void Example()
     {
         Core.Logger("This script is made to help you prep for InsertNamehere's \"ULTRAS - INSERTNAMEHERE.gbot\" on `Grim Li`. First run and fill this script out, once its finished, you can Access your item (for easy copy paste) in `Documents > Skua > options > UltraPrep`, open that and u can simply copy paste names of items. Set your safe pot to: `Potent Malevolence Elixir` as its what this script grabs.");
+
+        // Stories
+        Core.Logger("Story prep for the ultras");
+
+        // Ultra Dage
+        Legion.JoinLegion();
+        DageChallengeStory.DageChallengeQuests();
+
+        // Insert more stories when you care todo so.
+
+
 
         //prepare inventory
         Core.Logger("Preparing Inventory!! (insignias will be kept in bank, as they will be auto-added by the quest.)");
