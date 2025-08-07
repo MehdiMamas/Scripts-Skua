@@ -291,7 +291,6 @@ public class AllClasses
     private GrimNecromancer GN = new();
     private HighSeasCommander HSC = new();
     private InfiniteLegionDC ILDC = new();
-    private Lich lich = new();
     private LightMage LM = new();
     private MechaJouster MJ = new();
     private MartialArtist MA = new();
@@ -312,6 +311,7 @@ public class AllClasses
     private ChaosAvengerClass CAV = new();
     private DragonOfTime DOT = new();
     private HBVNonInsig HBV = new();
+    private Lich lich = new();
     private LightCaster LC = new();
     private CoreLR LR = new();
     private SovereignOfStorms SOS = new();
