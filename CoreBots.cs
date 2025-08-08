@@ -3426,11 +3426,22 @@ public class CoreBots
 
         ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).FirstOrDefault(x => x != null && x.Name == item);
 
+        Bot.Options.AggroAllMonsters = false;
+
+        //fuck it lets test it.
+        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
+        {
+            Bot.Options.AggroMonsters = true;
+            //hide players to reduce lag (Trust Tato)
+            Bot.Options.HidePlayers = true;
+        }
+        else Bot.Options.AggroMonsters = false;
+
         List<Monster> FindMonsters()
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
                 Sleep();
-                
+
             while (!Bot.ShouldExit && Bot.Player.Loaded && Bot.Player.Cell != cell)
             {
                 Bot.Map.Jump(cell, pad);
@@ -3459,18 +3470,6 @@ public class CoreBots
                 ? matched
                 : Bot.Monsters.MapMonsters.Where(x => x?.Name == monster).ToList();
         }
-
-
-        Bot.Options.AggroAllMonsters = false;
-        //fuck it lets test it.
-        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
-        {
-            Bot.Options.AggroMonsters = true;
-            //hide players to reduce lag (Trust Tato)
-            Bot.Options.HidePlayers = true;
-        }
-        else Bot.Options.AggroMonsters = false;
-
         List<Monster> targetMonsters = FindMonsters();
 
         if (targetMonsters == null || !targetMonsters.Any())
@@ -5312,6 +5311,13 @@ public class CoreBots
             }
             else
             {
+                // Logic to ensure player is in `Cell` for monster finding.
+                while (!Bot.ShouldExit && Bot.Player.Cell != cell)
+                {
+                    Bot.Map.Jump(cell, "Left", autoCorrect: false);
+                    Bot.Wait.ForCellChange(cell);
+                }
+
                 List<Monster> matchingMonsters = Bot.Monsters.MapMonsters
                     .Where(x => x != null && x.Cell == cell && x.Name.FormatForCompare() == trimmedName)
                     .ToList();
@@ -5321,7 +5327,7 @@ public class CoreBots
                     Logger($"Monster \"{name}\" not found in current cell.");
 
                     Monster? fallback = Bot.Monsters.MapMonsters
-                        .FirstOrDefault(x => x?.Name?.Contains(trimmedName, StringComparison.OrdinalIgnoreCase) == true);
+                        .FirstOrDefault(x => x.Name.Contains(trimmedName, StringComparison.OrdinalIgnoreCase));
 
                     if (fallback != null)
                     {
