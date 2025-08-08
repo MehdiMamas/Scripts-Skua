@@ -581,13 +581,15 @@ case ""Grace Orb"":
     @"
 case ""Vindicator Badge"":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
+                    Bot.Quests.UpdateQuest(8297);
                     Core.RegisterQuests(8299);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(""trygve"", ""r3"", ""Left"", ""Blood Eagle"", ""Eagle Heart"", 8);
-                        Core.KillMonster(""trygve"", ""r4"", ""Left"", ""Rune Boar"", ""Boar Heart"", 8);
-                        Core.HuntMonster(""trygve"", ""Gramiel"", ""Vindicator Seal"");
+                        Core.EquipClass(ClassType.Farm);
+                        Core.KillMonster(""trygve"", ""r3"", ""Left"", ""Blood Eagle"", ""Eagle Heart"", 8, log: false);
+                        Core.KillMonster(""trygve"", ""r4"", ""Left"", ""Rune Boar"", ""Boar Heart"", 8, log: false);
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster(""trygve"", ""Gramiel"", ""Vindicator Seal"", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

@@ -71,8 +71,10 @@ public class TrygveMerge
                     Core.RegisterQuests(8299);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
+                        Core.EquipClass(ClassType.Farm);
                         Core.KillMonster("trygve", "r3", "Left", "Blood Eagle", "Eagle Heart", 8);
                         Core.KillMonster("trygve", "r4", "Left", "Rune Boar", "Boar Heart", 8);
+                        Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("trygve", "Gramiel", "Vindicator Seal");
                         Bot.Wait.ForPickup(req.Name);
                     }

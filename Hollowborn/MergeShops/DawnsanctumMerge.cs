@@ -206,6 +206,7 @@ public class DawnsanctumMerge
                 return;
 
             Core.FarmingLogger("Vindicator Badge", quant);
+                    Bot.Quests.UpdateQuest(8297);
             Core.RegisterQuests(8299);
             while (!Bot.ShouldExit && !Core.CheckInventory("Vindicator Badge", quant))
             {

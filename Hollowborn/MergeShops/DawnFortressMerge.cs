@@ -5,6 +5,7 @@ tags: dawn, fortress, merge, neofortress, vindicator, archer, scout, archers, , 
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
@@ -74,12 +75,14 @@ public class DawnFortressMerge
 
                 case "Vindicator Badge":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
+                    Bot.Quests.UpdateQuest(8297);
                     Core.RegisterQuests(8299);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
+                        Core.EquipClass(ClassType.Farm);
                         Core.KillMonster("trygve", "r3", "Left", "Blood Eagle", "Eagle Heart", 8);
                         Core.KillMonster("trygve", "r4", "Left", "Rune Boar", "Boar Heart", 8);
+                        Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("trygve", "Gramiel", "Vindicator Seal");
                         Bot.Wait.ForPickup(req.Name);
                     }

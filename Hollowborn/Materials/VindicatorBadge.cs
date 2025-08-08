@@ -39,6 +39,7 @@ public class VindicatorBadge
         if (Core.CheckInventory(item, badgeQuant))
             return;
 
+        Bot.Quests.UpdateQuest(8297);
         Core.FarmingLogger(item, badgeQuant);
         Core.AddDrop(item, "Eagle Heart", "Boar Heart", "Vindicator Seal");
         Core.EquipClass(ClassType.Farm);
@@ -46,8 +47,10 @@ public class VindicatorBadge
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, badgeQuant))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.KillMonster("trygve", "r3", "Left", "Blood Eagle", "Eagle Heart", 8, log: false);
             Core.KillMonster("trygve", "r4", "Left", "Rune Boar", "Boar Heart", 8, log: false);
+            Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("trygve", "Gramiel", "Vindicator Seal", log: false);
             Bot.Wait.ForPickup(item);
         }
