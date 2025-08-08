@@ -119,14 +119,14 @@ public class VictorMatsuri
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant)))
             return;
 
-        if (!Core.CheckInventory("Legion Revenant") || !Adv.uPraxis() || !Adv.uPenitence())
+        if (!Core.CheckInventory("Legion Revenant") && !(Adv.uPraxis() && Adv.uPenitence() && Adv.uPneuma()))
         {
-            Core.Logger("You need to have the Legion Revenant class, Penitence and Praxis enhancements to kill Masakado with this script.");
+            Core.Logger("You need to have the Legion Revenant class, Penitence, Praxis, and the Pneuma enhancements to kill Masakado with this script.");
             return;
         }
-
+        Adv.GearStore();
         Core.Equip("Legion Revenant");
-        Adv.EnhanceEquipped(EnhancementType.Wizard, CapeSpecial.Penitence, Adv.CurrentHelmSpecial(), WeaponSpecial.Praxis);
+        Adv.EnhanceEquipped(EnhancementType.Wizard, CapeSpecial.Penitence, HelmSpecial.Pneuma, WeaponSpecial.Praxis);
 
         DateTime lastAuraTrigger = DateTime.MinValue;
         TimeSpan auraCooldown = TimeSpan.FromSeconds(0);
@@ -197,6 +197,7 @@ public class VictorMatsuri
         }
 
         Bot.Events.ExtensionPacketReceived -= AuraListener;
+        Adv.GearStore(true);
 
         void AuraListener(dynamic packet)
         {
