@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 376279,
+    "size": 376550,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -4027,7 +4027,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 897056,
+    "size": 897203,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -5192,7 +5192,7 @@
       "farm"
     ],
     "path": "Hollowborn/Materials/VindicatorBadge.cs",
-    "size": 1768,
+    "size": 1896,
     "fileName": "VindicatorBadge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/Materials/VindicatorBadge.cs"
   },
@@ -5451,7 +5451,7 @@
       "armaments"
     ],
     "path": "Hollowborn/MergeShops/DawnFortressMerge.cs",
-    "size": 11062,
+    "size": 11207,
     "fileName": "DawnFortressMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/DawnFortressMerge.cs"
   },
@@ -5696,7 +5696,7 @@
       "grimoires"
     ],
     "path": "Hollowborn/MergeShops/DawnsanctumMerge.cs",
-    "size": 15667,
+    "size": 15717,
     "fileName": "DawnsanctumMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/DawnsanctumMerge.cs"
   },
@@ -8992,7 +8992,7 @@
       "null"
     ],
     "path": "Other/MergeShops/TrygveMerge.cs",
-    "size": 6701,
+    "size": 6815,
     "fileName": "TrygveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/TrygveMerge.cs"
   },
