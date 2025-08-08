@@ -580,14 +580,18 @@ public class Butler2
 
         Stopwatch stopwatchTotal = Stopwatch.StartNew();
 
-        string scriptsRoot = ClientFileSources.SkuaScriptsDIR;
-        string questDataPath = Path.Combine(scriptsRoot, "QuestData.json");
+        // Use configured paths directly
+        string questDataPath = ClientFileSources.SkuaQuestsFile;
+
+        dynamic[] v = JsonConvert.DeserializeObject<dynamic[]>(File.ReadAllText(questDataPath))!;
 
         Stopwatch stopwatchExtraction = Stopwatch.StartNew();
-        Dictionary<int, (int Slot, int Value)> questData = ExtractQuestDataFromScripts(scriptsRoot, questDataPath);
+        Dictionary<int, (int Slot, int Value)> questData = ExtractQuestDataFromScripts();
         stopwatchExtraction.Stop();
+
         Core.Logger($"[Profiling] Quest data extraction took {stopwatchExtraction.ElapsedMilliseconds} ms");
 
+        // Get last quests per slot (final quest value)
         var lastQuestsPerSlot = questData
             .Where(q => q.Value.Slot >= 0 && q.Value.Value >= 0)
             .GroupBy(q => q.Value.Slot)
@@ -604,29 +608,29 @@ public class Butler2
             Stopwatch stopwatchBatch = Stopwatch.StartNew();
 
             foreach ((int id, (int slot, int value)) in batch)
-            {
                 if (!Core.isCompletedBefore(id))
                 {
                     Bot.Quests.UpdateQuest(id);
                     Bot.Sleep(Core.ActionDelay + Bot.Random.Next(100, 300));
                 }
-            }
 
             stopwatchBatch.Stop();
             Core.Logger($"[Profiling] Batch {(i / batchSize) + 1} processing took {FormatElapsedTime(stopwatchBatch.Elapsed)}");
 
-
-            GC.Collect();
         }
 
+        GC.Collect();
         stopwatchTotal.Stop();
         Core.Logger($"[Profiling] UnlockAllMaps total time: {FormatElapsedTime(stopwatchTotal.Elapsed)}");
-
     }
-    public Dictionary<int, (int Slot, int Value)> ExtractQuestDataFromScripts(string scriptsRoot, string questDataPath)
+
+    public Dictionary<int, (int Slot, int Value)> ExtractQuestDataFromScripts()
     {
         ButlerTokenSource = new();
         _cancellationToken = ButlerTokenSource.Token;
+
+        string scriptsRoot = ClientFileSources.SkuaScriptsDIR;
+        string questDataPath = Path.Combine(ClientFileSources.SkuaDIR, "QuestData.json");
 
         var questIDs = new HashSet<int>();
         Regex regex = new(@"Core\.isCompletedBefore\s*\(\s*(\d+)\s*\)");
@@ -653,19 +657,21 @@ public class Butler2
 
         if (!File.Exists(questDataPath))
         {
-            Core.Logger($"[Butler] QuestData.json not found: {questDataPath}");
-            return new();
+            Core.Logger($"[Butler] QuestData.json not found at {questDataPath}, creating...");
+            File.WriteAllText(questDataPath, "[]");
         }
 
-        ConcurrentDictionary<int, (int Slot, int Value)> result = new();
         string json = File.ReadAllText(questDataPath);
+        JArray questArray = JArray.Parse(json);
+
+        ConcurrentDictionary<int, (int Slot, int Value)> result = new();
 
         var options = new ParallelOptions
         {
             MaxDegreeOfParallelism = Environment.ProcessorCount
         };
 
-        Parallel.ForEach(JArray.Parse(json).Cast<JObject>(), options, quest =>
+        Parallel.ForEach(questArray.Cast<JObject>(), options, quest =>
         {
             int id = quest["ID"]?.Value<int>() ?? -1;
             if (!questIDs.Contains(id))
