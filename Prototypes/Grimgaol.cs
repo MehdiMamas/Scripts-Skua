@@ -940,7 +940,7 @@ public class Grimgaol
         #endregion Equipment Setup
 
         int skillIndex = 0;
-        int[] skillList = { 2, 4 };
+        int[] skillList = { 1, 2, 4, 2, 3, 2 };
         string monsId = "10";
         int monsIdInt = 10;
         int monsHealth = 40000;
