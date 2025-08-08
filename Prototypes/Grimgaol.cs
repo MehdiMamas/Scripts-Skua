@@ -902,9 +902,9 @@ public class Grimgaol
         }
 
         #region Equipment Setup
-        while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped("Void Highlord"))
+        while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped("Dragon of Time"))
         {
-            Bot.Inventory.EquipItem("Void Highlord");
+            Bot.Inventory.EquipItem("Dragon of Time");
             Core.Sleep(1500);
         }
 
