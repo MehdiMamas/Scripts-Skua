@@ -9203,7 +9203,7 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 33968,
+    "size": 36594,
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -9303,10 +9303,12 @@
       "castle gaheris",
       "castlegaheris",
       "castle",
-      "gaheris"
+      "gaheris",
+      "thelima",
+      "thelimacity"
     ],
     "path": "Story/AgeOfRuin/00DoAll.cs",
-    "size": 993,
+    "size": 1013,
     "fileName": "00DoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/00DoAll.cs"
   },
@@ -9503,6 +9505,24 @@
     "size": 734,
     "fileName": "07AbyssalZone.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/07AbyssalZone.cs"
+  },
+  {
+    "name": "Thelima City",
+    "description": "This script completes the storyline in /ThelimaCity.",
+    "tags": [
+      "age",
+      "of",
+      "ruin",
+      "saga",
+      "story",
+      "quest",
+      "thelimacity",
+      "warlic"
+    ],
+    "path": "Story/AgeOfRuin/17ThelimaCity.cs",
+    "size": 740,
+    "fileName": "17ThelimaCity.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/17ThelimaCity.cs"
   },
   {
     "name": "Ashray Village",
