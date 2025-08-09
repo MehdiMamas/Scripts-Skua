@@ -5312,7 +5312,7 @@ public class CoreBots
             else
             {
                 // Logic to ensure player is in `Cell` for monster finding.
-                while (!Bot.ShouldExit && Bot.Player.Cell != cell)
+                while (!Bot.ShouldExit && Bot.Player.Cell != cell && cell != null)
                 {
                     Bot.Map.Jump(cell, "Left", autoCorrect: false);
                     Bot.Wait.ForCellChange(cell);
