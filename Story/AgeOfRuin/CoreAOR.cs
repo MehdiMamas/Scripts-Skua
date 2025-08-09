@@ -47,6 +47,7 @@ public class CoreAOR
         LiaTaraHill();
         CastleGaheris();
         ColdThunder();
+        ThelimaCity();
     }
 
     private bool isSeaVoiceCalled = false;
@@ -58,7 +59,6 @@ public class CoreAOR
             return;
 
         SoW.ManaCradle();
-
         Story.PreLoad(this);
 
         // Familiar Faces (9213)
@@ -798,6 +798,99 @@ public class CoreAOR
         }
 
         TerminaTemple(coldThunder: true);
+    }
+
+    public void ThelimaCity()
+    {
+        if (Core.isCompletedBefore(10356))
+            return;
+
+        TerminaTemple(coldThunder: true);
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Noelle Knight", // UseableMonsters[0],
+	"Drow Soldier", // UseableMonsters[1],
+	"Dwarven Aegis", // UseableMonsters[2],
+	"Maleno Elemental", // UseableMonsters[3],
+	"Maleno Match", // UseableMonsters[4],
+	"Flame of Maleno", // UseableMonsters[5],
+	"Eternal Flames", // UseableMonsters[6]
+};
+        #endregion Useable Monsters
+
+        // 10347 | Sister Statues
+        Story.MapItemQuest(10347, "thelimacity", new[] { 14770, 14771 });
+
+
+        // 10348 | Starstruck Chivalry
+        if (!Story.QuestProgression(10348))
+            Core.HuntMonsterQuest(10348, "thelimacity", UseableMonsters[0]);
+
+
+        // 10349 | Black Dahlia
+        Story.MapItemQuest(10349, "thelimacity", new[] { 14772, 14773 });
+
+
+        // 10350 | Talls and Stouts
+        if (!Story.QuestProgression(10350))
+        {
+            Core.HuntMonsterQuest(10350,
+                ("thelimacity", UseableMonsters[2], ClassType.Farm),
+                ("thelimacity", UseableMonsters[1], ClassType.Farm));
+        }
+
+
+        // 10351 | A Lost Matchstick
+        if (!Story.QuestProgression(10351))
+        {
+            Core.EnsureAccept(10351);
+            Story.MapItemQuest(10351, "thelimacity", 14774);
+            Core.KillMonster("thelimacity", "r9", "Left", UseableMonsters[4], "Ashen Key");
+            Core.EnsureComplete(10351);
+        }
+
+
+        // 10352 | Flash Fire
+        Story.MapItemQuest(10352, "thelimacity", 14775, 4);
+
+
+        // 10353 | Unio Naturalis
+        if (!Story.QuestProgression(10353))
+        {
+            Core.HuntMonsterQuest(10353,
+                ("thelimacity", UseableMonsters[3], ClassType.Solo));
+        }
+
+
+        // 10354 | A Friend's Distant Laugh
+        if (!Story.QuestProgression(10354))
+        {
+            Core.HuntMonsterQuest(10354,
+                ("thelimacity", UseableMonsters[4], ClassType.Farm));
+        }
+
+
+        // 10355 | Putrefaction
+        if (!Story.QuestProgression(10355))
+        {
+            Core.HuntMonsterQuest(10355,
+                ("thelimacity", UseableMonsters[3], ClassType.Solo),
+                ("thelimacity", UseableMonsters[4], ClassType.Farm));
+        }
+
+
+        // 10356 | Enatiodromia
+        if (!Story.QuestProgression(10356))
+        {
+            Core.HuntMonsterQuest(10356,
+                ("thelimacity", UseableMonsters[5], ClassType.Solo));
+        }
+
+
     }
 
     // Mostly for `Skye's Lightning` for the Merge
