@@ -26878,6 +26878,153 @@ case ""Theliman Ore"":
                     break;
     "
 },
+{
+    "Pigment Powder",
+    @"
+case ""Pigment Powder"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(""Pigment Powder"");
+
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        int questID = Core.isCompletedBefore(10337) ? 10337 : 10336;
+                        Core.EnsureAccept(questID);
+
+                        Core.HuntMonster(""castlewhistler"", ""King of the Dark"",
+                            Core.isCompletedBefore(10337) ? ""King's Varnish"" : ""King's Pigment"");
+                        Core.EnsureComplete(questID);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+
+                    Core.CancelRegisteredQuests();
+                    break;
+
+                // Shared case for other castlewhistler drops
+    "
+},
+{
+    "Winter's Dirge",
+    @"
+case ""Winter's Dirge"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(""Armorial Crown"", ""Winter's Dirge"", ""Midsummer Rhapsody"");
+
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster(""castlewhistler"", ""King of the Dark"", req.Name, quant, req.Temp);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+
+                    Core.CancelRegisteredQuests();
+                    break;
+
+    "
+},
+{
+    "Midsummer Rhapsody",
+    @"
+case ""Midsummer Rhapsody"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(""Armorial Crown"", ""Winter's Dirge"", ""Midsummer Rhapsody"");
+
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster(""castlewhistler"", ""King of the Dark"", req.Name, quant, req.Temp);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+
+                    Core.CancelRegisteredQuests();
+                    break;
+
+    "
+},
+{
+    "Armorial Crown",
+    @"
+case ""Armorial Crown"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(""Armorial Crown"", ""Winter's Dirge"", ""Midsummer Rhapsody"");
+
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster(""castlewhistler"", ""King of the Dark"", req.Name, quant, req.Temp);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+
+                    Core.CancelRegisteredQuests();
+                    break;
+
+    "
+},
+{
+    "Yew Ember",
+    @"
+case ""Yew Ember"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""thelimacity"", ""Maleno Match"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Steel Ingot",
+    @"
+case ""Steel Ingot"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(Core.IsMember ? 10358 : 10357,
+                        (""thelimacity"", ""Maleno Elemental"", ClassType.Solo),
+                        (""thelimacity"", ""Maleno Match"", ClassType.Farm),
+                        (""thelimacity"", ""Flame of Maleno"", ClassType.Solo)
+                        );
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic)
