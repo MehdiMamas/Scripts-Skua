@@ -27025,6 +27025,108 @@ case ""Steel Ingot"":
                     break;
     "
 },
+{
+    "Mystic Topaz",
+    @"
+case ""Mystic Topaz"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""thelimacity"", ""Noelle Knight"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Dwarven Gold",
+    @"
+case ""Dwarven Gold"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""thelimacity"", ""Dwarven Aegis"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Dwarven Emerald",
+    @"
+case ""Dwarven Emerald"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""thelimacity"", ""Dwarven Aegis"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Maleno Obsidian",
+    @"
+case ""Maleno Obsidian"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""thelimacity"", ""Maleno Elemental"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Drow Silver",
+    @"
+case ""Drow Silver"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""thelimacity"", ""Drow Soldier"", req.Name, quant, false, false);
+                    break;
+    "
+},
+{
+    "Drow Amethyst",
+    @"
+case ""Drow Amethyst"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""thelimacity"", ""Drow Soldier"", req.Name, quant, false, false);
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic)
