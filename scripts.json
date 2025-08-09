@@ -16484,6 +16484,37 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/HakuVillageMerge.cs"
   },
   {
+    "name": "Neuling Welcome Gifts Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Neuling Welcome Gifts Merge [2617] in /thelimacity",
+    "tags": [
+      "neuling",
+      "welcome",
+      "gifts",
+      "merge",
+      "thelimacity",
+      "dwarfhold",
+      "explorer",
+      "morph",
+      "wool",
+      "cap",
+      "friend",
+      "explorers",
+      "bag",
+      "mountain",
+      "range",
+      "brandt",
+      "aegis",
+      "",
+      "melano",
+      "zircon",
+      "catalyst"
+    ],
+    "path": "Other/MergeShops/NeulingWelcomeGiftsMerge.cs",
+    "size": 6197,
+    "fileName": "NeulingWelcomeGiftsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/NeulingWelcomeGiftsMerge.cs"
+  },
+  {
     "name": "CrystalBrightMerge",
     "description": "null",
     "tags": [
