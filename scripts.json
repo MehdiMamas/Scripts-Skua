@@ -16214,6 +16214,29 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DreampalaceMerge.cs"
   },
   {
+    "name": "Thelima Jewelers Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Thelima Jewelers Merge [2616] in /thelimacity",
+    "tags": [
+      "thelima",
+      "jewelers",
+      "merge",
+      "thelimacity",
+      "custom",
+      "gem",
+      "vert",
+      "vitriol",
+      "emerald",
+      "emile",
+      "melano",
+      "amethyst",
+      "catalyst"
+    ],
+    "path": "Other/MergeShops/ThelimaJewelersMerge.cs",
+    "size": 5907,
+    "fileName": "ThelimaJewelersMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ThelimaJewelersMerge.cs"
+  },
+  {
     "name": "Celestial Past Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Celestial Past Merge [1909] in /celestialpast",
     "tags": [
