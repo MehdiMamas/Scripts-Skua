@@ -924,7 +924,7 @@ public class Grimgaol
 
         #endregion Equipment Setup
 
-        Core.OneTimeMessage("r6 - Fell Statue", "Due to server delays and things out of my control... you may still die to it over-attacking by one during the `Crit Damage Amplified` aura resulting in 3-500dmg/hit which is hard to out heal...");
+        Core.Logger("Due to server delays and things out of my control... you may still die to it over-attacking by one during the `Crit Damage Amplified` aura.");
         int skillIndex = 0;
         int[] skillList = { 1, 2, 4 };
         int Skillcount = 0;
@@ -975,10 +975,10 @@ public class Grimgaol
                         break;
                     }
 
-                    if (!Bot.Player.HasTarget)
+                    if (!Bot.Player.HasTarget && Skillcount < 5)
                         Bot.Combat.Attack(m.MapID);
 
-                    if (Bot.Player.Health < 3000 && Bot.Skills.CanUseSkill(2))
+                    if (Bot.Player.Health < 2500)
                         Bot.Skills.UseSkill(2);
                     else Bot.Skills.UseSkill(skillList[skillIndex]);
                     skillIndex = (skillIndex + 1) % skillList.Length;
@@ -1157,12 +1157,12 @@ public class Grimgaol
             }
         }
 
-        string? PneumaHelm = Bot.Config.Get<string>("PneumaHelm");
-        if (!string.IsNullOrWhiteSpace(PneumaHelm))
+        string? wizHelm = Bot.Config.Get<string>("WizHelm");
+        if (!string.IsNullOrWhiteSpace(wizHelm))
         {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(PneumaHelm))
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
             {
-                Bot.Inventory.EquipItem(PneumaHelm);
+                Bot.Inventory.EquipItem(wizHelm);
                 Core.Sleep(1500);
             }
         }
@@ -1374,11 +1374,12 @@ public class Grimgaol
         { "PneumaHelm", Bot.Config.Get<string>("PneumaHelm")},
         { "AnimaHelm", Bot.Config.Get<string>("AnimaHelm") },
         { "HealerHelm", Bot.Config.Get<string>("HealerHelm") },
+        { "WizHelm",  Bot.Config.Get<string>("WizHelm") },
         { "LuckHelm", Bot.Config.Get<string>("LuckHelm") },
     };
 
         // Require critical classes and log what's missing
-        string[] requiredClasses = { "Dragon of Time", "Void Highlord", "Verus DoomKnight", "Yami no Ronin" };
+        string[] requiredClasses = { "Dragon of Time", "Void Highlord", "Verus DoomKnight", };
         string[] missingClasses = requiredClasses
             .Where(c => !Core.CheckInventory(c))
             .ToArray();
@@ -1462,7 +1463,6 @@ public class Grimgaol
         EnhanceIfFound("Void Highlord", EnhancementType.Lucky);
         EnhanceIfFound("Verus DoomKnight", EnhancementType.Lucky);
         EnhanceIfFound("Dragon of Time", EnhancementType.Healer);
-        EnhanceIfFound("Yami no Ronin", EnhancementType.Lucky, CapeSpecial.Vainglory, HelmSpecial.Anima);
 
         // Weapon enhancements
         EnhanceIfFound(gear["Valiance"], EnhancementType.Lucky, weapon: WeaponSpecial.Valiance);
@@ -1470,6 +1470,7 @@ public class Grimgaol
         EnhanceIfFound(gear["Elysium"], EnhancementType.Healer, weapon: WeaponSpecial.Elysium);
 
         // Helm enhancements
+        EnhanceIfFound(gear["WizHelm"], EnhancementType.Wizard);
         EnhanceIfFound(gear["LuckHelm"], EnhancementType.Lucky);
         EnhanceIfFound(gear["HealerHelm"], EnhancementType.Healer);
         EnhanceIfFound(gear["AnimaHelm"], EnhancementType.Lucky, helm: HelmSpecial.Anima);
