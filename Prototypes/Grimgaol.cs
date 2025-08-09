@@ -293,63 +293,111 @@ public class Grimgaol
                 {
                     case "Enter":
                         Enter();
-                        Bot.Map.Jump("r2", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r2");
+                        if (Bot.Player.Cell != "r2")
+                        {
+                            Bot.Map.Jump("r2", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r2");
+                        }
+                        Bot.Player.SetSpawnPoint();
                         break;
                     case "r2":
                         R2();
-                        Bot.Map.Jump("r3", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r3");
+                        if (Bot.Player.Cell != "r3")
+                        {
+                            Bot.Map.Jump("r3", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r3");
+                        }
+                        Bot.Player.SetSpawnPoint();
                         break;
                     case "r3":
                         RVDK(Bot.Player.Cell);
-                        Bot.Map.Jump("r4", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r4");
+                        if (Bot.Player.Cell != "r4")
+                        {
+                            Bot.Map.Jump("r4", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r4");
+                        }
+                        Bot.Player.SetSpawnPoint();
                         break;
                     case "r4":
                         RVDK(Bot.Player.Cell);
-                        Bot.Map.Jump("r5", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r5");
+                        if (Bot.Player.Cell != "r5")
+                        {
+                            Bot.Map.Jump("r5", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r5");
+                        }
+                        Bot.Player.SetSpawnPoint();
                         break;
                     case "r5":
                         R5();
-                        Bot.Map.Jump("r6", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r6");
+                        if (Bot.Player.Cell != "r6")
+                        {
+                            Bot.Map.Jump("r6", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r6");
+                        }
+                        Bot.Player.SetSpawnPoint();
                         break;
                     case "r6":
                         R6();
-                        Bot.Map.Jump("r7", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r7");
+                        if (Bot.Player.Cell != "r7")
+                        {
+                            Bot.Map.Jump("r7", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r7");
+                        }
+                        Bot.Player.SetSpawnPoint();
                         break;
                     case "r7":
                         RVDK(Bot.Player.Cell);
-                        Bot.Map.Jump("r8", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r8");
+                        if (Bot.Player.Cell != "r8")
+                        {
+                            Bot.Map.Jump("r8", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r8");
+                        }
+                        Bot.Player.SetSpawnPoint();
                         break;
                     case "r8":
                         RVDK(Bot.Player.Cell);
-                        Bot.Map.Jump("r9", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r9");
+                        if (Bot.Player.Cell != "r9")
+                        {
+                            Bot.Map.Jump("r9", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r9");
+                        }
+                        Bot.Player.SetSpawnPoint();
                         break;
                     case "r9":
                         R9();
-                        Bot.Map.Jump("r10", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r10");
+                        if (Bot.Player.Cell != "r10")
+                        {
+                            Bot.Map.Jump("r10", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r10");
+                        }
+                        Bot.Player.SetSpawnPoint();
                         break;
                     case "r10":
                         R10();
-                        Bot.Map.Jump("r11", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r11");
+                        if (Bot.Player.Cell != "r11")
+                        {
+                            Bot.Map.Jump("r11", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r11");
+                        }
+                        Bot.Player.SetSpawnPoint();
                         break;
                     case "r11":
                         RVDK(Bot.Player.Cell);
-                        Bot.Map.Jump("r12", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r12");
+                        if (Bot.Player.Cell != "r12")
+                        {
+                            Bot.Map.Jump("r12", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r12");
+                        }
+                        Bot.Player.SetSpawnPoint();
                         break;
                     case "r12":
                         RVDK(Bot.Player.Cell);
-                        Bot.Map.Jump("r12a", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("r12a");
+                        if (Bot.Player.Cell != "r12a")
+                        {
+                            Bot.Map.Jump("r12a", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r12a");
+                        }
+                        Bot.Player.SetSpawnPoint();
                         break;
                     default:
                         break;
@@ -861,9 +909,151 @@ public class Grimgaol
         }
     }
 
+    // private void R6()
+    // {
+    //     if (Bot.ShouldExit) return;
+    //     if (Bot.Player.Cell != "r6")
+    //     {
+    //         Core.Logger("jump to r6");
+    //         Bot.Map.Jump("r6", "Left", autoCorrect: false);
+    //         Bot.Wait.ForCellChange("r6");
+    //     }
+
+    //     if (!monsterAvail())
+    //     {
+    //         return;
+    //     }
+
+    //     #region Equipment Setup
+    //     while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped("Void Highlord"))
+    //     {
+    //         Bot.Inventory.EquipItem("Void Highlord");
+    //         Core.Sleep(1500);
+    //     }
+
+    //     string? valiance = Bot.Config!.Get<string>("Valiance");
+    //     string? dauntless = Bot.Config.Get<string>("Dauntless");
+    //     if (!string.IsNullOrWhiteSpace(dauntless))
+    //     {
+    //         while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
+    //         {
+    //             Bot.Inventory.EquipItem(dauntless);
+    //             Core.Sleep(1500);
+    //         }
+    //     }
+    //     else if (!string.IsNullOrWhiteSpace(valiance))
+    //     {
+    //         while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
+    //         {
+    //             Bot.Inventory.EquipItem(valiance);
+    //             Core.Sleep(1500);
+    //         }
+    //     }
+
+    //     string? AnimaHelm = Bot.Config.Get<string>("AnimaHelm");
+    //     if (!string.IsNullOrWhiteSpace(AnimaHelm))
+    //     {
+    //         while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(AnimaHelm))
+    //         {
+    //             Bot.Inventory.EquipItem(AnimaHelm);
+    //             Core.Sleep(1500);
+    //         }
+    //     }
+
+    //     string? vainglory = Bot.Config.Get<string>("Vainglory");
+    //     if (!string.IsNullOrWhiteSpace(vainglory))
+    //     {
+    //         while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
+    //         {
+    //             Bot.Inventory.EquipItem(vainglory);
+    //             Core.Sleep(1500);
+    //         }
+    //     }
+
+    //     #endregion Equipment Setup
+
+    //     Core.OneTimeMessage("Fell Statue", "Due to server delays and things out of my control... you may still die to it over-attacking by one during the `Crit Damage Amplified` aura.");
+    //     int skillIndex = 0;
+    //     int[] skillList = { 1, 2, 3, 4 };
+    //     int Skillcount = 0;
+    //     while (!Bot.ShouldExit)
+    //     {
+    //         while (!Bot.ShouldExit && !Bot.Player.Alive)
+    //         {
+    //             Bot.Sleep(100);
+    //             if (Bot.Player.Alive)
+    //             {
+    //                 skillIndex = 0;
+    //                 continue;
+    //             }
+    //         }
+
+    //         if (!monsterAvail())
+    //         {
+    //             return;
+    //         }
+
+    //         foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
+    //         {
+    //             // Give it time to swap targets
+    //             // and a tiny delay to hopefuly get rid of the aura
+    //             Bot.Sleep(500);
+    //             while (!Bot.ShouldExit)
+    //             {
+    //                 while (!Bot.ShouldExit && !Bot.Player.Alive)
+    //                 {
+    //                     Bot.Sleep(100);
+    //                     if (Bot.Player.Alive)
+    //                     {
+    //                         Skillcount = 0;
+    //                         skillIndex = 0;
+    //                         break;
+    //                     }
+    //                 }
+
+    //                 if (!monsterAvail())
+    //                 {
+    //                     return;
+    //                 }
+
+    //                 if (Skillcount >= 5)
+    //                 {
+    //                     Bot.Combat.CancelTarget();
+    //                     Bot.Combat.CancelAutoAttack();
+    //                     Skillcount = 0;
+    //                     skillIndex = 0;
+    //                     break;
+    //                 }
+
+    //                 Bot.Combat.Attack(m.MapID);
+
+
+    //                 if (Bot.Player.HasTarget)
+    //                 {
+    //                     if (Bot.Player.Health <= 2500)
+    //                         Bot.Skills.UseSkill(2);
+    //                     else
+    //                     {
+    //                         Bot.Skills.UseSkill(skillList[skillIndex]);
+    //                         skillIndex = (skillIndex + 1) % skillList.Length;
+    //                     }
+    //                 }
+
+    //                 Core.Sleep();
+
+    //                 Skillcount++;
+
+    //             }
+    //         }
+    //     }
+
+    // }
+
     private void R6()
     {
         if (Bot.ShouldExit) return;
+
+        // Jump to r6 if not already there
         if (Bot.Player.Cell != "r6")
         {
             Core.Logger("jump to r6");
@@ -871,10 +1061,7 @@ public class Grimgaol
             Bot.Wait.ForCellChange("r6");
         }
 
-        if (!monsterAvail())
-        {
-            return;
-        }
+        if (!monsterAvail()) return;
 
         #region Equipment Setup
         while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped("Void Highlord"))
@@ -883,8 +1070,8 @@ public class Grimgaol
             Core.Sleep(1500);
         }
 
-        string? valiance = Bot.Config!.Get<string>("Valiance");
-        string? dauntless = Bot.Config.Get<string>("Dauntless");
+        string? dauntless = Bot.Config!.Get<string>("Dauntless");
+        string? valiance = Bot.Config.Get<string>("Valiance");
         if (!string.IsNullOrWhiteSpace(dauntless))
         {
             while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
@@ -902,12 +1089,12 @@ public class Grimgaol
             }
         }
 
-        string? AnimaHelm = Bot.Config.Get<string>("AnimaHelm");
-        if (!string.IsNullOrWhiteSpace(AnimaHelm))
+        string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
+        if (!string.IsNullOrWhiteSpace(animaHelm))
         {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(AnimaHelm))
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
             {
-                Bot.Inventory.EquipItem(AnimaHelm);
+                Bot.Inventory.EquipItem(animaHelm);
                 Core.Sleep(1500);
             }
         }
@@ -921,32 +1108,33 @@ public class Grimgaol
                 Core.Sleep(1500);
             }
         }
+        #endregion
 
-        #endregion Equipment Setup
+        Core.OneTimeMessage("Fell Statue",
+            "Due to server delays and things out of my control... you may still die to it over-attacking by one during the `Crit Damage Amplified` aura.");
 
-        Core.Logger("Due to server delays and things out of my control... you may still die to it over-attacking by one during the `Crit Damage Amplified` aura.");
         int skillIndex = 0;
-        int[] skillList = { 1, 2, 4 };
-        int Skillcount = 0;
+        int[] skillList = { 1, 2, 3, 4 };
+        int skillCount = 0;
+        bool switchTarget = false;
         while (!Bot.ShouldExit)
         {
+            // Wait until player is alive
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
                 Bot.Sleep(100);
                 if (Bot.Player.Alive)
                 {
                     skillIndex = 0;
-                    continue;
+                    skillCount = 0;
                 }
             }
 
-            if (!monsterAvail())
-            {
-                return;
-            }
+            if (!monsterAvail()) return;
 
             foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
             {
+                Bot.Sleep(500); // Small delay for target swap
 
                 while (!Bot.ShouldExit)
                 {
@@ -955,56 +1143,48 @@ public class Grimgaol
                         Bot.Sleep(100);
                         if (Bot.Player.Alive)
                         {
-                            Skillcount = 0;
                             skillIndex = 0;
+                            skillCount = 0;
+                            switchTarget = true;
                             break;
                         }
                     }
 
-                    if (!monsterAvail())
-                    {
-                        return;
-                    }
+                    if (switchTarget)
+                        break; // <-- breaks out of ②, goes to next monster in foreach
 
-                    if (Skillcount >= 5)
+                    if (!monsterAvail()) return;
+
+                    // Break after certain cycles to re-target
+                    if (skillCount >= 5)
                     {
                         Bot.Combat.CancelAutoAttack();
                         Bot.Combat.CancelTarget();
-                        Skillcount = 0;
+                        skillCount = 0;
                         skillIndex = 0;
                         break;
                     }
 
-                    if (!Bot.Player.HasTarget && Skillcount < 5)
-                        Bot.Combat.Attack(m.MapID);
+                    Bot.Combat.Attack(m.MapID);
 
-                    if (Bot.Player.Health < 2500)
-                        Bot.Skills.UseSkill(2);
-                    else Bot.Skills.UseSkill(skillList[skillIndex]);
-                    skillIndex = (skillIndex + 1) % skillList.Length;
+                    if (Bot.Player.HasTarget)
+                    {
+                        if (Bot.Player.Health <= 2500)
+                            Bot.Skills.UseSkill(2); // Emergency heal/defense
+                        else
+                            Bot.Skills.UseSkill(skillList[skillIndex]);
+
+                        // Always advance rotation, even if low HP skill is used
+                        skillIndex = (skillIndex + 1) % skillList.Length;
+                    }
 
                     Core.Sleep();
-
-                    Skillcount++;
-
+                    skillCount++;
                 }
             }
         }
-
-        int ChestForAura(string auraName)
-        {
-            foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
-            {
-                Bot.Combat.Attack(m.MapID);
-                Bot.Wait.ForTrue(() => Bot.Player.Target?.MapID == m.MapID, 20);
-
-                if (Bot.Target?.HasActiveAura(auraName) == true)
-                    return m.MapID;
-            }
-            return -1; // No monster with aura found
-        }
-
     }
+
 
     private void R9()
     {
