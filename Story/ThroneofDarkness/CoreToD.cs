@@ -22,7 +22,7 @@ public class CoreToD
         Core.RunCore();
     }
 
-    public void CompleteToD()
+    public void CompleteToD(bool SkipDPRepStorys = false)
     {
         int[] questIDs = { 4992, 5050, 5108, 5120, 5154, 5165, 5187, 5212, 5313, 5332, 5434, 5451 };
         if (Core.IsMember)
@@ -47,8 +47,11 @@ public class CoreToD
         LaserSharkInvasion();
 
         //Pax - The Warlord
-        DeathPit();
-        DeathPitPVP();
+        if (!SkipDPRepStorys)
+        {
+            DeathPit();
+            DeathPitPVP();
+        }
 
         //Sekt - The Eternal
         ShiftingPyramid();
