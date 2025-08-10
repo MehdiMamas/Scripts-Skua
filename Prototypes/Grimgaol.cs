@@ -947,12 +947,12 @@ public class Grimgaol
             }
         }
 
-        string? vainglory = Bot.Config.Get<string>("Vainglory");
-        if (!string.IsNullOrWhiteSpace(vainglory))
+        string? Penitence = Bot.Config.Get<string>("Penitence");
+        if (!string.IsNullOrWhiteSpace(Penitence))
         {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
+            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(Penitence))
             {
-                Bot.Inventory.EquipItem(vainglory);
+                Bot.Inventory.EquipItem(Penitence);
                 Core.Sleep(1500);
             }
         }
