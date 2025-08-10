@@ -54,7 +54,7 @@ public class GetAllRanks
         //Adv.BestGear(GenericGearBoost.rep);
         //Required Stories add when needed.
         Core.Logger("Doing Required Stories for the reps, let tato know if another is required.");
-        TOD.CompleteToD();
+        TOD.CompleteToD(true);
         LOC.Complete13LOC();
         BrightOak.doall(true);
         Core.Logger("when doing the `Glacera` storyline, you may have to restart it in the middle of the quests due to ae's bullshit how it keeps another quest locked even though the preivosu is completed till you relog");
