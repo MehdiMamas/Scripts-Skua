@@ -3566,9 +3566,28 @@ public class CoreFarms
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank} for Yew Mountains");
 
-        Core.RegisterQuests(10334); // In Your Dreams
+        Core.RegisterQuests(10341, 10346);
+        Core.AddDrop(
+            Core.EnsureLoad(10342).Rewards.Select(r => r.Name)
+            .Concat(Core.EnsureLoad(10346).Rewards.Select(r => r.Name))
+            .ToArray()
+        );
+        bool didDaily = Bot.Quests.IsDailyComplete(10342);
         while (!Bot.ShouldExit && FactionRank("Yew Mountains") < rank)
-            Core.KillMonster("somnia", "r9", "Left", "*");
+        {
+            if (!didDaily && Bot.Quests.IsAvailable(10342))
+            {
+                Core.EnsureAccept(10342);
+                Core.KillMonster("thelimacity", "r6", "Left", "*", log: false);
+                if (Bot.Quests.CanCompleteFullCheck(10342))
+                {
+                    Core.EnsureComplete(10342);
+                    Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
+                    didDaily = true;
+                }
+            }
+            Core.KillMonster("thelimacity", "r6", "Left", "*", log: false);
+        }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
