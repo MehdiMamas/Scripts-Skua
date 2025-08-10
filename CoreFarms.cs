@@ -2069,7 +2069,7 @@ public class CoreFarms
         Core.SavedState();
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank}");
-
+        Core.EquipClass(ClassType.Farm);
         Core.RegisterQuests(5775); //Expect the Inquisitors 5775
         while (!Bot.ShouldExit && FactionRank("Chaos Militia") < rank)
             Core.HuntMonster("citadel", "Inquisitor Guard", log: false);
