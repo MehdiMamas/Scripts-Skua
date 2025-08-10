@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 141238,
+    "size": 141983,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -8716,7 +8716,7 @@
       "reps"
     ],
     "path": "Farm/REP/1GetAllRanks.cs",
-    "size": 2402,
+    "size": 2406,
     "fileName": "1GetAllRanks.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/1GetAllRanks.cs"
   },
@@ -11894,7 +11894,7 @@
       "null"
     ],
     "path": "Story/ThroneofDarkness/CoreToD.cs",
-    "size": 47643,
+    "size": 47729,
     "fileName": "CoreToD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ThroneofDarkness/CoreToD.cs"
   },
