@@ -14,6 +14,9 @@ tags: null
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
 //cs_include Scripts/Story/QueenofMonsters/CoreQOM.cs
 //cs_include Scripts/ShadowsOfWar/CoreSoWMats.cs
+//cs_include Scripts/Evil/NSoD/oreNSOD.cs
+//cs_include Scripts/Evil/SDKA/CoreSDKA.cs
+//cs_include Scripts/Other/Classes/Necromancer.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Skills;
 using Skua.Core.Models.Items;
@@ -30,6 +33,7 @@ public class CoreArchMage
     private CoreQOM QOM = new();
     private CoreSoW SoW = new();
     private CoreSoWMats SOWM = new();
+    private CoreNSOD NSOD = new();
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ArchMage";
@@ -505,7 +509,11 @@ public class CoreArchMage
             switch (item)
             {
                 case "Void Essentia":
-                    Item("voidflibbi", "Flibbitiestgibbet", item, quant);
+                    NSOD.VoidAuras(75);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.HuntMonster("thevoid", "Ninja", "Void Energy", 25, isTemp: false);
+                    // Purchase required items.
+                    Adv.BuyItem("thevoid", 1406, item);
                     break;
 
                 case "Vital Exanima":
