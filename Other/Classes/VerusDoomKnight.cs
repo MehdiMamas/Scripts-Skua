@@ -63,12 +63,11 @@ public class VerusDoomKnightClass
         if (Core.CheckInventory("Verus DoomKnight"))
             return;
 
-        Farm.Experience(40);
-        Farm.EvilREP();
-        Core.EquipClass(ClassType.Solo);
-
         Story.PreLoad(this);
 
+        Farm.Experience();
+
+        Core.EquipClass(ClassType.Solo);
         // Body, Soul and, Domination (9411)
         if (!Story.QuestProgression(9411))
         {
@@ -114,10 +113,10 @@ public class VerusDoomKnightClass
         // Life Carve (9417)
         if (!Story.QuestProgression(9417))
         {
+            Bot.Quests.UpdateQuest(3773);
             Core.EnsureAccept(9417);
             Core.Logger("The map \"Wanders\", is a bit broke,\n" +
             "it will take a minute to hunt the mosnter");
-            Bot.Quests.UpdateQuest(3773);
             Core.HuntMonsterMapID("wanders", 46, "Trace of Light", 8, false); //i hate this map
             Core.HuntMonster("lightguardwar", "Extreme Noxus", "Trace of Dark", 8, false);
             Core.HuntMonster("eternalchaos", "Bandit Drakath", "Trace of Wind", 8, false);
