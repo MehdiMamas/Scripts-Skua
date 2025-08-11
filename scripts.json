@@ -12465,7 +12465,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 905907,
+    "size": 905793,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -14804,7 +14804,7 @@
       "rhapsody"
     ],
     "path": "Other/MergeShops/CastleWhistlerSpoilsMerge.cs",
-    "size": 5828,
+    "size": 5948,
     "fileName": "CastleWhistlerSpoilsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CastleWhistlerSpoilsMerge.cs"
   },
@@ -26546,7 +26546,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/CoreArchMage.cs",
-    "size": 23927,
+    "size": 24312,
     "fileName": "CoreArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/CoreArchMage.cs"
   },
