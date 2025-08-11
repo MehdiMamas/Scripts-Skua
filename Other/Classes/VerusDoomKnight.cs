@@ -65,7 +65,7 @@ public class VerusDoomKnightClass
 
         Story.PreLoad(this);
 
-        Farm.Experience();
+        Farm.Experience(80);
 
         Core.EquipClass(ClassType.Solo);
         // Body, Soul and, Domination (9411)
