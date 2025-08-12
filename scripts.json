@@ -714,7 +714,7 @@
   },
   {
     "name": "Grimgoal",
-    "description": "Goes through teh grimgaol dungeon... Testing Phase",
+    "description": "Goes through the grimgaol dungeon... Testing Phase",
     "tags": [
       "grimgoal",
       "dungeon",
@@ -728,7 +728,7 @@
       "beta"
     ],
     "path": "Prototypes/Grimgaol.cs",
-    "size": 55560,
+    "size": 48488,
     "fileName": "Grimgaol.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
