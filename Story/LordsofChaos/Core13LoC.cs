@@ -319,12 +319,14 @@ public class Core13LoC
         Story.KillQuest(352, "uppercity", "Cave Lizard");
 
         //Mock the Lock
-        if (!Story.QuestProgression(353))
+        if (!Bot.Quests.IsUnlocked(354))
         {
+            Core.AddDrop("Thermite"); // for the next quest
+            
             Core.EnsureAccept(353);
             Core.HuntMonster("dwarfprison", "Balboa", "Balboa Core", 4);
-            Core.HuntMonster("dwarfprison", "Albino Bat", "Rusted Claw", 3);
             Core.HuntMonster("dwarfprison", "Chaos Drow", "Magnesium Flare");
+            Core.HuntMonster("dwarfprison", "Albino Bat", "Rusted Claw", 3);
             Core.EnsureComplete(353);
         }
 
