@@ -22,6 +22,7 @@ public class MoreSkullsWorldBoss
     private CoreFarms Farm = new();
     private CoreAdvanced Adv => new();
     public CoreStory Story = new();
+
     private int GetMaxPristineSkull()
     {
         Quest? quest = Bot.Quests.EnsureLoad(10288);
@@ -32,6 +33,7 @@ public class MoreSkullsWorldBoss
         ItemBase? reward = quest.Rewards.FirstOrDefault(r => r.Name == "Pristine Skull");
         return reward?.MaxStack ?? 1;
     }
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.BankingBlackList.Add("Pristine Skull");
@@ -47,6 +49,10 @@ public class MoreSkullsWorldBoss
     public void Setup(int? quant = null)
     {
         LichWar();
+
+
+        if (!Bot.Player.IsMember && !Core.isSeasonalMapActive("MoreSkulls"))
+            return;
 
         int target = quant ?? GetMaxPristineSkull();
         if (Core.CheckInventory("Pristine Skull", target))
