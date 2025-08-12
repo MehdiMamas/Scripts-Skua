@@ -27,6 +27,7 @@ public class ShadowslayerSummoningRitual2
     public Core7DD DD = new();
     public BuyScrolls Scroll = new();
     public ShadowslayerSummoningRitual SSR = new();
+    public ShadowSlayerK SSK = new();
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -41,6 +42,9 @@ public class ShadowslayerSummoningRitual2
     {
         if (Core.CheckInventory("Lunate Sigil", quant))
             return;
+
+        if (!Core.isCompletedBefore(9845))
+            SSK.DoAll();
 
         //Get "Sparkly Shadowslayer Relic"
         SSR.GetAll(true);
