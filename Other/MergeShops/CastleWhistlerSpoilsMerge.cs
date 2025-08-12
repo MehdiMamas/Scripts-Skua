@@ -72,8 +72,9 @@ public class CastleWhistlerSpoilsMerge
                     }
 
                     // Unlock farming quest
-                    if (!Core.isCompletedBefore(10337))
+                    if (!Bot.Quests.IsUnlocked(10337))
                     {
+                        Core.Logger("unlocking farming quest for \"Pigment Powder\"");
                         Core.EnsureAccept(10336);
                         Core.HuntMonster("castlewhistler", "King of the Dark", "King's Pigment");
                         Core.EnsureComplete(10336);
@@ -82,10 +83,11 @@ public class CastleWhistlerSpoilsMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop("Pigment Powder");
-                    Core.RegisterQuests(10337);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
+                        Core.EnsureAccept(10337);
                         Core.HuntMonster("castlewhistler", "King of the Dark", "King's Varnish");
+                        Core.EnsureComplete(10337);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
