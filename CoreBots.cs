@@ -3420,6 +3420,8 @@ public class CoreBots
             Bot.Map.Jump(cell, pad);
             Bot.Wait.ForCellChange(cell);
         }
+        
+        Bot.Player.SetSpawnPoint();
 
         if (item != null && !isTemp)
             AddDrop(item);
@@ -3497,15 +3499,19 @@ public class CoreBots
                         Bot.Wait.ForCellChange(cell);
                     }
 
-                    if (!Bot.Combat.StopAttacking)
+                    if (!Bot.Player.HasTarget)
                         Bot.Combat.Attack(monster);
 
                     if (targetMonster.MaxHP == 1)
-                    {
                         ded = true;
-                        continue;
+
+                    if (ded)
+                    {
+                        Bot.Combat.CancelTarget();
+                        break;
                     }
-                    Sleep();
+
+                    Bot.Sleep(100);
                 }
             }
             return;
