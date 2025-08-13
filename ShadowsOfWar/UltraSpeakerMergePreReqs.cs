@@ -159,7 +159,7 @@ public class UltraSpeakerMergePreReqs
             Core.Logger("Getting prerequisites for 'Goddess Of War' armor...");
             // Prerequisites for acquiring "Goddess Of War" armor
 
-            if (Bot.Config.Get<bool>("UseInsigsonEmpDrkArm") && !Core.CheckInventory("Empowered Drakath Armor") && Core.CheckInventory("Champion Drakath Insignia", 5) && Core.CheckInventory(25779 /* Drakath Armor */))
+            if (Bot.Config!.Get<bool>("UseInsigsonEmpDrkArm") && !Core.CheckInventory("Empowered Drakath Armor") && Core.CheckInventory("Champion Drakath Insignia", 5) && Core.CheckInventory(25779 /* Drakath Armor */))
             {
                 DAB.DrakathArmorQuest();
                 Core.Join("championdrakath");
