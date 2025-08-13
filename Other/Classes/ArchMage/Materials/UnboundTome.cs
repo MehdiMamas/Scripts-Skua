@@ -15,6 +15,7 @@ tags: null
 //cs_include Scripts/Story/QueenofMonsters/CoreQOM.cs
 //cs_include Scripts/ShadowsOfWar/CoreSoWMats.cs
 //cs_include Scripts/Other/Classes/ArchMage/CoreArchMage.cs
+//cs_include Scripts/Evil/NSoD/CoreNSOD.cs
 using Skua.Core.Interfaces;
 
 public class UnboundTome
