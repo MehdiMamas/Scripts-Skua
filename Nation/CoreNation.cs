@@ -1425,7 +1425,7 @@ public class CoreNation
     /// </summary>
     /// <param name="item">The item to obtain (default: "Any").</param>
     /// <param name="quant">The quantity of the item to obtain (default: 1).</param>
-    public void VoidKightSwordQuest(string item = "Any", int quant = 1)
+    public void VoidKnightSwordQuest(string item = "Any", int quant = 1)
     {
         // Check if the desired item is already in inventory or if the required items are missing
         if (Core.CheckInventory(item, quant) || (!Core.CheckInventory(new[] { 38275, 38254 }, any: true)))
@@ -1577,7 +1577,7 @@ public class CoreNation
             while (!Bot.ShouldExit && !Core.CheckInventory("Unidentified 13", quant))
                 DiamondExchange();
         NewWorldsNewOpportunities("Unidentified 13", quant); //1minute turning  = 1x guaranteed
-        VoidKightSwordQuest("Unidentified 13", quant);
+        VoidKnightSwordQuest("Unidentified 13", quant);
         Supplies("Unidentified 13", quant);
     }
 
@@ -1608,7 +1608,7 @@ public class CoreNation
         Core.AddDrop("Dark Crystal Shard");
         FarmContractExchage("Dark Crystal Shard", quant);
         NewWorldsNewOpportunities("Dark Crystal Shard", quant); //1minute turning  = 1x guaranteed
-        VoidKightSwordQuest("Dark Crystal Shard", quant);
+        VoidKnightSwordQuest("Dark Crystal Shard", quant);
         Supplies("Dark Crystal Shard", quant); //xx:xx time turnin = 10% chance
         EssenceofDefeatReagent(quant);
     }
@@ -1624,7 +1624,7 @@ public class CoreNation
 
         Core.AddDrop("Diamond of Nulgath");
 
-        VoidKightSwordQuest("Diamond of Nulgath", quant);
+        VoidKnightSwordQuest("Diamond of Nulgath", quant);
         Supplies("Diamond of Nulgath", quant);
     }
 
@@ -1639,7 +1639,7 @@ public class CoreNation
             return;
 
         // Try different quest methods to obtain Fiend Tokens
-        VoidKightSwordQuest("Fiend Token", quant);
+        VoidKnightSwordQuest("Fiend Token", quant);
         AssistingDrudgen("Fiend Token", quant);
         FeedtheFiend();
     }
@@ -1655,7 +1655,7 @@ public class CoreNation
 
         FarmContractExchage("Gem of Nulgath", quant);
         Core.AddDrop("Gem of Nulgath");
-        VoidKightSwordQuest("Gem of Nulgath", quant);
+        VoidKnightSwordQuest("Gem of Nulgath", quant);
 
         VoucherItemTotemofNulgath(VoucherItemTotem.Gem_of_Nulgath, quant);
     }
@@ -1673,7 +1673,7 @@ public class CoreNation
 
         FarmContractExchage("Blood Gem of the Archfiend", quant);
         NewWorldsNewOpportunities("Blood Gem of the Archfiend", quant);
-        VoidKightSwordQuest("Blood Gem of the Archfiend", quant);
+        VoidKnightSwordQuest("Blood Gem of the Archfiend", quant);
         BloodyChaos(quant, true);
         KisstheVoid(quant);
     }
@@ -2294,7 +2294,7 @@ public class CoreNation
 
         BambloozevsDrudgen(member ? "Voucher of Nulgath" : "Voucher of Nulgath (non-mem)", KeepVoucher: KeepVoucher);
         NewWorldsNewOpportunities(member ? "Voucher of Nulgath" : "Voucher of Nulgath (non-mem)");
-        VoidKightSwordQuest(member ? "Voucher of Nulgath" : "Voucher of Nulgath (non-mem)");
+        VoidKnightSwordQuest(member ? "Voucher of Nulgath" : "Voucher of Nulgath (non-mem)");
         Supplies(member ? "Voucher of Nulgath" : "Voucher of Nulgath (non-mem)", KeepVoucher: KeepVoucher);
     }
 
