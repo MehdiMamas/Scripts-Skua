@@ -294,7 +294,7 @@ public class Grimgaol
                         // Start runtime here
                         runTimer.Restart();
                         Enter();
-                        if (Bot.Config.Get<bool>("RoomTimers"))
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"Enter\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player.Cell != "r2")
                         {
@@ -304,7 +304,7 @@ public class Grimgaol
                         break;
                     case "r2":
                         R2();
-                        if (Bot.Config.Get<bool>("RoomTimers"))
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r2\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player.Cell != "r3")
                         {
@@ -314,7 +314,7 @@ public class Grimgaol
                         break;
                     case "r3":
                         RVDK(Bot.Player.Cell);
-                        if (Bot.Config.Get<bool>("RoomTimers"))
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r3\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player.Cell != "r4")
                         {
@@ -324,7 +324,7 @@ public class Grimgaol
                         break;
                     case "r4":
                         RVDK(Bot.Player.Cell);
-                        if (Bot.Config.Get<bool>("RoomTimers"))
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r4\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player.Cell != "r5")
                         {
@@ -334,7 +334,7 @@ public class Grimgaol
                         break;
                     case "r5":
                         R5();
-                        if (Bot.Config.Get<bool>("RoomTimers"))
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r5\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player.Cell != "r6")
                         {
@@ -344,7 +344,7 @@ public class Grimgaol
                         break;
                     case "r6":
                         R6();
-                        if (Bot.Config.Get<bool>("RoomTimers"))
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r6\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player.Cell != "r7")
                         {
@@ -354,7 +354,7 @@ public class Grimgaol
                         break;
                     case "r7":
                         RVDK(Bot.Player.Cell);
-                        if (Bot.Config.Get<bool>("RoomTimers"))
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r7\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player.Cell != "r8")
                         {
@@ -364,7 +364,7 @@ public class Grimgaol
                         break;
                     case "r8":
                         RVDK(Bot.Player.Cell);
-                        if (Bot.Config.Get<bool>("RoomTimers"))
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r8\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player.Cell != "r9")
                         {
@@ -374,7 +374,7 @@ public class Grimgaol
                         break;
                     case "r9":
                         R9();
-                        if (Bot.Config.Get<bool>("RoomTimers"))
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r9\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player.Cell != "r10")
                         {
@@ -384,7 +384,7 @@ public class Grimgaol
                         break;
                     case "r10":
                         R10();
-                        if (Bot.Config.Get<bool>("RoomTimers"))
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r10\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player.Cell != "r11")
                         {
@@ -394,7 +394,7 @@ public class Grimgaol
                         break;
                     case "r11":
                         RVDK(Bot.Player.Cell);
-                        if (Bot.Config.Get<bool>("RoomTimers"))
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r11\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player.Cell != "r12")
                         {
@@ -404,7 +404,7 @@ public class Grimgaol
                         break;
                     case "r12":
                         RVDK(Bot.Player.Cell);
-                        if (Bot.Config.Get<bool>("RoomTimers"))
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r12\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player.Cell != "r12a")
                         {
@@ -922,8 +922,12 @@ public class Grimgaol
         {
             foreach (Monster mon in Bot.Monsters.CurrentAvailableMonsters)
             {
+
                 while (!Bot.ShouldExit)
                 {
+                    if (mon == null)
+                        continue;
+
                     if (!monsterAvail())
                     {
                         Core.Logger($"DeathCount: {DeathCount}");
@@ -960,7 +964,11 @@ public class Grimgaol
                     if (Bot.Player.HasTarget && Bot.Target.HasActiveAura("Crashed"))
                     {
                         // Core.Logger("Aura: \"Crashed\" Detected! Damage Time!!");
-                        Crashed(mon ?? Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null && GetMonsterHP(x.MapID.ToString()) > 0));
+                        Monster? crashedMon = mon ?? Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null && GetMonsterHP(x.MapID.ToString()) > 0);
+                        if (crashedMon != null)
+                            Crashed(crashedMon);
+                        else
+                            Core.Logger("No valid monster found for \"Crashed\" aura.");
                     }
                 }
             }
