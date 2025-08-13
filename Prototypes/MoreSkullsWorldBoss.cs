@@ -8,6 +8,7 @@ tags: null
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using Newtonsoft.Json.Linq;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
@@ -37,7 +38,7 @@ public class MoreSkullsWorldBoss
     public void ScriptMain(IScriptInterface bot)
     {
         Core.BankingBlackList.Add("Pristine Skull");
-        Core.SetOptions();
+        Core.SetOptions(disableClassSwap: true);
 
         Core.OneTimeMessage("WARNING", "During the script, when it Does the zone bit, there will be a momentary Freeze (blame flash), dw about it itll continue", true, true);
         Setup(GetMaxPristineSkull());
@@ -50,7 +51,6 @@ public class MoreSkullsWorldBoss
     {
         LichWar();
 
-
         if (!Bot.Player.IsMember && !Core.isSeasonalMapActive("MoreSkulls"))
             return;
 
@@ -58,6 +58,7 @@ public class MoreSkullsWorldBoss
         if (Core.CheckInventory("Pristine Skull", target))
             return;
 
+        Core.EquipClass(ClassType.Solo);
         moveTokenSource = new CancellationTokenSource(); // Create token
         Bot.Events.ExtensionPacketReceived += Fuckyou;
         Core.AddDrop("Pristine Skull");
@@ -211,6 +212,7 @@ public class MoreSkullsWorldBoss
 
         // It Takes Two to Tango        
         Core.EnsureAccept(10281);
+        Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("lichwar", "Rax-goreless", "Rax-goreless Defeated");
         Core.HuntMonster("lichwar", "Armadeddon", "Armadeddon Defeated");
         Core.EnsureComplete(10281);
