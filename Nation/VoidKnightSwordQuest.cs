@@ -19,7 +19,7 @@ public class VoidKnightSword
         Core.BankingBlackList.AddRange(Nation.bagDrops);
         Core.SetOptions();
 
-        Nation.VoidKightSwordQuest();
+        Nation.VoidKnightSwordQuest();
 
         Core.SetOptions(false);
     }
