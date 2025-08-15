@@ -235,32 +235,88 @@ public class Grimgaol
         Farm.ToggleBoost(BoostType.Reputation, false);
     }
 
+    const int MaxBackupRuns = 50;
+
     void LogRun()
     {
         runTimer.Stop();
         TimeSpan currentTime = runTimer.Elapsed;
+        if (currentTime < TimeSpan.Zero)
+            currentTime = TimeSpan.Zero;
 
         AppendRun(currentTime);
-        bestTime = LoadBestTime(); // Refresh from all runs
 
-        bool isNewPB = currentTime <= bestTime;
-        Core.Logger($"Dungeon run took: {currentTime:mm\\:ss\\.fff} | Personal Best: {bestTime:mm\\:ss\\.fff}" +
+        TimeSpan bestTime = LoadBestTime();
+        bool isNewPB = currentTime < bestTime;
+
+        Core.Logger($"Dungeon run took: {currentTime:mm\\:ss\\.fff} | Personal Best: {(bestTime == TimeSpan.MaxValue ? "N/A" : bestTime.ToString("mm\\:ss\\.fff"))}" +
                     (isNewPB ? " (New PB!)" : ""));
     }
 
     TimeSpan LoadBestTime()
     {
         string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes.txt");
+        string backupPath = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes_backup.txt");
 
-        if (!File.Exists(path))
-            return TimeSpan.MaxValue;
+        // Auto-restore from backup if main file missing or empty
+        if (!File.Exists(path) || new FileInfo(path).Length == 0)
+        {
+            if (File.Exists(backupPath))
+            {
+                File.Copy(backupPath, path, overwrite: true);
+                Core.Logger("Main run file missing or empty, restored from backup.");
+            }
+            else
+            {
+                return TimeSpan.MaxValue; // No data at all
+            }
+        }
 
         TimeSpan best = TimeSpan.MaxValue;
+        List<string> validLines = new();
 
         foreach (string line in File.ReadAllLines(path))
         {
-            if (TimeSpan.TryParseExact(line.Trim(), "c", CultureInfo.InvariantCulture, out TimeSpan parsed) && parsed < best)
-                best = parsed;
+            string trimmed = line.Trim();
+            if (string.IsNullOrWhiteSpace(trimmed))
+                continue;
+
+            if (TimeSpan.TryParseExact(trimmed, "c", CultureInfo.InvariantCulture, out TimeSpan parsed) && parsed >= TimeSpan.Zero)
+            {
+                validLines.Add(parsed.ToString("c", CultureInfo.InvariantCulture));
+                if (parsed < best)
+                    best = parsed;
+            }
+        }
+
+        // If all lines were invalid, try restore from backup
+        if (validLines.Count == 0 && File.Exists(backupPath))
+        {
+            File.Copy(backupPath, path, overwrite: true);
+            Core.Logger("All main file entries were invalid, restored from backup.");
+            foreach (string line in File.ReadAllLines(path))
+            {
+                if (TimeSpan.TryParseExact(line.Trim(), "c", CultureInfo.InvariantCulture, out TimeSpan parsed) && parsed >= TimeSpan.Zero)
+                {
+                    validLines.Add(parsed.ToString("c", CultureInfo.InvariantCulture));
+                    if (parsed < best)
+                        best = parsed;
+                }
+            }
+        }
+
+        // Rewrite main file with only valid entries
+        if (validLines.Count > 0)
+            File.WriteAllLines(path, validLines);
+
+        // Maintain backup with last MaxBackupRuns
+        if (validLines.Count > 0)
+        {
+            List<string> backupLines = validLines.Count > MaxBackupRuns
+                ? validLines.GetRange(validLines.Count - MaxBackupRuns, MaxBackupRuns)
+                : new List<string>(validLines);
+
+            File.WriteAllLines(backupPath, backupLines);
         }
 
         return best;
@@ -268,10 +324,20 @@ public class Grimgaol
 
     void AppendRun(TimeSpan run)
     {
-        string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes.txt");
+        if (run < TimeSpan.Zero)
+            run = TimeSpan.Zero;
 
+        string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes.txt");
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-        File.AppendAllText(path, run.ToString("c", CultureInfo.InvariantCulture) + Environment.NewLine);
+
+        try
+        {
+            File.AppendAllText(path, run.ToString("c", CultureInfo.InvariantCulture) + Environment.NewLine);
+        }
+        catch (IOException ex)
+        {
+            Core.Logger($"Failed to write run time: {ex.Message}");
+        }
     }
 
     private void Init()
