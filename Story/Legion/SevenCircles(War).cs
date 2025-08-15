@@ -41,9 +41,9 @@ public class SevenCircles
         if (!Story.QuestProgression(7970))
         {
             Core.EnsureAccept(7970);
-            Core.HuntMonster("sevencircles", "Limbo Guard", "Aura of Power");
-            Core.HuntMonster("sevencircles", "Luxuria Guard", "Aura of Pleasure");
-            Core.HuntMonster("sevencircles", "Limbo Guard", "Aura of Happiness");
+            Core.KillMonster("sevencircles", "r2", "Left", "Limbo Guard", "Aura of Power");
+            Core.KillMonster("sevencircles", "r2", "Left", "Limbo Guard", "Aura of Happiness");
+            Core.KillMonster("sevencircles", "r3", "Left", "Luxuria Guard", "Aura of Pleasure");
             Core.EnsureComplete(7970);
         }
 
@@ -86,7 +86,7 @@ public class SevenCircles
         Circles();
 
         Core.AddDrop("Essence of Treachery", "Essence of Violence", "Souls of Heresy", "Essence of Wrath");
-        
+
         //Guards of Wrath
         Core.EquipClass(ClassType.Farm);
         Story.KillQuest(7979, "sevencircleswar", "Wrath Guard");
