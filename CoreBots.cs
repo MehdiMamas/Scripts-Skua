@@ -7279,6 +7279,8 @@ public class CoreBots
             case "dagepvp":
             case "legionpvp":
             case "deathpitbrawl":
+            // Room Limit: 2
+            case "evilmarsh":
             // Room Limit: 1
             case "queeniona":
             case "baconcatb":
