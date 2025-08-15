@@ -275,12 +275,12 @@ public class CoreLegion
         LTBrightParagon(quant);
         LTArcaneParagon(quant);
         LTShogunParagon(quant);
+        LTFestiveParagonDracolichRider(quant);
         LTParagon(quant);
         LTMountedParagonPet(quant);
         LTThanatosParagon(quant);
         LTAscendedParagon(quant);
         LTDreadnaughtParagon(quant);
-        LTFestiveParagonDracolichRider(quant);
         LTHolidayParagon(quant);
         LTHardCoreParagon(quant);
         LTUW3017(quant);
@@ -395,14 +395,14 @@ public class CoreLegion
 
         Core.FarmingLogger("Legion Token", quant);
         Core.AddDrop("Legion Token");
-        Core.RegisterQuests(3968, 3969);
+        Core.RegisterQuests(3968);
         while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
         {
-            Core.HuntMonster("frozenruins", "Frost Fangbeast", "Frost Heart", 10);
-            Core.HuntMonster("frozenruins", "Frost Fangbeast", "Blanket", 6);
-            Core.HuntMonster("frozenruins", "Frost Fangbeast", "Light", 6);
-            Core.HuntMonster("frozenruins", "Frost Fangbeast", "Pail of Water", 6);
+            Core.KillMonster("frozentower", "Enter", "Spawn", "*");
+            if (Core.CheckInventory("Legion Token", quant))
+                break;
         }
+        Bot.Wait.ForPickup("Legion Token");
         Core.CancelRegisteredQuests();
     }
 
