@@ -203,6 +203,7 @@ public class Grimgaol
 
         Core.Logger($"Farming rank {rank} Grimskull Trolling reputation.");
 
+        Farm.ToggleBoost(BoostType.Reputation);
         while (!Bot.ShouldExit && Farm.FactionRank("Grimskull Trolling") < rank)
         {
             if (!Bot.Quests.IsDailyComplete(9469) && Core.HasWebBadge("SkullCrusher"))
