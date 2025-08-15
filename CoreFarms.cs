@@ -517,6 +517,7 @@ public class CoreFarms
         // Farming between levels 1-5
         while (!Bot.ShouldExit && Bot.Player.Level < 5)
         {
+            Core.CanWeAggro();
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
                 if (Bot.Player.Alive)
@@ -527,23 +528,11 @@ public class CoreFarms
                     Bot.Wait.ForCellChange("r4");
                     break;
                 }
-                else
-                    Bot.Sleep(1000);
+                Bot.Sleep(100);
             }
 
-            if (Bot.Map.Name != "icestormarena")
-            {
-                Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                Bot.Wait.ForMapLoad("icestormarena");
-            }
-            if (Bot.Player.Cell != "r4")
-            {
-                Core.Jump("r4", "Bottom");
-                Bot.Wait.ForCellChange("r4");
-            }
+            Core.KillMonster("icestormarena", "r4", "Left", "*");
 
-            Core.CanWeAggro();
-            Bot.Combat.Attack("*");
             if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
                 break;
         }
@@ -552,6 +541,7 @@ public class CoreFarms
         // Farming between levels 5-10
         while (!Bot.ShouldExit && Bot.Player.Level >= 5 && Bot.Player.Level < 10)
         {
+            Core.CanWeAggro();
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
                 if (Bot.Player.Alive)
@@ -562,24 +552,11 @@ public class CoreFarms
                     Bot.Wait.ForCellChange("r5");
                     break;
                 }
-                else
-                    Bot.Sleep(1000);
+                Bot.Sleep(100);
             }
 
-            if (Bot.Map.Name != "icestormarena")
-            {
-                Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                Bot.Wait.ForMapLoad("icestormarena");
-            }
-            if (Bot.Player.Cell != "r5")
-            {
-                Core.Jump("r5", "Left");
-                Bot.Wait.ForCellChange("r5");
-            }
+            Core.KillMonster("icestormarena", "r5", "Left", "*");
 
-            Core.CanWeAggro();
-            Core.Sleep();
-            Bot.Combat.Attack("*");
             if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
                 break;
         }
@@ -588,6 +565,7 @@ public class CoreFarms
         // Farming between levels 10-20
         while (!Bot.ShouldExit && Bot.Player.Level >= 10 && Bot.Player.Level < 20)
         {
+            Core.CanWeAggro();
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
                 if (Bot.Player.Alive)
@@ -598,24 +576,11 @@ public class CoreFarms
                     Bot.Wait.ForCellChange("r6");
                     break;
                 }
-                else
-                    Bot.Sleep(1000);
+                Bot.Sleep(100);
             }
 
-            if (Bot.Map.Name != "icestormarena")
-            {
-                Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                Bot.Wait.ForMapLoad("icestormarena");
-            }
-            if (Bot.Player.Cell != "r6")
-            {
-                Core.Jump("r6", "Left");
-                Bot.Wait.ForCellChange("r6");
-            }
+            Core.KillMonster("icestormarena", "r6", "Left", "*");
 
-            Core.CanWeAggro();
-            Bot.Combat.Attack("*");
-            Core.Sleep();
             if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
                 break;
         }
@@ -627,6 +592,7 @@ public class CoreFarms
             Core.RegisterQuests(6628);
             while (!Bot.ShouldExit && Bot.Player.Level >= 20 && Bot.Player.Level < 25)
             {
+                Core.CanWeAggro();
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                 {
                     if (Bot.Player.Alive)
@@ -637,24 +603,10 @@ public class CoreFarms
                         Bot.Wait.ForCellChange("r7");
                         break;
                     }
-                    else
-                        Bot.Sleep(1000);
+                    Bot.Sleep(100);
                 }
+                Core.KillMonster("icestormarena", "r7", "Left", "*");
 
-                if (Bot.Map.Name != "icestormarena")
-                {
-                    Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                    Bot.Wait.ForMapLoad("icestormarena");
-                }
-                if (Bot.Player.Cell != "r7")
-                {
-                    Core.Jump("r7", "Left");
-                    Bot.Wait.ForCellChange("r7");
-                }
-                Core.CanWeAggro();
-
-                Bot.Combat.Attack("*");
-                Core.Sleep();
                 if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
                     break;
             }
@@ -665,6 +617,7 @@ public class CoreFarms
         // Farming between levels 25-30
         while (!Bot.ShouldExit && Bot.Player.Level >= 25 && Bot.Player.Level < 30)
         {
+            Core.CanWeAggro();
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
                 if (Bot.Player.Alive)
@@ -672,27 +625,14 @@ public class CoreFarms
                     Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
                     Bot.Sleep(1000);
                     Core.Jump("r10", "Left");
-                    Bot.Wait.ForCellChange("cell");
+                    Bot.Wait.ForCellChange("r10");
                     break;
                 }
-                else
-                    Bot.Sleep(1000);
+                Bot.Sleep(100);
             }
 
-            if (Bot.Map.Name != "icestormarena")
-            {
-                Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                Bot.Wait.ForMapLoad("icestormarena");
-            }
-            if (Bot.Player.Cell != "r10")
-            {
-                Core.Jump("r10", "Left");
-                Bot.Wait.ForCellChange("cell");
-            }
+            Core.KillMonster("icestormarena", "r10", "Left", "*");
 
-            Core.CanWeAggro();
-            Bot.Combat.Attack("*");
-            Core.Sleep();
             if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
                 break;
         }
@@ -706,6 +646,7 @@ public class CoreFarms
             Core.RegisterQuests(6629);
             while (!Bot.ShouldExit && Bot.Player.Level >= 30 && Bot.Player.Level < 35)
             {
+                Core.CanWeAggro();
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                 {
                     if (Bot.Player.Alive)
@@ -716,24 +657,12 @@ public class CoreFarms
                         Bot.Wait.ForCellChange("r11");
                         break;
                     }
-                    else
-                        Bot.Sleep(1000);
+                    Bot.Sleep(100);
                 }
 
-                if (Bot.Map.Name != "icestormarena")
-                {
-                    Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                    Bot.Wait.ForMapLoad("icestormarena");
-                }
-                if (Bot.Player.Cell != "r11")
-                {
-                    Core.Jump("r11", "Left");
-                    Bot.Wait.ForCellChange("r11");
-                }
-                Core.CanWeAggro();
 
-                Bot.Combat.Attack("*");
-                Core.Sleep();
+                Core.KillMonster("icestormarena", "r11", "Left", "*");
+
                 if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
                     break;
             }
@@ -747,6 +676,7 @@ public class CoreFarms
         // Farming between levels 35-50
         while (!Bot.ShouldExit && Bot.Player.Level >= 35 && Bot.Player.Level < 50)
         {
+            Core.CanWeAggro();
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
                 if (Bot.Player.Alive)
@@ -754,61 +684,37 @@ public class CoreFarms
                     Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
                     Bot.Sleep(1000);
                     Core.Jump("r14", "Left");
-                    Bot.Wait.ForCellChange("cell");
+                    Bot.Wait.ForCellChange("r14");
                     break;
                 }
-                else
-                    Bot.Sleep(1000);
+                Bot.Sleep(100);
             }
 
-            if (Bot.Map.Name != "icestormarena")
-            {
-                Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                Bot.Wait.ForMapLoad("icestormarena");
-            }
-            if (Bot.Player.Cell != "r14")
-            {
-                Core.Jump("r14", "Left");
-                Bot.Wait.ForCellChange("cell");
-            }
+            Core.KillMonster("icestormarena", "r14", "Left", "*");
 
-            Core.CanWeAggro();
-            Bot.Combat.Attack("*");
-            Core.Sleep();
         }
 
         Core.ByPassCheck();
         // Farming between levels 50-61
         while (!Bot.ShouldExit && Bot.Player.Level >= 50 && Bot.Player.Level < 61)
         {
+            Core.CanWeAggro();
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
+                Bot.Sleep(100);
                 if (Bot.Player.Alive)
                 {
                     Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
                     Bot.Sleep(1000);
                     Core.Jump("r16", "Left");
-                    Bot.Wait.ForCellChange("cell");
+                    Bot.Wait.ForCellChange("r16");
                     break;
                 }
-                else
-                    Bot.Sleep(1000);
             }
 
-            Core.CanWeAggro();
-            if (Bot.Map.Name != "icestormarena")
-            {
-                Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                Bot.Wait.ForMapLoad("icestormarena");
-            }
-            if (Bot.Player.Cell != "r16")
-            {
-                Core.Jump("r16", "Left");
-                Bot.Wait.ForCellChange("cell");
-            }
 
-            Bot.Combat.Attack("*");
-            Core.Sleep();
+            Core.KillMonster("icestormarena", "r16", "Left", "*");
+
             if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
                 break;
         }
@@ -821,28 +727,22 @@ public class CoreFarms
             {
                 while (!Bot.ShouldExit && Bot.Player.Level >= 61 && Bot.Player.Level < 75)
                 {
+                    Core.CanWeAggro();
                     while (!Bot.ShouldExit && !Bot.Player.Alive)
                     {
+                        Bot.Sleep(100);
                         if (Bot.Player.Alive)
                         {
                             Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
                             Bot.Sleep(1000);
-                            if (Bot.Player.Cell != "r17")
-                                Core.Jump("r17", "Left");
+                            Core.Jump("r17", "Left");
+                            Bot.Wait.ForCellChange("r17");
                             break;
                         }
-                        else
-                            Bot.Sleep(1000);
                     }
 
-                    if (Bot.Map.Name != "icestormarena")
-                        Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                    if (Bot.Player.Cell != "r17")
-                        Core.Jump("r17", "Left");
+                    Core.KillMonster("icestormarena", "r17", "Left", "*");
 
-                    Core.CanWeAggro();
-                    Bot.Combat.Attack("*");
-                    Core.Sleep();
                     if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
                         break;
                 }
@@ -856,82 +756,31 @@ public class CoreFarms
                 while (!Bot.ShouldExit && Bot.Player.Level >= 61 && Bot.Player.Level < 75)
                 {
                     while (!Bot.ShouldExit && !Bot.Player.Alive)
-                    {
-                        if (Bot.Player.Alive)
-                        {
-                            Bot.Sleep(1000);
-                            if (Bot.Player.Cell != "r2")
-                                Core.Jump("r2", "center");
-                            break;
-                        }
-                        else
-                            Bot.Sleep(1000);
-                    }
-
-                    if (Bot.Map.Name != "battlegrounde")
-                        Core.Join("battlegrounde", publicRoom: Core.PrivateRooms);
-                    if (Bot.Player.Cell != "r2")
-                        Core.Jump("r2", "center");
+                        Bot.Sleep(1000);
 
                     Core.CanWeAggro();
-                    Bot.Combat.Attack("*");
-                    Core.Sleep();
+                    Core.KillMonster("battlegrounde", "r2", "center", "*");
                 }
                 Core.AbandonQuest(3991, 3992);
                 ToggleBoost(BoostType.Gold, false);
             }
         }
 
-        Core.ByPassCheck();
         // Farming between levels 75-100
         while (!Bot.ShouldExit)
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
-            {
-                if (Bot.Player.Alive)
-                {
-                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
-                    Bot.Sleep(1000);
-                    if (Bot.Player.Cell != "r2")
-                        if (Bot.Player.Cell != (Core.IsMember
-                ? "r13"
-                : "r2"))
-                            Core.Jump(Core.IsMember
-                            ? "r13"
-                            : "r2", "Left");
-                    break;
-                }
-                else
-                    Bot.Sleep(1000);
-            }
+                Bot.Sleep(1000);
 
             if (!rankUpClass && Bot.Player.Level >= level)
                 break;
 
-            if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+            if (rankUpClass && Core.CheckClassRank(true) < 10)
                 break;
 
-            if (!Bot.Player.IsMember)
-                Core.ByPassCheck();
-
-            if (Bot.Map.Name != (Core.IsMember
-                ? "nightmare"
-                : "icestormunder"))
-                Core.Join(Core.IsMember
-                ? "nightmare"
-                : "icestormunder", publicRoom: Core.PrivateRooms);
-
-            if (Bot.Player.Cell != (Core.IsMember
-                ? "r13"
-                : "r2"))
-                Core.Jump(Core.IsMember
-                ? "r13"
-                : "r2", "Left");
-            Core.CanWeAggro();
-
-            Bot.Combat.Attack("*");
-            Core.Sleep();
+            Core.KillMonster("icestormunder", "r2", "Top", "*");
         }
+
         #endregion level checks
 
 
@@ -1510,7 +1359,7 @@ public class CoreFarms
         Dex = 12,
         Wis = 13,
         Hea = 14 // Health Potion
-        //more to be added by request
+                 //more to be added by request
     };
 
     public void Voucher(string Voucher, int quant, string? shopName = null)
