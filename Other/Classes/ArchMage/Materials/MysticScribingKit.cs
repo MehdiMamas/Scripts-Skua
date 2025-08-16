@@ -16,6 +16,8 @@ tags: null
 //cs_include Scripts/ShadowsOfWar/CoreSoWMats.cs
 //cs_include Scripts/Other/Classes/ArchMage/CoreArchMage.cs
 //cs_include Scripts/Evil/NSoD/CoreNSOD.cs
+//cs_include Scripts/Evil/SDKA/CoreSDKA.cs
+//cs_include Scripts/Other/Classes/Necromancer.cs
 using Skua.Core.Interfaces;
 
 public class MysticScribingKit
