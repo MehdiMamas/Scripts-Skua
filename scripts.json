@@ -29649,7 +29649,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Books/3BookOfIce.cs",
-    "size": 1357,
+    "size": 1450,
     "fileName": "3BookOfIce.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/Books/3BookOfIce.cs"
   },
@@ -29660,7 +29660,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Books/5BookOfArcana.cs",
-    "size": 1366,
+    "size": 1459,
     "fileName": "5BookOfArcana.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/Books/5BookOfArcana.cs"
   },
@@ -29671,7 +29671,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Books/4BookOfAether.cs",
-    "size": 1366,
+    "size": 1459,
     "fileName": "4BookOfAether.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/Books/4BookOfAether.cs"
   },
@@ -29682,7 +29682,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Books/1BookOfMagus.cs",
-    "size": 1363,
+    "size": 1456,
     "fileName": "1BookOfMagus.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/Books/1BookOfMagus.cs"
   },
@@ -29693,7 +29693,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Books/2BookOfFire.cs",
-    "size": 1360,
+    "size": 1453,
     "fileName": "2BookOfFire.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/Books/2BookOfFire.cs"
   },
@@ -29704,7 +29704,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Materials/UnboundTome.cs",
-    "size": 964,
+    "size": 1057,
     "fileName": "UnboundTome.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/Materials/UnboundTome.cs"
   },
@@ -29715,7 +29715,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Materials/ArcaneLocus.cs",
-    "size": 966,
+    "size": 1059,
     "fileName": "ArcaneLocus.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/Materials/ArcaneLocus.cs"
   },
@@ -29726,7 +29726,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Materials/MysticScribingKit.cs",
-    "size": 984,
+    "size": 1077,
     "fileName": "MysticScribingKit.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/Materials/MysticScribingKit.cs"
   },
@@ -29737,7 +29737,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Materials/PrismaticEther.cs",
-    "size": 975,
+    "size": 1068,
     "fileName": "PrismaticEther.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/Materials/PrismaticEther.cs"
   }
