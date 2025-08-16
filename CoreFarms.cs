@@ -672,7 +672,7 @@ public class CoreFarms
                     Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
                     Bot.Sleep(1000);
                     Core.Jump("r10", "Left");
-                    Bot.Wait.ForCellChange("cell");
+                    Bot.Wait.ForCellChange("r10");
                     break;
                 }
                 else
@@ -687,7 +687,7 @@ public class CoreFarms
             if (Bot.Player.Cell != "r10")
             {
                 Core.Jump("r10", "Left");
-                Bot.Wait.ForCellChange("cell");
+                Bot.Wait.ForCellChange("r10");
             }
 
             Core.CanWeAggro();
@@ -754,7 +754,7 @@ public class CoreFarms
                     Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
                     Bot.Sleep(1000);
                     Core.Jump("r14", "Left");
-                    Bot.Wait.ForCellChange("cell");
+                    Bot.Wait.ForCellChange("r14");
                     break;
                 }
                 else
@@ -769,7 +769,7 @@ public class CoreFarms
             if (Bot.Player.Cell != "r14")
             {
                 Core.Jump("r14", "Left");
-                Bot.Wait.ForCellChange("cell");
+                Bot.Wait.ForCellChange("r14");
             }
 
             Core.CanWeAggro();
@@ -788,7 +788,7 @@ public class CoreFarms
                     Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
                     Bot.Sleep(1000);
                     Core.Jump("r16", "Left");
-                    Bot.Wait.ForCellChange("cell");
+                    Bot.Wait.ForCellChange("r16");
                     break;
                 }
                 else
@@ -804,7 +804,7 @@ public class CoreFarms
             if (Bot.Player.Cell != "r16")
             {
                 Core.Jump("r16", "Left");
-                Bot.Wait.ForCellChange("cell");
+                Bot.Wait.ForCellChange("r16");
             }
 
             Bot.Combat.Attack("*");
