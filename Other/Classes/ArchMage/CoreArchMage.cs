@@ -485,6 +485,7 @@ public class CoreArchMage
             return;
         }
 
+        Core.RegisterQuests(8869);
         Core.AddDrop("Unbound Thread");
         while (!Bot.ShouldExit && !Core.CheckInventory("Unbound Thread", quant))
         {
