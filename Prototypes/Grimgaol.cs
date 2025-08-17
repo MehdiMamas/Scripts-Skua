@@ -1146,12 +1146,27 @@ public class Grimgaol
 
     void EquipIfAvailable(string? itemName, int sleepMs = 500)
     {
-        if (!string.IsNullOrWhiteSpace(itemName))
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(itemName))
-            {
-                Bot.Inventory.EquipItem(itemName);
-                Core.Sleep(sleepMs);
-            }
+        if (string.IsNullOrWhiteSpace(itemName))
+            return;
+
+        // Handle special IoDA case
+        if (itemName == "Void Highlord")
+        // Check if VHL (IoDA) is owned, use that if its rank 10, else normal vhl
+            itemName = (Core.CheckInventory("Void HighLord (IoDA)") && Core.CheckClassRank(false, "Void HighLord (IoDA)") == 10) ? "Void HighLord (IoDA)" : "Void Highlord";
+
+        // Use this to unbank if we own it.
+        if (!Core.CheckInventory(itemName))
+        {
+            Core.Logger($"[EquipIfAvailable] Item not found in inventory or bank: \"{itemName}\"");
+            return;
+        }
+
+        // Keep trying until equipped or script exits
+        while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(itemName))
+        {
+            Bot.Inventory.EquipItem(itemName);
+            Core.Sleep(sleepMs);
+        }
     }
 
 
