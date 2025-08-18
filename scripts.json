@@ -9203,7 +9203,7 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 36594,
+    "size": 38956,
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -9305,10 +9305,12 @@
       "castle",
       "gaheris",
       "thelima",
-      "thelimacity"
+      "thelimacity",
+      "mount maleno",
+      "mountmaleno"
     ],
     "path": "Story/AgeOfRuin/00DoAll.cs",
-    "size": 1013,
+    "size": 1038,
     "fileName": "00DoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/00DoAll.cs"
   },
@@ -9368,6 +9370,25 @@
     "size": 755,
     "fileName": "10Balemorale.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/10Balemorale.cs"
+  },
+  {
+    "name": "Mount Maleno",
+    "description": "This script completes the storyline in /MountMaleno.",
+    "tags": [
+      "age",
+      "of",
+      "ruin",
+      "saga",
+      "story",
+      "quest",
+      "mountmaleno",
+      "aleister",
+      "dahlia"
+    ],
+    "path": "Story/AgeOfRuin/18MountMaleno.cs",
+    "size": 749,
+    "fileName": "18MountMaleno.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/18MountMaleno.cs"
   },
   {
     "name": "Termina Temple",
