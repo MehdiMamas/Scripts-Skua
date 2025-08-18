@@ -1841,7 +1841,7 @@ public class CoreNation
             while (!Bot.ShouldExit && !Core.CheckInventory("Totem of Nulgath", TotemQuant))
             {
                 Core.EnsureAccept(4777);
-                Supplies("Unidentified 3");
+                Supplies("Unidentified 3", ReturnItem: "Blood Gem of the Archfiend");
                 FarmBloodGem(2);
                 FarmUni10(30);
                 Core.EnsureComplete(4777, 5357);
