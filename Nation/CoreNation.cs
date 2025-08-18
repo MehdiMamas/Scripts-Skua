@@ -1748,9 +1748,13 @@ public class CoreNation
         Core.AddDrop("Totem of Nulgath");
         Core.RegisterQuests(726);
 
-        while (!Bot.ShouldExit && Core.CheckInventory("Totem of Nulgath", quant))
+        if (!Bot.Quests.HasBeenCompleted(9541))
+            Core.ChainComplete(9541);
+
+        while (!Bot.ShouldExit && !Core.CheckInventory("Totem of Nulgath", quant))
         {
-            if (Core.IsMember && !Core.CheckInventory(538))
+            EssenceofNulgath(25);
+            if (Core.IsMember && !Core.CheckInventory(538 /* Taro's Manslayer */))
             {
                 Core.EnsureAccept(1111);
                 FarmGemofNulgath(10);
@@ -1760,7 +1764,6 @@ public class CoreNation
                 Bot.Wait.ForPickup(538);
             }
             else Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Taro's Manslayer", isTemp: false);
-            EssenceofNulgath(25);
             Bot.Wait.ForQuestComplete(726);
             Bot.Wait.ForPickup("Totem of Nulgath");
         }
