@@ -48,6 +48,7 @@ public class CoreAOR
         CastleGaheris();
         ColdThunder();
         ThelimaCity();
+        MountMaleno();
     }
 
     private bool isSeaVoiceCalled = false;
@@ -888,6 +889,90 @@ public class CoreAOR
         {
             Core.HuntMonsterQuest(10356,
                 ("thelimacity", UseableMonsters[5], ClassType.Solo));
+        }
+
+
+    }
+
+    public void MountMaleno()
+    {
+        if (Core.isCompletedBefore(10368))
+            return;
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Soul Raven", // UseableMonsters[0],
+	"Maleno Match", // UseableMonsters[1],
+	"Maleno Elemental", // UseableMonsters[2],
+	"Draconian Bandit", // UseableMonsters[3],
+	"Idalion", // UseableMonsters[4]
+};
+        #endregion Useable Monsters
+
+        // 10359 | A-Luring Song
+        Story.KillQuest(10359, "mountmaleno", "Soul Raven");
+        Story.MapItemQuest(10359, "mountmaleno", 14805);
+
+
+        // 10360 | Splendid Ashes, Pompous Grave
+        if (!Story.QuestProgression(10360))
+        {
+            Core.HuntMonsterQuest(10360,
+                ("mountmaleno", UseableMonsters[1], ClassType.Farm));
+        }
+
+
+        // 10361 | Echolocation
+        Story.MapItemQuest(10361, new[] {
+            (14806, 1, "mountmaleno"),
+            (14807, 5, "mountmaleno")
+        });
+
+
+        // 10362 | Chymerical Ash
+        if (!Story.QuestProgression(10362))
+        {
+            Core.HuntMonsterQuest(10362,
+                ("mountmaleno", UseableMonsters[0], ClassType.Farm),
+                ("mountmaleno", UseableMonsters[1], ClassType.Farm));
+        }
+
+
+        // 10363 | Journey Through the Dark Night
+        Story.MapItemQuest(10363, "mountmaleno", new[] { 14808, 14809 });
+
+
+        // 10364 | Lunar Caustic
+        Story.MapItemQuest(10364, "mountmaleno", 14810);
+        Story.KillQuest(10364, "mountmaleno", UseableMonsters[2]);
+
+
+        // 10365 | Like Water and Lithium
+        Story.MapItemQuest(10365, "mountmaleno", 14811);
+        Story.KillQuest(10365, "mountmaleno", UseableMonsters[3]);
+
+
+        // 10366 | The Shadows Lengthen in…
+        Story.MapItemQuest(10366, "mountmaleno", 14812);
+
+
+        // 10367 | Blithe Hospitality
+        if (!Story.QuestProgression(10367))
+        {
+            Core.HuntMonsterQuest(10367,
+                ("mountmaleno", UseableMonsters[3], ClassType.Farm),
+                ("mountmaleno", UseableMonsters[2], ClassType.Solo));
+        }
+
+
+        // 10368 | Sal Volatile
+        if (!Story.QuestProgression(10368))
+        {
+            Core.HuntMonsterQuest(10368,
+                ("mountmaleno", UseableMonsters[4], ClassType.Solo));
         }
 
 

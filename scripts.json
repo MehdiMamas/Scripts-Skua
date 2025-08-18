@@ -463,7 +463,7 @@
       "escherion"
     ],
     "path": "Nation/SuppliesToSpinTheWheelofChance.cs",
-    "size": 7835,
+    "size": 7754,
     "fileName": "SuppliesToSpinTheWheelofChance.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/SuppliesToSpinTheWheelofChance.cs"
   },
@@ -9203,7 +9203,7 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 36594,
+    "size": 38956,
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -9305,10 +9305,12 @@
       "castle",
       "gaheris",
       "thelima",
-      "thelimacity"
+      "thelimacity",
+      "mount maleno",
+      "mountmaleno"
     ],
     "path": "Story/AgeOfRuin/00DoAll.cs",
-    "size": 1013,
+    "size": 1038,
     "fileName": "00DoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/00DoAll.cs"
   },
@@ -9368,6 +9370,25 @@
     "size": 755,
     "fileName": "10Balemorale.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/10Balemorale.cs"
+  },
+  {
+    "name": "Mount Maleno",
+    "description": "This script completes the storyline in /MountMaleno.",
+    "tags": [
+      "age",
+      "of",
+      "ruin",
+      "saga",
+      "story",
+      "quest",
+      "mountmaleno",
+      "aleister",
+      "dahlia"
+    ],
+    "path": "Story/AgeOfRuin/18MountMaleno.cs",
+    "size": 749,
+    "fileName": "18MountMaleno.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/18MountMaleno.cs"
   },
   {
     "name": "Termina Temple",
@@ -14340,6 +14361,35 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ChaosWarMerge.cs"
   },
   {
+    "name": "Forge Maleno Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Forge Maleno Merge [2615] in /mountmaleno",
+    "tags": [
+      "forge",
+      "maleno",
+      "merge",
+      "mountmaleno",
+      "idalions",
+      "shadowbrand",
+      "flame",
+      "halberd",
+      "shadowcleaver",
+      "shadowcleavers",
+      "drow",
+      "oathkeeper",
+      "morph",
+      "silver",
+      "saber",
+      "sabers",
+      "blazing",
+      "fang",
+      "fangs"
+    ],
+    "path": "Other/MergeShops/ForgeMalenoMerge.cs",
+    "size": 8051,
+    "fileName": "ForgeMalenoMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ForgeMalenoMerge.cs"
+  },
+  {
     "name": "IceDungeonMerge",
     "description": "null",
     "tags": [
@@ -15287,17 +15337,17 @@
       "ariagreenhouse",
       "astromancers",
       "apprentice",
-      "astro",
+      "morph",
+      "astral",
+      "compass",
+      "fireworks",
+      "qipao",
+      "star",
+      "festival",
+      "weapon",
       "gift",
       "i",
       "ii",
-      "astral",
-      "weapon",
-      "fireworks",
-      "qipao",
-      "elegant",
-      "festival",
-      "star",
       "crimson",
       "staredge",
       "suhail",
@@ -15307,10 +15357,11 @@
       "novablades",
       "spectral",
       "saiph",
-      "alnitak"
+      "alnitak",
+      "celestial"
     ],
     "path": "Other/MergeShops/StarhuntMerge.cs",
-    "size": 6095,
+    "size": 6236,
     "fileName": "StarhuntMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/StarhuntMerge.cs"
   },
@@ -16530,10 +16581,11 @@
       "",
       "melano",
       "zircon",
-      "catalyst"
+      "catalyst",
+      "stahlschwert"
     ],
     "path": "Other/MergeShops/NeulingWelcomeGiftsMerge.cs",
-    "size": 6197,
+    "size": 6645,
     "fileName": "NeulingWelcomeGiftsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/NeulingWelcomeGiftsMerge.cs"
   },
