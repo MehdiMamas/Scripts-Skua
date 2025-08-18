@@ -1,7 +1,7 @@
 /*
 name: Thelima Jewelers Merge
 description: This bot will farm the items belonging to the selected mode for the Thelima Jewelers Merge [2616] in /thelimacity
-tags: thelima, jewelers, merge, thelimacity, custom, gem, vert, vitriol, emerald, emile, melano, amethyst, catalyst
+tags: thelima, jewelers, merge, thelimacity, custom, gem, vert, vitriol, emerald, emile, melano, amethyst, catalyst, blue, smaragdine, enchanted, golden, claymore, gilded, doomwood, starks, brilliant, ice, engraved, unholy, heavy, holy, desert, dunes, toothbrush, toothpaste, amp
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
@@ -9,6 +9,7 @@ tags: thelima, jewelers, merge, thelimacity, custom, gem, vert, vitriol, emerald
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
 //cs_include Scripts/Story/AgeOfRuin/CoreAOR.cs
+//cs_include Scripts/Evil/ShadowFallMerge.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -21,6 +22,7 @@ public class ThelimaJewelersMerge
     private CoreAdvanced Adv = new();
     private static CoreAdvanced sAdv = new();
     private CoreAOR AOR = new();
+    private ShadowFallMerge SFM = new();
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -32,7 +34,7 @@ public class ThelimaJewelersMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Mystic Topaz", "Dwarven Gold", "Maleno Obsidian", "Drow Silver", "Dwarven Emerald", "Drow Amethyst" });
+        Core.BankingBlackList.AddRange(new[] { "Mystic Topaz", "Dwarven Gold", "Maleno Obsidian", "Drow Silver", "Dwarven Emerald", "Drow Amethyst", "Silver Claymore", "Necrotized Claymore", "Stark's Ice", "Grave Terror", "The Unholy", "Heavy Holy Blade", "Blade of the Desert Dunes" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -123,6 +125,87 @@ public class ThelimaJewelersMerge
                     Core.AddDrop(req.ID);
                     Core.HuntMonster("thelimacity", "Drow Soldier", req.Name, quant, false, false);
                     break;
+
+                case "Silver Claymore":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.EnsureAccept(739);
+                        while (!Bot.ShouldExit && !Core.CheckInventory("Racing Trophy", 20))
+                            Core.ChainComplete(746);
+                        Core.HuntMonster("table", "Roach", "Gold Roach Antenna", 10);
+                        Core.EnsureCompleteChoose(739, new[] { req.Name });
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+
+
+                case "Necrotized Claymore":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.Logger("Cannot Get Item, requires manual pvp.");
+                    break;
+
+
+                case "Stark's Ice":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Adv.BuyItem("blindingsnow", 236, req.Name, quant);
+                    break;
+
+
+                case "Grave Terror":
+                case "The Unholy":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    SFM.BuyAllMerge(req.Name);
+                    break;
+
+
+                case "Heavy Holy Blade":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Adv.BuyItem("necropolis", 408, req.Name, quant);
+                    break;
+
+
+                case "Blade of the Desert Dunes":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Adv.BuyItem("sandsea", 242, req.Name, quant);
+                    break;
                     #endregion
 
             }
@@ -137,5 +220,21 @@ public class ThelimaJewelersMerge
         new Option<bool>("93381", "Vert Vitriol Daggers", "Mode: [select] only\nShould the bot buy \"Vert Vitriol Daggers\" ?", false),
         new Option<bool>("93385", "Emerald Emile", "Mode: [select] only\nShould the bot buy \"Emerald Emile\" ?", false),
         new Option<bool>("93386", "Melano Amethyst Catalyst", "Mode: [select] only\nShould the bot buy \"Melano Amethyst Catalyst\" ?", false),
+        new Option<bool>("93118", "Blue Vitriol Dagger", "Mode: [select] only\nShould the bot buy \"Blue Vitriol Dagger\" ?", false),
+        new Option<bool>("93119", "Melano Amethyst Dagger", "Mode: [select] only\nShould the bot buy \"Melano Amethyst Dagger\" ?", false),
+        new Option<bool>("93120", "Smaragdine Dagger", "Mode: [select] only\nShould the bot buy \"Smaragdine Dagger\" ?", false),
+        new Option<bool>("93121", "Smaragdine Daggers", "Mode: [select] only\nShould the bot buy \"Smaragdine Daggers\" ?", false),
+        new Option<bool>("93382", "Enchanted Gem Dagger", "Mode: [select] only\nShould the bot buy \"Enchanted Gem Dagger\" ?", false),
+        new Option<bool>("93383", "Enchanted Gem Daggers", "Mode: [select] only\nShould the bot buy \"Enchanted Gem Daggers\" ?", false),
+        new Option<bool>("95099", "Golden Claymore", "Mode: [select] only\nShould the bot buy \"Golden Claymore\" ?", false),
+        new Option<bool>("95100", "Gilded Claymore of Doomwood", "Mode: [select] only\nShould the bot buy \"Gilded Claymore of Doomwood\" ?", false),
+        new Option<bool>("95101", "Stark's Brilliant Ice Blade", "Mode: [select] only\nShould the bot buy \"Stark's Brilliant Ice Blade\" ?", false),
+        new Option<bool>("95102", "Gilded Engraved Blade", "Mode: [select] only\nShould the bot buy \"Gilded Engraved Blade\" ?", false),
+        new Option<bool>("95103", "Golden Unholy Blade", "Mode: [select] only\nShould the bot buy \"Golden Unholy Blade\" ?", false),
+        new Option<bool>("95104", "Brilliant Heavy Holy Blade", "Mode: [select] only\nShould the bot buy \"Brilliant Heavy Holy Blade\" ?", false),
+        new Option<bool>("95105", "Gilded Blade of the Desert Dunes", "Mode: [select] only\nShould the bot buy \"Gilded Blade of the Desert Dunes\" ?", false),
+        new Option<bool>("95106", "Golden Toothbrush", "Mode: [select] only\nShould the bot buy \"Golden Toothbrush\" ?", false),
+        new Option<bool>("95107", "Golden Toothpaste", "Mode: [select] only\nShould the bot buy \"Golden Toothpaste\" ?", false),
+        new Option<bool>("95108", "Golden Toothbrush &amp; Toothpaste", "Mode: [select] only\nShould the bot buy \"Golden Toothbrush &amp; Toothpaste\" ?", false),
    };
 }
