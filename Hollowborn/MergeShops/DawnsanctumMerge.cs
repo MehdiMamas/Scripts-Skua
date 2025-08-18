@@ -108,6 +108,7 @@ public class DawnsanctumMerge
 
                 case "Dawn Vindicator Helm":
                 case "Dawn Vindicator Sword":
+                case "Dawn Vindicator Swords":
                 case "Dawn Vindicator Soldier":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -206,7 +207,7 @@ public class DawnsanctumMerge
                 return;
 
             Core.FarmingLogger("Vindicator Badge", quant);
-                    Bot.Quests.UpdateQuest(8297);
+            Bot.Quests.UpdateQuest(8297);
             Core.RegisterQuests(8299);
             while (!Bot.ShouldExit && !Core.CheckInventory("Vindicator Badge", quant))
             {
@@ -255,7 +256,7 @@ public class DawnsanctumMerge
 
     }
 
-    public List<IOption> Select = new()
+   public List<IOption> Select = new()
     {
         new Option<bool>("89889", "Gramiel's Celestial Enoch", "Mode: [select] only\nShould the bot buy \"Gramiel's Celestial Enoch\" ?", false),
         new Option<bool>("89890", "Gramiel's Celestial Enochs", "Mode: [select] only\nShould the bot buy \"Gramiel's Celestial Enochs\" ?", false),
@@ -287,5 +288,6 @@ public class DawnsanctumMerge
         new Option<bool>("89923", "Hollow Dawn Spellbooks", "Mode: [select] only\nShould the bot buy \"Hollow Dawn Spellbooks\" ?", false),
         new Option<bool>("89924", "Hollow Dawn Grimoires", "Mode: [select] only\nShould the bot buy \"Hollow Dawn Grimoires\" ?", false),
         new Option<bool>("89925", "Hollowborn Priest Staff", "Mode: [select] only\nShould the bot buy \"Hollowborn Priest Staff\" ?", false),
-    };
+        new Option<bool>("90518", "Dawn Vindicator Castle", "Mode: [select] only\nShould the bot buy \"Dawn Vindicator Castle\" ?", false),
+   };
 }
