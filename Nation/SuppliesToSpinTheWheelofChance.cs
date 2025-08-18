@@ -147,8 +147,7 @@ public class SuppliesToSpinTheWheelofChance
                 Bot.Config!.Get<bool>("UltraAlteon"),
                 Bot.Config!.Get<bool>("KeepVoucher"),
                 Bot.Config!.Get<bool>("AssistantDuring"),
-                SwindlesReturnItem ?? item.Name, // Use SwindlesReturnItem if set, otherwise use item.Name
-                swindlesMaxStack // Use determined max stack for SwindlesReturn
+                SwindlesReturnItem ?? item.Name // Use SwindlesReturnItem if set, otherwise use item.Name
             );
         }
     }
