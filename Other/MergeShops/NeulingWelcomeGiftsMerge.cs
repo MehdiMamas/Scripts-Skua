@@ -1,7 +1,7 @@
 /*
 name: Neuling Welcome Gifts Merge
 description: This bot will farm the items belonging to the selected mode for the Neuling Welcome Gifts Merge [2617] in /thelimacity
-tags: neuling, welcome, gifts, merge, thelimacity, dwarfhold, explorer, morph, wool, cap, friend, explorers, bag, mountain, range, brandt, aegis, , melano, zircon, catalyst
+tags: neuling, welcome, gifts, merge, thelimacity, dwarfhold, explorer, morph, wool, cap, friend, explorers, bag, mountain, range, brandt, aegis, , melano, zircon, catalyst, stahlschwert
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -122,5 +122,8 @@ public class NeulingWelcomeGiftsMerge
         new Option<bool>("92358", "Neuling Aegis", "Mode: [select] only\nShould the bot buy \"Neuling Aegis\" ?", false),
         new Option<bool>("92359", "Neuling Brandt + Aegis", "Mode: [select] only\nShould the bot buy \"Neuling Brandt + Aegis\" ?", false),
         new Option<bool>("93387", "Melano Zircon Catalyst", "Mode: [select] only\nShould the bot buy \"Melano Zircon Catalyst\" ?", false),
+        new Option<bool>("92356", "Neuling Stahlschwert", "Mode: [select] only\nShould the bot buy \"Neuling Stahlschwert\" ?", false),
+        new Option<bool>("92357", "Dual Neuling Stahlschwert", "Mode: [select] only\nShould the bot buy \"Dual Neuling Stahlschwert\" ?", false),
+        new Option<bool>("92360", "Neuling Stahlschwert + Aegis", "Mode: [select] only\nShould the bot buy \"Neuling Stahlschwert + Aegis\" ?", false),
    };
 }
