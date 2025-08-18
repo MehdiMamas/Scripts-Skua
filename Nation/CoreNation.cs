@@ -1721,15 +1721,67 @@ public class CoreNation
     /// Farms Totem of Nulgath with the best method available.
     /// </summary>
     /// <param name="quant">Desired quantity, 100 = max stack.</param>
-    public void FarmTotemofNulgath(int quant = 100) //, bool Taro = true)
+    public void FarmTotemofNulgath(int quant = 100)
     {
         // Check if Totem of Nulgath is already in inventory
         if (Core.CheckInventory("Totem of Nulgath", quant))
             return;
         NewWorldsNewOpportunities("Totem of Nulgath", quant);
-        VoucherItemTotemofNulgath(VoucherItemTotem.Totem_of_Nulgath, quant);
+        TotemsViaTaros(quant);
+
+        //this way takes to fucking long... ^ updated method via taro's manslayer and essence.
+        // VoucherItemTotemofNulgath(VoucherItemTotem.Totem_of_Nulgath, quant);
     }
 
+    public void TotemsViaTaros(int quant = 100)
+    {
+        if (Core.CheckInventory("Totem of Nulgath", quant))
+            return;
+
+        if (Core.IsMember && Farm.FactionRank("Good") < 10 && !Core.CheckInventory("Purified Claymore of Destiny"))
+        {
+            Core.Logger("Player is a member, we'll use the better farming method for the \"Taro's Manslayer\", first we need to get some prereqs.");
+            Farm.GoodREP();
+            GetPCoD();
+        }
+
+        Core.AddDrop("Totem of Nulgath");
+        Core.RegisterQuests(726);
+
+        while (!Bot.ShouldExit && Core.CheckInventory("Totem of Nulgath", quant))
+        {
+            if (Core.IsMember && !Core.CheckInventory(538))
+            {
+                Core.EnsureAccept(1111);
+                FarmGemofNulgath(10);
+                Core.ResetQuest(7551);
+                Core.DarkMakaiItem("Dark Makai Rune");
+                Core.EnsureComplete(1111, 538 /* Taro's Manslayer */);
+                Bot.Wait.ForPickup(538);
+            }
+            else Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Taro's Manslayer", isTemp: false);
+            EssenceofNulgath(25);
+            Bot.Wait.ForQuestComplete(726);
+            Bot.Wait.ForPickup("Totem of Nulgath");
+        }
+        Core.CancelRegisteredQuests();
+
+        void GetPCoD()
+        {
+            if (Core.CheckInventory("Purified Claymore of Destiny"))
+                return;
+
+            Core.AddDrop("Purified Claymore of Destiny");
+
+            Farm.Experience(15);
+            Farm.GoodREP(8);
+
+            Core.EnsureAccept(548);
+            Core.HuntMonster("battleundera", "Undead Berserker", "Warrior Claymore Blade", isTemp: false);
+            Core.EnsureComplete(548);
+        }
+
+    }
     /// <summary>
     /// Do Bloody Chaos quest for Blood Gems.
     /// </summary>
