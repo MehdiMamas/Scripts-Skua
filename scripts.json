@@ -574,6 +574,41 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Evil/DoomKnight[Mem].cs"
   },
   {
+    "name": "ShadowFall Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the ShadowFall Merge [291] in /shadowfallwar",
+    "tags": [
+      "shadowfall",
+      "merge",
+      "shadowfallwar",
+      "unholy",
+      "tormenter",
+      "great",
+      "grave",
+      "terror",
+      "terrors",
+      "lich",
+      "bane",
+      "creature",
+      "royal",
+      "crown",
+      "torch",
+      "darkness",
+      "bounded",
+      "ectoplasmic",
+      "skull",
+      "mace",
+      "doublesided",
+      "painblade",
+      "accoutrements",
+      "skelecommander",
+      "skelecommanders"
+    ],
+    "path": "Evil/ShadowFallMerge.cs",
+    "size": 5653,
+    "fileName": "ShadowFallMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Evil/ShadowFallMerge.cs"
+  },
+  {
     "name": "Arch DoomKnight (ADK)",
     "description": "This script farms the Arch DoomKnight Armor.",
     "tags": [
@@ -728,7 +763,7 @@
       "beta"
     ],
     "path": "Prototypes/Grimgaol.cs",
-    "size": 51915,
+    "size": 51987,
     "fileName": "Grimgaol.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
@@ -12486,7 +12521,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 905793,
+    "size": 917885,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -16280,10 +16315,29 @@
       "emile",
       "melano",
       "amethyst",
-      "catalyst"
+      "catalyst",
+      "blue",
+      "smaragdine",
+      "enchanted",
+      "golden",
+      "claymore",
+      "gilded",
+      "doomwood",
+      "starks",
+      "brilliant",
+      "ice",
+      "engraved",
+      "unholy",
+      "heavy",
+      "holy",
+      "desert",
+      "dunes",
+      "toothbrush",
+      "toothpaste",
+      "amp"
     ],
     "path": "Other/MergeShops/ThelimaJewelersMerge.cs",
-    "size": 5907,
+    "size": 11565,
     "fileName": "ThelimaJewelersMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ThelimaJewelersMerge.cs"
   },
