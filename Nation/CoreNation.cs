@@ -388,11 +388,11 @@ public class CoreNation
         while (!Bot.ShouldExit && !Core.CheckInventory(Item.Name, quant))
         {
             Core.EnsureAccept(7551);
-            Supplies("Unidentified 1");
-            Supplies("Unidentified 6");
-            Supplies("Unidentified 9");
-            Supplies("Unidentified 16");
-            Supplies("Unidentified 20");
+            Supplies("Unidentified 1", ReturnItem: item ?? null);
+            Supplies("Unidentified 6", ReturnItem: item ?? null);
+            Supplies("Unidentified 9", ReturnItem: item ?? null);
+            Supplies("Unidentified 16", ReturnItem: item ?? null);
+            Supplies("Unidentified 20", ReturnItem: item ?? null);
             Core.ResetQuest(7551);
             Core.DarkMakaiItem("Dark Makai Rune");
             Core.EnsureComplete(7551, Item.ID);
@@ -977,38 +977,41 @@ public class CoreNation
             return;
 
         Core.EnsureAccept(7551);
-        while (!Bot.ShouldExit)
+        Core.ResetQuest(7551);
+        Core.DarkMakaiItem("Dark Makai Rune");
+
+        // Load quest with retry
+        Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
+        if (quest == null)
         {
-            Core.ResetQuest(7551);
-            Core.DarkMakaiItem("Dark Makai Rune");
-
-            // Load quest with retry
-            Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
-            if (quest == null)
-            {
-                Core.Logger("Failed to load quest 7551, retrying...");
-                Core.Sleep(500);
-                continue;
-            }
-
-            // Determine reward: prefer 'item' if provided, else first non-maxed, else fallback
-            ItemBase? reward = item != null
-                ? quest.Rewards?.FirstOrDefault(r => r.Name == item)
-                : quest.Rewards?.FirstOrDefault(r => !Core.CheckInventory(r.ID, r.MaxStack));
-
-            // Fallback if all rewards maxed
-            int rewardID = reward?.ID ?? -1;
-            Core.Logger($"Completing with reward ID: {rewardID}");
-
-            if (Bot.Quests.CanCompleteFullCheck(7551))
-            {
-                if (!string.IsNullOrEmpty(item))
-                    Core.EnsureComplete(7551, rewardID);
-                else
-                    Core.EnsureComplete(7551);
-            }
-
+            Core.Logger("Failed to load quest 7551, retrying...");
             Core.Sleep(500);
+            return;
+        }
+
+        // Determine reward: prefer 'item' if provided, else first non-maxed, else fallback
+        ItemBase? reward = item != null
+            ? quest.Rewards?.FirstOrDefault(r => r.Name == item)
+            : quest.Rewards?.FirstOrDefault(r => !Core.CheckInventory(r.ID, r.MaxStack));
+
+        // Fallback if all rewards maxed
+        int rewardID = reward?.ID ?? -1;
+        // Core.Logger($"Completing with reward ID: {rewardID}");
+
+        if (Bot.Quests.CanCompleteFullCheck(7551))
+        {
+            if (!string.IsNullOrEmpty(item))
+            {
+                Core.EnsureComplete(7551, rewardID);
+                Bot.Wait.ForQuestComplete(7551);
+                Bot.Wait.ForPickup(reward.ID);
+
+            }
+            else
+            {
+                Core.EnsureComplete(7551);
+                Bot.Wait.ForQuestComplete(7551);
+            }
         }
     }
 
