@@ -1003,7 +1003,7 @@ public class CoreNation
             if (Bot.Quests.CanCompleteFullCheck(7551))
             {
                 if (!string.IsNullOrEmpty(item))
-                    Core.EnsureCompleteChoose(7551, new[] { item });
+                    Core.EnsureComplete(7551, rewardID);
                 else
                     Core.EnsureComplete(7551);
             }
@@ -1798,56 +1798,36 @@ public class CoreNation
     /// </summary>
     /// <param name="GemQuant">Number of Gems of Nulgath to farm (0 = skip).</param>
     /// <param name="TotemQuant">Number of Totems of Nulgath to farm (0 = skip).</param>
-    /// <remarks>
-    /// Requirements: Player must own the CragName item.  
-    /// Steps:  
-    /// 1. Ensure Dragon Slayer reward and Purified Claymore of Destiny are obtained.  
-    /// 2. Add quest drops to pick-up list.  
-    /// 3. For Gems: accept quest 4777, supply required items, farm Blood Gems and Unidentified 10, complete quest with Gem reward.  
-    /// 4. For Totems: accept quest 4777, supply required items, farm Blood Gems and Unidentified 10, complete quest with Totem reward.  
-    /// Repeats each step until the desired quantity is reached or the bot exits.
-    /// </remarks>
     public void Deal(int GemQuant = 0, int TotemQuant = 0)
     {
         if (!Core.CheckInventory(CragName))
         {
-            Core.Logger($"{CragName} missing. stopping");
+            Core.Logger($"{CragName} missing. Stopping.");
             return;
         }
 
-        DragonSlayerReward(); //required
+        DragonSlayerReward(); // required
         GetPCoD();
+        Core.AddDrop("Gem of Nulgath", "Totem of Nulgath");
 
-        Core.AddDrop(Core.QuestRewards(4777));
-
-        if (GemQuant > 0)
+        void FarmItem(string itemName, int quant, int rewardID)
         {
-            Core.FarmingLogger("Gem of Nulgath", GemQuant);
-            while (!Bot.ShouldExit && !Core.CheckInventory("Gem of Nulgath", GemQuant))
+            if (quant <= 0) return;
+
+            Core.FarmingLogger(itemName, quant);
+            while (!Bot.ShouldExit && !Core.CheckInventory(itemName, quant))
             {
                 Core.EnsureAccept(4777);
                 Supplies("Unidentified 3", ReturnItem: "Blood Gem of the Archfiend");
                 FarmBloodGem(2);
                 FarmUni10(30);
-                Core.EnsureComplete(4777, 6136);
-                Bot.Wait.ForPickup("Gem of Nulgath");
+                Core.EnsureComplete(4777, rewardID);
+                Bot.Wait.ForPickup(itemName);
             }
         }
 
-
-        if (TotemQuant > 0)
-        {
-            Core.FarmingLogger("Totem of Nulgath", TotemQuant);
-            while (!Bot.ShouldExit && !Core.CheckInventory("Totem of Nulgath", TotemQuant))
-            {
-                Core.EnsureAccept(4777);
-                Supplies("Unidentified 3", ReturnItem: "Blood Gem of the Archfiend");
-                FarmBloodGem(2);
-                FarmUni10(30);
-                Core.EnsureComplete(4777, 5357);
-                Bot.Wait.ForPickup("Totem of Nulgath");
-            }
-        }
+        FarmItem("Gem of Nulgath", GemQuant, 6136);
+        FarmItem("Totem of Nulgath", TotemQuant, 5357);
     }
 
 
