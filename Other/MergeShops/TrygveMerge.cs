@@ -65,6 +65,7 @@ public class TrygveMerge
                     break;
                 #endregion
 
+
                 case "Vindicator Badge":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -82,6 +83,7 @@ public class TrygveMerge
                     break;
 
                 case "Silver Vindicator Sword":
+                case "Silver Vindicator Swords":
                 case "Silver Vindicator Hood":
                 case "Silver Vindicator Recruit":
                     Core.FarmingLogger(req.Name, quant);
@@ -133,5 +135,6 @@ public class TrygveMerge
         new Option<bool>("63990", "Dawn Vindicator Captain Helm", "Mode: [select] only\nShould the bot buy \"Dawn Vindicator Captain Helm\" ?", false),
         new Option<bool>("63985", "Dawn Vindicator Inquisitor", "Mode: [select] only\nShould the bot buy \"Dawn Vindicator Inquisitor\" ?", false),
         new Option<bool>("63986", "Dawn Vindicator Inquisitor Helm", "Mode: [select] only\nShould the bot buy \"Dawn Vindicator Inquisitor Helm\" ?", false),
-    };
+        new Option<bool>("90204", "Dawn Vindicator Swords", "Mode: [select] only\nShould the bot buy \"Dawn Vindicator Swords\" ?", false),
+   };
 }
