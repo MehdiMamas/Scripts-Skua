@@ -1763,7 +1763,8 @@ public class CoreNation
                 Core.EnsureComplete(1111, 538 /* Taro's Manslayer */);
                 Bot.Wait.ForPickup(538);
             }
-            else Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Taro's Manslayer", isTemp: false);
+            else
+                Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Taro's Manslayer", isTemp: false);
             Bot.Wait.ForQuestComplete(726);
             Bot.Wait.ForPickup("Totem of Nulgath");
         }
