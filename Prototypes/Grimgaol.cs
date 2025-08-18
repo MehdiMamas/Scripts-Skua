@@ -1254,7 +1254,8 @@ public class Grimgaol
     };
 
         // Require critical classes and log what's missing
-        string[] requiredClasses = { "Dragon of Time", "Void Highlord", "Verus DoomKnight", };
+        string[] requiredClasses = { "Dragon of Time", Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord", "Verus DoomKnight", };
+
         // Extra Class for statues; CaV
         if (Core.CheckInventory("Chaos Avenger"))
         {
