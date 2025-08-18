@@ -14361,6 +14361,35 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ChaosWarMerge.cs"
   },
   {
+    "name": "Forge Maleno Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Forge Maleno Merge [2615] in /mountmaleno",
+    "tags": [
+      "forge",
+      "maleno",
+      "merge",
+      "mountmaleno",
+      "idalions",
+      "shadowbrand",
+      "flame",
+      "halberd",
+      "shadowcleaver",
+      "shadowcleavers",
+      "drow",
+      "oathkeeper",
+      "morph",
+      "silver",
+      "saber",
+      "sabers",
+      "blazing",
+      "fang",
+      "fangs"
+    ],
+    "path": "Other/MergeShops/ForgeMalenoMerge.cs",
+    "size": 8051,
+    "fileName": "ForgeMalenoMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ForgeMalenoMerge.cs"
+  },
+  {
     "name": "IceDungeonMerge",
     "description": "null",
     "tags": [
