@@ -34,55 +34,9 @@ public class TheRefreshingDeal
         Core.BankingBlackList.AddRange(Nation.bagDrops);
         Core.SetOptions();
 
-        Deal(Bot.Config!.Get<int>("GemQuantity"), Bot.Config.Get<int>("TotemQuantity"));
+        Nation.Deal(Bot.Config!.Get<int>("GemQuantity"), Bot.Config.Get<int>("TotemQuantity"));
 
         Core.SetOptions(false);
-    }
-
-    public void Deal(int GemQuant, int TotemQuant)
-    {
-        if (!Core.CheckInventory(Nation.CragName))
-        {
-            Core.Logger($"{Nation.CragName} missing. stopping");
-            return;
-        }
-
-        Nation.DragonSlayerReward(); //required
-        PCoD.GetPCoD();
-
-        Core.AddDrop(Core.QuestRewards(4777));
-
-        if (GemQuant > 0)
-        {
-            Core.FarmingLogger("Gem of Nulgath", GemQuant);
-            while (!Bot.ShouldExit && !Core.CheckInventory("Gem of Nulgath", GemQuant))
-            {
-                Core.EnsureAccept(4777);
-                Nation.Supplies("Unidentified 3");
-                Nation.FarmBloodGem(2);
-                Nation.FarmUni10(30);
-                Core.EnsureComplete(4777, 6136);
-                Bot.Wait.ForPickup("Gem of Nulgath");
-            }
-        }
-
-
-        if (TotemQuant > 0)
-        {
-            Core.FarmingLogger("Totem of Nulgath", TotemQuant);
-            while (!Bot.ShouldExit && !Core.CheckInventory("Totem of Nulgath", TotemQuant))
-            {
-                Core.EnsureAccept(4777);
-                Nation.Supplies("Unidentified 3");
-                Nation.FarmBloodGem(2);
-                Nation.FarmUni10(30);
-                Core.EnsureComplete(4777, 5357);
-                Bot.Wait.ForPickup("Totem of Nulgath");
-            }
-
-            if (Bot.Config!.Get<bool>("BankItems"))
-                Core.ToBank(Nation.bagDrops);
-        }
     }
 }
 

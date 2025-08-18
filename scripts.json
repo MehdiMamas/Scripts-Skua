@@ -474,7 +474,7 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 98317,
+    "size": 101619,
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -5767,7 +5767,7 @@
       "quest"
     ],
     "path": "Nation/Various/TheRefreshingDeal.cs",
-    "size": 2918,
+    "size": 1480,
     "fileName": "TheRefreshingDeal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/TheRefreshingDeal.cs"
   },
