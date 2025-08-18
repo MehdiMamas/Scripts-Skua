@@ -1035,7 +1035,7 @@
       "seasonal"
     ],
     "path": "Dailies/Cryomancer.cs",
-    "size": 1120,
+    "size": 1235,
     "fileName": "Cryomancer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Dailies/Cryomancer.cs"
   },
@@ -2405,7 +2405,7 @@
       "glacera"
     ],
     "path": "Story/Glacera.cs",
-    "size": 12704,
+    "size": 12829,
     "fileName": "Glacera.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Glacera.cs"
   },
