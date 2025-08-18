@@ -58,7 +58,7 @@ public class SwindlesReturnPolicy
                 return;
             }
             Core.Logger($"Item Selected: {item.Name}[{item.ID}]");
-            Nation.SwindleReturn(item.Name, item.MaxStack); // Fix the argument here
+            Nation.SwindleReturn(item.Name, item.MaxStack);
         }
         else
         {
@@ -82,7 +82,7 @@ public class SwindlesReturnPolicy
                 if (Core.CheckInventory(thing.Name, thing.MaxStack))
                     continue;
 
-                Nation.SwindleReturn(thing.Name, thing.MaxStack); // Fix the argument here
+                Nation.SwindleReturn(thing.Name, thing.MaxStack);
             }
         }
 
