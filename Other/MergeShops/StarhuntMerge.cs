@@ -1,7 +1,7 @@
 /*
 name: Starhunt Merge
 description: This bot will farm the items belonging to the selected mode for the Starhunt Merge [2598] in /ariagreenhouse
-tags: starhunt, merge, ariagreenhouse, astromancers, apprentice, astro, gift, i, ii, astral, weapon, fireworks, qipao, elegant, festival, star, crimson, staredge, suhail, staredges, novablade, persei, novablades, spectral, saiph, alnitak
+tags: starhunt, merge, ariagreenhouse, astromancers, apprentice, morph, astral, compass, fireworks, qipao, star, festival, weapon, gift, i, ii, crimson, staredge, suhail, staredges, novablade, persei, novablades, spectral, saiph, alnitak, celestial
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
@@ -92,12 +92,12 @@ public class StarhuntMerge
     public List<IOption> Select = new()
     {
         new Option<bool>("94555", "Astromancer's Apprentice", "Mode: [select] only\nShould the bot buy \"Astromancer's Apprentice\" ?", false),
-        new Option<bool>("94556", "Astro Apprentice Helm Gift I", "Mode: [select] only\nShould the bot buy \"Astro Apprentice Helm Gift I\" ?", false),
-        new Option<bool>("94557", "Astro Apprentice Helm Gift II", "Mode: [select] only\nShould the bot buy \"Astro Apprentice Helm Gift II\" ?", false),
-        new Option<bool>("94558", "Astral Apprentice Weapon Gift", "Mode: [select] only\nShould the bot buy \"Astral Apprentice Weapon Gift\" ?", false),
+        new Option<bool>("94556", "Astromancer's Apprentice Morph", "Mode: [select] only\nShould the bot buy \"Astromancer's Apprentice Morph\" ?", false),
+        new Option<bool>("94557", "Astromancer's Apprentice Visage", "Mode: [select] only\nShould the bot buy \"Astromancer's Apprentice Visage\" ?", false),
+        new Option<bool>("94558", "Astral Apprentice Compass", "Mode: [select] only\nShould the bot buy \"Astral Apprentice Compass\" ?", false),
         new Option<bool>("94559", "Fireworks Qipao", "Mode: [select] only\nShould the bot buy \"Fireworks Qipao\" ?", false),
-        new Option<bool>("94560", "Elegant Festival Helm Gift I", "Mode: [select] only\nShould the bot buy \"Elegant Festival Helm Gift I\" ?", false),
-        new Option<bool>("94561", "Elegant Festival Helm Gift II", "Mode: [select] only\nShould the bot buy \"Elegant Festival Helm Gift II\" ?", false),
+        new Option<bool>("94560", "Astromancer's Apprentice Hair", "Mode: [select] only\nShould the bot buy \"Astromancer's Apprentice Hair\" ?", false),
+        new Option<bool>("94561", "Astromancer's Apprentice Locks", "Mode: [select] only\nShould the bot buy \"Astromancer's Apprentice Locks\" ?", false),
         new Option<bool>("94562", "Star Festival Weapon Gift I", "Mode: [select] only\nShould the bot buy \"Star Festival Weapon Gift I\" ?", false),
         new Option<bool>("94563", "Star Festival Weapon Gift II", "Mode: [select] only\nShould the bot buy \"Star Festival Weapon Gift II\" ?", false),
         new Option<bool>("91467", "Crimson StarEdge Suhail", "Mode: [select] only\nShould the bot buy \"Crimson StarEdge Suhail\" ?", false),
@@ -108,5 +108,6 @@ public class StarhuntMerge
         new Option<bool>("91481", "Spectral StarEdges Saiph", "Mode: [select] only\nShould the bot buy \"Spectral StarEdges Saiph\" ?", false),
         new Option<bool>("91482", "Spectral NovaBlade Alnitak", "Mode: [select] only\nShould the bot buy \"Spectral NovaBlade Alnitak\" ?", false),
         new Option<bool>("91483", "Spectral NovaBlades Alnitak", "Mode: [select] only\nShould the bot buy \"Spectral NovaBlades Alnitak\" ?", false),
+        new Option<bool>("94574", "Celestial Qipao", "Mode: [select] only\nShould the bot buy \"Celestial Qipao\" ?", false),
    };
 }
