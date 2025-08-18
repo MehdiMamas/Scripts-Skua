@@ -45,6 +45,12 @@ public class TarosManslayer
         }
         else
         {
+            if (!Bot.Player.IsMember)
+            {
+                Core.Logger("Membership REQUIRED for this quest ( \"The Guardian Taro Blademaster\")");
+                return;
+            }
+
             Farm.GoodREP();
             PCoD.GetPCoD();
 
