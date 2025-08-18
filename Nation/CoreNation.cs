@@ -1710,11 +1710,14 @@ public class CoreNation
             Core.HuntMonsterQuest(questId, "lair", monsterName);
         }
     }
-
     /// <summary>
-    /// Farms Totem of Nulgath with the best method available.
+    /// Farms the "Totem of Nulgath" using the most efficient method available:
+    /// 1. Checks if the desired quantity is already in inventory.
+    /// 2. Uses CragName method if available.
+    /// 3. Uses Nulgath's Birthday Gift / Bounty Hunter's Drone Pet method if available.
+    /// 4. Falls back to Taro's Manslayer and Essence method if no pets are owned.
     /// </summary>
-    /// <param name="quant">Desired quantity, 100 = max stack.</param>
+    /// <param name="quant">Desired quantity of Totems of Nulgath (default: 100, max stack).</param>
     public void FarmTotemofNulgath(int quant = 100)
     {
         // Check if Totem of Nulgath is already in inventory
@@ -1790,6 +1793,20 @@ public class CoreNation
         Core.CancelRegisteredQuests();
     }
 
+    /// <summary>
+    /// Farms Gems of Nulgath and/or Totems of Nulgath via the CragName method (Quest 4777).
+    /// </summary>
+    /// <param name="GemQuant">Number of Gems of Nulgath to farm (0 = skip).</param>
+    /// <param name="TotemQuant">Number of Totems of Nulgath to farm (0 = skip).</param>
+    /// <remarks>
+    /// Requirements: Player must own the CragName item.  
+    /// Steps:  
+    /// 1. Ensure Dragon Slayer reward and Purified Claymore of Destiny are obtained.  
+    /// 2. Add quest drops to pick-up list.  
+    /// 3. For Gems: accept quest 4777, supply required items, farm Blood Gems and Unidentified 10, complete quest with Gem reward.  
+    /// 4. For Totems: accept quest 4777, supply required items, farm Blood Gems and Unidentified 10, complete quest with Totem reward.  
+    /// Repeats each step until the desired quantity is reached or the bot exits.
+    /// </remarks>
     public void Deal(int GemQuant = 0, int TotemQuant = 0)
     {
         if (!Core.CheckInventory(CragName))
