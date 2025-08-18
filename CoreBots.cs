@@ -2625,8 +2625,9 @@ public class CoreBots
 
                 if (availableReward != null && itemID != -1 && !Bot.Drops.ToPickupIDs.Contains(itemID))
                     AddDrop(availableReward.ID);
+                return Bot.Quests.EnsureComplete(questID, itemID);
             }
-            return Bot.Quests.EnsureComplete(questID, itemID);
+            else return Bot.Quests.EnsureComplete(questID, itemID);
 
         }
         else
@@ -3420,7 +3421,7 @@ public class CoreBots
             Bot.Map.Jump(cell, pad);
             Bot.Wait.ForCellChange(cell);
         }
-        
+
         Bot.Player.SetSpawnPoint();
 
         if (item != null && !isTemp)
