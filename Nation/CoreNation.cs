@@ -1004,7 +1004,8 @@ public class CoreNation
             {
                 Core.EnsureComplete(7551, rewardID);
                 Bot.Wait.ForQuestComplete(7551);
-                Bot.Wait.ForPickup(reward.ID);
+                if (reward != null)
+                    Bot.Wait.ForPickup(reward.ID);
 
             }
             else
