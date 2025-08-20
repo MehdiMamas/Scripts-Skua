@@ -180,8 +180,15 @@ public class Lich
         // Nictos Necronomicon
         if (!Core.CheckInventory("Nicto's Necronomicon"))
         {
-            ColossalWaresMerge.BuyAllMerge("Nicto's Necronomicon");
-            Bot.Wait.ForPickup("Nicto's Necronomicon");
+            if (Core.isSeasonalMapActive("moreskulls"))
+            {
+                ColossalWaresMerge.BuyAllMerge("Nicto's Necronomicon");
+                Bot.Wait.ForPickup("Nicto's Necronomicon");
+            }
+            else
+            {
+                Core.Logger("Cannot get Nicto's Necronomicon: 'moreskulls' not active and not a member.");
+            }
         }
 
         // Klaatu's Necronomicon

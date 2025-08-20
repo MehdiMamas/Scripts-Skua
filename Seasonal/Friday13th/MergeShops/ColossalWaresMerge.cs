@@ -45,6 +45,12 @@ public class ColossalWaresMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        if (!Core.isSeasonalMapActive("moreskulls"))
+        {
+            Core.Logger("The seasonal map 'moreskulls' is not active.");
+            return;
+        }
+
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("moreskulls", 2591, findIngredients, buyOnlyThis, buyMode: buyMode);
 
