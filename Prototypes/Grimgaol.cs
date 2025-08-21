@@ -221,7 +221,7 @@ public class Grimgaol
             {
                 Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol-100000%");
 
-                while (!Bot.ShouldExit && Bot.Map.Name != "grimgaol") { Bot.Sleep(100); }
+                while (!Bot.ShouldExit && Bot.Map.Name != "grimgaol") { Core.Sleep(100); }
 
                 // Incase we're in the Cutscene cell
                 if (Bot.Player.Cell != "Enter")
@@ -349,6 +349,7 @@ public class Grimgaol
             Bot.Wait.ForCellChange("Enter");
         }
 
+        runTimer.Restart();
         // Stop usage of AdvSkills after story & prereqs. as we'll use our own here.
         while (!Bot.ShouldExit && !Bot.TempInv.Contains("Grimskull's Gaol Cleared"))
         {
@@ -359,7 +360,6 @@ public class Grimgaol
                 {
                     case "Enter":
                         // Start runtime here
-                        runTimer.Restart();
                         Enter();
                         if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"Enter\" Done in: {runTimer.Elapsed}");
@@ -547,7 +547,7 @@ public class Grimgaol
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
-                Bot.Sleep(500);
+                Core.Sleep(500);
                 if (Bot.Player.Alive)
                 {
                     skillIndex = 0;
@@ -568,9 +568,9 @@ public class Grimgaol
             {
                 Bot.Combat.CancelAutoAttack();
                 Bot.Combat.StopAttacking = true;
-                Bot.Sleep(500);
+                Core.Sleep(500);
                 Bot.Wait.ForTrue(() => Bot.Target.HasActiveAura("Retaliate"), 20);
-                Bot.Sleep(Bot.Target.Auras.FirstOrDefault(a => a.Name == "Retaliate")?.SecondsRemaining() ?? 2500);
+                Core.Sleep(Bot.Target.Auras.FirstOrDefault(a => a.Name == "Retaliate")?.SecondsRemaining() ?? 2500);
                 Bot.Combat.StopAttacking = false;
                 skillIndex = 0;
                 Bot.Skills.Start();
@@ -634,7 +634,7 @@ public class Grimgaol
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
-                Bot.Sleep(500);
+                Core.Sleep(500);
                 if (Bot.Player.Alive)
                 {
                     skillIndex = 0;
@@ -700,7 +700,7 @@ public class Grimgaol
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
-                Bot.Sleep(500);
+                Core.Sleep(500);
                 if (Bot.Player.Alive)
                 {
                     skillIndex = 0;
@@ -761,7 +761,7 @@ public class Grimgaol
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
-                Bot.Sleep(500);
+                Core.Sleep(500);
                 if (Bot.Player.Alive)
                 {
                     skillIndex = 0;
@@ -826,7 +826,7 @@ public class Grimgaol
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
-                Bot.Sleep(500);
+                Core.Sleep(500);
                 if (Bot.Player.Alive)
                 {
                     skillIndex = 0;
@@ -900,7 +900,7 @@ public class Grimgaol
         {
             if (!Bot.Player.Alive)
             {
-                Bot.Sleep(500);
+                Core.Sleep(500);
                 if (Bot.Player.Alive)
                     skillIndex = 0;
                 continue;
@@ -930,7 +930,7 @@ public class Grimgaol
                 skillIndex = (skillIndex + 1) % skillList.Length;
             }
 
-            Bot.Sleep(100); // prevent skill spam
+            Core.Sleep(100); // prevent skill spam
         }
     }
     #endregion
@@ -1004,7 +1004,7 @@ public class Grimgaol
                     while (!Bot.ShouldExit && !Bot.Player.Alive)
                     {
                         DeathCount++;
-                        Bot.Sleep(500);
+                        Core.Sleep(500);
                         if (Bot.Player.Alive)
                         {
                             skillIndex = 0;
@@ -1052,7 +1052,7 @@ public class Grimgaol
                     return;
 
                 Bot.Combat.Attack(mon.MapID);
-                Bot.Sleep(500);
+                Core.Sleep(500);
                 if (Bot.Player.HasTarget)
                 {
                     Bot.Skills.UseSkill(skillList[skillIndex]);
@@ -1104,7 +1104,7 @@ public class Grimgaol
                 {
                     while (!Bot.ShouldExit && !Bot.Player.Alive)
                     {
-                        Bot.Sleep(100);
+                        Core.Sleep(100);
                         if (Bot.Player.Alive)
                         {
                             skillIndex = 0;
@@ -1151,7 +1151,7 @@ public class Grimgaol
 
         // Handle special IoDA case
         if (itemName == "Void Highlord")
-        // Check if VHL (IoDA) is owned, use that if its rank 10, else normal vhl
+            // Check if VHL (IoDA) is owned, use that if its rank 10, else normal vhl
             itemName = (Core.CheckInventory("Void HighLord (IoDA)") && Core.CheckClassRank(false, "Void HighLord (IoDA)") == 10) ? "Void HighLord (IoDA)" : "Void Highlord";
 
         // Use this to unbank if we own it.

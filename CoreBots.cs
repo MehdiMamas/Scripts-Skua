@@ -5480,7 +5480,7 @@ public class CoreBots
 
     /// <summary>
     /// Pauses execution for a specified duration in milliseconds.
-    /// If the provided duration is -1, it uses the default action delay of 750ms.
+    /// If the provided duration is -1, 0, or negative, it uses the default action delay.
     /// </summary>
     /// <param name="ms">The duration to pause execution in milliseconds. Defaults to -1.</param>
     public void Sleep(int ms = -1)
@@ -5490,8 +5490,14 @@ public class CoreBots
             Bot.Stop(true);
             return;
         }
-        Bot.Sleep((ms == -1) ? ActionDelay : ms);
+
+        // use ActionDelay if ms is -1, 0, or negative
+        int delay = (ms <= 0) ? ActionDelay : ms;
+
+        Thread.Sleep(delay);
     }
+
+
 
 
     // /// <summary>
