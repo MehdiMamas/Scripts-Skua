@@ -505,7 +505,7 @@ public class CoreStory
 
         if (whereToGet.All(x => x.desiredQuestReward.Count == 0) || whereToGet.All(x => x.requiredQuestReward?.Count == 0))
         {
-            Core.Logger("None of Quest IDs filled in are supposed to be used in the LegacyQuestManager, " +
+            Core.Logger("None of the Quest IDs filled in are supposed to be used in the LegacyQuestManager, " +
                         "please report to the bot makers that they must make this story line in the normal way.",
                         messageBox: true);
             return;
