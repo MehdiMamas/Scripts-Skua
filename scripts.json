@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 376907,
+    "size": 377002,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 36247,
+    "size": 36251,
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreStory.cs"
   },
@@ -763,7 +763,7 @@
       "beta"
     ],
     "path": "Prototypes/Grimgaol.cs",
-    "size": 51987,
+    "size": 51988,
     "fileName": "Grimgaol.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
