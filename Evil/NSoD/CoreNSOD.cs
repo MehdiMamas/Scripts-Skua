@@ -139,19 +139,18 @@ public class CoreNSOD
         if (Core.CheckInventory("Void Aura", quant))
             return;
 
-        if (Bot.Config!.Get<bool>("GetSDKA") && Core.IsMember)
-        {
-            Core.Logger("Player is a Member, attempting to get SDKA first");
-            if (!Core.CheckInventory("Sepulchure's DoomKnight Armor"))
-                SDKA.DoAll();
-            else
-                Core.Logger("Player already has SDKA, continuing with Void Aura farm");
-        }
+        if (Bot.Config!.Get<bool>("GetSDKA") && Bot.Player.IsMember && !Core.CheckInventory(14474 /* Sepulchure's DoomKnight Armor */))
+            SDKA.DoAll();
 
-        Core.FarmingLogger("Void Aura", quant);
         Core.AddDrop("Void Aura");
-        CommandingShadowEssences(quant);
-        GatheringUnstableEssences(quant);
+        Core.FarmingLogger("Void Aura", quant);
+
+        if (Core.CheckInventory(14474 /* Sepulchure's DoomKnight Armor */))
+            CommandingShadowEssences(quant);
+
+        if (Bot.Player.IsMember)
+            GatheringUnstableEssences(quant);
+
         RetrieveVoidAuras(quant);
     }
 
@@ -171,6 +170,7 @@ public class CoreNSOD
             Core.EquipClass(ClassType.Farm);
             Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Empowered Essence", 50, false);
             Bot.Wait.ForPickup("Void Aura");
+            Core.FarmingLogger("Void Aura", quant);
         }
         Core.AbandonQuest(4439);
     }
@@ -191,7 +191,7 @@ public class CoreNSOD
             Core.HuntMonster("doomwar", "Zombie King Alteon", "Transposed Essence", 1, false);
 
             Bot.Wait.ForPickup("Void Aura");
-            Core.Logger($"Void Auras: ({Bot.Inventory.GetQuantity("Void Aura")}/{quant})");
+            Core.FarmingLogger("Void Aura", quant);
         }
         Core.AbandonQuest(4438);
     }
@@ -237,6 +237,7 @@ public class CoreNSOD
 
             Core.EnsureCompleteMulti(4432);
             Bot.Wait.ForPickup("Void Aura");
+            Core.FarmingLogger("Void Aura", quant);
         }
     }
 
