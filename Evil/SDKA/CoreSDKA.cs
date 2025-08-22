@@ -94,7 +94,7 @@ public class CoreSDKA
     {
         if (Core.CheckInventory("Sepulchure's DoomKnight Armor") || !Core.IsMember)
         {
-            Core.Logger(Core.CheckInventory("Sepulchure's DoomKnight Armor") ? "Player already owns the armor" : "Player is non-Member, membership is required for SDKA");
+            Core.Logger(Core.CheckInventory("Sepulchure's DoomKnight Armor") ? "Player already owns SDKA" : "Player is non-Member, membership is required for SDKA");
             return;
         }
 
