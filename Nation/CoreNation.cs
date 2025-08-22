@@ -773,6 +773,18 @@ public class CoreNation
     /// <param name="ReturnItem">Item to return, if any.</param>
     public void Supplies(string? item = null, int quant = 1, bool UltraAlteon = false, bool KeepVoucher = false, bool AssistantDuring = false, string? ReturnItem = null)
     {
+        // Case 1: item specified and already in inventory
+        if (item != null && Core.CheckInventory(item, quant))
+            return;
+
+        // Case 2: no item specified, ensure all bagDrops[..^11] are at MaxStack
+        var quest = Core.InitializeWithRetries(() => Core.EnsureLoad(2857));
+        if (item == null && quest?.Rewards != null
+            && bagDrops[..^11].All(drop =>
+                quest.Rewards.FirstOrDefault(r => r.Name == drop) is { } reward
+                && Core.CheckInventory(drop, reward.MaxStack)))
+            return;
+
         //warning for idiots that wont read it
         Core.Logger("if Swindles is enabled, it will only accept the quest when it has the required Unis it needs");
 
@@ -889,6 +901,9 @@ public class CoreNation
                                 }
                             }
                             DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
+                            if (returnPolicyDuringSupplies && (item == "Diamond of Nulgath" || item == null) && !Core.CheckInventory("Diamond of Nulgath", 1000))
+                                CragsThirst();
+
                             if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Item.Name != "Voucher of Nulgath (non-mem)" && Core.CheckInventory("Essence of Nulgath", 60))
                                 Core.EnsureCompleteMulti(4778);
                         }
@@ -1622,6 +1637,15 @@ public class CoreNation
 
         Core.AddDrop("Diamond of Nulgath");
 
+        // This Quest is more of an additive Bonus whislt doing supplies
+        while (!Bot.ShouldExit && !Core.CheckInventory("Diamond of Nulgath", quant)
+        && Core.CheckInventory(CragName) && Core.CheckInventory(Uni(10), 100))
+        {
+            CragsThirst(quant);
+            if (Core.CheckInventory("Diamond of Nulgath", quant))
+                return;
+        }
+
         VoidKnightSwordQuest("Diamond of Nulgath", quant);
         Supplies("Diamond of Nulgath", quant);
     }
@@ -1887,6 +1911,22 @@ public class CoreNation
         }
 
         Core.CancelRegisteredQuests();
+    }
+
+    public void CragsThirst(int quant = 1000)
+    {
+        if (!Core.CheckInventory(CragName) || Core.CheckInventory("Diamond of Nulgath", quant) || !Core.CheckInventory(Uni(10), 100))
+            return;
+
+        while (!Bot.ShouldExit && Core.CheckInventory(Uni(10), 100) && !Core.CheckInventory("Diamond of Nulgath", quant))
+        {
+            Core.ResetQuest(600);
+            Core.EnsureAccept(600);
+            Core.DarkMakaiItem("Dark Makai Rune");
+            Core.EnsureComplete(600);
+            Bot.Wait.ForQuestComplete(600);
+            Bot.Wait.ForPickup("Diamond of Nulgath");
+        }
     }
 
     /// <summary>
