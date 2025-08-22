@@ -3818,8 +3818,9 @@ public class CoreBots
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
-        Join(map, publicRoom: publicRoom);
-        Bot.Wait.ForMapLoad(map);
+        // Join the specified map
+        if (Bot.Map.Name != map)
+            Join(map, publicRoom: publicRoom);
 
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
@@ -3935,7 +3936,9 @@ public class CoreBots
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
-        Join(map, publicRoom: publicRoom);
+        // Join the specified map
+        if (Bot.Map.Name != map)
+            Join(map, publicRoom: publicRoom);
 
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
