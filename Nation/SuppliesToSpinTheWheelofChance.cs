@@ -40,16 +40,18 @@ public class SuppliesToSpinTheWheelofChance
     }
 
     public void DoSupplies()
-    {
-        // Set Config Options & Convert Enum into string for display
-        string? SwindlesReturnItem = Bot.Config!.Get<SwindlesReturnItem>("SwindlesReturnItem").ToString().Replace('_', ' ');
-        string? SuppliesItem = Bot.Config!.Get<SuppliesReward>("SuppliesReward").ToString().Replace('_', ' ');
+    {// Set Config Options & Convert Enum into string for display
+        string? SwindlesReturnItem = Bot.Config!.Get<SwindlesReturnItem>("SwindlesReturnItem")
+            .ToString()?.Replace('_', ' ');
+        string? SuppliesItem = Bot.Config!.Get<SuppliesReward>("SuppliesReward")
+            .ToString()?.Replace('_', ' ');
 
-        // Check to see if we're maxing 1 or all items for reward sets.
+        // Normalize "All" into null to mean "max everything"
         SuppliesItem = SuppliesItem == "All" ? null : SuppliesItem;
         SwindlesReturnItem = SwindlesReturnItem == "All" ? null : SwindlesReturnItem;
+
     Retry2857:
-        // Load quests
+        // Load quest 2857 (Supplies)
         Quest? Supplies = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2857));
         if (Supplies == null)
         {
@@ -59,6 +61,7 @@ public class SuppliesToSpinTheWheelofChance
         }
 
     Retry7551:
+        // Load quest 7551 (Swindle’s Return)
         Quest? SwindlesReturn = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
         if (SwindlesReturn == null)
         {
@@ -67,28 +70,40 @@ public class SuppliesToSpinTheWheelofChance
             goto Retry7551;
         }
 
-        // Create a list to hold combined rewards from Supplies and SwindlesReturn
+        // --- Build combined rewards list ---
         List<ItemBase> combinedRewards = new();
 
-        // Add unique items from Supplies that are valid rewards
+        // Add unique Supplies rewards
         combinedRewards.AddRange(Supplies.Rewards
             .Where(r => r != null && Nation.SuppliesRewards.Contains(r.Name))
-            .DistinctBy(r => r.ID)); // Remove duplicates based on item ID
+            .DistinctBy(r => r.ID));
 
-        // Add unique items from SwindlesReturn that are valid rewards
+        // Add unique SwindlesReturn rewards
         combinedRewards.AddRange(SwindlesReturn.Rewards
             .Where(r => r != null && Nation.SwindlesReturnRewards.Contains(r.Name))
-            .DistinctBy(r => r.ID)); // Remove duplicates based on item ID
+            .DistinctBy(r => r.ID));
 
-        // Remove duplicates from combinedRewards based on item ID
-        combinedRewards = combinedRewards.DistinctBy(r => r.ID).ToList();
+        // If a specific Supplies reward was chosen, filter down to it
+        if (SuppliesItem != null)
+        {
+            var chosen = Supplies.Rewards?.FirstOrDefault(r => r.Name == SuppliesItem);
+            if (chosen != null)
+                combinedRewards = new List<ItemBase> { chosen };
+        }
+        else
+        {
+            // Otherwise, ensure no duplicates remain
+            combinedRewards = combinedRewards.DistinctBy(r => r.ID).ToList();
+        }
 
-        // Log selected rewards and member status
-        Core.Logger($"Rewards Selected: \"{string.Join("\", \"", combinedRewards.Select(r => r.Name))}\"\n\n" +
-                     $"Maxing Supplies? {(SuppliesItem == null ? "Yes" : "No")}\n" +
-                     $"Maxing Swindles? {(SwindlesReturnItem == null ? "Yes" : "No")}\n",
-                     "STStW Config");
+        // Log what we’re working on
+        Core.Logger(
+            $"Rewards Selected: \"{string.Join("\", \"", combinedRewards.Select(r => r.Name))}\"\n\n" +
+            $"Maxing Supplies? {(SuppliesItem == null ? "Yes" : "No")}\n" +
+            $"Maxing Swindles? {(SwindlesReturnItem == null ? "Yes" : "No")}\n",
+            "STStW Config");
 
+        // Process rewards
         foreach (ItemBase item in combinedRewards)
         {
             // Skip if the item is already in the inventory and we have the max stack

@@ -901,8 +901,6 @@ public class CoreNation
                                 }
                             }
                             DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
-                            if (returnPolicyDuringSupplies && (item == "Diamond of Nulgath" || item == null) && !Core.CheckInventory("Diamond of Nulgath", 1000))
-                                CragsThirst();
 
                             if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Item.Name != "Voucher of Nulgath (non-mem)" && Core.CheckInventory("Essence of Nulgath", 60))
                                 Core.EnsureCompleteMulti(4778);
@@ -1349,6 +1347,8 @@ public class CoreNation
                 }
 
                 DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
+                if (returnPolicyDuringSupplies && (item == "Diamond of Nulgath" || item == null) && !Core.CheckInventory("Diamond of Nulgath", 1000))
+                    CragsThirst();
 
                 if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
                     Core.EnsureCompleteMulti(4778);
@@ -1640,11 +1640,7 @@ public class CoreNation
         // This Quest is more of an additive Bonus whislt doing supplies
         while (!Bot.ShouldExit && !Core.CheckInventory("Diamond of Nulgath", quant)
         && Core.CheckInventory(CragName) && Core.CheckInventory(Uni(10), 100))
-        {
             CragsThirst(quant);
-            if (Core.CheckInventory("Diamond of Nulgath", quant))
-                return;
-        }
 
         VoidKnightSwordQuest("Diamond of Nulgath", quant);
         Supplies("Diamond of Nulgath", quant);
@@ -1917,6 +1913,8 @@ public class CoreNation
     {
         if (!Core.CheckInventory(CragName) || Core.CheckInventory("Diamond of Nulgath", quant) || !Core.CheckInventory(Uni(10), 100))
             return;
+
+        Bot.Log("Doing crags thirst");
 
         while (!Bot.ShouldExit && Core.CheckInventory(Uni(10), 100) && !Core.CheckInventory("Diamond of Nulgath", quant))
         {
