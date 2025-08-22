@@ -447,8 +447,8 @@ public class CoreLegion
             (9646, 9645), // Hollowborn Paragon Quest Pet [84899]
             (9663, 9662), // Hollowborn Paragon Quest Pet [84965]
             (7073, 7072), // Paragon Ringbearer [49926]
-            (6750, 6754), // Paragon Fiend Quest Pet [47578]
-            (6756, 6749), // Paragon Fiend Quest Pet [47614]
+            (6750, 6749), // Paragon Fiend Quest Pet [47578]
+            (6756, 6754), // Paragon Fiend Quest Pet [47614]
             (5756, 5754), // Shogun Dage Pet [38792]
             (5755, 5753)  // Shogun Paragon Pet [38621]
         };
