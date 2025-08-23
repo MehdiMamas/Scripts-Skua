@@ -2729,7 +2729,7 @@ public class CoreFarms
         Core.ToggleAggro(true);
     }
 
-    void RunDeathPitBrawl(string item = "Death Pit Token", int quant = 1, int rank = 10, bool canSoloBoss = true)
+    void RunDeathPitBrawl(string item = null, int quant = 1, int rank = 10, bool canSoloBoss = true)
     {
         foreach (int QID in new[] { 5153, 5156, 5157, 5165 })
         {
@@ -2757,12 +2757,18 @@ public class CoreFarms
         }
 
         Core.Logger($"Kill Additional mobs (more trophies - slower depending on gear): {KillAds}");
+        Core.FarmingLogger(item, quant, "RunDeathPitBrawl");
 
+        if (item == (new[] { "Brawler Token", "Restorer Token" }).Any())
+        {
+            KillAds = true;
+        }
+        
         int ExitAttempt = 0;
         int Death = 0;
 
     Start:
-        while (!Bot.ShouldExit && !Core.CheckInventory(item, quant) || FactionRank("Death Pit Brawl") < rank)
+        while (!Bot.ShouldExit && ((item != null && !Core.CheckInventory(item, quant)) || (item == null && FactionRank("Death Pit Brawl") < rank)))
         {
             while (!Bot.ShouldExit && Bot.Map.Name != "deathpitbrawl")
             {
@@ -2884,9 +2890,7 @@ public class CoreFarms
         if (Core.CheckInventory(item, quant))
             return;
 
-        Core.FarmingLogger(item, quant);
-        while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
-            RunDeathPitBrawl(item, quant, 0);
+        RunDeathPitBrawl(item, quant, 1);
     }
 
     public void FaerieCourtREP(int rank = 10) // Seasonal

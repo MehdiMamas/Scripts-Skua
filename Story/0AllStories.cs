@@ -650,7 +650,8 @@ public class AllStories
         #endregion
 
         #region ToD
-        TOD.CompleteToD();
+        // Skip rep quests
+        TOD.CompleteToD(false);
         Core.Logger($"Saga: Throne of Darkness - Complete");
         #endregion
 
