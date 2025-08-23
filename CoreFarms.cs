@@ -2759,8 +2759,7 @@ public class CoreFarms
         Core.Logger($"Kill Additional mobs (more trophies - slower depending on gear): {KillAds}");
         Core.FarmingLogger(item, quant, "RunDeathPitBrawl");
 
-        if (new[] { "Brawler Token", "Restorer Token" }.Contains(item))
-            KillAds = true;
+        KillAds = new[] { "Brawler Token", "Restorer Token" }.Contains(item!);
 
         int ExitAttempt = 0;
         int Death = 0;
