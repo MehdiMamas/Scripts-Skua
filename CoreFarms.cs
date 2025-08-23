@@ -2729,7 +2729,7 @@ public class CoreFarms
         Core.ToggleAggro(true);
     }
 
-    void RunDeathPitBrawl(string item = null, int quant = 1, int rank = 10, bool canSoloBoss = true)
+    void RunDeathPitBrawl(string? item = null, int quant = 1, int rank = 10, bool canSoloBoss = true)
     {
         foreach (int QID in new[] { 5153, 5156, 5157, 5165 })
         {
@@ -2828,11 +2828,14 @@ public class CoreFarms
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
-            Bot.Wait.ForDrop(item, 40);
-            Core.Sleep(1500);
-            Bot.Wait.ForPickup(item, 40);
+
             if (!string.IsNullOrEmpty(item))
+            {
+                Bot.Wait.ForDrop(item, 40);
+                Core.Sleep(1500);
+                Bot.Wait.ForPickup(item, 40);
                 Core.FarmingLogger(item, quant);
+            }
             Core.Sleep(1500);
             goto Exit;
 
