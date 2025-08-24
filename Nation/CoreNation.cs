@@ -216,12 +216,13 @@ public class CoreNation
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(Item.ID, Item.MaxStack))
                 {
-                    if (!Core.CheckInventory("Slugfit Horn", 5) || !Core.CheckInventory("Cyclops Horn", 3))
+                    if (!Core.CheckInventory("Slugfit Horn", 10) || !Core.CheckInventory("Cyclops Horn", 6))
                     {
-                        Core.JoinSWF("mobius", "ChiralValley/town-Mobius-21Feb14.swf");
-                        Core.Jump("Slugfit", "Bottom");
+                        Core.JoinSWF("mobius", "ChiralValley/town-Mobius-21Feb14.swf", "Slugfit", "Bottom");
+                        if (Bot.Player.Cell != "Slugfit")
+                            Core.Jump("Slugfit", "Bottom");
 
-                        foreach ((string mobName, string itemName, int quantity) in new[] { ("Slugfit", "Slugfit Horn", 5), ("Cyclops Warlord", "Cyclops Horn", 3) })
+                        foreach ((string mobName, string itemName, int quantity) in new[] { ("Slugfit", "Slugfit Horn", 10), ("Cyclops Warlord", "Cyclops Horn", 6) })
                         {
                             if (Core.CheckInventory(itemName, quantity))
                                 continue;
@@ -236,11 +237,11 @@ public class CoreNation
                             }
                             Bot.Wait.ForPickup(itemName);
                         }
-
                     }
-                    Core.KillMonster("tercessuinotlim", "m2", "Top", "Dark Makai", "Makai Fang", 5, log: false);
-                    Core.KillMonster("hydra", "Rune2", "Left", "Fire Imp", "Imp Flame", 3, log: false);
-                    Core.KillMonster("greenguardwest", "West12", "Up", "Big Bad Boar", "Wereboar Tusk", 2, log: false);
+
+                    Core.KillMonster("tercessuinotlim", "m2", "Top", "Dark Makai", "Makai Fang", 10, log: false);
+                    Core.KillMonster("hydra", "Rune2", "Left", "Fire Imp", "Imp Flame", 6, log: false);
+                    Core.KillMonster("greenguardwest", "West12", "Up", "Big Bad Boar", "Wereboar Tusk", 4, log: false);
                 }
             }
             Core.Logger("all items quant maxed");
