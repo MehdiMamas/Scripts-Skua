@@ -287,7 +287,7 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 44931,
+    "size": 45323,
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -13060,7 +13060,7 @@
       "null"
     ],
     "path": "Other/Armor/MalgorsArmorSet.cs",
-    "size": 3089,
+    "size": 3608,
     "fileName": "MalgorsArmorSet.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Armor/MalgorsArmorSet.cs"
   },
