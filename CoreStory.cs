@@ -383,10 +383,9 @@ public class CoreStory
                     }
                     else if (QuestData.Value - currentValue <= 2)
                     {
-                        Core.Logger("A server/client desync happened (common) for your quest progress, the bot will now restart");
                         lastFailedQuestID = QuestData.ID;
                         timeout = 0;
-                        Core.Relogin();
+                        Core.Relogin("A server/client desync happened (common) for your quest progress, the bot will now restart");
                     }
                 }
                 else

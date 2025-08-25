@@ -1426,15 +1426,13 @@ public class CoreBots
                 switch (str)
                 {
                     case "Item is not buyable. Item Inventory full. Re-login to syncronize your real bag slot amount.":
-                        Logger("Inventory de-sync (AE Issue) detected, relogging so the bot can continue");
-                        Relogin();
+                        Relogin("Inventory de-sync (AE Issue) detected, relogging so the bot can continue");
                         if (Bot.Inventory.FreeSlots < 1)
                             Logger($"Inventory Slots: {Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}, Free: {Bot.Inventory.FreeSlots}. Clean your inventory... stopping", stopBot: true);
                         break;
 
                     case "Quest Complete Failed: Missing Required Item":
-                        Logger("Quest de-sync (AE Issue) detected, relogging so the bot can continue");
-                        Relogin();
+                        Relogin("Quest de-sync (AE Issue) detected, relogging so the bot can continue");
                         break;
                 }
             }
