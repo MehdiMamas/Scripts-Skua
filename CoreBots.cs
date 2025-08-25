@@ -5931,14 +5931,16 @@ public class CoreBots
                 }
 
                 // Choose server: Preferred > LastUsed > FirstSuitable > fallback
-                string? serverName = Bot.Options.ReloginServer
+                string serverName = Bot.Options.ReloginServer
                     ?? Bot.Servers.LastName
-                    ?? servers.FirstOrDefault(s =>
-                        s != null &&
-                        s.Name != "Class Test Realm" &&
-                        !s.Upgrade &&
-                        s.PlayerCount < s.MaxPlayers &&
-                        s.Online)?.Name
+                    ?? servers
+                        .FirstOrDefault(s =>
+                            s is Server srv &&
+                            srv.Name != "Class Test Realm" &&
+                            !srv.Upgrade &&
+                            srv.PlayerCount < srv.MaxPlayers &&
+                            srv.Online
+                        )?.Name
                     ?? "Twilly";
 
                 if (string.IsNullOrWhiteSpace(serverName))
