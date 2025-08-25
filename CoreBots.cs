@@ -5890,34 +5890,104 @@ public class CoreBots
     /// <exception cref="InvalidOperationException">
     /// Thrown if server details cannot be fetched or no preferred server is set in <c>Options > Game</c>.
     /// </exception>
-    public void Relogin()
+    public void Relogin(string reason = "")
     {
-        while (true)
+        // Save original options
+        bool origAutoRelog = Bot.Options.AutoRelogin;
+        bool origAutoRelogAny = Bot.Options.AutoReloginAny;
+        bool origRetryRelogin = Bot.Options.RetryRelogin;
+        bool origSafeRelogin = Bot.Options.SafeRelogin;
+
+        try
         {
-            if (Bot.Options.ReloginServer != null && Bot.Servers.EnsureRelogin(Bot.Options.ReloginServer))
-                break;
+            Bot.Log($"Relogin Triggered{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}");
+            Bot.Servers.SetLoginInfo(Bot.Player.Username, Bot.Player.Password);
 
-            var servers = Bot.Servers.GetServers(true).Result;
-            if (servers.Count == 0)
+            int tries = 0;
+
+            while (!Bot.ShouldExit && tries < Bot.Options.ReloginTries)
             {
-                Logger("Failed to relogin: could not fetch server details" + (Bot.Options.ReloginServer == null ? '.' : " or the find the server you've set in Options > Game."), messageBox: true, stopBot: true);
-                return;
+                // Reset options each iteration
+                Bot.Options.AutoRelogin = false;
+                Bot.Options.AutoReloginAny = false;
+                Bot.Options.RetryRelogin = false;
+                Bot.Options.SafeRelogin = false;
+
+                // Logout if already logged in
+                if (Bot.Player.LoggedIn)
+                {
+                    Bot.Servers.Logout();
+                    Bot.Sleep(1500);
+                }
+
+                Bot.Sleep(500);
+
+                // Fetch servers
+                var servers = Bot.Servers.GetServers(true).Result;
+                if (servers.Count == 0)
+                {
+                    Bot.Log("Failed to relogin: could not fetch server details" +
+                            (Bot.Options.ReloginServer == null ? "." : " or the server set in Options > Game."));
+                    Bot.Stop();
+                    return;
+                }
+
+                // Choose server: Preferred > LastUsed > FirstSuitable > fallback
+                string? serverName = Bot.Options.ReloginServer
+                    ?? Bot.Servers.LastName
+                    ?? servers.FirstOrDefault(s =>
+                        s != null &&
+                        s.Name != "Class Test Realm" &&
+                        !s.Upgrade &&
+                        s.PlayerCount < s.MaxPlayers &&
+                        s.Online)?.Name
+                    ?? "Twilly";
+
+                if (string.IsNullOrWhiteSpace(serverName))
+                {
+                    Bot.Log("No suitable server found for relogin.");
+                    Bot.Stop();
+                    return;
+                }
+
+                Bot.Log($"Attempting to relog... Server: {serverName}");
+
+                // Attempt relogin
+                if (Bot.Servers.EnsureRelogin(serverName))
+                {
+                    // If player isn’t fully loaded, retry the outer loop
+                    if (!Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20))
+                    {
+                        tries++;
+                        Bot.Log($"Player loaded unsuccessfully. Retrying relogin (try {tries}/{Bot.Options.ReloginTries})...");
+                        continue;
+                    }
+
+                    // Success: send to house
+                    Bot.Sleep(500);
+                    Bot.Log($"Relogin successful! Sending you to your house to avoid \"Bot movement\" / \"AFK\" behavior in Spawn map: {Bot.Map.Name}.");
+                    Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
+
+                    if (!Bot.Wait.ForMapLoad("house", 20))
+                        Bot.Log("Failed to load house map, staying in current map.");
+
+                    return; // done
+                }
+
+                tries++;
+                Bot.Log($"Relogin unsuccessful (try {tries}/{Bot.Options.ReloginTries}). Retrying...");
             }
 
-            string? serverName = (Bot.Player.IsMember == true)
-                ? servers.FirstOrDefault(s => s.Name != "Class Test Realm" && s.PlayerCount < s.MaxPlayers && s.Online)?.Name
-                : servers.FirstOrDefault(s => s.Name != "Class Test Realm" && !s.Upgrade && s.PlayerCount < s.MaxPlayers && s.Online)?.Name;
-
-            if (serverName == null)
-            {
-                Logger("No suitable server found for relogin.", messageBox: true, stopBot: true);
-                return;
-            }
-
-            if (Bot.Servers.EnsureRelogin(serverName))
-                break;
-
-            Sleep(5000); // Wait 5 seconds before retrying
+            Bot.Log($"Relogin failed after {Bot.Options.ReloginTries} attempts.");
+            Bot.Stop();
+        }
+        finally
+        {
+            // Restore original AutoRelogin options
+            Bot.Options.AutoRelogin = origAutoRelog;
+            Bot.Options.AutoReloginAny = origAutoRelogAny;
+            Bot.Options.RetryRelogin = origRetryRelogin;
+            Bot.Options.SafeRelogin = origSafeRelogin;
         }
     }
 
