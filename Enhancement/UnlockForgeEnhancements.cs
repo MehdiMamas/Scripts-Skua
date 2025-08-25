@@ -693,32 +693,39 @@ public class UnlockForgeEnhancements
             MAS.GetSet();
 
             #region  [Prep] Malgor's ShadowFlame Blade
-            Adv.GearStore();
-            Core.BossClass();
-            SOWM.ElementalCore(20);
-            Adv.GearStore(true);
-            Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("shadowgrove", "Titan Shadow Dragonlord", "ShadowFlame Dragon Blade", isTemp: false);
+            if (!Core.CheckInventory("Malgor's ShadowFlame Blade"))
+            {
+                Adv.GearStore();
+                Core.BossClass();
+                SOWM.ElementalCore(20);
+                Adv.GearStore(true);
+                Core.EquipClass(ClassType.Solo);
+                Core.HuntMonster("shadowgrove", "Titan Shadow Dragonlord", "ShadowFlame Dragon Blade", isTemp: false);
+            }
             #endregion
 
             #region  [Prep] Infernal Flame Pyromancer
-            SoW.Tyndarius();
-
-            Core.AddDrop("Fire Avatar's Favor");
-            Core.EquipClass(ClassType.Farm);
-            Core.FarmingLogger("Fire Avatar's Favor", 75);
-            Core.RegisterQuests(8244);
-            while (!Bot.ShouldExit && !Core.CheckInventory("Fire Avatar's Favor", 75))
+            if (!Core.CheckInventory("Infernal Flame Pyromancer"))
             {
-                Core.KillMonster("fireavatar", "r4", "Right", "*", "Onslaught Defeated", 6);
-                Core.KillMonster("fireavatar", "r6", "Left", "*", "Elemental Defeated", 6);
+                SoW.Tyndarius();
 
-                Bot.Wait.ForPickup("Fire Avatar's Favor");
+                Core.AddDrop("Fire Avatar's Favor");
+                Core.EquipClass(ClassType.Farm);
+                Core.FarmingLogger("Fire Avatar's Favor", 75);
+                Core.RegisterQuests(8244);
+                while (!Bot.ShouldExit && !Core.CheckInventory("Fire Avatar's Favor", 75))
+                {
+                    Core.KillMonster("fireavatar", "r4", "Right", "*", "Onslaught Defeated", 6);
+                    Core.KillMonster("fireavatar", "r6", "Left", "*", "Elemental Defeated", 6);
+
+                    Bot.Wait.ForPickup("Fire Avatar's Favor");
+                }
+                Core.CancelRegisteredQuests();
             }
-            Core.CancelRegisteredQuests();
 
             #endregion
 
+            // Recheck for both items, buy if "UseInsignOnDaunt" is true
             if (Bot.Config.Get<bool>("UseInsignOnDaunt"))
             {
                 //ensure in inv
@@ -741,6 +748,7 @@ public class UnlockForgeEnhancements
 
         }
 
+        // Unlock Dauntless if items are owned.
         if (Core.CheckInventory(DauntlessItems) && Core.CheckInventory("Malgor Insignia", 5) && Core.CheckInventory("Avatar Tyndarius Insignia", 10))
         {
             Core.ChainComplete(9172);
