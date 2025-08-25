@@ -66,16 +66,23 @@ public class MalgorsArmorSet
 
     public void GetSet(bool useSet = true, string[]? item = null)
     {
+        // Determine which items to check: default ArmorSet or provided array
         string[]? items = useSet ? ArmorSet : item;
 
+        if (items == null || items.Length == 0)
+            return; // Nothing to do if no items specified
+
+        // If we already have all items, bank quest drops and exit
         if (Core.CheckInventory(items))
         {
             Core.ToBank(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
             return;
         }
 
+        // Prepare the store for buying/upgrading gear
         Adv.GearStore();
 
+        // Keep attempting to get items until Bot exits or inventory is complete
         while (!Bot.ShouldExit && !Core.CheckInventory(items))
         {
             DeadLinesMerge.BuyAllMerge(buyOnlyThis: "Timestream Ravager");
@@ -84,10 +91,15 @@ public class MalgorsArmorSet
             StreamwarMerge.BuyAllMerge(buyOnlyThis: "Dark Dragon Slayer");
             WorldsCoreMerge.BuyAllMerge(buyOnlyThis: "Mystical Devotee of Mana");
             ManaCradleMerge.BuyAllMerge(buyOnlyThis: "Dragon's Tear");
+
             Adv.BuyItem("alchemyacademy", 395, "Gold Voucher 500k", 30);
+
+            // Ensure quest items are in inventory before completing quest
             Core.Unbank(QuestItems);
             Core.ChainComplete(9127);
         }
+
+        // Return to GearStore and bank quest drops
         Adv.GearStore(true);
         Core.ToBank(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
     }
