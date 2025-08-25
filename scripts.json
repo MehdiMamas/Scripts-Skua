@@ -1941,10 +1941,11 @@
     "tags": [
       "story",
       "quest",
-      "artix-wedding"
+      "artix wedding",
+      "wedding"
     ],
     "path": "Story/ArtixWedding.cs",
-    "size": 3354,
+    "size": 3363,
     "fileName": "ArtixWedding.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ArtixWedding.cs"
   },
