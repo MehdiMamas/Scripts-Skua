@@ -30,8 +30,8 @@ public class MaxItems
         Nation.FarmBloodGem();
         Nation.FarmDarkCrystalShard();
         Nation.FarmDiamondofNulgath();
-        Nation.FarmGemofNulgath();
         Nation.FarmTotemofNulgath();
+        Nation.FarmGemofNulgath();
         Nation.FarmTaintedGem();
         Nation.FarmUni10();
         Nation.FarmUni13();
