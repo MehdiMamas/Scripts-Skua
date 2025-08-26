@@ -1784,7 +1784,7 @@ public class CoreNation
         if (Core.CheckInventory("Totem of Nulgath", quant))
             return;
 
-        if (Core.IsMember && Farm.FactionRank("Good") < 10 && !Core.CheckInventory("Purified Claymore of Destiny"))
+        if (Core.IsMember && !Core.CheckInventory("Purified Claymore of Destiny"))
         {
             Core.Logger("Player is a member, we'll use the better farming method for the \"Taro's Manslayer\", first we need to get some prereqs.");
             Farm.GoodREP();
@@ -1792,13 +1792,13 @@ public class CoreNation
         }
 
         Core.AddDrop("Totem of Nulgath");
-        Core.RegisterQuests(726);
 
         if (!Bot.Quests.HasBeenCompleted(9541))
             Core.ChainComplete(9541);
 
         while (!Bot.ShouldExit && !Core.CheckInventory("Totem of Nulgath", quant))
         {
+            Core.EnsureAccept(726);
             EssenceofNulgath(25);
             if (Core.IsMember && !Core.CheckInventory(538 /* Taro's Manslayer */))
             {
@@ -1812,6 +1812,7 @@ public class CoreNation
             }
             else
                 Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Taro's Manslayer", isTemp: false);
+            Core.EnsureComplete(726);
             Bot.Wait.ForQuestComplete(726);
             Bot.Wait.ForPickup("Totem of Nulgath");
         }
