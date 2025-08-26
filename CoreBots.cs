@@ -2970,67 +2970,78 @@ public class CoreBots
             Bot.Quests.UnregisterQuests(q.ID);
         }
     }
+
+
     /// <summary>
     /// Retrieves the quest reward names for the specified quest IDs.
     /// </summary>
-    /// <param name="questIDs">
-    /// The quest IDs for which to retrieve the reward names.
-    /// </param>
-    /// <returns>
-    /// An array of reward names (strings) for the specified quest IDs.
-    /// </returns>
+    /// <param name="questIDs">The quest IDs for which to retrieve the reward names.</param>
+    /// <returns>An array of reward names (strings) for the specified quest IDs.</returns>
     public string[] QuestRewards(params int[] questIDs)
     {
-        if (questIDs.Length == 0)
+        if (questIDs == null || questIDs.Length == 0)
             return Array.Empty<string>();
+
         List<string> toReturn = new();
+
         if (questIDs.Length <= 15)
         {
             InitializeWithRetries(() => EnsureLoad(questIDs));
-            toReturn.AddRange(Bot.Quests.Tree.Where(q => questIDs.Contains(q.ID)).SelectMany(q => q.Rewards.Select(i => i.Name)));
+            toReturn.AddRange(
+                Bot?.Quests?.Tree?
+                    .Where(q => questIDs.Contains(q.ID))
+                    .SelectMany(q => q?.Rewards?
+                        .Where(r => r != null)
+                        .Select(r => r!.Name)
+                        ?? Enumerable.Empty<string>())
+                ?? Enumerable.Empty<string>()
+            );
         }
         else
         {
             List<Quest>? quests = InitializeWithRetries(() => EnsureLoad(questIDs));
-            if (quests != null)
-            {
-                toReturn.AddRange(quests?.SelectMany(q =>
-                q.Rewards?.Count > 0 ? q.Rewards.Select(i => i.Name) : Enumerable.Empty<string>())
-                ?? Array.Empty<string>());
-
-            }
-            else
+            if (quests == null)
             {
                 Logger($"Failed to load quests with IDs: {string.Join(", ", questIDs)}", "QuestRewards");
                 return Array.Empty<string>();
             }
+
+            toReturn.AddRange(
+                quests
+                    .Where(q => q != null && q.Rewards?.Count > 0)
+                    .SelectMany(q => q!.Rewards!
+                        .Where(r => r != null)
+                        .Select(r => r!.Name))
+            );
         }
+
         return toReturn.ToArray();
     }
 
     /// <summary>
     /// Retrieves the quest reward IDs for the specified quest IDs.
     /// </summary>
-    /// <param name="questIDs">
-    /// The quest IDs for which to retrieve the reward IDs.
-    /// </param>
-    /// <returns>
-    /// An array of reward IDs (integers) for the specified quest IDs.
-    /// </returns>
+    /// <param name="questIDs">The quest IDs for which to retrieve the reward IDs.</param>
+    /// <returns>An array of reward IDs (integers) for the specified quest IDs.</returns>
     public int[] QuestRewardsInt(params int[] questIDs)
     {
-        if (questIDs.Length == 0)
+        if (questIDs == null || questIDs.Length == 0)
             return Array.Empty<int>();
+
         List<int> toReturn = new();
-        foreach (Quest q in EnsureLoad(questIDs))
+
+        foreach (Quest? q in EnsureLoad(questIDs) ?? Enumerable.Empty<Quest>())
         {
-            if (q.Rewards == null || q.Rewards.Count == 0)
+            if (q?.Rewards == null || q.Rewards.Count == 0)
                 continue;
-            toReturn.AddRange(q.Rewards.Select(x => x.ID).ToArray());
+
+            toReturn.AddRange(q.Rewards
+                .Where(r => r != null)
+                .Select(r => r!.ID));
         }
+
         return toReturn.ToArray();
     }
-
 
     /// <summary>
     /// Retrieves the quest requirements for the specified quest IDs, based on the type parameter.
@@ -3038,9 +3049,7 @@ public class CoreBots
     /// <typeparam name="T">
     /// The type of the result. Can be either <see cref="string"/> or <see cref="int"/>.
     /// </typeparam>
-    /// <param name="questIDs">
-    /// The quest IDs for which to retrieve the requirements.
-    /// </param>
+    /// <param name="questIDs">The quest IDs for which to retrieve the requirements.</param>
     /// <returns>
     /// An array of the specified type containing the quest requirements.
     /// For <see cref="string"/>, it returns an array of the requirement names.
@@ -3048,23 +3057,28 @@ public class CoreBots
     /// </returns>
     public T[] QuestRequirements<T>(params int[] questIDs)
     {
-        if (questIDs.Length == 0)
+        if (questIDs == null || questIDs.Length == 0)
             return Array.Empty<T>();
 
         List<T> toReturn = new();
 
-        foreach (Quest q in EnsureLoad(questIDs))
+        foreach (Quest? q in EnsureLoad(questIDs) ?? Enumerable.Empty<Quest>())
         {
-            if (q == null || q.Requirements == null || q.Requirements.Count == 0)
-            {
-                toReturn.Add(typeof(T) == typeof(string) ? (T)(object)string.Empty : (T)(object)default(int));
+            if (q?.Requirements == null || q.Requirements.Count == 0)
                 continue;
-            }
 
             if (typeof(T) == typeof(string))
-                toReturn.AddRange(q.Requirements.Where(x => x != null).Select(x => (T)(object)x.Name));
+            {
+                toReturn.AddRange(q.Requirements
+                    .Where(r => r != null)
+                    .Select(r => (T)(object)r!.Name));
+            }
             else if (typeof(T) == typeof(int))
-                toReturn.AddRange(q.Requirements.Select(x => (T)(object)x.ID));
+            {
+                toReturn.AddRange(q.Requirements
+                    .Where(r => r != null)
+                    .Select(r => (T)(object)r!.ID));
+            }
         }
 
         return toReturn.ToArray();
