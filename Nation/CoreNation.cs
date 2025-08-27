@@ -1439,26 +1439,19 @@ public class CoreNation
     /// </summary>
     /// <param name="item">The item to obtain (default: "Any").</param>
     /// <param name="quant">The quantity of the item to obtain (default: 1).</param>
-    public void VoidKnightSwordQuest(string item = "Any", int quant = 1)
+    public void VoidKnightSwordQuest(string item = null, int quant = 1)
     {
-        // Check if the desired item is already in inventory or if the required items are missing
-        if (Core.CheckInventory(item, quant) || (!Core.CheckInventory(new[] { 38275, 38254 }, any: true)))
+        if (item == null || Core.CheckInventory(item, quant) || (!Core.CheckInventory(new[] { 38275, 38254 }, any: true)))
             return;
 
-        // Add drops based on the provided item or bag drops
         Core.AddDrop(bagDrops);
         Core.AddDrop(item);
 
-        if (item != "Any")
-            Core.FarmingLogger(item, quant);
+        Core.FarmingLogger(item, quant);
 
-        // Register the appropriate quest based on the available items
-        Core.RegisterQuests(Core.CheckInventory(38275) ? 5662 : 5659);
-
-        // Continue the quest until the desired item and quantity are obtained
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
-            // Equip the Solo class and hunt monsters for quest completion
+            Core.EnsureAccept(Core.CheckInventory(38275) ? 5662 : 5659);
             Core.EquipClass(ClassType.Solo);
             Core.JoinSWF("mobius", "ChiralValley/town-Mobius-21Feb14.swf", "Slugfit", "Bottom");
             Core.HuntMonster("mobius", "Slugfit", "Slugfit Horn", 5);
@@ -1466,17 +1459,13 @@ public class CoreNation
 
             // Equip the Farm class and hunt monsters for quest completion
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Makai Fang", 5, log: false);
+            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Makai Fang", 5);
             Core.HuntMonster("hydra", "Fire Imp", "Imp Flame", 3, log: false);
-            Core.HuntMonster("battleunderc", "Crystalized Jellyfish", "Aquamarine of Nulgath", 3, false, log: false);
+            Core.HuntMonster("battleunderc", "Crystalized Jellyfish", "Aquamarine of Nulgath", 3, false);
 
-            Bot.Wait.ForQuestComplete(Core.CheckInventory(38275) ? 5662 : 5659);
-            // Pick up any dropped items
-            if (Bot.Drops.Exists(item))
-                Bot.Wait.ForPickup(item);
+            Core.EnsureComplete(Core.CheckInventory(38275) ? 5662 : 5659);
         }
 
-        // Cancel any registered quests once the desired items are obtained
         Core.CancelRegisteredQuests();
     }
 
@@ -1518,9 +1507,9 @@ public class CoreNation
     public void ContractExchange(ContractExchangeRewards rewardEnum, int quant, bool farmUni13 = true)
     {
         string reward = rewardEnum.ToString().Replace("_", " ");
-        if ((!Core.CheckInventory("Unidentified 13") && !farmUni13) || !Core.CheckInventory("Drudgen the Assistant"))
+        if ((!Core.CheckInventory(Uni(13)) && !farmUni13) || !Core.CheckInventory("Drudgen the Assistant"))
         {
-            if (!Core.CheckInventory("Unidentified 13") && !farmUni13)
+            if (!Core.CheckInventory(Uni(13)) && !farmUni13)
                 Core.Logger($"{farmUni13} is probably set to false, please have a dev change it");
             if (!Core.CheckInventory("Drudgen the Assistant"))
                 Core.Logger("Missing \"Drudgen the Assistant\"");
@@ -1533,7 +1522,7 @@ public class CoreNation
         Core.FarmingLogger(reward, quant);
         while (!Bot.ShouldExit && !Core.CheckInventory(reward, quant))
         {
-            if (farmUni13 && !Core.CheckInventory("Unidentified 13"))
+            if (farmUni13 && !Core.CheckInventory(Uni(13)))
                 FarmUni13(3);
             Core.ResetQuest(870);
             Core.KillMonster("tercessuinotlim", "m4", "Top", "Shadow of Nulgath", "Blade Master Rune", log: false);
@@ -1580,19 +1569,19 @@ public class CoreNation
     /// <param name="quant">Desired quantity, 13 = max stack</param>
     public void FarmUni13(int quant = 13)
     {
-        if (Core.CheckInventory("Unidentified 13", quant))
+        if (Core.CheckInventory(Uni(13), quant))
             return;
 
-        Core.AddDrop("Unidentified 13");
+        Core.AddDrop(Uni(13));
         quant = quant > 13 ? 13 : quant;
 
         // Core.DebugLogger(this);
         if (Core.CheckInventory(CragName))
-            while (!Bot.ShouldExit && !Core.CheckInventory("Unidentified 13", quant))
+            while (!Bot.ShouldExit && !Core.CheckInventory(Uni(13), quant))
                 DiamondExchange();
-        NewWorldsNewOpportunities("Unidentified 13", quant); //1minute turning  = 1x guaranteed
-        VoidKnightSwordQuest("Unidentified 13", quant);
-        Supplies("Unidentified 13", quant);
+        NewWorldsNewOpportunities(Uni(13), quant); //1minute turning  = 1x guaranteed
+        VoidKnightSwordQuest(Uni(13), quant);
+        Supplies(Uni(13), quant);
     }
 
     /// <summary>
@@ -2375,7 +2364,7 @@ public class CoreNation
 
         // Core.DebugLogger(this);
         // Add Unidentified 13 to the drops list.
-        Core.AddDrop("Unidentified 13");
+        Core.AddDrop(Uni(13));
 
         // Core.DebugLogger(this);
         // Toggle Gold Boost and register the required quest.
@@ -2477,11 +2466,7 @@ public class CoreNation
         if (Core.CheckInventory("Tainted Gem", quant))
             return;
 
-        if (!Core.CheckInventory("Unidentified 13"))
-        {
-            Core.FarmingLogger("Unidentified 13");
-            FarmUni13(1);
-        }
+        FarmUni13(1);
 
         Core.AddDrop("Tainted Gem");
 
