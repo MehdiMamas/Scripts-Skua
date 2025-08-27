@@ -772,24 +772,29 @@ public class CoreBots
     /// This method provides a way to retry an initialization operation, which can be useful when dealing with operations that might fail intermittently.
     /// It logs each retry attempt and will notify if all attempts fail.
     /// </remarks>
-    public T? InitializeWithRetries<T>(Func<T?> initializer, int retries = 5, int delay = 1000) where T : class
+    public T? InitializeWithRetries<T>(Func<T> initializer, int retries = 5, int delay = 1000)
     {
-        T? result = null;
+        T? result = default;
+
         for (int i = 0; i < retries; i++)
         {
-            result = initializer();
-            if (result != null)
-                break;
-            Logger($"Attempt {i++}: Initialization failed. Retrying...");
-            Sleep(delay); // Wait for the specified delay before retrying
+            try
+            {
+                result = initializer();
+                if (!EqualityComparer<T>.Default.Equals(result, default))
+                    return result;
+            }
+            catch (Exception ex)
+            {
+                Logger($"Attempt {i + 1}/{retries} threw exception: {ex.Message}");
+            }
+
+            Logger($"Attempt {i + 1}/{retries}: Initialization failed. Retrying...");
+            Sleep(delay);
         }
 
-        if (result == null)
-        {
-            Logger($"Initialization failed after {retries} attempts at: {initializer}.");
-        }
-
-        return result;
+        Logger($"Initialization failed after {retries} attempts at: {initializer.Method.Name}.");
+        return default;
     }
 
     /// <summary>
