@@ -8,6 +8,7 @@ tags: doompirate, haul, merge, doompirate, shadowscythe, admiral, empire, fleet,
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/DoomPirateStory.cs
+using Newtonsoft.Json.Linq;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;
@@ -71,38 +72,75 @@ public class DoomPirateHaulMerge
                     Core.RegisterQuests(9355);
                     Core.EquipClass(ClassType.Solo);
                     Core.Join("doompirate", "r5", "Left");
+
+                    bool restartKills = true;
+
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                    Restartkills:
+                    RestartKills:
+                        if (restartKills)
+                        {
+                            Bot.Map.Reload();
+                            Bot.Wait.ForMapLoad("doompirate");
+                            restartKills = false;
+                        }
+
+                        // Ensure player is in the correct cell
                         while (!Bot.ShouldExit && Bot.Player.Cell != "r5")
                         {
                             Core.Jump("r5", "Left");
-                            Bot.Player.SetSpawnPoint();
                             Core.Sleep();
                         }
 
+                        Bot.Player.SetSpawnPoint();
+
+                        // Mob IDs in kill order
                         foreach (int mob in new[] { 5, 4, 7, 6, 9, 8, 11, 10 })
                         {
-                            Monster? M = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null && x.MapID == mob);
-                            if (M != null)
+                            // Try to get the monster by MapID
+                            Monster? target = Bot.Monsters.MapMonsters
+                                .FirstOrDefault(x => x?.MapID! == mob);
+
+                            // Get monster HP (safe with retries)
+                            int hp = Core.InitializeWithRetries(() => GetMonsterHP(mob.ToString()));
+
+                            // Skip if monster doesn't exist or has no HP
+                            if (target == null || hp <= 0)
                             {
-                                Core.Logger($"Killing: {M.MapID}");
-                                Bot.Kill.Monster(M.MapID);
-                                Core.Logger($"Killed: {M.MapID}");
+                                Core.Logger($"Skipping mob {mob}[{(target == null ? "" : target.MapID.ToString())}] " +
+                                            $"({(target == null ? ", it's null or not available" : "it's dead")}).");
+                                continue;
                             }
-                            else
+
+                            Core.Logger($"Killing: {target.Name}[{target.MapID}]");
+                            while (!Bot.ShouldExit && GetMonsterHP(mob.ToString()) > 0)
                             {
-                                Core.Logger($"No monster found with MapID: {mob}, something went wrong. Restarting room");
-                                goto Restartkills;
+                                // Handle player death
+                                if (!Bot.Player.Alive)
+                                {
+                                    while (!Bot.ShouldExit && !Bot.Player.Alive)
+                                        Bot.Sleep(100);
+
+                                    Core.Logger("Player died, restarting room.");
+                                    restartKills = true;
+                                    goto RestartKills;
+                                }
+
+                                Bot.Combat.Attack(target.MapID);
+                                Bot.Sleep(100);
+
+                                // Break the loop when it dies
+                                if (!(GetMonsterHP(mob.ToString()) > 0))
+                                {
+                                    Core.Logger($"Killed: {target.Name}[{target.MapID}]");
+                                    continue;
+                                }
                             }
-                            while (!Bot.ShouldExit && !Bot.Player.Alive)
-                            {
-                                Core.Logger("Player died, restarting room");
-                                Bot.Wait.ForTrue(() => Bot.Player.Alive, 40);
-                                goto Restartkills;
-                            }
+
+
                         }
 
+                        // Final mob in the room
                         Bot.Kill.Monster(12);
                     }
                     break;
@@ -119,6 +157,23 @@ public class DoomPirateHaulMerge
             }
         }
     }
+
+    private int GetMonsterHP(string monMapID)
+    {
+        try
+        {
+            string? jsonData = Bot.Flash.Call("availableMonsters");
+            if (string.IsNullOrWhiteSpace(jsonData)) return 0;
+
+            foreach (var mon in JArray.Parse(jsonData))
+                if (mon?["MonMapID"]?.ToString() == monMapID)
+                    return mon["intHP"]?.ToObject<int>() ?? 0;
+        }
+        catch { }
+
+        return 0;
+    }
+
 
     public List<IOption> Select = new()
     {
