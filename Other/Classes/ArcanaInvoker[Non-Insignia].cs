@@ -3,6 +3,8 @@ name: Arcana Invoker (Class)
 description: This script will get Arcana Invoker class.
 tags: arcana, invoker, class, arcana invoker, darkon, astravia, garden
 */
+
+#region includes
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
@@ -47,6 +49,8 @@ tags: arcana, invoker, class, arcana invoker, darkon, astravia, garden
 //cs_include Scripts/Story/Nation/VoidRefuge.cs
 //cs_include Scripts/Story/AgeOfRuin/CoreAOR.cs
 //cs_include Scripts/Story/SepulchureSaga/CoreSepulchure.cs
+#endregion
+
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 
