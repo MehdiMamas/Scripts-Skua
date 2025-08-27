@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 380226,
+    "size": 380385,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -12522,7 +12522,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 917885,
+    "size": 918252,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -13547,7 +13547,7 @@
       "garden"
     ],
     "path": "Other/Classes/ArcanaInvoker[Non-Insignia].cs",
-    "size": 7877,
+    "size": 7907,
     "fileName": "ArcanaInvoker[Non-Insignia].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArcanaInvoker[Non-Insignia].cs"
   },
@@ -29211,7 +29211,7 @@
       "statue"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHouseMerge.cs",
-    "size": 5158,
+    "size": 7488,
     "fileName": "DoomPirateHouseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHouseMerge.cs"
   },
@@ -29539,7 +29539,7 @@
       "crimson"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHaulMerge.cs",
-    "size": 7441,
+    "size": 9389,
     "fileName": "DoomPirateHaulMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHaulMerge.cs"
   },
