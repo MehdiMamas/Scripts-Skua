@@ -845,6 +845,7 @@ public class CoreArmyLite
                 missingPlayers =
                Players()
                .Except(MapPlayers.Select(x => x.ToLower().Trim()).Concat(new[] { Bot.Player.Username.ToLower().Trim() }))
+               .Distinct()
                .ToList();
 
 
