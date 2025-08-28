@@ -67,29 +67,25 @@ public class DoomPirateHouseMerge
                 #endregion
 
                 case "Gallaeon's Piece of Eight":
-                    Core.FarmingLogger(req.Name, req.Quantity);
+                    Core.FarmingLogger("Gallaeon's Piece of Eight", 99);
                     Core.RegisterQuests(9355);
                     Core.EquipClass(ClassType.Solo);
                     Core.Join("doompirate", "r5", "Left");
 
                     bool restartKills = false;
 
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, req.Quantity))
+                RestartKills:
+                    while (!Bot.ShouldExit && !Core.CheckInventory("Gallaeon's Piece of Eight", 99))
                     {
-
-                    RestartKills:
-                        Bot.Log($"restartKills0/3: {restartKills}");
                         if (restartKills)
                         {
                             restartKills = false;
-                            // Wait for play to revive
-                            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-                            Core.Logger("send to house to reset map");
+                            Core.Logger("Send player to house to reset map");
                             Bot.Send.Packet($"%xt%zm%house%1%{Core.Username()}%");
                             Bot.Wait.ForMapLoad("house");
 
-                            Core.Logger("rejoin to reset mobs");
+                            Core.Logger("Rejoin map to reset mobs");
                             Core.Join("doompirate", "r5", "Left");
                             Bot.Wait.ForMapLoad("doompirate");
                         }
@@ -101,9 +97,8 @@ public class DoomPirateHouseMerge
                                 if (!Bot.Player.Alive)
                                 {
                                     Core.Logger("Death - Resetting");
-                                    Bot.Log($"restartKills1: {restartKills}");
+                                    while (!Bot.ShouldExit && !Bot.Player.Alive) { Bot.Sleep(1000); }
                                     restartKills = true;
-                                    Bot.Log($"restartKills2: {restartKills}");
                                     goto RestartKills;
                                 }
 
@@ -120,19 +115,14 @@ public class DoomPirateHouseMerge
                                     continue;
                                 }
 
-                                // Core.Logger($"Attacking: {mon.Name}[{mon.MapID}]");
-
-
                                 if (!Bot.Player.HasTarget)
                                     Bot.Combat.Attack(mobId);
 
-                                //allow setting of mob hp - if you die ur bad
                                 Bot.Sleep(1500);
 
                                 if (Core.GetMonsterHP(mobId.ToString()) <= 0)
                                 {
                                     Bot.Combat.CancelTarget();
-                                    // Core.Logger($"Killed: {mon.Name}[{mon.MapID}]");
                                     break;
                                 }
                             }

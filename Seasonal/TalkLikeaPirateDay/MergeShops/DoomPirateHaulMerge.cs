@@ -68,63 +68,62 @@ public class DoomPirateHaulMerge
                 #endregion
 
                 case "Gallaeon's Piece of Eight":
-                    Core.FarmingLogger(req.Name, req.Quantity);
+                    Core.FarmingLogger("Gallaeon's Piece of Eight", 99);
                     Core.RegisterQuests(9355);
                     Core.EquipClass(ClassType.Solo);
                     Core.Join("doompirate", "r5", "Left");
 
                     bool restartKills = false;
 
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, req.Quantity))
+                RestartKills:
+                    while (!Bot.ShouldExit && !Core.CheckInventory("Gallaeon's Piece of Eight", 99))
                     {
-                    RestartKills:
                         if (restartKills)
                         {
-                            Bot.Map.Reload();
-                            Bot.Wait.ForMapLoad("doompirate");
                             restartKills = false;
-                        }
 
-                        while (!Bot.ShouldExit && Bot.Player.Cell != "r5")
-                        {
-                            Core.Jump("r5", "Left");
-                            Core.Sleep();
-                        }
+                            Core.Logger("Send player to house to reset map");
+                            Bot.Send.Packet($"%xt%zm%house%1%{Core.Username()}%");
+                            Bot.Wait.ForMapLoad("house");
 
-                        Bot.Player.SetSpawnPoint();
+                            Core.Logger("Rejoin map to reset mobs");
+                            Core.Join("doompirate", "r5", "Left");
+                            Bot.Wait.ForMapLoad("doompirate");
+                        }
 
                         foreach (int mobId in new[] { 5, 4, 7, 6, 9, 8, 11, 10 })
                         {
-                            Monster? mon = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x.MapID == mobId);
-                            if (mon == null)
-                            {
-                                Core.Logger($"Skipping mob {mobId}, not found.");
-                                continue;
-                            }
-
-                            Core.Logger($"Attacking: {mon.Name}[{mon.MapID}]");
-
                             while (!Bot.ShouldExit)
                             {
-                                while (!Bot.ShouldExit && !Bot.Player.Alive)
-                                    Bot.Sleep(100); // avoid busy-wait
-
                                 if (!Bot.Player.Alive)
                                 {
+                                    Core.Logger("Death - Resetting");
+                                    while (!Bot.ShouldExit && !Bot.Player.Alive) { Bot.Sleep(1000); }
                                     restartKills = true;
                                     goto RestartKills;
+                                }
+
+                                if (Bot.Player.Cell != "r5")
+                                {
+                                    Core.Jump("r5", "Left");
+                                    Core.Sleep();
+                                }
+
+                                Monster? mon = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null && x.MapID == mobId);
+                                if (mon == null)
+                                {
+                                    Core.Logger($"Skipping mob {mobId}, not found.");
+                                    continue;
                                 }
 
                                 if (!Bot.Player.HasTarget)
                                     Bot.Combat.Attack(mobId);
 
-                                //allow setting of mob hp - if you die ur bad
                                 Bot.Sleep(1500);
 
                                 if (Core.GetMonsterHP(mobId.ToString()) <= 0)
                                 {
                                     Bot.Combat.CancelTarget();
-                                    Core.Logger($"Killed: {mon.Name}[{mon.MapID}]");
                                     break;
                                 }
                             }
