@@ -196,7 +196,7 @@ public class CoreArmyLite
 
         if (map != null)
         {
-            waitForPartyCell(_cell ?? "Enter", _pad ?? "Spawn", PartySize());
+            waitForPartyCell(_cell ?? Bot.Player.Cell, _pad ?? Bot.Player.Pad, PartySize());
         }
 
         List<string> _AggroMonCells = this._AggroMonCells;
@@ -825,7 +825,7 @@ public class CoreArmyLite
     {
         if (cell != null)
         {
-            Bot.Map.Jump(cell ?? "Enter", pad ?? "Left", autoCorrect: false); // Jump to specified cell if provided
+            Bot.Map.Jump(cell ?? Bot.Player.Cell, pad ?? Bot.Player.Cell, autoCorrect: false); // Jump to specified cell if provided
         }
 
         Core.Logger($"Final list of players: {string.Join(", ", Players())}");
