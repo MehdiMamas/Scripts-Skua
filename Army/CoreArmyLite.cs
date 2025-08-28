@@ -830,22 +830,25 @@ public class CoreArmyLite
 
         Core.Logger($"Final list of players: {string.Join(", ", Players())}");
         // Wait for party players to be ready
-        while (!Bot.ShouldExit && Bot.Map.PlayerNames != null
-        && (Bot.Map.PlayerNames.Count < PartySize() || !Bot.Map.PlayerNames.All(x => Players().Contains(x.Trim().ToLower())))
+        while (!Bot.ShouldExit
+               && Bot.Map.PlayerNames != null
+               && (Bot.Map.PlayerNames.Count < PartySize()
+                   || !Bot.Map.PlayerNames.All(x => Players().Select(p => p.Trim().ToLower()).Contains(x.Trim().ToLower()))))
         {
-            if (Bot.Map.PlayerNames.All(x => Players().Contains(x.Trim().ToLower())))
+            if (Bot.Map.PlayerNames.All(x => Players().Select(p => p.Trim().ToLower()).Contains(x.Trim().ToLower())))
             {
                 Core.Logger("All Players found!");
                 break;
             }
             else
+            {
                 Core.Logger($"Missing {string.Join(", ", Bot.Map.PlayerNames
-        .Where(x => !Players().Select(p => p.Trim().ToLower()).Contains(x.Trim().ToLower())))}");
-
-
+                    .Where(x => !Players().Select(p => p.Trim().ToLower()).Contains(x.Trim().ToLower())))}");
+            }
 
             Core.Sleep();
         }
+
     }
 
     public string[] Players()
