@@ -34,6 +34,7 @@ using System.Globalization;
 using Skua.Core.Models.Auras;
 using System.Windows.Forms;
 using System.Drawing;
+using Newtonsoft.Json.Linq;
 
 public class CoreBots
 {
@@ -7831,6 +7832,22 @@ public class CoreBots
             // Retry if the map isn't loaded yet
             goto retry;
         }
+    }
+
+    public int GetMonsterHP(string monMapID)
+    {
+        try
+        {
+            string? jsonData = Bot.Flash.Call("availableMonsters");
+            if (string.IsNullOrWhiteSpace(jsonData)) return 0;
+
+            foreach (var mon in JArray.Parse(jsonData))
+                if (mon?["MonMapID"]?.ToString() == monMapID)
+                    return mon["intHP"]?.ToObject<int>() ?? 0;
+        }
+        catch { }
+
+        return 0;
     }
 
 

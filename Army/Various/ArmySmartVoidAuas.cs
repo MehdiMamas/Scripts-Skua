@@ -98,14 +98,32 @@ public class ArmySmartVoidAuras
         Core.AddDrop(VASDKA);
         Core.Logger($"Farming Void Aura's with SDKA Method");
         Core.FarmingLogger($"Void Aura", Quantity);
+        Core.RegisterQuests(4439);
+        if (Bot.Config!.Get<bool>("sellToSync"))
+            Army.SellToSync("Void Aura", Quantity);
+        Core.AddDrop("Void Aura");
+        Core.Join("shadowrealmpast");
 
+        Army.DivideOnCells("Enter", "r2", "r3", "r4");
+        Core.Sleep(1500);
+        Bot.Player.SetSpawnPoint();
+        Core.EquipClass(Bot.Player.Cell == "r4" ? ClassType.Solo : ClassType.Farm);
+
+        Army.AggroMonMIDs(Core.FromTo(1, 11));
+        Army.AggroMonStart("shadowrealmpast");
         while (!Bot.ShouldExit && !Core.CheckInventory("Void Aura", Quantity))
         {
-            Core.EnsureAccept(4439);
-            ArmyHunt("shadowrealmpast", Core.FromTo(1, 10), new[] { "Enter", "r2", "r3" }, "Empowered Essence", ClassType.Farm, isTemp: false, 50);
-            ArmyHunt("shadowrealmpast", new[] { 11 }, new[] { "r4" }, "Malignant Essence", ClassType.Solo, isTemp: false, 3);
-            Core.EnsureComplete(4439);
+            if (!Bot.Player.Alive)
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+            if (!Bot.Player.HasTarget)
+                Bot.Combat.Attack("*");
+
+            //allow setting of mob hp - if you die ur bad
+            Bot.Sleep(500);
         }
+        Army.AggroMonStop(true);
+        Core.JumpWait();
     }
 
     public void RetrieveVoidAurasArmy(int Quantity)
@@ -143,18 +161,16 @@ public class ArmySmartVoidAuras
         Core.AddDrop(item);
 
         Core.EquipClass(classType);
-        Core.Join(map);
         Army.waitForParty(map, item, Army.PartySize());
-        Core.FarmingLogger(item, quant);
 
+        Army.DivideOnCells(Cells);
         Army.AggroMonMIDs(MIDs);
         Army.AggroMonStart(map);
-        Army.DivideOnCells(Cells);
 
         while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant)))
         {
             Bot.Combat.Attack("*");
-            Core.Sleep();
+            Bot.Sleep(500);
             if (isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant))
                 break;
         }

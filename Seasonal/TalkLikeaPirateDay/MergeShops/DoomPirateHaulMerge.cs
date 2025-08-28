@@ -68,14 +68,14 @@ public class DoomPirateHaulMerge
                 #endregion
 
                 case "Gallaeon's Piece of Eight":
-                    Core.FarmingLogger(req.Name, quant);
+                    Core.FarmingLogger(req.Name, req.Quantity);
                     Core.RegisterQuests(9355);
                     Core.EquipClass(ClassType.Solo);
                     Core.Join("doompirate", "r5", "Left");
 
-                    bool restartKills = true;
+                    bool restartKills = false;
 
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, req.Quantity))
                     {
                     RestartKills:
                         if (restartKills)
@@ -85,7 +85,6 @@ public class DoomPirateHaulMerge
                             restartKills = false;
                         }
 
-                        // Ensure player is in the correct cell
                         while (!Bot.ShouldExit && Bot.Player.Cell != "r5")
                         {
                             Core.Jump("r5", "Left");
@@ -94,53 +93,43 @@ public class DoomPirateHaulMerge
 
                         Bot.Player.SetSpawnPoint();
 
-                        // Mob IDs in kill order
-                        foreach (int mob in new[] { 5, 4, 7, 6, 9, 8, 11, 10 })
+                        foreach (int mobId in new[] { 5, 4, 7, 6, 9, 8, 11, 10 })
                         {
-                            // Try to get the monster by MapID
-                            Monster? target = Bot.Monsters.MapMonsters
-                                .FirstOrDefault(x => x?.MapID! == mob);
-
-                            // Get monster HP (safe with retries)
-                            int hp = Core.InitializeWithRetries(() => GetMonsterHP(mob.ToString()));
-
-                            // Skip if monster doesn't exist or has no HP
-                            if (target == null || hp <= 0)
+                            Monster? mon = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x.MapID == mobId);
+                            if (mon == null)
                             {
-                                Core.Logger($"Skipping mob {mob}[{(target == null ? "" : target.MapID.ToString())}] " +
-                                            $"({(target == null ? ", it's null or not available" : "it's dead")}).");
+                                Core.Logger($"Skipping mob {mobId}, not found.");
                                 continue;
                             }
 
-                            Core.Logger($"Killing: {target.Name}[{target.MapID}]");
-                            while (!Bot.ShouldExit && GetMonsterHP(mob.ToString()) > 0)
+                            Core.Logger($"Attacking: {mon.Name}[{mon.MapID}]");
+
+                            while (!Bot.ShouldExit)
                             {
-                                // Handle player death
+                                while (!Bot.ShouldExit && !Bot.Player.Alive)
+                                    Bot.Sleep(100); // avoid busy-wait
+
                                 if (!Bot.Player.Alive)
                                 {
-                                    while (!Bot.ShouldExit && !Bot.Player.Alive)
-                                        Bot.Sleep(100);
-
-                                    Core.Logger("Player died, restarting room.");
                                     restartKills = true;
                                     goto RestartKills;
                                 }
 
-                                Bot.Combat.Attack(target.MapID);
-                                Bot.Sleep(100);
+                                if (!Bot.Player.HasTarget)
+                                    Bot.Combat.Attack(mobId);
 
-                                // Break the loop when it dies
-                                if (!(GetMonsterHP(mob.ToString()) > 0))
+                                //allow setting of mob hp - if you die ur bad
+                                Bot.Sleep(1500);
+
+                                if (Core.GetMonsterHP(mobId.ToString()) <= 0)
                                 {
-                                    Core.Logger($"Killed: {target.Name}[{target.MapID}]");
-                                    continue;
+                                    Bot.Combat.CancelTarget();
+                                    Core.Logger($"Killed: {mon.Name}[{mon.MapID}]");
+                                    break;
                                 }
                             }
-
-
                         }
 
-                        // Final mob in the room
                         Bot.Kill.Monster(12);
                     }
                     break;

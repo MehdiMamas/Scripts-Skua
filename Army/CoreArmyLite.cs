@@ -196,8 +196,7 @@ public class CoreArmyLite
 
         if (map != null)
         {
-            Core.Join(map, _cell ?? "Enter", _pad ?? "Spawn");
-            waitForPartyCell("Enter", "Spawn", PartySize());
+            waitForPartyCell(_cell ?? "Enter", _pad ?? "Spawn", PartySize());
         }
 
         List<string> _AggroMonCells = this._AggroMonCells;
@@ -826,17 +825,18 @@ public class CoreArmyLite
     {
         if (cell != null)
         {
-            Bot.Map.Jump(cell, pad ?? "Left"); // Jump to specified cell if provided
+            Bot.Map.Jump(cell ?? "Enter", pad ?? "Left", autoCorrect: false); // Jump to specified cell if provided
         }
 
         Core.Logger($"Final list of players: {string.Join(", ", Players())}");
         List<string> missingPlayers = new();
+        List<string> MapPlayers = Bot.Map.PlayerNames;
         // Wait for party players to be ready
         while (!Bot.ShouldExit &&
          cell != null &&
          Bot.Map.CellPlayers != null &&
          Bot.Map.PlayerNames != null &&
-         Bot.Map.PlayerNames.Count(x => Players().Contains(x.ToLower())) != PartySize())        
+         Bot.Map.PlayerNames.Count(x => Players().Contains(x.ToLower())) != PartySize())
         {
             Core.Sleep();
 
@@ -844,7 +844,7 @@ public class CoreArmyLite
             {
                 missingPlayers =
                Players()
-               .Except(Bot.Map.PlayerNames.Select(x => x.ToLower().Trim()).Concat(new[] { Bot.Player.Username.ToLower().Trim() }))
+               .Except(MapPlayers.Select(x => x.ToLower().Trim()).Concat(new[] { Bot.Player.Username.ToLower().Trim() }))
                .ToList();
 
 
@@ -857,12 +857,12 @@ public class CoreArmyLite
                 // Log player readiness status if players are missing
                 if (missingPlayers.Count > 0)
                 {
-                    Bot.Log($"[Players Ready: {Bot.Map.PlayerNames.Count(x => Players().Contains(x))}/{PartySize()}] " +
+                    Bot.Log($"[Players Ready: {MapPlayers.Count(x => Players().Contains(x))}/{PartySize()}] " +
                             $"Missing: {string.Join(", ", missingPlayers)}");
                 }
                 else
                 {
-                    Bot.Log($"[Players Ready: {Bot.Map.PlayerNames.Count(x => Players().Contains(x))}/{PartySize()}] " +
+                    Bot.Log($"[Players Ready: {MapPlayers.Count(x => Players().Contains(x))}/{PartySize()}] " +
                             $"All players are ready in cell {cell}.");
                 }
             }
@@ -962,85 +962,85 @@ public class CoreArmyLite
 
     public void waitForParty(string map, string? item = null, int playerMax = -1)
     {
-        // Subscribe to the AFK event
         Bot.Events.PlayerAFK += PlayerAFK;
 
-        // Setup initial party tracking
         string[] players = Players();
-        int partySize = players.Length;
-        List<string> playersWhoHaveBeenHere = new() { Core.Username() };
-        int playerCount = 1;
+        int targetPartySize = playerMax > 0 ? playerMax : PartySize();
+        List<string> playersHere = new() { Core.Username() };
+
+        Bot.Map.Join(map, "Enter", "Left", autoCorrect: false);
+        Bot.Wait.ForMapLoad(map);
 
         int logCount = 0;
         int butlerTimer = 0;
         bool hasWaited = false;
 
-        // Join the specified map and set the target party size
-        Core.Join(map);
-        int dynamicPartySize = PartySize();
-
-        // Main waiting loop
-        while (playerCount < dynamicPartySize)
+        while (playersHere.Count < targetPartySize)
         {
-            // Track players entering the map
-            if (Bot.Map.PlayerNames != null)
-            {
-                foreach (var name in Bot.Map.PlayerNames)
-                {
-                    if (!playersWhoHaveBeenHere.Contains(name) &&
-                        players.Select(x => x.ToLower().Trim()).Contains(name.ToLower().Trim()))
-                    {
-                        playersWhoHaveBeenHere.Add(name.ToLower().Trim());
-                    }
-                }
-            }
+            TrackPlayers(players, playersHere);
 
-            playerCount = playersWhoHaveBeenHere.Count;
             logCount++;
-
-            // Log every 15 iterations to avoid spam
             if (logCount == 15)
             {
-                Core.Logger($"Waiting for the party{(item == null ? string.Empty : $" to farm {item}")} [{playerCount}/{dynamicPartySize}]");
+                Core.Logger($"Waiting for the party{(item == null ? string.Empty : $" to farm {item}")} [{playersHere.Count}/{targetPartySize}]");
                 hasWaited = true;
                 logCount = 0;
             }
 
             Core.Sleep(1000);
 
-            // Butler invocation if only one player is missing
-            if (playersWhoHaveBeenHere.Count <= (dynamicPartySize - 1)) // If only one player is missing (you)
+            if (playersHere.Count < targetPartySize)
             {
                 butlerTimer++;
                 if (butlerTimer >= 30)
                 {
-                    b_breakOnMap = Bot.Map.Name;
-                    string missingPlayer = players.First(p => !playersWhoHaveBeenHere.Any(n => n.Equals(p, StringComparison.OrdinalIgnoreCase)));
+                    // Every account helps fetch whoever is missing
+                    foreach (string missing in players.Where(p => !playersHere.Any(n => n.Equals(p, StringComparison.OrdinalIgnoreCase))))
+                    {
+                        HandleMissingPlayer(missing, playersHere, map);
+                    }
 
-                    Core.Logger($"Missing {missingPlayer}, initiating Butler.cs");
-                    Core.Logger("Butler active until in map /" + b_breakOnMap);
-
-                    Butler(missingPlayer, roomNr: getRoomNr());
-
-                    Core.Logger($"{missingPlayer} has joined {b_breakOnMap}. Continuing...");
-
-                    // Re-enter the loop to recheck for other missing players after Butler intervention
-                    playersWhoHaveBeenHere = new() { Core.Username() };  // Reset players list
-                    playerCount = 1; // Reset player count
-                    butlerTimer = 0; // Reset Butler timer
-                    logCount = 0;    // Reset log count
-                    continue;
+                    // Reset timers, but keep playersHere intact
+                    butlerTimer = 0;
+                    logCount = 0;
                 }
             }
         }
 
-        // Log completion and synchronize attack timing
         if (hasWaited)
-            Core.Logger($"Party complete [{partySize}/{partySize}]");
+            Core.Logger($"Party complete [{targetPartySize}/{targetPartySize}]");
 
-        Core.Sleep(3500); // To synchronize attack timing and avoid initial deaths
+        Core.Sleep(3500);
 
-        // Anti-AFK handler to keep players active
+        // Helpers
+        void TrackPlayers(string[] allPlayers, List<string> seenPlayers)
+        {
+            if (Bot.Map.PlayerNames == null)
+                return;
+
+            foreach (string name in Bot.Map.PlayerNames)
+            {
+                if (!seenPlayers.Any(n => n.Equals(name, StringComparison.OrdinalIgnoreCase)) &&
+                    allPlayers.Any(p => p.Equals(name, StringComparison.OrdinalIgnoreCase)))
+                {
+                    seenPlayers.Add(name);
+                }
+            }
+        }
+
+        void HandleMissingPlayer(string missing, List<string> seenPlayers, string currentMap)
+        {
+            b_breakOnMap = Bot.Map.Name;
+
+            Core.Logger($"Missing {missing}, initiating Butler.cs");
+            Core.Logger("Butler active until in map /" + currentMap);
+
+            Butler(missing, roomNr: getRoomNr());
+
+            Core.Logger($"{missing} has rejoined {b_breakOnMap}. Continuing...");
+            seenPlayers.Add(missing); // Add once, never remove
+        }
+
         void PlayerAFK()
         {
             Core.Logger("Anti-AFK engaged");

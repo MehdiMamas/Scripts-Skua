@@ -24944,14 +24944,14 @@ case ""Crimson Face Plate of Nulgath"":
     "Gallaeon's Piece of Eight",
     @"
         case ""Gallaeon's Piece of Eight"":
-            Core.FarmingLogger(req.Name, quant);
+            Core.FarmingLogger(req.Name, req.Quantity);
             Core.RegisterQuests(9355);
             Core.EquipClass(ClassType.Solo);
             Core.Join(""doompirate"", ""r5"", ""Left"");
 
-            bool restartKills = true;
+            bool restartKills = false;
 
-            while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+            while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, req.Quantity))
             {
             RestartKills:
                 if (restartKills)
@@ -24964,40 +24964,45 @@ case ""Crimson Face Plate of Nulgath"":
                 while (!Bot.ShouldExit && Bot.Player.Cell != ""r5"")
                 {
                     Core.Jump(""r5"", ""Left"");
-                    Bot.Player.SetSpawnPoint();
                     Core.Sleep();
                 }
 
-                foreach (int mob in new[] { 5, 4, 7, 6, 9, 8, 11, 10 })
+                Bot.Player.SetSpawnPoint();
+
+                foreach (int mobId in new[] { 5, 4, 7, 6, 9, 8, 11, 10 })
                 {
-                    Monster? target = Bot.Monsters.MapMonsters
-                        .FirstOrDefault(x => x != null && x.MapID == mob);
-
-                    int hp = Core.InitializeWithRetries(() => GetMonsterHP(mob.ToString()));
-
-                    if (target == null || hp <= 0)
+                    Monster? mon = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x.MapID == mobId);
+                    if (mon == null)
                     {
-                        Core.Logger($""Skipping mob {mob}[{(target == null ? ""null"" : target.MapID.ToString())}] "" +
-                                    $""({(target == null ? ""not available"" : ""dead"")})."");
+                        Core.Logger($""Skipping mob {mobId}, not found."");
                         continue;
                     }
 
-                    Core.Logger($""Killing: {target.Name}[{target.MapID}]"");
-                    while (!Bot.ShouldExit && GetMonsterHP(mob.ToString()) > 0)
+                    Core.Logger($""Attacking: {mon.Name}[{mon.MapID}]"");
+
+                    while (!Bot.ShouldExit)
                     {
+                        while (!Bot.ShouldExit && !Bot.Player.Alive)
+                            Bot.Sleep(100);
+
                         if (!Bot.Player.Alive)
                         {
-                            Core.Logger(""Player died, restarting room."");
-                            Bot.Wait.ForTrue(() => Bot.Player.Alive, 40);
                             restartKills = true;
                             goto RestartKills;
                         }
 
-                        Bot.Combat.Attack(target.MapID);
-                        Bot.Sleep(100);
-                    }
+                        if (!Bot.Player.HasTarget)
+                            Bot.Combat.Attack(mobId);
 
-                    Core.Logger($""Killed: {target.Name}[{target.MapID}]"");
+                        Bot.Sleep(1500);
+
+                        if (Core.GetMonsterHP(mobId.ToString()) <= 0)
+                        {
+                            Bot.Combat.CancelTarget();
+                            Core.Logger($""Killed: {mon.Name}[{mon.MapID}]"");
+                            break;
+                        }
+                    }
                 }
 
                 Bot.Kill.Monster(12);

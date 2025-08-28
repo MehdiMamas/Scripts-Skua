@@ -67,79 +67,77 @@ public class DoomPirateHouseMerge
                 #endregion
 
                 case "Gallaeon's Piece of Eight":
-                    Core.FarmingLogger(req.Name, quant);
+                    Core.FarmingLogger(req.Name, req.Quantity);
                     Core.RegisterQuests(9355);
                     Core.EquipClass(ClassType.Solo);
                     Core.Join("doompirate", "r5", "Left");
 
-                    bool restartKills = true;
+                    bool restartKills = false;
 
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, req.Quantity))
                     {
+
                     RestartKills:
+                        Bot.Log($"restartKills0/3: {restartKills}");
                         if (restartKills)
                         {
-                            Bot.Map.Reload();
-                            Bot.Wait.ForMapLoad("doompirate");
                             restartKills = false;
+                            // Wait for play to revive
+                            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+                            Core.Logger("send to house to reset map");
+                            Bot.Send.Packet($"%xt%zm%house%1%{Core.Username()}%");
+                            Bot.Wait.ForMapLoad("house");
+
+                            Core.Logger("rejoin to reset mobs");
+                            Core.Join("doompirate", "r5", "Left");
+                            Bot.Wait.ForMapLoad("doompirate");
                         }
 
-                        // Ensure player is in the correct cell
-                        while (!Bot.ShouldExit && Bot.Player.Cell != "r5")
+                        foreach (int mobId in new[] { 5, 4, 7, 6, 9, 8, 11, 10 })
                         {
-                            Core.Jump("r5", "Left");
-                            Core.Sleep();
-                        }
-
-                        Bot.Player.SetSpawnPoint();
-
-                        // Mob IDs in kill order
-                        foreach (int mob in new[] { 5, 4, 7, 6, 9, 8, 11, 10 })
-                        {
-                            // Try to get the monster by MapID
-                            Monster? target = Bot.Monsters.MapMonsters
-                                .FirstOrDefault(x => x?.MapID! == mob);
-
-                            // Get monster HP (safe with retries)
-                            int hp = Core.InitializeWithRetries(() => GetMonsterHP(mob.ToString()));
-
-                            // Skip if monster doesn't exist or has no HP
-                            if (target == null || hp <= 0)
+                            while (!Bot.ShouldExit)
                             {
-                                Core.Logger($"Skipping mob {mob}[{(target == null ? "" : target.MapID.ToString())}] " +
-                                            $"({(target == null ? ", it's null or not available" : "it's dead")}).");
-                                continue;
-                            }
-
-                            Core.Logger($"Killing: {target.Name}[{target.MapID}]");
-                            while (!Bot.ShouldExit && GetMonsterHP(mob.ToString()) > 0)
-                            {
-                                // Handle player death
                                 if (!Bot.Player.Alive)
                                 {
-                                    while (!Bot.ShouldExit && !Bot.Player.Alive)
-                                        Bot.Sleep(100);
-
-                                    Core.Logger("Player died, restarting room.");
+                                    Core.Logger("Death - Resetting");
+                                    Bot.Log($"restartKills1: {restartKills}");
                                     restartKills = true;
+                                    Bot.Log($"restartKills2: {restartKills}");
                                     goto RestartKills;
                                 }
 
-                                Bot.Combat.Attack(target.MapID);
-                                Bot.Sleep(100);
-
-                                // Break the loop when it dies
-                                if (!(GetMonsterHP(mob.ToString()) > 0))
+                                if (Bot.Player.Cell != "r5")
                                 {
-                                    Core.Logger($"Killed: {target.Name}[{target.MapID}]");
+                                    Core.Jump("r5", "Left");
+                                    Core.Sleep();
+                                }
+
+                                Monster? mon = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null && x.MapID == mobId);
+                                if (mon == null)
+                                {
+                                    Core.Logger($"Skipping mob {mobId}, not found.");
                                     continue;
                                 }
+
+                                // Core.Logger($"Attacking: {mon.Name}[{mon.MapID}]");
+
+
+                                if (!Bot.Player.HasTarget)
+                                    Bot.Combat.Attack(mobId);
+
+                                //allow setting of mob hp - if you die ur bad
+                                Bot.Sleep(1500);
+
+                                if (Core.GetMonsterHP(mobId.ToString()) <= 0)
+                                {
+                                    Bot.Combat.CancelTarget();
+                                    // Core.Logger($"Killed: {mon.Name}[{mon.MapID}]");
+                                    break;
+                                }
                             }
-
-
                         }
 
-                        // Final mob in the room
                         Bot.Kill.Monster(12);
                     }
                     break;
@@ -155,8 +153,8 @@ public class DoomPirateHouseMerge
             }
         }
     }
-    
-    private int GetMonsterHP(string monMapID)
+
+    public int GetMonsterHP(string monMapID)
     {
         try
         {
