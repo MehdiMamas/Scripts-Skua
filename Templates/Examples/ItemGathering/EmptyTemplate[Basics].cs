@@ -37,8 +37,6 @@ public class DefaultTemplate
     {
         // Test Area vv
 
-
-
         // Test Area ^^
 
         // Optional Test Mode
