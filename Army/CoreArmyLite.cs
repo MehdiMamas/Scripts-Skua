@@ -968,7 +968,7 @@ public class CoreArmyLite
         int targetPartySize = playerMax > 0 ? playerMax : PartySize();
         List<string> playersHere = new() { Core.Username() };
 
-        Bot.Map.Join(map, "Enter", "Left", autoCorrect: false);
+        Core.Join(map, "Enter", "Left");
         Bot.Wait.ForMapLoad(map);
 
         int logCount = 0;
