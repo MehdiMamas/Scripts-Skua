@@ -829,44 +829,22 @@ public class CoreArmyLite
         }
 
         Core.Logger($"Final list of players: {string.Join(", ", Players())}");
-        List<string> missingPlayers = new();
-        List<string> MapPlayers = Bot.Map.PlayerNames;
         // Wait for party players to be ready
-        while (!Bot.ShouldExit &&
-         cell != null &&
-         Bot.Map.CellPlayers != null &&
-         Bot.Map.PlayerNames != null &&
-         Bot.Map.PlayerNames.Count(x => Players().Contains(x.ToLower())) != PartySize())
+        while (!Bot.ShouldExit && Bot.Map.PlayerNames != null
+        && (Bot.Map.PlayerNames.Count < PartySize() || !Bot.Map.PlayerNames.All(x => Players().Contains(x.Trim().ToLower())))
         {
-            Core.Sleep();
-
-            if (cell != null && Bot.Map.PlayerNames != null)
+            if (Bot.Map.PlayerNames.All(x => Players().Contains(x.Trim().ToLower())))
             {
-                missingPlayers =
-               Players()
-               .Except(MapPlayers.Select(x => x.ToLower().Trim()).Concat(new[] { Bot.Player.Username.ToLower().Trim() }))
-               .Distinct()
-               .ToList();
-
-
-                if (missingPlayers.Count == 0)
-                {
-                    Core.Logger($"All players are ready in cell {cell}.");
-                    break;
-                }
-
-                // Log player readiness status if players are missing
-                if (missingPlayers.Count > 0)
-                {
-                    Bot.Log($"[Players Ready: {MapPlayers.Count(x => Players().Contains(x))}/{PartySize()}] " +
-                            $"Missing: {string.Join(", ", missingPlayers)}");
-                }
-                else
-                {
-                    Bot.Log($"[Players Ready: {MapPlayers.Count(x => Players().Contains(x))}/{PartySize()}] " +
-                            $"All players are ready in cell {cell}.");
-                }
+                Core.Logger("All Players found!");
+                break;
             }
+            else
+                Core.Logger($"Missing {string.Join(", ", Bot.Map.PlayerNames
+        .Where(x => !Players().Select(p => p.Trim().ToLower()).Contains(x.Trim().ToLower())))}");
+
+
+
+            Core.Sleep();
         }
     }
 
