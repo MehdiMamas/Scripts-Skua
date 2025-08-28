@@ -119,7 +119,6 @@ public class ArmySmartVoidAuras
             if (!Bot.Player.HasTarget)
                 Bot.Combat.Attack("*");
 
-            //allow setting of mob hp - if you die ur bad
             Bot.Sleep(500);
         }
         Army.AggroMonStop(true);
