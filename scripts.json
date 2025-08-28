@@ -90,7 +90,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 75242,
+    "size": 75269,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -4627,7 +4627,7 @@
       "doom"
     ],
     "path": "Army/Various/ArmySmartVoidAuas.cs",
-    "size": 6614,
+    "size": 7218,
     "fileName": "ArmySmartVoidAuas.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/Various/ArmySmartVoidAuas.cs"
   },
