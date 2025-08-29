@@ -1800,7 +1800,10 @@ public class CoreNation
                 Bot.Wait.ForPickup(538);
             }
             else
+            {
+                Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Taro's Manslayer", isTemp: false);
+            }
             Core.EnsureComplete(726);
             Bot.Wait.ForQuestComplete(726);
             Bot.Wait.ForPickup("Totem of Nulgath");
