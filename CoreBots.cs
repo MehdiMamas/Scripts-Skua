@@ -5750,9 +5750,6 @@ public class CoreBots
 
     public bool AggroMonsters()
     {
-        if (Bot.Map.Name == null || Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Count <= 1)
-            return false;
-
         if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
         {
             return true;
