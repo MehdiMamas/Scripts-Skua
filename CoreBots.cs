@@ -5748,6 +5748,18 @@ public class CoreBots
     }
     private bool last_aggro_status = false;
 
+    public bool AggroMonsters()
+    {
+        if (Bot.Map.Name == null || Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Count <= 1)
+            return false;
+
+        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
+        {
+            return true;
+        }
+        return false;
+    }
+
     /// <summary>
     /// Send a packet to the server the desired amount of times
     /// </summary>
