@@ -62,11 +62,6 @@ public class CoreLegion
             return;
 
         Core.EquipClass(ClassType.Farm);
-
-
-
-        //fuck it lets test it.
-
         Core.AddDrop(43266);
         Core.FarmingLogger("Dark Token", 10);
         Core.RegisterQuests(6248, 6249, 6251);
