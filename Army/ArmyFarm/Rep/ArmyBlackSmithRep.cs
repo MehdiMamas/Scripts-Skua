@@ -74,14 +74,14 @@ public class ArmyBlackSmithRep
             Core.EquipClass(ClassType.Farm);
 
             Armykill("hydrachallenge", "Hydra Scale Piece", 75);
-            //Army.waitForParty("maul");
+            //Army.WaitForParty("maul");
 
             Core.EquipClass(ClassType.Solo);
             Armykill("maul", "Creature Shard");
-            //Army.waitForParty("towerofdoom");
+            //Army.WaitForParty("towerofdoom");
 
             Armykill("towerofdoom", "Monster Trophy", 15);
-            //Army.waitForParty("hydrachallenge");
+            //Army.WaitForParty("hydrachallenge");
 
             Core.EnsureComplete(8736);
         }
@@ -107,7 +107,7 @@ public class ArmyBlackSmithRep
 
         AggroSetup(map);
 
-        
+
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             Bot.Combat.Attack("*");

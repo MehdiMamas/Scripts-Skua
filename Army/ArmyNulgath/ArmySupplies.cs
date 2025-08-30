@@ -123,7 +123,7 @@ public class SuppliesWheelArmy
                 while (!Bot.ShouldExit && !Core.CheckInventory(item.ID, item.MaxStack))
                     ArmyHydra(item.Name, item.MaxStack);
             }
-            //Army.waitForParty("whitemap");
+            //Army.WaitForParty("whitemap");
         }
     }
 

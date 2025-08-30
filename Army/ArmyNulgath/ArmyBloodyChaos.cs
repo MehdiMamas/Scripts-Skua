@@ -74,11 +74,11 @@ public class ArmyBloodyChaos
             return;
         }
 
-        Army.waitForParty(map);
+        Army.WaitForParty(map);
 
         Core.AddDrop(item);
 
-        //Army.waitForParty(map, item);
+        //Army.WaitForParty(map, item);
         Core.FarmingLogger(item, quant);
 
         switch (map)

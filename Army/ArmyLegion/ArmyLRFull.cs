@@ -102,7 +102,7 @@ public class ArmyLR
     {
         Core.BankingBlackList.AddRange(LRMaterials.Concat(LF1).Concat(LF2).Concat(LF3).Concat(legionMedals));
         Core.SetOptions();
-        
+
         Core.Logger("This script has been disabled by the author as it is not working as intended. " +
      "Please use the Solo version of this script instead.\n" +
      $"Location: {Path.Combine(ClientFileSources.SkuaScriptsDIR, @"Legion\Revenant\0LegionRevenant.cs")}");
@@ -202,13 +202,13 @@ public class ArmyLR
         {
             Core.EnsureAccept(6897);
             ArmyHunt("judgement", "Aeacus Empowered", ClassType.Solo, 50, false);
-            // //Army.waitForParty("revenant");
+            // //Army.WaitForParty("revenant");
             ArmyHunt("revenant", "Tethered Soul", ClassType.Farm, 300);
-            // //Army.waitForParty("shadowrealmpast");
+            // //Army.WaitForParty("shadowrealmpast");
             ArmyHunt("shadowrealmpast", "Darkened Essence", ClassType.Farm, 400);
-            // //Army.waitForParty("necrodungeon");
+            // //Army.WaitForParty("necrodungeon");
             ArmyHunt("necrodungeon", "Dracolich Contract", ClassType.Farm, 1000);
-            // //Army.waitForParty("judgement");
+            // //Army.WaitForParty("judgement");
             if (Bot.Quests.CanComplete(6897)) Bot.Quests.Complete(6897);
             Bot.Wait.ForPickup("Revenant's Spellscroll");
             if (checkIsDone("Revenant's Spellscroll", quant)) break;
@@ -234,25 +234,25 @@ public class ArmyLR
         {
             Core.EnsureAccept(6898);
             ArmyHunt("doomvault", "Grim Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("mummies");
+            // //Army.WaitForParty("mummies");
             ArmyHunt("mummies", "Ancient Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("wrath");
+            // //Army.WaitForParty("wrath");
             ArmyHunt("wrath", "Pirate Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("doomwar");
+            // //Army.WaitForParty("doomwar");
             ArmyHunt("doomwar", "Battleon Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("overworld");
+            // //Army.WaitForParty("overworld");
             ArmyHunt("overworld", "Mirror Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("deathpits");
+            // //Army.WaitForParty("deathpits");
             ArmyHunt("deathpits", "Darkblood Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("maxius");
+            // //Army.WaitForParty("maxius");
             ArmyHunt("maxius", "Vampire Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("curseshore");
+            // //Army.WaitForParty("curseshore");
             ArmyHunt("curseshore", "Spirit Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("dragonbone");
+            // //Army.WaitForParty("dragonbone");
             ArmyHunt("dragonbone", "Dragon Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("doomwood");
+            // //Army.WaitForParty("doomwood");
             ArmyHunt("doomwood", "Doomwood Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("doomvault");
+            // //Army.WaitForParty("doomvault");
             if (Bot.Quests.CanComplete(6898)) Bot.Quests.Complete(6898);
 
             Bot.Wait.ForPickup("Conquest Wreath");
@@ -427,7 +427,7 @@ public class ArmyLR
         Core.FarmingLogger("Emblem of Dage", quant);
         Core.EquipClass(ClassType.Farm);
 
-        // //Army.waitForParty("shadowblast");
+        // //Army.WaitForParty("shadowblast");
         Core.RegisterQuests(4742);
         ArmyHunt("shadowblast", "Emblem of Dage", ClassType.Farm, quant);
         // while (!Bot.ShouldExit)
@@ -474,7 +474,7 @@ public class ArmyLR
 
         Core.FarmingLogger("Dark Token", quant);
         Core.AddDrop("Dark Token");
-        // //Army.waitForParty("seraphicwardage");
+        // //Army.WaitForParty("seraphicwardage");
         while (!Bot.ShouldExit)
         {
             ArmyHunt("seraphicwardage", "Seraphic Commanders Slain", ClassType.Farm, 6);
@@ -489,7 +489,7 @@ public class ArmyLR
         //     return;
         if (checkIsDone("Legion Token", quant)) return;
         Core.FarmingLogger("Legion Token", quant);
-        // //Army.waitForParty("dreadrock");
+        // //Army.WaitForParty("dreadrock");
         while (!Bot.ShouldExit)
         {
             ArmyHunt("dreadrock", "Legion Token", ClassType.Farm, quant);

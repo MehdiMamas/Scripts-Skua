@@ -66,15 +66,15 @@ public class ArmyRepTemplate
         Farm.ToggleBoost(BoostType.Reputation);
         Core.EquipClass(ClassType.Farm);
         Core.RegisterQuests(RegisterQuests);
-        
-        
-            
+
+
+
         while (!Bot.ShouldExit && Farm.FactionRank(repname) < 10)
             Bot.Combat.Attack("*");
         Army.AggroMonStop(true);
         Farm.ToggleBoost(BoostType.Reputation, false);
         Core.CancelRegisteredQuests();
-        //Army.waitForParty("whitemap");
+        //Army.WaitForParty("whitemap");
     }
 }
 
