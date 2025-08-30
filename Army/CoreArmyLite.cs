@@ -947,27 +947,41 @@ public class CoreArmyLite
     //     }
     // }
 
-    public void waitForParty(string map, string? item = null, int playerMax = -1)
+    /// <summary>
+    /// Waits until all expected party members are present in the specified map.
+    /// Tracks players, logs progress, and uses Butler.cs to fetch missing players
+    /// if they fail to join within the given wait time. Also engages anti-AFK.
+    /// </summary>
+    /// <param name="map">The map name to join and wait in.</param>
+    /// <param name="item">Optional: Item name for contextual logging (e.g., farming target).</param>
+    /// <param name="playerMax">
+    /// The expected number of players in the party. 
+    /// If -1 (default), uses <see cref="PartySize"/>.
+    /// </param>
+    public void WaitForParty(string map, string? item = null, int playerMax = -1)
     {
         Bot.Events.PlayerAFK += PlayerAFK;
 
-        string[] players = Players();
+        string[] allPlayers = Players();
         int targetPartySize = playerMax > 0 ? playerMax : PartySize();
-        List<string> playersHere = new() { Core.Username() };
 
-        Core.Join(map, "Enter", "Left");
+        HashSet<string> playersHere = new(StringComparer.OrdinalIgnoreCase)
+    {
+        Core.Username()
+    };
+
+        Core.Join(map, "Enter", "Spawn");
         Bot.Wait.ForMapLoad(map);
 
         int logCount = 0;
         int butlerTimer = 0;
         bool hasWaited = false;
 
-        while (playersHere.Count < targetPartySize)
+        while (playersHere.Count < targetPartySize && !Bot.ShouldExit)
         {
-            TrackPlayers(players, playersHere);
+            TrackPlayers(allPlayers, playersHere);
 
-            logCount++;
-            if (logCount == 15)
+            if (++logCount >= 15)
             {
                 Core.Logger($"Waiting for the party{(item == null ? string.Empty : $" to farm {item}")} [{playersHere.Count}/{targetPartySize}]");
                 hasWaited = true;
@@ -976,21 +990,15 @@ public class CoreArmyLite
 
             Core.Sleep(1000);
 
-            if (playersHere.Count < targetPartySize)
+            if (playersHere.Count < targetPartySize && ++butlerTimer >= 30)
             {
-                butlerTimer++;
-                if (butlerTimer >= 30)
-                {
-                    // Every account helps fetch whoever is missing
-                    foreach (string missing in players.Where(p => !playersHere.Any(n => n.Equals(p, StringComparison.OrdinalIgnoreCase))))
-                    {
-                        HandleMissingPlayer(missing, playersHere, map);
-                    }
+                var missingPlayers = allPlayers.Where(p => !playersHere.Contains(p));
+                foreach (string missing in missingPlayers)
+                    HandleMissingPlayer(missing, playersHere, map);
 
-                    // Reset timers, but keep playersHere intact
-                    butlerTimer = 0;
-                    logCount = 0;
-                }
+                // Reset timers
+                butlerTimer = 0;
+                logCount = 0;
             }
         }
 
@@ -999,33 +1007,30 @@ public class CoreArmyLite
 
         Core.Sleep(3500);
 
-        // Helpers
-        void TrackPlayers(string[] allPlayers, List<string> seenPlayers)
+        // --- Helpers ---
+        void TrackPlayers(string[] expected, HashSet<string> seen)
         {
             if (Bot.Map.PlayerNames == null)
                 return;
 
             foreach (string name in Bot.Map.PlayerNames)
             {
-                if (!seenPlayers.Any(n => n.Equals(name, StringComparison.OrdinalIgnoreCase)) &&
-                    allPlayers.Any(p => p.Equals(name, StringComparison.OrdinalIgnoreCase)))
-                {
-                    seenPlayers.Add(name);
-                }
+                if (expected.Contains(name, StringComparer.OrdinalIgnoreCase))
+                    seen.Add(name);
             }
         }
 
-        void HandleMissingPlayer(string missing, List<string> seenPlayers, string currentMap)
+        void HandleMissingPlayer(string missing, HashSet<string> seen, string currentMap)
         {
             b_breakOnMap = Bot.Map.Name;
 
             Core.Logger($"Missing {missing}, initiating Butler.cs");
-            Core.Logger("Butler active until in map /" + currentMap);
+            Core.Logger($"Butler active until in map /{currentMap}");
 
             Butler(missing, roomNr: getRoomNr());
 
             Core.Logger($"{missing} has rejoined {b_breakOnMap}. Continuing...");
-            seenPlayers.Add(missing); // Add once, never remove
+            seen.Add(missing);
         }
 
         void PlayerAFK()
@@ -1035,6 +1040,7 @@ public class CoreArmyLite
             Bot.Send.Packet("%xt%zm%afk%1%false%");
         }
     }
+
 
     public bool SellToSync(string? item, int quant)
     {
