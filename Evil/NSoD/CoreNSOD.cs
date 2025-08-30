@@ -335,7 +335,10 @@ public class CoreNSOD
     public void FindBlade()
     {
         if (Core.CheckInventory("Unenhanced Doom Blade"))
+        {
+            Core.Logger("Unenhanced Doom Blade Owned!");
             return;
+        }
 
         Core.Logger("Unenhanced Doom Blade");
         Core.AddDrop("Unenhanced Doom Blade");
@@ -378,9 +381,9 @@ public class CoreNSOD
         Core.EnsureAccept(Core.CheckInventory(8012) ? 4435 : 4436);
         FindBlade();
         FindHilt();
+        TimeLordNecro(1);
         CHourglass(2);
         ScrollDarkArts(1);
-        TimeLordNecro(1);
         VoidAuras(10);
         Core.EnsureComplete(Core.CheckInventory(8012) ? 4435 : 4436);
         Bot.Wait.ForPickup("Unenhanced Aura");
@@ -439,12 +442,17 @@ public class CoreNSOD
     {
         if (Core.CheckInventory("Time Lord's Necronomicon", quant))
             return;
+
+        int CurrentCHQuant = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Chaorrupted Hourglass").Quantity;
+
         Core.FarmingLogger("Time Lord's Necronomicon", quant);
         CHourglass(quant * 10);
         ScrollDarkArts(quant);
         VoidAuras(quant * 100);
         Core.BuyItem("shadowfall", 793, "Time Lord's Necronomicon", quant);
         Bot.Wait.ForPickup("Time Lord's Necronomicon");
+
+
     }
 
     public void CavernCelestite(int quant)
