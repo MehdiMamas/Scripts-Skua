@@ -443,8 +443,8 @@ public class CoreNSOD
         if (Core.CheckInventory("Time Lord's Necronomicon", quant))
             return;
 
-        int CurrentCHQuant = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Name == "Chaorrupted Hourglass").Quantity;
-
+        int CurrentCHQuant = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+            .FirstOrDefault(x => x.Name == "Chaorrupted Hourglass")?.Quantity ?? 0;
         Core.FarmingLogger("Time Lord's Necronomicon", quant);
         CHourglass(quant * 10);
         ScrollDarkArts(quant);
