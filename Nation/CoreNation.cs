@@ -1439,7 +1439,7 @@ public class CoreNation
     /// </summary>
     /// <param name="item">The item to obtain (default: "Any").</param>
     /// <param name="quant">The quantity of the item to obtain (default: 1).</param>
-    public void VoidKnightSwordQuest(string item = null, int quant = 1)
+    public void VoidKnightSwordQuest(string? item = null, int quant = 1)
     {
         if (item == null || Core.CheckInventory(item, quant) || (!Core.CheckInventory(new[] { 38275, 38254 }, any: true)))
             return;
