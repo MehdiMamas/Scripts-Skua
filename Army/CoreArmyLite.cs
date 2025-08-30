@@ -196,7 +196,7 @@ public class CoreArmyLite
 
         if (map != null)
         {
-            waitForPartyCell(_cell ?? Bot.Player.Cell, _pad ?? Bot.Player.Pad, PartySize());
+            WaitForPartyCell(_cell ?? Bot.Player.Cell, _pad ?? Bot.Player.Pad, PartySize());
         }
 
         List<string> _AggroMonCells = this._AggroMonCells;
