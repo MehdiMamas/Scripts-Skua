@@ -114,13 +114,13 @@ public class ArmyVoucherItemofNulgath
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger(item, quant);
 
-        //Army.waitForParty("tercessuinotlim", item);
+        ////Army.waitForParty("tercessuinotlim", item);
 
         Army.AggroMonMIDs(2, 3, 4, 5);
         Army.AggroMonStart("tercessuinotlim");
         Army.DivideOnCells("Enter", "m1", "m2");
 
-        
+
 
         // Attack monsters until the inventory is filled with the specified quantity
         while (!Core.CheckInventory(item, quant) && !Bot.ShouldExit)

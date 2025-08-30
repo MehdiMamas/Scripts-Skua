@@ -102,7 +102,7 @@ public class ArmyLR
     {
         Core.BankingBlackList.AddRange(LRMaterials.Concat(LF1).Concat(LF2).Concat(LF3).Concat(legionMedals));
         Core.SetOptions();
-        
+
         Core.Logger("This script has been disabled by the author as it is not working as intended. " +
      "Please use the Solo version of this script instead.\n" +
      $"Location: {Path.Combine(ClientFileSources.SkuaScriptsDIR, @"Legion\Revenant\0LegionRevenant.cs")}");
@@ -188,7 +188,7 @@ public class ArmyLR
         if (checkIsDone("Revenant's Spellscroll", quant)) return;
 
         Core.Join("whitemap");
-        Army.WaitForPartyCell("Enter", "Spawn");
+        //Army.waitForPartyCell("Enter", "Spawn");
         Army.waitForSignal("armyLF1ready");
 
         Core.AddDrop("Legion Token");
@@ -202,13 +202,13 @@ public class ArmyLR
         {
             Core.EnsureAccept(6897);
             ArmyHunt("judgement", "Aeacus Empowered", ClassType.Solo, 50, false);
-            // //Army.waitForParty("revenant");
+            // ////Army.waitForParty("revenant");
             ArmyHunt("revenant", "Tethered Soul", ClassType.Farm, 300);
-            // //Army.waitForParty("shadowrealmpast");
+            // ////Army.waitForParty("shadowrealmpast");
             ArmyHunt("shadowrealmpast", "Darkened Essence", ClassType.Farm, 400);
-            // //Army.waitForParty("necrodungeon");
+            // ////Army.waitForParty("necrodungeon");
             ArmyHunt("necrodungeon", "Dracolich Contract", ClassType.Farm, 1000);
-            // //Army.waitForParty("judgement");
+            // ////Army.waitForParty("judgement");
             if (Bot.Quests.CanComplete(6897)) Bot.Quests.Complete(6897);
             Bot.Wait.ForPickup("Revenant's Spellscroll");
             if (checkIsDone("Revenant's Spellscroll", quant)) break;
@@ -223,7 +223,7 @@ public class ArmyLR
         if (checkIsDone("Conquest Wreath", quant)) return;
 
         Core.Join("whitemap");
-        Army.WaitForPartyCell("Enter", "Spawn");
+        //Army.waitForPartyCell("Enter", "Spawn");
 
         Core.AddDrop(LF2);
 
@@ -234,25 +234,25 @@ public class ArmyLR
         {
             Core.EnsureAccept(6898);
             ArmyHunt("doomvault", "Grim Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("mummies");
+            // ////Army.waitForParty("mummies");
             ArmyHunt("mummies", "Ancient Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("wrath");
+            // ////Army.waitForParty("wrath");
             ArmyHunt("wrath", "Pirate Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("doomwar");
+            // ////Army.waitForParty("doomwar");
             ArmyHunt("doomwar", "Battleon Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("overworld");
+            // ////Army.waitForParty("overworld");
             ArmyHunt("overworld", "Mirror Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("deathpits");
+            // ////Army.waitForParty("deathpits");
             ArmyHunt("deathpits", "Darkblood Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("maxius");
+            // ////Army.waitForParty("maxius");
             ArmyHunt("maxius", "Vampire Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("curseshore");
+            // ////Army.waitForParty("curseshore");
             ArmyHunt("curseshore", "Spirit Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("dragonbone");
+            // ////Army.waitForParty("dragonbone");
             ArmyHunt("dragonbone", "Dragon Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("doomwood");
+            // ////Army.waitForParty("doomwood");
             ArmyHunt("doomwood", "Doomwood Cohort Conquered", ClassType.Farm, 400);
-            // //Army.waitForParty("doomvault");
+            // ////Army.waitForParty("doomvault");
             if (Bot.Quests.CanComplete(6898)) Bot.Quests.Complete(6898);
 
             Bot.Wait.ForPickup("Conquest Wreath");
@@ -268,7 +268,7 @@ public class ArmyLR
         if (checkIsDone("Exalted Crown", quant)) return;
 
         Core.Join("whitemap");
-        Army.WaitForPartyCell("Enter", "Spawn");
+        //Army.waitForPartyCell("Enter", "Spawn");
         Army.waitForSignal("armyLF3ready");
 
         Core.FarmingLogger("Exalted Crown", quant);
@@ -304,7 +304,7 @@ public class ArmyLR
         Farm.ToggleBoost(BoostType.Reputation);
 
         Core.Join("swordhavenbridge");
-        Army.WaitForPartyCell("Enter", "Spawn");
+        //Army.waitForPartyCell("Enter", "Spawn");
 
         Army.DivideOnCellsPriority(new[] { "Bridge", "End" }, priorityCell: "", log: true);
         Core.RegisterQuests(364, 369); //Youthanize 364, That Hero Who Chases Slimes 369
@@ -349,7 +349,7 @@ public class ArmyLR
         Farm.ToggleBoost(BoostType.Reputation);
 
         Core.Join("castleundead");
-        Army.WaitForPartyCell("Enter", "Spawn");
+        //Army.waitForPartyCell("Enter", "Spawn");
 
         Core.RegisterQuests(367, 372);
         Army.DivideOnCellsPriority(new[] { "Enter", "Bleft", "Bright", "Tleft" }, priorityCell: "", log: true);
@@ -396,7 +396,7 @@ public class ArmyLR
         Farm.ToggleBoost(BoostType.Gold);
 
         Core.Join("darkwarnation");
-        Army.WaitForPartyCell("Enter", "Spawn");
+        //Army.waitForPartyCell("Enter", "Spawn");
 
         Core.RegisterQuests(8578, 8579, 8580, 8581); //Legion Badges, Mega Legion Badges, Doomed Legion Warriors, Undead Legion Dread       
 
@@ -427,7 +427,7 @@ public class ArmyLR
         Core.FarmingLogger("Emblem of Dage", quant);
         Core.EquipClass(ClassType.Farm);
 
-        // //Army.waitForParty("shadowblast");
+        // ////Army.waitForParty("shadowblast");
         Core.RegisterQuests(4742);
         ArmyHunt("shadowblast", "Emblem of Dage", ClassType.Farm, quant);
         // while (!Bot.ShouldExit)
@@ -474,7 +474,7 @@ public class ArmyLR
 
         Core.FarmingLogger("Dark Token", quant);
         Core.AddDrop("Dark Token");
-        // //Army.waitForParty("seraphicwardage");
+        // ////Army.waitForParty("seraphicwardage");
         while (!Bot.ShouldExit)
         {
             ArmyHunt("seraphicwardage", "Seraphic Commanders Slain", ClassType.Farm, 6);
@@ -489,7 +489,7 @@ public class ArmyLR
         //     return;
         if (checkIsDone("Legion Token", quant)) return;
         Core.FarmingLogger("Legion Token", quant);
-        // //Army.waitForParty("dreadrock");
+        // ////Army.waitForParty("dreadrock");
         while (!Bot.ShouldExit)
         {
             ArmyHunt("dreadrock", "Legion Token", ClassType.Farm, quant);
@@ -540,9 +540,9 @@ public class ArmyLR
             else Army.waitForSignal($"revenant1{counter}", revenant1);
             counter++;
         }
-        else Army.WaitForPartyCell("Enter", "Spawn");
+        else //Army.waitForPartyCell("Enter", "Spawn");
 
-        Army.registerMessage($"{item}{counter}", false);
+            Army.registerMessage($"{item}{counter}", false);
         counter++;
 
         Core.FarmingLogger(item, quant);
@@ -757,7 +757,7 @@ public class ArmyLR
 
     private bool repGoodEvil4()
     {
-        Army.WaitForPartyCell("Enter", "Spawn");
+        //Army.waitForPartyCell("Enter", "Spawn");
         Army.waitForSignal($"checkinggoodevil4{counter}");
         Army.registerMessage($"rep4{counter}", false);
         counter++;
@@ -768,7 +768,7 @@ public class ArmyLR
 
     private bool repGoodEvilMax()
     {
-        Army.WaitForPartyCell("Enter", "Spawn");
+        //Army.waitForPartyCell("Enter", "Spawn");
         Army.waitForSignal($"checkinggoodevilmax{counter}");
         Army.registerMessage($"repmax{counter}", false);
         counter++;
@@ -779,7 +779,7 @@ public class ArmyLR
 
     private bool checkGold(int quant)
     {
-        Army.WaitForPartyCell("Enter", "Spawn");
+        //Army.waitForPartyCell("Enter", "Spawn");
         Army.waitForSignal($"gold{quant}");
         Army.registerMessage($"gold{counter}", false);
         counter++;

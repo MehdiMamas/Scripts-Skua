@@ -71,7 +71,7 @@ public class ArmyTaintedGem
             Bot.Wait.ForPickup("Tained Gem");
         }
         Core.CancelRegisteredQuests();
-        //Army.waitForParty("whitemap", "Tainted Gem");
+        ////Army.waitForParty("whitemap", "Tainted Gem");
 
     }
 
@@ -82,7 +82,7 @@ public class ArmyTaintedGem
         Army.AggroMonStart("boxes");
         Army.DivideOnCells("Fort2", "Closet", "Fort1", "Boss", "Boss", "Boss");
 
-        
+
 
         while (!Bot.ShouldExit && (!Core.CheckInventory("Cubes", 500)))
             Bot.Combat.Attack("*");
@@ -90,7 +90,7 @@ public class ArmyTaintedGem
 
         Core.JumpWait();
         Core.Sleep(2000);
-        //Army.waitForParty("boxes", "Cubes");
+        ////Army.waitForParty("boxes", "Cubes");
     }
 
     public void IceCube()
@@ -100,7 +100,7 @@ public class ArmyTaintedGem
         Army.AggroMonStart("mountfrost");
         Core.Jump("War", "Left");
 
-        
+
 
         while (!Bot.ShouldExit && (!Core.CheckInventory("Ice Cubes", 6)))
             Bot.Combat.Attack("*");
@@ -108,6 +108,6 @@ public class ArmyTaintedGem
 
         Core.JumpWait();
         Core.Sleep(2000);
-        //Army.waitForParty("mountfrost", "Ice Cubes");
+        ////Army.waitForParty("mountfrost", "Ice Cubes");
     }
 }
