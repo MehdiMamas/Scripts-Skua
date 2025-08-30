@@ -820,36 +820,41 @@ public class CoreArmyLite
     /// <param name="pad">The direction to pad when jumping to the cell; 
     /// defaults to "Left".</param>
     /// <param name="playerCount">The expected number of players in the 
-    /// party; defaults to the current player count.</param>
-    public void waitForPartyCell(string? cell = null, string? pad = null, int? playerCount = null)
+    /// party; defaults to the party size.</param>
+    public void WaitForPartyCell(string? cell = null, string? pad = null, int? playerCount = null)
     {
         if (cell != null)
-        {
-            Bot.Map.Jump(cell ?? Bot.Player.Cell, pad ?? Bot.Player.Cell, autoCorrect: false); // Jump to specified cell if provided
-        }
+            Bot.Map.Jump(cell, pad ?? "Left", autoCorrect: false);
 
-        Core.Logger($"Final list of players: {string.Join(", ", Players())}");
-        // Wait for party players to be ready
-        while (!Bot.ShouldExit
-               && Bot.Map.PlayerNames != null
-               && (Bot.Map.PlayerNames.Count < PartySize()
-                   || !Bot.Map.PlayerNames.All(x => Players().Select(p => p.Trim().ToLower()).Contains(x.Trim().ToLower()))))
+        IReadOnlyList<string> expectedPlayers = Players()
+            .Select(p => p.Trim().ToLower())
+            .ToList();
+
+        int requiredCount = playerCount ?? PartySize();
+        Core.Logger($"Final list of players: {string.Join(", ", expectedPlayers)}");
+
+        while (!Bot.ShouldExit && Bot.Map.PlayerNames != null)
         {
-            if (Bot.Map.PlayerNames.All(x => Players().Select(p => p.Trim().ToLower()).Contains(x.Trim().ToLower())))
+            var currentPlayers = Bot.Map.PlayerNames
+                .Select(x => x.Trim().ToLower())
+                .ToList();
+
+            bool allPresent = expectedPlayers.All(currentPlayers.Contains)
+                              && currentPlayers.Count >= requiredCount;
+
+            if (allPresent)
             {
                 Core.Logger("All Players found!");
                 break;
             }
-            else
-            {
-                Core.Logger($"Missing {string.Join(", ", Bot.Map.PlayerNames
-                    .Where(x => !Players().Select(p => p.Trim().ToLower()).Contains(x.Trim().ToLower())))}");
-            }
+
+            var missing = expectedPlayers.Where(p => !currentPlayers.Contains(p));
+            Core.Logger($"Missing: {string.Join(", ", missing)}");
 
             Core.Sleep();
         }
-
     }
+
 
     public string[] Players()
     {
