@@ -88,7 +88,7 @@ public class ArmyPrinceDarkonsPoleaxeMats
 
         //Core.EquipClass(classType);
         Core.Join(map);
-        //Army.waitForPartyCell("Enter", "Spawn");
+        Army.WaitForPartyCell("Enter", "Spawn");
         Core.RegisterQuests(questId);
         Army.waitForSignal("imready");
 

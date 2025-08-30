@@ -264,7 +264,7 @@ public class DoTArmy
     {
         if (Core.CheckInventory(QuestRewards[0..2], toInv: false))
             foreach (string reward in QuestRewards[0..2])
-                ////Army.waitForParty("whitemap", reward);
+                //Army.waitForParty("whitemap", reward);
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[0..2], toInv: false))
                 {
@@ -294,7 +294,7 @@ public class DoTArmy
     {
         if (Core.CheckInventory(QuestRewards[3..5], toInv: false))
             foreach (string reward in QuestRewards[3..5])
-                ////Army.waitForParty("whitemap", reward);
+                //Army.waitForParty("whitemap", reward);
 
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[3..5], toInv: false))
@@ -324,7 +324,7 @@ public class DoTArmy
     {
         if (Core.CheckInventory(QuestRewards[6..7], toInv: false))
             foreach (string reward in QuestRewards[6..7])
-                ////Army.waitForParty("whitemap", reward);
+                //Army.waitForParty("whitemap", reward);
 
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[6..7], toInv: false))
@@ -354,7 +354,7 @@ public class DoTArmy
     {
         if (Core.CheckInventory(QuestRewards[7..8], toInv: false))
             foreach (string reward in QuestRewards[7..8])
-                ////Army.waitForParty("whitemap", reward);
+                //Army.waitForParty("whitemap", reward);
 
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[7..8], toInv: false))
@@ -383,7 +383,7 @@ public class DoTArmy
     {
         if (Core.CheckInventory(QuestRewards[9..10], toInv: false))
             foreach (string reward in QuestRewards[9..10])
-                ////Army.waitForParty("whitemap", reward);
+                //Army.waitForParty("whitemap", reward);
 
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[9..10], toInv: false))
@@ -405,7 +405,7 @@ public class DoTArmy
     {
         if (Core.CheckInventory(QuestRewards[11..12], toInv: false))
             foreach (string reward in QuestRewards[11..12])
-                ////Army.waitForParty("whitemap", reward);
+                //Army.waitForParty("whitemap", reward);
 
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[11..12], toInv: false))
@@ -450,7 +450,7 @@ public class DoTArmy
     {
         if (Core.CheckInventory(QuestRewards[13..14], toInv: false))
             foreach (string reward in QuestRewards[13..14])
-                ////Army.waitForParty("whitemap", reward);
+                //Army.waitForParty("whitemap", reward);
 
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[13..14], toInv: false))
@@ -480,7 +480,7 @@ public class DoTArmy
     {
         if (Core.CheckInventory(QuestRewards[14..15], toInv: false))
             foreach (string reward in QuestRewards[14..15])
-                ////Army.waitForParty("whitemap", reward);
+                //Army.waitForParty("whitemap", reward);
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[14..15], toInv: false))
                 {
@@ -505,7 +505,7 @@ public class DoTArmy
     {
         if (Core.CheckInventory(QuestRewards[16..19], toInv: false))
             foreach (string reward in QuestRewards[16..19])
-                ////Army.waitForParty("whitemap", reward);
+                //Army.waitForParty("whitemap", reward);
 
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[16..19], toInv: false))
@@ -531,7 +531,7 @@ public class DoTArmy
     {
         //     if (Core.CheckInventory(QuestRewards[20..21], toInv: false))
         //         foreach (string reward in QuestRewards[20..21])
-        //             //Army.waitForParty("whitemap", reward);
+        //             Army.waitForParty("whitemap", reward);
 
         // else
         Core.Logger("Quest already complete / Items owned, butlering[hopefully]");
@@ -617,7 +617,7 @@ public class DoTArmy
             Army.SellToSync(item, quant);
 
         Core.AddDrop(item);
-        ////Army.waitForParty(map);
+        //Army.waitForParty(map);
 
         Core.EquipClass(classType);
         Core.FarmingLogger(item, quant);
@@ -660,7 +660,7 @@ public class DoTArmy
             Core.JumpWait();
             Core.Sleep(2500);
         }
-        ////Army.waitForParty(map, item);
+        //Army.waitForParty(map, item);
     }
 
     void ArmyHunt(string map, int monsterID, string item, ClassType classType, bool isTemp = false, int quant = 1)
@@ -679,7 +679,7 @@ public class DoTArmy
             Army.SellToSync(item, quant);
 
         Core.AddDrop(item);
-        ////Army.waitForParty(map);
+        //Army.waitForParty(map);
 
         Core.EquipClass(classType);
         Core.FarmingLogger(item, quant);
@@ -699,7 +699,7 @@ public class DoTArmy
             Core.JumpWait();
             Core.Sleep(2500);
         }
-        ////Army.waitForParty(map, item);
+        //Army.waitForParty(map, item);
     }
 
 
