@@ -161,15 +161,15 @@ public class CoreNSOD
 
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
-        Core.RegisterQuests(4439);
         while (!Bot.ShouldExit && !Core.CheckInventory("Void Aura", quant))
         {
+            Core.EnsureAccept(4439);
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonsterMapID("shadowrealmpast", 11, "Malignant Essence", 3, false);
 
             Core.EquipClass(ClassType.Farm);
             Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Empowered Essence", 50, false);
-            Bot.Wait.ForPickup("Void Aura");
+            Core.EnsureComplete(4439);
             Core.FarmingLogger("Void Aura", quant);
         }
         Core.AbandonQuest(4439);
