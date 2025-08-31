@@ -1841,7 +1841,7 @@ public class CoreBots
     /// <param name="itemName">Name of the item</param>
     /// <param name="quant">Desired quantity</param>
     /// <param name="all">Set to true if you wish to sell all the items</param>
-    public void SellItem(string itemName, int quant = 0, bool all = false)
+    public void SellItem(string itemName, int quant = 1, bool all = false)
     {
         if (!(quant > 0 ? CheckInventory(itemName, quant) : CheckInventory(itemName)) || !Bot.Inventory.TryGetItem(itemName, out InventoryItem? item))
             return;
