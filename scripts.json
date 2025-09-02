@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 381072,
+    "size": 381466,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -90,7 +90,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 74764,
+    "size": 75081,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -3679,7 +3679,7 @@
       "moreskulls"
     ],
     "path": "Tools/AutoZoneandAttack.cs",
-    "size": 11032,
+    "size": 11219,
     "fileName": "AutoZoneandAttack.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/AutoZoneandAttack.cs"
   },
@@ -3947,7 +3947,7 @@
       "goto"
     ],
     "path": "Prototypes/Butler2[WIP].cs",
-    "size": 26596,
+    "size": 26678,
     "fileName": "Butler2[WIP].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Butler2[WIP].cs"
   },
@@ -3958,7 +3958,7 @@
       "null"
     ],
     "path": "Prototypes/MoreSkullsWorldBoss.cs",
-    "size": 7976,
+    "size": 8008,
     "fileName": "MoreSkullsWorldBoss.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/MoreSkullsWorldBoss.cs"
   },
@@ -24798,7 +24798,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelper.cs",
-    "size": 11580,
+    "size": 13767,
     "fileName": "MergeTemplateHelper.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelper.cs"
   },
@@ -24845,7 +24845,7 @@
       "data"
     ],
     "path": "Tools/ForDevelopers/GenerateQuestFiles.cs",
-    "size": 2679,
+    "size": 2708,
     "fileName": "GenerateQuestFiles.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFiles.cs"
   },
