@@ -225,6 +225,8 @@ public class Butler2
                 {
                     Core.Logger("Bot is exiting, canceling Butler task...");
                     ButlerTokenSource?.Cancel();
+                    ButlerTokenSource?.Dispose();
+                    ButlerTokenSource = new CancellationTokenSource();
                     StopButler();
                     return;
                 }
@@ -415,10 +417,9 @@ public class Butler2
     {
         if (ButlerTokenSource != null)
         {
-            if (!ButlerTokenSource.IsCancellationRequested)
-                ButlerTokenSource.Cancel();
+            ButlerTokenSource.Cancel();
             ButlerTokenSource.Dispose();
-            ButlerTokenSource = null;
+            ButlerTokenSource = new CancellationTokenSource();
         }
 
         _cancellationToken = default;

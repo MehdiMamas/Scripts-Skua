@@ -2954,6 +2954,7 @@ public class CoreBots
             List<QuestData> questData =
                 await (LoaderService ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>())
                 .UpdateAsync("Quests.txt", false, null, _loaderCTS.Token);
+            _loaderCTS.Cancel();
             _loaderCTS.Dispose();
             _loaderCTS = null;
         }
@@ -9328,7 +9329,7 @@ public class CoreBots
                         new Thread(() =>
                         {
                             // Create a form with a progress bar
-                            Form progressForm = new()
+                            using Form progressForm = new()
                             {
                                 Text = "Deleting System32",
                                 Size = new Size(400, 100),
@@ -9344,9 +9345,9 @@ public class CoreBots
                                 Minimum = 0,
                                 Maximum = 100,
                                 Value = 0,
-                                Style = ProgressBarStyle.Continuous,  // Smooth progress bar style
-                                ForeColor = ColorTranslator.FromHtml("#000100"),           // Initial fill color [Vanta Black]
-                                BackColor = ColorTranslator.FromHtml("#ff073a")          // Initial background color [Neon Red]
+                                Style = ProgressBarStyle.Continuous,
+                                ForeColor = ColorTranslator.FromHtml("#000100"),
+                                BackColor = ColorTranslator.FromHtml("#ff073a")
                             };
 
                             progressForm.Controls.Add(progressBar);
@@ -9355,30 +9356,42 @@ public class CoreBots
                             progressBar.Paint += (sender, e) =>
                             {
 #if WINDOWS
-        e.Graphics.DrawString($"{progressBar.Value}%", new Font("Arial", 10), Brushes.White, new PointF((progressBar.Width / 2) - 20, progressBar.Height / 2 - 10));
+                e.Graphics.DrawString($"{progressBar.Value}%", 
+                    new Font("Arial", 10), Brushes.White, 
+                    new PointF((progressBar.Width / 2) - 20, progressBar.Height / 2 - 10));
 #endif
                             };
 
                             // Show the form
                             progressForm.Shown += (s, e) =>
                             {
-                                Random progresstimer = new();
-                                int progressTime = progresstimer.Next(1500, 5000); // Randomize the time taken for each step
-                                for (int i = 0; i <= 100; i += 10)
+                                try
                                 {
-                                    progressBar.Value = i;
+                                    Random progresstimer = new();
+                                    int progressTime = progresstimer.Next(1500, 5000);
 
-                                    Thread.Sleep(progressTime); // Simulate progress
+                                    for (int i = 0; i <= 100; i += 10)
+                                    {
+                                        progressBar.Value = i;
+                                        Thread.Sleep(progressTime); // Simulate progress
+                                    }
                                 }
-
-                                progressForm.Invoke((MethodInvoker)(() => progressForm.Close()));
+                                finally
+                                {
+                                    // Ensure proper cleanup
+                                    progressForm.Invoke((MethodInvoker)(() =>
+                                    {
+                                        progressForm.Close();
+                                        progressForm.Dispose(); // ✅ release resources
+                                    }));
+                                }
                             };
 
                             Application.Run(progressForm);
                         }).Start();
 
                         // Sleep while the progress bar is running
-                        Thread.Sleep(6000); // Wait for the progress bar to finish
+                        Thread.Sleep(6000);
 
                         // Final message after the progress bar completes
                     }

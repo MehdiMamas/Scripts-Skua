@@ -112,6 +112,8 @@ public class AAWithMove
         }
 
         darkCarnaxCts.Cancel();
+        darkCarnaxCts.Dispose();
+        darkCarnaxCts = null;
         Bot.Events.RunToArea -= MoveNightmareCarnax;
         Core.CancelRegisteredQuests();
         Bot.Options.AttackWithoutTarget = false;
@@ -201,6 +203,8 @@ public class AAWithMove
         }
 
         ultraDageCts.Cancel();
+        ultraDageCts.Dispose();
+        ultraDageCts = null;
         Bot.Events.RunToArea -= MoveUltraDage;
         Bot.Options.AttackWithoutTarget = false;
     }
@@ -293,6 +297,8 @@ public class AAWithMove
         }
 
         moreSkullsCts.Cancel();
+        moreSkullsCts.Dispose();
+        moreSkullsCts = null;
         Bot.Events.ExtensionPacketReceived -= Fuckyou;
         Bot.Options.AttackWithoutTarget = false;
     }

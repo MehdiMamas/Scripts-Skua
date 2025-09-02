@@ -92,6 +92,7 @@ public class MoreSkullsWorldBoss
         // Cleanup
         moveTokenSource?.Cancel(); // Cancel any ongoing move task
         moveTokenSource?.Dispose();
+        moveTokenSource = null;
         Bot.Events.ExtensionPacketReceived -= Fuckyou;
         Bot.Options.AttackWithoutTarget = false;
     }

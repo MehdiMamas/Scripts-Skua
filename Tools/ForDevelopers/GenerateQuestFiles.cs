@@ -66,6 +66,7 @@ public class GetQuests
         List<QuestData> questData =
             await (service ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>())
             .UpdateAsync("Quests.txt", false, null, _loaderCTS.Token);
+        _loaderCTS.Cancel();
         _loaderCTS.Dispose();
         _loaderCTS = null;
     }

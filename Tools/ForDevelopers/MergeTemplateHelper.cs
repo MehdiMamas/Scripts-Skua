@@ -234,6 +234,61 @@ public class MergeTemplateHelper
     /// <summary>
     /// Loads stored cases from the specified file path.
     /// </summary>
+    // private void LoadStoredCases()
+    // {
+    //     if (!File.Exists(caseStoragePath))
+    //     {
+    //         Core.Logger($"Case storage file not found at {caseStoragePath}.");
+    //         StoredCases = new Dictionary<string, string>();
+    //         return;
+    //     }
+
+    //     try
+    //     {
+    //         string[] lines = File.ReadAllLines(caseStoragePath);
+    //         string? currentItem = null;
+    //         List<string> currentCaseLines = new();
+
+    //         foreach (string line in lines)
+    //         {
+    //             if (line.TrimStart().StartsWith("case \""))
+    //             {
+    //                 if (currentItem != null && currentCaseLines.Count > 0)
+    //                     StoredCases[currentItem] = string.Join("\n", currentCaseLines);
+
+    //                 currentCaseLines.Clear();
+
+    //                 int start = line.IndexOf('"') + 1;
+    //                 int end = line.IndexOf('"', start);
+    //                 currentItem = line[start..end];
+    //                 currentCaseLines.Add(line);
+    //             }
+    //             else if (currentItem != null)
+    //             {
+    //                 currentCaseLines.Add(line);
+    //                 if (line.Trim() == "break;")
+    //                 {
+    //                     StoredCases[currentItem] = string.Join("\n", currentCaseLines);
+    //                     currentItem = null;
+    //                     currentCaseLines.Clear();
+    //                 }
+    //             }
+    //         }
+
+    //         if (currentItem != null && currentCaseLines.Count > 0)
+    //             StoredCases[currentItem] = string.Join("\n", currentCaseLines);
+
+    //         Core.Logger($"Loaded {StoredCases.Count} stored cases from CaseStorage.");
+    //     }
+    //     catch (System.Exception ex)
+    //     {
+    //         Core.Logger($"Failed to load stored cases: {ex.Message}");
+    //         StoredCases = new Dictionary<string, string>();
+    //     }
+    // }
+
+    private static readonly object _caseLock = new();
+
     private void LoadStoredCases()
     {
         if (!File.Exists(caseStoragePath))
@@ -245,6 +300,7 @@ public class MergeTemplateHelper
 
         try
         {
+            Dictionary<string, string> tempCases = new();
             string[] lines = File.ReadAllLines(caseStoragePath);
             string? currentItem = null;
             List<string> currentCaseLines = new();
@@ -254,7 +310,7 @@ public class MergeTemplateHelper
                 if (line.TrimStart().StartsWith("case \""))
                 {
                     if (currentItem != null && currentCaseLines.Count > 0)
-                        StoredCases[currentItem] = string.Join("\n", currentCaseLines);
+                        tempCases[currentItem] = string.Join("\n", currentCaseLines);
 
                     currentCaseLines.Clear();
 
@@ -268,7 +324,7 @@ public class MergeTemplateHelper
                     currentCaseLines.Add(line);
                     if (line.Trim() == "break;")
                     {
-                        StoredCases[currentItem] = string.Join("\n", currentCaseLines);
+                        tempCases[currentItem] = string.Join("\n", currentCaseLines);
                         currentItem = null;
                         currentCaseLines.Clear();
                     }
@@ -276,14 +332,18 @@ public class MergeTemplateHelper
             }
 
             if (currentItem != null && currentCaseLines.Count > 0)
-                StoredCases[currentItem] = string.Join("\n", currentCaseLines);
+                tempCases[currentItem] = string.Join("\n", currentCaseLines);
+
+            lock (_caseLock)
+                StoredCases = tempCases;
 
             Core.Logger($"Loaded {StoredCases.Count} stored cases from CaseStorage.");
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             Core.Logger($"Failed to load stored cases: {ex.Message}");
             StoredCases = new Dictionary<string, string>();
         }
     }
+
 }

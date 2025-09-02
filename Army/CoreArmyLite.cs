@@ -157,21 +157,23 @@ public class CoreArmyLite
             }
         }
 
+        aggroCTS.Cancel();
+        aggroCTS.Dispose();
         aggroCTS = new();
         Task.Run(async () =>
-        {
-            while (!Bot.ShouldExit && !aggroCTS.IsCancellationRequested)
-            {
-                try
-                {
-                    if (AggroMonMapIDs.Count > 0)
-                        Bot.Send.Packet(AggroMonPacket(AggroMonMapIDs.ToArray()));
-                    await Task.Delay(AggroMonPacketDelay);
-                }
-                catch { }
-            }
-            aggroCTS = null;
-        });
+               {
+                   while (!Bot.ShouldExit && !aggroCTS.IsCancellationRequested)
+                   {
+                       try
+                       {
+                           if (AggroMonMapIDs.Count > 0)
+                               Bot.Send.Packet(AggroMonPacket(AggroMonMapIDs.ToArray()));
+                           await Task.Delay(AggroMonPacketDelay);
+                       }
+                       catch { }
+                   }
+                   aggroCTS = null;
+               });
         List<int> GetMapIDs(List<Monster> monsterData) => monsterData.Select(m => m.MapID).ToList();
         void AddMapIDs(List<int> MMIDs)
         {
@@ -211,6 +213,8 @@ public class CoreArmyLite
         foreach (int ID in _AggroMonIDs)
             AddMapIDs(GetMapIDs(Bot.Monsters.MapMonsters.Where(m => m.ID == ID || m.MapID == ID).ToList()));
 
+        aggroCTS.Cancel();
+        aggroCTS.Dispose();
         aggroCTS = new();
         Task.Run(async () =>
         {
@@ -224,6 +228,8 @@ public class CoreArmyLite
                 }
                 catch { }
             }
+            aggroCTS.Cancel();
+            aggroCTS.Dispose();
             aggroCTS = null;
         });
 
@@ -246,6 +252,8 @@ public class CoreArmyLite
     Retry:
         Bot.Options.AttackWithoutTarget = false;
         aggroCTS?.Cancel();
+        aggroCTS.Dispose();
+        aggroCTS = null;
         if (clear)
             AggroMonClear();
         Bot.Wait.ForTrue(() => aggroCTS == null, 30);
