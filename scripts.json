@@ -4643,14 +4643,15 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/Various/ArmyStarPiece.cs"
   },
   {
-    "name": "Elemental Binding (Army)",
-    "description": "Farms Prismatic Seams using your army.",
+    "name": "Army Elemental Binding & Gold Farm",
+    "description": "Farms Elemental Bindings and optionally gold using your army setup.",
     "tags": [
       "army",
-      "elemental binding"
+      "elemental binding",
+      "gold farm"
     ],
     "path": "Army/Various/ArmyElementalBindings.cs",
-    "size": 2304,
+    "size": 3138,
     "fileName": "ArmyElementalBindings.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/Various/ArmyElementalBindings.cs"
   },
