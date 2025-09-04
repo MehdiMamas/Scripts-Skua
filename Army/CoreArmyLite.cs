@@ -188,59 +188,68 @@ public class CoreArmyLite
         if (aggroCTS is not null)
             AggroMonStop();
 
-        // Retrieve player configurations in a loop
+        Core.PrivateRooms = true;
+        Core.PrivateRoomNumber = getRoomNr();
+
+        Bot.Map.Join($"{map}-{Core.PrivateRoomNumber}", "Enter", "Spawn", autoCorrect: false);
+        Bot.Wait.ForMapLoad(map);
+
+        Bot.Map.Jump(_cell ?? "Enter", _pad ?? "Spawn", autoCorrect: false);
+        Bot.Wait.ForCellChange(_cell ?? "Enter");
+
+        // Retrieve player configurations
         for (int i = 1; i <= 10; i++)
-        {
             Bot.Config!.Get<string>($"player{i}");
-        }
 
         Core.Logger($"Party Size: {PartySize()}");
 
         if (map != null)
-        {
             WaitForPartyCell(_cell ?? Bot.Player.Cell, _pad ?? Bot.Player.Pad, PartySize());
+
+        // Use HashSet to prevent duplicate MapIDs
+        HashSet<int> AggroMonMapIDs = new();
+
+        void PopulateAggroMonMapIDs()
+        {
+            foreach (string cell in _AggroMonCells)
+                foreach (int id in Bot.Monsters.GetMonstersByCell(cell).Select(m => m.MapID))
+                    AggroMonMapIDs.Add(id);
+
+            foreach (string name in _AggroMonNames)
+                foreach (int id in Bot.Monsters.MapMonsters.Where(m => m.Name == name).Select(m => m.MapID))
+                    AggroMonMapIDs.Add(id);
+
+            foreach (int id in _AggroMonIDs)
+                foreach (int mapId in Bot.Monsters.MapMonsters.Where(m => m.ID == id || m.MapID == id).Select(m => m.MapID))
+                    AggroMonMapIDs.Add(mapId);
+
+            foreach (int mapID in _AggroMonMIDs)
+                AggroMonMapIDs.Add(mapID);
         }
+        PopulateAggroMonMapIDs();
 
-        List<string> _AggroMonCells = this._AggroMonCells;
-        List<string> _AggroMonNames = this._AggroMonNames;
-        List<int> _AggroMonIDs = this._AggroMonIDs;
-        List<int> AggroMonMapIDs = this._AggroMonMIDs; //MMIDs = Monster Map IDs
-
-        foreach (string cell in _AggroMonCells)
-            AddMapIDs(GetMapIDs(Bot.Monsters.GetMonstersByCell(cell)));
-        foreach (string name in _AggroMonNames)
-            AddMapIDs(GetMapIDs(Bot.Monsters.MapMonsters.Where(m => m.Name == name).ToList()));
-        foreach (int ID in _AggroMonIDs)
-            AddMapIDs(GetMapIDs(Bot.Monsters.MapMonsters.Where(m => m.ID == ID || m.MapID == ID).ToList()));
-
-        aggroCTS.Cancel();
-        aggroCTS.Dispose();
+        // Start aggro task
+        aggroCTS?.Cancel();
+        aggroCTS?.Dispose();
         aggroCTS = new();
+
         Task.Run(async () =>
         {
             while (!Bot.ShouldExit && !aggroCTS.IsCancellationRequested)
             {
                 try
                 {
-                    if (Bot.Player.Alive)
+                    if (Bot.Player.Alive && Bot.Player.Cell == _cell)
                         Bot.Send.Packet(AggroMonPacket(AggroMonMapIDs.ToArray()));
                     await Task.Delay(AggroMonPacketDelay);
                 }
                 catch { }
             }
-            aggroCTS.Cancel();
-            aggroCTS.Dispose();
+
+            aggroCTS?.Cancel();
+            aggroCTS?.Dispose();
             aggroCTS = null;
         });
-
-        List<int> GetMapIDs(List<Monster> monsterData)
-            => monsterData.Select(m => m.MapID).ToList();
-        void AddMapIDs(List<int> MMIDs)
-        {
-            foreach (int ID in MMIDs)
-                if (!AggroMonMapIDs.Contains(ID))
-                    AggroMonMapIDs.Add(ID);
-        }
     }
     private CancellationTokenSource? aggroCTS = null;
 
@@ -309,7 +318,8 @@ public class CoreArmyLite
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = getRoomNr();
-        Core.Join(map);
+        Bot.Map.Join($"{map}-{Core.PrivateRoomNumber}", autoCorrect: false);
+        Bot.Wait.ForMapLoad(map);
 
         //Devining variables
         var _monsters = Bot.Monsters.MapMonsters.Where(m => monsters.Contains(m.Name)).ToList();
@@ -731,7 +741,11 @@ public class CoreArmyLite
                 _SmartAggroMonCells.Add(cell);
 
             if (username == p)
-                Core.Jump(cell, "Left");
+            {
+                Bot.Map.Jump(cell, "Left", autoCorrect: false);
+                Bot.Wait.ForCellChange(cell);
+                Bot.Player.SetSpawnPoint();
+            }
             cellCount = cellCount == cells.Length - 1 ? 0 : cellCount + 1;
         }
     }
@@ -819,47 +833,64 @@ public class CoreArmyLite
     /// <summary>
     /// Waits for the party members to join the specified cell in the game.
     /// If no cell is specified, it checks the current cell for the required 
-    /// player count. The method logs the final list of players and monitors 
-    /// the player status until the expected number of players is present or 
-    /// a bugged lobby condition is detected.
+    /// player count. Logs the final list of players and monitors until all 
+    /// expected players are present, a timeout occurs, or the bot exits.
     /// </summary>
-    /// <param name="cell">The cell to jump to, if specified. If null, the 
-    /// current cell is used.</param>
-    /// <param name="pad">The direction to pad when jumping to the cell; 
-    /// defaults to "Left".</param>
-    /// <param name="playerCount">The expected number of players in the 
-    /// party; defaults to the party size.</param>
-    public void WaitForPartyCell(string? cell = null, string? pad = null, int? playerCount = null)
+    /// <param name="cell">The cell to jump to. If null, the current cell is used.</param>
+    /// <param name="pad">The direction to pad when jumping; defaults to "Left".</param>
+    /// <param name="playerCount">The expected number of players; defaults to the party size.</param>
+    /// <param name="timeoutSeconds">Optional timeout in seconds; defaults to 60s.</param>
+    public void WaitForPartyCell(string? cell = null, string? pad = null, int? playerCount = null, int timeoutSeconds = 60)
     {
-        if (cell != null)
+        // Jump to the specified cell if provided
+        if (!string.IsNullOrEmpty(cell))
+        {
             Bot.Map.Jump(cell, pad ?? "Left", autoCorrect: false);
+            Bot.Wait.ForCellChange(cell);
+        }
 
-        IReadOnlyList<string> expectedPlayers = Players()
+        // Normalize expected player names
+        var expectedPlayers = Players()
+            .Where(p => !string.IsNullOrWhiteSpace(p))
             .Select(p => p.Trim().ToLower())
             .ToList();
 
         int requiredCount = playerCount ?? PartySize();
-        Core.Logger($"Final list of players: {string.Join(", ", expectedPlayers)}");
+
+        Core.Logger($"Waiting for players: {string.Join(", ", expectedPlayers)}");
+
+        DateTime startTime = DateTime.UtcNow;
 
         while (!Bot.ShouldExit && Bot.Map.PlayerNames != null)
         {
-            var currentPlayers = Bot.Map.PlayerNames
-                .Select(x => x.Trim().ToLower())
-                .ToList();
-
-            bool allPresent = expectedPlayers.All(currentPlayers.Contains)
-                              && currentPlayers.Count >= requiredCount;
-
-            if (allPresent)
+            // Timeout check
+            if ((DateTime.UtcNow - startTime).TotalSeconds > timeoutSeconds)
             {
-                Core.Logger("All Players found!");
+                Core.Logger("Timeout reached. Lobby may be bugged or some players are missing.");
                 break;
             }
 
-            var missing = expectedPlayers.Where(p => !currentPlayers.Contains(p));
-            Core.Logger($"Missing: {string.Join(", ", missing)}");
+            // Normalize current map player names
+            var currentPlayers = Bot.Map.PlayerNames
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .Select(x => x.Trim().ToLower())
+                .ToHashSet();
 
-            Core.Sleep();
+            // Determine missing players
+            var missing = expectedPlayers
+                .Where(p => !currentPlayers.Contains(p))
+                .ToList();
+
+            if (!missing.Any() && currentPlayers.Count >= requiredCount)
+            {
+                Core.Logger("All players found!");
+                break;
+            }
+
+            if (missing.Any())
+                Core.Logger($"Missing: {string.Join(", ", missing)}");
+
+            Core.Sleep(1000);
         }
     }
 
