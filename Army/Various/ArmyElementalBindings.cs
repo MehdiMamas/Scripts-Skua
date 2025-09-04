@@ -52,41 +52,40 @@ public class ArmyElementalBinding
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
+        bool sellBindings = Bot.Config.Get<bool>("GoldFarm");
 
         Core.EquipClass(ClassType.Solo);
         Core.AddDrop("Elemental Binding");
-        Core.Join("archmage");
 
+        Army.AggroMonMIDs(new[] { 1, 2 });
+        Army.AggroMonStart("archmage", "Enter", "Spawn");
         Army.DivideOnCells("r2");
-        Army.AggroMonCells("r2");
-        Army.AggroMonStart("archmage", "r2", "left");
-
-        bool sellBindings = Bot.Config.Get<bool>("GoldFarm");
 
         while (!Bot.ShouldExit) // Infinite loop
         {
-            foreach (Monster mon in Bot.Monsters.MapMonsters.Where(x => x.ID == 1 || x.ID == 2))
+            foreach (Monster mon in Bot.Monsters.MapMonsters.Where(x => x != null && (x.MapID == 1 || x.MapID == 2)))
             {
-                while (!Bot.ShouldExit && mon.HP > 0)
+                if (mon == null)
+                    continue;
+
+                while (!Bot.ShouldExit)
                 {
-                    if (!Bot.Player.Alive)
-                    {
-                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                        continue;
-                    }
+                    while (!Bot.ShouldExit && !Bot.Player.Alive) { Bot.Sleep(500); }
 
                     // Ensure player is in the correct cell
-                    while (!Bot.ShouldExit && Bot.Player.Cell != "r2")
+                    if (Bot.Player.Cell != "r2")
                     {
-                        Core.Jump("r2", "Right");
-                        Core.Sleep();
+                        Bot.Map.Jump("r2", "Right", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r2");
                     }
 
                     // Attack logic
-                    if (!Bot.Player.HasTarget)
-                        Bot.Combat.Attack(mon.MapID);
+                    Bot.Combat.Attack(mon.MapID);
 
                     Bot.Sleep(500);
+
+                    if (mon.HP <= 0)
+                        break;
 
                     // Determine stacking vs selling
                     bool startStackingBindings = Bot.Player.Gold >= 96_000_000;
@@ -97,7 +96,7 @@ public class ArmyElementalBinding
                 }
 
                 // Sell bindings if needed and the option is enabled
-                if (sellBindings && Core.CheckInventory("Elemental Binding", 1000) && Bot.Player.Gold < 96_000_000)
+                while (!Bot.ShouldExit && sellBindings && Core.CheckInventory("Elemental Binding", 1) && Bot.Player.Gold < 96_000_000)
                 {
                     Core.Jump("Enter", "Spawn");
                     Core.SellItem("Elemental Binding", all: true);
