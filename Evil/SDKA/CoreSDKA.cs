@@ -271,9 +271,31 @@ public class CoreSDKA
         if (Core.CheckInventory("DoomSquire Weapon Kit", quant))
             return;
 
+        // Check for squire quest to be completed if !completed unlock via metal upgrade quest
+        if (!Bot.Quests.IsUnlocked(2144))
+        {
+            string[] Metals = new[] { "Arsenic", "Beryllium", "Chromium", "Palladium", "Rhodium", "Thorium", "Mercury" };
+            string metalName = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+                .FirstOrDefault(x => x != null && Metals.Any(m => x.Name == m))?.Name ?? "Arsenic";
+            HardCoreMetalsEnum metalEnum = Enum.TryParse<HardCoreMetalsEnum>(metalName, out var parsedEnum) ? parsedEnum : HardCoreMetalsEnum.Arsenic;
+            string fullMetalName = metalEnum switch
+            {
+                HardCoreMetalsEnum.Arsenic => "Accursed Arsenic of Doom",
+                HardCoreMetalsEnum.Beryllium => "Baneful Beryllium of Doom",
+                HardCoreMetalsEnum.Chromium => "Calamitous Chromium of Doom",
+                HardCoreMetalsEnum.Palladium => "Pernicious Palladium of Doom",
+                HardCoreMetalsEnum.Rhodium => "Reprehensible Rhodium of Doom",
+                HardCoreMetalsEnum.Thorium => "Treacherous Thorium of Doom",
+                HardCoreMetalsEnum.Mercury => "Malefic Mercury of Doom",
+                _ => "Accursed Arsenic of Doom"
+            };
+            UpgradeMetal(metalEnum);
+        }
+
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger("DoomSquire Weapon Kit", quant);
         Core.AddDrop("DoomSquire Weapon Kit");
+
         Core.RegisterQuests(2144);
         while (!Bot.ShouldExit && (!Core.CheckInventory("DoomSquire Weapon Kit", quant)))
         {
@@ -400,13 +422,6 @@ public class CoreSDKA
                 Core.BuyItem("dwarfhold", 434, 12476, shopItemID: 1198);
             }
 
-            if (!Story.QuestProgression(2137))
-            {
-                Core.Logger("Unlocking Weapon Kit quests");
-                Core.EnsureAccept(2137);
-                Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat", "Forge Key", isTemp: false, log: false);
-                Core.EnsureComplete(2137);
-            }
             Core.FarmingLogger("Daggers of Destruction");
             DoomSquireWK();
             FarmDSO(50);
@@ -610,7 +625,7 @@ public class CoreSDKA
             case "Necrotic Scythe of Scourge":
                 if (Core.CheckInventory("Necrotic Scythe of Scourge"))
                     PinpointthePieces(2184, new[] { "Ominous Aura" }, new[] { quant });
-                break;  
+                break;
 
             default:
                 break;
@@ -713,7 +728,6 @@ public class CoreSDKA
                 forgeKeyQuest = 2143;
                 break;
         }
-        ;
 
         if (Core.CheckInventory(fullMetalName))
             return;
