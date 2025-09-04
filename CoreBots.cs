@@ -7391,6 +7391,7 @@ public class CoreBots
             case "deathpitbrawl":
             // Room Limit: 2
             case "evilmarsh":
+            case "nulgath":
             // Room Limit: 1
             case "queeniona":
             case "baconcatb":
