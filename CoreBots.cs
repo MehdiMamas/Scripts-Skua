@@ -5414,14 +5414,14 @@ public class CoreBots
 
     #region  IsMonsterAlive
     public bool IsMonsterAlive(Monster? mon)
-        => mon != null && (mon.Alive || !KilledMonsters.Contains(mon.MapID));
+        => mon != null && ((mon.HP > 0 && mon.State != 0 )|| !KilledMonsters.Contains(mon.MapID));
     public bool IsMonsterAlive(string monsterName)
-        => Bot.Monsters.CurrentMonsters.Where(m => m.Name == monsterName).Any(m => IsMonsterAlive(m));
+        => Bot.Monsters.CurrentMonsters.Where(m => m.Name == monsterName).Any(IsMonsterAlive);
     public bool IsMonsterAlive(int monsterID, bool useMapID)
     {
         if (useMapID)
             return IsMonsterAlive(Bot.Monsters.CurrentMonsters.Find(m => m.MapID == monsterID));
-        else return Bot.Monsters.CurrentMonsters.Where(m => m.ID == monsterID).Any(m => IsMonsterAlive(m));
+        else return Bot.Monsters.CurrentMonsters.Where(m => m.ID == monsterID).Any(IsMonsterAlive);
     }
 
 
