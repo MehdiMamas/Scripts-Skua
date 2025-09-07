@@ -6032,7 +6032,7 @@ public class CoreBots
 
         if (Bot.ShowMessageBox($"This script requires Skua {targetVersion} or above, " +
         "click OK to open the download page of the latest release", "Outdated Skua detected", "OK").Text == "OK")
-            Process.Start("explorer", "https://github.com/BrenoHenrike/Skua/releases/latest");
+            Process.Start("explorer", "https://github.com/BrenoHenrike/Skua/releases/tag/1.2.5.1");
         Logger($"This script requires Skua {targetVersion} or above. Stopping the script", messageBox: true, stopBot: true);
     }
 
