@@ -131,7 +131,7 @@ public class CoreBots
         if (changeTo)
         {
             Bot.Events.ScriptStopping += CrashDetector;
-            SkuaVersionChecker("1.2.4.0");
+            SkuaVersionChecker("1.2.5.1");
 
             // Start the stopwatch for timing the script run
             _scriptStopwatch = Stopwatch.StartNew();
