@@ -762,14 +762,11 @@ public class CoreSDKA
         Core.BuyItem("dwarfhold", 434, fullMetalName);
 
         // Unlocking "DoomSquire Weapon Kit" [Quest ID 2144]
-        if (!Core.isCompletedBefore(2144))
-        {
-            Core.AddDrop(fullMetalName);
-            Core.EnsureAccept(forgeKeyQuest);
-            Core.HuntMonster("dwarfhold", "Albino Bat", "Forge Key", isTemp: false);
-            Core.EnsureComplete(forgeKeyQuest);
-            Bot.Wait.ForPickup(fullMetalName);
-        }
+        Core.AddDrop(fullMetalName);
+        Core.EnsureAccept(forgeKeyQuest);
+        Core.HuntMonster("dwarfhold", "Albino Bat", "Forge Key", isTemp: false);
+        Core.EnsureComplete(forgeKeyQuest);
+        Bot.Wait.ForPickup(fullMetalName);
     }
 }
 
