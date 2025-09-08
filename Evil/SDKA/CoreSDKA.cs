@@ -761,8 +761,8 @@ public class CoreSDKA
         DoomKnightWK("Ominous Aura", 2);
         Core.BuyItem("dwarfhold", 434, fullMetalName);
 
-        // Unlocking "Basic Weapon Kit Construction" [Quest ID 2136]
-        if (!Core.isCompletedBefore(forgeKeyQuest))
+        // Unlocking "DoomSquire Weapon Kit" [Quest ID 2144]
+        if (!Core.isCompletedBefore(2144))
         {
             Core.AddDrop(fullMetalName);
             Core.EnsureAccept(forgeKeyQuest);
