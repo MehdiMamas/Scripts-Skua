@@ -22175,6 +22175,33 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/LiaTaraHillLootMerge.cs"
   },
   {
+    "name": "Povo Heroico Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Povo Heroico Merge [2620] in /povoheroico",
+    "tags": [
+      "povo",
+      "heroico",
+      "merge",
+      "povoheroico",
+      "brado",
+      "encantado",
+      "capuz",
+      "face",
+      "encantada",
+      "símbolo",
+      "da",
+      "ordem",
+      "do",
+      "progresso",
+      "brabo",
+      "brabos",
+      "encantados"
+    ],
+    "path": "Other/MergeShops/PovoHeroicoMerge.cs",
+    "size": 4356,
+    "fileName": "PovoHeroicoMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/PovoHeroicoMerge.cs"
+  },
+  {
     "name": "Infernal Arena Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Infernal Arena Merge [2334] in /infernalarena",
     "tags": [
