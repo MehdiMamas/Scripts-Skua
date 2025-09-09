@@ -1212,16 +1212,12 @@ public class CoreFarms
         Exit:
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
-                if (ExitAttempt <= 1)
-                    Core.Logger("Attempting to leave map.");
-                else
-                    Core.Logger($"Attempting to leave map. Try: {ExitAttempt++}");
                 Bot.Combat.CancelTarget();
                 Bot.Wait.ForCombatExit();
                 Bot.Map.Join("battleon-999999");
                 Bot.Wait.ForMapLoad("battleon");
                 if (Bot.Map.Name != "battleon")
-                    Core.Logger("Failed!? HOW.. try agian");
+                    continue;
                 else
                     goto Start;
             }
