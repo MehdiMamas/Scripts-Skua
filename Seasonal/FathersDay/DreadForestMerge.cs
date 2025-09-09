@@ -39,6 +39,9 @@ public class DreadForestMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        if (!Core.isSeasonalMapActive("dreadforest"))
+            return;
+            
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("dreadforest", 2140, findIngredients, buyOnlyThis, buyMode: buyMode);
 
