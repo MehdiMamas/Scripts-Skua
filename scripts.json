@@ -7536,6 +7536,17 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/FathersDay/OneFinalTaskRewards.cs"
   },
   {
+    "name": "DreadForestMerge",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Seasonal/FathersDay/DreadForestMerge.cs",
+    "size": 10810,
+    "fileName": "DreadForestMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/FathersDay/DreadForestMerge.cs"
+  },
+  {
     "name": "Beleen's Gifts",
     "description": "Farms the materials needed for Beleen's Gifts Merge in canalshore.",
     "tags": [
@@ -22814,17 +22825,6 @@
     "size": 13535,
     "fileName": "SeaVoiceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SeaVoiceMerge.cs"
-  },
-  {
-    "name": "DreadForestMerge",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Other/MergeShops/DreadForestMerge.cs",
-    "size": 10723,
-    "fileName": "DreadForestMerge.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/DreadForestMerge.cs"
   },
   {
     "name": "Diplomat Merge",
