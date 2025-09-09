@@ -699,77 +699,63 @@ public class CoreStory
     private int PreviousQuestID = 0;
     private bool PreviousQuestState = false;
 
+    #region Fixed KillQuest
+
+    private readonly List<ItemBase> CurrentRequirements = new();
+
     private void _SmartKill(string map, string monster, int iterations = 20)
     {
-        if (monster == null)
+        if (string.IsNullOrEmpty(monster))
         {
-            Core.Logger("ERROR: monster is null, please report", stopBot: true);
+            Core.Logger("ERROR: monster is null or empty, please report", stopBot: true);
             return;
         }
 
-        bool repeat = true;
-        for (int j = 0; j < iterations; j++)
+        bool shouldRepeat = true;
+
+        for (int attempt = 0; attempt < iterations; attempt++)
         {
             if (CurrentRequirements.Count == 0)
-            {
                 break;
-            }
-            if (CurrentRequirements.Count == 1)
+
+            for (int i = CurrentRequirements.Count - 1; i >= 0; i--)
             {
-                if (_RepeatCheck(ref repeat, 0))
+                var req = CurrentRequirements[i];
+
+                if (Core.CheckInventory(req.Name, req.Quantity))
                 {
+                    CurrentRequirements.RemoveAt(i);
+                    continue;
+                }
+
+                if (_RepeatCheck(ref shouldRepeat, i))
                     break;
-                }
-                _MonsterHunt(map, ref repeat, monster, CurrentRequirements[0].Name, CurrentRequirements[0].Quantity, CurrentRequirements[0].Temp, 0);
-                break;
-            }
-            else
-            {
-                for (int i = CurrentRequirements.Count - 1; i >= 0; i--)
+
+                var targetMonster = FindMonster(monster);
+                if (targetMonster == null)
                 {
-                    if (j == 0 && Core.CheckInventory(CurrentRequirements[i].ID, CurrentRequirements[i].Quantity))
-                    {
-                        CurrentRequirements.RemoveAt(i);
-                        continue;
-                    }
-                    if (j != 0 && Core.CheckInventory(CurrentRequirements[i].ID, CurrentRequirements[i].Quantity))
-                    {
-                        if (_RepeatCheck(ref repeat, i))
-                        {
-                            break;
-                        }
-                        _MonsterHunt(map, ref repeat, monster, CurrentRequirements[i].Name, CurrentRequirements[i].Quantity, CurrentRequirements[i].Temp, i);
-                        break;
-                    }
+                    Core.Logger($"Monster \"{monster}\" not found on map \"{Bot.Map.Name}\"", stopBot: true);
+                    return;
                 }
-            }
-            if (!repeat)
-            {
+
+                _MonsterHunt(map, ref shouldRepeat, targetMonster, req.Name, req.Quantity, req.Temp, i);
                 break;
-            }
-            // Find the target monster
-            Monster? targetMonster = Core.InitializeWithRetries(() => Bot.Monsters.MapMonsters.Find(x => x.Name.FormatForCompare() == monster.FormatForCompare()));
-            if (targetMonster == null)
-            {
-                Core.Logger($"Monster \"{monster}\" not found on the map \"{Bot.Map.Name}\" after {j} iterations", stopBot: true);
-                return;
-            }
-            if (Bot.Map.Name != map)
-            {
-                Core.Join(map);
-                Bot.Wait.ForMapLoad(map);
             }
 
-            Bot.Hunt.Monster(monster);
-            Bot.Drops.Pickup(CurrentRequirements.Where(item => !item.Temp).Select(item => item.Name).ToArray());
+            if (!shouldRepeat)
+                break;
+
+            PickupDrops();
             Core.Sleep();
         }
     }
-    private readonly List<ItemBase> CurrentRequirements = new();
-    private void _MonsterHunt(string map, ref bool shouldRepeat, string monster, string itemName, int quantity, bool isTemp, int index)
+
+    private void _MonsterHunt(string map, ref bool shouldRepeat, Monster targetMonster, string itemName, int quantity, bool isTemp, int index)
     {
-        // Check if the item is already in inventory
-        bool itemInInventory = itemName != null && (isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity));
+        bool itemInInventory = isTemp
+            ? Bot.TempInv.Contains(itemName, quantity)
+            : Core.CheckInventory(itemName, quantity);
+
         if (itemInInventory)
         {
             CurrentRequirements.RemoveAt(index);
@@ -777,19 +763,8 @@ public class CoreStory
             return;
         }
 
+        Core.Logger($"Hunting \"{targetMonster.Name}\" for \"{itemName}\" x{quantity}", "MonsterHunt");
 
-        // Find the target monster
-        Monster? targetMonster = Core.InitializeWithRetries(() => Bot.Monsters.MapMonsters.Find(x => x.Name.FormatForCompare() == monster.FormatForCompare()));
-        if (targetMonster == null)
-        {
-            Core.Logger($"Monster \"{monster}\" not found on the map \"{Bot.Map.Name}\" for \"{itemName}\", Its Probably been renamed, please report this Missing monster to @Tato2 or @bogalj on Discord", $"Missing Monster", stopBot: true);
-            shouldRepeat = false;
-            return;
-        }
-
-        Core.Logger($"Hunting \"{monster}\" for \"{itemName}\" x{quantity}", "MonsterHunt");
-
-        // Main loop for hunting the monster until the item is acquired
         while (!Bot.ShouldExit && !itemInInventory)
         {
             if (Bot.Map.Name != map)
@@ -797,27 +772,80 @@ public class CoreStory
                 Core.Join(map);
                 Bot.Wait.ForMapLoad(map);
             }
-            if (Bot.Player.Cell != targetMonster.Cell)
-            {
-                Bot.Map.Jump(targetMonster.Cell, targetMonster.Cell == "Enter" ? "Spawn" : "Left");
-                Bot.Wait.ForCellChange(targetMonster.Cell);
-            }
-            Bot.Combat.Attack(targetMonster);
-            Core.Sleep();
 
-            // Update itemInInventory status after attempting to get the item
-            itemInInventory = itemName != null && (isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity));
-            if (itemInInventory)
-                break;
+            EnsureInCell(targetMonster.Cell);
+
+            AttackMonster(targetMonster);
+
+            itemInInventory = isTemp
+                ? Bot.TempInv.Contains(itemName, quantity)
+                : Core.CheckInventory(itemName, quantity);
         }
 
-        // Handle item pickup if not temporary
         if (!isTemp)
-            Bot.Wait.ForPickup(itemName!);
+            Bot.Wait.ForPickup(itemName);
 
         CurrentRequirements.RemoveAt(index);
         shouldRepeat = false;
     }
+
+    private void EnsureInCell(string cell)
+    {
+        if (Bot.Player.Cell != cell)
+        {
+            Bot.Map.Jump(cell, cell == "Enter" ? "Spawn" : "Left");
+            Bot.Wait.ForCellChange(cell);
+        }
+    }
+
+    private void AttackMonster(Monster monster)
+    {
+        var currentCellMonsters = Bot.Monsters.GetMonstersByCell(Bot.Player.Cell);
+        var priorityMonsters = currentCellMonsters
+            .Where(m => string.Equals(m.Name, monster.Name, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        if (priorityMonsters.Any())
+        {
+            foreach (var targetMonster in priorityMonsters)
+            {
+                if (Bot.ShouldExit) break;
+
+                Bot.Combat.Attack(targetMonster.MapID);
+                Bot.Wait.ForMonsterDeath(targetMonster.MapID);
+
+                while (Bot.Player.HasTarget && !Bot.ShouldExit)
+                    Bot.Wait.ForMonsterDeath(targetMonster.MapID);
+
+                if (Bot.Player.HasTarget)
+                    Bot.Combat.CancelTarget();
+
+                Bot.Sleep(100);
+            }
+        }
+        else
+        {
+            Bot.Sleep(250);
+        }
+    }
+
+    private Monster? FindMonster(string monsterName)
+    {
+        return Core.InitializeWithRetries(() =>
+            Bot.Monsters.MapMonsters.Find(x => x.Name.FormatForCompare() == monsterName.FormatForCompare()));
+    }
+
+    private void PickupDrops()
+    {
+        var itemsToPickup = CurrentRequirements
+            .Where(item => !item.Temp)
+            .Select(item => item.Name)
+            .ToArray();
+
+        Bot.Drops.Pickup(itemsToPickup);
+    }
+
+    #endregion
 
 
     private bool _RepeatCheck(ref bool shouldRepeat, int index)
