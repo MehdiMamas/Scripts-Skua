@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 381504,
+    "size": 381498,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 142939,
+    "size": 143007,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -2961,7 +2961,7 @@
       "brawl"
     ],
     "path": "Farm/CombatTrophy.cs",
-    "size": 894,
+    "size": 1283,
     "fileName": "CombatTrophy.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/CombatTrophy.cs"
   },
