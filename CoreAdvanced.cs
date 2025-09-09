@@ -2825,11 +2825,22 @@ public class CoreAdvanced
                     break;
                 #endregion Lucky - Dauntless - Vim - Penitence
 
+                #region Lucky - Lacerate - Vim - Lament
+                case "timekeeper":
+                case "timekiller":
+                    if (!uLacerate() || !uVim() || !uLament())
+                        goto default;
+
+                    type = EnhancementType.Lucky;
+                    cSpecial = CapeSpecial.Lament;
+                    wSpecial = WeaponSpecial.Lacerate;
+                    hSpecial = HelmSpecial.Vim;
+                    break;
+                #endregion Lucky - Lacerate - Vim - Lament
+
                 #region Lucky - Forge - Spiral Carve
                 case "corrupted chronomancer":
                 case "underworld chronomancer":
-                case "timekeeper":
-                case "timekiller":
                 case "eternal chronomancer":
                 case "immortal chronomancer":
                 case "dark metal necro":
