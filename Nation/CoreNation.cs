@@ -346,10 +346,10 @@ public class CoreNation
         {
             if (Bot.Map.Name != "evilwarnul")
                 Core.Join("evilwarnul");
-            if (Bot.Player.Cell != "r2")
-                Core.Jump("r2", "Down");
+            if (Bot.Player.Cell != "r12")
+                Core.Jump("r12", "Left");
 
-            foreach (Monster Mob in Bot.Monsters.CurrentAvailableMonsters.Where(m => m.Cell == "r2"))
+            foreach (Monster Mob in Bot.Monsters.CurrentAvailableMonsters.Where(m => m.Cell == "r12"))
             {
                 Bot.Kill.Monster(Mob.MapID);
                 Core.Sleep();
