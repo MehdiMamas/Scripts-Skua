@@ -1141,7 +1141,7 @@ public class CoreFarms
         }
 
     Start:
-        int ExitAttempt = 0;
+        int ExitAttempt = 1;
         int Death = 0;
         Random random = new();
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
@@ -1212,18 +1212,18 @@ public class CoreFarms
         Exit:
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
-                Core.Logger($"Attempting Exit {ExitAttempt++}.");
+                if (ExitAttempt <= 1)
+                    Core.Logger("Attempting to leave map.");
+                else
+                    Core.Logger($"Attempting to leave map. Try: {ExitAttempt++}");
                 Bot.Combat.CancelTarget();
                 Bot.Wait.ForCombatExit();
                 Bot.Map.Join("battleon-999999");
-                Core.Sleep(1500);
+                Bot.Wait.ForMapLoad("battleon");
                 if (Bot.Map.Name != "battleon")
                     Core.Logger("Failed!? HOW.. try agian");
                 else
-                {
-                    Core.Logger("Successful!");
                     goto Start;
-                }
             }
 
         RestartOnDeath:

@@ -5414,7 +5414,7 @@ public class CoreBots
 
     #region  IsMonsterAlive
     public bool IsMonsterAlive(Monster? mon)
-        => mon != null && ((mon.HP > 0 && mon.State != 0 )|| !KilledMonsters.Contains(mon.MapID));
+        => mon != null && ((mon.HP > 0 && mon.State != 0) || !KilledMonsters.Contains(mon.MapID));
     public bool IsMonsterAlive(string monsterName)
         => Bot.Monsters.CurrentMonsters.Where(m => m.Name == monsterName).Any(IsMonsterAlive);
     public bool IsMonsterAlive(int monsterID, bool useMapID)
@@ -7983,18 +7983,23 @@ public class CoreBots
         .Where(x => x != null && x.Cell == Bot.Player.Cell))
         {
 
-            Logger($"setting mob State for {target.MapID}");
-            Bot.Combat.Attack(target);
-            Bot.Combat.CancelAutoAttack();
-            Bot.Combat.CancelTarget();
-            Bot.Wait.ForTrue(() => target.State > 0 || Bot.Monsters.CurrentAvailableMonsters.Any(x => x.MapID == 27), 20);
-
-            Bot.Combat.StopAttacking = false;
-            if (Bot.Map.Name == "legionpvp")
+            while (!Bot.ShouldExit && target.HP > 0)
             {
-                Join("dagepvp-999999", "Enter0", "Spawn");
-                Bot.Wait.ForMapLoad("dagepvp");
-                return;
+                if (target.HP <= 0)
+                    break;
+
+                Bot.Combat.Attack(target);
+                Bot.Sleep(500);
+
+                if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                    continue;
+
+                if (Bot.Map.Name == "legionpvp")
+                {
+                    Join("dagepvp-999999", "Enter0", "Spawn");
+                    Bot.Wait.ForMapLoad("dagepvp");
+                    return;
+                }
             }
         }
 
