@@ -54,7 +54,7 @@ public class ScarletSorceress
         // Check if R10, soemtimes the game can get it stuck at r9 with 100% Cxp
         if (BloodSorceress != null && BloodSorceress.Quantity < 302500) //now requires it to be rank 10?
         {
-            // Core.Relogin();
+            Core.Relogin("\"Blood Sorceress\" Received from Quest is unenhanced, relogging to properly set its enh. type.");
             Adv.RankUpClass("Blood Sorceress");
         }
 

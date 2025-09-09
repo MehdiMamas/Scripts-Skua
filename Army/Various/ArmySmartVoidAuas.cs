@@ -98,14 +98,30 @@ public class ArmySmartVoidAuras
         Core.AddDrop(VASDKA);
         Core.Logger($"Farming Void Aura's with SDKA Method");
         Core.FarmingLogger($"Void Aura", Quantity);
+        Core.RegisterQuests(4439);
+        if (Bot.Config!.Get<bool>("sellToSync"))
+            Army.SellToSync("Void Aura", Quantity);
+        Core.AddDrop("Void Aura");
+        Core.Join("shadowrealmpast");
 
+        Army.DivideOnCells("Enter", "r2", "r3", "r4");
+        Core.Sleep(1500);
+        Bot.Player.SetSpawnPoint();
+        Core.EquipClass(Bot.Player.Cell == "r4" ? ClassType.Solo : ClassType.Farm);
+
+        Army.AggroMonMIDs(Core.FromTo(1, 11));
+        Army.AggroMonStart("shadowrealmpast");
         while (!Bot.ShouldExit && !Core.CheckInventory("Void Aura", Quantity))
         {
-            Core.EnsureAccept(4439);
-            ArmyHunt("shadowrealmpast", Core.FromTo(1, 10), new[] { "Enter", "r2", "r3" }, "Empowered Essence", ClassType.Farm, isTemp: false, 50);
-            ArmyHunt("shadowrealmpast", new[] { 11 }, new[] { "r4" }, "Malignant Essence", ClassType.Solo, isTemp: false, 3);
-            Core.EnsureComplete(4439);
+            while (!Bot.ShouldExit && !Bot.Player.Alive) { Core.Sleep(); }
+
+            if (!Bot.Player.HasTarget && !Core.CheckInventory("Void Aura", Quantity))
+                Bot.Combat.Attack("*");
+
+            Bot.Sleep(500);
         }
+        Army.AggroMonStop(true);
+        Core.JumpWait();
     }
 
     public void RetrieveVoidAurasArmy(int Quantity)
@@ -117,19 +133,29 @@ public class ArmySmartVoidAuras
         Core.Logger($"Farming Void Aura's with Non-SDKA Method");
         Core.FarmingLogger($"Void Aura", Quantity);
 
+        // Dictionary storing all ArmyHunt parameters
+        Dictionary<string, (string map, int[] MIDs, string[] Cells, string item, ClassType classType, bool isTemp, int quant)> armyHunts = new()
+        {
+            { "Astral", ("timespace", new[] { 1, 2, 3, 4, 5 }, new[] { "Enter", "Frame1" }, "Astral Ephemerite Essence", ClassType.Farm, false, 100) },
+            { "Belrot", ("citadel", new[] { 21 }, new[] { "m13" }, "Belrot the Fiend Essence", ClassType.Farm, false, 100) },
+            { "BlackKnight", ("greenguardwest", new[] { 22 }, new[] { "BKWest15" }, "Black Knight Essence", ClassType.Solo, false, 100) },
+            { "TigerLeech", ("mudluk", new[] { 18 }, new[] { "Boss" }, "Tiger Leech Essence", ClassType.Solo, false, 100) },
+            { "Carnax", ("aqlesson", new[] { 17 }, new[] { "Frame9" }, "Carnax Essence", ClassType.Solo, false, 100) },
+            { "ChaosVordred", ("necrocavern", new[] { 5 }, new[] { "r16" }, "Chaos Vordred Essence", ClassType.Solo, false, 100) },
+            { "DaiTengu", ("hachiko", new[] { 10 }, new[] { "Roof" }, "Dai Tengu Essence", ClassType.Solo, false, 100) },
+            { "UnendingAvatar", ("timevoid", new[] { 12 }, new[] { "Frame8" }, "Unending Avatar Essence", ClassType.Solo, false, 100) },
+            { "VoidDragon", ("dragonchallenge", new[] { 4 }, new[] { "r4" }, "Void Dragon Essence", ClassType.Solo, false, 100) },
+            { "CreatureCreation", ("maul", new[] { 17 }, new[] { "r3" }, "Creature Creation Essence", ClassType.Solo, false, 100) }
+        };
+
         while (!Bot.ShouldExit && !Core.CheckInventory("Void Aura", Quantity))
         {
             Core.EnsureAccept(4432);
-            ArmyHunt("timespace", new[] { 1, 2, 3, 4, 5 }, new[] { "Enter", "Frame1" }, "Astral Ephemerite Essence", ClassType.Farm, isTemp: false, 100);
-            ArmyHunt("citadel", new[] { 21 }, new[] { "m13" }, "Belrot the Fiend Essence", ClassType.Farm, isTemp: false, 100);
-            ArmyHunt("greenguardwest", new[] { 22 }, new[] { "BKWest15" }, "Black Knight Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("mudluk", new[] { 18 }, new[] { "Boss" }, "Tiger Leech Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("aqlesson", new[] { 17 }, new[] { "Frame9" }, "Carnax Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("necrocavern", new[] { 5 }, new[] { "r16" }, "Chaos Vordred Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("hachiko", new[] { 10 }, new[] { "Roof" }, "Dai Tengu Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("timevoid", new[] { 12 }, new[] { "Frame8" }, "Unending Avatar Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("dragonchallenge", new[] { 4 }, new[] { "r4" }, "Void Dragon Essence", ClassType.Solo, isTemp: false, 100);
-            ArmyHunt("maul", new[] { 17 }, new[] { "r3" }, "Creature Creation Essence", ClassType.Solo, isTemp: false, 100);
+
+            // Loop through the dictionary to call ArmyHunt
+            foreach (var hunt in armyHunts.Values)
+                ArmyHunt(hunt.map, hunt.MIDs, hunt.Cells, hunt.item, hunt.classType, hunt.isTemp, hunt.quant);
+
             Core.EnsureCompleteMulti(4432);
         }
         Core.ConfigureAggro(false);
@@ -142,21 +168,23 @@ public class ArmySmartVoidAuras
 
         Core.AddDrop(item);
 
-        Core.EquipClass(classType);
         Core.Join(map);
-        Army.waitForParty(map, item, Army.PartySize());
-        Core.FarmingLogger(item, quant);
 
-        Army.AggroMonMIDs(MIDs);
-        Army.AggroMonStart(map);
         Army.DivideOnCells(Cells);
+        Core.Sleep(1500);
+        Bot.Player.SetSpawnPoint();
+        Army.AggroMonMIDs(MIDs);
+        Core.EquipClass(classType);
+        Army.AggroMonStart(map);
 
         while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant)))
         {
-            Bot.Combat.Attack("*");
-            Core.Sleep();
-            if (isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant))
-                break;
+            while (!Bot.ShouldExit && !Bot.Player.Alive) { Core.Sleep(); }
+
+            if (!Bot.Player.HasTarget && !(isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant)))
+                Bot.Combat.Attack("*");
+
+            Bot.Sleep(500);
         }
 
         Army.AggroMonStop(true);

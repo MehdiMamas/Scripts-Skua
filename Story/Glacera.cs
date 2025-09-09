@@ -22,9 +22,9 @@ public class GlaceraStory
         Core.SetOptions(false);
     }
 
-    public void DoAll()
+    public void DoAll(bool Cryomancer = false)
     {
-        FrozenTower();
+        FrozenTower(Cryomancer);
         FrozenRuins();
         Glacera();
         FrozenRuins2();
@@ -35,7 +35,7 @@ public class GlaceraStory
         IceDungeon();
     }
 
-    public void FrozenTower()
+    public void FrozenTower(bool Cryomancer = false)
     {
         if (Core.isCompletedBefore(3937))
             return;
@@ -149,13 +149,16 @@ public class GlaceraStory
             Core.EnsureComplete(3936);
         }
 
+        if (Cryomancer)
+            return;
+
         // Defeat the FrostSpawn Invaders
-        if (!Story.QuestProgression(3937))
-        {
-            Core.EnsureAccept(3937);
-            Core.HuntMonster("frozentower", "Frost Fangbeast", "Fangbeasts defeated", 15);
-            Core.EnsureComplete(3937);
-        }
+            if (!Story.QuestProgression(3937))
+            {
+                Core.EnsureAccept(3937);
+                Core.HuntMonster("frozentower", "Frost Fangbeast", "Fangbeasts defeated", 15);
+                Core.EnsureComplete(3937);
+            }
     }
 
     public void FrozenRuins()

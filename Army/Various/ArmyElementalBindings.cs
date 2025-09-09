@@ -1,8 +1,9 @@
 /*
-name: Elemental Binding (Army)
-description: Farms Prismatic Seams using your army.
-tags: army, elemental binding
+name: Army Elemental Binding & Gold Farm
+description: Farms Elemental Bindings and optionally gold using your army setup.
+tags: army, elemental binding, gold farm
 */
+
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreFarms.cs
@@ -10,6 +11,7 @@ tags: army, elemental binding
 //cs_include Scripts/Army/CoreArmyLite.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Monsters;
+using Skua.Core.Options;
 
 public class ArmyElementalBinding
 {
@@ -20,10 +22,11 @@ public class ArmyElementalBinding
     private CoreArmyLite Army = new();
     private static CoreArmyLite sArmy = new();
 
-    public string OptionsStorage = "CustomAggroMon";
+    public string OptionsStorage = "ArmyElementalBindings";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
+        new Option<bool>("Sell Bindings", "GoldFarm", "Sell the bindings to max gold, then stack bindings. Otherwise stack for Providence", true),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -49,36 +52,60 @@ public class ArmyElementalBinding
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
+        bool sellBindings = Bot.Config.Get<bool>("GoldFarm");
 
         Core.EquipClass(ClassType.Solo);
         Core.AddDrop("Elemental Binding");
 
-        Army.AggroMonStart("archmage");
+        Army.AggroMonMIDs(new[] { 1, 2 });
+        Army.AggroMonStart("archmage", "Enter", "Spawn");
         Army.DivideOnCells("r2");
 
-        while (!Bot.ShouldExit && !Core.CheckInventory("Elemental Binding", 2500))
+        while (!Bot.ShouldExit) // Infinite loop
         {
-            while (!Bot.ShouldExit && Bot.Player.Cell != "r2")
+            foreach (Monster mon in Bot.Monsters.MapMonsters.Where(x => x != null && (x.MapID == 1 || x.MapID == 2)))
             {
-                Core.Jump("r2");
-                Core.Sleep();
-            }
+                if (mon == null)
+                    continue;
 
-            foreach (Monster mon in Bot.Monsters.MapMonsters.Where(x => x.ID == 1 || x.ID == 2))
-            {
-                bool shouldExit = false;
-
-                while (!Bot.ShouldExit && mon.HP >= 0 && !shouldExit)
+                while (!Bot.ShouldExit)
                 {
+                    while (!Bot.ShouldExit && !Bot.Player.Alive) { Bot.Sleep(500); }
+
+                    // Ensure player is in the correct cell
+                    if (Bot.Player.Cell != "r2")
+                    {
+                        Bot.Map.Jump("r2", "Right", autoCorrect: false);
+                        Bot.Wait.ForCellChange("r2");
+                    }
+
+                    // Attack logic
                     Bot.Combat.Attack(mon.MapID);
-                    Core.Sleep();
-                    shouldExit = Core.CheckInventory("Elemental Binding", 2500);
+
+                    Bot.Sleep(500);
+
+                    if (mon.HP <= 0)
+                        break;
+
+                    // Determine stacking vs selling
+                    bool startStackingBindings = Bot.Player.Gold >= 96_000_000;
+
+                    // Exit if we need to sell
+                    if (sellBindings && !startStackingBindings && Core.CheckInventory("Elemental Binding", 1000))
+                        break;
                 }
 
-                if (shouldExit)
-                    break;
+                // Sell bindings if needed and the option is enabled
+                while (!Bot.ShouldExit && sellBindings && Core.CheckInventory("Elemental Binding", 1) && Bot.Player.Gold < 96_000_000)
+                {
+                    Core.Jump("Enter", "Spawn");
+                    Core.SellItem("Elemental Binding", all: true);
+                    Core.Jump("r2");
+                    break; // Exit foreach, selling done
+                }
             }
         }
+
         Army.AggroMonStop(true);
         Core.CancelRegisteredQuests();
     }

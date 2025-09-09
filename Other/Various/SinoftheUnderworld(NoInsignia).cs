@@ -81,15 +81,14 @@ public class SinoftheSinoftheUnderworldNoInsignia
         if (!Core.CheckInventory("Corrupted Dragon Slayer"))
         {
             Core.FarmingLogger("Corrupted Dragon Slayer");
+            Core.RegisterQuests(824);
             while (!Bot.ShouldExit && !Core.CheckInventory(new[] { "Corrupted Dragon Slayer" }))
             {
-                Core.EnsureAccept(824);
                 Core.EquipClass(ClassType.Farm);
                 Core.KillMonster("doomhaven", "r4", "Down", "Skeletal Ice Mage", "Frostbit Skull", 15);
                 Core.HuntMonster("Marsh2", "Lesser Shadow Serpent", "Potent Viper's Blood");
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("Marsh2", "Soulseeker", "Soul Scythe", isTemp: false);
-                Core.EnsureComplete(824);
             }
         }
 

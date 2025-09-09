@@ -53,9 +53,9 @@ public class ArmyUniqueQuarry
     {
         Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
 
-        Quest QuestData = Core.EnsureLoad(9000);
-        ItemBase[] RequiredItems = QuestData.Requirements.ToArray();
-        ItemBase[] QuestReward = QuestData.Rewards.ToArray();
+        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(9000));
+        ItemBase[] RequiredItems = QuestData?.Requirements.ToArray() ?? Array.Empty<ItemBase>();
+        ItemBase[] QuestReward = QuestData?.Rewards.ToArray() ?? Array.Empty<ItemBase>();
 
         // Core.EquipClass(ClassType.Solo);
         // Core.AddDrop("Chaos Sphinx", "Chaoroot", "Kathool Annihilator", "Chaotic Manticore Head", "Chaos Tentacle", "Chaos Dragon Slayer", "HarpyHunter", "Naga Baas Pet");
@@ -176,7 +176,7 @@ public class ArmyUniqueQuarry
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
 
-        Quest QuestData = Core.EnsureLoad(questID);
+        Quest? QuestData = Core.InitializeWithRetries( () => Core.EnsureLoad(QuestID));
         ItemBase[] RequiredItems = QuestData.Requirements.ToArray();
         ItemBase[] QuestReward = QuestData.Rewards.ToArray();
 
@@ -208,7 +208,7 @@ F
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
 
-        Quest QuestData = Core.EnsureLoad(questID);
+        Quest? QuestData = Core.InitializeWithRetries( () => Core.EnsureLoad(QuestID));
         ItemBase[] RequiredItems = QuestData.Requirements.ToArray();
         ItemBase[] QuestReward = QuestData.Rewards.ToArray();
 

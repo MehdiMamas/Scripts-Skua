@@ -65,14 +65,17 @@ public class TrygveMerge
                     break;
                 #endregion
 
+
                 case "Vindicator Badge":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(8299);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster("trygve", "r2", "Left", "Blood Eagle", "Eagle Heart", 8);
+                        Core.EquipClass(ClassType.Farm);
+                        Core.KillMonster("trygve", "r3", "Left", "Blood Eagle", "Eagle Heart", 8);
                         Core.KillMonster("trygve", "r4", "Left", "Rune Boar", "Boar Heart", 8);
+                        Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("trygve", "Gramiel", "Vindicator Seal");
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -80,6 +83,7 @@ public class TrygveMerge
                     break;
 
                 case "Silver Vindicator Sword":
+                case "Silver Vindicator Swords":
                 case "Silver Vindicator Hood":
                 case "Silver Vindicator Recruit":
                     Core.FarmingLogger(req.Name, quant);
@@ -131,5 +135,6 @@ public class TrygveMerge
         new Option<bool>("63990", "Dawn Vindicator Captain Helm", "Mode: [select] only\nShould the bot buy \"Dawn Vindicator Captain Helm\" ?", false),
         new Option<bool>("63985", "Dawn Vindicator Inquisitor", "Mode: [select] only\nShould the bot buy \"Dawn Vindicator Inquisitor\" ?", false),
         new Option<bool>("63986", "Dawn Vindicator Inquisitor Helm", "Mode: [select] only\nShould the bot buy \"Dawn Vindicator Inquisitor Helm\" ?", false),
-    };
+        new Option<bool>("90204", "Dawn Vindicator Swords", "Mode: [select] only\nShould the bot buy \"Dawn Vindicator Swords\" ?", false),
+   };
 }

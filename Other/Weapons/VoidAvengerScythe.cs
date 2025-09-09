@@ -64,6 +64,7 @@ public class VoidAvengerScythe
         Core.HuntMonster("darkoviagrave", "Blightfang", "Batwing Scythe", isTemp: false);
 
 
+        Core.EquipClass(ClassType.Solo);
         while (!Bot.ShouldExit && !Core.CheckInventory("Batwing Scythe"))
         {
             Core.EnsureAccept(498);
@@ -78,18 +79,24 @@ public class VoidAvengerScythe
         // Ungodly Reavers of Nulgath - 
         juggernaut.JuggItems(reward: JuggernautItemsofNulgath.RewardsSelection.Ungodly_Reavers_of_Nulgath);
         // Scythe of Sisyphean - 
+        Core.EquipClass(ClassType.Farm);
         Core.HuntMonster("dragonplane", "Wind Elemental", "Scythe of Sisyphean", isTemp: false);
         // Heart of the Void - 
+        Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("void", "Void Dragon", "Heart of the Void", isTemp: false);
         // The Scythe of Eternal Rest - 
+        Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("sepulchure", "Dark Sepulchure", "The Scythe of Eternal Rest", isTemp: false);
         // Nulgath's Approval -
+        Core.EquipClass(ClassType.Farm);
         Nation.ApprovalAndFavor(1000, 0);
         // Dracolich Destroyer Scythe - 
+        Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("dragonheart", "Avatar of Desolich", "Dracolich Destroyer Scythe", isTemp: false);
         // Void Aura - 
         NSoD.VoidAuras(150);
         // Letter from Asuka and Tendou -    
+        Core.EquipClass(ClassType.Farm);
         Core.HuntMonster("Citadel", "Burning Witch", "Letter from Asuka and Tendou", isTemp: false);
         Core.EnsureComplete(5025);
         Bot.Wait.ForPickup("Void Avenger Scythe");

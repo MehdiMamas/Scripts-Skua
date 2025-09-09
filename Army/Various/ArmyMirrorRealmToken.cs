@@ -58,7 +58,6 @@ public class ArmyMirrorRealmToken
         else if (Method.ToString() == "Kill_Boss")
         {
             Core.EquipClass(ClassType.Solo);
-            Core.RegisterQuests(3188);
             Army.SmartAggroMonStart("mirrorportal", "Chaos Harpy");
         }
 

@@ -319,7 +319,16 @@ public class Core13LoC
         Story.KillQuest(352, "uppercity", "Cave Lizard");
 
         //Mock the Lock
-        Story.KillQuest(353, "dwarfprison", new[] { "Balboa", "Albino Bat", "Chaos Drow" });
+        if (!Bot.Quests.IsUnlocked(354))
+        {
+            Core.AddDrop("Thermite"); // for the next quest
+            
+            Core.EnsureAccept(353);
+            Core.HuntMonster("dwarfprison", "Balboa", "Balboa Core", 4);
+            Core.HuntMonster("dwarfprison", "Chaos Drow", "Magnesium Flare");
+            Core.HuntMonster("dwarfprison", "Albino Bat", "Rusted Claw", 3);
+            Core.EnsureComplete(353);
+        }
 
         //Like Butter
         if (!Story.QuestProgression(354))
@@ -1178,10 +1187,10 @@ public class Core13LoC
         if (!Story.QuestProgression(1470))
         {
             Core.EnsureAccept(1470);
-            Core.HuntMonster("dreamnexus", "Dark Wyvern", "Wyvern Scales", 5);
-            Core.HuntMonster("dreamnexus", "Dark Wyvern", "Wyvern Claws", 5);
-            Core.HuntMonster("dreamnexus", "Aether Serpent", "Serpent Fangs", 5);
-            Core.HuntMonster("dreamnexus", "Aether Serpent", "Serpent Hair", 5);
+            Core.HuntMonster("dreamnexus", "Dark Wyvern", "Wyvern Scales", 2);
+            Core.HuntMonster("dreamnexus", "Dark Wyvern", "Wyvern Claws", 2);
+            Core.HuntMonster("dreamnexus", "Aether Serpent", "Serpent Fangs", 2);
+            Core.HuntMonster("dreamnexus", "Aether Serpent", "Serpent Hair", 2);
             Core.EnsureComplete(1470);
         }
 

@@ -83,7 +83,7 @@ public class ArmyPoly
             Core.CancelRegisteredQuests();
 
             // Wait for the party
-            //Army.waitForParty(map, item);
+            //Army.WaitForParty(map, item);
         }
     }
 
@@ -116,7 +116,7 @@ public class ArmyPoly
             Core.CancelRegisteredQuests();
 
             // Wait for the party
-            //Army.waitForParty(map, item);
+            //Army.WaitForParty(map, item);
         }
 
         // Clean up

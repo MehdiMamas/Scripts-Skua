@@ -55,7 +55,7 @@ public class AssistingCragAndBamboozle
         if (!Core.IsMember || !Core.CheckInventory(Nation.CragName) || !Core.CheckInventory("Sparrow's Blood") && !Daily.CheckDailyv2(803, true, true, "Sparrow's Blood"))
             return;
 
-        ItemBase? Item = Bot.Quests.EnsureLoad(5817)?.Rewards
+        ItemBase? Item = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(5817))?.Rewards
             .FirstOrDefault(r => (int)reward == -1
             ? r.Quantity < r.MaxStack
             : r.ID == (int)reward);
@@ -83,9 +83,13 @@ public class AssistingCragAndBamboozle
 
             // ReCheck Sparrow's Blood
             if (!Core.CheckInventory(5584))
-                Core.Logger("This bot requires you to have at least 1 Sparrow's Blood", stopBot: true);
+            {
+                continueFarming = false;
+                Core.Logger("This bot requires you to have at least 1 Sparrow's Blood");
+                return;
+            }
 
-            Nation.EssenceofNulgath(20);    
+            Nation.EssenceofNulgath(20);
             Nation.ApprovalAndFavor(100, 100);
 
             //medal required to get seals
@@ -104,7 +108,7 @@ public class AssistingCragAndBamboozle
 
                     string? rewardName = rewardEnum.ToString().Replace("_", " ");
                 Retry5817:
-                    Quest? quest = Bot.Quests.EnsureLoad(5817);
+                    Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(5817));
 
                     if (quest != null)
                     {

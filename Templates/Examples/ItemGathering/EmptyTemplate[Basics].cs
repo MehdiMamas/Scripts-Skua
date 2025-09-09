@@ -35,37 +35,26 @@ public class DefaultTemplate
 
     public void Example(bool TestMode = false)
     {
-        //Test Stuff Below here
-       
-        //Test Stuff Above here
+        // Test Area vv
 
-        #region Fold me
+        // Test Area ^^
+
+        // Optional Test Mode
         if (TestMode)
         {
             if (Core.CheckInventory("item", 1))
                 return;
 
-            #region General Item Farming with quest included
             Core.RegisterQuests(000);
-            while (!Bot.ShouldExit && Core.CheckInventory("item", 1))
+            while (!Bot.ShouldExit && !Core.CheckInventory("item", 1))
             {
                 Core.HuntMonster("map", "mob", "item", 1, isTemp: false, log: false);
-                Core.HuntMonsterMapID("map", 1, "item", 1, isTemp: false, log: false);
-                Core.KillMonster("map", "cell", "pad", "mob", "item", 1, isTemp: false, log: false);
             }
             Core.CancelRegisteredQuests();
-            #endregion
-
-            #region Story Mode:
-            Story.KillQuest(000, "mapname", "MonsterName");
-            Story.KillQuest(000, "mapname", new[] { "Monstername", "Monstername" });
-            Story.MapItemQuest(000, "mapname", 1, 1);
-            Story.MapItemQuest(000, "mapname", new[] { 000, 000, 000, });
-            Story.ChainQuest(000);
-            #endregion
         }
-        #endregion Fold me
     }
+
+
 }
 
 

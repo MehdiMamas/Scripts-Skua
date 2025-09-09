@@ -5,11 +5,13 @@ tags: null
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
+using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Models;
 using Skua.Core.Models.Items;
@@ -797,7 +799,7 @@ public class CoreAdvanced
         }
         #endregion
 
-        int t = 1;
+        int t = 0;
         // Why did we need the `for ( int i = 0; i < 2; i++)`?
 
         foreach (ShopItem item in items!)
@@ -879,19 +881,33 @@ public class CoreAdvanced
             ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == Req.ID);
             if (wasinshop != null)
             {
-                Core.Logger($"Attempting to get {Req.Name} [{Req.ID}] x{ReqQuant} from shop [{shopID}].");
+                Core.Logger($"Item: \"{Req.Name}  [{Req.ID}\"] is in the shop!");
                 while (!Bot.ShouldExit && !Core.CheckInventory(Req.ID, ReqQuant))
                 {
                     // for requirements that are in the shop, but are just buyable with gold. (excludes ac buyable items)
-                    if (wasinshop.Requirements.Count <= 0 && wasinshop.Cost <= 0)
+                    if (wasinshop.Requirements.Count <= 0 && (wasinshop.Coins && wasinshop.Cost <= 0 || !wasinshop.Coins)) //|| wasinshop.Name.Contains("Gold Voucher") || wasinshop.Name.Contains("Dragon Runestone"))
                     {
-                        BuyItem(map, shopID, wasinshop.ID, ReqQuant, shopItemID: wasinshop.ShopItemID, Log: Log);
-                        Bot.Wait.ForPickup(wasinshop.ID);
+                        // // Handle special cases for Gold Vouchers and Dragon Runestones
+                        // if (wasinshop.Name.Contains("Gold Voucher"))
+                        // {
+                        //     Farm.Voucher(wasinshop.Name, ReqQuant);
+                        //     return;
+                        // }
+                        // if (wasinshop.Name.Contains("Dragon Runestone"))
+                        // {
+                        //     Farm.DragonRunestone(ReqQuant);
+                        //     return;
+                        // }
+
+                        // Otherwise buy the item directly
+                        BuyItem(map, shopID, Req.ID, ReqQuant, shopItemID: wasinshop.ShopItemID, Log: Log);
+                        Bot.Wait.ForPickup(Req.ID);
                     }
                     else IngredientWasintheShop(wasinshop, ReqQuant);
                     if (Core.CheckInventory(Req.ID, ReqQuant))
                         break;
-                    else Core.Logger($"Failed to meet requirements for \"{wasinshop.Name}\" [{wasinshop.ID}] x{ReqQuant}, Retrying the farm (items may have been used).");
+                    else
+                        Core.Logger($"Failed to meet requirements for \"{Req.Name}\" [{Req.ID}] x{ReqQuant}, Retrying the farm (items may have been used).");
                 }
             }
             else if (wasinshop == null)
@@ -1178,6 +1194,163 @@ public class CoreAdvanced
         if (!forAuto)
             GearStore(true);
     }
+
+    #region WIP/Proof of Concept Methods(W.I.P)
+    /// <summary>
+    /// Kills a monster while monitoring for a specific aura.
+    /// </summary>
+    public void KillWithAura(
+        string map, string cell, string pad, string monster,
+        string[] auraNames,
+        Dictionary<string, Action>? auraReactions = null,
+        string? item = null, int quant = 1, bool isTemp = false, bool log = true,
+        int ItemToUse = 0, int SafeItem = 0,
+        CancellationToken cancellationToken = default)
+    {
+        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant)))
+            return;
+
+        DateTime lastAuraTrigger = DateTime.MinValue;
+        TimeSpan auraCooldown = TimeSpan.FromSeconds(0);
+        monster = monster.Trim().FormatForCompare();
+
+        Bot.Events.ExtensionPacketReceived += AuraListener;
+
+        #region Setup Item Equip (optional)
+        if (ItemToUse > 0)
+        {
+            int fallbackPotion = 1749;
+            int equipSafe = SafeItem > 0 ? SafeItem : fallbackPotion;
+
+            if (!Core.CheckInventory(equipSafe))
+                BuyItem("embersea", 1100, fallbackPotion, 10, 1, 17966);
+
+            EquipRetry(equipSafe);
+            Core.Equip(ItemToUse);
+        }
+        #endregion
+
+        if (item == null)
+        {
+            if (log)
+                Core.Logger($"Killing {monster}");
+            Bot.Kill.Monster(monster);
+        }
+        else
+        {
+            if (!isTemp)
+                Core.AddDrop(item);
+            if (log)
+                Core.FarmingLogger(item, quant);
+
+            while (!Bot.ShouldExit && !Core.CheckInventory(item, quant) && !cancellationToken.IsCancellationRequested)
+            {
+                while (!Bot.ShouldExit && !Bot.Player.Alive && !cancellationToken.IsCancellationRequested) { }
+
+                if (Bot.Map.Name != map)
+                    Core.Join(map, cell, pad);
+                if (Bot.Player.Cell != cell)
+                    Core.Jump(cell, pad);
+
+                Bot.Combat.Attack(monster);
+                Bot.Sleep(500);
+
+                if (isTemp ? Bot.TempInv.Contains(item, quant) : (Bot.Inventory.Contains(item, quant) || Bot.Bank.Contains(item, quant)))
+                    break;
+            }
+        }
+
+        Bot.Events.ExtensionPacketReceived -= AuraListener;
+
+        void AuraListener(dynamic packet)
+        {
+            if (cancellationToken.IsCancellationRequested)
+                return;
+
+            if ((string?)packet["params"]?.type != "json")
+                return;
+
+            dynamic? data = packet["params"]?.dataObj;
+            if (data?.cmd?.ToString() != "ct" || data?.a is null)
+                return;
+
+            if (data == null)
+                return;
+
+            foreach (dynamic a in data.a)
+            {
+                string? auraName = a?.aura?["nam"]?.ToString();
+                if (string.IsNullOrEmpty(auraName) || !auraNames.Contains(auraName))
+                    continue;
+
+                // Throttle cooldown
+                if (DateTime.Now - lastAuraTrigger < auraCooldown)
+                    continue;
+
+                lastAuraTrigger = DateTime.Now;
+
+                if (auraReactions != null && auraReactions.TryGetValue(auraName, out Action? reaction))
+                {
+                    Bot.Log($"Invoking reaction for aura: {auraName}");
+                    try
+                    {
+                        reaction?.Invoke();
+                    }
+                    catch (Exception ex)
+                    {
+                        Core.Logger($"Exception during aura reaction '{auraName}': {ex}");
+                    }
+                }
+                else
+                {
+                    // fallback switch logic if no reaction found
+                    switch (auraName)
+                    {
+                        case "Shapeshifted":
+                            Bot.Log($"Detected aura (switch fallback): {auraName}");
+                            break;
+
+                        default:
+                            Core.Logger($"Unhandled aura (switch fallback): {auraName}");
+                            break;
+                    }
+                }
+
+                break; // react to only one aura per packet
+            }
+        }
+
+        void EquipRetry(int id)
+        {
+            Core.Equip(id);
+            Bot.Wait.ForTrue(() => Bot.Inventory.IsEquipped(id), 20);
+            Bot.Sleep(2000);
+            Core.Equip(id); // Flash refresh workaround
+            Bot.Sleep(2000);
+        }
+    }
+
+    /* Example:
+     Adv.KillWithAura(
+            map: "kitsune",
+            cell: "Boss",
+            pad: "Left",
+            monster: "kitsune",
+            auraNames: new[] { "Shapeshifted" },
+            auraReactions: new Dictionary<string, Action>
+            {
+                ["Shapeshifted"] = () => Core.Logger("Aura: Shapeshifted", "Example"),
+            },
+            item: "Fox Tail",
+            quant: 3,
+            log: true,
+            ItemToUse: 0,
+            SafeItem: 0,
+            cancellationToken: CancellationToken.None
+        );
+        */
+
+    #endregion WIP/Proof of Concept Methods(W.I.P)
 
     #endregion
 
@@ -1859,7 +2032,8 @@ public class CoreAdvanced
     /// <param name="cSpecial"></param>
     /// <param name="hSpecial"></param>
     /// <param name="wSpecial"></param>
-    public void EnhanceItem(string item, EnhancementType type, CapeSpecial cSpecial = CapeSpecial.None, HelmSpecial hSpecial = HelmSpecial.None, WeaponSpecial wSpecial = WeaponSpecial.None)
+    /// <param name="logging"></param>
+    public void EnhanceItem(string item, EnhancementType type, CapeSpecial cSpecial = CapeSpecial.None, HelmSpecial hSpecial = HelmSpecial.None, WeaponSpecial wSpecial = WeaponSpecial.None, bool logging = true)
     {
         if (string.IsNullOrEmpty(item) || (Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance))
             return;
@@ -1890,7 +2064,7 @@ public class CoreAdvanced
 
         try
         {
-            AutoEnhance(new() { SelectedItem }, type, cSpecial, hSpecial, wSpecial);
+            AutoEnhance(new() { SelectedItem }, type, cSpecial, hSpecial, wSpecial, logging);
         }
         catch (Exception e)
         {
@@ -2055,7 +2229,7 @@ public class CoreAdvanced
 
     public readonly ItemCategory[] WeaponCatagories = EnhanceableCatagories[..12];
 
-    private void AutoEnhance(List<InventoryItem> ItemList, EnhancementType type, CapeSpecial cSpecial, HelmSpecial hSpecial, WeaponSpecial wSpecial)
+    private void AutoEnhance(List<InventoryItem> ItemList, EnhancementType type, CapeSpecial cSpecial, HelmSpecial hSpecial, WeaponSpecial wSpecial, bool logging = true)
     {
         // In case the 'CurrentEnhancement()' failed and returned 0
         if (type == 0)
@@ -2342,14 +2516,14 @@ public class CoreAdvanced
             }
 
             if (canEnhance)
-                _AutoEnhance(weapon, shopID, ((int)wSpecial > 6) ? "forge" : null);
+                _AutoEnhance(weapon, shopID, ((int)wSpecial > 6) ? "forge" : null, logging);
             else skipCounter++;
         }
 
         if (skipCounter > 0)
             Core.Logger($"Enhancement Skipped:\t{skipCounter} item{(skipCounter > 1 ? 's' : null)}");
 
-        void _AutoEnhance(InventoryItem item, int shopID, string? map = null)
+        void _AutoEnhance(InventoryItem item, int shopID, string? map = null, bool logging = true)
         {
             bool specialOnCape = item.Category == ItemCategory.Cape && cSpecial != CapeSpecial.None;
             bool specialOnHelm = item.Category == ItemCategory.Helm && hSpecial != HelmSpecial.None;
@@ -2390,12 +2564,15 @@ public class CoreAdvanced
             }
 
             // Logging
-            if (specialOnCape)
-                Core.Logger($"Searching Enhancement:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
-            else if (specialOnWeapon)
-                Core.Logger($"Searching Enhancement:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
-            else
-                Core.Logger($"Searching Enhancement:\t{type} - \"{item.Name}\"");
+            if (logging)
+            {
+                if (specialOnCape)
+                    Core.Logger($"Searching Enhancement:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
+                else if (specialOnWeapon)
+                    Core.Logger($"Searching Enhancement:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
+                else
+                    Core.Logger($"Searching Enhancement:\t{type} - \"{item.Name}\"");
+            }
 
             List<ShopItem> availableEnh = new();
 
@@ -2403,7 +2580,7 @@ public class CoreAdvanced
             foreach (ShopItem enh in shopItems)
             {
                 // Remove enhancments that you dont have access to
-                if ((!Core.IsMember && enh.Upgrade) || (enh.Level > Bot.Player.Level))
+                if ((!Bot.Player.IsMember && enh.Upgrade) || (enh.Level > Bot.Player.Level))
                 {
                     continue;
                 }
@@ -2437,7 +2614,8 @@ public class CoreAdvanced
             ShopItem? bestEnhancement = null;
             if (availableEnh.Count == 0)
             {
-                Core.Logger($"Enhancement Failed:\t\"availableEnh\" is empty");
+                if (logging)
+                    Core.Logger($"Enhancement Failed:\t\"availableEnh\" is empty");
                 return;
             }
             else if (availableEnh.Count == 1)
@@ -2453,14 +2631,16 @@ public class CoreAdvanced
             // Null check
             if (bestEnhancement == null)
             {
-                Core.Logger($"Enhancement Failed:\tCould not find the best enhancement for \"{item.Name}\"");
+                if (logging)
+                    Core.Logger($"Enhancement Failed:\tCould not find the best enhancement for \"{item.Name}\"");
                 return;
             }
 
             // Compare with current enhancement
-            if (bestEnhancement.ID == getEnhID(item) && item.EnhancementLevel > 0)
+            if (bestEnhancement.ID == getEnhID(item) && item.EnhancementLevel > 0 && bestEnhancement.Level == item.EnhancementLevel)
             {
-                Core.Logger($"Enhancement Canceled:\tBest enhancement is already applied for \"{item.Name}\"");
+                if (logging)
+                    Core.Logger($"Enhancement Canceled:\tBest enhancement is already applied for \"{item.Name}\"");
                 return;
             }
 
@@ -2469,12 +2649,20 @@ public class CoreAdvanced
 
             // Final logging
             if (specialOnCape)
-                Core.Logger($"Enhancement Applied:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+            {
+                if (logging)
+                    Core.Logger($"Enhancement Applied:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+            }
             else if (specialOnWeapon)
-                Core.Logger($"Enhancement Applied:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+            {
+                if (logging)
+                    Core.Logger($"Enhancement Applied:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+            }
             else
-                Core.Logger($"Enhancement Applied:\t{type} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
-
+            {
+                if (logging)
+                    Core.Logger($"Enhancement Applied:\t{type} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+            }
             Core.Sleep();
         }
     }
@@ -2530,7 +2718,7 @@ public class CoreAdvanced
         => Core.isCompletedBefore(9560);
     public bool uHearty()
     {
-        return Core.isCompletedBefore(9466) && Farm.FactionRank("Grimskull") >= 7;
+        return Core.isCompletedBefore(9466) && Farm.FactionRank("Grimskull Trolling") >= 7;
     }
 
     #endregion
@@ -2637,11 +2825,22 @@ public class CoreAdvanced
                     break;
                 #endregion Lucky - Dauntless - Vim - Penitence
 
+                #region Lucky - Lacerate - Vim - Lament
+                case "timekeeper":
+                case "timekiller":
+                    if (!uLacerate() || !uVim() || !uLament())
+                        goto default;
+
+                    type = EnhancementType.Lucky;
+                    cSpecial = CapeSpecial.Lament;
+                    wSpecial = WeaponSpecial.Lacerate;
+                    hSpecial = HelmSpecial.Vim;
+                    break;
+                #endregion Lucky - Lacerate - Vim - Lament
+
                 #region Lucky - Forge - Spiral Carve
                 case "corrupted chronomancer":
                 case "underworld chronomancer":
-                case "timekeeper":
-                case "timekiller":
                 case "eternal chronomancer":
                 case "immortal chronomancer":
                 case "dark metal necro":
@@ -3057,6 +3256,19 @@ public class CoreAdvanced
                     hSpecial = uPneuma() ? HelmSpecial.Pneuma : HelmSpecial.Forge;
                     break;
                 #endregion
+
+
+                #region Wizard - Ravenous - Lament - Examen
+                case "lich":
+                    if (!(uRavenous() && uLament() && uExamen()))
+                        goto default;
+
+                    type = EnhancementType.Wizard;
+                    cSpecial = CapeSpecial.Lament;
+                    wSpecial = WeaponSpecial.Ravenous;
+                    hSpecial = HelmSpecial.Examen;
+                    break;
+                #endregion                
                 #endregion
 
                 #region Healer Region
@@ -3482,6 +3694,7 @@ public class CoreAdvanced
                 case "savage glaceran warlord":
                 case "glacial warlord":
                 case "great thief":
+                case "hollowborn vindicator member preview":
                 case "immortal chronomancer":
                 case "imperial chunin":
                 case "infinite dark caster":
@@ -3595,6 +3808,8 @@ public class CoreAdvanced
                 case "guardian":
                 case "heavy metal necro":
                 case "heavy metal rockstar":
+                case "hollowborn vindicator":
+                case "Hollowborn Vindicator Member Preview":
                 case "hobo highlord":
                 case "lord of order":
                 case "legendary hero":
@@ -3677,6 +3892,7 @@ public class CoreAdvanced
                 case "interstellar knight":
                 case "master of moglins":
                 case "dark master of moglins":
+                case "lich":
                 case "mystical dark caster":
                 case "northlands monk":
                 case "royal battlemage":
@@ -3786,6 +4002,13 @@ public class CoreAdvanced
     }
 
     #endregion
+}
+
+
+public enum Auras
+{
+    Shapeshifted,
+    stuff2
 }
 
 public enum GenericGearBoost

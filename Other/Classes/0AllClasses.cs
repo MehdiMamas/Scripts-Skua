@@ -4,7 +4,7 @@ description: This script will get all of the classes that are currently farmable
 tags: all classes, class, farm, complete, all
 */
 
- #region  includes
+#region  includes
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreDailies.cs
@@ -194,6 +194,80 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Other/Classes/SovereignOfStorms.cs
 //cs_include Scripts/Other/Classes/Sentinal.cs
 //cs_include Scripts/Other/Classes/MartialArtist.cs
+//cs_include Scripts/Other/Classes/NoClassClasses/NoHollowbornClass.cs
+//cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
+//cs_include Scripts/Hollowborn/HollowbornVindicator(NonInsignia).cs
+//cs_include Scripts/Hollowborn/Materials/VindicatorBadge.cs
+//cs_include Scripts/Hollowborn/Materials/DeathsPower.cs
+//cs_include Scripts/Hollowborn/Materials/GraceOrb.cs
+//cs_include Scripts/Hollowborn/Materials/GramielsEmblem.cs
+//cs_include Scripts/Hollowborn/Materials/VindicatorCrest.cs
+//cs_include Scripts/Seasonal/Friday13th/MergeShops/ColossalWaresMerge.cs
+//cs_include Scripts/Farm/REP/GrimskullTrollingRep.cs
+//cs_include Scripts/Prototypes/MoreSkullsWorldBoss.cs
+//cs_include Scripts/Other/Classes/Lich.cs
+//cs_include Scripts/Chaos/DrakathsArmor.cs
+//cs_include Scripts/Chaos/EternalDrakathSet.cs
+//cs_include Scripts/Darkon/Various/PrinceDarkonsPoleaxePreReqs.cs
+//cs_include Scripts/Enhancement/UnlockForgeEnhancements.cs
+//cs_include Scripts/Good/GearOfAwe/ArmorOfAwe.cs
+//cs_include Scripts/Good/GearOfAwe/Awescended.cs
+//cs_include Scripts/Good/GearOfAwe/CoreAwe.cs
+//cs_include Scripts/Good/GearOfAwe/HelmOfAwe.cs
+//cs_include Scripts/Good/SilverExaltedPaladin.cs
+//cs_include Scripts/Hollowborn/TradingandStuff(single).cs
+//cs_include Scripts/Legion/HeadOfTheLegionBeast.cs
+//cs_include Scripts/Nation/AFDL/NulgathDemandsWork.cs
+//cs_include Scripts/Nation/AFDL/WillpowerExtraction.cs
+//cs_include Scripts/Nation/EmpoweringItems.cs
+//cs_include Scripts/Nation/MergeShops/DilligasMerge.cs
+//cs_include Scripts/Nation/MergeShops/DirtlickersMerge.cs
+//cs_include Scripts/Nation/MergeShops/NationMerge.cs
+//cs_include Scripts/Nation/MergeShops/NulgathDiamondMerge.cs
+//cs_include Scripts/Nation/MergeShops/VoidChasmMerge.cs
+//cs_include Scripts/Nation/MergeShops/VoidRefugeMerge.cs
+//cs_include Scripts/Nation/NationLoyaltyRewarded.cs
+//cs_include Scripts/Nation/Various/ArchfiendDeathLord.cs
+//cs_include Scripts/Nation/Various/GoldenHanzoVoid.cs
+//cs_include Scripts/Nation/Various/JuggernautItems.cs
+//cs_include Scripts/Nation/Various/PrimeFiendShard.cs
+//cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
+//cs_include Scripts/Nation/Various/SwirlingTheAbyss.cs
+//cs_include Scripts/Nation/Various/TarosManslayer.cs
+//cs_include Scripts/Nation/Various/TheLeeryContract[Member].cs
+//cs_include Scripts/Nation/Various/VoidPaladin.cs
+//cs_include Scripts/Nation/Various/VoidSpartan.cs
+//cs_include Scripts/Other/Armor/FireChampionsArmor.cs
+//cs_include Scripts/Other/Armor/MalgorsArmorSet.cs
+//cs_include Scripts/Other/ShadowDragonDefender.cs
+//cs_include Scripts/Other/WarFuryEmblem.cs
+//cs_include Scripts/Other/Weapons/FortitudeAndHubris.cs
+//cs_include Scripts/Other/Weapons/VoidAvengerScythe.cs
+//cs_include Scripts/Other/Weapons/WrathofNulgath.cs
+//cs_include Scripts/ShadowsOfWar/MergeShops/DeadLinesMerge.cs
+//cs_include Scripts/ShadowsOfWar/MergeShops/ManaCradleMerge.cs
+//cs_include Scripts/ShadowsOfWar/MergeShops/ShadowflameFinaleMerge.cs
+//cs_include Scripts/ShadowsOfWar/MergeShops/StreamwarMerge.cs
+//cs_include Scripts/ShadowsOfWar/MergeShops/TimekeepMerge.cs
+//cs_include Scripts/ShadowsOfWar/MergeShops/WorldsCoreMerge.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleDelve.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleDelveMerge.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleSiege.cs
+//cs_include Scripts/Story/DjinnGate.cs
+//cs_include Scripts/Story/DoomVault.cs
+//cs_include Scripts/Story/DoomVaultB.cs
+//cs_include Scripts/Story/J6Saga.cs
+//cs_include Scripts/Story/Legion/DarkWarLegionandNation.cs
+//cs_include Scripts/Story/Nation/Bamboozle.cs
+//cs_include Scripts/Story/Nation/Fiendshard.cs
+//cs_include Scripts/Story/Nation/Originul.cs
+//cs_include Scripts/Story/Nation/VoidChasm.cs
+//cs_include Scripts/Story/StarSinc.cs
+//cs_include Scripts/Story/ThirdSpell.cs
+//cs_include Scripts/Story/TowerOfDoom.cs
+//cs_include Scripts/Prototypes/Grimgaol.cs
+//cs_include Scripts/Story/7DeadlyDragons/Extra/HatchTheEgg.cs
+//cs_include Scripts/Other/MergeShops/InfernalArenaMerge.cs
 #endregion includes
 
 using Skua.Core.Interfaces;
@@ -262,6 +336,7 @@ public class AllClasses
     private ShadowDragonShinobi SDS = new();
     private PumpkinLord PL = new();
     private VampireLord VL = new();
+    private NoHollowbornClass NHBC = new();
     #endregion Seasonal
 
     #region Various
@@ -297,6 +372,8 @@ public class AllClasses
     private ArchPaladin AP = new();
     private ChaosAvengerClass CAV = new();
     private DragonOfTime DOT = new();
+    private HBVNonInsig HBV = new();
+    private Lich lich = new();
     private LightCaster LC = new();
     private CoreLR LR = new();
     private SovereignOfStorms SOS = new();
@@ -467,6 +544,8 @@ public class AllClasses
         CheckAndExecute("Shadow Dragon Shinobi", () => SDS.GetClass(rankUpClass));
         CheckAndExecute("Pumpkin Lord", () => PL.GetClass(rankUpClass));
         CheckAndExecute("Vampire Lord", () => VL.GetClass(rankUpClass));
+        CheckAndExecute("No Hollowborn Class", () => NHBC.GetNHBC(rankUpClass));
+
         Adv.GearStore(true, true);
         Core.ToBank(new[] { "Alpha Pirate", "Dark Lord", "Evolved Leprechaun", "Exalted Harbinger", "Frostval Barbarian", "Legion SwordMaster Assassin", "Northlands Monk", "Pirate", "Shadow Dragon Shinobi", "Pumpkin Lord", "Vampire Lord" });
 
@@ -543,10 +622,12 @@ public class AllClasses
 
         // Classes that take to long to farm for a bank class:
         CheckAndExecute("Arcana Invoker", () => AI.GetAI(rankUpClass));
+        CheckAndExecute("Hollowborn Vindicator", () => HBV.GetClass(rankUpClass)); // Non Insignia
+        CheckAndExecute("Lich", () => lich.Example(rankUpClass));
         CheckAndExecute("ShadowScythe General", Daily.ShadowScytheClass);
         CheckAndExecute("Sovereign of Storms", () => SOS.GetSOS(rankUpClass));
         Adv.GearStore(true, true);
-        Core.ToBank(new[] { "Grim Necromancer", "SkyCharged Grenadier", "Sentinel", "LightCaster", "Legion Revenant", "Exalted Soul Cleaver", "Chaos Avenger", "Archmage", "Verus DoomKnight", "Arcana Invoker", "ShadowScythe General", "Sovereign of Storms" });
+        Core.ToBank(new[] { "Grim Necromancer", "SkyCharged Grenadier", "Sentinel", "LightCaster", "Legion Revenant", "Exalted Soul Cleaver", "Chaos Avenger", "Archmage", "Verus DoomKnight", "Arcana Invoker", "Hollowborn Vindicator", "Lich", "ShadowScythe General", "Sovereign of Storms" });
 
         Core.Logger("=== AC / Special Requirement / Army Classes - Completed! ===");
     }

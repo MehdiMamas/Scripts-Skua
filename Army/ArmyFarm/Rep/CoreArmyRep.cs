@@ -221,7 +221,7 @@ public class CoreArmyRep
         Farm.ToggleBoost(BoostType.Reputation, false);
 
         // Wait for the party
-        //Army.waitForParty("whitemap");
+        //Army.WaitForParty("whitemap");
     }
     public int FactionRank(string faction) => Bot.Reputation.GetRank(faction);
 }

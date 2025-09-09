@@ -3,6 +3,8 @@ name: Дж2सरतϛȠကỊⱣ
 description: Not for everyday use
 tags: do, not, find, me
 */
+
+#region 
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
@@ -116,6 +118,9 @@ tags: do, not, find, me
 //cs_include Scripts/Story/Nation/VoidChasm.cs
 //cs_include Scripts/Nation/MergeShops/NationMerge.cs
 //cs_include Scripts/Nation/NationLoyaltyRewarded.cs
+//cs_include Scripts/Story/Legion/DageChallengeStory.cs
+
+#endregion
 
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
@@ -132,6 +137,8 @@ public class InsertNameHeresUltraPrep
     private BuyScrolls Scroll = new();
     private BankAllItems BankAllItems = new();
     private UnlockForgeEnhancements UnlockForgeEnhancements = new();
+    private DageChallengeStory DageChallengeStory = new();
+    private readonly CoreLegion Legion = new();
 
     private string[] UltraItems = new[]
     {
@@ -213,7 +220,19 @@ public class InsertNameHeresUltraPrep
 
     public void Example()
     {
+        #region  Ignore this
         Core.Logger("This script is made to help you prep for InsertNamehere's \"ULTRAS - INSERTNAMEHERE.gbot\" on `Grim Li`. First run and fill this script out, once its finished, you can Access your item (for easy copy paste) in `Documents > Skua > options > UltraPrep`, open that and u can simply copy paste names of items. Set your safe pot to: `Potent Malevolence Elixir` as its what this script grabs.");
+
+        // Stories
+        Core.Logger("Story prep for the ultras");
+
+        // Ultra Dage
+        Legion.JoinLegion();
+        DageChallengeStory.DageChallengeQuests();
+
+        // Insert more stories when you care todo so.
+
+
 
         //prepare inventory
         Core.Logger("Preparing Inventory!! (insignias will be kept in bank, as they will be auto-added by the quest.)");
@@ -225,6 +244,7 @@ public class InsertNameHeresUltraPrep
         var blacklistOptions = Options
             .Where(o => !o.Name.StartsWith("Player", StringComparison.OrdinalIgnoreCase))
             .Select(o => Bot.Config!.Get<string>(o.Name));
+        #endregion
 
         #region  Unbanking Required items
         // Iterate through options and unbank items for each option except those starting with "player"
@@ -238,6 +258,7 @@ public class InsertNameHeresUltraPrep
                 Core.Unbank(itemNameNullable);
         }
 
+        #region Player Setup
         // Dictionary with players and their corresponding classes
         Dictionary<string, List<string>> PlayersandItems = new();
         var playerKeyList = new[] { "Player1", "Player2", "Player3", "Player4" };
@@ -299,8 +320,13 @@ public class InsertNameHeresUltraPrep
             }
         }
         #endregion  Unbanking Required items
+        #endregion
 
-        #region Enhancment Unlock Checking
+        #region Preunlock Enhance
+        DoEnhs();
+        #endregion
+
+        #region Check & Unlock Forge Enhs + Redo Enhs after Unlocking (if any)
 
         // Quest IDs and Enhancement Names
         int[] questIDs =
@@ -384,7 +410,22 @@ public class InsertNameHeresUltraPrep
             Core.Logger($"Missing Enhancement: {missingEnhancement}");
         }
 
+        // Do Enhs again after unlocking.
+        DoEnhs();
 
+        #endregion
+
+        #region  Potions & Scrolls
+        // Buy potions and scrolls
+        PotionBuyer.INeedYourStrongestPotions(new[] { "Potent Malevolence Elixir" }, new bool[] { true }, 300, true, true);
+        Scroll.BuyScroll(Scrolls.Enrage, 1000);
+        if (!Core.CheckInventory("Scroll of Life Steal", 99))
+            Adv.BuyItem("terminatemple", 2328, "Scroll of Life Steal", 99 - Bot.Inventory.GetQuantity("Scroll of Life Steal"));
+        #endregion  Potions & Scrolls
+    }
+
+    void DoEnhs()
+    {
         // Wspecial x8 (x9 with Hvamp)
         Adv.EnhanceItem(Bot.Config!.Get<string>("Dauntless")!, EnhancementType.Lucky, wSpecial: WeaponSpecial.Dauntless);
         Adv.EnhanceItem(Bot.Config!.Get<string>("Valiance")!, EnhancementType.Lucky, wSpecial: WeaponSpecial.Valiance);
@@ -409,14 +450,5 @@ public class InsertNameHeresUltraPrep
         Adv.EnhanceItem(Bot.Config!.Get<string>("Penitence")!, EnhancementType.Lucky, cSpecial: CapeSpecial.Penitence);
         Adv.EnhanceItem(Bot.Config!.Get<string>("Vainglory")!, EnhancementType.Lucky, cSpecial: CapeSpecial.Vainglory);
         Adv.EnhanceItem(Bot.Config!.Get<string>("Lament")!, EnhancementType.Lucky, cSpecial: CapeSpecial.Lament);
-        #endregion Enhancment Unlock Checking
-
-        #region  Potions & Scrolls
-        // Buy potions and scrolls
-        PotionBuyer.INeedYourStrongestPotions(new[] { "Potent Malevolence Elixir" }, new bool[] { true }, 300, true, true);
-        Scroll.BuyScroll(Scrolls.Enrage, 1000);
-        if (!Core.CheckInventory("Scroll of Life Steal", 99))
-            Adv.BuyItem("terminatemple", 2328, "Scroll of Life Steal", 99 - Bot.Inventory.GetQuantity("Scroll of Life Steal"));
-        #endregion  Potions & Scrolls
     }
 }

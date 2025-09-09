@@ -166,6 +166,10 @@ public class CoreVHL
 
     private void FarmExtra(int quant = 25)
     {
+        // 17 for VHL
+        // 8 for Void Crystals
+        // 10 for The Fiend Shard's Final quest
+        
         if (Core.CheckInventory("Roentgenium of Nulgath", quant))
             return;
 
@@ -175,7 +179,6 @@ public class CoreVHL
         Core.Logger("Not enough \"Roentgenium of Nulgath\", maxing mats so it's easier tomorrow. You can just leave this running!");
 
         // Farm Mats for Tomarrow.
-        Nation.FarmVoucher(false, true);
         Farm.BlackKnightOrb();
         Adv.BuyItem("citadel", 44, 38316, shopItemID: 22367);
         Adv.BuyItem("yulgar", 16, "Aelita's Emerald");
@@ -184,8 +187,17 @@ public class CoreVHL
         Nation.EmblemofNulgath(500);
         Nation.EssenceofNulgath(60);
         Nation.SwindleBulk(1000);
-        Nation.ApprovalAndFavor(5000, 5000);
-
+        Nation.ApprovalAndFavor(5000, 5000);// Core.AddDrop("Totem of Nulgath", "Blood Gem of Nulgath", "Voucher of Nulgath", "Voucher of Nulgath (non-mem)");
+        Nation.FarmBloodGem();
+        if (!Core.CheckInventory("Unidentified 19"))
+        {
+            ItemBase? item = Core.EnsureLoad(7551).Rewards.FirstOrDefault(x => x.ID == 57446);
+            Nation.SwindleReturn(item!.Name, 6);
+            Adv.BuyItem("tercessuinotlim", 1951, "Unidentified 19");
+        }
+        Nation.FarmTotemofNulgath(15); // 15 for Void Crystal B
+        Nation.FarmVoucher(false);
+        Nation.FarmVoucher(true);
         Core.Logger("Materials max out! You should be good for tomorrow.");
     }
 
@@ -193,21 +205,6 @@ public class CoreVHL
     {
         if (!Bot.Config!.Get<bool>("SparrowMethod") || !Core.IsMember || !Core.CheckInventory(Nation.CragName) || Core.CheckInventory("Elders' Blood", EldersBloodQuant))
             return;
-
-        Core.Logger("Sparrow Method is enabled, the bot will now max out Totems, BloodGems, Uni19 and Vouchers in order to get another Elders' Blood. This may take a while");
-
-        ItemBase? item = Core.EnsureLoad(7551).Rewards.FirstOrDefault(x => x.ID == 57446);
-
-        Core.AddDrop("Totem of Nulgath", "Blood Gem of Nulgath", "Voucher of Nulgath", "Voucher of Nulgath (non-mem)");
-        Nation.FarmTotemofNulgath();
-        Nation.FarmBloodGem();
-        if (!Core.CheckInventory("Unidentified 19"))
-        {
-            Nation.SwindleReturn(item!.Name, 6);
-            Adv.BuyItem("tercessuinotlim", 1951, "Unidentified 19");
-        }
-        Nation.FarmVoucher(false);
-        Nation.FarmVoucher(true);
         ACAB.AssistingCandB(AssistingCragAndBamboozle.Rewards.Elders_Blood);
     }
 }

@@ -60,6 +60,11 @@ public class DarkCarnaxStory
         else Core.Logger($"Already Completed: [8872] - \"The Last Stand\"");
     }
 
+    private Task? carnaxMovementTask;
+    private string currentCarnaxZone = "";
+    private DateTime lastCarnaxMove = DateTime.MinValue;
+    private readonly TimeSpan CarnaxMoveCooldown = TimeSpan.FromSeconds(2);
+
     public void SyntheticViscera(int quant = 1000)
     {
         if (Core.CheckInventory("Synthetic Viscera", quant))
@@ -69,6 +74,7 @@ public class DarkCarnaxStory
         Core.FarmingLogger("Synthetic Viscera", quant);
 
         Bot.Options.AttackWithoutTarget = true;
+
         Bot.Events.RunToArea += DarkCarnaxMove;
 
         if (Core.CheckInventory("Dragon of Time"))
@@ -80,7 +86,8 @@ public class DarkCarnaxStory
             Bot.Skills.StartAdvanced("Healer (Rare)", true, ClassUseMode.Base);
         else if (Core.CheckInventory("Healer"))
             Bot.Skills.StartAdvanced("Healer", true, ClassUseMode.Base);
-        else Core.EquipClass(ClassType.Solo);
+        else
+            Core.EquipClass(ClassType.Solo);
 
         Adv.GearStore();
         Adv.EnhanceEquipped(EnhancementType.Healer, wSpecial: WeaponSpecial.Elysium);
@@ -88,27 +95,45 @@ public class DarkCarnaxStory
         Core.RegisterQuests(8872);
         while (!Bot.ShouldExit && !Core.CheckInventory("Synthetic Viscera", quant))
             Core.KillMonster("DarkCarnax", "Boss", "Right", "Nightmare Carnax");
+
         Core.CancelRegisteredQuests();
         Bot.Options.AttackWithoutTarget = false;
         Adv.GearStore(true);
 
-        void DarkCarnaxMove(string zone)
-        {
-            switch (zone.ToLower())
-            {
-                case "a":
-                    //Move to the right
-                    Bot.Player.WalkTo(Bot.Random.Next(600, 930), Bot.Random.Next(380, 475));
-                    break;
-                case "b":
-                    //Move to the left
-                    Bot.Player.WalkTo(Bot.Random.Next(25, 325), Bot.Random.Next(380, 475));
-                    break;
-                default:
-                    //Move to the center
-                    Bot.Player.WalkTo(Bot.Random.Next(325, 600), Bot.Random.Next(380, 475));
-                    break;
-            }
-        }
+        Bot.Events.RunToArea -= DarkCarnaxMove;
     }
+
+    private void DarkCarnaxMove(string zone)
+    {
+        string zoneLower = zone?.ToLower() ?? "";
+        if (zoneLower == currentCarnaxZone)
+            return;
+
+        if (DateTime.Now - lastCarnaxMove < CarnaxMoveCooldown)
+            return;
+
+        currentCarnaxZone = zoneLower;
+        lastCarnaxMove = DateTime.Now;
+
+        if (carnaxMovementTask is { IsCompleted: false })
+            return;
+
+        carnaxMovementTask = Task.Run(async () =>
+        {
+            await Task.Delay(Bot.Random.Next(1000, 1500));
+
+            int y = Bot.Random.Next(380, 475);
+            int x = zoneLower switch
+            {
+                "a" => Bot.Random.Next(600, 931),
+                "b" => Bot.Random.Next(25, 326),
+                _ => Bot.Random.Next(325, 601)
+            };
+
+            Bot.Player.WalkTo(x, y);
+
+            await Task.Delay(Bot.Random.Next(1500, 2500));
+        });
+    }
+
 }

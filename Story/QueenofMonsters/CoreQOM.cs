@@ -437,7 +437,14 @@ public class CoreQOM
         Story.KillQuest(5581, "castleinvasion", new[] { "Infernal Knight", "Fallen Knight", "Nethermage" });
 
         //What is THAT??
-        Story.KillQuest(5582, "castleinvasion", "Giant Worm of Teeth");
+        if (!Story.QuestProgression(5582))
+        {
+            Core.EnsureAccept(5582);
+            // Drop is 100%, and will get stuck  otherwise as its auto-turnin
+            Core.KillMonster("castleinvasion", "r2a", "Left", "*");
+            Bot.Wait.ForPickup("Giant Worm of Teeth Defeated");
+            Core.EnsureComplete(5582);
+        }
 
         //Arm the Civilians
         Story.MapItemQuest(5583, "castleinvasion", 5057, 4);
@@ -445,11 +452,18 @@ public class CoreQOM
         //Get Those Beasts
         Story.KillQuest(5584, "castleinvasion", new[] { "Infernal Imp", "Underworld Hound" });
 
+        Core.Logger("Relaoding the map for the worm");
+        Bot.Map.Reload();
+        Bot.Sleep(2500);
+        Bot.Wait.ForMapLoad("castleinvasion");
+
         //It's Baaaaack!
         if (!Story.QuestProgression(5585))
         {
             Core.EnsureAccept(5585);
-            Core.KillMonster("castleinvasion", "r6a", "Left", "Giant Worm of Teeth", "Giant Worm of Teeth Defeated... Again!");
+            // Drop is 100%, and will get stuck  otherwise as its auto-turnin
+            Core.KillMonster("castleinvasion", "r6a", "Left", "*");
+            Bot.Wait.ForPickup("Giant Worm of Teeth Defeated... Again!");
             Core.EnsureComplete(5585);
         }
 

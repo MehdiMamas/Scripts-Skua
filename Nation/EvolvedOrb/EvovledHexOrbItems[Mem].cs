@@ -66,6 +66,7 @@ public class EvovledHexOrbItems
         Nation.FarmUni13(3);
         Nation.TheAssistant("Unidentified 22", 1);
         Nation.TheAssistant("4th Betrayal Blade of Nulgath", 1);
+                Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Polish's Book of Avalon", isTemp: false);
         Farm.BludrutBrawlBoss(quant: 500);
         Adv.BuyItem(Bot.Map.Name, 222, "Warden of Light");

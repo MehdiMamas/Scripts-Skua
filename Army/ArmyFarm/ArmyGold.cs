@@ -291,7 +291,12 @@ public class ArmyGold
 
     void RequiredQuest(string map, int Quest)
     {
-        Quest QuestData = Core.EnsureLoad(Quest);
+        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(Quest));
+        if (QuestData == null)
+        {
+            Core.Logger($"Failed to load quest {Quest}.");
+            return;
+        }
         if (Core.isCompletedBefore(Quest))
         {
             Core.Logger($"{QuestData.Name} [ {QuestData.ID}] Already unlocked! onto the gains.");
@@ -331,7 +336,7 @@ public class ArmyGold
 
     void PirateBloodWar()
     {
-        Quest? WarQuest = Bot.Quests.EnsureLoad(9873);
+        Quest? WarQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(9873));
 
         if (WarQuest != null)
         {

@@ -95,10 +95,13 @@ public class ChaosAvengerClass
 
         Core.EquipClass(ClassType.Solo);
         Core.Join("chaoslord");
+        Bot.Wait.ForMapLoad("chaoslord");
         Core.Jump("r2", "Left");
-        Monster? kys = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null && (x.Name == Bot.Player.Username || x.Name.ToLower() == "skua bot"));
+        Bot.Wait.ForCellChange("r2");
+
+        Monster? kys = Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && (x.MapID == 1));
         if (kys != null)
-            Core.KillMonster("chaoslord", "r2", "Left", kys.Name, "Fragment of the Dragon", isTemp: false);
+            Core.KillMonster("chaoslord", "r2", "Left", kys.MapID == 0 ? 1 : kys.MapID, "Fragment of the Dragon", isTemp: false);
         else
         {
             Core.Logger("No monster found");

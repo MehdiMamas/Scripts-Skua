@@ -223,6 +223,7 @@ public class CoreFarmerJoe
         new Option<bool>("OutFit", "Get a Pre-Made Outfit, Curtious of the Community", "We are farmers, bum ba dum bum bum bum bum", false),
         new Option<bool>("EquipOutfit", "Equip outfit at the end?", "Yay or Nay", false),
         new Option<bool>("SellStarterClasses", "SellStarterClasses", "Yay or Nay", false),
+        new Option<bool>("EquipBoostingGear", "EquipBoostingGear", "use a predetermined set of gear based on what you own, and certain paramiters set, otherwise use whats set for your solo/farm class gear in CBO", true),
         new Option<PetChoice>("PetChoice", "Choose Your Pet", "Extra stuff to choose, if you have any suggestions -form in disc, and put it under request. or dm Tato(the retarded one on disc)", PetChoice.None),
         CoreBots.Instance.SkipOptions,
     };
@@ -962,10 +963,12 @@ public class CoreFarmerJoe
             newFarmClass = CheckAndSetClass(newFarmClass, farmClassesToCheck, "FarmClass", rankUp);
         }
 
-        // Only equip best items if we're actually changing classes
-        if (swapToSoloClass || swapToFarmClass)
+        if (Bot.Config!.Get<bool>("EquipBoostingGear"))
         {
-            var metaPriorities = new Dictionary<string, string[]>
+            // Only equip best items if we're actually changing classes
+            if (swapToSoloClass || swapToFarmClass)
+            {
+                var metaPriorities = new Dictionary<string, string[]>
             {
                 { "Cape", new[] { "dmgAll", "gold", "cp", "rep", "Undead", "Chaos", "Elemental", "Dragonkin", "Human" } },
                 { "Helm", new[] { "dmgAll", "gold", "cp", "rep", "Undead", "Chaos", "Elemental", "Dragonkin", "Human" } },
@@ -976,7 +979,8 @@ public class CoreFarmerJoe
                 { "Pet", new[] { "dmgAll", "gold", "cp", "rep", "Undead", "Chaos", "Elemental", "Dragonkin", "Human" } }
             };
 
-            Core.EquipBestItemsForMeta(metaPriorities);
+                Core.EquipBestItemsForMeta(metaPriorities);
+            }
         }
 
         if (swapToSoloClass)
@@ -984,12 +988,18 @@ public class CoreFarmerJoe
             Enum.TryParse(newSoloClass, true, out ClassType soloClassEnum);
             Core.EquipClass(soloClassEnum);
             Adv.SmartEnhance(newSoloClass);
+
+            if (!Bot.Config!.Get<bool>("EquipBoostingGear"))
+                Core.Equip(CoreBots.Instance.SoloGear);
         }
         else if (swapToFarmClass)
         {
             Enum.TryParse(newFarmClass, true, out ClassType farmClassEnum);
             Core.EquipClass(farmClassEnum);
             Adv.SmartEnhance(newFarmClass);
+
+            if (!Bot.Config!.Get<bool>("EquipBoostingGear"))
+                Core.Equip(CoreBots.Instance.FarmGear);
         }
 
         Core.SoloClass = newSoloClass;

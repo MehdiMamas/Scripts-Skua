@@ -553,7 +553,10 @@ public class MemberFarm
         }
 
         if (!Core.CheckInventory("Guardian Patent"))
-            Core.BuyItem("museum", 53, "Guardian Patent");
+
+            if (Bot.Flash.GetGameObject<int>("world.myAvatar.objData.intAQ") > 0)
+                Adv.BuyItem("museum", 53, "Guardian Patent");
+            else Core.Logger("Active Aq Guardian Acc Required for this Item.");
         Core.Sleep(1500);
         if (!Core.CheckInventory("Guardian Patent"))
         {

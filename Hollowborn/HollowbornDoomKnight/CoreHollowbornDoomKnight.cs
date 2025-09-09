@@ -199,6 +199,9 @@ public class CoreHollowbornDoomKnight
         if (Core.CheckInventory(ADKReturnsItems))
             return;
 
+        if (!Core.isCompletedBefore(2090) && !Bot.Player.IsMember)
+            Core.Logger("Completion of the quest \"Dark Spirit Donation\" is required for the \"Dark Energy\" to drop, which is members only");
+
         Core.AddDrop(ADKReturnsItems);
 
         Core.EnsureAccept(8416);

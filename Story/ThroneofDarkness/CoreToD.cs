@@ -22,13 +22,13 @@ public class CoreToD
         Core.RunCore();
     }
 
-    public void CompleteToD()
+    public void CompleteToD(bool SkipDPRepStorys = false)
     {
         int[] questIDs = { 4992, 5050, 5108, 5120, 5154, 5165, 5187, 5212, 5313, 5332, 5434, 5451 };
         if (Core.IsMember)
             questIDs = questIDs.Concat(new[] { 5010, 5022, 5083 }).ToArray();
         Core.EnsureLoad(questIDs);
-        if (questIDs.All(qID => Core.isCompletedBefore(qID)))
+        if (questIDs.All(Core.isCompletedBefore))
             return;
 
         Story.PreLoad(this);
@@ -47,8 +47,11 @@ public class CoreToD
         LaserSharkInvasion();
 
         //Pax - The Warlord
-        DeathPit();
-        DeathPitPVP();
+        if (!SkipDPRepStorys)
+        {
+            DeathPit();
+            DeathPitPVP();
+        }
 
         //Sekt - The Eternal
         ShiftingPyramid();
@@ -731,6 +734,7 @@ public class CoreToD
             Farm.DeathPitToken(quant: 15);
             Core.EnsureComplete(5156);
         }
+        
         // Pummel For Hun'Gar
         if (!Story.QuestProgression(5157))
         {

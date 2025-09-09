@@ -62,7 +62,7 @@ public class TreasureHunterGenerator
 
         // Ensure quest is loaded
         int questID = Bot.Config.Get<int>("QuestID");
-        var quest = Bot.Quests.EnsureLoad(questID);
+        var quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(questID));
 
         // Select the Name property from Requirements, which is a List<ItemBase>
         var requirementNames = quest?.Requirements?

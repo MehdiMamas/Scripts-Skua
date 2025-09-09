@@ -14,7 +14,10 @@ tags: null
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
 //cs_include Scripts/Story/QueenofMonsters/CoreQOM.cs
 //cs_include Scripts/Other/Classes/ArchMage/CoreArchMage.cs
+//cs_include Scripts/Evil/NSoD/CoreNSOD.cs
 //cs_include Scripts/ShadowsOfWar/CoreSoWMats.cs
+//cs_include Scripts/Evil/SDKA/CoreSDKA.cs
+//cs_include Scripts/Other/Classes/Necromancer.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 

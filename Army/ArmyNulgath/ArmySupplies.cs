@@ -123,7 +123,7 @@ public class SuppliesWheelArmy
                 while (!Bot.ShouldExit && !Core.CheckInventory(item.ID, item.MaxStack))
                     ArmyHydra(item.Name, item.MaxStack);
             }
-            //Army.waitForParty("whitemap");
+            //Army.WaitForParty("whitemap");
         }
     }
 
@@ -148,6 +148,14 @@ public class SuppliesWheelArmy
             {
                 SetHydraAggro();
                 AggroSet = true;
+            }
+
+            while (!Bot.ShouldExit && !Bot.Player.Alive) { Bot.Sleep(100); }
+
+            if (Bot.Player.Cell != (Bot.Config!.Get<Cell>("mob") == Cell.h85 ? "h85" : "h90"))
+            {
+                Bot.Map.Jump(Bot.Config!.Get<Cell>("mob") == Cell.h85 ? "h85" : "h90", "Left", autoCorrect: false);
+                Bot.Wait.ForCellChange(Bot.Config!.Get<Cell>("mob") == Cell.h85 ? "h85" : "h90");
             }
 
             Bot.Combat.Attack(Bot.Config!.Get<Cell>("mob") == Cell.h85 ? "Hydra Head 85" : "Hydra Head 90");

@@ -43,7 +43,8 @@ public class ArmyMartialArtist
         Core.BankingBlackList.AddRange(Loot);
         Core.SetOptions();
 
-        Setup();
+        Core.Logger("This script has been disabled by the author as it is not working as intended. " +
+    "There are current no plans to fix army scripts -- use grim from the `#grimlite-ligma-info` channel on disc.");
 
         Core.SetOptions(false);
     }
@@ -74,7 +75,7 @@ public class ArmyMartialArtist
             Core.EquipClass(ClassType.Farm);
 
             #region Frogzard Defeated
-            Army.waitForParty("nexus", "Enter");
+            Army.WaitForParty("nexus", "Enter");
             Army.AggroMonMIDs(1, 2, 3);
             Army.AggroMonStart("nexus");
             Army.DivideOnCells("Enter");
@@ -90,7 +91,7 @@ public class ArmyMartialArtist
             #endregion Frogzard Defeated
 
             #region Gorillaphant Defeated
-            Army.waitForParty("arcangrove", "Enter");
+            Army.WaitForParty("arcangrove", "Enter");
             Army.AggroMonMIDs(2, 5, 8, 9, 10);
             Army.AggroMonStart("arcangrove");
             Army.DivideOnCells("Left", "Back", "LeftBack");
@@ -107,7 +108,7 @@ public class ArmyMartialArtist
             #endregion Gorillaphant Defeated
 
             #region Dragon Defeated
-            Army.waitForParty("etherwardes", "Enter");
+            Army.WaitForParty("etherwardes", "Enter");
             Army.AggroMonMIDs(Core.FromTo(1, 18));
             Army.AggroMonStart("etherwardes");
             Army.DivideOnCells("Enter", "r2", "r3", "r4", "r5", "r6");
@@ -126,7 +127,7 @@ public class ArmyMartialArtist
             Core.EnsureComplete(9923);
         }
         // go back and help if needed
-        Army.waitForParty("party", "Enter");
+        Army.WaitForParty("party", "Enter");
 
         // Generate the list of quest IDs
         int[]? questIDs = Core.FromTo(9922, 9927).Append(Core.IsMember ? 9911 : 9902)?.Where(q => q > 0).ToArray();
@@ -139,7 +140,7 @@ public class ArmyMartialArtist
 
         #region Dreadhaven General's Soul Fragment
 
-        Army.waitForParty("dreadfight", "Enter");
+        Army.WaitForParty("dreadfight", "Enter");
         Army.AggroMonMIDs(1);
         Army.AggroMonStart("dreadfight");
         Army.DivideOnCells("Enter");
@@ -156,7 +157,7 @@ public class ArmyMartialArtist
 
         #region Zakhvatchik's Soul Fragment
         Bot.Quests.UpdateQuest(9607);
-        Army.waitForParty("hakuwar", "r10");
+        Army.WaitForParty("hakuwar", "r10");
         Army.AggroMonMIDs(28);
         Army.AggroMonStart("hakuwar");
         Army.DivideOnCells("r10");
@@ -172,7 +173,7 @@ public class ArmyMartialArtist
 
 
         #region Creel's Soul Fragment
-        Army.waitForParty("towerofdoom5", "r10");
+        Army.WaitForParty("towerofdoom5", "r10");
         Army.AggroMonMIDs(28);
         Army.AggroMonStart("towerofdoom5");
         Army.DivideOnCells("r10");
@@ -186,7 +187,7 @@ public class ArmyMartialArtist
         #endregion
 
         // Wait & butler back if needed.
-        Army.waitForParty("whitemap", "Enter");
+        Army.WaitForParty("whitemap", "Enter");
 
         Core.EnsureCompleteMulti(9933);
         Bot.Wait.ForPickup("*");
@@ -203,7 +204,7 @@ public class ArmyMartialArtist
         // Ensure quest is complete before buying
         if (!Story.QuestProgression(9928))
         {
-            Army.waitForParty("hakuvillage", "r2a");
+            Army.WaitForParty("hakuvillage", "r2a");
             Core.EnsureAccept(9928);
             Army.AggroMonMIDs(10);
             Army.AggroMonStart("hakuvillage");
@@ -219,7 +220,7 @@ public class ArmyMartialArtist
             Core.EnsureComplete(9928);
             Bot.Wait.ForQuestComplete(9928);
         }
-        Army.waitForParty("party", "Enter");
+        Army.WaitForParty("party", "Enter");
 
         Core.BuyItem("hakuvillage", 2490, "Martial Artist");
         Bot.Wait.ForPickup("Martial Artist");

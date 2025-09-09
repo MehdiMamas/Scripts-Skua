@@ -72,7 +72,7 @@ public class ArmyLightCaster
 
         while (!Bot.ShouldExit && !Core.CheckInventory(new[] { 38153, 31058 }))
         {
-            Core.EnsureAcceptmultiple( new[ ]{4510, 4511, 4512});
+            Core.EnsureAcceptmultiple(new[] { 4510, 4511, 4512 });
             if (!Core.CheckInventory(30266))
                 ArmyHunt("lostruinswar", new[] { "Fallen Knight" }, "Trapped Spirits", ClassType.Farm, isTemp: false, 500);
             if (!Core.CheckInventory(31019))
@@ -105,12 +105,12 @@ public class ArmyLightCaster
         Core.AddDrop(item);
 
         Core.EquipClass(classType);
-        //Army.waitForParty(map, item);
+        //Army.WaitForParty(map, item);
         Core.FarmingLogger(item, quant);
 
         Army.SmartAggroMonStart(map, monsters);
 
-        
+
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             Bot.Combat.Attack("*");

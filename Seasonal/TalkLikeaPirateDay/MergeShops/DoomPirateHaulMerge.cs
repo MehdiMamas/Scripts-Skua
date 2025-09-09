@@ -8,6 +8,7 @@ tags: doompirate, haul, merge, doompirate, shadowscythe, admiral, empire, fleet,
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/DoomPirateStory.cs
+using Newtonsoft.Json.Linq;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;
@@ -67,39 +68,64 @@ public class DoomPirateHaulMerge
                 #endregion
 
                 case "Gallaeon's Piece of Eight":
-                    Core.FarmingLogger(req.Name, quant);
+                    Core.FarmingLogger("Gallaeon's Piece of Eight", 99);
                     Core.RegisterQuests(9355);
                     Core.EquipClass(ClassType.Solo);
                     Core.Join("doompirate", "r5", "Left");
+
+                    bool restartKills = false;
+
+                RestartKills:
                     while (!Bot.ShouldExit && !Core.CheckInventory("Gallaeon's Piece of Eight", 99))
                     {
-                    Restartkills:
-                        while (!Bot.ShouldExit && Bot.Player.Cell != "r5")
+                        if (restartKills)
                         {
-                            Core.Jump("r5", "Left");
-                            Bot.Player.SetSpawnPoint();
-                            Core.Sleep();
+                            restartKills = false;
+
+                            Core.Logger("Send player to house to reset map");
+                            Bot.Send.Packet($"%xt%zm%house%1%{Core.Username()}%");
+                            Bot.Wait.ForMapLoad("house");
+
+                            Core.Logger("Rejoin map to reset mobs");
+                            Core.Join("doompirate", "r5", "Left");
+                            Bot.Wait.ForMapLoad("doompirate");
                         }
 
-                        foreach (int mob in new[] { 5, 4, 7, 6, 9, 8, 11, 10 })
+                        foreach (int mobId in new[] { 5, 4, 7, 6, 9, 8, 11, 10 })
                         {
-                            Monster? M = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null && x.MapID == mob);
-                            if (M != null)
+                            while (!Bot.ShouldExit)
                             {
-                                Core.Logger($"Killing: {M.MapID}");
-                                Bot.Kill.Monster(M.MapID);
-                                Core.Logger($"Killed: {M.MapID}");
-                            }
-                            else
-                            {
-                                Core.Logger($"No monster found with MapID: {mob}, something went wrong. Restarting room");
-                                goto Restartkills;
-                            }
-                            while (!Bot.ShouldExit && !Bot.Player.Alive)
-                            {
-                                Core.Logger("Player died, restarting room");
-                                Bot.Wait.ForTrue(() => Bot.Player.Alive, 40);
-                                goto Restartkills;
+                                if (!Bot.Player.Alive)
+                                {
+                                    Core.Logger("Death - Resetting");
+                                    while (!Bot.ShouldExit && !Bot.Player.Alive) { Bot.Sleep(1000); }
+                                    restartKills = true;
+                                    goto RestartKills;
+                                }
+
+                                if (Bot.Player.Cell != "r5")
+                                {
+                                    Core.Jump("r5", "Left");
+                                    Core.Sleep();
+                                }
+
+                                Monster? mon = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null && x.MapID == mobId);
+                                if (mon == null)
+                                {
+                                    Core.Logger($"Skipping mob {mobId}, not found.");
+                                    continue;
+                                }
+
+                                if (!Bot.Player.HasTarget)
+                                    Bot.Combat.Attack(mobId);
+
+                                Bot.Sleep(1500);
+
+                                if (Core.GetMonsterHP(mobId.ToString()) <= 0)
+                                {
+                                    Bot.Combat.CancelTarget();
+                                    break;
+                                }
                             }
                         }
 
@@ -119,6 +145,23 @@ public class DoomPirateHaulMerge
             }
         }
     }
+
+    private int GetMonsterHP(string monMapID)
+    {
+        try
+        {
+            string? jsonData = Bot.Flash.Call("availableMonsters");
+            if (string.IsNullOrWhiteSpace(jsonData)) return 0;
+
+            foreach (var mon in JArray.Parse(jsonData))
+                if (mon?["MonMapID"]?.ToString() == monMapID)
+                    return mon["intHP"]?.ToObject<int>() ?? 0;
+        }
+        catch { }
+
+        return 0;
+    }
+
 
     public List<IOption> Select = new()
     {

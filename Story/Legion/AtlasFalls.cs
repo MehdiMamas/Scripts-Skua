@@ -142,7 +142,7 @@ public class AtlasFalls
         {
             if (Core.CheckInventory("Chaos Avenger"))
             {
-                Core.BossClass("Chaos Avenger");
+                Core.BossClass();
                 Story.KillQuest(10136, "atlasfalls", UseableMonsters[9]);
             }
             else Core.Logger("You need to have \"Chaos Avenger\" to kill \"King Zedek\".");

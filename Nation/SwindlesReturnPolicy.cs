@@ -45,22 +45,44 @@ public class SwindlesReturnPolicy
 
         if (!getAll)
         {
-            ItemBase? item = Core.EnsureLoad(7551).Rewards.Find(x => x.Name == reward!.Value.ToString().Replace("_", " "));
+            Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7551));
+            if (quest == null)
+            {
+                Core.Logger("Quest 7551 not found.");
+                return;
+            }
+            ItemBase? item = quest.Rewards.FirstOrDefault(x => x.Name == reward!.Value.ToString().Replace("_", " "));
             if (item == null)
             {
                 Core.Logger($"Reward with name {reward!.Value.ToString().Replace("_", " ")} not found in Quest Rewards.");
                 return;
             }
-            Nation.SwindleReturn(item.Name, item.MaxStack); // Fix the argument here
+            Core.Logger($"Item Selected: {item.Name}[{item.ID}]");
+            Nation.SwindleReturn(item.Name, item.MaxStack);
         }
         else
         {
+            Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7551));
+            if (quest == null)
+            {
+                Core.Logger("Quest 7551 not found.");
+                return;
+            }
+
+            Core.Logger("Maxing All Rewards from Swindles return:\n" +
+                string.Join('\n', quest.Rewards.Select(r =>
+                {
+                    int current = Bot.TempInv.GetQuantity(r.Name) + Bot.Inventory.GetQuantity(r.Name);
+                    int target = r.MaxStack;
+                    return $"Farming {r.Name} ({current}/{target})";
+                })));
+
             foreach (ItemBase thing in Core.EnsureLoad(7551).Rewards)
             {
                 if (Core.CheckInventory(thing.Name, thing.MaxStack))
                     continue;
 
-                Nation.SwindleReturn(thing.Name, thing.MaxStack); // Fix the argument here
+                Nation.SwindleReturn(thing.Name, thing.MaxStack);
             }
         }
 

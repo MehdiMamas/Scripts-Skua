@@ -56,7 +56,7 @@ public class CoreStory
     /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
     public void KillQuest(int QuestID, string MapName, string MonsterName, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-        Quest QuestData = Core.EnsureLoad(QuestID);
+        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
         if (QuestProgression(QuestID, GetReward, Reward))
         {
             return;
@@ -65,6 +65,11 @@ public class CoreStory
         SmartKillMonster(QuestID, MapName, MonsterName);
         if (AutoCompleteQuest)
         {
+            if (QuestData == null)
+            {
+                Core.Logger($"Quest with ID {QuestID} not found");
+                return;
+            }
             foreach (ItemBase item in QuestData.Requirements)
             {
                 Bot.Wait.ForPickup(item.ID);
@@ -93,7 +98,7 @@ public class CoreStory
     public void KillQuest(int QuestID, string MapName, string[] MonsterNames, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
 
-        Quest QuestData = Core.EnsureLoad(QuestID);
+        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
         if (QuestProgression(QuestID, GetReward, Reward))
         {
             return;
@@ -102,6 +107,11 @@ public class CoreStory
         SmartKillMonster(QuestID, MapName, MonsterNames);
         if (AutoCompleteQuest)
         {
+            if (QuestData == null)
+            {
+                Core.Logger($"Quest with ID {QuestID} not found");
+                return;
+            }
             foreach (ItemBase item in QuestData.Requirements)
             {
                 Bot.Wait.ForPickup(item.ID);
@@ -277,9 +287,19 @@ public class CoreStory
 
     public void QuestComplete(int questID) => TryComplete(Core.EnsureLoad(questID), true);
 
-    private void TryComplete(Quest questData, bool autoCompleteQuest)
+    private void TryComplete(Quest? QuestData, bool autoCompleteQuest)
     {
-        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(questData.ID));
+        if (QuestData == null)
+        {
+            Core.Logger("QuestData is null, cannot complete quest");
+            return;
+        }
+        Quest? questData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestData.ID));
+        if (questData == null)
+        {
+            Core.Logger($"Quest with ID {QuestData.ID} not found");
+            return;
+        }
         if (!Bot.Quests.CanComplete(questData.ID))
         {
             return;
@@ -317,7 +337,12 @@ public class CoreStory
             CBO_Checked = true;
         }
 
-        Quest QuestData = Core.EnsureLoad(QuestID);
+        Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+        if (QuestData == null)
+        {
+            Core.Logger($"Quest with ID {QuestID} not found");
+            return true;
+        }
 
         int timeout = 0;
         while (!Bot.Quests.IsUnlocked(QuestID))
@@ -358,10 +383,9 @@ public class CoreStory
                     }
                     else if (QuestData.Value - currentValue <= 2)
                     {
-                        Core.Logger("A server/client desync happened (common) for your quest progress, the bot will now restart");
                         lastFailedQuestID = QuestData.ID;
                         timeout = 0;
-                        Core.Relogin();
+                        Core.Relogin("A server/client desync happened (common) for your quest progress, the bot will now restart");
                     }
                 }
                 else
@@ -444,15 +468,20 @@ public class CoreStory
 
     public void LegacyQuestManager(Action questLogic, params int[] questIDs)
     {
-        List<Quest> questData = Core.EnsureLoad(questIDs);
+        List<Quest>? questData = Core.InitializeWithRetries(() => Core.EnsureLoad(questIDs));
         List<LegacyQuestObject> whereToGet = new();
+        if (questData == null || questData.Count == 0)
+        {
+            Core.Logger("No quests found, cannot run LegacyQuestManager", messageBox: true);
+            return;
+        }
 
         //Core.DL_Enable();
         Core.DebugLogger(this, "-------------\t");
         foreach (Quest quest in questData)
         {
             List<ItemBase> desiredQuestReward = quest.Rewards.Where(r => questData.Any(q => q.AcceptRequirements.Any(a => a.ID == r.ID || a.Name == r.Name))).ToList();
-            int requiredQuestID = questData.Find((q => q.Rewards.Any(r => quest.AcceptRequirements != null && quest.AcceptRequirements.Any(a => a.ID == r.ID || a.Name == r.Name))))?.ID ?? 0;
+            int requiredQuestID = questData.Find(q => q.Rewards.Any(r => quest.AcceptRequirements != null && quest.AcceptRequirements.Any(a => a.ID == r.ID || a.Name == r.Name)))?.ID ?? 0;
             List<ItemBase>? requiredQuestReward = quest.AcceptRequirements?.Where(r => questData.Any(q => q.Rewards.Any(a => a.ID == r.ID || a.Name == r.Name)))?.ToList();
 
             Core.DebugLogger(this, $"{quest.ID}\t\t");
@@ -475,7 +504,7 @@ public class CoreStory
 
         if (whereToGet.All(x => x.desiredQuestReward.Count == 0) || whereToGet.All(x => x.requiredQuestReward?.Count == 0))
         {
-            Core.Logger("None of Quest IDs filled in are supposed to be used in the LegacyQuestManager, " +
+            Core.Logger("None of the Quest IDs filled in are supposed to be used in the LegacyQuestManager, " +
                         "please report to the bot makers that they must make this story line in the normal way.",
                         messageBox: true);
             return;
@@ -505,7 +534,12 @@ public class CoreStory
                 Core.Logger("runQuestData is NULL");
                 return;
             }
-            Quest questData = Core.EnsureLoad(questID);
+            Quest? questData = Core.InitializeWithRetries(() => Core.EnsureLoad(questID));
+            if (questData == null)
+            {
+                Core.Logger($"Quest with ID {questID} not found");
+                return;
+            }
 
             int[] requiredReward = runQuestData.requiredQuestReward!.Select(i => i.ID).ToArray();
             if (runQuestData.desiredQuestReward.Count == 0 && questID != finalItemQuest.desiredQuestID)
@@ -830,11 +864,11 @@ public class CoreStory
         if (questID > 0 && questID != lastQuestID)
         {
             lastQuestID = questID;
-            Quest quest = Core.EnsureLoad(questID);
+            Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(questID));
 
             List<string> reqItems = new();
-            quest.AcceptRequirements.ForEach(item => reqItems.Add(item.Name));
-            quest.Requirements.ForEach(item =>
+            quest?.AcceptRequirements.ForEach(item => reqItems.Add(item.Name));
+            quest?.Requirements.ForEach(item =>
             {
                 if (!CurrentRequirements.Where(i => i.Name == item.Name).Any())
                 {

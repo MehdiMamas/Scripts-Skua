@@ -1,6 +1,6 @@
 /*
 name: HBP - The Post Summoning
-description: does the 'the post summoning' part of hollowborn doomKnight
+description: does the 'the post summoning' part of hollowborn Paladin
 tags: hollowborn paladin, hollowborn, the post summoning, hollowborn paladin character page badge
 */
 //cs_include Scripts/CoreBots.cs

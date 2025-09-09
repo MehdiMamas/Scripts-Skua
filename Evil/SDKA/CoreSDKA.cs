@@ -94,7 +94,7 @@ public class CoreSDKA
     {
         if (Core.CheckInventory("Sepulchure's DoomKnight Armor") || !Core.IsMember)
         {
-            Core.Logger(Core.CheckInventory("Sepulchure's DoomKnight Armor") ? "Player already owns the armor" : "Player is non-Member, membership is required for SDKA");
+            Core.Logger(Core.CheckInventory("Sepulchure's DoomKnight Armor") ? "Player already owns SDKA" : "Player is non-Member, membership is required for SDKA");
             return;
         }
 
@@ -137,9 +137,9 @@ public class CoreSDKA
             Core.ToBank("Experimental Dark Item");
         }
 
-        if (!Story.QuestProgression(Core.IsMember ? 2086 : 2087))
+        if (!Story.QuestProgression(Core.CheckInventory(8523) ? 2086 : 2087))
         {
-            Core.EnsureAccept(Core.IsMember ? 2086 : 2087);
+            Core.EnsureAccept(Core.CheckInventory(8523) ? 2086 : 2087);
 
             // Check if DoomKnight Class is missing for non-members or members without either version (AC or non-AC)
             if (!Core.IsMember && !Core.CheckInventory(2083) || Core.IsMember && !Core.CheckInventory(new[] { 8523, 2083 }, any: true))
@@ -167,7 +167,7 @@ public class CoreSDKA
             Core.EquipClass(ClassType.Solo);
 
             // Complete the quest for obtaining the class
-            Core.EnsureComplete(Core.IsMember ? 2086 : 2087);
+            Core.EnsureComplete(Core.CheckInventory(8523) ? 2086 : 2087);
 
             // Bank non-solo classes if equipped
             if (Core.SoloClass != "DoomKnight")
@@ -271,9 +271,31 @@ public class CoreSDKA
         if (Core.CheckInventory("DoomSquire Weapon Kit", quant))
             return;
 
+        // Check for squire quest to be completed if !completed unlock via metal upgrade quest
+        if (!Bot.Quests.IsUnlocked(2144))
+        {
+            string[] Metals = new[] { "Arsenic", "Beryllium", "Chromium", "Palladium", "Rhodium", "Thorium", "Mercury" };
+            string metalName = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+                .FirstOrDefault(x => x != null && Metals.Any(m => x.Name == m))?.Name ?? "Arsenic";
+            HardCoreMetalsEnum metalEnum = Enum.TryParse<HardCoreMetalsEnum>(metalName, out var parsedEnum) ? parsedEnum : HardCoreMetalsEnum.Arsenic;
+            string fullMetalName = metalEnum switch
+            {
+                HardCoreMetalsEnum.Arsenic => "Accursed Arsenic of Doom",
+                HardCoreMetalsEnum.Beryllium => "Baneful Beryllium of Doom",
+                HardCoreMetalsEnum.Chromium => "Calamitous Chromium of Doom",
+                HardCoreMetalsEnum.Palladium => "Pernicious Palladium of Doom",
+                HardCoreMetalsEnum.Rhodium => "Reprehensible Rhodium of Doom",
+                HardCoreMetalsEnum.Thorium => "Treacherous Thorium of Doom",
+                HardCoreMetalsEnum.Mercury => "Malefic Mercury of Doom",
+                _ => "Accursed Arsenic of Doom"
+            };
+            UpgradeMetal(metalEnum);
+        }
+
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger("DoomSquire Weapon Kit", quant);
         Core.AddDrop("DoomSquire Weapon Kit");
+
         Core.RegisterQuests(2144);
         while (!Bot.ShouldExit && (!Core.CheckInventory("DoomSquire Weapon Kit", quant)))
         {
@@ -400,13 +422,6 @@ public class CoreSDKA
                 Core.BuyItem("dwarfhold", 434, 12476, shopItemID: 1198);
             }
 
-            if (!Story.QuestProgression(2137))
-            {
-                Core.Logger("Unlocking Weapon Kit quests");
-                Core.EnsureAccept(2137);
-                Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat", "Forge Key", isTemp: false, log: false);
-                Core.EnsureComplete(2137);
-            }
             Core.FarmingLogger("Daggers of Destruction");
             DoomSquireWK();
             FarmDSO(50);
@@ -459,13 +474,13 @@ public class CoreSDKA
                     Bot.Wait.ForPickup("Calamitous Chromium");
                 }
                 Core.FarmingLogger("Calamitous Chromium of Doom");
-                PinpointDaggers();
+                OmninousAura();
                 DoomKnightWK("Corrupt Spirit Orb", 5);
                 Core.BuyItem("dwarfhold", 434, "Calamitous Chromium of Doom");
             }
             if (!Core.CheckInventory("Diabolical Aura"))
             {
-                PinpointDaggers(25);
+                OmninousAura(25);
                 DoomMerge("Diabolical Aura");
             }
             Core.FarmingLogger("Broadsword of Bane");
@@ -479,7 +494,7 @@ public class CoreSDKA
         {
             Core.FarmingLogger("Shadow Broadsword of Bane");
             DoomKnightWK("Corrupt Spirit Orb");
-            PinpointDaggers(1);
+            OmninousAura(1);
             DoomSoldierWK();
             DoomMerge("Shadow Broadsword of Bane");
         }
@@ -522,7 +537,7 @@ public class CoreSDKA
                     Bot.Wait.ForPickup("Reprehensible Rhodium");
                 }
                 Core.FarmingLogger("Reprehensible Rhodium of Doom");
-                PinpointDaggers();
+                OmninousAura();
                 DoomKnightWK("Corrupt Spirit Orb", 5);
                 Core.BuyItem("dwarfhold", 434, "Reprehensible Rhodium of Doom");
             }
@@ -558,7 +573,7 @@ public class CoreSDKA
             return;
 
         PinpointBow(500, 250);
-        PinpointDaggers(125);
+        OmninousAura(125);
         PinpointBroadsword(75);
 
         Core.Logger(Core.CheckInventory("Doom Aura") ? "Doom Aura found." : "Farming for Doom Aura");
@@ -582,15 +597,39 @@ public class CoreSDKA
         Bot.Wait.ForPickup("Sepulchure's DoomKnight Armor");
     }
 
-    public void PinpointDaggers(int quant = 5)
+    public void OmninousAura(int quant = 5)
     {
         if (Core.CheckInventory("Ominous Aura", quant))
             return;
 
-        if (!Core.CheckInventory("Necrotic Daggers of Destruction", 1)) // Assuming third argument is toInv
-            NecroticDaggers();
+        // Substitute "Necrotic Daggers of Destruction"
+        // with "Necrotic Mace of Misery" or "Necrotic Scythe of Scourge" if the player has it
 
-        PinpointthePieces(2181, new[] { "Ominous Aura" }, new[] { quant });
+        // List of weapons in in order of best rates [Best to worst]
+        string[] Weapons = { "Necrotic Daggers of Destruction", "Necrotic Mace of Misery", "Necrotic Scythe of Scourge" };
+        string Weapon = Weapons.FirstOrDefault(w => Core.CheckInventory(w)) ?? "Necrotic Daggers of Destruction";
+        switch (Weapon)
+        {
+            case "Necrotic Daggers of Destruction":
+                if (!Core.CheckInventory("Necrotic Daggers of Destruction"))
+                    NecroticDaggers();
+
+                PinpointthePieces(2181, new[] { "Ominous Aura" }, new[] { quant });
+                break;
+
+            case "Necrotic Mace of Misery":
+                if (Core.CheckInventory("Necrotic Mace of Misery"))
+                    PinpointthePieces(2185, new[] { "Ominous Aura" }, new[] { quant });
+                break;
+
+            case "Necrotic Scythe of Scourge":
+                if (Core.CheckInventory("Necrotic Scythe of Scourge"))
+                    PinpointthePieces(2184, new[] { "Ominous Aura" }, new[] { quant });
+                break;
+
+            default:
+                break;
+        }
     }
 
     public void PinpointBroadsword(int quant = 1)
@@ -689,7 +728,6 @@ public class CoreSDKA
                 forgeKeyQuest = 2143;
                 break;
         }
-        ;
 
         if (Core.CheckInventory(fullMetalName))
             return;
@@ -723,15 +761,12 @@ public class CoreSDKA
         DoomKnightWK("Ominous Aura", 2);
         Core.BuyItem("dwarfhold", 434, fullMetalName);
 
-        // Unlocking "Basic Weapon Kit Construction" [Quest ID 2136]
-        if (!Core.isCompletedBefore(forgeKeyQuest))
-        {
-            Core.AddDrop(fullMetalName);
-            Core.EnsureAccept(forgeKeyQuest);
-            Core.HuntMonster("dwarfhold", "Albino Bat", "Forge Key", isTemp: false);
-            Core.EnsureComplete(forgeKeyQuest);
-            Bot.Wait.ForPickup(fullMetalName);
-        }
+        // Unlocking "DoomSquire Weapon Kit" [Quest ID 2144]
+        Core.AddDrop(fullMetalName);
+        Core.EnsureAccept(forgeKeyQuest);
+        Core.HuntMonster("dwarfhold", "Albino Bat", "Forge Key", isTemp: false);
+        Core.EnsureComplete(forgeKeyQuest);
+        Bot.Wait.ForPickup(fullMetalName);
     }
 }
 

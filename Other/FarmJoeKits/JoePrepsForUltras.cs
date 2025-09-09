@@ -263,7 +263,12 @@ tags: joe, ultra, boss, preparation, farm
 //cs_include Scripts/Story/VasalkarLairWar.cs
 //cs_include Scripts/Story/UnderGroundLab.cs
 //cs_include Scripts/Story/WatchTower.cs
+//cs_include Scripts/Story/WhiteTigerPoint.cs
 //cs_include Scripts/Story/WillowCreek.cs
+//cs_include Scripts/Story/BaseCamp.cs
+//cs_include Scripts/Other/MergeShops/TerminaTempleMerge.cs
+//cs_include Scripts/Seasonal/TalkLikeaPirateDay/DoomPirateStory.cs
+//cs_include Scripts/Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHaulMerge.cs
 
 
 
@@ -291,6 +296,7 @@ public class JoePrepsForUltras
     private CoreNSOD NSOD = new();
     private CoreLR LR = new();
     private CoreYnR YnR = new();
+    private VerusDoomKnightClass VDK = new();
 
     public enum PlayerNumber
     {
@@ -428,7 +434,10 @@ public class JoePrepsForUltras
 
         // Verus DoomKnight
         if (!Core.CheckInventory("Verus DoomKnight"))
-            Core.Logger("Note: Verus DoomKnight must be obtained manually as it requires ultras, and Skua does not support this");
+        {
+            Core.Logger("Getting Verus DoomKnight...");
+            VDK.GetClass();
+        }
         else
             Core.Logger("Verus DoomKnight found!");
     }

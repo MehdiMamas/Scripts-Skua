@@ -64,9 +64,11 @@ tags: ultra speaker merge, ultra malgor merge, rgow, goddess of war
 //cs_include Scripts/Legion/SwordMaster.cs
 //cs_include Scripts/Good/GearOfAwe/Awescended.cs
 //cs_include Scripts/Story/Lair.cs
+//cs_include Scripts/Chaos/ChampionDrakathMerge.cs
 
 using Skua.Core.Interfaces;
-// using Skua.Core.Options;
+using Skua.Core.Models;
+using Skua.Core.Options;
 
 public class UltraSpeakerMergePreReqs
 {
@@ -89,6 +91,16 @@ public class UltraSpeakerMergePreReqs
     public Awescended Awescended = new();
     public CoreHollowbornPaladin CHBP = new();
     public MalgorsArmorSet MalgorsArmorSet = new();
+    public ChampionDrakathMerge ChampionDrakathMerge = new();
+    public DrakathArmorBot DAB = new();
+
+    public string OptionsStorage = "Rgrow";
+    public bool DontPreconfigure = true;
+    public List<IOption> Options = new()
+    {
+        new Option<bool>("UseInsigsonEmpDrkArm", "Use Insig on Emp Drak", "Wether to use your Champion Drakath Insignia to buy the \"Empowered Drakath Armor\"", false),
+        CoreBots.Instance.SkipOptions,
+    };
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -146,6 +158,26 @@ public class UltraSpeakerMergePreReqs
         {
             Core.Logger("Getting prerequisites for 'Goddess Of War' armor...");
             // Prerequisites for acquiring "Goddess Of War" armor
+
+            if (Bot.Config!.Get<bool>("UseInsigsonEmpDrkArm") && !Core.CheckInventory("Empowered Drakath Armor") && Core.CheckInventory("Champion Drakath Insignia", 5) && Core.CheckInventory(25779 /* Drakath Armor */))
+            {
+                DAB.DrakathArmorQuest();
+                Core.Join("championdrakath");
+                Bot.Wait.ForMapLoad("championdrakath");
+                // Load shop data
+                while (!Bot.ShouldExit && Bot.Shops.ID != 2055)
+                {
+                    Bot.Shops.Load(2055);
+                    Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+                    Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 2055, 20);
+                    Core.Sleep(1000);
+                    if (Bot.Shops.ID == 2055)
+                        break;
+                }
+                Bot.Shops.BuyItem("Empowered Drakath Armor");
+                Bot.Wait.ForItemBuy();
+            }
+
             UBLOD.PurifiedUndeadDragonEssence(3);
             // Ice Shard - 43712
             if (!Core.CheckInventory(43712, 50))
@@ -180,7 +212,7 @@ public class UltraSpeakerMergePreReqs
 
                 Farm.Experience();
                 FCA.GetFireChampsArmor();
-                BeetleQuests.GetBeetleWarlord();
+                BeetleQuests.WarlordRewards("Void Beetle Warlord");
                 Awescended.GetAwe();
                 CHBP.GetSpecific("Classic Hollowborn Paladin Armor");
                 MalgorsArmorSet.GetSet(false, new[] { "Malgor the ShadowLord" });
@@ -345,4 +377,5 @@ public class UltraSpeakerMergePreReqs
         // #endregion Radiant Goddess of War quest
 
 
-    }}
+    }
+}

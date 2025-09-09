@@ -139,19 +139,18 @@ public class CoreNSOD
         if (Core.CheckInventory("Void Aura", quant))
             return;
 
-        if (Bot.Config!.Get<bool>("GetSDKA") && Core.IsMember)
-        {
-            Core.Logger("Player is a Member, attempting to get SDKA first");
-            if (!Core.CheckInventory("Sepulchure's DoomKnight Armor"))
-                SDKA.DoAll();
-            else
-                Core.Logger("Player already has SDKA, continuing with Void Aura farm");
-        }
+        if (Bot.Config!.Get<bool>("GetSDKA") && Bot.Player.IsMember && !Core.CheckInventory(14474 /* Sepulchure's DoomKnight Armor */))
+            SDKA.DoAll();
 
-        Core.FarmingLogger("Void Aura", quant);
         Core.AddDrop("Void Aura");
-        CommandingShadowEssences(quant);
-        GatheringUnstableEssences(quant);
+        Core.FarmingLogger("Void Aura", quant);
+
+        if (Core.CheckInventory(14474 /* Sepulchure's DoomKnight Armor */))
+            CommandingShadowEssences(quant);
+
+        if (Bot.Player.IsMember)
+            GatheringUnstableEssences(quant);
+
         RetrieveVoidAuras(quant);
     }
 
@@ -162,15 +161,16 @@ public class CoreNSOD
 
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
-        Core.RegisterQuests(4439);
         while (!Bot.ShouldExit && !Core.CheckInventory("Void Aura", quant))
         {
+            Core.EnsureAccept(4439);
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonsterMapID("shadowrealmpast", 11, "Malignant Essence", 3, false);
 
             Core.EquipClass(ClassType.Farm);
             Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Empowered Essence", 50, false);
-            Bot.Wait.ForPickup("Void Aura");
+            Core.EnsureComplete(4439);
+            Core.FarmingLogger("Void Aura", quant);
         }
         Core.AbandonQuest(4439);
     }
@@ -191,7 +191,7 @@ public class CoreNSOD
             Core.HuntMonster("doomwar", "Zombie King Alteon", "Transposed Essence", 1, false);
 
             Bot.Wait.ForPickup("Void Aura");
-            Core.Logger($"Void Auras: ({Bot.Inventory.GetQuantity("Void Aura")}/{quant})");
+            Core.FarmingLogger("Void Aura", quant);
         }
         Core.AbandonQuest(4438);
     }
@@ -237,6 +237,7 @@ public class CoreNSOD
 
             Core.EnsureCompleteMulti(4432);
             Bot.Wait.ForPickup("Void Aura");
+            Core.FarmingLogger("Void Aura", quant);
         }
     }
 
@@ -334,7 +335,10 @@ public class CoreNSOD
     public void FindBlade()
     {
         if (Core.CheckInventory("Unenhanced Doom Blade"))
+        {
+            Core.Logger("Unenhanced Doom Blade Owned!");
             return;
+        }
 
         Core.Logger("Unenhanced Doom Blade");
         Core.AddDrop("Unenhanced Doom Blade");
@@ -377,9 +381,9 @@ public class CoreNSOD
         Core.EnsureAccept(Core.CheckInventory(8012) ? 4435 : 4436);
         FindBlade();
         FindHilt();
+        TimeLordNecro(1);
         CHourglass(2);
         ScrollDarkArts(1);
-        TimeLordNecro(1);
         VoidAuras(10);
         Core.EnsureComplete(Core.CheckInventory(8012) ? 4435 : 4436);
         Bot.Wait.ForPickup("Unenhanced Aura");
@@ -438,12 +442,17 @@ public class CoreNSOD
     {
         if (Core.CheckInventory("Time Lord's Necronomicon", quant))
             return;
+
+        int CurrentCHQuant = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+            .FirstOrDefault(x => x.Name == "Chaorrupted Hourglass")?.Quantity ?? 0;
         Core.FarmingLogger("Time Lord's Necronomicon", quant);
         CHourglass(quant * 10);
         ScrollDarkArts(quant);
         VoidAuras(quant * 100);
         Core.BuyItem("shadowfall", 793, "Time Lord's Necronomicon", quant);
         Bot.Wait.ForPickup("Time Lord's Necronomicon");
+
+
     }
 
     public void CavernCelestite(int quant)

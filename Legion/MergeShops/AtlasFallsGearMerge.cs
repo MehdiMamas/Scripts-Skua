@@ -73,7 +73,7 @@ public class AtlasFallsGearMerge
                     Core.FarmingLogger(req.Name, quant);
                     if (Core.CheckInventory("Chaos Avenger"))
                     {
-                        Core.BossClass("Chaos Avenger");
+                        Core.BossClass();
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
                             Core.HuntMonsterQuest(10137, "atlasfalls", "King Zedek");

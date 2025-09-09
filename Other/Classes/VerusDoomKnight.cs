@@ -63,12 +63,11 @@ public class VerusDoomKnightClass
         if (Core.CheckInventory("Verus DoomKnight"))
             return;
 
-        Farm.Experience(40);
-        Farm.EvilREP();
-        Core.EquipClass(ClassType.Solo);
-
         Story.PreLoad(this);
 
+        Farm.Experience(80);
+
+        Core.EquipClass(ClassType.Solo);
         // Body, Soul and, Domination (9411)
         if (!Story.QuestProgression(9411))
         {
@@ -114,10 +113,10 @@ public class VerusDoomKnightClass
         // Life Carve (9417)
         if (!Story.QuestProgression(9417))
         {
+            Bot.Quests.UpdateQuest(3773);
             Core.EnsureAccept(9417);
             Core.Logger("The map \"Wanders\", is a bit broke,\n" +
             "it will take a minute to hunt the mosnter");
-            Bot.Quests.UpdateQuest(3773);
             Core.HuntMonsterMapID("wanders", 46, "Trace of Light", 8, false); //i hate this map
             Core.HuntMonster("lightguardwar", "Extreme Noxus", "Trace of Dark", 8, false);
             Core.HuntMonster("eternalchaos", "Bandit Drakath", "Trace of Wind", 8, false);
@@ -180,11 +179,7 @@ public class VerusDoomKnightClass
 
             // Hunt for Void Energy if required
             if (energyNeeded > 0)
-                Core.HuntMonster("thevoid", "Void Dragon", "Void Energy", energyNeeded, isTemp: false);
-
-            // Prefarm Gold for 8x 500k vouchers (4,000,000 total).
-            if (!Core.CheckInventory("Gold Voucher 500k", 8))
-                Farm.Gold(4000000);
+                Core.HuntMonster("thevoid", "Ninja", "Void Energy", energyNeeded, isTemp: false);
 
             // Purchase required items.
             Adv.BuyItem("thevoid", 1406, "Xyfrag's Slimy Tooth", 5);
@@ -258,7 +253,7 @@ public class VerusDoomKnightClass
             Class: selectedClass,
             item: "Maw of the Sea",
             quant: 10,
-            isTemp: true
+            isTemp: false
         );
         Adv.GearStore(true, true);
     }

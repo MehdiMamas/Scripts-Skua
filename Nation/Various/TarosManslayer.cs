@@ -41,10 +41,17 @@ public class TarosManslayer
 
         if (ManslayerOnly)
         {
+                Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Taro's Manslayer", isTemp: false);
         }
         else
         {
+            if (!Bot.Player.IsMember)
+            {
+                Core.Logger("Membership REQUIRED for this quest ( \"The Guardian Taro Blademaster\")");
+                return;
+            }
+
             Farm.GoodREP();
             PCoD.GetPCoD();
 

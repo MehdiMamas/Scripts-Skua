@@ -1,7 +1,7 @@
 /*
 name: Super Slayin Merge
 description: This bot will farm the items belonging to the selected mode for the Super Slayin Merge [2321] in /superslayin
-tags: super, slayin, merge, superslayin, enchanted, martial, artists, gi, ryokus, masters, ryoku, morph
+tags: super, slayin, merge, superslayin, enchanted, martial, artists, gi, ryokus, masters, ryoku, morph, squoglin, pet, bulba, moglin, charmoglin
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -98,5 +98,8 @@ public class SuperSlayinMerge
         new Option<bool>("79176", "Enchanted Master's Gi", "Mode: [select] only\nShould the bot buy \"Enchanted Master's Gi\" ?", false),
         new Option<bool>("79177", "Enchanted Super Ryoku Morph", "Mode: [select] only\nShould the bot buy \"Enchanted Super Ryoku Morph\" ?", false),
         new Option<bool>("79311", "Enchanted Super Ryoku Spikes", "Mode: [select] only\nShould the bot buy \"Enchanted Super Ryoku Spikes\" ?", false),
-    };
+        new Option<bool>("94228", "Squoglin Pet", "Mode: [select] only\nShould the bot buy \"Squoglin Pet\" ?", false),
+        new Option<bool>("94229", "Bulba Moglin", "Mode: [select] only\nShould the bot buy \"Bulba Moglin\" ?", false),
+        new Option<bool>("94230", "Charmoglin Pet", "Mode: [select] only\nShould the bot buy \"Charmoglin Pet\" ?", false),
+   };
 }

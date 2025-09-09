@@ -6,6 +6,8 @@ tags: rangda, merge, rangda, gatotkaca, gatot, crown, bearded, sheath, keris, ar
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreStory.cs
+//cs_include Scripts/Seasonal/IndonesianDay/Rangda.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -17,6 +19,7 @@ public class RangdaMerge
     private CoreFarms Farm = new();
     private CoreAdvanced Adv = new();
     private static CoreAdvanced sAdv = new();
+    private static RangdaSeasonal RangdaSeasonal = new();
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -39,6 +42,9 @@ public class RangdaMerge
     {
         if (!Core.isSeasonalMapActive("rangda"))
             return;
+
+        RangdaSeasonal.StoryLine();
+
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("rangda", 1901, findIngredients, buyOnlyThis, buyMode: buyMode);
 
@@ -75,6 +81,76 @@ public class RangdaMerge
                     Core.HuntMonster("rangda", "Tuyul", req.Name, quant, false, false);
                     break;
 
+                case "Batik Fabric":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(10371); // TODO: Replace with actual quest ID
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster("rangda", "Rangda", req.Name, 1);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+
+                case "Benang":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(10372); // TODO: Replace with actual quest ID
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster("rangda", "Tuyul", "Tuyul Soul", 9);
+                        Core.HuntMonster("rangda", "Leyak", "Leyak Jaw", 9);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+
+
+                case "Warok's Wicked Snapper":
+                case "Duskwind Warok Visage":
+                case "Elder Warok Morph":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster("rangda", "Rangda", req.Name, quant, isTemp: req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+
+
+                case "Southern King Hair":
+                case "Ocean Maiden’s Locks":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster("rangda", "Leyak", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+
             }
         }
     }
@@ -89,5 +165,24 @@ public class RangdaMerge
         new Option<bool>("55791", "Arjuna's Bow", "Mode: [select] only\nShould the bot buy \"Arjuna's Bow\" ?", false),
         new Option<bool>("55794", "Gatot Mace", "Mode: [select] only\nShould the bot buy \"Gatot Mace\" ?", false),
         new Option<bool>("55790", "Gatot Wings", "Mode: [select] only\nShould the bot buy \"Gatot Wings\" ?", false),
-    };
+        new Option<bool>("94994", "Warok Warlord", "Mode: [select] only\nShould the bot buy \"Warok Warlord\" ?", false),
+        new Option<bool>("94996", "Ironbeard Warok Morph", "Mode: [select] only\nShould the bot buy \"Ironbeard Warok Morph\" ?", false),
+        new Option<bool>("94997", "Scarlet Warok Visage", "Mode: [select] only\nShould the bot buy \"Scarlet Warok Visage\" ?", false),
+        new Option<bool>("95000", "Singa Barong Visage", "Mode: [select] only\nShould the bot buy \"Singa Barong Visage\" ?", false),
+        new Option<bool>("95011", "Warok's Binding Cord", "Mode: [select] only\nShould the bot buy \"Warok's Binding Cord\" ?", false),
+        new Option<bool>("95012", "Warok's Binding Cords", "Mode: [select] only\nShould the bot buy \"Warok's Binding Cords\" ?", false),
+        new Option<bool>("95020", "Serpent Lash of Ponorogo", "Mode: [select] only\nShould the bot buy \"Serpent Lash of Ponorogo\" ?", false),
+        new Option<bool>("95057", "Nyi Roro Kidul Regalia", "Mode: [select] only\nShould the bot buy \"Nyi Roro Kidul Regalia\" ?", false),
+        new Option<bool>("95061", "Southern King's Sea Crown", "Mode: [select] only\nShould the bot buy \"Southern King's Sea Crown\" ?", false),
+        new Option<bool>("95062", "Nyi Roro Kidul's Sea Crown", "Mode: [select] only\nShould the bot buy \"Nyi Roro Kidul's Sea Crown\" ?", false),
+        new Option<bool>("95063", "Nyi Roro Kidul's Visage", "Mode: [select] only\nShould the bot buy \"Nyi Roro Kidul's Visage\" ?", false),
+        new Option<bool>("95064", "Southern Sea King's Visage", "Mode: [select] only\nShould the bot buy \"Southern Sea King's Visage\" ?", false),
+        new Option<bool>("95065", "Southern Sea King's Turban", "Mode: [select] only\nShould the bot buy \"Southern Sea King's Turban\" ?", false),
+        new Option<bool>("95056", "Tidebound Maiden", "Mode: [select] only\nShould the bot buy \"Tidebound Maiden\" ?", false),
+        new Option<bool>("94995", "Reog Companion", "Mode: [select] only\nShould the bot buy \"Reog Companion\" ?", false),
+        new Option<bool>("94983", "Aegis of the Golden Garuda", "Mode: [select] only\nShould the bot buy \"Aegis of the Golden Garuda\" ?", false),
+        new Option<bool>("94984", "Crown of the Sky Guardian", "Mode: [select] only\nShould the bot buy \"Crown of the Sky Guardian\" ?", false),
+        new Option<bool>("94985", "Hood of the Hidden Talon", "Mode: [select] only\nShould the bot buy \"Hood of the Hidden Talon\" ?", false),
+        new Option<bool>("94987", "Sovereign Ceremonial Mace", "Mode: [select] only\nShould the bot buy \"Sovereign Ceremonial Mace\" ?", false),
+   };
 }

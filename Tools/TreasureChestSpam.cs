@@ -111,27 +111,37 @@ public class TreasureChestSpam
 
         Core.Join("battleon");
 
-        // Load shop data
-        int retry = 0;
-        while (!Bot.ShouldExit && Bot.Shops.ID != 325)
-        {
-            Bot.Shops.Load(325);
-            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 325, 20);
-            Core.Sleep(1000);
-            if (Bot.Shops.ID == 325 || retry == 20)
-                break;
-            else retry++;
+        void LoadShop()
+        {   // Load shop data
+            int retry = 0;
+            while (!Bot.ShouldExit && Bot.Shops.ID != 314)
+            {
+                Bot.Shops.Load(314);
+                Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+                Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 314, 20);
+                Core.Sleep(1000);
+                if (Bot.Shops.ID == 314 || retry == 20)
+                    break;
+                else retry++;
+            }
+            retry = 0;
         }
-        retry = 0;
 
         for (int i = 0; i < amount; i++)
         {
             if (!Core.CheckInventory("Treasure Chest", 1))
                 Core.KillMonster("swordhavenundead", "Left", "Right", "*", "Treasure Chest", (amount - i) > 250 ? 250 : (amount - i), false);
 
-            Bot.Shops.BuyItem(8939, 6483);
-
+            if (Bot.Map.Name != "battleon")
+                Core.Join("battleon");
+            LoadShop();
+            if (!Bot.Shops.IsLoaded || Bot.Shops.ID != 314)
+            {
+                Core.Logger("Shop not loaded, retrying...");
+                LoadShop();
+            }
+            else Bot.Shops.BuyItem(8939, 6483);
+            Bot.Wait.ForItemBuy();
             Core.Sleep();
             var preKeyItems = Bot.Inventory.Items;
 

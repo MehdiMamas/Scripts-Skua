@@ -47,6 +47,8 @@ public class CoreAOR
         LiaTaraHill();
         CastleGaheris();
         ColdThunder();
+        ThelimaCity();
+        MountMaleno();
     }
 
     private bool isSeaVoiceCalled = false;
@@ -58,7 +60,6 @@ public class CoreAOR
             return;
 
         SoW.ManaCradle();
-
         Story.PreLoad(this);
 
         // Familiar Faces (9213)
@@ -800,7 +801,184 @@ public class CoreAOR
         TerminaTemple(coldThunder: true);
     }
 
-    //mostly for `Skye's Lightning` for the Merge
+    public void ThelimaCity()
+    {
+        if (Core.isCompletedBefore(10356))
+            return;
+
+        TerminaTemple(coldThunder: true);
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Noelle Knight", // UseableMonsters[0],
+	"Drow Soldier", // UseableMonsters[1],
+	"Dwarven Aegis", // UseableMonsters[2],
+	"Maleno Elemental", // UseableMonsters[3],
+	"Maleno Match", // UseableMonsters[4],
+	"Flame of Maleno", // UseableMonsters[5],
+	"Eternal Flames", // UseableMonsters[6]
+};
+        #endregion Useable Monsters
+
+        // 10347 | Sister Statues
+        Story.MapItemQuest(10347, "thelimacity", new[] { 14770, 14771 });
+
+
+        // 10348 | Starstruck Chivalry
+        if (!Story.QuestProgression(10348))
+            Core.HuntMonsterQuest(10348, "thelimacity", UseableMonsters[0]);
+
+
+        // 10349 | Black Dahlia
+        Story.MapItemQuest(10349, "thelimacity", new[] { 14772, 14773 });
+
+
+        // 10350 | Talls and Stouts
+        if (!Story.QuestProgression(10350))
+        {
+            Core.HuntMonsterQuest(10350,
+                ("thelimacity", UseableMonsters[2], ClassType.Farm),
+                ("thelimacity", UseableMonsters[1], ClassType.Farm));
+        }
+
+
+        // 10351 | A Lost Matchstick
+        if (!Story.QuestProgression(10351))
+        {
+            Core.EnsureAccept(10351);
+            Story.MapItemQuest(10351, "thelimacity", 14774);
+            Core.KillMonster("thelimacity", "r9", "Left", UseableMonsters[4], "Ashen Key");
+            Core.EnsureComplete(10351);
+        }
+
+
+        // 10352 | Flash Fire
+        Story.MapItemQuest(10352, "thelimacity", 14775, 4);
+
+
+        // 10353 | Unio Naturalis
+        if (!Story.QuestProgression(10353))
+        {
+            Core.HuntMonsterQuest(10353,
+                ("thelimacity", UseableMonsters[3], ClassType.Solo));
+        }
+
+
+        // 10354 | A Friend's Distant Laugh
+        if (!Story.QuestProgression(10354))
+        {
+            Core.HuntMonsterQuest(10354,
+                ("thelimacity", UseableMonsters[4], ClassType.Farm));
+        }
+
+
+        // 10355 | Putrefaction
+        if (!Story.QuestProgression(10355))
+        {
+            Core.HuntMonsterQuest(10355,
+                ("thelimacity", UseableMonsters[3], ClassType.Solo),
+                ("thelimacity", UseableMonsters[4], ClassType.Farm));
+        }
+
+
+        // 10356 | Enatiodromia
+        if (!Story.QuestProgression(10356))
+        {
+            Core.HuntMonsterQuest(10356,
+                ("thelimacity", UseableMonsters[5], ClassType.Solo));
+        }
+
+
+    }
+
+    public void MountMaleno()
+    {
+        if (Core.isCompletedBefore(10368))
+            return;
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Soul Raven", // UseableMonsters[0],
+	"Maleno Match", // UseableMonsters[1],
+	"Maleno Elemental", // UseableMonsters[2],
+	"Draconian Bandit", // UseableMonsters[3],
+	"Idalion", // UseableMonsters[4]
+};
+        #endregion Useable Monsters
+
+        // 10359 | A-Luring Song
+        Story.KillQuest(10359, "mountmaleno", "Soul Raven");
+        Story.MapItemQuest(10359, "mountmaleno", 14805);
+
+
+        // 10360 | Splendid Ashes, Pompous Grave
+        if (!Story.QuestProgression(10360))
+        {
+            Core.HuntMonsterQuest(10360,
+                ("mountmaleno", UseableMonsters[1], ClassType.Farm));
+        }
+
+
+        // 10361 | Echolocation
+        Story.MapItemQuest(10361, new[] {
+            (14806, 1, "mountmaleno"),
+            (14807, 5, "mountmaleno")
+        });
+
+
+        // 10362 | Chymerical Ash
+        if (!Story.QuestProgression(10362))
+        {
+            Core.HuntMonsterQuest(10362,
+                ("mountmaleno", UseableMonsters[0], ClassType.Farm),
+                ("mountmaleno", UseableMonsters[1], ClassType.Farm));
+        }
+
+
+        // 10363 | Journey Through the Dark Night
+        Story.MapItemQuest(10363, "mountmaleno", new[] { 14808, 14809 });
+
+
+        // 10364 | Lunar Caustic
+        Story.MapItemQuest(10364, "mountmaleno", 14810);
+        Story.KillQuest(10364, "mountmaleno", UseableMonsters[2]);
+
+
+        // 10365 | Like Water and Lithium
+        Story.MapItemQuest(10365, "mountmaleno", 14811);
+        Story.KillQuest(10365, "mountmaleno", UseableMonsters[3]);
+
+
+        // 10366 | The Shadows Lengthen in…
+        Story.MapItemQuest(10366, "mountmaleno", 14812);
+
+
+        // 10367 | Blithe Hospitality
+        if (!Story.QuestProgression(10367))
+        {
+            Core.HuntMonsterQuest(10367,
+                ("mountmaleno", UseableMonsters[3], ClassType.Farm),
+                ("mountmaleno", UseableMonsters[2], ClassType.Solo));
+        }
+
+
+        // 10368 | Sal Volatile
+        if (!Story.QuestProgression(10368))
+        {
+            Core.HuntMonsterQuest(10368,
+                ("mountmaleno", UseableMonsters[4], ClassType.Solo));
+        }
+
+
+    }
+
+    // Mostly for `Skye's Lightning` for the Merge
     public void ColdThunderBoss(string? item = null, int quant = 1, bool isTemp = true)
     {
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant)))
@@ -810,17 +988,11 @@ public class CoreAOR
             return;
         }
 
+        // Reset potion flags
+        bool needsPotion = false;
+        bool potionApplied = false;
+
         Bot.Events.ExtensionPacketReceived += Listener;
-        // if (Core.CheckInventory("Dragon of Time"))
-        // {
-        //     Adv.GearStore();
-        //     Core.Logger("Ohh..? you have DoT :O.. this is appearntly soloable");
-        //     //insurance vv
-        //     Core.Unbank("Dragon of Time");
-        //     Core.Equip("Dragon of Time");
-        //     if (Bot.Player.Alive && Bot.Player.CurrentClass.Name == "Dragon of Time")
-        //         Bot.Skills.StartAdvanced("Dragon of Time", true, ClassUseMode.Solo);
-        // }
 
         if (!isTemp && item != null)
             Core.AddDrop(item);
@@ -850,7 +1022,39 @@ public class CoreAOR
             if (Bot.Player.Cell != "r3")
                 Core.Jump("r3");
 
-            Bot.Combat.Attack("*");
+            // Check if potion is needed and handle it
+            if (needsPotion && !potionApplied)
+            {
+                Core.Logger("Detected 'The skies rumble. Prepare yourself!' - applying Bananach's Last Will potion...");
+
+                // Keep trying to use potion until it's successfully applied
+                while (!Bot.ShouldExit && needsPotion && !potionApplied)
+                {
+                    Bot.Combat.CancelAutoAttack();
+                    Bot.Combat.CancelTarget();
+                    Core.UsePotion();
+                    Core.Sleep(200); // Small delay to allow potion to apply
+
+                    // Check if Bananach's Last Will potion was applied
+                    // You might need to adjust the aura name based on what this potion actually provides
+                    if (Bot.Self.HasActiveAura("Bananach's Last Will"))
+                    {
+                        potionApplied = true;
+                        needsPotion = false;
+                        Core.Logger("Bananach's Last Will potion successfully applied!");
+                    }
+                    else
+                    {
+                        Core.Sleep(100); // Brief pause before retrying
+                    }
+                }
+            }
+
+            // Only attack if no potion is needed or potion has been applied
+            if (!needsPotion || potionApplied)
+            {
+                Bot.Combat.Attack("*");
+            }
 
             if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant)))
             {
@@ -861,6 +1065,11 @@ public class CoreAOR
             Core.Sleep();
         }
         Bot.Events.ExtensionPacketReceived -= Listener;
+
+        // Reset potion flags
+        needsPotion = false;
+        potionApplied = false;
+
         Core.JumpWait();
         Adv.GearStore(true);
 
@@ -883,7 +1092,9 @@ public class CoreAOR
 
                                 if (a.msg is not null && (string)a.msg is "The skies rumble. Prepare yourself!")
                                 {
-                                    Core.UsePotion();
+                                    needsPotion = true;
+                                    potionApplied = false;
+                                    Core.Logger("Event detected: The skies rumble. Prepare yourself! - Potion needed.");
                                 }
                             }
                         }

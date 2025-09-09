@@ -1,6 +1,6 @@
 /*
 name: Grimgoal
-description: Goes through teh grimgaol dungeon... Testing Phase
+description: Goes through the grimgaol dungeon... Testing Phase
 tags: grimgoal, dungeon, why, did, we, make, this, Testing, WIP, beta
 */
 
@@ -126,6 +126,9 @@ using Newtonsoft.Json.Linq;
 using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Auras;
+using System.Diagnostics;
+using Skua.Core.Models;
+using System.Globalization;
 
 public class Grimgaol
 {
@@ -139,140 +142,202 @@ public class Grimgaol
     private J6Saga J6 = new();
     private UnlockForgeEnhancements Forge = new();
 
+
+    Stopwatch runTimer = new();
+    TimeSpan bestTime = TimeSpan.MaxValue;
+    int RunCount = 0;
+
     public string OptionsStorage = "Grimgaol";
-    public bool DontSetOptions = true;
+    public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         // VHL : luck
         // VDK : luck
         // Dragon of Time : Healer
 
-        // weaponons
-        new Option<string>("Valiance", "Weapon: Valiance", "insert name of your Valiance weapon", ""),
-        new Option<string>("Dauntless", "Weapon: Dauntless", "insert name of your Dauntless weapon", ""),
+        // Skip Options
+        CoreBots.Instance.SkipOptions,
 
-        // helm
-        new Option<string>("WizHelm", "Helm: WizHelm", "insert name of your WizHelm helm", ""),
-        new Option<string>("LuckHelm", "Helm: LuckHelm", "insert name of your LuckHelm helm", ""),
+        // Skip Enhancements
+        new Option<bool>("SkipEnhancements", "Skip Item Enhancing", "If enabled, will not enhance items for the run (this doesnt mean skip enhancements you dont have... these enhancements are **VERY** important).", false),
+        new Option<bool>("RoomTimers", "Time each room?", "If enabled, this will log the time for each room into chat/the Logs > scripts tab.", false),
+
+        // Weapons
+        new Option<string>("Valiance", "Weapon: Valiance", "insert name of your Valiance weapon", ""),
+        new Option<string>("Dauntless", "Weapon: Dauntless", "insert name of your Dauntless weapon ( this will be subbed with valiance if u dont have dsuant so just copy valiance weapon name here)", ""),
+        new Option<string>("Elysium", "Weapon: Elysium", "insert name of your Elysium weapon", ""),
+      
+        // Helm
+        new Option<string>("LuckHelm", "Helm: LuckHelm", "insert name of your Lucky helm", ""),
+        new Option<string>("HealerHelm", "Helm: HealerHelm", "insert name of your Healer helm (used for DoT Sheltons)", ""),
         new Option<string>("AnimaHelm", "Helm: AnimaHelm", "insert name of your AnimaHelm helm", ""),
+        new Option<string>("PneumaHelm", "Helm: PneumaHelm", "insert name of your Pneuma helm (used for VHL Sheltons)", ""),
         
-        // cape
+        // Cape
         new Option<string>("Penitence", "Cape: Penitence", "insert name of your Penitence cape", ""),
         new Option<string>("Vainglory", "Cape: Vainglory", "insert name of your Vainglory cape", ""),
+        new Option<string>("HealerCape", "Cape: HealerCape", "insert name of your Healer cape", ""),
     };
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        // Setoptions is disable due to how we'l be using skills, so we have todo it like this:
-        //transfered stuff from core to a void below, it wont affect the script
-        SetOptions();
-
-        // Options Check
-        CheckConfig();
-
-        //Prerequisites
-        Prereqs();
-
-        // Class Check
-        if (!Core.CheckInventory(new[] { "Dragon of Time", "Void Highlord", "Verus DoomKnight" }))
-        {
-            Core.Logger("You need to have the following classes: Dragon of Time, Void Highlord, Verus DoomKnight", stopBot: true);
-        }
+        Core.SetOptions(disableClassSwap: true);
 
         DoGrimGaol();
 
-        Bot.Stop();
+        Core.SetOptions(false);
     }
 
-    private void DoGrimGaol()
+    public void DoGrimGaol(int rank = 10)
     {
-        // Classes
-        Adv.EnhanceItem("Void Highlord", EnhancementType.Lucky);
-        Adv.EnhanceItem("Verus DoomKnight", EnhancementType.Lucky);
-        Adv.EnhanceItem("Dragon of Time", EnhancementType.Healer);
-
-        // Weapons
-        string? valiance = Bot.Config!.Get<string>("Valiance");
-        if (!string.IsNullOrWhiteSpace(valiance))
-            Adv.EnhanceItem(valiance, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Valiance);
-
-        string? dauntless = Bot.Config.Get<string>("Dauntless");
-        if (!string.IsNullOrWhiteSpace(dauntless))
-            Adv.EnhanceItem(dauntless, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Dauntless);
-
-        // Helms
-        string? wizHelm = Bot.Config.Get<string>("WizHelm");
-        if (!string.IsNullOrWhiteSpace(wizHelm))
-            Adv.EnhanceItem(wizHelm, EnhancementType.Wizard);
-
-        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
-        if (!string.IsNullOrWhiteSpace(luckHelm))
-            Adv.EnhanceItem(luckHelm, EnhancementType.Lucky);
-
-        string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
-        if (!string.IsNullOrWhiteSpace(animaHelm))
-            Adv.EnhanceItem(animaHelm, EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.Anima);
-
-        // Capes
-        string? penitence = Bot.Config.Get<string>("Penitence");
-        if (!string.IsNullOrWhiteSpace(penitence))
-            Adv.EnhanceItem(penitence, EnhancementType.Lucky, CapeSpecial.Penitence);
-
-        string? vainglory = Bot.Config.Get<string>("Vainglory");
-        if (!string.IsNullOrWhiteSpace(vainglory))
-            Adv.EnhanceItem(vainglory, EnhancementType.Lucky, CapeSpecial.Vainglory);
-        Farm.ToggleBoost(BoostType.Reputation);
-
-        Core.Logger("Gear Enhancements:");
-        Core.Logger($"Classes:");
-        Core.Logger($"- Void Highlord: Lucky");
-        Core.Logger($"- Verus DoomKnight: Lucky");
-        Core.Logger($"- Dragon of Time: Healer");
-
-        if (!string.IsNullOrWhiteSpace(valiance))
-            Core.Logger($"Weapons:");
-        if (!string.IsNullOrWhiteSpace(valiance))
-            Core.Logger($"- {valiance}: Lucky (Valiance)");
-        if (!string.IsNullOrWhiteSpace(dauntless))
-            Core.Logger($"- {dauntless}: Lucky (Dauntless)");
-
-        if (!string.IsNullOrWhiteSpace(wizHelm) || !string.IsNullOrWhiteSpace(luckHelm) || !string.IsNullOrWhiteSpace(animaHelm))
-            Core.Logger($"Helms:");
-        if (!string.IsNullOrWhiteSpace(wizHelm))
-            Core.Logger($"- {wizHelm}: Wizard");
-        if (!string.IsNullOrWhiteSpace(luckHelm))
-            Core.Logger($"- {luckHelm}: Lucky");
-        if (!string.IsNullOrWhiteSpace(animaHelm))
-            Core.Logger($"- {animaHelm}: Lucky (Anima)");
-
-        if (!string.IsNullOrWhiteSpace(penitence) || !string.IsNullOrWhiteSpace(vainglory))
-            Core.Logger($"Capes:");
-        if (!string.IsNullOrWhiteSpace(penitence))
-            Core.Logger($"- {penitence}: Lucky (Penitence)");
-        if (!string.IsNullOrWhiteSpace(vainglory))
-            Core.Logger($"- {vainglory}: Lucky (Vainglory)");
-
-
-        while (!Bot.ShouldExit)
+        if (Farm.FactionRank("Grimskull Trolling") >= rank)
         {
+            Core.Logger($"You already have rank {rank} Grimskull Trolling reputation.");
+            return;
+        }
+        Core.Logger("Checking prerequisites and configurations...");
+        CheckConfig();
+        Prereqs();
+        Bot.Options.RestPackets = true;
+        Core.Logger("Prerequisites and configurations checked successfully.");
+
+        Core.Logger($"Farming rank {rank} Grimskull Trolling reputation.");
+
+        Farm.ToggleBoost(BoostType.Reputation);
+        while (!Bot.ShouldExit && Farm.FactionRank("Grimskull Trolling") < rank)
+        {
+            if (!Bot.Quests.IsDailyComplete(9469) && Core.HasWebBadge("SkullCrusher"))
+                Core.EnsureAccept(9469);
+
+            Core.EnsureAccept(!Core.HasWebBadge("SkullCrusher") ? 9466 : (Core.IsMember ? 9468 : 9467));
+
             if (Bot.Map.Name.ToLower() == "grimgaol")
             {
+                Core.Logger("Already in the dungeon (weird flex but ok)... we'll continue from where you left off");
                 Init();
                 continue;
             }
-            Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol{(Core.PrivateRoomNumber > 0 ? "-" + Core.PrivateRoomNumber : "")}%");
-            Core.Sleep(4000);
-            Bot.Wait.ForCellChange("Enter");
-            Bot.Wait.ForCellChange("Cut1");
-            Bot.Map.Jump("Enter", "Left");
-            Core.Sleep(4000);
-            Bot.Wait.ForCellChange("Enter");
-            Core.Sleep(4000);
-            Bot.Wait.ForMapLoad("grimgaol");
-            Core.Sleep(1000);
-            Init();
+            else
+            {
+                Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol-100000%");
+
+                while (!Bot.ShouldExit && Bot.Map.Name != "grimgaol") { Core.Sleep(100); }
+
+                // Incase we're in the Cutscene cell
+                if (Bot.Player.Cell != "Enter")
+                    Bot.Map.Jump("Enter", "Spawn", autoCorrect: false);
+
+                Init();
+            }
         }
+
+        Core.Logger($"Runs Complete: {RunCount}");
         Farm.ToggleBoost(BoostType.Reputation, false);
+    }
+
+    const int MaxBackupRuns = 50;
+
+    void LogRun()
+    {
+        runTimer.Stop();
+        TimeSpan currentTime = runTimer.Elapsed;
+        if (currentTime < TimeSpan.Zero)
+            currentTime = TimeSpan.Zero;
+
+        AppendRun(currentTime);
+
+        TimeSpan bestTime = LoadBestTime();
+        bool isNewPB = currentTime < bestTime;
+
+        Core.Logger($"Dungeon run took: {currentTime:mm\\:ss\\.fff} | Personal Best: {(bestTime == TimeSpan.MaxValue ? "N/A" : bestTime.ToString("mm\\:ss\\.fff"))}" +
+                    (isNewPB ? " (New PB!)" : ""));
+    }
+
+    TimeSpan LoadBestTime()
+    {
+        string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes.txt");
+        string backupPath = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes_backup.txt");
+
+        // Auto-restore from backup if main file missing or empty
+        if (!File.Exists(path) || new FileInfo(path).Length == 0)
+        {
+            if (File.Exists(backupPath))
+            {
+                File.Copy(backupPath, path, overwrite: true);
+                Core.Logger("Main run file missing or empty, restored from backup.");
+            }
+            else
+            {
+                return TimeSpan.MaxValue; // No data at all
+            }
+        }
+
+        TimeSpan best = TimeSpan.MaxValue;
+        List<string> validLines = new();
+
+        foreach (string line in File.ReadAllLines(path))
+        {
+            string trimmed = line.Trim();
+            if (string.IsNullOrWhiteSpace(trimmed))
+                continue;
+
+            if (TimeSpan.TryParseExact(trimmed, "c", CultureInfo.InvariantCulture, out TimeSpan parsed) && parsed >= TimeSpan.Zero)
+            {
+                validLines.Add(parsed.ToString("c", CultureInfo.InvariantCulture));
+                if (parsed < best)
+                    best = parsed;
+            }
+        }
+
+        // If all lines were invalid, try restore from backup
+        if (validLines.Count == 0 && File.Exists(backupPath))
+        {
+            File.Copy(backupPath, path, overwrite: true);
+            Core.Logger("All main file entries were invalid, restored from backup.");
+            foreach (string line in File.ReadAllLines(path))
+            {
+                if (TimeSpan.TryParseExact(line.Trim(), "c", CultureInfo.InvariantCulture, out TimeSpan parsed) && parsed >= TimeSpan.Zero)
+                {
+                    validLines.Add(parsed.ToString("c", CultureInfo.InvariantCulture));
+                    if (parsed < best)
+                        best = parsed;
+                }
+            }
+        }
+
+        // Rewrite main file with only valid entries
+        if (validLines.Count > 0)
+            File.WriteAllLines(path, validLines);
+
+        // Maintain backup with last MaxBackupRuns
+        if (validLines.Count > 0)
+        {
+            List<string> backupLines = validLines.Count > MaxBackupRuns
+                ? validLines.GetRange(validLines.Count - MaxBackupRuns, MaxBackupRuns)
+                : new List<string>(validLines);
+
+            File.WriteAllLines(backupPath, backupLines);
+        }
+
+        return best;
+    }
+
+    void AppendRun(TimeSpan run)
+    {
+        if (run < TimeSpan.Zero)
+            run = TimeSpan.Zero;
+
+        string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes.txt");
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+
+        try
+        {
+            File.AppendAllText(path, run.ToString("c", CultureInfo.InvariantCulture) + Environment.NewLine);
+        }
+        catch (IOException ex)
+        {
+            Core.Logger($"Failed to write run time: {ex.Message}");
+        }
     }
 
     private void Init()
@@ -280,63 +345,139 @@ public class Grimgaol
         if (Bot.Player.Cell.ToLower().Contains("cut"))
         {
             Core.Logger($"in {Bot.Player?.Cell} cell, jumping to enter");
-            Core.Jump("Enter", "Left");
+            Bot.Map.Jump("Enter", "Left", autoCorrect: false);
+            Bot.Wait.ForCellChange("Enter");
         }
 
+        runTimer.Restart();
+        // Stop usage of AdvSkills after story & prereqs. as we'll use our own here.
         while (!Bot.ShouldExit && !Bot.TempInv.Contains("Grimskull's Gaol Cleared"))
         {
             jumpToAvailMonster();
-            Core.Sleep(500);
+            Bot.Skills.Stop();
             if (Bot.Player != null)
                 switch (Bot.Player.Cell)
                 {
                     case "Enter":
+                        // Start runtime here
                         Enter();
-                        Core.Jump("r2", "Left");
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
+                            Core.Logger($"Room \"Enter\" Done in: {runTimer.Elapsed}");
+                        if (Bot.Player.Cell != "r2")
+                        {
+                            Bot.Map.Jump("r2", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r2");
+                        }
                         break;
                     case "r2":
                         R2();
-                        Core.Jump("r3", "Left");
-                        break;
-                    case "r4":
-                        RVDK(Bot.Player.Cell);
-                        Core.Jump("r5", "Left");
-                        break;
-                    case "r5":
-                        R5();
-                        Core.Jump("r6", "Left");
-                        break;
-                    case "r6":
-                        R6();
-                        Core.Jump("r7", "Left");
-                        break;
-                    case "r9":
-                        R9();
-                        Core.Jump("r10", "Left");
-                        break;
-                    case "r10":
-                        R10();
-                        Core.Jump("r11", "Left");
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
+                            Core.Logger($"Room \"r2\" Done in: {runTimer.Elapsed}");
+                        if (Bot.Player.Cell != "r3")
+                        {
+                            Bot.Map.Jump("r3", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r3");
+                        }
                         break;
                     case "r3":
                         RVDK(Bot.Player.Cell);
-                        Core.Jump("r4", "Left");
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
+                            Core.Logger($"Room \"r3\" Done in: {runTimer.Elapsed}");
+                        if (Bot.Player.Cell != "r4")
+                        {
+                            Bot.Map.Jump("r4", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r4");
+                        }
+                        break;
+                    case "r4":
+                        RVDK(Bot.Player.Cell);
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
+                            Core.Logger($"Room \"r4\" Done in: {runTimer.Elapsed}");
+                        if (Bot.Player.Cell != "r5")
+                        {
+                            Bot.Map.Jump("r5", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r5");
+                        }
+                        break;
+                    case "r5":
+                        R5();
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
+                            Core.Logger($"Room \"r5\" Done in: {runTimer.Elapsed}");
+                        if (Bot.Player.Cell != "r6")
+                        {
+                            Bot.Map.Jump("r6", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r6");
+                        }
+                        break;
+                    case "r6":
+                        R6();
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
+                            Core.Logger($"Room \"r6\" Done in: {runTimer.Elapsed}");
+                        if (Bot.Player.Cell != "r7")
+                        {
+                            Bot.Map.Jump("r7", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r7");
+                        }
                         break;
                     case "r7":
                         RVDK(Bot.Player.Cell);
-                        Core.Jump("r8", "Left");
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
+                            Core.Logger($"Room \"r7\" Done in: {runTimer.Elapsed}");
+                        if (Bot.Player.Cell != "r8")
+                        {
+                            Bot.Map.Jump("r8", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r8");
+                        }
                         break;
                     case "r8":
                         RVDK(Bot.Player.Cell);
-                        Core.Jump("r9", "Left");
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
+                            Core.Logger($"Room \"r8\" Done in: {runTimer.Elapsed}");
+                        if (Bot.Player.Cell != "r9")
+                        {
+                            Bot.Map.Jump("r9", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r9");
+                        }
+                        break;
+                    case "r9":
+                        R9();
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
+                            Core.Logger($"Room \"r9\" Done in: {runTimer.Elapsed}");
+                        if (Bot.Player.Cell != "r10")
+                        {
+                            Bot.Map.Jump("r10", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r10");
+                        }
+                        break;
+                    case "r10":
+                        R10();
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
+                            Core.Logger($"Room \"r10\" Done in: {runTimer.Elapsed}");
+                        if (Bot.Player.Cell != "r11")
+                        {
+                            Bot.Map.Jump("r11", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r11");
+                        }
                         break;
                     case "r11":
                         RVDK(Bot.Player.Cell);
-                        Core.Jump("r12", "Left");
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
+                            Core.Logger($"Room \"r11\" Done in: {runTimer.Elapsed}");
+                        if (Bot.Player.Cell != "r12")
+                        {
+                            Bot.Map.Jump("r12", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r12");
+                        }
                         break;
                     case "r12":
                         RVDK(Bot.Player.Cell);
-                        Core.Jump("r12a", "Left");
+                        if (Bot.Config!.Get<bool>("RoomTimers"))
+                            Core.Logger($"Room \"r12\" Done in: {runTimer.Elapsed}");
+                        if (Bot.Player.Cell != "r12a")
+                        {
+                            Bot.Map.Jump("r12a", "Left", autoCorrect: false);
+                            Bot.Wait.ForCellChange("r12a");
+                        }
                         break;
                     default:
                         break;
@@ -346,17 +487,30 @@ public class Grimgaol
                 Core.Logger("Object Bot.Player is null.");
                 break;
             }
-            Core.Sleep(500);
+            Core.Sleep();
         }
 
-        Core.ChainComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9467) : 9466);
-        Bot.Wait.ForQuestComplete(Core.isCompletedBefore(9467) ? (Core.IsMember ? 9468 : 9467) : 9466);
-        Core.Sleep(1500);
-        Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol{(Core.PrivateRoomNumber > 0 ? "-" + Core.PrivateRoomNumber : "")}%");
-        Core.Sleep(4000);
+        // End runtime here
+        if (Core.CheckInventory("Grimskull's Gaol Cleared"))
+        {
+            Core.Logger($"Runs Complete: {RunCount++}");
+            LogRun();
+        }
+
+        Core.EnsureComplete(!Core.HasWebBadge("SkullCrusher") ? 9466 : (Core.IsMember ? 9468 : 9467));
+
+        if (!Bot.Quests.IsDailyComplete(9469) && Core.HasWebBadge("SkullCrusher"))
+            Core.EnsureComplete(9469);
+
+        Core.Join("whitemap-100000");
+
+        Bot.Send.Packet($"%xt%zm%dungeonQueue%{Bot.Map.RoomID}%grimgaol-100000%");
         Bot.Wait.ForMapLoad("grimgaol");
+        if (Bot.Player != null)
+            Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
     }
 
+    #region These are fine
     private void Enter()
     {
         if (Bot.ShouldExit) return;
@@ -364,105 +518,69 @@ public class Grimgaol
         if (Bot.Player.Cell != "Enter")
         {
             Core.Logger("jump to enter");
-            Core.Jump("Enter", "Left");
+            Bot.Map.Jump("Enter", "Spawn", autoCorrect: false);
+            Bot.Wait.ForCellChange("Enter");
         }
-        Core.Sleep(1000);
-        jumpToAvailMonster();
 
         if (!monsterAvail()) return;
+        Bot.Player.SetSpawnPoint();
 
-        Core.Equip("Void Highlord");
+        #region Equipment Setup
+        EquipIfAvailable("Void Highlord");
+
         string? valiance = Bot.Config!.Get<string>("Valiance");
-        if (!string.IsNullOrWhiteSpace(valiance))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
-            {
-                Core.Equip(valiance);
-                Core.Sleep(1500);
-            }
-        }
-
         string? dauntless = Bot.Config.Get<string>("Dauntless");
-        if (!string.IsNullOrWhiteSpace(dauntless))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
-            {
-                Core.Equip(dauntless);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? wizHelm = Bot.Config.Get<string>("WizHelm");
-        if (!string.IsNullOrWhiteSpace(wizHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
-            {
-                Core.Equip(wizHelm);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
-        if (!string.IsNullOrWhiteSpace(luckHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
-            {
-                Core.Equip(luckHelm);
-                Core.Sleep(1500);
-            }
-        }
+        EquipIfAvailable(!string.IsNullOrWhiteSpace(dauntless) ? dauntless : valiance);
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
-        if (!string.IsNullOrWhiteSpace(animaHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
-            {
-                Core.Equip(animaHelm);
-                Core.Sleep(1500);
-            }
-        }
+        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
+        EquipIfAvailable(!string.IsNullOrWhiteSpace(animaHelm) ? animaHelm : luckHelm);
 
         string? penitence = Bot.Config.Get<string>("Penitence");
-        if (!string.IsNullOrWhiteSpace(penitence))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
-            {
-                Core.Equip(penitence);
-                Core.Sleep(1500);
-            }
-        }
-
         string? vainglory = Bot.Config.Get<string>("Vainglory");
-        if (!string.IsNullOrWhiteSpace(vainglory))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
-            {
-                Core.Equip(vainglory);
-                Core.Sleep(1500);
-            }
-        }
-
+        EquipIfAvailable(!string.IsNullOrWhiteSpace(vainglory) ? vainglory : penitence);
+        #endregion
 
         int skillIndex = 0;
         int[] skillList = { 1, 2, 4 };
-
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player.Alive)
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
-                skillIndex = 0;
-                Bot.Sleep(500);
-                continue;
+                Core.Sleep(500);
+                if (Bot.Player.Alive)
+                {
+                    skillIndex = 0;
+                    continue;
+                }
             }
             if (!monsterAvail()) return;
 
             if (Bot.Player.Cell != "Enter")
             {
                 Core.Logger("jump back to enter");
-                Core.Jump("Enter", "Left");
+                Bot.Map.Jump("Enter", "Left", autoCorrect: false);
+                Bot.Wait.ForCellChange("Enter");
+                Core.Sleep(1000);
             }
 
-            if (Bot.Target.HasActiveAura("Talon Twisting")) continue;
+            if (Bot.Player.HasTarget && Bot.Target.HasActiveAura("Talon Twisting"))
+            {
+                Bot.Combat.CancelAutoAttack();
+                Bot.Combat.StopAttacking = true;
+                Core.Sleep(500);
+                Bot.Wait.ForTrue(() => Bot.Target.HasActiveAura("Retaliate"), 20);
+                Core.Sleep(Bot.Target.Auras.FirstOrDefault(a => a.Name == "Retaliate")?.SecondsRemaining() ?? 2500);
+                Bot.Combat.StopAttacking = false;
+                skillIndex = 0;
+                Bot.Skills.Start();
+            }
+
+            if (!Bot.Player.HasTarget)
+            {
+                Bot.Combat.Attack("*");
+                Core.Sleep();
+            }
 
             if (!Bot.Self.HasActiveAura("Shackled") && skillIndex == 0 && Bot.Player.HasTarget)
             {
@@ -470,17 +588,12 @@ public class Grimgaol
                 skillIndex = (skillIndex + 1) % skillList.Length;
             }
 
-            if (!Bot.Player.HasTarget)
-            {
-                Bot.Combat.Attack("*");
-            }
-
             if (Bot.Player.HasTarget && skillIndex != 0)
             {
                 Bot.Skills.UseSkill(skillList[skillIndex]);
             }
+
             skillIndex = (skillIndex + 1) % skillList.Length;
-            Core.Sleep(100);
         }
     }
 
@@ -490,95 +603,43 @@ public class Grimgaol
         if (Bot.Player.Cell != "r2")
         {
             Core.Logger("jump to r2");
-            Core.Jump("r2", "Left");
+            Bot.Map.Jump("r2", "Left", autoCorrect: false);
+            Bot.Wait.ForCellChange("r2");
         }
         Core.Sleep(1000);
-        jumpToAvailMonster();
 
         if (!monsterAvail()) return;
+        Bot.Player.SetSpawnPoint();
 
-        Core.Equip("Void Highlord");
+        #region Equipment Setup
+        EquipIfAvailable("Void Highlord");
+
         string? valiance = Bot.Config!.Get<string>("Valiance");
-        if (!string.IsNullOrWhiteSpace(valiance))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
-            {
-                Core.Equip(valiance);
-                Core.Sleep(1500);
-            }
-        }
-
         string? dauntless = Bot.Config.Get<string>("Dauntless");
-        if (!string.IsNullOrWhiteSpace(dauntless))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
-            {
-                Core.Equip(dauntless);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? wizHelm = Bot.Config.Get<string>("WizHelm");
-        if (!string.IsNullOrWhiteSpace(wizHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
-            {
-                Core.Equip(wizHelm);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
-        if (!string.IsNullOrWhiteSpace(luckHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
-            {
-                Core.Equip(luckHelm);
-                Core.Sleep(1500);
-            }
-        }
+        EquipIfAvailable(!string.IsNullOrWhiteSpace(dauntless) ? dauntless : valiance);
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
-        if (!string.IsNullOrWhiteSpace(animaHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
-            {
-                Core.Equip(animaHelm);
-                Core.Sleep(1500);
-            }
-        }
+        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
+        EquipIfAvailable(!string.IsNullOrWhiteSpace(animaHelm) ? animaHelm : luckHelm);
 
         string? penitence = Bot.Config.Get<string>("Penitence");
-        if (!string.IsNullOrWhiteSpace(penitence))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
-            {
-                Core.Equip(penitence);
-                Core.Sleep(1500);
-            }
-        }
-
         string? vainglory = Bot.Config.Get<string>("Vainglory");
-        if (!string.IsNullOrWhiteSpace(vainglory))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
-            {
-                Core.Equip(vainglory);
-                Core.Sleep(1500);
-            }
-        }
-
+        EquipIfAvailable(!string.IsNullOrWhiteSpace(vainglory) ? vainglory : penitence);
+        #endregion
 
         int skillIndex = 0;
         int[] skillList = { 1, 2, 3, 4 };
 
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player.Alive)
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
-                skillIndex = 0;
-                Bot.Sleep(500);
-                continue;
+                Core.Sleep(500);
+                if (Bot.Player.Alive)
+                {
+                    skillIndex = 0;
+                    continue;
+                }
             }
             if (!monsterAvail()) return;
 
@@ -608,101 +669,46 @@ public class Grimgaol
         if (Bot.Player.Cell != "r4")
         {
             Core.Logger("jump to r4");
-            Core.Jump("r4", "Left");
+            Bot.Map.Jump("r4", "Left", autoCorrect: false);
+            Bot.Wait.ForCellChange("r4");
         }
         Core.Sleep(1000);
-        jumpToAvailMonster();
-        if (!monsterAvail())
-        {
-            return;
-        }
-        Core.Equip("Legion Revenant");
+
+        if (!monsterAvail()) return;
+        Bot.Player.SetSpawnPoint();
+
+        #region Equipment Setup
+        EquipIfAvailable("Legion Revenant");
+
         string? valiance = Bot.Config!.Get<string>("Valiance");
-        if (!string.IsNullOrWhiteSpace(valiance))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
-            {
-                Core.Equip(valiance);
-                Core.Sleep(1500);
-            }
-        }
-
         string? dauntless = Bot.Config.Get<string>("Dauntless");
-        if (!string.IsNullOrWhiteSpace(dauntless))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
-            {
-                Core.Equip(dauntless);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? wizHelm = Bot.Config.Get<string>("WizHelm");
-        if (!string.IsNullOrWhiteSpace(wizHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
-            {
-                Core.Equip(wizHelm);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
-        if (!string.IsNullOrWhiteSpace(luckHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
-            {
-                Core.Equip(luckHelm);
-                Core.Sleep(1500);
-            }
-        }
+        EquipIfAvailable(!string.IsNullOrWhiteSpace(dauntless) ? dauntless : valiance);
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
-        if (!string.IsNullOrWhiteSpace(animaHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
-            {
-                Core.Equip(animaHelm);
-                Core.Sleep(1500);
-            }
-        }
+        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
+        EquipIfAvailable(!string.IsNullOrWhiteSpace(animaHelm) ? animaHelm : luckHelm);
 
         string? penitence = Bot.Config.Get<string>("Penitence");
-        if (!string.IsNullOrWhiteSpace(penitence))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
-            {
-                Core.Equip(penitence);
-                Core.Sleep(1500);
-            }
-        }
-
         string? vainglory = Bot.Config.Get<string>("Vainglory");
-        if (!string.IsNullOrWhiteSpace(vainglory))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
-            {
-                Core.Equip(vainglory);
-                Core.Sleep(1500);
-            }
-        }
-
+        EquipIfAvailable(!string.IsNullOrWhiteSpace(vainglory) ? vainglory : penitence);
+        #endregion
 
         int skillIndex = 0;
         int[] skillList = { 1, 2, 3, 4 };
 
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player.Alive)
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
-                skillIndex = 0;
-                Bot.Sleep(500);
-                continue;
+                Core.Sleep(500);
+                if (Bot.Player.Alive)
+                {
+                    skillIndex = 0;
+                    continue;
+                }
             }
-            if (!monsterAvail())
-            {
-                return;
-            }
+
+            if (!monsterAvail()) return;
 
             if (!Bot.Player.HasTarget)
             {
@@ -718,409 +724,52 @@ public class Grimgaol
         }
     }
 
-    private void R5()
-    {
-        if (Bot.ShouldExit) return;
-        if (Bot.Player.Cell != "r5")
-        {
-            Core.Logger("jump to r5");
-            Core.Jump("r5", "Left");
-        }
-        Core.Sleep(1000);
-        jumpToAvailMonster();
-        if (!monsterAvail())
-        {
-            return;
-        }
-        Core.Equip(Adv.uDauntless() ? "Dragon of Time" : "Void Highlord");
-        string? valiance = Bot.Config!.Get<string>("Valiance");
-        if (!string.IsNullOrWhiteSpace(valiance))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
-            {
-                Core.Equip(valiance);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? dauntless = Bot.Config.Get<string>("Dauntless");
-        if (!string.IsNullOrWhiteSpace(dauntless))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
-            {
-                Core.Equip(dauntless);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? wizHelm = Bot.Config.Get<string>("WizHelm");
-        if (!string.IsNullOrWhiteSpace(wizHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
-            {
-                Core.Equip(wizHelm);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
-        if (!string.IsNullOrWhiteSpace(luckHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
-            {
-                Core.Equip(luckHelm);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
-        if (!string.IsNullOrWhiteSpace(animaHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
-            {
-                Core.Equip(animaHelm);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? penitence = Bot.Config.Get<string>("Penitence");
-        if (!string.IsNullOrWhiteSpace(penitence))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
-            {
-                Core.Equip(penitence);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? vainglory = Bot.Config.Get<string>("Vainglory");
-        if (!string.IsNullOrWhiteSpace(vainglory))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
-            {
-                Core.Equip(vainglory);
-                Core.Sleep(1500);
-            }
-        }
-
-
-        int skillIndex = 0;
-        int[] skillList = Adv.uDauntless() ?  new int[] { 1, 2, 4, 2, 3, 2 } : new int[] { 1, 2, 3, 4 };
-        int[] priorityIDs = { 7, 8, 9 };
-
-        while (!Bot.ShouldExit)
-        {
-            if (!Bot.Player.Alive)
-            {
-                skillIndex = 0;
-                Bot.Sleep(500);
-                continue;
-            }
-            string playerCell = Bot.Player.Cell;
-            List<Monster> mapMonsters = Bot.Monsters.MapMonsters;
-            // List<Aura> targetAuras = Bot.Target?.Auras?.ToList() ?? new List<Aura>();
-            Monster? target = null;
-            foreach (var mon in mapMonsters)
-            {
-                if (mon.Cell == playerCell && mon.HP > 0 && mon.State != 0)
-                {
-                    if (priorityIDs.Contains(mon.MapID))
-                    {
-                        // targetAuras = Bot.Target?.Auras?.ToList() ?? new List<Aura>();
-                        target = mon;
-                        break;
-                    }
-                    else target ??= mon;
-                }
-            }
-
-            if (target == null)
-            {
-                return;
-            }
-
-            Bot.Combat.Attack(target.MapID);
-            // targetAuras = Bot.Target?.Auras?.ToList() ?? new List<Aura>();
-
-            int skillID = skillList[skillIndex];
-            if (Bot.Player.HasTarget && Bot.Skills.CanUseSkill(skillID))
-            {
-                Bot.Skills.UseSkill(skillID);
-                skillIndex = (skillIndex + 1) % skillList.Length;
-            }
-        }
-    }
-
-    private void R6()
-    {
-        if (Bot.ShouldExit) return;
-        if (Bot.Player.Cell != "r6")
-        {
-            Core.Logger("jump to r6");
-            Core.Jump("r6", "Left");
-        }
-        Core.Sleep(1000);
-        if (!monsterAvail())
-        {
-            return;
-        }
-        Core.Equip("Void Highlord");
-        string? valiance = Bot.Config!.Get<string>("Valiance");
-        if (!string.IsNullOrWhiteSpace(valiance))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
-            {
-                Core.Equip(valiance);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? dauntless = Bot.Config.Get<string>("Dauntless");
-        if (!string.IsNullOrWhiteSpace(dauntless))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
-            {
-                Core.Equip(dauntless);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? wizHelm = Bot.Config.Get<string>("WizHelm");
-        if (!string.IsNullOrWhiteSpace(wizHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
-            {
-                Core.Equip(wizHelm);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
-        if (!string.IsNullOrWhiteSpace(luckHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
-            {
-                Core.Equip(luckHelm);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
-        if (!string.IsNullOrWhiteSpace(animaHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
-            {
-                Core.Equip(animaHelm);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? penitence = Bot.Config.Get<string>("Penitence");
-        if (!string.IsNullOrWhiteSpace(penitence))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
-            {
-                Core.Equip(penitence);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? vainglory = Bot.Config.Get<string>("Vainglory");
-        if (!string.IsNullOrWhiteSpace(vainglory))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
-            {
-                Core.Equip(vainglory);
-                Core.Sleep(1500);
-            }
-        }
-
-
-        int skillIndex = 0;
-        int[] skillList = { 2, 4 };
-
-        string monsId = "10";
-        int monsIdInt = 10;
-        int monsHealth = 40000;
-
-        while (!Bot.ShouldExit)
-        {
-            if (!Bot.Player.Alive)
-            {
-                skillIndex = 0;
-                monsId = "10";
-                monsIdInt = 10;
-                monsHealth = 40000;
-                Bot.Sleep(500);
-                continue;
-            }
-            if (!monsterAvail())
-            {
-                return;
-            }
-
-            if (monsId != "*" && GetMonsterHP(monsId) < monsHealth)
-            {
-                if (monsId == "12")
-                {
-                    monsId = "10";
-                    monsIdInt = 10;
-
-                    if (monsHealth == 10000)
-                    {
-                        monsId = "*";
-                    }
-                    if (monsHealth == 20000)
-                    {
-                        monsHealth = 10000;
-                    }
-                    if (monsHealth == 30000)
-                    {
-                        monsHealth = 20000;
-                    }
-                    if (monsHealth == 40000)
-                    {
-                        monsHealth = 30000;
-                    }
-                }
-                else if (monsId == "11")
-                {
-                    monsId = "12";
-                    monsIdInt = 12;
-                }
-                else if (monsId == "10")
-                {
-                    monsId = "11";
-                    monsIdInt = 11;
-                }
-            }
-
-            // if (!Bot.Player.HasTarget)
-            // {
-            //     if (monsId == "*") Bot.Combat.Attack("*");
-            //     else Bot.Combat.Attack(monsIdInt);
-            // }
-
-            if (monsId == "*") doPriorityAttackId(new int[] { 10, 11, 12 });
-            // else doPriorityAttack(new string[] {$"id-{monsId}"});
-            else doPriorityAttackId(new int[] { monsIdInt });
-
-            if (Bot.Player.Health >= 3000 && Bot.Player.HasTarget)
-            {
-                Bot.Skills.UseSkill(1);
-            }
-            if (Bot.Player.Health >= 4000 && Bot.Player.HasTarget)
-            {
-                Bot.Skills.UseSkill(3);
-            }
-            Bot.Skills.UseSkill(skillList[skillIndex]);
-            skillIndex = (skillIndex + 1) % skillList.Length;
-            Core.Sleep(100);
-        }
-    }
-
     private void R9()
     {
         if (Bot.ShouldExit) return;
         if (Bot.Player.Cell != "r9")
         {
             Core.Logger("jump to r9");
-            Core.Jump("r9", "Left");
+            Bot.Map.Jump("r9", "Left", autoCorrect: false);
+            Bot.Wait.ForCellChange("r9");
         }
         Core.Sleep(1000);
-        if (!monsterAvail())
-        {
-            return;
-        }
-        Core.Equip("Void Highlord");
+
+        if (!monsterAvail()) return;
+        Bot.Player.SetSpawnPoint();
+
+        #region Equipment Setup
+        EquipIfAvailable("Void Highlord");
+
         string? valiance = Bot.Config!.Get<string>("Valiance");
-        if (!string.IsNullOrWhiteSpace(valiance))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
-            {
-                Core.Equip(valiance);
-                Core.Sleep(1500);
-            }
-        }
-
         string? dauntless = Bot.Config.Get<string>("Dauntless");
-        if (!string.IsNullOrWhiteSpace(dauntless))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
-            {
-                Core.Equip(dauntless);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? wizHelm = Bot.Config.Get<string>("WizHelm");
-        if (!string.IsNullOrWhiteSpace(wizHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
-            {
-                Core.Equip(wizHelm);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
-        if (!string.IsNullOrWhiteSpace(luckHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
-            {
-                Core.Equip(luckHelm);
-                Core.Sleep(1500);
-            }
-        }
+        EquipIfAvailable(!string.IsNullOrWhiteSpace(dauntless) ? dauntless : valiance);
 
         string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
-        if (!string.IsNullOrWhiteSpace(animaHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
-            {
-                Core.Equip(animaHelm);
-                Core.Sleep(1500);
-            }
-        }
+        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
+        EquipIfAvailable(!string.IsNullOrWhiteSpace(animaHelm) ? animaHelm : luckHelm);
 
         string? penitence = Bot.Config.Get<string>("Penitence");
-        if (!string.IsNullOrWhiteSpace(penitence))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
-            {
-                Core.Equip(penitence);
-                Core.Sleep(1500);
-            }
-        }
-
         string? vainglory = Bot.Config.Get<string>("Vainglory");
-        if (!string.IsNullOrWhiteSpace(vainglory))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
-            {
-                Core.Equip(vainglory);
-                Core.Sleep(1500);
-            }
-        }
-
+        EquipIfAvailable(!string.IsNullOrWhiteSpace(vainglory) ? vainglory : penitence);
+        #endregion
 
         int skillIndex = 0;
         int[] skillList = { 1, 2, 3, 4 };
 
-
-
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player.Alive)
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
-                skillIndex = 0;
-                Bot.Sleep(500);
-                continue;
+                Core.Sleep(500);
+                if (Bot.Player.Alive)
+                {
+                    skillIndex = 0;
+                    continue;
+                }
             }
-            if (!monsterAvail())
-            {
-                return;
-            }
+
+            if (!monsterAvail()) return;
 
             if (!Bot.Player.HasTarget)
             {
@@ -1146,84 +795,26 @@ public class Grimgaol
         if (Bot.Player.Cell != "r10")
         {
             Core.Logger("jump to r10");
-            Core.Jump("r10", "Left");
+            Bot.Map.Jump("r10", "Left", autoCorrect: false);
+            Bot.Wait.ForCellChange("r10");
         }
         Core.Sleep(1000);
-        if (!monsterAvail())
-        {
-            return;
-        }
-        Core.Equip("Dragon of Time");
-        string? valiance = Bot.Config!.Get<string>("Valiance");
-        if (!string.IsNullOrWhiteSpace(valiance))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(valiance))
-            {
-                Core.Equip(valiance);
-                Core.Sleep(1500);
-            }
-        }
 
-        string? dauntless = Bot.Config.Get<string>("Dauntless");
-        if (!string.IsNullOrWhiteSpace(dauntless))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
-            {
-                Core.Equip(dauntless);
-                Core.Sleep(1500);
-            }
-        }
+        if (!monsterAvail()) return;
+        Bot.Player.SetSpawnPoint();
+
+        #region Equipment Setup
+        EquipIfAvailable("Dragon of Time");
+
+        string? elysium = Bot.Config!.Get<string>("Elysium");
+        EquipIfAvailable(elysium);
 
         string? wizHelm = Bot.Config.Get<string>("WizHelm");
-        if (!string.IsNullOrWhiteSpace(wizHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(wizHelm))
-            {
-                Core.Equip(wizHelm);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? luckHelm = Bot.Config.Get<string>("LuckHelm");
-        if (!string.IsNullOrWhiteSpace(luckHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
-            {
-                Core.Equip(luckHelm);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
-        if (!string.IsNullOrWhiteSpace(animaHelm))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
-            {
-                Core.Equip(animaHelm);
-                Core.Sleep(1500);
-            }
-        }
+        EquipIfAvailable(wizHelm);
 
         string? penitence = Bot.Config.Get<string>("Penitence");
-        if (!string.IsNullOrWhiteSpace(penitence))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(penitence))
-            {
-                Core.Equip(penitence);
-                Core.Sleep(1500);
-            }
-        }
-
-        string? vainglory = Bot.Config.Get<string>("Vainglory");
-        if (!string.IsNullOrWhiteSpace(vainglory))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
-            {
-                Core.Equip(vainglory);
-                Core.Sleep(1500);
-            }
-        }
-
+        EquipIfAvailable(penitence);
+        #endregion
 
         int skillIndex = 0;
         int[] skillList = { 1, 2, 4, 2, 3, 2 };
@@ -1233,18 +824,17 @@ public class Grimgaol
 
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player.Alive)
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
-                skillIndex = 0;
-                monsId = "16";
-                monsIdInt = 16;
-                Bot.Sleep(500);
-                continue;
+                Core.Sleep(500);
+                if (Bot.Player.Alive)
+                {
+                    skillIndex = 0;
+                    continue;
+                }
             }
-            if (!monsterAvail())
-            {
-                return;
-            }
+
+            if (!monsterAvail()) return;
 
             if (monsId != "*" && GetMonsterHP(monsId) <= 70000)
             {
@@ -1264,6 +854,7 @@ public class Grimgaol
 
             if (monsId == "*") doPriorityAttackId(new int[] { 16, 17, 18, 19 });
             else doPriorityAttackId(new int[] { monsIdInt });
+
             if (Bot.Player.HasTarget && Bot.Skills.CanUseSkill(skillList[skillIndex]))
             {
                 Bot.Skills.UseSkill(skillList[skillIndex]);
@@ -1276,62 +867,31 @@ public class Grimgaol
     {
         if (Bot.ShouldExit) return;
 
+        // Jump to cell if needed
         if (Bot.Player.Cell != cell)
         {
-            Core.Logger($"jump to {cell}");
-            Core.Jump(cell, "Left");
+            Core.Logger($"Jumping to {cell}");
+            Bot.Map.Jump(cell, "Left", autoCorrect: false);
+            Bot.Wait.ForCellChange(cell);
         }
-
-        jumpToAvailMonster();
 
         if (!monsterAvail()) return;
+        Bot.Player.SetSpawnPoint();
 
-        Core.Equip("Verus DoomKnight");
+        #region Equipment Setup
+        EquipIfAvailable("Verus DoomKnight");
 
-        string? dauntless = Bot.Config!.Get<string>("Dauntless");
-        if (!string.IsNullOrWhiteSpace(dauntless))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(dauntless))
-            {
-                Core.Equip(dauntless);
-                Core.Sleep(1500);
-            }
-        }
+        string? dauntless = Bot.Config!.Get<string>("Dauntless"); // fixed typo
+        EquipIfAvailable(dauntless);
 
-        if (cell == "r11" || cell == "r12")
-        {
-            string? luckHelm = Bot.Config.Get<string>("LuckHelm");
-            if (!string.IsNullOrWhiteSpace(luckHelm))
-            {
-                while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(luckHelm))
-                {
-                    Core.Equip(luckHelm);
-                    Core.Sleep(1500);
-                }
-            }
-        }
-        else
-        {
-            string? animaHelm = Bot.Config.Get<string>("AnimaHelm");
-            if (!string.IsNullOrWhiteSpace(animaHelm))
-            {
-                while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(animaHelm))
-                {
-                    Core.Equip(animaHelm);
-                    Core.Sleep(1500);
-                }
-            }
-        }
+        string? helm = cell is "r11" or "r12"
+            ? Bot.Config.Get<string>("LuckHelm")
+            : Bot.Config.Get<string>("AnimaHelm");
+        EquipIfAvailable(helm);
 
-        string? vainglory = Bot.Config.Get<string>("Vainglory");
-        if (!string.IsNullOrWhiteSpace(vainglory))
-        {
-            while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(vainglory))
-            {
-                Core.Equip(vainglory);
-                Core.Sleep(1500);
-            }
-        }
+        string? vainglory = Bot.Config.Get<string>("Vainglory"); // fixed typo
+        EquipIfAvailable(vainglory);
+        #endregion
 
         int skillIndex = 0;
         int[] skillList = { 1, 2, 3, 4 };
@@ -1340,49 +900,286 @@ public class Grimgaol
         {
             if (!Bot.Player.Alive)
             {
-                skillIndex = 0;
-                Bot.Sleep(500);
+                Core.Sleep(500);
+                if (Bot.Player.Alive)
+                    skillIndex = 0;
                 continue;
             }
 
+            // Ensure we're still in the right cell
             if (Bot.Player.Cell != cell)
             {
-                Core.Logger($"jump back to {cell}");
-                Core.Jump(cell, "Left");
+                Bot.Map.Jump(cell, "Left", autoCorrect: false);
+                Bot.Wait.ForCellChange(cell);
             }
 
             if (!monsterAvail()) return;
 
+            // Start attack if no target
             if (!Bot.Player.HasTarget)
-            {
                 Bot.Combat.Attack("*");
-            }
 
+            // Heal if needed
             if (Bot.Player.Health <= 2500)
-            {
                 Bot.Skills.UseSkill(2);
-            }
 
+            // Use next skill
             if (Bot.Player.HasTarget)
             {
                 Bot.Skills.UseSkill(skillList[skillIndex]);
+                skillIndex = (skillIndex + 1) % skillList.Length;
             }
-            skillIndex = (skillIndex + 1) % skillList.Length;
+
+            Core.Sleep(100); // prevent skill spam
         }
     }
+    #endregion
+
+
+    private void R5()
+    {
+        if (Bot.ShouldExit) return;
+        if (Bot.Player.Cell != "r5")
+        {
+            Core.Logger("jump to r5");
+            Bot.Map.Jump("r5", "Left", autoCorrect: false);
+            Bot.Wait.ForCellChange("r5");
+        }
+
+        if (!monsterAvail()) return;
+        Bot.Player.SetSpawnPoint();
+
+        #region Equipment Setup
+        string? valiance = Bot.Config!.Get<string>("Valiance");
+        string? elysium = Bot.Config.Get<string>("Elysium");
+        string? dauntless = Bot.Config.Get<string>("Dauntless");
+        string? healerHelm = Bot.Config.Get<string>("HealerHelm");
+        string? pneumaHelm = Bot.Config.Get<string>("PneumaHelm");
+        string? penitence = Bot.Config.Get<string>("Penitence");
+
+        bool useDoT = Adv.uElysium() && !string.IsNullOrWhiteSpace(elysium);
+
+        string? weapon = null;
+        if (useDoT)
+        {
+            if (!string.IsNullOrWhiteSpace(elysium))
+                weapon = elysium;
+            else if (!string.IsNullOrWhiteSpace(valiance))
+                weapon = valiance;
+        }
+        else
+        {
+            if (Adv.uDauntless() && !string.IsNullOrWhiteSpace(dauntless))
+                weapon = dauntless;
+            else if (!string.IsNullOrWhiteSpace(valiance))
+                weapon = valiance;
+        }
+
+        EquipIfAvailable(useDoT ? "Dragon of Time" : "Void Highlord");
+        EquipIfAvailable(weapon);
+        EquipIfAvailable(useDoT ? healerHelm : pneumaHelm);
+        EquipIfAvailable(penitence);
+        #endregion Equipment Setup
+
+        int skillIndex = 0;
+        int[] skillList = { 1, 2, 3, 2, 4 };
+        int skillID = skillList[skillIndex];
+        int DeathCount = 0;
+        while (!Bot.ShouldExit)
+        {
+            foreach (Monster mon in Bot.Monsters.CurrentAvailableMonsters)
+            {
+
+                while (!Bot.ShouldExit)
+                {
+                    if (mon == null)
+                        continue;
+
+                    if (!monsterAvail())
+                    {
+                        Core.Logger($"DeathCount: {DeathCount}");
+                        return;
+                    }
+
+                    while (!Bot.ShouldExit && !Bot.Player.Alive)
+                    {
+                        DeathCount++;
+                        Core.Sleep(500);
+                        if (Bot.Player.Alive)
+                        {
+                            skillIndex = 0;
+                            continue;
+                        }
+                    }
+
+                    if (!Bot.Player.HasTarget)
+                        Bot.Combat.Attack(mon.MapID);
+
+                    if (Bot.Player.HasTarget)
+                    {
+                        if (Bot.Player.Health < 1500 && Bot.Skills.CanUseSkill(2))
+                            Bot.Skills.UseSkill(2);
+                        else if (Bot.Player.Health > 4000)
+                            Bot.Skills.UseSkill(Bot.Skills.CanUseSkill(1) ? 1 : 3);
+                        else
+                        {
+                            Bot.Skills.UseSkill(skillList[skillIndex]);
+                            skillIndex = (skillIndex + 1) % skillList.Length;
+                        }
+                    }
+
+                    if (Bot.Player.HasTarget && Bot.Target.HasActiveAura("Crashed"))
+                    {
+                        // Core.Logger("Aura: \"Crashed\" Detected! Damage Time!!");
+                        Monster? crashedMon = mon ?? Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null && GetMonsterHP(x.MapID.ToString()) > 0);
+                        if (crashedMon != null)
+                            Crashed(crashedMon);
+                        else
+                            Core.Logger("No valid monster found for \"Crashed\" aura.");
+                    }
+                }
+            }
+        }
+
+        void Crashed(Monster mon)
+        {
+            if (!Bot.Player.HasTarget || (Bot.Player.HasTarget && !Bot.Target.HasActiveAura("Crashed")) || !Bot.Player.Alive)
+                return;
+
+            while (!Bot.ShouldExit && Bot.Player.HasTarget && Bot.Target.HasActiveAura("Crashed"))
+            {
+                if (!Bot.Player.Alive)
+                    return;
+
+                Bot.Combat.Attack(mon.MapID);
+                Core.Sleep(500);
+                if (Bot.Player.HasTarget)
+                {
+                    Bot.Skills.UseSkill(skillList[skillIndex]);
+                    skillIndex = (skillIndex + 1) % skillList.Length;
+                }
+
+                if (!monsterAvail() || !Bot.Player.Alive || Bot.Player.HasTarget && Bot.Target.HasActiveAura("Ludicrous Speed") || !Bot.Target.HasActiveAura("Crashed"))
+                    return;
+            }
+        }
+    }
+
+    private void R6()
+    {
+        if (Bot.ShouldExit) return;
+
+        if (Bot.Player.Cell != "r6")
+        {
+            Core.Logger("Jumping to r6");
+            Bot.Map.Jump("r6", "Left", autoCorrect: false);
+            Bot.Wait.ForCellChange("r6");
+        }
+
+        if (!monsterAvail()) return;
+
+        Bot.Player.SetSpawnPoint();
+
+        #region Equipment Setup
+        EquipIfAvailable(Core.CheckInventory("Chaos Avenger") ? "Chaos Avenger" : "Void Highlord");
+
+        string? dauntless = Bot.Config!.Get<string>("Dauntless");
+        string? valiance = Bot.Config.Get<string>("Valiance");
+        EquipIfAvailable(!string.IsNullOrWhiteSpace(dauntless) ? dauntless : valiance);
+
+        EquipIfAvailable(Bot.Config.Get<string>("AnimaHelm"));
+        EquipIfAvailable(Bot.Config.Get<string>("Penitence"));
+        #endregion Equipment Setup
+
+        int skillIndex = 0;
+        int[] skillList = Bot.Inventory.Contains("Chaos Avenger") ? new[] { 4, 1, 3 } : new[] { 2, 4 };
+
+        while (!Bot.ShouldExit)
+        {
+            if (!monsterAvail()) return;
+
+            foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
+            {
+                while (!Bot.ShouldExit)
+                {
+                    while (!Bot.ShouldExit && !Bot.Player.Alive)
+                    {
+                        Core.Sleep(100);
+                        if (Bot.Player.Alive)
+                        {
+                            skillIndex = 0;
+                            break;
+                        }
+                    }
+
+                    if (!monsterAvail()) return;
+
+                    if (Bot.Target.HasActiveAura("Crit Damage Amplified"))
+                    {
+                        Bot.Combat.CancelAutoAttack();
+                        Bot.Combat.CancelTarget();
+                        skillIndex = 0;
+                        break;
+                    }
+
+                    if (!Bot.Player.HasTarget)
+                        Bot.Combat.Attack(m.MapID);
+
+                    if (Bot.Player.HasTarget)
+                    {
+                        if (!Core.CheckInventory("Chaos Avenger") && Bot.Player.Health <= 2500)
+                            Bot.Skills.UseSkill(2);
+                        else
+                        {
+                            Bot.Skills.UseSkill(skillList[skillIndex]);
+                            skillIndex = (skillIndex + 1) % skillList.Length;
+                        }
+                    }
+
+                    Core.Sleep();
+                }
+            }
+        }
+
+
+    }
+
+    void EquipIfAvailable(string? itemName, int sleepMs = 500)
+    {
+        if (string.IsNullOrWhiteSpace(itemName))
+            return;
+
+        // Handle special IoDA case
+        if (itemName == "Void Highlord")
+            // Check if VHL (IoDA) is owned, use that if its rank 10, else normal vhl
+            itemName = (Core.CheckInventory("Void HighLord (IoDA)") && Core.CheckClassRank(false, "Void HighLord (IoDA)") == 10) ? "Void HighLord (IoDA)" : "Void Highlord";
+
+        // Use this to unbank if we own it.
+        if (!Core.CheckInventory(itemName))
+        {
+            Core.Logger($"[EquipIfAvailable] Item not found in inventory or bank: \"{itemName}\"");
+            return;
+        }
+
+        // Keep trying until equipped or script exits
+        while (!Bot.ShouldExit && !Bot.Inventory.IsEquipped(itemName))
+        {
+            Bot.Inventory.EquipItem(itemName);
+            Core.Sleep(sleepMs);
+        }
+    }
+
 
     private int GetMonsterHP(string monMapID)
     {
         try
         {
-            var jsonData = Bot.Flash.Call("availableMonsters");
-            if (string.IsNullOrEmpty(jsonData)) return 0;
+            string? jsonData = Bot.Flash.Call("availableMonsters");
+            if (string.IsNullOrWhiteSpace(jsonData)) return 0;
 
             foreach (var mon in JArray.Parse(jsonData))
-            {
                 if (mon?["MonMapID"]?.ToString() == monMapID)
                     return mon["intHP"]?.ToObject<int>() ?? 0;
-            }
         }
         catch { }
 
@@ -1391,24 +1188,21 @@ public class Grimgaol
 
     private void doPriorityAttackId(int[] monsterListId)
     {
-        for (int i = 0; i < monsterListId.Length; i++)
-        {
-            if (monsterAvailId(monsterListId[i]))
+        foreach (int id in monsterListId)
+            if (monsterAvailId(id))
             {
-                Bot.Combat.Attack(monsterListId[i]);
+                Bot.Combat.Attack(id);
                 return;
             }
-        }
     }
 
     private bool monsterAvailId(int id)
     {
-        var playerCell = Bot.Player.Cell;
+        string playerCell = Bot.Player.Cell;
         foreach (var mon in Bot.Monsters.MapMonsters)
-        {
             if (mon.MapID == id && mon.Cell == playerCell && mon.HP > 0 && mon.State != 0)
                 return true;
-        }
+
         return false;
     }
 
@@ -1416,50 +1210,164 @@ public class Grimgaol
     {
         string playerCell = Bot.Player.Cell;
         foreach (var mon in Bot.Monsters.MapMonsters)
-        {
             if (mon.Cell == playerCell && mon.HP > 0 && mon.State != 0)
                 return true;
-        }
+
         return false;
     }
 
     private void jumpToAvailMonster()
     {
         foreach (var mon in Bot.Monsters.MapMonsters)
-        {
             if (mon.HP > 0 && mon.State != 0)
             {
-                Core.Jump(mon.Cell, "Left");
+                if (Bot.Player.Cell != mon.Cell)
+                {
+                    Bot.Map.Jump(mon.Cell, "Left", autoCorrect: false);
+                    Bot.Wait.ForCellChange(mon.Cell);
+                }
                 return;
             }
-        }
     }
 
     private void CheckConfig()
     {
-        // Loop through all Option<string> in Options list
+        // Load config values into dictionary
+        Dictionary<string, string?> gear = new()
+    {
+        // Weapon Enhancements
+        { "Dauntless", Bot.Config!.Get<string>("Dauntless") },
+        { "Valiance", Bot.Config.Get<string>("Valiance") },
+        { "Elysium",  Bot.Config.Get<string>("Elysium") },
+
+        // Cape Enhancements
+        { "Vainglory", Bot.Config.Get<string>("Vainglory") },
+        { "Penitence", Bot.Config.Get<string>("Penitence") },
+        { "HealerCape", Bot.Config.Get<string>("HealerCape") },
+
+        // Helm Enhancements
+        { "PneumaHelm", Bot.Config.Get<string>("PneumaHelm")},
+        { "AnimaHelm", Bot.Config.Get<string>("AnimaHelm") },
+        { "HealerHelm", Bot.Config.Get<string>("HealerHelm") },
+        { "WizHelm",  Bot.Config.Get<string>("WizHelm") },
+        { "LuckHelm", Bot.Config.Get<string>("LuckHelm") },
+    };
+
+        // Require critical classes and log what's missing
+        string[] requiredClasses = { "Dragon of Time", Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord", "Verus DoomKnight", };
+
+        // Extra Class for statues; CaV
+        if (Core.CheckInventory("Chaos Avenger"))
+        {
+            Bot.Log("Chaos Avenger Found, we'll use this for the Fallen Statues");
+        }
+
+        string[] missingClasses = requiredClasses
+            .Where(c => !Core.CheckInventory(c))
+            .ToArray();
+
+        if (missingClasses.Length > 0)
+        {
+            Core.Logger(
+                "You are missing one or more required classes:\n" +
+                $"- {string.Join("\n- ", missingClasses)}",
+                stopBot: true);
+        }
+
+        // Filter non-null and non-whitespace items and cast to non-nullable string
+        List<string> requiredItems = gear.Values
+     .Where(item => !string.IsNullOrWhiteSpace(item))
+     .Select(item => item!) // Cast to non-nullable string
+     .Where(item => !Bot.Inventory.IsEquipped(item) && !Bot.Bank.Contains(item))
+     .ToList();
+
+        Core.CheckInventory(requiredItems.ToArray());
+
+
+        // Determine whether to skip enhancements
+        bool skipEnh = Bot.Config.Get<bool>("SkipEnhancements");
+
+        // Validate config values
         foreach (var opt in Options.OfType<Option<string>>())
         {
-            // Skip the SkipOptions entry
             if (ReferenceEquals(opt, CoreBots.Instance.SkipOptions))
                 continue;
 
-            // Get the config key from the option's name (this will be used to retrieve the value)
-            string key = opt.Name;
+            if (!gear.TryGetValue(opt.Name, out string? value))
+                continue;
 
-            // Get and trim the value from Bot.Config using the option's Name (key)
-            string? value = Bot.Config?.Get<string>(key)?.Trim();
-
-            // Use DisplayName as the label for the error message
-            string label = opt.DisplayName ?? opt.Name; // Fall back to Name if DisplayName is null
-
-            // If the value is null, empty, or still equal to the default (""), log an error and stop the bot
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrWhiteSpace(value))
             {
-                Core.Logger($"The item with enhancement '{key}' is missing. Please enter its exact in-game name (including capitalization). If unsure, use Tools > Grabber > Inventory to find it.", $"Missing Item: {key}", stopBot: true);
-
+                Core.Logger(
+                    $"The item for enhancement '{opt.Name}' is missing.\n" +
+                    $"Go to: Scripts > [Edit Script Options], then enter the exact item name (case-sensitive).\n" +
+                    $"Use Tools > Grabber > Inventory to get the correct name.",
+                    $"Missing Item: {opt.Name}",
+                    stopBot: true);
             }
         }
+
+        // Precompile lowercase name list for comparison
+        HashSet<string> allItemNames = Bot.Inventory.Items
+            .Concat(Bot.Bank.Items)
+            .Select(i => i.Name.ToLowerInvariant().Trim())
+            .ToHashSet();
+
+        // Enhancement result log
+        List<string> summaryLogs = new();
+
+        void EnhanceIfFound(string? name, EnhancementType type, CapeSpecial cape = CapeSpecial.None, HelmSpecial helm = HelmSpecial.None, WeaponSpecial weapon = WeaponSpecial.None)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return;
+
+            if (!Core.CheckInventory(name))
+            {
+                string key = name.ToLowerInvariant().Trim();
+                if (allItemNames.Contains(key))
+                    Core.Logger($"[WARN] \"{name}\" is in inventory/bank but may have a capitalization/spacing mismatch.");
+                else
+                    Core.Logger($"[MISSING] Enhancement target \"{name}\" not found in inventory or bank.");
+                return;
+            }
+
+            if (!skipEnh)
+            {
+                Adv.EnhanceItem(name, type, cape, helm, weapon, logging: false);
+                summaryLogs.Add($"- {name}: {type}" +
+                    (weapon != WeaponSpecial.None ? $" ({weapon})" :
+                     cape != CapeSpecial.None ? $" ({cape})" :
+                     helm != HelmSpecial.None ? $" ({helm})" : ""));
+            }
+        }
+
+        // Static class enhancements
+        EnhanceIfFound("Void Highlord", EnhancementType.Lucky);
+        EnhanceIfFound("Verus DoomKnight", EnhancementType.Lucky);
+        EnhanceIfFound("Dragon of Time", EnhancementType.Healer);
+        if (Core.CheckInventory("Chaos Avenger"))
+            EnhanceIfFound("Chaos Avenger", EnhancementType.Lucky);
+
+        // Weapon enhancements
+        EnhanceIfFound(gear["Valiance"], EnhancementType.Lucky, weapon: WeaponSpecial.Valiance);
+        EnhanceIfFound(gear["Dauntless"], EnhancementType.Lucky, weapon: WeaponSpecial.Dauntless);
+        EnhanceIfFound(gear["Elysium"], EnhancementType.Healer, weapon: WeaponSpecial.Elysium);
+
+        // Helm enhancements
+        EnhanceIfFound(gear["WizHelm"], EnhancementType.Wizard);
+        EnhanceIfFound(gear["LuckHelm"], EnhancementType.Lucky);
+        // EnhanceIfFound(gear["HealerHelm"], EnhancementType.Healer);
+        EnhanceIfFound(gear["AnimaHelm"], EnhancementType.Lucky, helm: HelmSpecial.Anima);
+
+        // Cape enhancements
+        EnhanceIfFound(gear["HealerCape"], EnhancementType.Healer);
+        EnhanceIfFound(gear["Penitence"], EnhancementType.Lucky, cape: CapeSpecial.Penitence);
+        EnhanceIfFound(gear["Vainglory"], EnhancementType.Lucky, cape: CapeSpecial.Vainglory);
+
+        // Final log
+        if (!skipEnh)
+            foreach (string log in summaryLogs)
+                Core.Logger(log);
     }
 
     private void Prereqs()
@@ -1501,50 +1409,5 @@ public class Grimgaol
             Core.EnsureComplete(9465);
         }
         #endregion Grimgaol Prereqs
-    }
-
-    private void SetOptions()
-    {
-        #region SetOptions
-
-        Bot.Events.ScriptStopping += Core.CrashDetector;
-        Bot.Events.MapChanged += Core.CleanKilledMonstersList;
-        Bot.Events.MonsterKilled += Core.KilledMonsterListener;
-        Bot.Events.ExtensionPacketReceived += Core.RespawnListener;
-        Core.ReadCBO();
-
-        Core.IsMember = Bot.Player.IsMember;
-
-        // Common Options
-        Bot.Options.PrivateRooms = false;
-        Bot.Options.AttackWithoutTarget = false;
-        Bot.Options.SafeTimings = true;
-        Bot.Options.RestPackets = true && Core.ShouldRest;
-        Bot.Options.AutoRelogin = true;
-        Bot.Options.InfiniteRange = true;
-        Bot.Options.SkipCutscenes = true;
-        Bot.Options.QuestAcceptAndCompleteTries = Core.AcceptandCompleteTries;
-        Bot.Drops.RejectElse = true;
-        Bot.Lite.UntargetDead = true;
-        Bot.Lite.UntargetSelf = true;
-        Bot.Lite.ReacceptQuest = false;
-        Bot.Lite.DisableRedWarning = true;
-        Bot.Lite.CharacterSelectScreen = false;
-
-        //adding sommore
-        Bot.Lite.DisableDamageStrobe = true;
-        Bot.Lite.DisableRedWarning = true;
-        Bot.Lite.InvisibleMonsters = false;
-        Bot.Lite.SmoothBackground = true;
-        Bot.Lite.ShowMonsterType = true;
-        Bot.Lite.CustomDropsUI = true;
-
-        if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
-            Bot.Bank.Open();
-        Core.Sleep(1500);
-        Bot.Bank.Load();
-        Bot.Bank.Loaded = true;
-
-        #endregion SetOptionsq
     }
 }

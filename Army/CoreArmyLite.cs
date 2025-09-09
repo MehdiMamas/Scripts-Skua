@@ -157,21 +157,23 @@ public class CoreArmyLite
             }
         }
 
+        aggroCTS.Cancel();
+        aggroCTS.Dispose();
         aggroCTS = new();
         Task.Run(async () =>
-        {
-            while (!Bot.ShouldExit && !aggroCTS.IsCancellationRequested)
-            {
-                try
-                {
-                    if (AggroMonMapIDs.Count > 0)
-                        Bot.Send.Packet(AggroMonPacket(AggroMonMapIDs.ToArray()));
-                    await Task.Delay(AggroMonPacketDelay);
-                }
-                catch { }
-            }
-            aggroCTS = null;
-        });
+               {
+                   while (!Bot.ShouldExit && !aggroCTS.IsCancellationRequested)
+                   {
+                       try
+                       {
+                           if (AggroMonMapIDs.Count > 0)
+                               Bot.Send.Packet(AggroMonPacket(AggroMonMapIDs.ToArray()));
+                           await Task.Delay(AggroMonPacketDelay);
+                       }
+                       catch { }
+                   }
+                   aggroCTS = null;
+               });
         List<int> GetMapIDs(List<Monster> monsterData) => monsterData.Select(m => m.MapID).ToList();
         void AddMapIDs(List<int> MMIDs)
         {
@@ -186,56 +188,68 @@ public class CoreArmyLite
         if (aggroCTS is not null)
             AggroMonStop();
 
-        // Retrieve player configurations in a loop
-        for (int i = 1; i <= 10; i++)
-        {
-            Bot.Config!.Get<string>($"player{i}");
-        }
+        Core.PrivateRooms = true;
+        Core.PrivateRoomNumber = getRoomNr();
 
-        int partySize = Players().Length;
-        Core.Logger($"Party Size: {partySize}");
+        Bot.Map.Join($"{map}-{Core.PrivateRoomNumber}", "Enter", "Spawn", autoCorrect: false);
+        Bot.Wait.ForMapLoad(map);
+
+        Bot.Map.Jump(_cell ?? "Enter", _pad ?? "Spawn", autoCorrect: false);
+        Bot.Wait.ForCellChange(_cell ?? "Enter");
+
+        // Retrieve player configurations
+        for (int i = 1; i <= 10; i++)
+            Bot.Config!.Get<string>($"player{i}");
+
+        Core.Logger($"Party Size: {PartySize()}");
 
         if (map != null)
+            WaitForPartyCell(_cell ?? Bot.Player.Cell, _pad ?? Bot.Player.Pad, PartySize());
+
+        // Use HashSet to prevent duplicate MapIDs
+        HashSet<int> AggroMonMapIDs = new();
+
+        void PopulateAggroMonMapIDs()
         {
-            Core.Join(map);
-            waitForPartyCell(_cell, _pad, partySize);
+            foreach (string cell in _AggroMonCells)
+                foreach (int id in Bot.Monsters.GetMonstersByCell(cell).Select(m => m.MapID))
+                    AggroMonMapIDs.Add(id);
+
+            foreach (string name in _AggroMonNames)
+                foreach (int id in Bot.Monsters.MapMonsters.Where(m => m.Name == name).Select(m => m.MapID))
+                    AggroMonMapIDs.Add(id);
+
+            foreach (int id in _AggroMonIDs)
+                foreach (int mapId in Bot.Monsters.MapMonsters.Where(m => m.ID == id || m.MapID == id).Select(m => m.MapID))
+                    AggroMonMapIDs.Add(mapId);
+
+            foreach (int mapID in _AggroMonMIDs)
+                AggroMonMapIDs.Add(mapID);
         }
+        PopulateAggroMonMapIDs();
 
-        List<string> _AggroMonCells = this._AggroMonCells;
-        List<string> _AggroMonNames = this._AggroMonNames;
-        List<int> _AggroMonIDs = this._AggroMonIDs;
-        List<int> AggroMonMapIDs = this._AggroMonMIDs; //MMIDs = Monster Map IDs
-
-        foreach (string cell in _AggroMonCells)
-            AddMapIDs(GetMapIDs(Bot.Monsters.GetMonstersByCell(cell)));
-        foreach (string name in _AggroMonNames)
-            AddMapIDs(GetMapIDs(Bot.Monsters.MapMonsters.Where(m => m.Name == name).ToList()));
-        foreach (int ID in _AggroMonIDs)
-            AddMapIDs(GetMapIDs(Bot.Monsters.MapMonsters.Where(m => m.ID == ID || m.MapID == ID).ToList()));
-
+        // Start aggro task
+        aggroCTS?.Cancel();
+        aggroCTS?.Dispose();
         aggroCTS = new();
+
         Task.Run(async () =>
         {
             while (!Bot.ShouldExit && !aggroCTS.IsCancellationRequested)
             {
                 try
                 {
-                    Bot.Send.Packet(AggroMonPacket(AggroMonMapIDs.ToArray()));
+                    if (Bot.Player.Alive && Bot.Player.Cell == _cell)
+                        Bot.Send.Packet(AggroMonPacket(AggroMonMapIDs.ToArray()));
                     await Task.Delay(AggroMonPacketDelay);
                 }
                 catch { }
             }
+
+            aggroCTS?.Cancel();
+            aggroCTS?.Dispose();
             aggroCTS = null;
         });
-
-        List<int> GetMapIDs(List<Monster> monsterData)
-            => monsterData.Select(m => m.MapID).ToList();
-        void AddMapIDs(List<int> MMIDs)
-        {
-            foreach (int ID in MMIDs)
-                if (!AggroMonMapIDs.Contains(ID))
-                    AggroMonMapIDs.Add(ID);
-        }
     }
     private CancellationTokenSource? aggroCTS = null;
 
@@ -247,6 +261,8 @@ public class CoreArmyLite
     Retry:
         Bot.Options.AttackWithoutTarget = false;
         aggroCTS?.Cancel();
+        aggroCTS.Dispose();
+        aggroCTS = null;
         if (clear)
             AggroMonClear();
         Bot.Wait.ForTrue(() => aggroCTS == null, 30);
@@ -302,7 +318,8 @@ public class CoreArmyLite
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = getRoomNr();
-        Core.Join(map);
+        Bot.Map.Join($"{map}-{Core.PrivateRoomNumber}", autoCorrect: false);
+        Bot.Wait.ForMapLoad(map);
 
         //Devining variables
         var _monsters = Bot.Monsters.MapMonsters.Where(m => monsters.Contains(m.Name)).ToList();
@@ -368,6 +385,17 @@ public class CoreArmyLite
     public Option<string> player8 = new("player8", "Account #8", "Name of one of your accounts.", "");
     public Option<string> player9 = new("player9", "Account #9", "Name of one of your accounts.", "");
     public Option<string> player10 = new("player10", "Account #10", "Name of one of your accounts.", "");
+    public Option<string> player11 = new("player11", "Account #11", "Name of one of your accounts.", "");
+    public Option<string> player12 = new("player12", "Account #12", "Name of one of your accounts.", "");
+    public Option<string> player13 = new("player13", "Account #13", "Name of one of your accounts.", "");
+    public Option<string> player14 = new("player14", "Account #14", "Name of one of your accounts.", "");
+    public Option<string> player15 = new("player15", "Account #15", "Name of one of your accounts.", "");
+    public Option<string> player16 = new("player16", "Account #16", "Name of one of your accounts.", "");
+    public Option<string> player17 = new("player17", "Account #17", "Name of one of your accounts.", "");
+    public Option<string> player18 = new("player18", "Account #18", "Name of one of your accounts.", "");
+    public Option<string> player19 = new("player19", "Account #19", "Name of one of your accounts.", "");
+    public Option<string> player20 = new("player20", "Account #20", "Name of one of your accounts.", "");
+
 
     public Option<int> packetDelay = new(
         "PacketDelay", "Delay for Packet Spam", "Sets the delay for the Packet Spam\n" +
@@ -713,7 +741,11 @@ public class CoreArmyLite
                 _SmartAggroMonCells.Add(cell);
 
             if (username == p)
-                Core.Jump(cell, "Left");
+            {
+                Bot.Map.Jump(cell, "Left", autoCorrect: false);
+                Bot.Wait.ForCellChange(cell);
+                Bot.Player.SetSpawnPoint();
+            }
             cellCount = cellCount == cells.Length - 1 ? 0 : cellCount + 1;
         }
     }
@@ -801,54 +833,67 @@ public class CoreArmyLite
     /// <summary>
     /// Waits for the party members to join the specified cell in the game.
     /// If no cell is specified, it checks the current cell for the required 
-    /// player count. The method logs the final list of players and monitors 
-    /// the player status until the expected number of players is present or 
-    /// a bugged lobby condition is detected.
+    /// player count. Logs the final list of players and monitors until all 
+    /// expected players are present, a timeout occurs, or the bot exits.
     /// </summary>
-    /// <param name="cell">The cell to jump to, if specified. If null, the 
-    /// current cell is used.</param>
-    /// <param name="pad">The direction to pad when jumping to the cell; 
-    /// defaults to "Left".</param>
-    /// <param name="playerCount">The expected number of players in the 
-    /// party; defaults to the current player count.</param>
-    public void waitForPartyCell(string? cell = null, string? pad = null, int? playerCount = null)
+    /// <param name="cell">The cell to jump to. If null, the current cell is used.</param>
+    /// <param name="pad">The direction to pad when jumping; defaults to "Left".</param>
+    /// <param name="playerCount">The expected number of players; defaults to the party size.</param>
+    /// <param name="timeoutSeconds">Optional timeout in seconds; defaults to 60s.</param>
+    public void WaitForPartyCell(string? cell = null, string? pad = null, int? playerCount = null, int timeoutSeconds = 60)
     {
-        if (cell != null)
+        // Jump to the specified cell if provided
+        if (!string.IsNullOrEmpty(cell))
         {
-            Bot.Map.Jump(cell, pad ?? "Left"); // Jump to specified cell if provided
+            Bot.Map.Jump(cell, pad ?? "Left", autoCorrect: false);
+            Bot.Wait.ForCellChange(cell);
         }
 
-        Core.Logger($"Final list of players: {string.Join(", ", Players())}");
+        // Normalize expected player names
+        var expectedPlayers = Players()
+            .Where(p => !string.IsNullOrWhiteSpace(p))
+            .Select(p => p.Trim().ToLower())
+            .ToList();
 
-        // Wait for party players to be ready
-        while (!Bot.ShouldExit &&
-         cell != null &&
-         Bot.Map.CellPlayers != null &&
-         Bot.Map.PlayerNames != null &&
-         Bot.Map.PlayerNames.Count(x => Players().Contains(x)) != Players().Length)
+        int requiredCount = playerCount ?? PartySize();
+
+        Core.Logger($"Waiting for players: {string.Join(", ", expectedPlayers)}");
+
+        DateTime startTime = DateTime.UtcNow;
+
+        while (!Bot.ShouldExit && Bot.Map.PlayerNames != null)
         {
-            Core.Sleep();
-
-            if (cell != null && Bot.Map.PlayerNames != null)
+            // Timeout check
+            if ((DateTime.UtcNow - startTime).TotalSeconds > timeoutSeconds)
             {
-                List<string> missingPlayers = Players().Except(Bot.Map.PlayerNames).ToList();
-
-                // Fail-safe for bugged lobby: if we're the only missing player, log and break
-                if (missingPlayers.Count == 1 && missingPlayers[0] == Core.Username())
-                {
-                    Core.Logger("Bugged lobby: we're the only one missing?");
-                    break;
-                }
-
-                // Log player readiness status if players are missing
-                if (missingPlayers.Count > 0)
-                {
-                    Bot.Log($"[Players Ready: {Bot.Map.PlayerNames.Count(x => Players().Contains(x))}/{Players().Length}] " +
-                            $"Missing: {string.Join(", ", missingPlayers)}");
-                }
+                Core.Logger("Timeout reached. Lobby may be bugged or some players are missing.");
+                break;
             }
+
+            // Normalize current map player names
+            var currentPlayers = Bot.Map.PlayerNames
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .Select(x => x.Trim().ToLower())
+                .ToHashSet();
+
+            // Determine missing players
+            var missing = expectedPlayers
+                .Where(p => !currentPlayers.Contains(p))
+                .ToList();
+
+            if (!missing.Any() && currentPlayers.Count >= requiredCount)
+            {
+                Core.Logger("All players found!");
+                break;
+            }
+
+            if (missing.Any())
+                Core.Logger($"Missing: {string.Join(", ", missing)}");
+
+            Core.Sleep(1000);
         }
     }
+
 
     public string[] Players()
     {
@@ -881,7 +926,7 @@ public class CoreArmyLite
 
         return players.ToArray();
     }
-    public int PartySize() => Players() == null ? 0 : Players().Length;
+    public int PartySize() => Players() == null ? 0 : Players().Where(x => !string.IsNullOrEmpty(x)).Count();
 
     // public void waitForParty(string map, string? item = null, int playerMax = -1)
     // {
@@ -941,87 +986,92 @@ public class CoreArmyLite
     //     }
     // }
 
-    public void waitForParty(string map, string? item = null, int playerMax = -1)
+    /// <summary>
+    /// Waits until all expected party members are present in the specified map.
+    /// Tracks players, logs progress, and uses Butler.cs to fetch missing players
+    /// if they fail to join within the given wait time. Also engages anti-AFK.
+    /// </summary>
+    /// <param name="map">The map name to join and wait in.</param>
+    /// <param name="item">Optional: Item name for contextual logging (e.g., farming target).</param>
+    /// <param name="playerMax">
+    /// The expected number of players in the party. 
+    /// If -1 (default), uses <see cref="PartySize"/>.
+    /// </param>
+    public void WaitForParty(string map, string? item = null, int playerMax = -1)
     {
-        // Subscribe to the AFK event
         Bot.Events.PlayerAFK += PlayerAFK;
 
-        // Setup initial party tracking
-        string[] players = Players();
-        int partySize = players.Length;
-        List<string> playersWhoHaveBeenHere = new() { Core.Username() };
-        int playerCount = 1;
+        string[] allPlayers = Players();
+        int targetPartySize = playerMax > 0 ? playerMax : PartySize();
+
+        HashSet<string> playersHere = new(StringComparer.OrdinalIgnoreCase)
+    {
+        Core.Username()
+    };
+
+        Core.Join(map, "Enter", "Spawn");
+        Bot.Wait.ForMapLoad(map);
 
         int logCount = 0;
         int butlerTimer = 0;
         bool hasWaited = false;
 
-        // Join the specified map and set the target party size
-        Core.Join(map);
-        int dynamicPartySize = PartySize();
-
-        // Main waiting loop
-        while (playerCount < dynamicPartySize)
+        while (playersHere.Count < targetPartySize && !Bot.ShouldExit)
         {
-            // Track players entering the map
-            if (Bot.Map.PlayerNames != null)
-            {
-                foreach (var name in Bot.Map.PlayerNames)
-                {
-                    if (!playersWhoHaveBeenHere.Contains(name) &&
-                        players.Select(x => x.ToLower().Trim()).Contains(name.ToLower().Trim()))
-                    {
-                        playersWhoHaveBeenHere.Add(name.ToLower().Trim());
-                    }
-                }
-            }
+            TrackPlayers(allPlayers, playersHere);
 
-            playerCount = playersWhoHaveBeenHere.Count;
-            logCount++;
-
-            // Log every 15 iterations to avoid spam
-            if (logCount == 15)
+            if (++logCount >= 15)
             {
-                Core.Logger($"Waiting for the party{(item == null ? string.Empty : $" to farm {item}")} [{playerCount}/{dynamicPartySize}]");
+                Core.Logger($"Waiting for the party{(item == null ? string.Empty : $" to farm {item}")} [{playersHere.Count}/{targetPartySize}]");
                 hasWaited = true;
                 logCount = 0;
             }
 
             Core.Sleep(1000);
 
-            // Butler invocation if only one player is missing
-            if (playersWhoHaveBeenHere.Count <= (dynamicPartySize - 1)) // If only one player is missing (you)
+            if (playersHere.Count < targetPartySize && ++butlerTimer >= 30)
             {
-                butlerTimer++;
-                if (butlerTimer >= 30)
-                {
-                    b_breakOnMap = Bot.Map.Name;
-                    string missingPlayer = players.First(p => !playersWhoHaveBeenHere.Any(n => n.Equals(p, StringComparison.OrdinalIgnoreCase)));
+                var missingPlayers = allPlayers.Where(p => !playersHere.Contains(p));
+                foreach (string missing in missingPlayers)
+                    HandleMissingPlayer(missing, playersHere, map);
 
-                    Core.Logger($"Missing {missingPlayer}, initiating Butler.cs");
-                    Core.Logger("Butler active until in map /" + b_breakOnMap);
-
-                    Butler(missingPlayer, roomNr: getRoomNr());
-
-                    Core.Logger($"{missingPlayer} has joined {b_breakOnMap}. Continuing...");
-
-                    // Re-enter the loop to recheck for other missing players after Butler intervention
-                    playersWhoHaveBeenHere = new() { Core.Username() };  // Reset players list
-                    playerCount = 1; // Reset player count
-                    butlerTimer = 0; // Reset Butler timer
-                    logCount = 0;    // Reset log count
-                    continue;
-                }
+                // Reset timers
+                butlerTimer = 0;
+                logCount = 0;
             }
         }
 
-        // Log completion and synchronize attack timing
         if (hasWaited)
-            Core.Logger($"Party complete [{partySize}/{partySize}]");
+            Core.Logger($"Party complete [{targetPartySize}/{targetPartySize}]");
 
-        Core.Sleep(3500); // To synchronize attack timing and avoid initial deaths
+        Core.Sleep(3500);
 
-        // Anti-AFK handler to keep players active
+        // --- Helpers ---
+        void TrackPlayers(string[] expected, HashSet<string> seen)
+        {
+            if (Bot.Map.PlayerNames == null)
+                return;
+
+            foreach (string name in Bot.Map.PlayerNames)
+            {
+                if (expected.Contains(name, StringComparer.OrdinalIgnoreCase))
+                    seen.Add(name);
+            }
+        }
+
+        void HandleMissingPlayer(string missing, HashSet<string> seen, string currentMap)
+        {
+            b_breakOnMap = Bot.Map.Name;
+
+            Core.Logger($"Missing {missing}, initiating Butler.cs");
+            Core.Logger($"Butler active until in map /{currentMap}");
+
+            Butler(missing, roomNr: getRoomNr());
+
+            Core.Logger($"{missing} has rejoined {b_breakOnMap}. Continuing...");
+            seen.Add(missing);
+        }
+
         void PlayerAFK()
         {
             Core.Logger("Anti-AFK engaged");
@@ -1029,6 +1079,7 @@ public class CoreArmyLite
             Bot.Send.Packet("%xt%zm%afk%1%false%");
         }
     }
+
 
     public bool SellToSync(string? item, int quant)
     {
@@ -1224,7 +1275,6 @@ public class CoreArmyLite
     {
         Bot.Events.PlayerAFK += PlayerAFK;
 
-        Core.DebugLogger(this);
         #region Initialization and Setup
         if (string.IsNullOrEmpty(playerName) || playerName == "Insert Name")
         {
@@ -1280,19 +1330,16 @@ public class CoreArmyLite
 
         while (!Bot.ShouldExit)
         {
-            Core.DebugLogger(this);
             #region Ignore me
             // Try to /goto the player with retry logic
             while (!tryGoto(playerName, out playerObject, roomNr) && playerObject != null && retryCount < retryLimit)
             {
-                Core.DebugLogger(this);
                 // Increment retry count and log the attempt
                 retryCount++;
                 Core.Logger($"Attempt {retryCount} to find {playerName} failed. Retrying...");
 
                 // Handle combat disengagement and fallback
                 // ExitCombat();
-                Core.DebugLogger(this);
 
                 // Join fallback map if /goto fails
                 if (Bot.House.Items.Any(h => h.Equipped))
@@ -1324,7 +1371,6 @@ public class CoreArmyLite
                 }
                 else Bot.Send.Packet($"%xt%zm%cmd%1%tfer%{Core.Username()}%whitemap-{Core.PrivateRoomNumber}%");
 
-                Core.DebugLogger(this);
                 Core.Logger($"Could not find {playerName}. Ensure they are on the same server.", "tryGoto");
 
                 if (b_shouldHibernate)
@@ -1336,14 +1382,11 @@ public class CoreArmyLite
                 // Enter hibernation retry loop
                 while (!Bot.ShouldExit)
                 {
-                    Core.DebugLogger(this, "Enter hibernation retry loop");
                     if (b_shouldHibernate)
                     {
-                        Core.DebugLogger(this, "b_shouldHibernate");
                         // Sleep for the hibernate period
                         for (int t = 0; t < hibernateTimer; t++)
                         {
-                            Core.DebugLogger(this, "hibernateTimer" + hibernateTimer);
                             Core.Sleep(1000);
                             if (Bot.ShouldExit)
                                 break;
@@ -1353,7 +1396,6 @@ public class CoreArmyLite
                     // Retry /goto after hibernation
                     if (tryGoto(playerName, out playerObject, roomNr) && playerObject != null)
                     {
-                        Core.DebugLogger(this);
                         break;
                     }
 
@@ -1361,7 +1403,6 @@ public class CoreArmyLite
                     elapsedMinutes += hibernateTimer;
                     if (elapsedMinutes >= 300)
                     {
-                        Core.DebugLogger(this);
                         Core.Logger($"Bot has been hibernating for {elapsedMinutes / 60} minutes.");
                         elapsedMinutes = 0;
                     }
@@ -1376,7 +1417,6 @@ public class CoreArmyLite
                 }
                 if (tryGoto(playerName, out playerObject, roomNr) && playerObject != null)
                 {
-                    Core.DebugLogger(this);
                     Core.Logger($"{playerName} found!");
                     break;
                 }
@@ -1391,7 +1431,6 @@ public class CoreArmyLite
             // Check for break on specific map
             if (b_breakOnMap != null && b_breakOnMap == Bot.Map.Name)
             {
-                Core.DebugLogger(this, "b_breakOnMap??");
                 b_breakOnMap = null;
                 break;
             }
@@ -1414,9 +1453,15 @@ public class CoreArmyLite
 
                 if (!string.IsNullOrEmpty(attackPriority))
                 {
-                    Core.DebugLogger(this, "Attack priority lsit isnt empty, attack priority is " + attackPriority);
+                    List<string> Mons = new();
+                    if (!string.IsNullOrEmpty(attackPriority))
+                    {
+                        var attackPriorityItems = attackPriority
+                            .Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                        Mons.AddRange(attackPriorityItems);
+                    }
                     if (!Bot.Combat.StopAttacking)
-                        PriorityAttack();
+                        PriorityAttack(Mons);
                 }
                 #endregion ignore this
                 else
@@ -1435,7 +1480,6 @@ public class CoreArmyLite
                     Bot.Wait.ForCellChange(playerObject?.Cell ?? Bot.Player.Cell);
                     Core.Sleep();
                     Bot.Player.SetSpawnPoint();
-                    Core.DebugLogger(this, "Jumped to player");
                 }
 
             }
@@ -1471,7 +1515,6 @@ public class CoreArmyLite
             return false;
         }
 
-        Core.Logger("Attempting /goto");
         int retry = 0;
 
         // Handle locked zones by subscribing to the event if necessary
@@ -1480,75 +1523,57 @@ public class CoreArmyLite
 
         while (!Bot.ShouldExit)
         {
-            Core.DebugLogger(this);
             if (Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null && playerObject.Cell == Bot.Player.Cell)
             {
-                Core.DebugLogger(this);
                 return true;
             }
-            Core.DebugLogger(this);
             Core.JumpWait();
             Core.Sleep();
             Bot.Player.Goto(userName);
             Core.Sleep();
-            Core.DebugLogger(this);
             playerObject = Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null ? playerObject : null;
             if (Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null)
             {
                 if (playerObject != null && playerObject?.Cell == Bot.Player.Cell)
                 {
-                    Core.DebugLogger(this);
                     return true;
                 }
 
                 string targetCell = playerObject?.Cell ?? Bot.Player.Cell;
                 string targetPad = playerObject?.Pad ?? Bot.Player.Pad;
 
-                Core.DebugLogger(this);
                 Bot.Map.Jump(targetCell, targetPad, false);
-                Core.DebugLogger(this);
                 Bot.Wait.ForCellChange(targetCell);
-                Core.DebugLogger(this);
                 Core.Sleep();
                 playerObject = Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null ? playerObject : null;
 
-                Core.DebugLogger(this);
                 if (playerObject != null && playerObject?.Cell == Bot.Player.Cell)
                 {
-                    Core.DebugLogger(this);
                     return true;
                 }
-                Core.DebugLogger(this);
             }
 
-            Core.DebugLogger(this);
 
             if (playerObject != null && playerObject.Cell == Bot.Player.Cell)
             {
-                Core.DebugLogger(this);
                 return true;
             }
             // Check for locked zone warning and handle it accordingly
             if (LockedZoneWarning)
             {
-                Core.DebugLogger(this);
                 break;
             }
-            Core.DebugLogger(this);
 
             if (++retry >= 5)
                 break;
             Core.Sleep(1000);
 
-            Core.DebugLogger(this);
         }
 
         // Handle locked zone scenario
         if (b_doLockedMaps && LockedZoneWarning && !insideLockedMaps)
         {
-            Core.DebugLogger(this);
             LockedZoneWarning = false;
-            Core.DebugLogger(this, $"{LockedZoneWarning}");
             LockedMaps(userName, false, roomNumber); // Handle the locked zone logic
             Core.ToggleAggro(true);
             Bot.Events.ExtensionPacketReceived -= LockedZoneListener;
@@ -1601,18 +1626,31 @@ public class CoreArmyLite
         }
     }
 
-    public void LockedMaps(string Pname, bool Cancel = false, int RoomNumber = 100000)
+    public void LockedMaps(string Pname, bool Cancel = false, int RoomNumber = 100000, List<string>? LockedMapList = null)
     {
+        LockedMapList ??= new();
+        LockedMapList.AddRange(_LockedMapsList.ToArray());
+        PlayerInfo? foundPlayer = null;
+        GC.Collect();
         if (Cancel || Bot.Map.PlayerExists(Pname))
         {
             Core.Logger($"Already at {Pname} or Cancel is true, stopping LockedMaps.", "LockedMaps");
             return;
         }
 
+        // Flatten any comma-separated entries
+        LockedMapList = LockedMapList
+            .SelectMany(entry => entry.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
+            .ToList();
+
+        _LockedMapsList.AddRange(LockedMapList.Where(map => !_LockedMapsList.Contains(map)));
+
+        if (_LockedMapsList.Count > 0)
+            Core.Logger($"Custom locked maps added: {string.Join(", ", LockedMapList)}");
+
+
         if (Pname != null)
             b_playerName = Pname;
-
-        Core.DebugLogger(this, b_playerName);
 
         string playerLogPath = Path.Combine(CoreBots.ButlerLogDir, b_playerName + ".txt");
         if (File.Exists(playerLogPath))
@@ -1620,16 +1658,32 @@ public class CoreArmyLite
             string? targetMap = File.ReadLines(playerLogPath).FirstOrDefault();
             if (targetMap != null)
             {
-                Core.DebugLogger(this);
-                Core.Join($"{targetMap}-{RoomNumber}");
-                if (Bot.Map.PlayerExists(b_playerName!))
+                if (Bot.Map.Name != targetMap)
+                {
+                    Core.JumpWait();
+                    Bot.Map.Join($"{targetMap}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Wait.ForMapLoad(targetMap);
+                }
+                Core.MeasureExecutionTime(() =>
+              {
+                  if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                  {
+                      foundPlayer = _PO;
+                      return;
+                  }
+              });
+
+                if (foundPlayer != null)
+                {
+                    Core.Logger($"Found {b_playerName} in /{targetMap}");
                     return;
+                }
             }
         }
 
         string[] NonMemMaps = { "tercessuinotlim", "doomvaultb", "doomvault", "shadowrealmpast", "battlegrounda", "battlegroundb", "battlegroundc", "battlegroundd", "battlegrounde", "battlegroundf", "doomwood", "shadowrealm", "confrontation", "darkoviaforest", "ledgermayne", "hollowdeep", "hyperium", "willowcreek", "voidflibbi", "voidnightbane", "championdrakath", "ultraezrajal", "ultrawarden", "ultraengineer", "ultradage", "ultratyndarius", "ultranulgath", "ultradrago", "ultradarkon", "ultraspeaker" };
         string[] MemMaps = { "shadowlordpast", "binky", "superlowe" };
-        string[] EventMaps = { /* e.g., "yoshino" */ };
+        string[] EventMaps = Array.Empty<string>();
 
         var levelLockedMaps = new[]
         {
@@ -1640,63 +1694,151 @@ public class CoreArmyLite
         new { Map = "voidnerfkitten", LevelRequired = 80 }
     };
 
-        Core.DebugLogger(this);
-        int maptry = 0;
-        int mapCount = _LockedMapsList.Count == 0
+        int maptry = 1;
+        int mapCount = LockedMapList.Count == 0
+        // If count = 0, add all resticted maps, else do the custom maps only.
             ? (Core.IsMember ? NonMemMaps.Length + MemMaps.Length + EventMaps.Length + levelLockedMaps.Length
                              : NonMemMaps.Length + EventMaps.Length + levelLockedMaps.Length)
-            : _LockedMapsList.Count;
+            : LockedMapList.Count;
 
-        if (_LockedMapsList.Count == 0)
+        if (LockedMapList.Count == 0)
         {
             foreach (string map in EventMaps)
             {
+                if (Bot.ShouldExit)
+                    return;
+
                 if (!Core.isSeasonalMapActive(map)) continue;
 
-                Core.Logger($"[{maptry++.ToString("D2")}/{mapCount}] Searching /{map}", "LockedZoneHandler");
-                Core.Join($"{map}-{RoomNumber}");
-                if (Bot.Map.PlayerExists(b_playerName!)) return;
+                Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => LockedMapList");
+
+                if (Bot.Map.Name != map)
+                {
+                    Bot.Map.Join($"{map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Wait.ForMapLoad(map);
+                }
+
+                Core.Sleep();
+
+                Core.MeasureExecutionTime(() =>
+                {
+                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    {
+                        foundPlayer = _PO;
+                        return;
+                    }
+                }, $"{b_playerName} found in: ");
+
+                if (foundPlayer != null)
+                {
+                    Core.Logger($"Found {b_playerName} in /{map}");
+                    return;
+                }
+                else continue;
             }
 
             foreach (var mapInfo in levelLockedMaps)
             {
+                if (Bot.ShouldExit)
+                    return;
+
                 if (Bot.Player.Level < mapInfo.LevelRequired)
                 {
                     Core.Logger($"Level too low for /{mapInfo.Map} (required: {mapInfo.LevelRequired}, current: {Bot.Player.Level})");
                     continue;
                 }
 
-                Core.Logger($"[{maptry++:D2}/{mapCount}] Searching /{mapInfo.Map}", "LockedZoneHandler");
-                Core.Join($"{mapInfo.Map}-{RoomNumber}");
-                if (Bot.Map.PlayerExists(b_playerName!))
+                Core.Logger($"[{maptry++:D2}/{mapCount:D2}] Searching /{mapInfo.Map}", "LockedZoneHandler =>  !LockedMapList");
+
+                if (Bot.Map.Name != mapInfo.Map)
+                {
+                    Bot.Map.Join($"{mapInfo.Map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Wait.ForMapLoad(mapInfo.Map);
+                }
+
+                Core.Sleep();
+
+                Core.MeasureExecutionTime(() =>
+                {
+                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    {
+                        foundPlayer = _PO;
+                        return;
+                    }
+                }, $"{b_playerName} found in: ");
+
+                if (foundPlayer != null)
                 {
                     Core.Logger($"Found {b_playerName} in /{mapInfo.Map}");
                     return;
                 }
+                else continue;
             }
 
             foreach (string map in NonMemMaps)
             {
-                Core.Logger($"[{maptry++:D2}/{mapCount}] Searching /{map}", "LockedZoneHandler");
-                Core.Join($"{map}-{RoomNumber}");
-                if (Bot.Map.PlayerExists(b_playerName!))
+                if (Bot.ShouldExit)
+                    return;
+
+                Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => LockedMapList");
+
+                if (Bot.Map.Name != map)
+                {
+                    Bot.Map.Join($"{map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Wait.ForMapLoad(map);
+                }
+
+                Core.Sleep();
+
+                Core.MeasureExecutionTime(() =>
+                {
+                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    {
+                        foundPlayer = _PO;
+                        return;
+                    }
+                }, $"{b_playerName} found in: ");
+
+                if (foundPlayer != null)
                 {
                     Core.Logger($"Found {b_playerName} in /{map}");
                     return;
                 }
+                else continue;
             }
 
             if (Core.IsMember)
             {
                 foreach (string map in MemMaps)
                 {
-                    Core.Logger($"[{maptry++:D2}/{mapCount}] Searching /{map}", "LockedZoneHandler");
-                    Core.Join($"{map}-{RoomNumber}");
-                    if (Bot.Map.PlayerExists(b_playerName!))
+                    if (Bot.ShouldExit)
+                        return;
+
+                    Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => LockedMapList");
+
+                    if (Bot.Map.Name != map)
+                    {
+                        Bot.Map.Join($"{map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                        Bot.Wait.ForMapLoad(map);
+                    }
+
+                    Core.Sleep();
+
+                    Core.MeasureExecutionTime(() =>
+                {
+                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    {
+                        foundPlayer = _PO;
+                        return;
+                    }
+                }, $"{b_playerName} found in: ");
+
+                    if (foundPlayer != null)
                     {
                         Core.Logger($"Found {b_playerName} in /{map}");
                         return;
                     }
+                    else continue;
                 }
             }
         }
@@ -1704,10 +1846,34 @@ public class CoreArmyLite
         {
             foreach (string map in _LockedMapsList)
             {
-                Core.Logger($"[{maptry++.ToString("D2")}/{mapCount}] Searching /{map}", "LockedZoneHandler");
+                if (Bot.ShouldExit || LockedMapList.Count <= 0)
+                    return;
+
+                Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => Custom LockedMapList");
+
                 if (Bot.Map.Name != map)
-                    Core.Join($"{map}-{RoomNumber}");
-                if (Bot.Map.PlayerExists(b_playerName!)) return;
+                {
+                    Bot.Map.Join($"{map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Wait.ForMapLoad(map);
+                }
+
+                Core.Sleep();
+
+                Core.MeasureExecutionTime(() =>
+                {
+                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
+                    {
+                        foundPlayer = _PO;
+                        return;
+                    }
+                }, $"{b_playerName} found in: ");
+
+                if (foundPlayer != null)
+                {
+                    Core.Logger($"Found {b_playerName} in /{map}");
+                    return;
+                }
+                else continue;
             }
         }
 
@@ -1744,30 +1910,28 @@ public class CoreArmyLite
         }
     }
 
-    public void PriorityAttack()
+    public void PriorityAttack(List<string>? mons = null)
     {
-        // If there's an attack priority list, search for a priority monster to attack
-        if (_attackPriority?.Count > 0)
+        if (_attackPriority != null)
         {
-            foreach (string mon in _attackPriority)
-            {
-                string formattedMonName = mon.FormatForCompare();
-
-                // Find the first matching priority monster in the same cell
-                Monster? priorityMonster = Bot.Monsters.CurrentMonsters
-                    .FirstOrDefault(m => m.Name?.FormatForCompare() == formattedMonName && m.Cell == Bot.Player.Cell);
-
-                if (priorityMonster != null)
-                {
-                    Bot.Combat.Attack(priorityMonster); // Attack the priority monster
-                    Core.Sleep(); // Pause after attacking
-                    return; // Exit if a priority monster was found and attacked
-                }
-            }
+            mons ??= new List<string>();
+            mons.AddRange(_attackPriority);
         }
 
-        // If no priority monster was found, attack any available monster
-        Bot.Combat.Attack("*");
+        if (mons?.Count > 0)
+        {
+            foreach (string mon in mons)
+            {
+                Monster? priorityMonster = Bot.Monsters.CurrentMonsters
+                    .FirstOrDefault(m => m.Name?.FormatForCompare() == mon.FormatForCompare() && m.Cell == Bot.Player.Cell) ?? null;
+
+                if (priorityMonster != null)
+                    Bot.Kill.Monster(priorityMonster.MapID);
+                else Bot.Kill.Monster("*");
+            }
+        }
+        else Bot.Combat.Attack("*");
+
     }
 
     private async void MapNumberParses(string map)

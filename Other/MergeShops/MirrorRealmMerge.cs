@@ -69,7 +69,6 @@ public class MirrorRealmMerge
                     LoC.Xiang();
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.RegisterQuests(3188);
                     Core.HuntMonsterMapID("mirrorportal", 1, req.Name, quant, false);
                     Core.CancelRegisteredQuests();
                     break;

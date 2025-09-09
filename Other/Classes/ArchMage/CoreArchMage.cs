@@ -14,6 +14,9 @@ tags: null
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
 //cs_include Scripts/Story/QueenofMonsters/CoreQOM.cs
 //cs_include Scripts/ShadowsOfWar/CoreSoWMats.cs
+//cs_include Scripts/Evil/NSoD/CoreNSOD.cs
+//cs_include Scripts/Evil/SDKA/CoreSDKA.cs
+//cs_include Scripts/Other/Classes/Necromancer.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Skills;
 using Skua.Core.Models.Items;
@@ -30,6 +33,7 @@ public class CoreArchMage
     private CoreQOM QOM = new();
     private CoreSoW SoW = new();
     private CoreSoWMats SOWM = new();
+    private CoreNSOD NSOD = new();
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ArchMage";
@@ -481,16 +485,17 @@ public class CoreArchMage
             return;
         }
 
+        Core.RegisterQuests(8869);
         Core.AddDrop("Unbound Thread");
-        while (!Bot.ShouldExit && !Core.CheckInventory("Unbound Thread", 100))
+        while (!Bot.ShouldExit && !Core.CheckInventory("Unbound Thread", quant))
         {
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("DeadLines", "Frenzied Mana", "Captured Mana", 8);
             Core.HuntMonster("DeadLines", "Shadowfall Warrior", "Armor Scrap", 8);
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("DeadLines", "Eternal Dragon", "Eternal Dragon Scale");
-            Bot.Wait.ForPickup("Unbound Thread");
         }
+        Bot.Wait.ForPickup("Unbound Thread");
         Core.CancelRegisteredQuests();
     }
     #endregion
@@ -505,7 +510,11 @@ public class CoreArchMage
             switch (item)
             {
                 case "Void Essentia":
-                    Item("voidflibbi", "Flibbitiestgibbet", item, quant);
+                    NSOD.VoidAuras(75);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.HuntMonster("thevoid", "Ninja", "Void Energy", 25, isTemp: false);
+                    // Purchase required items.
+                    Adv.BuyItem("thevoid", 1406, item);
                     break;
 
                 case "Vital Exanima":
@@ -523,14 +532,9 @@ public class CoreArchMage
                     break;
 
                 case "Calamitous Ruin":
-                    if (army)
-                    {
-                        Bot.Events.RunToArea += DarkCarnaxMove;
-                        Core.Logger("You might need to babysit this one due to the laser");
-                        Core.KillMonster("darkcarnax", "Boss", "Right", "Nightmare Carnax", "Calamitous Ruin", isTemp: false);
-                        Bot.Events.RunToArea -= DarkCarnaxMove;
-                    }
-                    else Item("darkcarnax", "Nightmare Carnax", item, quant);
+                    if (Core.CheckInventory("Calamitous Ruin"))
+                        return;
+                    FarmDarkCarnax(!army);
                     break;
 
                 case "The Mortal Coil":
@@ -567,27 +571,93 @@ public class CoreArchMage
         }
     }
 
-    //For Nightmare Carnax
-    private void DarkCarnaxMove(string zone)
+    private DateTime lastMove = DateTime.MinValue;
+    private readonly TimeSpan moveCooldown = TimeSpan.FromSeconds(2);
+    private string currentZone = "";
+    private Task? moveTask;
+
+    private void MoveNightmareCarnax(string zone)
     {
-        switch (zone.ToLower())
+        string zoneLower = zone?.ToLower() ?? "";
+        if (zoneLower == currentZone || DateTime.Now - lastMove < moveCooldown || (moveTask is { IsCompleted: false }))
+            return;
+
+        currentZone = zoneLower;
+        lastMove = DateTime.Now;
+
+        moveTask = Task.Run(async () =>
         {
-            case "a":
-                //Move to the right
-                Bot.Player.WalkTo(Bot.Random.Next(600, 930), Bot.Random.Next(380, 475));
-                Core.Sleep(2500);
-                break;
-            case "b":
-                //Move to the left
-                Bot.Player.WalkTo(Bot.Random.Next(25, 325), Bot.Random.Next(380, 475));
-                Core.Sleep(2500);
-                break;
-            default:
-                //Move to the center
-                Bot.Player.WalkTo(Bot.Random.Next(325, 600), Bot.Random.Next(380, 475));
-                Core.Sleep(2500);
-                break;
+            await Task.Delay(300);
+
+            int y = Bot.Random.Next(380, 475);
+            int x = zoneLower switch
+            {
+                "a" => Bot.Random.Next(600, 931),
+                "b" => Bot.Random.Next(25, 326),
+                _ => Bot.Random.Next(325, 601)
+            };
+
+            Bot.Player.WalkTo(x, y);
+
+            await Task.Delay(2500);
+        });
+    }
+
+    private void FarmDarkCarnax(bool attemptSolo = true)
+    {
+        if (Core.CheckInventory("Calamitous Ruin"))
+            return;
+
+        Core.AddDrop("Synthetic Viscera");
+        Core.Jump("Boss", "Left");
+        Bot.Player.SetSpawnPoint();
+        Core.RegisterQuests(8872);
+        Bot.Options.AttackWithoutTarget = true;
+
+        Bot.Events.RunToArea += MoveNightmareCarnax;
+
+        if (attemptSolo)
+        {
+            if (Core.CheckInventory("Dragon of Time"))
+            {
+                Core.Equip("Dragon of Time");
+                Bot.Skills.StartAdvanced("3|2|4|2|1|2", 250, SkillUseMode.WaitForCooldown);
+            }
+            else if (Core.CheckInventory("Healer (Rare)"))
+                Bot.Skills.StartAdvanced("Healer (Rare)", true, ClassUseMode.Base);
+            else if (Core.CheckInventory("Healer"))
+                Bot.Skills.StartAdvanced("Healer", true, ClassUseMode.Base);
+            else
+                Core.EquipClass(ClassType.Solo);
+
+            Adv.GearStore();
+            Adv.EnhanceEquipped(EnhancementType.Healer, wSpecial: WeaponSpecial.Elysium);
         }
+
+        while (!Bot.ShouldExit && !Core.CheckInventory("Calamitous Ruin"))
+        {
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
+                Bot.Sleep(1000);
+
+            if (Bot.Map.Name != "DarkCarnax")
+                Core.Join("DarkCarnax", "Boss", "Right");
+            if (Bot.Player.Cell != "Boss")
+                Core.Jump("Boss", "Right");
+
+            if (!Bot.Player.HasTarget)
+                Bot.Combat.Attack("*");
+            else
+            {
+                Bot.Wait.ForMonsterDeath();
+                Bot.Combat.CancelTarget();
+            }
+        }
+
+        Core.CancelRegisteredQuests();
+        Bot.Options.AttackWithoutTarget = false;
+        Adv.GearStore(true);
+
+        Bot.Events.RunToArea -= MoveNightmareCarnax;
     }
 
 

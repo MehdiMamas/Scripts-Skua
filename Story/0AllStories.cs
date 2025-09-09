@@ -94,6 +94,7 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/Asylum.cs
 
 //cs_include Scripts/Story/Banished.cs
+//cs_include Scripts/Story/BaseCamp.cs
 //cs_include Scripts/Story/BattleUnder.cs
 //cs_include Scripts/Story/BeleensDream.cs
 //cs_include Scripts/Story/BloodMoon.cs
@@ -199,6 +200,7 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/VasalkarLairWar.cs
 
 //cs_include Scripts/Story/WatchTower.cs
+//cs_include Scripts/Story/WhiteTigerPoint.cs
 //cs_include Scripts/Story/WillowCreek.cs
 
 //cs_include Scripts/Story/XansLair.cs
@@ -323,6 +325,7 @@ public class AllStories
     public Asylum Asylum = new();
 
     public Banished Banished = new();
+    public BaseCamp BaseCamp = new();
     public BattleUnder BattleUnder = new();
     public BeleensDream BeleensDream = new();
     public BloodMoon BloodMoon = new();
@@ -426,6 +429,7 @@ public class AllStories
     public LairWar LairWar = new(); //VasalkarLairWar.cs
 
     public WatchTower WatchTower = new();
+    public whitetigerpoint WhiteTigerPoint = new();
     public WillowCreek WillowCreek = new();
 
     public XansLair Xans = new();
@@ -646,7 +650,8 @@ public class AllStories
         #endregion
 
         #region ToD
-        TOD.CompleteToD();
+        // Skip rep quests
+        TOD.CompleteToD(false);
         Core.Logger($"Saga: Throne of Darkness - Complete");
         #endregion
 
@@ -684,6 +689,9 @@ public class AllStories
 
         Banished.doall();
         Core.Logger($"Story: Banished - Complete");
+
+        BaseCamp.StoryLine();
+        Core.Logger($"Story: Base Camp - Complete");
 
         BattleUnder.BattleUnderAll();
         Core.Logger($"Story: BattleUnder - Complete");
@@ -987,6 +995,9 @@ public class AllStories
 
         WatchTower.StoryLine();
         Core.Logger($"Story: WatchTower - Complete");
+
+        WhiteTigerPoint.DoStory();
+        Core.Logger($"Story: White Tiger Point - Complete");
 
         WillowCreek.StoryLine();
         Core.Logger($"Story: Willow Creek - Complete");

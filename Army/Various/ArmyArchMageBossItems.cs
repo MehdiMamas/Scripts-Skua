@@ -90,7 +90,7 @@ public class ArchMageMatsArmy
         Core.PrivateRoomNumber = Army.getRoomNr();
 
         Core.Join(map);
-        Army.waitForPartyCell(cell, playerCount: Army.Players().Count());
+        Army.WaitForPartyCell(cell, playerCount: Army.Players().Count());
 
         Monster? mon = null;
         for (int i = 0; i < 5; i++)

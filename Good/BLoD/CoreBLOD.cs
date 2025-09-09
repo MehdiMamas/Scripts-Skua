@@ -549,10 +549,8 @@ public class CoreBLOD
                 forgeKeyQuest = 2135;
                 break;
         }
-        ;
-        if (Core.CheckInventory(fullMetalName))
-            return;
 
+        // Getting the name of the metal used to upgrade
         string upgradeMetalName = fullMetalName.Split(' ')[..2].Join(' ');
         Core.FarmingLogger(fullMetalName, 1);
 
