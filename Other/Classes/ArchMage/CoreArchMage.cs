@@ -325,9 +325,9 @@ public class CoreArchMage
     public void MysticScribingKit(int quant = 99)
     {
         if (Core.CheckInventory(73327, quant))
-        {
             return;
-        }
+        
+        quant -= Bot.Inventory.GetQuantity(73327);
 
         Core.FarmingLogger("Mystic Scribing Kit", quant);
         Core.AddDrop("Mystic Scribing Kit");
@@ -387,6 +387,7 @@ public class CoreArchMage
 
         if (!Bot.Quests.IsUnlocked(8910))
             MysticScribingKit(1);
+        quant -= Bot.Inventory.GetQuantity(73333);
 
         Core.FarmingLogger("Prismatic Ether", quant);
         Core.AddDrop("Prismatic Ether");
@@ -407,13 +408,12 @@ public class CoreArchMage
     public void ArcaneLocus(int quant = 99)
     {
         if (Core.CheckInventory(73339, quant))
-        {
             return;
-        }
 
         if (!Bot.Quests.IsUnlocked(8911))
             PrismaticEther(1);
 
+        quant -= Bot.Inventory.GetQuantity(73339);
         Core.FarmingLogger("Arcane Locus", quant);
         Core.AddDrop(73339);
 
@@ -451,6 +451,9 @@ public class CoreArchMage
         }
 
         Core.FarmingLogger("Unbound Tome", quant);
+
+        // Dynamicly update quant based on currently owned
+        quant -= Bot.Inventory.GetQuantity("Unbound Tome");
 
         MysticScribingKit(quant);
         PrismaticEther(quant);
