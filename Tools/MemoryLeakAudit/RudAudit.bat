@@ -26,8 +26,14 @@ dotnet run > "!logfile!" 2>&1
 REM Show output in the console
 type "!logfile!"
 
-REM Notify user where the logs are
 echo.
 echo Memory leak audit completed. Logs saved to "!logfile!".
+echo.
+
+REM Prompt to open the log file
+set /p openlog=Do you want to open the log file now? (Y/N): 
+if /i "!openlog!"=="Y" (
+    start notepad "!logfile!"
+)
 
 endlocal
