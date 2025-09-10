@@ -3925,17 +3925,31 @@ public class CoreBots
 
         if (item == null)
         {
-            while (!Bot.ShouldExit && Bot.Player.Cell != targetMonster.Cell)
+
+            bool ded = false;
+
+            // Local method to match delegate signature
+            void OnMonsterKilled(int b) => ded = true;
+            Bot.Events.MonsterKilled += OnMonsterKilled;
+
+            while (!Bot.ShouldExit && (!ded))
             {
-                Jump(targetMonster.Cell, "Left");
-                Bot.Wait.ForCellChange(targetMonster.Cell);
-                Bot.Player.SetSpawnPoint();
+                while (!Bot.ShouldExit && !Bot.Player.Alive)
+                    Sleep();
+
+                if (Bot.Player.Cell != targetMonster.Cell)
+                    Jump(targetMonster.Cell);
+
+                if (Bot.Player != null && Bot.Player.CurrentClass != null && Bot.Player.CurrentClass.Name == "ArchMage")
+                    if (Bot.Skills.CanUseSkill(1))
+                        Bot.Skills.UseSkill(1);
+                    else Bot.Combat.Attack(targetMonster);
+                Sleep();
+
+                if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+                    break;
             }
-            if (Bot.Player != null && Bot.Player.CurrentClass != null && Bot.Player.CurrentClass.Name == "ArchMage")
-                if (Bot.Skills.CanUseSkill(1))
-                    Bot.Skills.UseSkill(1);
-                else Bot.Combat.Attack(targetMonster);
-            Bot.Kill.Monster(targetMonster);
+
             JumpWait();
             Rest();
         }
@@ -4042,17 +4056,33 @@ public class CoreBots
 
         if (item == null)
         {
-            while (!Bot.ShouldExit && Bot.Player.Cell != targetMonster.Cell)
+
+            bool ded = false;
+
+            // Local method to match delegate signature
+            void OnMonsterKilled(int b) => ded = true;
+
+            // Subscribe
+            Bot.Events.MonsterKilled += OnMonsterKilled;
+
+            while (!Bot.ShouldExit && (!ded))
             {
-                Jump(targetMonster.Cell, pad);
-                Bot.Wait.ForCellChange(targetMonster.Cell);
-                Bot.Player.SetSpawnPoint();
+                while (!Bot.ShouldExit && !Bot.Player.Alive)
+                    Sleep();
+
+                if (Bot.Player.Cell != targetMonster.Cell)
+                    Jump(targetMonster.Cell);
+
+                if (Bot.Player != null && Bot.Player.CurrentClass != null && Bot.Player.CurrentClass.Name == "ArchMage")
+                    if (Bot.Skills.CanUseSkill(1))
+                        Bot.Skills.UseSkill(1);
+                    else Bot.Combat.Attack(targetMonster);
+
+                Sleep();
             }
-            if (Bot.Player != null && Bot.Player.CurrentClass != null && Bot.Player.CurrentClass.Name == "ArchMage")
-                if (Bot.Skills.CanUseSkill(1))
-                    Bot.Skills.UseSkill(1);
-                else Bot.Combat.Attack(targetMonster);
-            Bot.Kill.Monster(targetMonster);
+
+            // Unsubscribe to prevent memory leaks
+            Bot.Events.MonsterKilled -= OnMonsterKilled;
             JumpWait();
             Rest();
         }
