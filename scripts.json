@@ -24845,22 +24845,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/ScriptMainCleaner.cs"
   },
   {
-    "name": "Treasure Hunt file Generator",
-    "description": "Generates a file containg the accepting/requirements for the specified quest.",
-    "tags": [
-      "generator",
-      "treasure",
-      "hunt",
-      "treasure hunt",
-      "stupid ae shit",
-      "weekly"
-    ],
-    "path": "Tools/ForDevelopers/TreasureHunterGenerator.cs",
-    "size": 6759,
-    "fileName": "TreasureHunterGenerator.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/TreasureHunterGenerator.cs"
-  },
-  {
     "name": "Generate Quest Files",
     "description": "This will generate the the files needed for the QuestData sheet and the #quest-ids channel in our discord",
     "tags": [
