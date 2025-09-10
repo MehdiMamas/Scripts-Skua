@@ -3540,8 +3540,12 @@ public class CoreBots
                     }
 
                     if (!Bot.Player.HasTarget)
-                        Bot.Combat.Attack(monster);
-
+                    {
+                        if (Bot.Player != null && Bot.Player.CurrentClass != null && Bot.Player.CurrentClass.Name == "ArchMage")
+                            if (Bot.Skills.CanUseSkill(1))
+                                Bot.Skills.UseSkill(1);
+                            else Bot.Combat.Attack(monster);
+                    }
                     if (targetMonster.MaxHP == 1)
                         ded = true;
 
@@ -3927,6 +3931,10 @@ public class CoreBots
                 Bot.Wait.ForCellChange(targetMonster.Cell);
                 Bot.Player.SetSpawnPoint();
             }
+            if (Bot.Player != null && Bot.Player.CurrentClass != null && Bot.Player.CurrentClass.Name == "ArchMage")
+                if (Bot.Skills.CanUseSkill(1))
+                    Bot.Skills.UseSkill(1);
+                else Bot.Combat.Attack(targetMonster);
             Bot.Kill.Monster(targetMonster);
             JumpWait();
             Rest();
@@ -3952,7 +3960,10 @@ public class CoreBots
                 if (Bot.Player.Cell != targetMonster.Cell)
                     Jump(targetMonster.Cell);
 
-                Bot.Combat.Attack(targetMonster);
+                if (Bot.Player != null && Bot.Player.CurrentClass != null && Bot.Player.CurrentClass.Name == "ArchMage")
+                    if (Bot.Skills.CanUseSkill(1))
+                        Bot.Skills.UseSkill(1);
+                    else Bot.Combat.Attack(targetMonster);
                 Sleep();
 
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
@@ -4037,6 +4048,10 @@ public class CoreBots
                 Bot.Wait.ForCellChange(targetMonster.Cell);
                 Bot.Player.SetSpawnPoint();
             }
+            if (Bot.Player != null && Bot.Player.CurrentClass != null && Bot.Player.CurrentClass.Name == "ArchMage")
+                if (Bot.Skills.CanUseSkill(1))
+                    Bot.Skills.UseSkill(1);
+                else Bot.Combat.Attack(targetMonster);
             Bot.Kill.Monster(targetMonster);
             JumpWait();
             Rest();
@@ -4072,8 +4087,10 @@ public class CoreBots
 
                 if (Bot.Player.Cell != targetMonster.Cell)
                     Jump(targetMonster.Cell);
-
-                Bot.Combat.Attack(targetMonster);
+                if (Bot.Player != null && Bot.Player.CurrentClass != null && Bot.Player.CurrentClass.Name == "ArchMage")
+                    if (Bot.Skills.CanUseSkill(1))
+                        Bot.Skills.UseSkill(1);
+                    else Bot.Combat.Attack(targetMonster);
                 Sleep();
 
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
@@ -5405,7 +5422,15 @@ public class CoreBots
                             Jump(cell, "Left");
 
                         if (!Bot.Combat.StopAttacking)
-                            Bot.Combat.Attack(monster);
+                        {
+                            if (!Bot.Player.HasTarget)
+                            {
+                                if (Bot.Player != null && Bot.Player.CurrentClass != null && Bot.Player.CurrentClass.Name == "ArchMage")
+                                    if (Bot.Skills.CanUseSkill(1))
+                                        Bot.Skills.UseSkill(1);
+                                    else Bot.Combat.Attack(monster);
+                            }
+                        }
 
                         Sleep();
                     }
@@ -5478,9 +5503,16 @@ public class CoreBots
                             Bot.Wait.ForCellChange(cell);
                             Sleep();
                         }
-
                         if (!Bot.Combat.StopAttacking)
-                            Bot.Combat.Attack(targetMonster);
+                        {
+                            if (!Bot.Player.HasTarget)
+                            {
+                                if (Bot.Player != null && Bot.Player.CurrentClass != null && Bot.Player.CurrentClass.Name == "ArchMage")
+                                    if (Bot.Skills.CanUseSkill(1))
+                                        Bot.Skills.UseSkill(1);
+                                    else Bot.Combat.Attack(targetMonster);
+                            }
+                        }
                         Sleep();
                     }
 
