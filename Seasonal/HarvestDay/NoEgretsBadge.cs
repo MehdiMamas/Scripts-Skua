@@ -12,7 +12,13 @@ public class NoEgrets
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreHarvestDay HarvestDay = new();
+public CoreHarvestDay HarvestDay
+{
+    get => _HarvestDay ??= new CoreHarvestDay();
+    set => _HarvestDay = value;
+}
+public CoreHarvestDay _HarvestDay;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -18,12 +18,48 @@ public class ShadowflameFinaleMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreStory Story = new();
-    public CoreAdvanced Adv = new();
-    public static CoreAdvanced sAdv = new();
-    private CoreSoWMats SOWM = new();
-    public CoreSoW SoW = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+public static CoreAdvanced _sAdv;
+
+private CoreSoWMats SOWM
+{
+    get => _SOWM ??= new CoreSoWMats();
+    set => _SOWM = value;
+}
+private CoreSoWMats _SOWM;
+
+public CoreSoW SoW
+{
+    get => _SoW ??= new CoreSoW();
+    set => _SoW = value;
+}
+public CoreSoW _SoW;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

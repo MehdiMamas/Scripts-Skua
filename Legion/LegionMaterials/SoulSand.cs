@@ -15,10 +15,34 @@ public class AnotherOneBitesTheDust
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreLegion Legion = new();
-    public CoreAdvanced Adv = new();
-    public SeraphicWar_Story SeraphicWar = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+public CoreLegion _Legion;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public SeraphicWar_Story SeraphicWar
+{
+    get => _SeraphicWar ??= new SeraphicWar_Story();
+    set => _SeraphicWar = value;
+}
+public SeraphicWar_Story _SeraphicWar;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

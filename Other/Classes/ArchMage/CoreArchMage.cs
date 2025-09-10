@@ -26,14 +26,62 @@ public class CoreArchMage
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private BuyScrolls Scroll = new();
-    private CoreBLOD BLOD = new();
-    private CoreQOM QOM = new();
-    private CoreSoW SoW = new();
-    private CoreSoWMats SOWM = new();
-    private CoreNSOD NSOD = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private BuyScrolls Scroll
+{
+    get => _Scroll ??= new BuyScrolls();
+    set => _Scroll = value;
+}
+private BuyScrolls _Scroll;
+
+private CoreBLOD BLOD
+{
+    get => _BLOD ??= new CoreBLOD();
+    set => _BLOD = value;
+}
+private CoreBLOD _BLOD;
+
+private CoreQOM QOM
+{
+    get => _QOM ??= new CoreQOM();
+    set => _QOM = value;
+}
+private CoreQOM _QOM;
+
+private CoreSoW SoW
+{
+    get => _SoW ??= new CoreSoW();
+    set => _SoW = value;
+}
+private CoreSoW _SoW;
+
+private CoreSoWMats SOWM
+{
+    get => _SOWM ??= new CoreSoWMats();
+    set => _SOWM = value;
+}
+private CoreSoWMats _SOWM;
+
+private CoreNSOD NSOD
+{
+    get => _NSOD ??= new CoreNSOD();
+    set => _NSOD = value;
+}
+private CoreNSOD _NSOD;
+
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ArchMage";

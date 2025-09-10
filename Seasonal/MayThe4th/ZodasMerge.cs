@@ -16,10 +16,34 @@ public class ZodasMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private static CoreAdvanced sAdv = new();
-    private Zoda Z = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
+private Zoda Z
+{
+    get => _Z ??= new Zoda();
+    set => _Z = value;
+}
+private Zoda _Z;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

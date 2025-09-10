@@ -16,11 +16,41 @@ public class CrystalBrightMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private CoreStory Story = new();
-    private static CoreAdvanced sAdv = new();
-    private BrightCrystalStory BrightCrystal = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
+private BrightCrystalStory BrightCrystal
+{
+    get => _BrightCrystal ??= new BrightCrystalStory();
+    set => _BrightCrystal = value;
+}
+private BrightCrystalStory _BrightCrystal;
+
     
 
     public bool DontPreconfigure = true;

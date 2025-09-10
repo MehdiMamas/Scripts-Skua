@@ -14,8 +14,20 @@ public class MadWeaponCrafting
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreToD ToD = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreToD ToD
+{
+    get => _ToD ??= new CoreToD();
+    set => _ToD = value;
+}
+public CoreToD _ToD;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

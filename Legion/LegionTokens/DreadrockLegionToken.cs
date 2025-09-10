@@ -13,8 +13,20 @@ using Skua.Core.Interfaces;
 public class DreadrockLegionToken
 {
     public CoreBots Core => CoreBots.Instance;
-    public CoreLegion Legion = new();
-    public CoreAdvanced Adv = new();
+public CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+public CoreLegion _Legion;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

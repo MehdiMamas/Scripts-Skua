@@ -16,11 +16,41 @@ public class EvovledHexOrbItems
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreAdvanced Adv = new();
-    private CoreFarms Farm = new();
-    private CoreNation Nation = new();
-    private EvolvedHexOrb EHO = new();
-    private PotionBuyer Potion = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+private CoreNation _Nation;
+
+private EvolvedHexOrb EHO
+{
+    get => _EHO ??= new EvolvedHexOrb();
+    set => _EHO = value;
+}
+private EvolvedHexOrb _EHO;
+
+private PotionBuyer Potion
+{
+    get => _Potion ??= new PotionBuyer();
+    set => _Potion = value;
+}
+private PotionBuyer _Potion;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

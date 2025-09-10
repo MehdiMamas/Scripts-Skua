@@ -13,8 +13,20 @@ public class HatchTheEgg
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public MysteriousEgg Egg = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public MysteriousEgg Egg
+{
+    get => _Egg ??= new MysteriousEgg();
+    set => _Egg = value;
+}
+public MysteriousEgg _Egg;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

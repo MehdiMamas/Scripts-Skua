@@ -12,7 +12,13 @@ public class GoldenLaurel
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public GoldenArena GA = new();
+public GoldenArena GA
+{
+    get => _GA ??= new GoldenArena();
+    set => _GA = value;
+}
+public GoldenArena _GA;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -16,11 +16,41 @@ public class OrbHuntMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreStory Story = new();
-    public CoreAdvanced Adv = new();
-    public static CoreAdvanced sAdv = new();
-    public OrbHunt OH = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+public static CoreAdvanced _sAdv;
+
+public OrbHunt OH
+{
+    get => _OH ??= new OrbHunt();
+    set => _OH = value;
+}
+public OrbHunt _OH;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

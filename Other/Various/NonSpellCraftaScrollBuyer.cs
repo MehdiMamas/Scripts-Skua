@@ -13,8 +13,20 @@ public class BuyNSCScrolls
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "BuyNSCScrolls";

@@ -12,7 +12,13 @@ public class BloodGuardianSet
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private BloodMoon BloodMoon = new();
+private BloodMoon BloodMoon
+{
+    get => _BloodMoon ??= new BloodMoon();
+    set => _BloodMoon = value;
+}
+private BloodMoon _BloodMoon;
+
 
 
     string[] Set =

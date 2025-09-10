@@ -74,25 +74,139 @@ public class UltraSpeakerMergePreReqs
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private AscendedDrakathGear ADG = new();
-    private CoreBLOD BLOD = new();
-    private CoreHollowbornDoomKnight HDK = new();
-    private CoreSoC SoC = new();
-    private CoreSoW SoW = new();
-    private CoreSoWMats SOWM = new();
-    private DragonFableOrigins DFO = new();
-    private DragonslayerGeneral DSG = new();
-    private FireAvatarFavorFarm FAFF = new();
-    private UltimateBLoD UBLOD = new();
-    private WarfuryEmblem WFE = new();
-    public FireChampionsArmor FCA = new();
-    public BeetleQuests BeetleQuests = new();
-    public Awescended Awescended = new();
-    public CoreHollowbornPaladin CHBP = new();
-    public MalgorsArmorSet MalgorsArmorSet = new();
-    public ChampionDrakathMerge ChampionDrakathMerge = new();
-    public DrakathArmorBot DAB = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private AscendedDrakathGear ADG
+{
+    get => _ADG ??= new AscendedDrakathGear();
+    set => _ADG = value;
+}
+private AscendedDrakathGear _ADG;
+
+private CoreBLOD BLOD
+{
+    get => _BLOD ??= new CoreBLOD();
+    set => _BLOD = value;
+}
+private CoreBLOD _BLOD;
+
+private CoreHollowbornDoomKnight HDK
+{
+    get => _HDK ??= new CoreHollowbornDoomKnight();
+    set => _HDK = value;
+}
+private CoreHollowbornDoomKnight _HDK;
+
+private CoreSoC SoC
+{
+    get => _SoC ??= new CoreSoC();
+    set => _SoC = value;
+}
+private CoreSoC _SoC;
+
+private CoreSoW SoW
+{
+    get => _SoW ??= new CoreSoW();
+    set => _SoW = value;
+}
+private CoreSoW _SoW;
+
+private CoreSoWMats SOWM
+{
+    get => _SOWM ??= new CoreSoWMats();
+    set => _SOWM = value;
+}
+private CoreSoWMats _SOWM;
+
+private DragonFableOrigins DFO
+{
+    get => _DFO ??= new DragonFableOrigins();
+    set => _DFO = value;
+}
+private DragonFableOrigins _DFO;
+
+private DragonslayerGeneral DSG
+{
+    get => _DSG ??= new DragonslayerGeneral();
+    set => _DSG = value;
+}
+private DragonslayerGeneral _DSG;
+
+private FireAvatarFavorFarm FAFF
+{
+    get => _FAFF ??= new FireAvatarFavorFarm();
+    set => _FAFF = value;
+}
+private FireAvatarFavorFarm _FAFF;
+
+private UltimateBLoD UBLOD
+{
+    get => _UBLOD ??= new UltimateBLoD();
+    set => _UBLOD = value;
+}
+private UltimateBLoD _UBLOD;
+
+private WarfuryEmblem WFE
+{
+    get => _WFE ??= new WarfuryEmblem();
+    set => _WFE = value;
+}
+private WarfuryEmblem _WFE;
+
+public FireChampionsArmor FCA
+{
+    get => _FCA ??= new FireChampionsArmor();
+    set => _FCA = value;
+}
+public FireChampionsArmor _FCA;
+
+public BeetleQuests BeetleQuests
+{
+    get => _BeetleQuests ??= new BeetleQuests();
+    set => _BeetleQuests = value;
+}
+public BeetleQuests _BeetleQuests;
+
+public Awescended Awescended
+{
+    get => _Awescended ??= new Awescended();
+    set => _Awescended = value;
+}
+public Awescended _Awescended;
+
+public CoreHollowbornPaladin CHBP
+{
+    get => _CHBP ??= new CoreHollowbornPaladin();
+    set => _CHBP = value;
+}
+public CoreHollowbornPaladin _CHBP;
+
+public MalgorsArmorSet MalgorsArmorSet
+{
+    get => _MalgorsArmorSet ??= new MalgorsArmorSet();
+    set => _MalgorsArmorSet = value;
+}
+public MalgorsArmorSet _MalgorsArmorSet;
+
+public ChampionDrakathMerge ChampionDrakathMerge
+{
+    get => _ChampionDrakathMerge ??= new ChampionDrakathMerge();
+    set => _ChampionDrakathMerge = value;
+}
+public ChampionDrakathMerge _ChampionDrakathMerge;
+
+public DrakathArmorBot DAB
+{
+    get => _DAB ??= new DrakathArmorBot();
+    set => _DAB = value;
+}
+public DrakathArmorBot _DAB;
+
 
     public string OptionsStorage = "Rgrow";
     public bool DontPreconfigure = true;

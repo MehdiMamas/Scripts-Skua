@@ -21,11 +21,41 @@ using Skua.Core.Interfaces;
 public class EvolvedOrb
 {
     public CoreBots Core => CoreBots.Instance;
-    public CoreNation Nation = new();
-    public EvolvedBloodOrb EBO = new();
-    public EvolvedHexOrb EHO = new();
-    public EvolvedShadowOrb ESO = new();
-    public EvolvedShadowOrbItems ESOItems = new();
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public EvolvedBloodOrb EBO
+{
+    get => _EBO ??= new EvolvedBloodOrb();
+    set => _EBO = value;
+}
+public EvolvedBloodOrb _EBO;
+
+public EvolvedHexOrb EHO
+{
+    get => _EHO ??= new EvolvedHexOrb();
+    set => _EHO = value;
+}
+public EvolvedHexOrb _EHO;
+
+public EvolvedShadowOrb ESO
+{
+    get => _ESO ??= new EvolvedShadowOrb();
+    set => _ESO = value;
+}
+public EvolvedShadowOrb _ESO;
+
+public EvolvedShadowOrbItems ESOItems
+{
+    get => _ESOItems ??= new EvolvedShadowOrbItems();
+    set => _ESOItems = value;
+}
+public EvolvedShadowOrbItems _ESOItems;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

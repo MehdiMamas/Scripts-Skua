@@ -22,12 +22,48 @@ public class DarkBirthdayTokenMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    public CoreLegion Legion = new();
-    private CoreDageBirthday Dage = new();
-    private AtlasFallsGearMerge AFGM = new();
-    private static CoreAdvanced sAdv = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+public CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+public CoreLegion _Legion;
+
+private CoreDageBirthday Dage
+{
+    get => _Dage ??= new CoreDageBirthday();
+    set => _Dage = value;
+}
+private CoreDageBirthday _Dage;
+
+private AtlasFallsGearMerge AFGM
+{
+    get => _AFGM ??= new AtlasFallsGearMerge();
+    set => _AFGM = value;
+}
+private AtlasFallsGearMerge _AFGM;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

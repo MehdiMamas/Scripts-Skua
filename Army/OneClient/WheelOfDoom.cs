@@ -14,8 +14,20 @@ public class ArmyWheelofDoom
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreArmyLite Army = new();
-    private CoreDailies Dailies = new();
+private CoreArmyLite Army
+{
+    get => _Army ??= new CoreArmyLite();
+    set => _Army = value;
+}
+private CoreArmyLite _Army;
+
+private CoreDailies Dailies
+{
+    get => _Dailies ??= new CoreDailies();
+    set => _Dailies = value;
+}
+private CoreDailies _Dailies;
+
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ArmyWheelOfDoom";

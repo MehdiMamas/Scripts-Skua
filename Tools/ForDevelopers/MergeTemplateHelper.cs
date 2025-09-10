@@ -21,8 +21,20 @@ public class MergeTemplateHelper
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreAdvanced Adv = new();
-    public static CoreAdvanced sAdv = new();
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+public static CoreAdvanced _sAdv;
+
     public string OptionsStorage = "MergeTemplateHelper";
 
     public List<IOption> Options = new()

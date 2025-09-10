@@ -14,7 +14,13 @@ public class AriesChrysomallusRewards
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
     public CoreAdvanced Adv => new();
 
     public void ScriptMain(IScriptInterface Bot)

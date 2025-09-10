@@ -12,8 +12,20 @@ public class Zoda
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreStory Story = new();
-    private CoreFarms Farm = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

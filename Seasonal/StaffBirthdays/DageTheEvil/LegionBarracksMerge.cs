@@ -17,11 +17,41 @@ public class LegionBarracksMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private static CoreAdvanced sAdv = new();
-    private CoreDageBirthday CDB = new();
-    private CoreLegion Legion = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
+private CoreDageBirthday CDB
+{
+    get => _CDB ??= new CoreDageBirthday();
+    set => _CDB = value;
+}
+private CoreDageBirthday _CDB;
+
+private CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+private CoreLegion _Legion;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

@@ -14,10 +14,28 @@ public class AggroMonReader
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreArmyLite Army = new();
+private CoreArmyLite Army
+{
+    get => _Army ??= new CoreArmyLite();
+    set => _Army = value;
+}
+private CoreArmyLite _Army;
 
-    private static CoreBots sCore = new();
-    private static CoreArmyLite sArmy = new();
+
+private static CoreBots sCore
+{
+    get => _sCore ??= new CoreBots();
+    set => _sCore = value;
+}
+private static CoreBots _sCore;
+
+private static CoreArmyLite sArmy
+{
+    get => _sArmy ??= new CoreArmyLite();
+    set => _sArmy = value;
+}
+private static CoreArmyLite _sArmy;
+
 
     public string OptionsStorage = "AggroMonReader";
     public List<IOption> Options = new()

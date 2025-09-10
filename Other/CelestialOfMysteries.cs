@@ -21,11 +21,41 @@ public class CelestialOfMysteries
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private InfernalDianoia ID = new();
-    private InfernalParadiseMerge IPM = new();
-    private InfernalCelestialFinaleMerge ICFM = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private InfernalDianoia ID
+{
+    get => _ID ??= new InfernalDianoia();
+    set => _ID = value;
+}
+private InfernalDianoia _ID;
+
+private InfernalParadiseMerge IPM
+{
+    get => _IPM ??= new InfernalParadiseMerge();
+    set => _IPM = value;
+}
+private InfernalParadiseMerge _IPM;
+
+private InfernalCelestialFinaleMerge ICFM
+{
+    get => _ICFM ??= new InfernalCelestialFinaleMerge();
+    set => _ICFM = value;
+}
+private InfernalCelestialFinaleMerge _ICFM;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

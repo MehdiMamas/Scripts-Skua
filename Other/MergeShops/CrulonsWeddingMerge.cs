@@ -16,10 +16,34 @@ public class CrulonsWeddingMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private crulonwedding crulonwedding = new();
-    private static CoreAdvanced sAdv = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private crulonwedding crulonwedding
+{
+    get => _crulonwedding ??= new crulonwedding();
+    set => _crulonwedding = value;
+}
+private crulonwedding _crulonwedding;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

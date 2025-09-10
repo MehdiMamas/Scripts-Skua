@@ -17,10 +17,28 @@ public class BringTheCheer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public CoreFarms Farm = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
     public CoreAdvanced Adv => new();
-    public CoreFrostvale Frostvale = new();
+public CoreFrostvale Frostvale
+{
+    get => _Frostvale ??= new CoreFrostvale();
+    set => _Frostvale = value;
+}
+public CoreFrostvale _Frostvale;
+
 
     public bool DontPreconfigure = true;
 

@@ -16,9 +16,27 @@ public class ValariansMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreAdvanced Adv = new();
-    private CoreFriday13th F13 = new();
-    private static CoreAdvanced sAdv = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private CoreFriday13th F13
+{
+    get => _F13 ??= new CoreFriday13th();
+    set => _F13 = value;
+}
+private CoreFriday13th _F13;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

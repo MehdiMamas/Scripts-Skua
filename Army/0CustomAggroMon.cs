@@ -16,9 +16,21 @@ public class CustomAggroMon
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreArmyLite Army = new();
+private CoreArmyLite Army
+{
+    get => _Army ??= new CoreArmyLite();
+    set => _Army = value;
+}
+private CoreArmyLite _Army;
 
-    private static CoreArmyLite sArmy = new();
+
+private static CoreArmyLite sArmy
+{
+    get => _sArmy ??= new CoreArmyLite();
+    set => _sArmy = value;
+}
+private static CoreArmyLite _sArmy;
+
 
     public string OptionsStorage = "CustomAggroMon";
     public List<IOption> Options = new()
@@ -227,15 +239,15 @@ public class CustomAggroMon
 
             if (questIDs.Count > 0)
             {
-                int questIndex = FetchIndex("private List<int> questIDs = new() { };");
+                int questIndex = FetchIndex("private static readonly int[] questIDs={ };");
                 template[questIndex] = $"{spaces}private List<int> questIDs = new() {{ {string.Join(", ", questIDs)} }};";
             }
-            int monsterIndex = FetchIndex("private List<string> monNames = new() { };");
+            int monsterIndex = FetchIndex("private static readonly string[] monNames={ };");
             template[monsterIndex] = $"{spaces}private List<string> monNames = new() {{ \"{string.Join("\", \"", monNames)}\" }};";
 
             if (drops.Count > 0)
             {
-                int dropsIndex = FetchIndex("private List<string> drops = new() { };");
+                int dropsIndex = FetchIndex("private static readonly string[] drops={ };");
                 template[dropsIndex] = $"{spaces}private List<string> drops = new() {{ \"{string.Join("\", \"", drops)}\" }};";
             }
             int mapIndex = FetchIndex("private string map = \"\";");

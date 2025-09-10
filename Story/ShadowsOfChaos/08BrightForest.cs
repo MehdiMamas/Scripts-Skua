@@ -16,7 +16,13 @@ public class BrightForest
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreSoC CoreSoC = new();
+public CoreSoC CoreSoC
+{
+    get => _CoreSoC ??= new CoreSoC();
+    set => _CoreSoC = value;
+}
+public CoreSoC _CoreSoC;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

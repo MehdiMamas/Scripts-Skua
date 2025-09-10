@@ -16,8 +16,20 @@ public class SepulchureDoomKnightArmor
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreSDKA SDKA = new();
-    public static CoreSDKA sSDKA = new();
+public CoreSDKA SDKA
+{
+    get => _SDKA ??= new CoreSDKA();
+    set => _SDKA = value;
+}
+public CoreSDKA _SDKA;
+
+public static CoreSDKA sSDKA
+{
+    get => _sSDKA ??= new CoreSDKA();
+    set => _sSDKA = value;
+}
+public static CoreSDKA _sSDKA;
+
 
     public string OptionsStorage = sSDKA.OptionsStorage;
     public bool DontPreconfigure = true;

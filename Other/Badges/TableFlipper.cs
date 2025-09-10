@@ -12,7 +12,13 @@ public class TableFlipper
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public Borgars Borgars = new();
+public Borgars Borgars
+{
+    get => _Borgars ??= new Borgars();
+    set => _Borgars = value;
+}
+public Borgars _Borgars;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

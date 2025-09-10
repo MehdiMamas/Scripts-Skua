@@ -15,7 +15,13 @@ public class SecondErrand
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreDarkon Darkon = new();
+public CoreDarkon Darkon
+{
+    get => _Darkon ??= new CoreDarkon();
+    set => _Darkon = value;
+}
+public CoreDarkon _Darkon;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

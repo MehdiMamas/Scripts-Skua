@@ -12,8 +12,20 @@ public class InfernalParadise
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    private CelestialPast CP = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+private CelestialPast CP
+{
+    get => _CP ??= new CelestialPast();
+    set => _CP = value;
+}
+private CelestialPast _CP;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

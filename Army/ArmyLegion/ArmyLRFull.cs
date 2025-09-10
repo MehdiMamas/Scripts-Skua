@@ -26,17 +26,77 @@ public class ArmyLR
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private CoreArmyLite Army = new();
-    private CoreLegion Legion = new();
-    private CoreLR CoreLR = new();
-    private InfiniteLegionDC ILDC = new();
-    private SeraphicWar_Story Seraph = new();
-    private CruxShip CruxShip = new();
-    private DarkWarLegionandNation DWLN = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
 
-    private static CoreArmyLite sArmy = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private CoreArmyLite Army
+{
+    get => _Army ??= new CoreArmyLite();
+    set => _Army = value;
+}
+private CoreArmyLite _Army;
+
+private CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+private CoreLegion _Legion;
+
+private CoreLR CoreLR
+{
+    get => _CoreLR ??= new CoreLR();
+    set => _CoreLR = value;
+}
+private CoreLR _CoreLR;
+
+private InfiniteLegionDC ILDC
+{
+    get => _ILDC ??= new InfiniteLegionDC();
+    set => _ILDC = value;
+}
+private InfiniteLegionDC _ILDC;
+
+private SeraphicWar_Story Seraph
+{
+    get => _Seraph ??= new SeraphicWar_Story();
+    set => _Seraph = value;
+}
+private SeraphicWar_Story _Seraph;
+
+private CruxShip CruxShip
+{
+    get => _CruxShip ??= new CruxShip();
+    set => _CruxShip = value;
+}
+private CruxShip _CruxShip;
+
+private DarkWarLegionandNation DWLN
+{
+    get => _DWLN ??= new DarkWarLegionandNation();
+    set => _DWLN = value;
+}
+private DarkWarLegionandNation _DWLN;
+
+
+private static CoreArmyLite sArmy
+{
+    get => _sArmy ??= new CoreArmyLite();
+    set => _sArmy = value;
+}
+private static CoreArmyLite _sArmy;
+
 
     public string OptionsStorage = "ArmyLR";
     public bool DontPreconfigure = true;

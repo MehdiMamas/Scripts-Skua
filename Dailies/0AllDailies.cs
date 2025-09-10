@@ -31,13 +31,55 @@ public class FarmAllDailies
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreDailies Daily = new();
-    private LordOfOrder LOO = new();
-    private GlaceraStory Glac = new();
-    private CoreBLOD BLOD = new();
-    private Friendship FR = new();
-    private CoreSDKA CSDKA = new();
-    private MineCrafting MineCrafting = new();
+private CoreDailies Daily
+{
+    get => _Daily ??= new CoreDailies();
+    set => _Daily = value;
+}
+private CoreDailies _Daily;
+
+private LordOfOrder LOO
+{
+    get => _LOO ??= new LordOfOrder();
+    set => _LOO = value;
+}
+private LordOfOrder _LOO;
+
+private GlaceraStory Glac
+{
+    get => _Glac ??= new GlaceraStory();
+    set => _Glac = value;
+}
+private GlaceraStory _Glac;
+
+private CoreBLOD BLOD
+{
+    get => _BLOD ??= new CoreBLOD();
+    set => _BLOD = value;
+}
+private CoreBLOD _BLOD;
+
+private Friendship FR
+{
+    get => _FR ??= new Friendship();
+    set => _FR = value;
+}
+private Friendship _FR;
+
+private CoreSDKA CSDKA
+{
+    get => _CSDKA ??= new CoreSDKA();
+    set => _CSDKA = value;
+}
+private CoreSDKA _CSDKA;
+
+private MineCrafting MineCrafting
+{
+    get => _MineCrafting ??= new MineCrafting();
+    set => _MineCrafting = value;
+}
+private MineCrafting _MineCrafting;
+
     //private BankAllItems BAI = new();
 
     public bool DontPreconfigure = true;

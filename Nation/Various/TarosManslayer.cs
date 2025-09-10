@@ -12,9 +12,27 @@ public class TarosManslayer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreNation Nation = new();
-    public PurifiedClaymoreOfDestiny PCoD = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public PurifiedClaymoreOfDestiny PCoD
+{
+    get => _PCoD ??= new PurifiedClaymoreOfDestiny();
+    set => _PCoD = value;
+}
+public PurifiedClaymoreOfDestiny _PCoD;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

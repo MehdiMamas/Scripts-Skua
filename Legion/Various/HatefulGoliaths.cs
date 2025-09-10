@@ -31,10 +31,34 @@ public class HatefulGoliaths
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private UndeadLegionMerge ULM = new();
-    private CoreIsleOfFotia IOF = new();
-    private HeadoftheLegionBeast HOTLB = new();
-    private FortressDelve FD = new();
+private UndeadLegionMerge ULM
+{
+    get => _ULM ??= new UndeadLegionMerge();
+    set => _ULM = value;
+}
+private UndeadLegionMerge _ULM;
+
+private CoreIsleOfFotia IOF
+{
+    get => _IOF ??= new CoreIsleOfFotia();
+    set => _IOF = value;
+}
+private CoreIsleOfFotia _IOF;
+
+private HeadoftheLegionBeast HOTLB
+{
+    get => _HOTLB ??= new HeadoftheLegionBeast();
+    set => _HOTLB = value;
+}
+private HeadoftheLegionBeast _HOTLB;
+
+private FortressDelve FD
+{
+    get => _FD ??= new FortressDelve();
+    set => _FD = value;
+}
+private FortressDelve _FD;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

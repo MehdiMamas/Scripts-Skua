@@ -32,14 +32,62 @@ public class CoreHollowbornDoomKnight
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreAdvanced Adv = new();
-    public CoreStory Story = new();
-    public CoreHollowborn HB = new();
-    public CoreHollowbornPaladin HBP = new();
-    public CoreSDKA SDKA = new();
-    public CoreNSOD NSoD = new();
-    public SepulchuresOriginalHelm SOH = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreHollowborn HB
+{
+    get => _HB ??= new CoreHollowborn();
+    set => _HB = value;
+}
+public CoreHollowborn _HB;
+
+public CoreHollowbornPaladin HBP
+{
+    get => _HBP ??= new CoreHollowbornPaladin();
+    set => _HBP = value;
+}
+public CoreHollowbornPaladin _HBP;
+
+public CoreSDKA SDKA
+{
+    get => _SDKA ??= new CoreSDKA();
+    set => _SDKA = value;
+}
+public CoreSDKA _SDKA;
+
+public CoreNSOD NSoD
+{
+    get => _NSoD ??= new CoreNSOD();
+    set => _NSoD = value;
+}
+public CoreNSOD _NSoD;
+
+public SepulchuresOriginalHelm SOH
+{
+    get => _SOH ??= new SepulchuresOriginalHelm();
+    set => _SOH = value;
+}
+public SepulchuresOriginalHelm _SOH;
+
 
     public string OptionsStorage = "HollowbornDoomKnightOptions";
     public bool DontPreconfigure = true;

@@ -15,7 +15,13 @@ public class ElementalCore
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreSoWMats SOWM = new();
+public CoreSoWMats SOWM
+{
+    get => _SOWM ??= new CoreSoWMats();
+    set => _SOWM = value;
+}
+public CoreSoWMats _SOWM;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

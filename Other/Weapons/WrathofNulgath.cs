@@ -18,12 +18,48 @@ public class WrathofNulgath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreAdvanced Adv = new();
-    public CoreStory Story = new();
-    public CoreNation Nation = new();
-    public JuggernautItemsofNulgath juggernaut = new();
-    private DarkWarLegionandNation DWLN = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public JuggernautItemsofNulgath juggernaut
+{
+    get => _juggernaut ??= new JuggernautItemsofNulgath();
+    set => _juggernaut = value;
+}
+public JuggernautItemsofNulgath _juggernaut;
+
+private DarkWarLegionandNation DWLN
+{
+    get => _DWLN ??= new DarkWarLegionandNation();
+    set => _DWLN = value;
+}
+private DarkWarLegionandNation _DWLN;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

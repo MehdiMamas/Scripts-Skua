@@ -19,13 +19,55 @@ public class SepulchuresOriginalHelm
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    public CoreAdvanced Adv = new();
-    public CoreStory Story = new();
-    public CoreFarms Farm = new();
-    public CoreDailies Daily = new();
-    public Core13LoC LOC = new();
-    public CoreToD TOD = new();
-    public CoreDoomwood DW = new();
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreDailies Daily
+{
+    get => _Daily ??= new CoreDailies();
+    set => _Daily = value;
+}
+public CoreDailies _Daily;
+
+public Core13LoC LOC
+{
+    get => _LOC ??= new Core13LoC();
+    set => _LOC = value;
+}
+public Core13LoC _LOC;
+
+public CoreToD TOD
+{
+    get => _TOD ??= new CoreToD();
+    set => _TOD = value;
+}
+public CoreToD _TOD;
+
+public CoreDoomwood DW
+{
+    get => _DW ??= new CoreDoomwood();
+    set => _DW = value;
+}
+public CoreDoomwood _DW;
+
     public string[] GravelynsDoomFireTokenItems = { "Empowered Essence", "Gravelyn's Blessing", "Painful Memory Bubble", "Burning Passion Flame", "Father's Sorrowful Tear", "Gravelyn's DoomFire Token", "Necrotic Sword of Doom", "Sepulchure's DoomKnight Armor" };
 
     public void ScriptMain(IScriptInterface bot)

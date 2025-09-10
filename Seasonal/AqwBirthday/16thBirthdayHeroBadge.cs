@@ -11,7 +11,13 @@ public class BirthdayHeroBadge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreStory Story = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

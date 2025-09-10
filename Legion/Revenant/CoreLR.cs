@@ -17,12 +17,48 @@ public class CoreLR
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreAdvanced Adv = new();
-    public CoreStory Story = new();
-    public CoreLegion Legion = new();
-    public InfiniteLegionDC ILDC = new();
-    public SeraphicWar_Story Seraph = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+public CoreLegion _Legion;
+
+public InfiniteLegionDC ILDC
+{
+    get => _ILDC ??= new InfiniteLegionDC();
+    set => _ILDC = value;
+}
+public InfiniteLegionDC _ILDC;
+
+public SeraphicWar_Story Seraph
+{
+    get => _Seraph ??= new SeraphicWar_Story();
+    set => _Seraph = value;
+}
+public SeraphicWar_Story _Seraph;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

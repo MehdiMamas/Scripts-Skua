@@ -13,7 +13,13 @@ public class ThroneofDarkness
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreToD TOD = new();
+public CoreToD TOD
+{
+    get => _TOD ??= new CoreToD();
+    set => _TOD = value;
+}
+public CoreToD _TOD;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

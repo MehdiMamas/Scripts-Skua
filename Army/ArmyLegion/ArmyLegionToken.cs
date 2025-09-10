@@ -20,10 +20,28 @@ public class ArmyLegionToken
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
     private CoreAdvanced Adv => new();
-    private CoreArmyLite Army = new();
-    public CoreLegion Legion = new();
+private CoreArmyLite Army
+{
+    get => _Army ??= new CoreArmyLite();
+    set => _Army = value;
+}
+private CoreArmyLite _Army;
 
-    private static CoreArmyLite sArmy = new();
+public CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+public CoreLegion _Legion;
+
+
+private static CoreArmyLite sArmy
+{
+    get => _sArmy ??= new CoreArmyLite();
+    set => _sArmy = value;
+}
+private static CoreArmyLite _sArmy;
+
 
     public string OptionsStorage = "ArmyLegionToken";
     public bool DontPreconfigure = true;
@@ -422,9 +440,9 @@ public class ArmyLegionToken
         Legion_Arena = 13,
     }
 
-    private List<int> questIDs = new() { };
-    private List<string> monNames = new() { };
-    private List<string> drops = new() { };
+    private static readonly int[] questIDs={ };
+    private static readonly string[] monNames={ };
+    private static readonly string[] drops={ };
     private string map = "";
     private ClassType classType;
 }

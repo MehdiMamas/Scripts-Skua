@@ -22,8 +22,20 @@ public class ArmyAggromonCreatorAutoReward
     private CoreBots Core => CoreBots.Instance;
     private readonly CoreArmyLite Army = new();
 
-    private static CoreBots sCore = new();
-    private static CoreArmyLite sArmy = new();
+private static CoreBots sCore
+{
+    get => _sCore ??= new CoreBots();
+    set => _sCore = value;
+}
+private static CoreBots _sCore;
+
+private static CoreArmyLite sArmy
+{
+    get => _sArmy ??= new CoreArmyLite();
+    set => _sArmy = value;
+}
+private static CoreArmyLite _sArmy;
+
 
     public string OptionsStorage = "ArmyAggromonCreatorAutoReward";
     public bool DontPreconfigure = true;

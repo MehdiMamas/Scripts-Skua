@@ -21,13 +21,49 @@ public class ShadowSlayerKMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreStory Story = new();
-    public CoreAdvanced Adv = new();
-    public ShadowSlayerK SSK = new();
-    public static CoreAdvanced sAdv = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
 
-    public CoreDailies Dailies = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public ShadowSlayerK SSK
+{
+    get => _SSK ??= new ShadowSlayerK();
+    set => _SSK = value;
+}
+public ShadowSlayerK _SSK;
+
+public static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+public static CoreAdvanced _sAdv;
+
+
+public CoreDailies Dailies
+{
+    get => _Dailies ??= new CoreDailies();
+    set => _Dailies = value;
+}
+public CoreDailies _Dailies;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

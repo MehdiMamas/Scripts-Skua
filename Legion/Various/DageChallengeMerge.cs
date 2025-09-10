@@ -19,14 +19,62 @@ public class DageChallengeMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private CoreStory Story = new();
-    private CoreLegion Legion = new();
-    private SevenCircles Circles = new();
-    private HeadoftheLegionBeast HOTLB = new();
-    private DageChallengeStory DageChallenge = new();
-    private static CoreAdvanced sAdv = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+private CoreLegion _Legion;
+
+private SevenCircles Circles
+{
+    get => _Circles ??= new SevenCircles();
+    set => _Circles = value;
+}
+private SevenCircles _Circles;
+
+private HeadoftheLegionBeast HOTLB
+{
+    get => _HOTLB ??= new HeadoftheLegionBeast();
+    set => _HOTLB = value;
+}
+private HeadoftheLegionBeast _HOTLB;
+
+private DageChallengeStory DageChallenge
+{
+    get => _DageChallenge ??= new DageChallengeStory();
+    set => _DageChallenge = value;
+}
+private DageChallengeStory _DageChallenge;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
 
 
     public bool DontPreconfigure = true;

@@ -14,7 +14,13 @@ public class OneFinaltTask
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private HoratioQuests HQ = new();
+private HoratioQuests HQ
+{
+    get => _HQ ??= new HoratioQuests();
+    set => _HQ = value;
+}
+private HoratioQuests _HQ;
+
 
 
     public void ScriptMain(IScriptInterface Bot)

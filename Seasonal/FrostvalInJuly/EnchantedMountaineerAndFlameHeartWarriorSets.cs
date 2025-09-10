@@ -12,8 +12,20 @@ public class EnchantedMountaineerAndFlameHeartWarriorSets
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    private IceStorm IS = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+private IceStorm IS
+{
+    get => _IS ??= new IceStorm();
+    set => _IS = value;
+}
+private IceStorm _IS;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

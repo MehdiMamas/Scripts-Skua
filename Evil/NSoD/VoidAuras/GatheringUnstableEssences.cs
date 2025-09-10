@@ -19,7 +19,13 @@ public class GatheringUnstableEssences
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreNSOD NSoD = new();
+public CoreNSOD NSoD
+{
+    get => _NSoD ??= new CoreNSOD();
+    set => _NSoD = value;
+}
+public CoreNSOD _NSoD;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

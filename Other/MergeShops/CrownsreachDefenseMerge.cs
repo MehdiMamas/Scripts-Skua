@@ -18,13 +18,55 @@ public class CrownsreachDefenseMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreStory Story = new();
-    public CoreAdvanced Adv = new();
-    public static CoreAdvanced sAdv = new();
-    public CoreSoW SoW = new();
-    public CoreSoC SoC = new();
-    public ShadowflameWarMedal SWM = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+public static CoreAdvanced _sAdv;
+
+public CoreSoW SoW
+{
+    get => _SoW ??= new CoreSoW();
+    set => _SoW = value;
+}
+public CoreSoW _SoW;
+
+public CoreSoC SoC
+{
+    get => _SoC ??= new CoreSoC();
+    set => _SoC = value;
+}
+public CoreSoC _SoC;
+
+public ShadowflameWarMedal SWM
+{
+    get => _SWM ??= new ShadowflameWarMedal();
+    set => _SWM = value;
+}
+public ShadowflameWarMedal _SWM;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

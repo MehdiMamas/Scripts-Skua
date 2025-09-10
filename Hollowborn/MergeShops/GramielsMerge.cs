@@ -27,11 +27,41 @@ public class GramielsMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private static CoreAdvanced sAdv = new();
-    private DawnsanctumMerge DM = new();
-    private HBVNonInsig HBV = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
+private DawnsanctumMerge DM
+{
+    get => _DM ??= new DawnsanctumMerge();
+    set => _DM = value;
+}
+private DawnsanctumMerge _DM;
+
+private HBVNonInsig HBV
+{
+    get => _HBV ??= new HBVNonInsig();
+    set => _HBV = value;
+}
+private HBVNonInsig _HBV;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

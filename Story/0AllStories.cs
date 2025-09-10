@@ -215,226 +215,1132 @@ public class AllStories
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreAdvanced Adv = new();
-    public CoreStory Story = new();
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
 
     #region Folder based
     // 7 Deadly Dragons
-    public Core7DD DD = new();
-    public HatchTheEgg Egg = new();
-    public GetSDD SDD = new();
+public Core7DD DD
+{
+    get => _DD ??= new Core7DD();
+    set => _DD = value;
+}
+public Core7DD _DD;
+
+public HatchTheEgg Egg
+{
+    get => _Egg ??= new HatchTheEgg();
+    set => _Egg = value;
+}
+public HatchTheEgg _Egg;
+
+public GetSDD SDD
+{
+    get => _SDD ??= new GetSDD();
+    set => _SDD = value;
+}
+public GetSDD _SDD;
+
 
     // Age Of Ruin
-    public CoreAOR AOR = new();
+public CoreAOR AOR
+{
+    get => _AOR ??= new CoreAOR();
+    set => _AOR = value;
+}
+public CoreAOR _AOR;
+
 
     // Doomwood (all parts)
-    public CoreDoomwood DW = new();
+public CoreDoomwood DW
+{
+    get => _DW ??= new CoreDoomwood();
+    set => _DW = value;
+}
+public CoreDoomwood _DW;
+
 
     // Dragons Of Yokai
-    public CoreDOY DOY = new();
+public CoreDOY DOY
+{
+    get => _DOY ??= new CoreDOY();
+    set => _DOY = value;
+}
+public CoreDOY _DOY;
+
 
     // Elergy of Madness - Darkon
-    public CoreAstravia CoreAstravia = new();
+public CoreAstravia CoreAstravia
+{
+    get => _CoreAstravia ??= new CoreAstravia();
+    set => _CoreAstravia = value;
+}
+public CoreAstravia _CoreAstravia;
+
 
     //Fire Island
-    public CoreFireIsland FI = new();
+public CoreFireIsland FI
+{
+    get => _FI ??= new CoreFireIsland();
+    set => _FI = value;
+}
+public CoreFireIsland _FI;
+
 
     //Hollowborn
-    public CoreHollowbornStory HB = new();
+public CoreHollowbornStory HB
+{
+    get => _HB ??= new CoreHollowbornStory();
+    set => _HB = value;
+}
+public CoreHollowbornStory _HB;
+
 
     //Friday 13th
-    public CoreFriday13th CoreFriday13th = new();
+public CoreFriday13th CoreFriday13th
+{
+    get => _CoreFriday13th ??= new CoreFriday13th();
+    set => _CoreFriday13th = value;
+}
+public CoreFriday13th _CoreFriday13th;
+
 
     // Isle Of Fotia
-    public CoreIsleOfFotia CoreIsleOfFotia = new();
+public CoreIsleOfFotia CoreIsleOfFotia
+{
+    get => _CoreIsleOfFotia ??= new CoreIsleOfFotia();
+    set => _CoreIsleOfFotia = value;
+}
+public CoreIsleOfFotia _CoreIsleOfFotia;
+
 
     // Legion
-    public CoreDageTheEvilIsland DageIsland = new();
-    public AtlasFalls AtlasFalls = new();
-    public AtlasKingdom AtlasKingdom = new();
-    public AtlasPromenade AtlasPromenade = new();
-    public DageChallengeStory DageChallengeStory = new();
-    public DarkWarLegionandNation DarkWar = new();
-    public Ravenscar Ravenscar = new();
-    public SeraphicWar_Story SeraphicWar_Story = new();
-    public SevenCircles SevenCircles = new();
-    public WorldSoul WorldSoul = new();
+public CoreDageTheEvilIsland DageIsland
+{
+    get => _DageIsland ??= new CoreDageTheEvilIsland();
+    set => _DageIsland = value;
+}
+public CoreDageTheEvilIsland _DageIsland;
+
+public AtlasFalls AtlasFalls
+{
+    get => _AtlasFalls ??= new AtlasFalls();
+    set => _AtlasFalls = value;
+}
+public AtlasFalls _AtlasFalls;
+
+public AtlasKingdom AtlasKingdom
+{
+    get => _AtlasKingdom ??= new AtlasKingdom();
+    set => _AtlasKingdom = value;
+}
+public AtlasKingdom _AtlasKingdom;
+
+public AtlasPromenade AtlasPromenade
+{
+    get => _AtlasPromenade ??= new AtlasPromenade();
+    set => _AtlasPromenade = value;
+}
+public AtlasPromenade _AtlasPromenade;
+
+public DageChallengeStory DageChallengeStory
+{
+    get => _DageChallengeStory ??= new DageChallengeStory();
+    set => _DageChallengeStory = value;
+}
+public DageChallengeStory _DageChallengeStory;
+
+public DarkWarLegionandNation DarkWar
+{
+    get => _DarkWar ??= new DarkWarLegionandNation();
+    set => _DarkWar = value;
+}
+public DarkWarLegionandNation _DarkWar;
+
+public Ravenscar Ravenscar
+{
+    get => _Ravenscar ??= new Ravenscar();
+    set => _Ravenscar = value;
+}
+public Ravenscar _Ravenscar;
+
+public SeraphicWar_Story SeraphicWar_Story
+{
+    get => _SeraphicWar_Story ??= new SeraphicWar_Story();
+    set => _SeraphicWar_Story = value;
+}
+public SeraphicWar_Story _SeraphicWar_Story;
+
+public SevenCircles SevenCircles
+{
+    get => _SevenCircles ??= new SevenCircles();
+    set => _SevenCircles = value;
+}
+public SevenCircles _SevenCircles;
+
+public WorldSoul WorldSoul
+{
+    get => _WorldSoul ??= new WorldSoul();
+    set => _WorldSoul = value;
+}
+public WorldSoul _WorldSoul;
+
 
     // 13 Lord of Chaos
     public Core13LoC LOC => new();
-    public DeadlyDungeon DeadlyDungeon = new();
-    public KillerCatacombs KillerCatacombs = new();
-    public PyramidofPain PyramidofPain = new();
+public DeadlyDungeon DeadlyDungeon
+{
+    get => _DeadlyDungeon ??= new DeadlyDungeon();
+    set => _DeadlyDungeon = value;
+}
+public DeadlyDungeon _DeadlyDungeon;
+
+public KillerCatacombs KillerCatacombs
+{
+    get => _KillerCatacombs ??= new KillerCatacombs();
+    set => _KillerCatacombs = value;
+}
+public KillerCatacombs _KillerCatacombs;
+
+public PyramidofPain PyramidofPain
+{
+    get => _PyramidofPain ??= new PyramidofPain();
+    set => _PyramidofPain = value;
+}
+public PyramidofPain _PyramidofPain;
+
 
     // Lynaria
-    public CoreLynaria Lynaria = new();
+public CoreLynaria Lynaria
+{
+    get => _Lynaria ??= new CoreLynaria();
+    set => _Lynaria = value;
+}
+public CoreLynaria _Lynaria;
+
 
     // Nation
-    public Bamboozle Bamboozle = new();
-    public CitadelRuins CitadelRuins = new();
-    public DeleuzeTundraStory DeleuzeTundra = new();
-    public FiendPast FiendPast = new();
-    public Fiendshard_Story Fiendshard_Story = new();
-    public OblivionTundra OblivionTundra = new();
-    public Originul_Story Originul_Story = new();
-    public ShadowBlastArena ShadowBlastArena = new();
-    public Tercessuinotlim Tercessuinotlim = new();
-    public VoidRefuge VoidRefuge = new();
-    public VoidChasm VoidChasm = new();
+public Bamboozle Bamboozle
+{
+    get => _Bamboozle ??= new Bamboozle();
+    set => _Bamboozle = value;
+}
+public Bamboozle _Bamboozle;
+
+public CitadelRuins CitadelRuins
+{
+    get => _CitadelRuins ??= new CitadelRuins();
+    set => _CitadelRuins = value;
+}
+public CitadelRuins _CitadelRuins;
+
+public DeleuzeTundraStory DeleuzeTundra
+{
+    get => _DeleuzeTundra ??= new DeleuzeTundraStory();
+    set => _DeleuzeTundra = value;
+}
+public DeleuzeTundraStory _DeleuzeTundra;
+
+public FiendPast FiendPast
+{
+    get => _FiendPast ??= new FiendPast();
+    set => _FiendPast = value;
+}
+public FiendPast _FiendPast;
+
+public Fiendshard_Story Fiendshard_Story
+{
+    get => _Fiendshard_Story ??= new Fiendshard_Story();
+    set => _Fiendshard_Story = value;
+}
+public Fiendshard_Story _Fiendshard_Story;
+
+public OblivionTundra OblivionTundra
+{
+    get => _OblivionTundra ??= new OblivionTundra();
+    set => _OblivionTundra = value;
+}
+public OblivionTundra _OblivionTundra;
+
+public Originul_Story Originul_Story
+{
+    get => _Originul_Story ??= new Originul_Story();
+    set => _Originul_Story = value;
+}
+public Originul_Story _Originul_Story;
+
+public ShadowBlastArena ShadowBlastArena
+{
+    get => _ShadowBlastArena ??= new ShadowBlastArena();
+    set => _ShadowBlastArena = value;
+}
+public ShadowBlastArena _ShadowBlastArena;
+
+public Tercessuinotlim Tercessuinotlim
+{
+    get => _Tercessuinotlim ??= new Tercessuinotlim();
+    set => _Tercessuinotlim = value;
+}
+public Tercessuinotlim _Tercessuinotlim;
+
+public VoidRefuge VoidRefuge
+{
+    get => _VoidRefuge ??= new VoidRefuge();
+    set => _VoidRefuge = value;
+}
+public VoidRefuge _VoidRefuge;
+
+public VoidChasm VoidChasm
+{
+    get => _VoidChasm ??= new VoidChasm();
+    set => _VoidChasm = value;
+}
+public VoidChasm _VoidChasm;
+
 
     // Queen of Monsters
     public CoreQOM QOM => new();
-    public BrightOak BrightOak = new();
-    public CelestialArenaQuests CelestialArena = new();
-    public CelestialPast CelestialPast = new();
-    public GoldenArena GoldenArena = new();
-    public InfernalDianoia InfernalDianoia = new();
-    public InfernalParadise InfernalParadise = new();
-    public LivingDungeon LivingDungeon = new();
-    public OrbHunt OrbHunt = new();
-    public QueenBattle QueenBattle = new();
+public BrightOak BrightOak
+{
+    get => _BrightOak ??= new BrightOak();
+    set => _BrightOak = value;
+}
+public BrightOak _BrightOak;
+
+public CelestialArenaQuests CelestialArena
+{
+    get => _CelestialArena ??= new CelestialArenaQuests();
+    set => _CelestialArena = value;
+}
+public CelestialArenaQuests _CelestialArena;
+
+public CelestialPast CelestialPast
+{
+    get => _CelestialPast ??= new CelestialPast();
+    set => _CelestialPast = value;
+}
+public CelestialPast _CelestialPast;
+
+public GoldenArena GoldenArena
+{
+    get => _GoldenArena ??= new GoldenArena();
+    set => _GoldenArena = value;
+}
+public GoldenArena _GoldenArena;
+
+public InfernalDianoia InfernalDianoia
+{
+    get => _InfernalDianoia ??= new InfernalDianoia();
+    set => _InfernalDianoia = value;
+}
+public InfernalDianoia _InfernalDianoia;
+
+public InfernalParadise InfernalParadise
+{
+    get => _InfernalParadise ??= new InfernalParadise();
+    set => _InfernalParadise = value;
+}
+public InfernalParadise _InfernalParadise;
+
+public LivingDungeon LivingDungeon
+{
+    get => _LivingDungeon ??= new LivingDungeon();
+    set => _LivingDungeon = value;
+}
+public LivingDungeon _LivingDungeon;
+
+public OrbHunt OrbHunt
+{
+    get => _OrbHunt ??= new OrbHunt();
+    set => _OrbHunt = value;
+}
+public OrbHunt _OrbHunt;
+
+public QueenBattle QueenBattle
+{
+    get => _QueenBattle ??= new QueenBattle();
+    set => _QueenBattle = value;
+}
+public QueenBattle _QueenBattle;
+
 
     // Sepulchure Saga
-    public CoreSepulchure CoreSS = new();
+public CoreSepulchure CoreSS
+{
+    get => _CoreSS ??= new CoreSepulchure();
+    set => _CoreSS = value;
+}
+public CoreSepulchure _CoreSS;
+
 
     // Shadows of Chaos
-    public CoreSoC CoreSoC = new();
+public CoreSoC CoreSoC
+{
+    get => _CoreSoC ??= new CoreSoC();
+    set => _CoreSoC = value;
+}
+public CoreSoC _CoreSoC;
+
 
     // Shadow of War
-    public CoreSoW SOW = new();
+public CoreSoW SOW
+{
+    get => _SOW ??= new CoreSoW();
+    set => _SOW = value;
+}
+public CoreSoW _SOW;
+
 
     //Summer 2015 AdventureMap
-    public CoreSummer CoreSummer = new();
+public CoreSummer CoreSummer
+{
+    get => _CoreSummer ??= new CoreSummer();
+    set => _CoreSummer = value;
+}
+public CoreSummer _CoreSummer;
+
 
     // Throne of Darkness
-    public CoreToD TOD = new();
+public CoreToD TOD
+{
+    get => _TOD ??= new CoreToD();
+    set => _TOD = value;
+}
+public CoreToD _TOD;
+
 
     //MemetsRealm
-    public MemetsRealm MemetsRealm = new();
+public MemetsRealm MemetsRealm
+{
+    get => _MemetsRealm ??= new MemetsRealm();
+    set => _MemetsRealm = value;
+}
+public MemetsRealm _MemetsRealm;
+
 
     #endregion
 
     #region Standalone (sorted alphabetically)
-    public Adam1a1Quest Adam1A1Quest = new();
-    public AranxQuests AranxQuests = new();
-    public Arcangrove Arcangrove = new();
-    public AriaGreenhouse AriaGreenhouse = new();
-    public AriaPet AriaPet = new();
-    public Artixpointe Artixpointe = new();
-    public ArtixWedding ArtixWedding = new();
-    public Asylum Asylum = new();
+public Adam1a1Quest Adam1A1Quest
+{
+    get => _Adam1A1Quest ??= new Adam1a1Quest();
+    set => _Adam1A1Quest = value;
+}
+public Adam1a1Quest _Adam1A1Quest;
 
-    public Banished Banished = new();
-    public BaseCamp BaseCamp = new();
-    public BattleUnder BattleUnder = new();
-    public BeleensDream BeleensDream = new();
-    public BloodMoon BloodMoon = new();
-    public Bludrut Bludrut = new();
-    public BoneBreak BoneBreak = new();
-    public Borgars Borgars = new();
-    public BrightCrystalStory BrightCrystal = new();
+public AranxQuests AranxQuests
+{
+    get => _AranxQuests ??= new AranxQuests();
+    set => _AranxQuests = value;
+}
+public AranxQuests _AranxQuests;
 
-    public CastleOfGlass CastleOfGlass = new();
-    public CastleTunnels CastleTunnels = new();
-    public Cleric Cleric = new();
-    public Concert Concert = new();
-    public Cornelis Cornelis = new();
-    public CrashSite CrashSite = new();
-    public CruxShip CruxShip = new();
+public Arcangrove Arcangrove
+{
+    get => _Arcangrove ??= new Arcangrove();
+    set => _Arcangrove = value;
+}
+public Arcangrove _Arcangrove;
 
-    public DarkCarnaxStory DarkCarnax = new();
-    public DarkDungeon DarkDungeon = new();
-    public DeathsRealm DeathsRealm = new();
-    public DjinnGateStory DjinnGateStory = new();
-    public DjinnGuard DjinnGuard = new();
-    public DoomVaultA DoomVaultA = new();
-    public DoomVaultB DoomVaultB = new();
-    public Downward Downward = new();
-    public DracoCon DracoCon = new();
-    public DragonFableOrigins DragonFableOrigins = new();
-    public DragonRoad DragonRoad = new();
-    public DreamPalace DreamPalace = new();
-    public Dwarfhold Dwarfhold = new();
-    public DwarvesVsGiants DwarvesVsGiants = new();
+public AriaGreenhouse AriaGreenhouse
+{
+    get => _AriaGreenhouse ??= new AriaGreenhouse();
+    set => _AriaGreenhouse = value;
+}
+public AriaGreenhouse _AriaGreenhouse;
 
-    public Eden Eden = new();
-    public EtherStormWastes EtherStormWastes = new();
-    public ExaltiaTower ExaltiaTower = new();
-    public Extinction Extinction = new();
+public AriaPet AriaPet
+{
+    get => _AriaPet ??= new AriaPet();
+    set => _AriaPet = value;
+}
+public AriaPet _AriaPet;
 
-    public FableForest FableForest = new();
-    public Friendship Friendship = new();
-    public FrozenNorthlands FrozenNorthlands = new();
+public Artixpointe Artixpointe
+{
+    get => _Artixpointe ??= new Artixpointe();
+    set => _Artixpointe = value;
+}
+public Artixpointe _Artixpointe;
 
-    public Gamehaven Gamehaven = new();
-    public GiantTaleStory GiantTaleStory = new();
-    public GlaceraStory GlaceraStory = new();
-    public Guru Guru = new();
+public ArtixWedding ArtixWedding
+{
+    get => _ArtixWedding ??= new ArtixWedding();
+    set => _ArtixWedding = value;
+}
+public ArtixWedding _ArtixWedding;
 
-    public HuntersMoon HuntersMoon = new();
+public Asylum Asylum
+{
+    get => _Asylum ??= new Asylum();
+    set => _Asylum = value;
+}
+public Asylum _Asylum;
 
-    public IcePlane IcePlane = new();
 
-    public LaeWedding LaeWedding = new();
-    public Lair Lair = new();
-    public Lightguard Lightguard = new();
-    public LightoviaCave LightoviaCave = new();
-    public LostVilla LostVilla = new();
+public Banished Banished
+{
+    get => _Banished ??= new Banished();
+    set => _Banished = value;
+}
+public Banished _Banished;
 
-    public Manor Manor = new();
-    public Marsh2 Marsh2 = new();
-    public Mazumi Mazumi = new();
-    public Mobius Mobius = new();
-    public MustyCave MustyCave = new();
+public BaseCamp BaseCamp
+{
+    get => _BaseCamp ??= new BaseCamp();
+    set => _BaseCamp = value;
+}
+public BaseCamp _BaseCamp;
 
-    public NecroProject NecroProject = new();
-    public Noobshire Noobshire = new();
-    public Nukemichi Nukemichi = new();
-    public NytheraSaga NytheraSaga = new();
+public BattleUnder BattleUnder
+{
+    get => _BattleUnder ??= new BattleUnder();
+    set => _BattleUnder = value;
+}
+public BattleUnder _BattleUnder;
 
-    public J6Saga J6Saga = new();
+public BeleensDream BeleensDream
+{
+    get => _BeleensDream ??= new BeleensDream();
+    set => _BeleensDream = value;
+}
+public BeleensDream _BeleensDream;
 
-    public Pirates Pirates = new();
-    public PoisonForest PoisonForest = new();
+public BloodMoon BloodMoon
+{
+    get => _BloodMoon ??= new BloodMoon();
+    set => _BloodMoon = value;
+}
+public BloodMoon _BloodMoon;
 
-    public QueenReign QueenReign = new();
-    public QuibbleHunt QuibbleHunt = new();
+public Bludrut Bludrut
+{
+    get => _Bludrut ??= new Bludrut();
+    set => _Bludrut = value;
+}
+public Bludrut _Bludrut;
 
-    public RavenlossSaga RavenlossSaga = new();
-    public River River = new();
+public BoneBreak BoneBreak
+{
+    get => _BoneBreak ??= new BoneBreak();
+    set => _BoneBreak = value;
+}
+public BoneBreak _BoneBreak;
 
-    public Safiria Safiria = new();
-    public ShadowGates ShadowGates = new();
-    public ShadowSlayerK ShadowSlayerK = new();
-    public ShadowVault ShadowVault = new();
-    public ShadowVoid ShadowVoid = new();
-    public Shattersword Shattersword = new();
-    public Shinkansen Shinkansen = new();
-    public ShipWreck ShipWreck = new();
-    public SkyGuardSaga SkyGuardSaga = new();
-    public SpirePast SpirePast = new();
-    public StarSinc StarSinc = new();
-    public SuperDeath SuperDeath = new();
+public Borgars Borgars
+{
+    get => _Borgars ??= new Borgars();
+    set => _Borgars = value;
+}
+public Borgars _Borgars;
 
-    public ThirdSpell ThirdSpell = new();
-    public TitanAttackStory TitanAttackStory = new();
-    public Tournament Tournament = new();
-    public Tower Tower = new();
-    public TowerOfDoom TowerOfDoom = new();
-    public Tutorial Tutorial = new();
+public BrightCrystalStory BrightCrystal
+{
+    get => _BrightCrystal ??= new BrightCrystalStory();
+    set => _BrightCrystal = value;
+}
+public BrightCrystalStory _BrightCrystal;
 
-    public Ubear Ubear = new();
-    public UnderGroundLab UnderGroundLab = new();
 
-    public LairWar LairWar = new(); //VasalkarLairWar.cs
+public CastleOfGlass CastleOfGlass
+{
+    get => _CastleOfGlass ??= new CastleOfGlass();
+    set => _CastleOfGlass = value;
+}
+public CastleOfGlass _CastleOfGlass;
 
-    public WatchTower WatchTower = new();
-    public whitetigerpoint WhiteTigerPoint = new();
-    public WillowCreek WillowCreek = new();
+public CastleTunnels CastleTunnels
+{
+    get => _CastleTunnels ??= new CastleTunnels();
+    set => _CastleTunnels = value;
+}
+public CastleTunnels _CastleTunnels;
 
-    public XansLair Xans = new();
+public Cleric Cleric
+{
+    get => _Cleric ??= new Cleric();
+    set => _Cleric = value;
+}
+public Cleric _Cleric;
 
-    public YokaiQuests Yokai = new();
+public Concert Concert
+{
+    get => _Concert ??= new Concert();
+    set => _Concert = value;
+}
+public Concert _Concert;
+
+public Cornelis Cornelis
+{
+    get => _Cornelis ??= new Cornelis();
+    set => _Cornelis = value;
+}
+public Cornelis _Cornelis;
+
+public CrashSite CrashSite
+{
+    get => _CrashSite ??= new CrashSite();
+    set => _CrashSite = value;
+}
+public CrashSite _CrashSite;
+
+public CruxShip CruxShip
+{
+    get => _CruxShip ??= new CruxShip();
+    set => _CruxShip = value;
+}
+public CruxShip _CruxShip;
+
+
+public DarkCarnaxStory DarkCarnax
+{
+    get => _DarkCarnax ??= new DarkCarnaxStory();
+    set => _DarkCarnax = value;
+}
+public DarkCarnaxStory _DarkCarnax;
+
+public DarkDungeon DarkDungeon
+{
+    get => _DarkDungeon ??= new DarkDungeon();
+    set => _DarkDungeon = value;
+}
+public DarkDungeon _DarkDungeon;
+
+public DeathsRealm DeathsRealm
+{
+    get => _DeathsRealm ??= new DeathsRealm();
+    set => _DeathsRealm = value;
+}
+public DeathsRealm _DeathsRealm;
+
+public DjinnGateStory DjinnGateStory
+{
+    get => _DjinnGateStory ??= new DjinnGateStory();
+    set => _DjinnGateStory = value;
+}
+public DjinnGateStory _DjinnGateStory;
+
+public DjinnGuard DjinnGuard
+{
+    get => _DjinnGuard ??= new DjinnGuard();
+    set => _DjinnGuard = value;
+}
+public DjinnGuard _DjinnGuard;
+
+public DoomVaultA DoomVaultA
+{
+    get => _DoomVaultA ??= new DoomVaultA();
+    set => _DoomVaultA = value;
+}
+public DoomVaultA _DoomVaultA;
+
+public DoomVaultB DoomVaultB
+{
+    get => _DoomVaultB ??= new DoomVaultB();
+    set => _DoomVaultB = value;
+}
+public DoomVaultB _DoomVaultB;
+
+public Downward Downward
+{
+    get => _Downward ??= new Downward();
+    set => _Downward = value;
+}
+public Downward _Downward;
+
+public DracoCon DracoCon
+{
+    get => _DracoCon ??= new DracoCon();
+    set => _DracoCon = value;
+}
+public DracoCon _DracoCon;
+
+public DragonFableOrigins DragonFableOrigins
+{
+    get => _DragonFableOrigins ??= new DragonFableOrigins();
+    set => _DragonFableOrigins = value;
+}
+public DragonFableOrigins _DragonFableOrigins;
+
+public DragonRoad DragonRoad
+{
+    get => _DragonRoad ??= new DragonRoad();
+    set => _DragonRoad = value;
+}
+public DragonRoad _DragonRoad;
+
+public DreamPalace DreamPalace
+{
+    get => _DreamPalace ??= new DreamPalace();
+    set => _DreamPalace = value;
+}
+public DreamPalace _DreamPalace;
+
+public Dwarfhold Dwarfhold
+{
+    get => _Dwarfhold ??= new Dwarfhold();
+    set => _Dwarfhold = value;
+}
+public Dwarfhold _Dwarfhold;
+
+public DwarvesVsGiants DwarvesVsGiants
+{
+    get => _DwarvesVsGiants ??= new DwarvesVsGiants();
+    set => _DwarvesVsGiants = value;
+}
+public DwarvesVsGiants _DwarvesVsGiants;
+
+
+public Eden Eden
+{
+    get => _Eden ??= new Eden();
+    set => _Eden = value;
+}
+public Eden _Eden;
+
+public EtherStormWastes EtherStormWastes
+{
+    get => _EtherStormWastes ??= new EtherStormWastes();
+    set => _EtherStormWastes = value;
+}
+public EtherStormWastes _EtherStormWastes;
+
+public ExaltiaTower ExaltiaTower
+{
+    get => _ExaltiaTower ??= new ExaltiaTower();
+    set => _ExaltiaTower = value;
+}
+public ExaltiaTower _ExaltiaTower;
+
+public Extinction Extinction
+{
+    get => _Extinction ??= new Extinction();
+    set => _Extinction = value;
+}
+public Extinction _Extinction;
+
+
+public FableForest FableForest
+{
+    get => _FableForest ??= new FableForest();
+    set => _FableForest = value;
+}
+public FableForest _FableForest;
+
+public Friendship Friendship
+{
+    get => _Friendship ??= new Friendship();
+    set => _Friendship = value;
+}
+public Friendship _Friendship;
+
+public FrozenNorthlands FrozenNorthlands
+{
+    get => _FrozenNorthlands ??= new FrozenNorthlands();
+    set => _FrozenNorthlands = value;
+}
+public FrozenNorthlands _FrozenNorthlands;
+
+
+public Gamehaven Gamehaven
+{
+    get => _Gamehaven ??= new Gamehaven();
+    set => _Gamehaven = value;
+}
+public Gamehaven _Gamehaven;
+
+public GiantTaleStory GiantTaleStory
+{
+    get => _GiantTaleStory ??= new GiantTaleStory();
+    set => _GiantTaleStory = value;
+}
+public GiantTaleStory _GiantTaleStory;
+
+public GlaceraStory GlaceraStory
+{
+    get => _GlaceraStory ??= new GlaceraStory();
+    set => _GlaceraStory = value;
+}
+public GlaceraStory _GlaceraStory;
+
+public Guru Guru
+{
+    get => _Guru ??= new Guru();
+    set => _Guru = value;
+}
+public Guru _Guru;
+
+
+public HuntersMoon HuntersMoon
+{
+    get => _HuntersMoon ??= new HuntersMoon();
+    set => _HuntersMoon = value;
+}
+public HuntersMoon _HuntersMoon;
+
+
+public IcePlane IcePlane
+{
+    get => _IcePlane ??= new IcePlane();
+    set => _IcePlane = value;
+}
+public IcePlane _IcePlane;
+
+
+public LaeWedding LaeWedding
+{
+    get => _LaeWedding ??= new LaeWedding();
+    set => _LaeWedding = value;
+}
+public LaeWedding _LaeWedding;
+
+public Lair Lair
+{
+    get => _Lair ??= new Lair();
+    set => _Lair = value;
+}
+public Lair _Lair;
+
+public Lightguard Lightguard
+{
+    get => _Lightguard ??= new Lightguard();
+    set => _Lightguard = value;
+}
+public Lightguard _Lightguard;
+
+public LightoviaCave LightoviaCave
+{
+    get => _LightoviaCave ??= new LightoviaCave();
+    set => _LightoviaCave = value;
+}
+public LightoviaCave _LightoviaCave;
+
+public LostVilla LostVilla
+{
+    get => _LostVilla ??= new LostVilla();
+    set => _LostVilla = value;
+}
+public LostVilla _LostVilla;
+
+
+public Manor Manor
+{
+    get => _Manor ??= new Manor();
+    set => _Manor = value;
+}
+public Manor _Manor;
+
+public Marsh2 Marsh2
+{
+    get => _Marsh2 ??= new Marsh2();
+    set => _Marsh2 = value;
+}
+public Marsh2 _Marsh2;
+
+public Mazumi Mazumi
+{
+    get => _Mazumi ??= new Mazumi();
+    set => _Mazumi = value;
+}
+public Mazumi _Mazumi;
+
+public Mobius Mobius
+{
+    get => _Mobius ??= new Mobius();
+    set => _Mobius = value;
+}
+public Mobius _Mobius;
+
+public MustyCave MustyCave
+{
+    get => _MustyCave ??= new MustyCave();
+    set => _MustyCave = value;
+}
+public MustyCave _MustyCave;
+
+
+public NecroProject NecroProject
+{
+    get => _NecroProject ??= new NecroProject();
+    set => _NecroProject = value;
+}
+public NecroProject _NecroProject;
+
+public Noobshire Noobshire
+{
+    get => _Noobshire ??= new Noobshire();
+    set => _Noobshire = value;
+}
+public Noobshire _Noobshire;
+
+public Nukemichi Nukemichi
+{
+    get => _Nukemichi ??= new Nukemichi();
+    set => _Nukemichi = value;
+}
+public Nukemichi _Nukemichi;
+
+public NytheraSaga NytheraSaga
+{
+    get => _NytheraSaga ??= new NytheraSaga();
+    set => _NytheraSaga = value;
+}
+public NytheraSaga _NytheraSaga;
+
+
+public J6Saga J6Saga
+{
+    get => _J6Saga ??= new J6Saga();
+    set => _J6Saga = value;
+}
+public J6Saga _J6Saga;
+
+
+public Pirates Pirates
+{
+    get => _Pirates ??= new Pirates();
+    set => _Pirates = value;
+}
+public Pirates _Pirates;
+
+public PoisonForest PoisonForest
+{
+    get => _PoisonForest ??= new PoisonForest();
+    set => _PoisonForest = value;
+}
+public PoisonForest _PoisonForest;
+
+
+public QueenReign QueenReign
+{
+    get => _QueenReign ??= new QueenReign();
+    set => _QueenReign = value;
+}
+public QueenReign _QueenReign;
+
+public QuibbleHunt QuibbleHunt
+{
+    get => _QuibbleHunt ??= new QuibbleHunt();
+    set => _QuibbleHunt = value;
+}
+public QuibbleHunt _QuibbleHunt;
+
+
+public RavenlossSaga RavenlossSaga
+{
+    get => _RavenlossSaga ??= new RavenlossSaga();
+    set => _RavenlossSaga = value;
+}
+public RavenlossSaga _RavenlossSaga;
+
+public River River
+{
+    get => _River ??= new River();
+    set => _River = value;
+}
+public River _River;
+
+
+public Safiria Safiria
+{
+    get => _Safiria ??= new Safiria();
+    set => _Safiria = value;
+}
+public Safiria _Safiria;
+
+public ShadowGates ShadowGates
+{
+    get => _ShadowGates ??= new ShadowGates();
+    set => _ShadowGates = value;
+}
+public ShadowGates _ShadowGates;
+
+public ShadowSlayerK ShadowSlayerK
+{
+    get => _ShadowSlayerK ??= new ShadowSlayerK();
+    set => _ShadowSlayerK = value;
+}
+public ShadowSlayerK _ShadowSlayerK;
+
+public ShadowVault ShadowVault
+{
+    get => _ShadowVault ??= new ShadowVault();
+    set => _ShadowVault = value;
+}
+public ShadowVault _ShadowVault;
+
+public ShadowVoid ShadowVoid
+{
+    get => _ShadowVoid ??= new ShadowVoid();
+    set => _ShadowVoid = value;
+}
+public ShadowVoid _ShadowVoid;
+
+public Shattersword Shattersword
+{
+    get => _Shattersword ??= new Shattersword();
+    set => _Shattersword = value;
+}
+public Shattersword _Shattersword;
+
+public Shinkansen Shinkansen
+{
+    get => _Shinkansen ??= new Shinkansen();
+    set => _Shinkansen = value;
+}
+public Shinkansen _Shinkansen;
+
+public ShipWreck ShipWreck
+{
+    get => _ShipWreck ??= new ShipWreck();
+    set => _ShipWreck = value;
+}
+public ShipWreck _ShipWreck;
+
+public SkyGuardSaga SkyGuardSaga
+{
+    get => _SkyGuardSaga ??= new SkyGuardSaga();
+    set => _SkyGuardSaga = value;
+}
+public SkyGuardSaga _SkyGuardSaga;
+
+public SpirePast SpirePast
+{
+    get => _SpirePast ??= new SpirePast();
+    set => _SpirePast = value;
+}
+public SpirePast _SpirePast;
+
+public StarSinc StarSinc
+{
+    get => _StarSinc ??= new StarSinc();
+    set => _StarSinc = value;
+}
+public StarSinc _StarSinc;
+
+public SuperDeath SuperDeath
+{
+    get => _SuperDeath ??= new SuperDeath();
+    set => _SuperDeath = value;
+}
+public SuperDeath _SuperDeath;
+
+
+public ThirdSpell ThirdSpell
+{
+    get => _ThirdSpell ??= new ThirdSpell();
+    set => _ThirdSpell = value;
+}
+public ThirdSpell _ThirdSpell;
+
+public TitanAttackStory TitanAttackStory
+{
+    get => _TitanAttackStory ??= new TitanAttackStory();
+    set => _TitanAttackStory = value;
+}
+public TitanAttackStory _TitanAttackStory;
+
+public Tournament Tournament
+{
+    get => _Tournament ??= new Tournament();
+    set => _Tournament = value;
+}
+public Tournament _Tournament;
+
+public Tower Tower
+{
+    get => _Tower ??= new Tower();
+    set => _Tower = value;
+}
+public Tower _Tower;
+
+public TowerOfDoom TowerOfDoom
+{
+    get => _TowerOfDoom ??= new TowerOfDoom();
+    set => _TowerOfDoom = value;
+}
+public TowerOfDoom _TowerOfDoom;
+
+public Tutorial Tutorial
+{
+    get => _Tutorial ??= new Tutorial();
+    set => _Tutorial = value;
+}
+public Tutorial _Tutorial;
+
+
+public Ubear Ubear
+{
+    get => _Ubear ??= new Ubear();
+    set => _Ubear = value;
+}
+public Ubear _Ubear;
+
+public UnderGroundLab UnderGroundLab
+{
+    get => _UnderGroundLab ??= new UnderGroundLab();
+    set => _UnderGroundLab = value;
+}
+public UnderGroundLab _UnderGroundLab;
+
+
+public LairWar LairWar
+{
+    get => _LairWar ??= new LairWar();
+    set => _LairWar = value;
+}
+public LairWar _LairWar;
+ //VasalkarLairWar.cs
+
+public WatchTower WatchTower
+{
+    get => _WatchTower ??= new WatchTower();
+    set => _WatchTower = value;
+}
+public WatchTower _WatchTower;
+
+public whitetigerpoint WhiteTigerPoint
+{
+    get => _WhiteTigerPoint ??= new whitetigerpoint();
+    set => _WhiteTigerPoint = value;
+}
+public whitetigerpoint _WhiteTigerPoint;
+
+public WillowCreek WillowCreek
+{
+    get => _WillowCreek ??= new WillowCreek();
+    set => _WillowCreek = value;
+}
+public WillowCreek _WillowCreek;
+
+
+public XansLair Xans
+{
+    get => _Xans ??= new XansLair();
+    set => _Xans = value;
+}
+public XansLair _Xans;
+
+
+public YokaiQuests Yokai
+{
+    get => _Yokai ??= new YokaiQuests();
+    set => _Yokai = value;
+}
+public YokaiQuests _Yokai;
+
 
     #endregion
 

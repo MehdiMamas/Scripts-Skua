@@ -11,7 +11,13 @@ using Skua.Core.Options;
 public class CelestialPirateCommander
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
-    private CoreFarms Farm = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
 
     public CoreBots Core => CoreBots.Instance;
     public bool DontPreconfigure = true;

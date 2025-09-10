@@ -17,9 +17,27 @@ public class SwirlingTheAbyss
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreNation Nation = new();
-    public Fiendshard_Story Fiendshard = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public Fiendshard_Story Fiendshard
+{
+    get => _Fiendshard ??= new Fiendshard_Story();
+    set => _Fiendshard = value;
+}
+public Fiendshard_Story _Fiendshard;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

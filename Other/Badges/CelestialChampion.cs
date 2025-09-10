@@ -14,7 +14,13 @@ public class CelestialArenaChampion
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CelestialArenaQuests CA = new();
+public CelestialArenaQuests CA
+{
+    get => _CA ??= new CelestialArenaQuests();
+    set => _CA = value;
+}
+public CelestialArenaQuests _CA;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

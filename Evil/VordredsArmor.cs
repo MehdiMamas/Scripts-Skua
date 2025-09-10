@@ -18,11 +18,41 @@ public class VordredArmor
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreDoomwood DW = new();
-    public CoreStory Story = new();
-    public CoreAdvanced Adv = new();
-    public CoreSDKA SDKA = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreDoomwood DW
+{
+    get => _DW ??= new CoreDoomwood();
+    set => _DW = value;
+}
+public CoreDoomwood _DW;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreSDKA SDKA
+{
+    get => _SDKA ??= new CoreSDKA();
+    set => _SDKA = value;
+}
+public CoreSDKA _SDKA;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

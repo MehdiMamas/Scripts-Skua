@@ -16,9 +16,27 @@ public class CoreLegion
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreStory Story = new();
-    private CoreAdvanced Adv = new();
+    private CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private CoreFarms _Farm;
+
+    private CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private CoreStory _Story;
+
+    private CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private CoreAdvanced _Adv;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -76,10 +94,11 @@ public class CoreLegion
             List<Monster> M = Bot.Monsters.CurrentAvailableMonsters
                 .FindAll(x => x != null && x.Cell == Bot.Player.Cell);
 
+            bool ded = false;
+            Bot.Events.MonsterKilled += b => ded = true;
             M.ForEach(monster =>
             {
-                bool ded = false;
-                Bot.Events.MonsterKilled += b => ded = true;
+                ded = false;
                 while (!Bot.ShouldExit && monster != null && !ded)
                 {
                     Bot.Options.HidePlayers = Core.AggroMonsters();
@@ -98,8 +117,10 @@ public class CoreLegion
                         Core.JumpWait();
                         break;
                     }
+
                 }
             });
+            Bot.Events.MonsterKilled -= b => ded = true;
         }
         Core.CancelRegisteredQuests();
 

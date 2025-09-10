@@ -12,7 +12,13 @@ public class BattleConVIP
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public UnderGroundLab UGL = new();
+public UnderGroundLab UGL
+{
+    get => _UGL ??= new UnderGroundLab();
+    set => _UGL = value;
+}
+public UnderGroundLab _UGL;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

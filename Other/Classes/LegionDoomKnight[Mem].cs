@@ -15,9 +15,21 @@ public class LegionDoomKnight
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
     public CoreAdvanced Adv => new();
-    public CoreSDKA SDKA = new();
+public CoreSDKA SDKA
+{
+    get => _SDKA ??= new CoreSDKA();
+    set => _SDKA = value;
+}
+public CoreSDKA _SDKA;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

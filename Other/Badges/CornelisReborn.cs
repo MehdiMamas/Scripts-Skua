@@ -12,7 +12,13 @@ public class CornelisRebornbadge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public Cornelis Corn = new();
+public Cornelis Corn
+{
+    get => _Corn ??= new Cornelis();
+    set => _Corn = value;
+}
+public Cornelis _Corn;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

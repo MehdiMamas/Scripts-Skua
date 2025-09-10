@@ -21,13 +21,43 @@ public class ArmyAllRep
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreAdvanced Adv => new();
-    private CoreArmyLite Army = new();
-    private CoreArmyRep CAR = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
 
-    private static CoreBots sCore = new();
-    private static CoreArmyLite sArmy = new();
+    public CoreAdvanced Adv => new();
+private CoreArmyLite Army
+{
+    get => _Army ??= new CoreArmyLite();
+    set => _Army = value;
+}
+private CoreArmyLite _Army;
+
+private CoreArmyRep CAR
+{
+    get => _CAR ??= new CoreArmyRep();
+    set => _CAR = value;
+}
+private CoreArmyRep _CAR;
+
+
+private static CoreBots sCore
+{
+    get => _sCore ??= new CoreBots();
+    set => _sCore = value;
+}
+private static CoreBots _sCore;
+
+private static CoreArmyLite sArmy
+{
+    get => _sArmy ??= new CoreArmyLite();
+    set => _sArmy = value;
+}
+private static CoreArmyLite _sArmy;
+
 
     public string OptionsStorage = "ArmyAllRep";
     public bool DontPreconfigure = true;

@@ -15,8 +15,20 @@ public class EmpoweredWeaponsofNulgath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreNation Nation = new();
-    public CoreFarms Farm = new();
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
     public CoreAdvanced Adv => new();
 
     public string OptionsStorage = "EmpoweredWeaponofN";

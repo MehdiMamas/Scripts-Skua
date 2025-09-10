@@ -12,7 +12,13 @@ public class PinkestDyeEver
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public LoveSpell LSS = new();
+public LoveSpell LSS
+{
+    get => _LSS ??= new LoveSpell();
+    set => _LSS = value;
+}
+public LoveSpell _LSS;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

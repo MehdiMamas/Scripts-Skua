@@ -23,8 +23,20 @@ public class ExaltedSoulCleaver
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private UndeadLegionMerge ULM = new();
-    private CoreAdvanced Adv = new();
+private UndeadLegionMerge ULM
+{
+    get => _ULM ??= new UndeadLegionMerge();
+    set => _ULM = value;
+}
+private UndeadLegionMerge _ULM;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

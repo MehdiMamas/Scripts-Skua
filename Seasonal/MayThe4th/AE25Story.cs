@@ -15,8 +15,20 @@ public class AE25Quests
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreStory Story = new();
-    private TwigguHunt TH = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private TwigguHunt TH
+{
+    get => _TH ??= new TwigguHunt();
+    set => _TH = value;
+}
+private TwigguHunt _TH;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

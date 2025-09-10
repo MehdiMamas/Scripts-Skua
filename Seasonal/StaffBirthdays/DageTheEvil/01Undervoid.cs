@@ -12,7 +12,13 @@ public class UndervoidStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private CoreDageBirthday Dage = new();
+private CoreDageBirthday Dage
+{
+    get => _Dage ??= new CoreDageBirthday();
+    set => _Dage = value;
+}
+private CoreDageBirthday _Dage;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

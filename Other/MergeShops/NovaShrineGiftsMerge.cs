@@ -50,22 +50,112 @@ public class NovaShrineGiftsMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private static CoreAdvanced sAdv = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
 
-    public AscendedDrakathGear ADG = new();
-    public DreadspaceReplicatorMerge DRM = new();
-    public VoidPaladin VP = new();
-    public CyseroItemUpgrade CIU = new();
-    public CoreHollowbornPaladin CHP = new();
-    public ObsidianLightofDestiny ObsidianLightofDestiny = new();
-    public UltimateBLoD UltimateBLoD = new();
-    public SanctifiedLightofDestiny SanctifiedLightofDestiny = new();
-    public DragonBladeofNulgath DBoN = new();
-    public CoreBLOD BLOD = new();
-    public CoreDOY CoreDOY = new();
-    public StreamwarMerge StreamwarMerge = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
+
+public AscendedDrakathGear ADG
+{
+    get => _ADG ??= new AscendedDrakathGear();
+    set => _ADG = value;
+}
+public AscendedDrakathGear _ADG;
+
+public DreadspaceReplicatorMerge DRM
+{
+    get => _DRM ??= new DreadspaceReplicatorMerge();
+    set => _DRM = value;
+}
+public DreadspaceReplicatorMerge _DRM;
+
+public VoidPaladin VP
+{
+    get => _VP ??= new VoidPaladin();
+    set => _VP = value;
+}
+public VoidPaladin _VP;
+
+public CyseroItemUpgrade CIU
+{
+    get => _CIU ??= new CyseroItemUpgrade();
+    set => _CIU = value;
+}
+public CyseroItemUpgrade _CIU;
+
+public CoreHollowbornPaladin CHP
+{
+    get => _CHP ??= new CoreHollowbornPaladin();
+    set => _CHP = value;
+}
+public CoreHollowbornPaladin _CHP;
+
+public ObsidianLightofDestiny ObsidianLightofDestiny
+{
+    get => _ObsidianLightofDestiny ??= new ObsidianLightofDestiny();
+    set => _ObsidianLightofDestiny = value;
+}
+public ObsidianLightofDestiny _ObsidianLightofDestiny;
+
+public UltimateBLoD UltimateBLoD
+{
+    get => _UltimateBLoD ??= new UltimateBLoD();
+    set => _UltimateBLoD = value;
+}
+public UltimateBLoD _UltimateBLoD;
+
+public SanctifiedLightofDestiny SanctifiedLightofDestiny
+{
+    get => _SanctifiedLightofDestiny ??= new SanctifiedLightofDestiny();
+    set => _SanctifiedLightofDestiny = value;
+}
+public SanctifiedLightofDestiny _SanctifiedLightofDestiny;
+
+public DragonBladeofNulgath DBoN
+{
+    get => _DBoN ??= new DragonBladeofNulgath();
+    set => _DBoN = value;
+}
+public DragonBladeofNulgath _DBoN;
+
+public CoreBLOD BLOD
+{
+    get => _BLOD ??= new CoreBLOD();
+    set => _BLOD = value;
+}
+public CoreBLOD _BLOD;
+
+public CoreDOY CoreDOY
+{
+    get => _CoreDOY ??= new CoreDOY();
+    set => _CoreDOY = value;
+}
+public CoreDOY _CoreDOY;
+
+public StreamwarMerge StreamwarMerge
+{
+    get => _StreamwarMerge ??= new StreamwarMerge();
+    set => _StreamwarMerge = value;
+}
+public StreamwarMerge _StreamwarMerge;
+
 
 
 

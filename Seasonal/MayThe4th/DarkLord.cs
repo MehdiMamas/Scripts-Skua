@@ -15,10 +15,34 @@ public class DarkLord
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreAdvanced Adv = new();
-    public MurderMoonMerge Merge = new();
-    public MurderMoon MMS = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public MurderMoonMerge Merge
+{
+    get => _Merge ??= new MurderMoonMerge();
+    set => _Merge = value;
+}
+public MurderMoonMerge _Merge;
+
+public MurderMoon MMS
+{
+    get => _MMS ??= new MurderMoon();
+    set => _MMS = value;
+}
+public MurderMoon _MMS;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

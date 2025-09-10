@@ -18,12 +18,48 @@ public class DageRecruitMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreStory Story = new();
-    private CoreAdvanced Adv = new();
-    private CoreLegion Legion = new();
-    private DarkWarLegionandNation DWLaN = new();
-    private static CoreAdvanced sAdv = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+private CoreLegion _Legion;
+
+private DarkWarLegionandNation DWLaN
+{
+    get => _DWLaN ??= new DarkWarLegionandNation();
+    set => _DWLaN = value;
+}
+private DarkWarLegionandNation _DWLaN;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

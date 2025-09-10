@@ -17,9 +17,27 @@ public class ShadowofChaosMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreAdvanced Adv = new();
-    public static CoreAdvanced sAdv = new();
-    public CoreSoC Laguna = new();
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+public static CoreAdvanced _sAdv;
+
+public CoreSoC Laguna
+{
+    get => _Laguna ??= new CoreSoC();
+    set => _Laguna = value;
+}
+public CoreSoC _Laguna;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

@@ -14,9 +14,27 @@ public class EvolvedLeprechaun
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreAdvanced Adv = new();
-    private LuckyDayShamrockFairMerge LDSFM = new();
-    public CoreDailies Daily = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private LuckyDayShamrockFairMerge LDSFM
+{
+    get => _LDSFM ??= new LuckyDayShamrockFairMerge();
+    set => _LDSFM = value;
+}
+private LuckyDayShamrockFairMerge _LDSFM;
+
+public CoreDailies Daily
+{
+    get => _Daily ??= new CoreDailies();
+    set => _Daily = value;
+}
+public CoreDailies _Daily;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

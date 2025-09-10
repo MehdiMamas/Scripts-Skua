@@ -12,8 +12,20 @@ public class TempleDelve
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreStory Story = new();
-    private TempleSiege TS = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private TempleSiege TS
+{
+    get => _TS ??= new TempleSiege();
+    set => _TS = value;
+}
+private TempleSiege _TS;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

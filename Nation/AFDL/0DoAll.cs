@@ -17,11 +17,41 @@ public class ADFL
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreNation Nation = new();
-    public WillpowerExtraction WillpowerExtraction = new();
-    public NulgathDemandsWork NulgathDemandsWork = new();
-    public EnoughDOOMforanArchfiend DOOM = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public WillpowerExtraction WillpowerExtraction
+{
+    get => _WillpowerExtraction ??= new WillpowerExtraction();
+    set => _WillpowerExtraction = value;
+}
+public WillpowerExtraction _WillpowerExtraction;
+
+public NulgathDemandsWork NulgathDemandsWork
+{
+    get => _NulgathDemandsWork ??= new NulgathDemandsWork();
+    set => _NulgathDemandsWork = value;
+}
+public NulgathDemandsWork _NulgathDemandsWork;
+
+public EnoughDOOMforanArchfiend DOOM
+{
+    get => _DOOM ??= new EnoughDOOMforanArchfiend();
+    set => _DOOM = value;
+}
+public EnoughDOOMforanArchfiend _DOOM;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

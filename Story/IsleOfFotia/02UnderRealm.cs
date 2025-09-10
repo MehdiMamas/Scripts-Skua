@@ -12,7 +12,13 @@ public class UnderRealm
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreIsleOfFotia CoreIsleOfFotia = new();
+public CoreIsleOfFotia CoreIsleOfFotia
+{
+    get => _CoreIsleOfFotia ??= new CoreIsleOfFotia();
+    set => _CoreIsleOfFotia = value;
+}
+public CoreIsleOfFotia _CoreIsleOfFotia;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

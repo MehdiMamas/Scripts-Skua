@@ -158,8 +158,20 @@ public class FarmerJoeKit0DoAll
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarmerJoe CFJ = new();
-    private BankAllItems BAI = new();
+private CoreFarmerJoe CFJ
+{
+    get => _CFJ ??= new CoreFarmerJoe();
+    set => _CFJ = value;
+}
+private CoreFarmerJoe _CFJ;
+
+private BankAllItems BAI
+{
+    get => _BAI ??= new BankAllItems();
+    set => _BAI = value;
+}
+private BankAllItems _BAI;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

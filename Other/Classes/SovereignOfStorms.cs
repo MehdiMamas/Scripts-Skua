@@ -20,8 +20,20 @@ public class SovereignOfStorms
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreAdvanced Adv = new();
-    private LothianTreasuryMerge LTM = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private LothianTreasuryMerge LTM
+{
+    get => _LTM ??= new LothianTreasuryMerge();
+    set => _LTM = value;
+}
+private LothianTreasuryMerge _LTM;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

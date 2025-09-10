@@ -15,7 +15,13 @@ public class AAWithMove
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    public CoreAdvanced Adv = new();
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
 
     public string OptionsStorage = "AutoZoneandAttack";
     public bool DontPreconfigure = true;

@@ -15,8 +15,20 @@ public class OblivionNulgath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreOblivionBladeofNulgath COBoN = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreOblivionBladeofNulgath COBoN
+{
+    get => _COBoN ??= new CoreOblivionBladeofNulgath();
+    set => _COBoN = value;
+}
+public CoreOblivionBladeofNulgath _COBoN;
+
 
     public string OptionsStorage = "TheDarkDeal";
     public bool DontPreconfigure = true;

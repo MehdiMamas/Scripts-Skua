@@ -12,8 +12,20 @@ public class DoAllIsleOfFotia
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public CoreIsleOfFotia CoreIsleOfFotia = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreIsleOfFotia CoreIsleOfFotia
+{
+    get => _CoreIsleOfFotia ??= new CoreIsleOfFotia();
+    set => _CoreIsleOfFotia = value;
+}
+public CoreIsleOfFotia _CoreIsleOfFotia;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

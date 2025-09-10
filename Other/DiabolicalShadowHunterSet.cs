@@ -18,7 +18,13 @@ public class DiabolicalShadowHunterSet
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private LostVilla LV = new();
+private LostVilla LV
+{
+    get => _LV ??= new LostVilla();
+    set => _LV = value;
+}
+private LostVilla _LV;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

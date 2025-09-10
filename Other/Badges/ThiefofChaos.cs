@@ -12,8 +12,20 @@ public class ThiefofChaosBadge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreStory Story = new();
-    private MagicThief MT = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private MagicThief MT
+{
+    get => _MT ??= new MagicThief();
+    set => _MT = value;
+}
+private MagicThief _MT;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

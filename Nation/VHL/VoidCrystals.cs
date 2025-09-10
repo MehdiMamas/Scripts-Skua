@@ -17,9 +17,27 @@ public class VoidCrystals
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreVHL VHL = new();
-    public static CoreVHL sVHL = new();
-    public CoreNation Nation = new();
+public CoreVHL VHL
+{
+    get => _VHL ??= new CoreVHL();
+    set => _VHL = value;
+}
+public CoreVHL _VHL;
+
+public static CoreVHL sVHL
+{
+    get => _sVHL ??= new CoreVHL();
+    set => _sVHL = value;
+}
+public static CoreVHL _sVHL;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
 
     public string OptionsStorage = sVHL.OptionsStorage;
     public bool DontPreconfigure = true;

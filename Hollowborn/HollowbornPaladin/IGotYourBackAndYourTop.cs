@@ -25,10 +25,34 @@ public class IGotYourBackAndYourTop
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    public CoreHollowborn HB = new();
-    public CoreHollowbornPaladin HBPal = new();
-    public CoreFarms Farm = new();
-    public CoreStory Story = new();
+public CoreHollowborn HB
+{
+    get => _HB ??= new CoreHollowborn();
+    set => _HB = value;
+}
+public CoreHollowborn _HB;
+
+public CoreHollowbornPaladin HBPal
+{
+    get => _HBPal ??= new CoreHollowbornPaladin();
+    set => _HBPal = value;
+}
+public CoreHollowbornPaladin _HBPal;
+
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

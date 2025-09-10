@@ -21,8 +21,20 @@ public class BattleConcertClassQuests
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreStory Story = new();
-    private VordredArmor VA = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private VordredArmor VA
+{
+    get => _VA ??= new VordredArmor();
+    set => _VA = value;
+}
+private VordredArmor _VA;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

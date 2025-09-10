@@ -22,13 +22,55 @@ public class VoidAvengerScythe
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreAdvanced Adv = new();
-    public CoreStory Story = new();
-    public CoreNation Nation = new();
-    public CoreNSOD NSoD = new();
-    public JuggernautItemsofNulgath juggernaut = new();
-    public EmpoweringItems Empower = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public CoreNSOD NSoD
+{
+    get => _NSoD ??= new CoreNSOD();
+    set => _NSoD = value;
+}
+public CoreNSOD _NSoD;
+
+public JuggernautItemsofNulgath juggernaut
+{
+    get => _juggernaut ??= new JuggernautItemsofNulgath();
+    set => _juggernaut = value;
+}
+public JuggernautItemsofNulgath _juggernaut;
+
+public EmpoweringItems Empower
+{
+    get => _Empower ??= new EmpoweringItems();
+    set => _Empower = value;
+}
+public EmpoweringItems _Empower;
+
     public bool DontPreconfigure = true;
 
     public void ScriptMain(IScriptInterface bot)

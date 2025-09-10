@@ -25,13 +25,55 @@ public class NecroticBladeoftheUnderworld
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public CoreAdvanced Adv = new();
-    public CoreNSOD NSoD = new();
-    public CoreLegion Legion = new();
-    public DageChallengeStory DageChallenge = new();
-    public AnotherOneBitesTheDust SoulSand = new();
-    public CoreFarms Farm = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreNSOD NSoD
+{
+    get => _NSoD ??= new CoreNSOD();
+    set => _NSoD = value;
+}
+public CoreNSOD _NSoD;
+
+public CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+public CoreLegion _Legion;
+
+public DageChallengeStory DageChallenge
+{
+    get => _DageChallenge ??= new DageChallengeStory();
+    set => _DageChallenge = value;
+}
+public DageChallengeStory _DageChallenge;
+
+public AnotherOneBitesTheDust SoulSand
+{
+    get => _SoulSand ??= new AnotherOneBitesTheDust();
+    set => _SoulSand = value;
+}
+public AnotherOneBitesTheDust _SoulSand;
+
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -12,8 +12,20 @@ public class TheLostKnightAndBackupBlade
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public CoreFriday13th F13 = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreFriday13th F13
+{
+    get => _F13 ??= new CoreFriday13th();
+    set => _F13 = value;
+}
+public CoreFriday13th _F13;
+
 
 
     public void ScriptMain(IScriptInterface bot)

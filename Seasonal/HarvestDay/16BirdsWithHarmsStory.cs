@@ -12,7 +12,13 @@ public class BirdsWithHarmsStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
     CoreHarvestDay HarvestDay = new();
 
     public void ScriptMain(IScriptInterface bot)

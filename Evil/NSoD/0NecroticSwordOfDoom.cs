@@ -21,8 +21,20 @@ public class NecroticSwordOfDoom
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public static CoreBots sCore => CoreBots.Instance;
-    public CoreNSOD NSoD = new();
-    public static CoreNSOD sNSoD = new();
+public CoreNSOD NSoD
+{
+    get => _NSoD ??= new CoreNSOD();
+    set => _NSoD = value;
+}
+public CoreNSOD _NSoD;
+
+public static CoreNSOD sNSoD
+{
+    get => _sNSoD ??= new CoreNSOD();
+    set => _sNSoD = value;
+}
+public static CoreNSOD _sNSoD;
+
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = sNSoD.OptionsStorage;

@@ -14,8 +14,20 @@ public class GrimDarkSet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public MustyCave Cave = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public MustyCave Cave
+{
+    get => _Cave ??= new MustyCave();
+    set => _Cave = value;
+}
+public MustyCave _Cave;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

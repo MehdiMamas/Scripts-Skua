@@ -278,108 +278,618 @@ public class AllClasses
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    public CoreAdvanced Adv = new();
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
 
     #region Dailies
-    private CoreDailies Daily = new();
-    private BlazeBinder BB = new();
-    private Cryomancer Cryo = new();
-    private LordOfOrder LOO = new();
+private CoreDailies Daily
+{
+    get => _Daily ??= new CoreDailies();
+    set => _Daily = value;
+}
+private CoreDailies _Daily;
+
+private BlazeBinder BB
+{
+    get => _BB ??= new BlazeBinder();
+    set => _BB = value;
+}
+private BlazeBinder _BB;
+
+private Cryomancer Cryo
+{
+    get => _Cryo ??= new Cryomancer();
+    set => _Cryo = value;
+}
+private Cryomancer _Cryo;
+
+private LordOfOrder LOO
+{
+    get => _LOO ??= new LordOfOrder();
+    set => _LOO = value;
+}
+private LordOfOrder _LOO;
+
     #endregion Dailies
 
     #region Rep
-    private Arachnomancer Arach = new();
-    private ChaosSlayer CS = new();
-    private DarkbloodStormKing DBSK = new();
-    private ElementalDracomancer ED = new();
-    private EternalInversionist EI = new();
-    private EvolvedShaman ES = new();
-    private GlacialBerserker GB = new();
-    private HorcEvader HE = new();
-    private ImperialChunin IC = new();
-    private Lycan Lycan = new();
-    private MasterRanger MR = new();
-    private Paladin Pal = new();
-    private RoyalBattleMage RBM = new();
-    private Shaman Shaman = new();
-    private StoneCrusher SC = new();
-    private ThiefOfHours TOH = new();
-    private TrollSpellsmith TS = new();
+private Arachnomancer Arach
+{
+    get => _Arach ??= new Arachnomancer();
+    set => _Arach = value;
+}
+private Arachnomancer _Arach;
+
+private ChaosSlayer CS
+{
+    get => _CS ??= new ChaosSlayer();
+    set => _CS = value;
+}
+private ChaosSlayer _CS;
+
+private DarkbloodStormKing DBSK
+{
+    get => _DBSK ??= new DarkbloodStormKing();
+    set => _DBSK = value;
+}
+private DarkbloodStormKing _DBSK;
+
+private ElementalDracomancer ED
+{
+    get => _ED ??= new ElementalDracomancer();
+    set => _ED = value;
+}
+private ElementalDracomancer _ED;
+
+private EternalInversionist EI
+{
+    get => _EI ??= new EternalInversionist();
+    set => _EI = value;
+}
+private EternalInversionist _EI;
+
+private EvolvedShaman ES
+{
+    get => _ES ??= new EvolvedShaman();
+    set => _ES = value;
+}
+private EvolvedShaman _ES;
+
+private GlacialBerserker GB
+{
+    get => _GB ??= new GlacialBerserker();
+    set => _GB = value;
+}
+private GlacialBerserker _GB;
+
+private HorcEvader HE
+{
+    get => _HE ??= new HorcEvader();
+    set => _HE = value;
+}
+private HorcEvader _HE;
+
+private ImperialChunin IC
+{
+    get => _IC ??= new ImperialChunin();
+    set => _IC = value;
+}
+private ImperialChunin _IC;
+
+private Lycan Lycan
+{
+    get => _Lycan ??= new Lycan();
+    set => _Lycan = value;
+}
+private Lycan _Lycan;
+
+private MasterRanger MR
+{
+    get => _MR ??= new MasterRanger();
+    set => _MR = value;
+}
+private MasterRanger _MR;
+
+private Paladin Pal
+{
+    get => _Pal ??= new Paladin();
+    set => _Pal = value;
+}
+private Paladin _Pal;
+
+private RoyalBattleMage RBM
+{
+    get => _RBM ??= new RoyalBattleMage();
+    set => _RBM = value;
+}
+private RoyalBattleMage _RBM;
+
+private Shaman Shaman
+{
+    get => _Shaman ??= new Shaman();
+    set => _Shaman = value;
+}
+private Shaman _Shaman;
+
+private StoneCrusher SC
+{
+    get => _SC ??= new StoneCrusher();
+    set => _SC = value;
+}
+private StoneCrusher _SC;
+
+private ThiefOfHours TOH
+{
+    get => _TOH ??= new ThiefOfHours();
+    set => _TOH = value;
+}
+private ThiefOfHours _TOH;
+
+private TrollSpellsmith TS
+{
+    get => _TS ??= new TrollSpellsmith();
+    set => _TS = value;
+}
+private TrollSpellsmith _TS;
+
     #endregion Rep
 
     #region Member
-    private AlphaOmega AO = new();
-    private Acolyte Acolyte = new();
-    private Bard Bard = new();
-    private BeastMaster BM = new();
-    private BloodAncient BA = new();
-    private BloodTitan BT = new();
-    private ChronoAssassin CA = new();
-    private DeathKnight DK = new();
-    private DoomKnight DoomK = new();
-    private DrakelWarlord DW = new();
-    private LegionDoomKnight LDK = new();
-    private LegendaryElementalWarrior LEW = new();
-    private Renegade Ren = new();
-    private UndeadSlayer US = new();
+private AlphaOmega AO
+{
+    get => _AO ??= new AlphaOmega();
+    set => _AO = value;
+}
+private AlphaOmega _AO;
+
+private Acolyte Acolyte
+{
+    get => _Acolyte ??= new Acolyte();
+    set => _Acolyte = value;
+}
+private Acolyte _Acolyte;
+
+private Bard Bard
+{
+    get => _Bard ??= new Bard();
+    set => _Bard = value;
+}
+private Bard _Bard;
+
+private BeastMaster BM
+{
+    get => _BM ??= new BeastMaster();
+    set => _BM = value;
+}
+private BeastMaster _BM;
+
+private BloodAncient BA
+{
+    get => _BA ??= new BloodAncient();
+    set => _BA = value;
+}
+private BloodAncient _BA;
+
+private BloodTitan BT
+{
+    get => _BT ??= new BloodTitan();
+    set => _BT = value;
+}
+private BloodTitan _BT;
+
+private ChronoAssassin CA
+{
+    get => _CA ??= new ChronoAssassin();
+    set => _CA = value;
+}
+private ChronoAssassin _CA;
+
+private DeathKnight DK
+{
+    get => _DK ??= new DeathKnight();
+    set => _DK = value;
+}
+private DeathKnight _DK;
+
+private DoomKnight DoomK
+{
+    get => _DoomK ??= new DoomKnight();
+    set => _DoomK = value;
+}
+private DoomKnight _DoomK;
+
+private DrakelWarlord DW
+{
+    get => _DW ??= new DrakelWarlord();
+    set => _DW = value;
+}
+private DrakelWarlord _DW;
+
+private LegionDoomKnight LDK
+{
+    get => _LDK ??= new LegionDoomKnight();
+    set => _LDK = value;
+}
+private LegionDoomKnight _LDK;
+
+private LegendaryElementalWarrior LEW
+{
+    get => _LEW ??= new LegendaryElementalWarrior();
+    set => _LEW = value;
+}
+private LegendaryElementalWarrior _LEW;
+
+private Renegade Ren
+{
+    get => _Ren ??= new Renegade();
+    set => _Ren = value;
+}
+private Renegade _Ren;
+
+private UndeadSlayer US
+{
+    get => _US ??= new UndeadSlayer();
+    set => _US = value;
+}
+private UndeadSlayer _US;
+
     #endregion Member
 
     #region Seasonal
-    private AlphaPirate APir = new();
-    private DarkLord DL = new();
-    private EvolvedLeprechaun EL = new();
-    private ExaltedHarbinger EH = new();
-    private FrostvalBarbarian FB = new();
-    private LegionSwordMasterAssassin LSMA = new();
-    private NorthlandsMonk NM = new();
-    private PirateClass Pirate = new();
-    private ShadowDragonShinobi SDS = new();
-    private PumpkinLord PL = new();
-    private VampireLord VL = new();
-    private NoHollowbornClass NHBC = new();
+private AlphaPirate APir
+{
+    get => _APir ??= new AlphaPirate();
+    set => _APir = value;
+}
+private AlphaPirate _APir;
+
+private DarkLord DL
+{
+    get => _DL ??= new DarkLord();
+    set => _DL = value;
+}
+private DarkLord _DL;
+
+private EvolvedLeprechaun EL
+{
+    get => _EL ??= new EvolvedLeprechaun();
+    set => _EL = value;
+}
+private EvolvedLeprechaun _EL;
+
+private ExaltedHarbinger EH
+{
+    get => _EH ??= new ExaltedHarbinger();
+    set => _EH = value;
+}
+private ExaltedHarbinger _EH;
+
+private FrostvalBarbarian FB
+{
+    get => _FB ??= new FrostvalBarbarian();
+    set => _FB = value;
+}
+private FrostvalBarbarian _FB;
+
+private LegionSwordMasterAssassin LSMA
+{
+    get => _LSMA ??= new LegionSwordMasterAssassin();
+    set => _LSMA = value;
+}
+private LegionSwordMasterAssassin _LSMA;
+
+private NorthlandsMonk NM
+{
+    get => _NM ??= new NorthlandsMonk();
+    set => _NM = value;
+}
+private NorthlandsMonk _NM;
+
+private PirateClass Pirate
+{
+    get => _Pirate ??= new PirateClass();
+    set => _Pirate = value;
+}
+private PirateClass _Pirate;
+
+private ShadowDragonShinobi SDS
+{
+    get => _SDS ??= new ShadowDragonShinobi();
+    set => _SDS = value;
+}
+private ShadowDragonShinobi _SDS;
+
+private PumpkinLord PL
+{
+    get => _PL ??= new PumpkinLord();
+    set => _PL = value;
+}
+private PumpkinLord _PL;
+
+private VampireLord VL
+{
+    get => _VL ??= new VampireLord();
+    set => _VL = value;
+}
+private VampireLord _VL;
+
+private NoHollowbornClass NHBC
+{
+    get => _NHBC ??= new NoHollowbornClass();
+    set => _NHBC = value;
+}
+private NoHollowbornClass _NHBC;
+
     #endregion Seasonal
 
     #region Various
-    private AbyssalAngelsShadow AAS = new();
-    private ArchFiend AF = new();
-    private BloodSorceress BS = new();
-    private DoomMetalNecro DMN = new();
-    private Dragonslayer DS = new();
-    private DragonslayerGeneral DSG = new();
-    private DragonShinobi DSS = new();
-    private Enforcer Enf = new();
-    private ExaltedSoulCleaver ESC = new();
-    private FrostSpiritReaver FSR = new();
-    private GrimNecromancer GN = new();
-    private HighSeasCommander HSC = new();
-    private InfiniteLegionDC ILDC = new();
-    private LightMage LM = new();
-    private MechaJouster MJ = new();
-    private MartialArtist MA = new();
-    private Necromancer Necro = new();
-    private NeoMetalNecro NMN = new();
-    private ProtoSartorium PS = new();
-    private Rustbucket RB = new();
-    private ScarletSorceress SS = new();
-    private SkyChargedGrenadier SCG = new();
-    private SwordMaster SM = new();
-    private Sentinel Sentinel = new();
+private AbyssalAngelsShadow AAS
+{
+    get => _AAS ??= new AbyssalAngelsShadow();
+    set => _AAS = value;
+}
+private AbyssalAngelsShadow _AAS;
+
+private ArchFiend AF
+{
+    get => _AF ??= new ArchFiend();
+    set => _AF = value;
+}
+private ArchFiend _AF;
+
+private BloodSorceress BS
+{
+    get => _BS ??= new BloodSorceress();
+    set => _BS = value;
+}
+private BloodSorceress _BS;
+
+private DoomMetalNecro DMN
+{
+    get => _DMN ??= new DoomMetalNecro();
+    set => _DMN = value;
+}
+private DoomMetalNecro _DMN;
+
+private Dragonslayer DS
+{
+    get => _DS ??= new Dragonslayer();
+    set => _DS = value;
+}
+private Dragonslayer _DS;
+
+private DragonslayerGeneral DSG
+{
+    get => _DSG ??= new DragonslayerGeneral();
+    set => _DSG = value;
+}
+private DragonslayerGeneral _DSG;
+
+private DragonShinobi DSS
+{
+    get => _DSS ??= new DragonShinobi();
+    set => _DSS = value;
+}
+private DragonShinobi _DSS;
+
+private Enforcer Enf
+{
+    get => _Enf ??= new Enforcer();
+    set => _Enf = value;
+}
+private Enforcer _Enf;
+
+private ExaltedSoulCleaver ESC
+{
+    get => _ESC ??= new ExaltedSoulCleaver();
+    set => _ESC = value;
+}
+private ExaltedSoulCleaver _ESC;
+
+private FrostSpiritReaver FSR
+{
+    get => _FSR ??= new FrostSpiritReaver();
+    set => _FSR = value;
+}
+private FrostSpiritReaver _FSR;
+
+private GrimNecromancer GN
+{
+    get => _GN ??= new GrimNecromancer();
+    set => _GN = value;
+}
+private GrimNecromancer _GN;
+
+private HighSeasCommander HSC
+{
+    get => _HSC ??= new HighSeasCommander();
+    set => _HSC = value;
+}
+private HighSeasCommander _HSC;
+
+private InfiniteLegionDC ILDC
+{
+    get => _ILDC ??= new InfiniteLegionDC();
+    set => _ILDC = value;
+}
+private InfiniteLegionDC _ILDC;
+
+private LightMage LM
+{
+    get => _LM ??= new LightMage();
+    set => _LM = value;
+}
+private LightMage _LM;
+
+private MechaJouster MJ
+{
+    get => _MJ ??= new MechaJouster();
+    set => _MJ = value;
+}
+private MechaJouster _MJ;
+
+private MartialArtist MA
+{
+    get => _MA ??= new MartialArtist();
+    set => _MA = value;
+}
+private MartialArtist _MA;
+
+private Necromancer Necro
+{
+    get => _Necro ??= new Necromancer();
+    set => _Necro = value;
+}
+private Necromancer _Necro;
+
+private NeoMetalNecro NMN
+{
+    get => _NMN ??= new NeoMetalNecro();
+    set => _NMN = value;
+}
+private NeoMetalNecro _NMN;
+
+private ProtoSartorium PS
+{
+    get => _PS ??= new ProtoSartorium();
+    set => _PS = value;
+}
+private ProtoSartorium _PS;
+
+private Rustbucket RB
+{
+    get => _RB ??= new Rustbucket();
+    set => _RB = value;
+}
+private Rustbucket _RB;
+
+private ScarletSorceress SS
+{
+    get => _SS ??= new ScarletSorceress();
+    set => _SS = value;
+}
+private ScarletSorceress _SS;
+
+private SkyChargedGrenadier SCG
+{
+    get => _SCG ??= new SkyChargedGrenadier();
+    set => _SCG = value;
+}
+private SkyChargedGrenadier _SCG;
+
+private SwordMaster SM
+{
+    get => _SM ??= new SwordMaster();
+    set => _SM = value;
+}
+private SwordMaster _SM;
+
+private Sentinel Sentinel
+{
+    get => _Sentinel ??= new Sentinel();
+    set => _Sentinel = value;
+}
+private Sentinel _Sentinel;
+
     #endregion Various
 
     #region End game
-    private ArcanaInvoker AI = new();
-    private CoreArchMage AM = new();
-    private ArchPaladin AP = new();
-    private ChaosAvengerClass CAV = new();
-    private DragonOfTime DOT = new();
-    private HBVNonInsig HBV = new();
-    private Lich lich = new();
-    private LightCaster LC = new();
-    private CoreLR LR = new();
-    private SovereignOfStorms SOS = new();
-    private VerusDoomKnightClass VDK = new();
-    private CoreVHL VHL = new();
-    private CoreYnR YNR = new();
+private ArcanaInvoker AI
+{
+    get => _AI ??= new ArcanaInvoker();
+    set => _AI = value;
+}
+private ArcanaInvoker _AI;
+
+private CoreArchMage AM
+{
+    get => _AM ??= new CoreArchMage();
+    set => _AM = value;
+}
+private CoreArchMage _AM;
+
+private ArchPaladin AP
+{
+    get => _AP ??= new ArchPaladin();
+    set => _AP = value;
+}
+private ArchPaladin _AP;
+
+private ChaosAvengerClass CAV
+{
+    get => _CAV ??= new ChaosAvengerClass();
+    set => _CAV = value;
+}
+private ChaosAvengerClass _CAV;
+
+private DragonOfTime DOT
+{
+    get => _DOT ??= new DragonOfTime();
+    set => _DOT = value;
+}
+private DragonOfTime _DOT;
+
+private HBVNonInsig HBV
+{
+    get => _HBV ??= new HBVNonInsig();
+    set => _HBV = value;
+}
+private HBVNonInsig _HBV;
+
+private Lich lich
+{
+    get => _lich ??= new Lich();
+    set => _lich = value;
+}
+private Lich _lich;
+
+private LightCaster LC
+{
+    get => _LC ??= new LightCaster();
+    set => _LC = value;
+}
+private LightCaster _LC;
+
+private CoreLR LR
+{
+    get => _LR ??= new CoreLR();
+    set => _LR = value;
+}
+private CoreLR _LR;
+
+private SovereignOfStorms SOS
+{
+    get => _SOS ??= new SovereignOfStorms();
+    set => _SOS = value;
+}
+private SovereignOfStorms _SOS;
+
+private VerusDoomKnightClass VDK
+{
+    get => _VDK ??= new VerusDoomKnightClass();
+    set => _VDK = value;
+}
+private VerusDoomKnightClass _VDK;
+
+private CoreVHL VHL
+{
+    get => _VHL ??= new CoreVHL();
+    set => _VHL = value;
+}
+private CoreVHL _VHL;
+
+private CoreYnR YNR
+{
+    get => _YNR ??= new CoreYnR();
+    set => _YNR = value;
+}
+private CoreYnR _YNR;
+
     #endregion End game
 
 

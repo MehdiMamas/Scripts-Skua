@@ -19,13 +19,55 @@ public class EvolvedShadowOrbItems
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreAdvanced Adv = new();
-    private CoreFarms Farm = new();
-    private CoreNation Nation = new();
-    private EvolvedShadowOrb ESO = new();
-    private Bard Bard = new();
-    private BattleConGearMerge BCon = new();
-    private PotionBuyer Potion = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+private CoreNation _Nation;
+
+private EvolvedShadowOrb ESO
+{
+    get => _ESO ??= new EvolvedShadowOrb();
+    set => _ESO = value;
+}
+private EvolvedShadowOrb _ESO;
+
+private Bard Bard
+{
+    get => _Bard ??= new Bard();
+    set => _Bard = value;
+}
+private Bard _Bard;
+
+private BattleConGearMerge BCon
+{
+    get => _BCon ??= new BattleConGearMerge();
+    set => _BCon = value;
+}
+private BattleConGearMerge _BCon;
+
+private PotionBuyer Potion
+{
+    get => _Potion ??= new PotionBuyer();
+    set => _Potion = value;
+}
+private PotionBuyer _Potion;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

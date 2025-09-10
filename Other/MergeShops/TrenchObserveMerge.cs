@@ -18,11 +18,41 @@ public class TrenchObserveMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private static CoreAdvanced sAdv = new();
-    private CoreAOR AOR = new();
-    private AbyssalZoneMerge AZM = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
+private CoreAOR AOR
+{
+    get => _AOR ??= new CoreAOR();
+    set => _AOR = value;
+}
+private CoreAOR _AOR;
+
+private AbyssalZoneMerge AZM
+{
+    get => _AZM ??= new AbyssalZoneMerge();
+    set => _AZM = value;
+}
+private AbyssalZoneMerge _AZM;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

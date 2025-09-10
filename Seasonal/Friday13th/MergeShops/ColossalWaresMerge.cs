@@ -20,11 +20,41 @@ public class ColossalWaresMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private static CoreAdvanced sAdv = new();
-    private VordredArmor VA = new();
-    private MoreSkullsWorldBoss MSWB = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
+private VordredArmor VA
+{
+    get => _VA ??= new VordredArmor();
+    set => _VA = value;
+}
+private VordredArmor _VA;
+
+private MoreSkullsWorldBoss MSWB
+{
+    get => _MSWB ??= new MoreSkullsWorldBoss();
+    set => _MSWB = value;
+}
+private MoreSkullsWorldBoss _MSWB;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

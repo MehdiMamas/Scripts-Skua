@@ -26,12 +26,48 @@ public class CyseroItemUpgrade
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreBLOD BLOD = new();
-    public CoreAdvanced Adv = new();
-    public DarknessShard DS = new();
-    public SepulchuresOriginalHelm Seppy = new();
-    public TarosManslayer TarosManslayer = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreBLOD BLOD
+{
+    get => _BLOD ??= new CoreBLOD();
+    set => _BLOD = value;
+}
+public CoreBLOD _BLOD;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public DarknessShard DS
+{
+    get => _DS ??= new DarknessShard();
+    set => _DS = value;
+}
+public DarknessShard _DS;
+
+public SepulchuresOriginalHelm Seppy
+{
+    get => _Seppy ??= new SepulchuresOriginalHelm();
+    set => _Seppy = value;
+}
+public SepulchuresOriginalHelm _Seppy;
+
+public TarosManslayer TarosManslayer
+{
+    get => _TarosManslayer ??= new TarosManslayer();
+    set => _TarosManslayer = value;
+}
+public TarosManslayer _TarosManslayer;
+
 
     public string OptionsStorage = "CyseroItemUpgrade";
     public bool DontPreconfigure = true;

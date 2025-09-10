@@ -129,15 +129,69 @@ public class InsertNameHeresUltraPrep
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreAdvanced Adv = new();
-    private CoreFarms Farm = new();
-    private CoreStory Story = new();
-    private CoreDailies Daily = new();
-    public PotionBuyer PotionBuyer = new();
-    private BuyScrolls Scroll = new();
-    private BankAllItems BankAllItems = new();
-    private UnlockForgeEnhancements UnlockForgeEnhancements = new();
-    private DageChallengeStory DageChallengeStory = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private CoreDailies Daily
+{
+    get => _Daily ??= new CoreDailies();
+    set => _Daily = value;
+}
+private CoreDailies _Daily;
+
+public PotionBuyer PotionBuyer
+{
+    get => _PotionBuyer ??= new PotionBuyer();
+    set => _PotionBuyer = value;
+}
+public PotionBuyer _PotionBuyer;
+
+private BuyScrolls Scroll
+{
+    get => _Scroll ??= new BuyScrolls();
+    set => _Scroll = value;
+}
+private BuyScrolls _Scroll;
+
+private BankAllItems BankAllItems
+{
+    get => _BankAllItems ??= new BankAllItems();
+    set => _BankAllItems = value;
+}
+private BankAllItems _BankAllItems;
+
+private UnlockForgeEnhancements UnlockForgeEnhancements
+{
+    get => _UnlockForgeEnhancements ??= new UnlockForgeEnhancements();
+    set => _UnlockForgeEnhancements = value;
+}
+private UnlockForgeEnhancements _UnlockForgeEnhancements;
+
+private DageChallengeStory DageChallengeStory
+{
+    get => _DageChallengeStory ??= new DageChallengeStory();
+    set => _DageChallengeStory = value;
+}
+private DageChallengeStory _DageChallengeStory;
+
     private readonly CoreLegion Legion = new();
 
     private string[] UltraItems = new[]

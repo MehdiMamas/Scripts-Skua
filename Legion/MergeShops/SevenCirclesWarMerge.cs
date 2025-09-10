@@ -19,13 +19,55 @@ public class SevenCirclesWarMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    public CoreLegion Legion = new();
-    private CoreAdvanced Adv = new();
-    public SevenCircles Circles = new();
-    public SevenCirclesMerge SevenCirclesMerge = new();
-    private static CoreAdvanced sAdv = new();
-    private HeadoftheLegionBeast HeadoftheLegionBeast = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+public CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+public CoreLegion _Legion;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+public SevenCircles Circles
+{
+    get => _Circles ??= new SevenCircles();
+    set => _Circles = value;
+}
+public SevenCircles _Circles;
+
+public SevenCirclesMerge SevenCirclesMerge
+{
+    get => _SevenCirclesMerge ??= new SevenCirclesMerge();
+    set => _SevenCirclesMerge = value;
+}
+public SevenCirclesMerge _SevenCirclesMerge;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
+private HeadoftheLegionBeast HeadoftheLegionBeast
+{
+    get => _HeadoftheLegionBeast ??= new HeadoftheLegionBeast();
+    set => _HeadoftheLegionBeast = value;
+}
+private HeadoftheLegionBeast _HeadoftheLegionBeast;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

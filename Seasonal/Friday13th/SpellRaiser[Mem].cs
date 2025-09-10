@@ -12,7 +12,13 @@ public class SpellRaiser
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFriday13th F13 = new();
+public CoreFriday13th F13
+{
+    get => _F13 ??= new CoreFriday13th();
+    set => _F13 = value;
+}
+public CoreFriday13th _F13;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

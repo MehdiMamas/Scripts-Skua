@@ -14,7 +14,13 @@ public class VoidBattleMageSet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public LairWar War = new();
+public LairWar War
+{
+    get => _War ??= new LairWar();
+    set => _War = value;
+}
+public LairWar _War;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

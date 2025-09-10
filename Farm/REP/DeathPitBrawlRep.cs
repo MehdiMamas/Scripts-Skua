@@ -13,9 +13,27 @@ using Skua.Core.Interfaces;
 public class DeathPitBrawlREP
 {
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreToD CoreToD = new();
-    public CoreAdvanced Adv = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreToD CoreToD
+{
+    get => _CoreToD ??= new CoreToD();
+    set => _CoreToD = value;
+}
+public CoreToD _CoreToD;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

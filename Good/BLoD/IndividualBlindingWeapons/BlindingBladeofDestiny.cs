@@ -16,7 +16,13 @@ public class BlindingBladeofDestiny
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreBLOD BLOD = new();
+private CoreBLOD BLOD
+{
+    get => _BLOD ??= new CoreBLOD();
+    set => _BLOD = value;
+}
+private CoreBLOD _BLOD;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

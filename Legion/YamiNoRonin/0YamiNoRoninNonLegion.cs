@@ -17,7 +17,13 @@ public class YamiNoRoninNonLegion
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreYnR YNR = new();
+public CoreYnR YNR
+{
+    get => _YNR ??= new CoreYnR();
+    set => _YNR = value;
+}
+public CoreYnR _YNR;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

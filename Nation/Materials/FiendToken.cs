@@ -13,9 +13,27 @@ using Skua.Core.Interfaces;
 public class FiendToken
 {
     public CoreBots Core => CoreBots.Instance;
-    public CoreNation Nation = new();
-    public HanzoOrbQuest HanzoOrbQuest = new();
-    public VoidKnightSword VoidKnightSword = new();
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public HanzoOrbQuest HanzoOrbQuest
+{
+    get => _HanzoOrbQuest ??= new HanzoOrbQuest();
+    set => _HanzoOrbQuest = value;
+}
+public HanzoOrbQuest _HanzoOrbQuest;
+
+public VoidKnightSword VoidKnightSword
+{
+    get => _VoidKnightSword ??= new VoidKnightSword();
+    set => _VoidKnightSword = value;
+}
+public VoidKnightSword _VoidKnightSword;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -25,15 +25,63 @@ public class NightmareCarnaxMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreStory Story = new();
-    private CoreAdvanced Adv = new();
-    private static CoreAdvanced sAdv = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
 
-    private DarkCarnaxStory DarkCarnax = new();
-    private CoreNSOD NSOD = new();
-    private ArchFiend AF = new();
-    private UltimateBLoD uBLOD = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
+
+private DarkCarnaxStory DarkCarnax
+{
+    get => _DarkCarnax ??= new DarkCarnaxStory();
+    set => _DarkCarnax = value;
+}
+private DarkCarnaxStory _DarkCarnax;
+
+private CoreNSOD NSOD
+{
+    get => _NSOD ??= new CoreNSOD();
+    set => _NSOD = value;
+}
+private CoreNSOD _NSOD;
+
+private ArchFiend AF
+{
+    get => _AF ??= new ArchFiend();
+    set => _AF = value;
+}
+private ArchFiend _AF;
+
+private UltimateBLoD uBLOD
+{
+    get => _uBLOD ??= new UltimateBLoD();
+    set => _uBLOD = value;
+}
+private UltimateBLoD _uBLOD;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

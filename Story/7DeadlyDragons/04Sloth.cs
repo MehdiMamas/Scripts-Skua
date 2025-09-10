@@ -12,7 +12,13 @@ public class Sloth
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public Core7DD DD = new();
+public Core7DD DD
+{
+    get => _DD ??= new Core7DD();
+    set => _DD = value;
+}
+public Core7DD _DD;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

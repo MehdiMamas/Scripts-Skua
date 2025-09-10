@@ -11,7 +11,13 @@ public class UnderWorldPirateCasterQuset
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

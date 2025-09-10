@@ -31,15 +31,69 @@ public class SinoftheSinoftheUndyingNoInsignia
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreAdvanced Adv = new();
-    private CoreFarms Farm = new();
-    private CoreLegion LR = new();
-    private HeadoftheLegionBeast HotLB = new();
-    private AtlasFalls AtlasFalls = new();
-    private CoreYnR YnR = new();
-    private VulcarsMerge VulcarsMerge = new();
-    private UnderworldTeamMerge UnderworldTeamMerge = new();
-    private SoulForgeMerge SoulForgeMerge = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreLegion LR
+{
+    get => _LR ??= new CoreLegion();
+    set => _LR = value;
+}
+private CoreLegion _LR;
+
+private HeadoftheLegionBeast HotLB
+{
+    get => _HotLB ??= new HeadoftheLegionBeast();
+    set => _HotLB = value;
+}
+private HeadoftheLegionBeast _HotLB;
+
+private AtlasFalls AtlasFalls
+{
+    get => _AtlasFalls ??= new AtlasFalls();
+    set => _AtlasFalls = value;
+}
+private AtlasFalls _AtlasFalls;
+
+private CoreYnR YnR
+{
+    get => _YnR ??= new CoreYnR();
+    set => _YnR = value;
+}
+private CoreYnR _YnR;
+
+private VulcarsMerge VulcarsMerge
+{
+    get => _VulcarsMerge ??= new VulcarsMerge();
+    set => _VulcarsMerge = value;
+}
+private VulcarsMerge _VulcarsMerge;
+
+private UnderworldTeamMerge UnderworldTeamMerge
+{
+    get => _UnderworldTeamMerge ??= new UnderworldTeamMerge();
+    set => _UnderworldTeamMerge = value;
+}
+private UnderworldTeamMerge _UnderworldTeamMerge;
+
+private SoulForgeMerge SoulForgeMerge
+{
+    get => _SoulForgeMerge ??= new SoulForgeMerge();
+    set => _SoulForgeMerge = value;
+}
+private SoulForgeMerge _SoulForgeMerge;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -14,12 +14,42 @@ public class ArmyEmblemOfNulgath
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreArmyLite Army = new();
-    private CoreNation Nation = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
 
-    private static CoreBots sCore = new();
-    private static CoreArmyLite sArmy = new();
+private CoreArmyLite Army
+{
+    get => _Army ??= new CoreArmyLite();
+    set => _Army = value;
+}
+private CoreArmyLite _Army;
+
+private CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+private CoreNation _Nation;
+
+
+private static CoreBots sCore
+{
+    get => _sCore ??= new CoreBots();
+    set => _sCore = value;
+}
+private static CoreBots _sCore;
+
+private static CoreArmyLite sArmy
+{
+    get => _sArmy ??= new CoreArmyLite();
+    set => _sArmy = value;
+}
+private static CoreArmyLite _sArmy;
+
 
     public string OptionsStorage = "ArmyEmblemOfNulgathV2";
     public bool DontPreconfigure = true;

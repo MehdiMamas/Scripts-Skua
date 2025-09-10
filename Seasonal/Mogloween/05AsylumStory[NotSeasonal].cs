@@ -12,8 +12,20 @@ public class AsylumMogloween
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public CoreMogloween CoreMogloween = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreMogloween CoreMogloween
+{
+    get => _CoreMogloween ??= new CoreMogloween();
+    set => _CoreMogloween = value;
+}
+public CoreMogloween _CoreMogloween;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

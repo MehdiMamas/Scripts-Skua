@@ -15,9 +15,27 @@ public class ThePoisonousDeal
 {
     public static IScriptInterface Bot => IScriptInterface.Instance;
     public static CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreNation Nation = new();
-    public TaintedClaymore TC = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public TaintedClaymore TC
+{
+    get => _TC ??= new TaintedClaymore();
+    set => _TC = value;
+}
+public TaintedClaymore _TC;
+
 
     public string OptionsStorage = "PoisonousDeal";
     public bool DontPreconfigure = true;

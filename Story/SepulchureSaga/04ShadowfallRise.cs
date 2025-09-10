@@ -12,8 +12,20 @@ public class ShadowfallRise
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public CoreSepulchure CoreSS = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreSepulchure CoreSS
+{
+    get => _CoreSS ??= new CoreSepulchure();
+    set => _CoreSS = value;
+}
+public CoreSepulchure _CoreSS;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -17,8 +17,20 @@ public class TheConquerorOfGlacera
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private GlaceraStory IWP = new();
-    private FrostSpiritReaver FSR = new();
+private GlaceraStory IWP
+{
+    get => _IWP ??= new GlaceraStory();
+    set => _IWP = value;
+}
+private GlaceraStory _IWP;
+
+private FrostSpiritReaver FSR
+{
+    get => _FSR ??= new FrostSpiritReaver();
+    set => _FSR = value;
+}
+private FrostSpiritReaver _FSR;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

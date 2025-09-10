@@ -11,7 +11,13 @@ using Skua.Core.Interfaces;
 public class MaxItems
 {
     public CoreBots Core => CoreBots.Instance;
-    public CoreNation Nation = new();
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

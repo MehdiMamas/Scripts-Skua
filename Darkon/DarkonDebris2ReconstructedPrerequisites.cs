@@ -16,8 +16,20 @@ public class DarkonDebris2ReconstructedPrerequisites
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreDarkon Darkon = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreDarkon Darkon
+{
+    get => _Darkon ??= new CoreDarkon();
+    set => _Darkon = value;
+}
+public CoreDarkon _Darkon;
+
 
 
     public void ScriptMain(IScriptInterface bot)

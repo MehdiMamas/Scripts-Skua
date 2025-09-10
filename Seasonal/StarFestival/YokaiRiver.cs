@@ -12,8 +12,20 @@ public class YokaiRiver
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreStory Story = new();
-    private Akiba Akiba = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private Akiba Akiba
+{
+    get => _Akiba ??= new Akiba();
+    set => _Akiba = value;
+}
+private Akiba _Akiba;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

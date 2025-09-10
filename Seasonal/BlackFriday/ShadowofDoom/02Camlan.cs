@@ -12,8 +12,20 @@ public class Camlan
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreStory Story = new();
-    private CoreShadowofDoom CoreSoD = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private CoreShadowofDoom CoreSoD
+{
+    get => _CoreSoD ??= new CoreShadowofDoom();
+    set => _CoreSoD = value;
+}
+private CoreShadowofDoom _CoreSoD;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

@@ -15,10 +15,34 @@ public class DoomVaultB
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public CoreAdvanced Adv = new();
-    public CoreFarms Farm = new();
-    public DoomVaultA DoomVaultA = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public DoomVaultA DoomVaultA
+{
+    get => _DoomVaultA ??= new DoomVaultA();
+    set => _DoomVaultA = value;
+}
+public DoomVaultA _DoomVaultA;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

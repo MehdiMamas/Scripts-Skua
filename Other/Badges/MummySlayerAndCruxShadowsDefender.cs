@@ -12,7 +12,13 @@ public class MummySlayerAndCruxShadowsDefender
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CruxShip CS = new();
+public CruxShip CS
+{
+    get => _CS ??= new CruxShip();
+    set => _CS = value;
+}
+public CruxShip _CS;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

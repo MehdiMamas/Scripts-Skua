@@ -25,14 +25,62 @@ public class TheDarkSacrifice
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    public CoreHollowborn HB = new();
-    public CoreHollowbornPaladin HBPal = new();
-    public AscendedDrakathGear ADG = new();
-    public CoreNation Nation = new();
-    public Artixpointe APointe = new();
-    public CoreFarms Farm = new();
-    public CoreDailies Daily = new();
-    public CoreStory Story = new();
+public CoreHollowborn HB
+{
+    get => _HB ??= new CoreHollowborn();
+    set => _HB = value;
+}
+public CoreHollowborn _HB;
+
+public CoreHollowbornPaladin HBPal
+{
+    get => _HBPal ??= new CoreHollowbornPaladin();
+    set => _HBPal = value;
+}
+public CoreHollowbornPaladin _HBPal;
+
+public AscendedDrakathGear ADG
+{
+    get => _ADG ??= new AscendedDrakathGear();
+    set => _ADG = value;
+}
+public AscendedDrakathGear _ADG;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public Artixpointe APointe
+{
+    get => _APointe ??= new Artixpointe();
+    set => _APointe = value;
+}
+public Artixpointe _APointe;
+
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreDailies Daily
+{
+    get => _Daily ??= new CoreDailies();
+    set => _Daily = value;
+}
+public CoreDailies _Daily;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

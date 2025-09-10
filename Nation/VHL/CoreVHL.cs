@@ -24,11 +24,41 @@ public class CoreVHL
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public static CoreBots sCore => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreAdvanced Adv = new();
-    public CoreDailies Daily = new();
-    public CoreNation Nation = new();
-    public AssistingCragAndBamboozle ACAB = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreDailies Daily
+{
+    get => _Daily ??= new CoreDailies();
+    set => _Daily = value;
+}
+public CoreDailies _Daily;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public AssistingCragAndBamboozle ACAB
+{
+    get => _ACAB ??= new AssistingCragAndBamboozle();
+    set => _ACAB = value;
+}
+public AssistingCragAndBamboozle _ACAB;
+
 
     public string OptionsStorage = "VoidHighLordOptions";
     public bool DontPreconfigure = true;

@@ -17,13 +17,49 @@ public class AstraviaCastleMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreStory Story = new();
-    public CoreAdvanced Adv = new();
-    public static CoreAdvanced sAdv = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
 
-    public CoreDarkon Darkon = new();
-    public CoreAstravia Astravia = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+public static CoreAdvanced _sAdv;
+
+
+public CoreDarkon Darkon
+{
+    get => _Darkon ??= new CoreDarkon();
+    set => _Darkon = value;
+}
+public CoreDarkon _Darkon;
+
+public CoreAstravia Astravia
+{
+    get => _Astravia ??= new CoreAstravia();
+    set => _Astravia = value;
+}
+public CoreAstravia _Astravia;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

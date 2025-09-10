@@ -15,10 +15,34 @@ public class Cryomancer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreDailies Daily = new();
-    public GlaceraStory Glac = new();
-    public CoreStory Story = new();
-    private CoreAdvanced Adv = new();
+public CoreDailies Daily
+{
+    get => _Daily ??= new CoreDailies();
+    set => _Daily = value;
+}
+public CoreDailies _Daily;
+
+public GlaceraStory Glac
+{
+    get => _Glac ??= new GlaceraStory();
+    set => _Glac = value;
+}
+public GlaceraStory _Glac;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

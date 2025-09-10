@@ -15,7 +15,13 @@ public class TrobbolierPet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFriday13th F13 = new();
+private CoreFriday13th F13
+{
+    get => _F13 ??= new CoreFriday13th();
+    set => _F13 = value;
+}
+private CoreFriday13th _F13;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

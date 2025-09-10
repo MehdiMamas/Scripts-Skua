@@ -13,7 +13,13 @@ public class EnvyMap
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreDageTheEvilIsland CoreDageTheEvilIsland = new();
+public CoreDageTheEvilIsland CoreDageTheEvilIsland
+{
+    get => _CoreDageTheEvilIsland ??= new CoreDageTheEvilIsland();
+    set => _CoreDageTheEvilIsland = value;
+}
+public CoreDageTheEvilIsland _CoreDageTheEvilIsland;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

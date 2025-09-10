@@ -16,7 +16,13 @@ public class UltimateBLoD
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreBLOD BLOD = new();
+public CoreBLOD BLOD
+{
+    get => _BLOD ??= new CoreBLOD();
+    set => _BLOD = value;
+}
+public CoreBLOD _BLOD;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

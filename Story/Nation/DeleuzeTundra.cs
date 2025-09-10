@@ -13,8 +13,20 @@ public class DeleuzeTundraStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    private VoidChasm VC = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+private VoidChasm VC
+{
+    get => _VC ??= new VoidChasm();
+    set => _VC = value;
+}
+private VoidChasm _VC;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

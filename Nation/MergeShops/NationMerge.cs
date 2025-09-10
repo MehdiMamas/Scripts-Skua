@@ -22,12 +22,48 @@ public class NationMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private static CoreAdvanced sAdv = new();
-    private CoreNation Nation = new();
-    private NationLoyaltyRewarded NLR = new();
-    private CoreNSOD NSOD = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
+private CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+private CoreNation _Nation;
+
+private NationLoyaltyRewarded NLR
+{
+    get => _NLR ??= new NationLoyaltyRewarded();
+    set => _NLR = value;
+}
+private NationLoyaltyRewarded _NLR;
+
+private CoreNSOD NSOD
+{
+    get => _NSOD ??= new CoreNSOD();
+    set => _NSOD = value;
+}
+private CoreNSOD _NSOD;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

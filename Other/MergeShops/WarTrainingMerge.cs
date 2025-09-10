@@ -20,14 +20,62 @@ public class WarTrainingMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreStory Story = new();
-    public CoreAdvanced Adv = new();
-    public static CoreAdvanced sAdv = new();
-    public CoreSoW Tynd = new();
-    public WarfuryEmblem Emblem = new();
-    public DragonslayerGeneral DSG = new();
-    public FireChampionsArmor FCA = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+public static CoreAdvanced _sAdv;
+
+public CoreSoW Tynd
+{
+    get => _Tynd ??= new CoreSoW();
+    set => _Tynd = value;
+}
+public CoreSoW _Tynd;
+
+public WarfuryEmblem Emblem
+{
+    get => _Emblem ??= new WarfuryEmblem();
+    set => _Emblem = value;
+}
+public WarfuryEmblem _Emblem;
+
+public DragonslayerGeneral DSG
+{
+    get => _DSG ??= new DragonslayerGeneral();
+    set => _DSG = value;
+}
+public DragonslayerGeneral _DSG;
+
+public FireChampionsArmor FCA
+{
+    get => _FCA ??= new FireChampionsArmor();
+    set => _FCA = value;
+}
+public FireChampionsArmor _FCA;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

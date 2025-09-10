@@ -50,42 +50,234 @@ public class AllSeasonal
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public DERPBadge Derp = new();
-    public MeateorHunt MeateorHunt = new();
-    public SuperSLAYINBadge SSB = new();
-    public CoreFrostvale Frostvale = new();
-    public FezziniStory Fezzini = new();
-    public LoveSpell LoveSpell = new();
-    public WheeleOfLove WheeleOfLove = new();
-    public PookaStory Pooka = new();
-    public MmmmMeatyQuest Meaty = new();
-    public DarkLord DarkLord = new();
-    public MurderMoon MurderMoon = new();
-    public CoreMogloween CoreMogloween = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
 
-    public VampireLord VPL = new();
-    public DageRecruitStory DageRecruit = new();
-    private CoreDageBirthday Dage = new();
-    public StarFestival StarFestival = new();
-    public BeachPartyTokenItems BeachPartyTokenItems = new();
-    public BlazingBeachStory BlazingBeach = new();
+public DERPBadge Derp
+{
+    get => _Derp ??= new DERPBadge();
+    set => _Derp = value;
+}
+public DERPBadge _Derp;
+
+public MeateorHunt MeateorHunt
+{
+    get => _MeateorHunt ??= new MeateorHunt();
+    set => _MeateorHunt = value;
+}
+public MeateorHunt _MeateorHunt;
+
+public SuperSLAYINBadge SSB
+{
+    get => _SSB ??= new SuperSLAYINBadge();
+    set => _SSB = value;
+}
+public SuperSLAYINBadge _SSB;
+
+public CoreFrostvale Frostvale
+{
+    get => _Frostvale ??= new CoreFrostvale();
+    set => _Frostvale = value;
+}
+public CoreFrostvale _Frostvale;
+
+public FezziniStory Fezzini
+{
+    get => _Fezzini ??= new FezziniStory();
+    set => _Fezzini = value;
+}
+public FezziniStory _Fezzini;
+
+public LoveSpell LoveSpell
+{
+    get => _LoveSpell ??= new LoveSpell();
+    set => _LoveSpell = value;
+}
+public LoveSpell _LoveSpell;
+
+public WheeleOfLove WheeleOfLove
+{
+    get => _WheeleOfLove ??= new WheeleOfLove();
+    set => _WheeleOfLove = value;
+}
+public WheeleOfLove _WheeleOfLove;
+
+public PookaStory Pooka
+{
+    get => _Pooka ??= new PookaStory();
+    set => _Pooka = value;
+}
+public PookaStory _Pooka;
+
+public MmmmMeatyQuest Meaty
+{
+    get => _Meaty ??= new MmmmMeatyQuest();
+    set => _Meaty = value;
+}
+public MmmmMeatyQuest _Meaty;
+
+public DarkLord DarkLord
+{
+    get => _DarkLord ??= new DarkLord();
+    set => _DarkLord = value;
+}
+public DarkLord _DarkLord;
+
+public MurderMoon MurderMoon
+{
+    get => _MurderMoon ??= new MurderMoon();
+    set => _MurderMoon = value;
+}
+public MurderMoon _MurderMoon;
+
+public CoreMogloween CoreMogloween
+{
+    get => _CoreMogloween ??= new CoreMogloween();
+    set => _CoreMogloween = value;
+}
+public CoreMogloween _CoreMogloween;
+
+
+public VampireLord VPL
+{
+    get => _VPL ??= new VampireLord();
+    set => _VPL = value;
+}
+public VampireLord _VPL;
+
+public DageRecruitStory DageRecruit
+{
+    get => _DageRecruit ??= new DageRecruitStory();
+    set => _DageRecruit = value;
+}
+public DageRecruitStory _DageRecruit;
+
+private CoreDageBirthday Dage
+{
+    get => _Dage ??= new CoreDageBirthday();
+    set => _Dage = value;
+}
+private CoreDageBirthday _Dage;
+
+public StarFestival StarFestival
+{
+    get => _StarFestival ??= new StarFestival();
+    set => _StarFestival = value;
+}
+public StarFestival _StarFestival;
+
+public BeachPartyTokenItems BeachPartyTokenItems
+{
+    get => _BeachPartyTokenItems ??= new BeachPartyTokenItems();
+    set => _BeachPartyTokenItems = value;
+}
+public BeachPartyTokenItems _BeachPartyTokenItems;
+
+public BlazingBeachStory BlazingBeach
+{
+    get => _BlazingBeach ??= new BlazingBeachStory();
+    set => _BlazingBeach = value;
+}
+public BlazingBeachStory _BlazingBeach;
+
     // public BlazingBeachMerge BlazingBeachMerge = new();
-    public BurningBeachStory BurningBeach = new();
+public BurningBeachStory BurningBeach
+{
+    get => _BurningBeach ??= new BurningBeachStory();
+    set => _BurningBeach = value;
+}
+public BurningBeachStory _BurningBeach;
+
     // public CoralBeachMerge CoralBeachMerge = new();
-    public CoreSummer LunaCove = new();
+public CoreSummer LunaCove
+{
+    get => _LunaCove ??= new CoreSummer();
+    set => _LunaCove = value;
+}
+public CoreSummer _LunaCove;
+
     // public LunaCoveMerge LunaCoveMerge = new();
-    public SweetSummerTreats SweetSummerTreats = new();
-    public UnLifeGuardQuest UnLifeguardQuest = new();
-    public CelestialPirateCommander CelestialPirateCommander = new();
-    public KaijuWar KaijuWar = new();
-    public HeartOfTheSeaStory HeartOfTheSeaStory = new();
-    public CetoleonWarStory CetoleonWarStory = new();
-    public DragonPirateStory DragonPirateStory = new();
-    public DragonCapitalStory DragonCapitalStory = new();
-    public LowTideStory LowTideStory = new();
-    public AluteaNursery AluteaNursery = new();
-    public BlazeBeard BlazeBeard = new();
+public SweetSummerTreats SweetSummerTreats
+{
+    get => _SweetSummerTreats ??= new SweetSummerTreats();
+    set => _SweetSummerTreats = value;
+}
+public SweetSummerTreats _SweetSummerTreats;
+
+public UnLifeGuardQuest UnLifeguardQuest
+{
+    get => _UnLifeguardQuest ??= new UnLifeGuardQuest();
+    set => _UnLifeguardQuest = value;
+}
+public UnLifeGuardQuest _UnLifeguardQuest;
+
+public CelestialPirateCommander CelestialPirateCommander
+{
+    get => _CelestialPirateCommander ??= new CelestialPirateCommander();
+    set => _CelestialPirateCommander = value;
+}
+public CelestialPirateCommander _CelestialPirateCommander;
+
+public KaijuWar KaijuWar
+{
+    get => _KaijuWar ??= new KaijuWar();
+    set => _KaijuWar = value;
+}
+public KaijuWar _KaijuWar;
+
+public HeartOfTheSeaStory HeartOfTheSeaStory
+{
+    get => _HeartOfTheSeaStory ??= new HeartOfTheSeaStory();
+    set => _HeartOfTheSeaStory = value;
+}
+public HeartOfTheSeaStory _HeartOfTheSeaStory;
+
+public CetoleonWarStory CetoleonWarStory
+{
+    get => _CetoleonWarStory ??= new CetoleonWarStory();
+    set => _CetoleonWarStory = value;
+}
+public CetoleonWarStory _CetoleonWarStory;
+
+public DragonPirateStory DragonPirateStory
+{
+    get => _DragonPirateStory ??= new DragonPirateStory();
+    set => _DragonPirateStory = value;
+}
+public DragonPirateStory _DragonPirateStory;
+
+public DragonCapitalStory DragonCapitalStory
+{
+    get => _DragonCapitalStory ??= new DragonCapitalStory();
+    set => _DragonCapitalStory = value;
+}
+public DragonCapitalStory _DragonCapitalStory;
+
+public LowTideStory LowTideStory
+{
+    get => _LowTideStory ??= new LowTideStory();
+    set => _LowTideStory = value;
+}
+public LowTideStory _LowTideStory;
+
+public AluteaNursery AluteaNursery
+{
+    get => _AluteaNursery ??= new AluteaNursery();
+    set => _AluteaNursery = value;
+}
+public AluteaNursery _AluteaNursery;
+
+public BlazeBeard BlazeBeard
+{
+    get => _BlazeBeard ??= new BlazeBeard();
+    set => _BlazeBeard = value;
+}
+public BlazeBeard _BlazeBeard;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

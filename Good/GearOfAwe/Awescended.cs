@@ -36,22 +36,118 @@ public class Awescended
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreStory Story = new();
-    public CoreAdvanced Adv = new();
-    public ArmorOfAwe AweArmor = new();
-    public HelmOfAwe Helm = new();
-    public SEP Pal = new();
-    public FandH FaH = new();
-    public SRoD SRoD = new();
-    public GetSDD SDD = new();
-    public DrakathArmorBot Armor = new();
-    public SepulchuresOriginalHelm Seppy = new();
-    public ArchDoomKnight ADK = new();
-    public J6Saga J6 = new();
-    public BattleUnder Under = new();
-    public Bamboozle Bam = new();
-    public DjinnGateStory Djinn = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public ArmorOfAwe AweArmor
+{
+    get => _AweArmor ??= new ArmorOfAwe();
+    set => _AweArmor = value;
+}
+public ArmorOfAwe _AweArmor;
+
+public HelmOfAwe Helm
+{
+    get => _Helm ??= new HelmOfAwe();
+    set => _Helm = value;
+}
+public HelmOfAwe _Helm;
+
+public SEP Pal
+{
+    get => _Pal ??= new SEP();
+    set => _Pal = value;
+}
+public SEP _Pal;
+
+public FandH FaH
+{
+    get => _FaH ??= new FandH();
+    set => _FaH = value;
+}
+public FandH _FaH;
+
+public SRoD SRoD
+{
+    get => _SRoD ??= new SRoD();
+    set => _SRoD = value;
+}
+public SRoD _SRoD;
+
+public GetSDD SDD
+{
+    get => _SDD ??= new GetSDD();
+    set => _SDD = value;
+}
+public GetSDD _SDD;
+
+public DrakathArmorBot Armor
+{
+    get => _Armor ??= new DrakathArmorBot();
+    set => _Armor = value;
+}
+public DrakathArmorBot _Armor;
+
+public SepulchuresOriginalHelm Seppy
+{
+    get => _Seppy ??= new SepulchuresOriginalHelm();
+    set => _Seppy = value;
+}
+public SepulchuresOriginalHelm _Seppy;
+
+public ArchDoomKnight ADK
+{
+    get => _ADK ??= new ArchDoomKnight();
+    set => _ADK = value;
+}
+public ArchDoomKnight _ADK;
+
+public J6Saga J6
+{
+    get => _J6 ??= new J6Saga();
+    set => _J6 = value;
+}
+public J6Saga _J6;
+
+public BattleUnder Under
+{
+    get => _Under ??= new BattleUnder();
+    set => _Under = value;
+}
+public BattleUnder _Under;
+
+public Bamboozle Bam
+{
+    get => _Bam ??= new Bamboozle();
+    set => _Bam = value;
+}
+public Bamboozle _Bam;
+
+public DjinnGateStory Djinn
+{
+    get => _Djinn ??= new DjinnGateStory();
+    set => _Djinn = value;
+}
+public DjinnGateStory _Djinn;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

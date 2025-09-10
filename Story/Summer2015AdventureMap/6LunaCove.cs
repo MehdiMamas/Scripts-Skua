@@ -14,7 +14,13 @@ public class LunaCove
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreSummer Summer = new();
+public CoreSummer Summer
+{
+    get => _Summer ??= new CoreSummer();
+    set => _Summer = value;
+}
+public CoreSummer _Summer;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

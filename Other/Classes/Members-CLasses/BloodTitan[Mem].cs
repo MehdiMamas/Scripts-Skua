@@ -13,8 +13,20 @@ public class BloodTitan
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    public CoreAdvanced Adv = new();
-    private BloodTitanMerge BTM = new();
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+private BloodTitanMerge BTM
+{
+    get => _BTM ??= new BloodTitanMerge();
+    set => _BTM = value;
+}
+private BloodTitanMerge _BTM;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

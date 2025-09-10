@@ -13,8 +13,20 @@ public class Firebird
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreStory Story = new();
-    private TerraDeFesta TDF = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private TerraDeFesta TDF
+{
+    get => _TDF ??= new TerraDeFesta();
+    set => _TDF = value;
+}
+private TerraDeFesta _TDF;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

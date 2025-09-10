@@ -13,7 +13,13 @@ public class ShadowVaultChampion
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public ShadowVault SV = new();
+public ShadowVault SV
+{
+    get => _SV ??= new ShadowVault();
+    set => _SV = value;
+}
+public ShadowVault _SV;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

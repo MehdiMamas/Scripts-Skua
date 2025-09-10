@@ -14,8 +14,20 @@ public class DrakelWarlord
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreAdvanced Adv = new();
-    private DeathPitArenaRepMerge DPARM = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private DeathPitArenaRepMerge DPARM
+{
+    get => _DPARM ??= new DeathPitArenaRepMerge();
+    set => _DPARM = value;
+}
+private DeathPitArenaRepMerge _DPARM;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

@@ -12,7 +12,13 @@ public class CocytusBarracks
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreDageBirthday Dage = new();
+private CoreDageBirthday Dage
+{
+    get => _Dage ??= new CoreDageBirthday();
+    set => _Dage = value;
+}
+private CoreDageBirthday _Dage;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

@@ -13,8 +13,20 @@ public class AtlasKingdom
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    private AtlasPromenade AP = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+private AtlasPromenade AP
+{
+    get => _AP ??= new AtlasPromenade();
+    set => _AP = value;
+}
+private AtlasPromenade _AP;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

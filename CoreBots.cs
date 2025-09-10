@@ -447,7 +447,13 @@ public class CoreBots
         return false;
     }
 
-    public List<string> BankingBlackList = new();
+public List<string> BankingBlackList
+{
+    get => _BankingBlackList ??= new List<string>();
+    set => _BankingBlackList = value;
+}
+public List<string> _BankingBlackList;
+
     private readonly List<string> EquipmentBeforeBot = new();
     private bool joinedPrison = false;
     private bool prisonListernerActive = false;
@@ -604,6 +610,7 @@ public class CoreBots
         Logger("Crash (Debug)");
         Bot.Log(eSlice);
         Bot.Log("--------------------------------------");
+            Bot.Events.ScriptStopping -= CrashDetector;
 
         return false;
     }
@@ -9106,7 +9113,13 @@ public class CoreBots
         return true;
     }
 
-    private List<string> CBOList = new();
+private List<string> CBOList
+{
+    get => _CBOList ??= new List<string>();
+    set => _CBOList = value;
+}
+private List<string> _CBOList;
+
 
     public string MeasureExecutionTime(Action action, string? PrefixMessage = null)
     {

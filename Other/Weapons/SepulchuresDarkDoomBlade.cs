@@ -13,7 +13,13 @@ public class GetSDDB
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private DarknessShard DS = new();
+private DarknessShard DS
+{
+    get => _DS ??= new DarknessShard();
+    set => _DS = value;
+}
+private DarknessShard _DS;
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();

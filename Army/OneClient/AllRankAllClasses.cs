@@ -16,8 +16,20 @@ public class AllRankAllClasses
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreArmyLite Army = new();
-    private RankUpAll RUA = new();
+private CoreArmyLite Army
+{
+    get => _Army ??= new CoreArmyLite();
+    set => _Army = value;
+}
+private CoreArmyLite _Army;
+
+private RankUpAll RUA
+{
+    get => _RUA ??= new RankUpAll();
+    set => _RUA = value;
+}
+private RankUpAll _RUA;
+
     
     public void ScriptMain(IScriptInterface Bot)
     {

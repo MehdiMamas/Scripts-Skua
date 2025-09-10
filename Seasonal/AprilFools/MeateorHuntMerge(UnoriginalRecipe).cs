@@ -13,8 +13,20 @@ public class MeateorHuntMerge
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public MeateorHunt MH = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public MeateorHunt MH
+{
+    get => _MH ??= new MeateorHunt();
+    set => _MH = value;
+}
+public MeateorHunt _MH;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

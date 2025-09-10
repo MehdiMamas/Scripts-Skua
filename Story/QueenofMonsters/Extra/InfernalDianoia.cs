@@ -13,8 +13,20 @@ public class InfernalDianoia
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    private InfernalParadise IP = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+private InfernalParadise IP
+{
+    get => _IP ??= new InfernalParadise();
+    set => _IP = value;
+}
+private InfernalParadise _IP;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

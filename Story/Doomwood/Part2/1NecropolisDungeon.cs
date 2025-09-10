@@ -12,7 +12,13 @@ public class NecropolisDungeon
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreDoomwood DW = new();
+private CoreDoomwood DW
+{
+    get => _DW ??= new CoreDoomwood();
+    set => _DW = value;
+}
+private CoreDoomwood _DW;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

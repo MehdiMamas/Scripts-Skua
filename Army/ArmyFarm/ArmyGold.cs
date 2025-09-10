@@ -22,17 +22,71 @@ public class ArmyGold
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv => new();
-    public CoreStory Story = new();
-    private CoreArmyLite Army = new();
-    private DarkWarLegionandNation DWLN = new();
-    public SevenCircles SC = new();
-    private CoreSoW SoW = new();
-    private CoreDOY CoreDOY = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
 
-    private static CoreBots sCore = new();
-    private static CoreArmyLite sArmy = new();
+    private CoreAdvanced Adv => new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+private CoreArmyLite Army
+{
+    get => _Army ??= new CoreArmyLite();
+    set => _Army = value;
+}
+private CoreArmyLite _Army;
+
+private DarkWarLegionandNation DWLN
+{
+    get => _DWLN ??= new DarkWarLegionandNation();
+    set => _DWLN = value;
+}
+private DarkWarLegionandNation _DWLN;
+
+public SevenCircles SC
+{
+    get => _SC ??= new SevenCircles();
+    set => _SC = value;
+}
+public SevenCircles _SC;
+
+private CoreSoW SoW
+{
+    get => _SoW ??= new CoreSoW();
+    set => _SoW = value;
+}
+private CoreSoW _SoW;
+
+private CoreDOY CoreDOY
+{
+    get => _CoreDOY ??= new CoreDOY();
+    set => _CoreDOY = value;
+}
+private CoreDOY _CoreDOY;
+
+
+private static CoreBots sCore
+{
+    get => _sCore ??= new CoreBots();
+    set => _sCore = value;
+}
+private static CoreBots _sCore;
+
+private static CoreArmyLite sArmy
+{
+    get => _sArmy ??= new CoreArmyLite();
+    set => _sArmy = value;
+}
+private static CoreArmyLite _sArmy;
+
 
     public string OptionsStorage = "Army_Gold";
     public bool DontPreconfigure = true;

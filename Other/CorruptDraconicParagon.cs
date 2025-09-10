@@ -15,8 +15,20 @@ public class CorruptDraconicParagon
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreSoW SoW = new();
+    public CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    public CoreFarms _Farm;
+
+    public CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
+    public CoreSoW _SoW;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

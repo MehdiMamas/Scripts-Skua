@@ -13,8 +13,20 @@ public class ElementalDragonSlayer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public Core7DD DD = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public Core7DD DD
+{
+    get => _DD ??= new Core7DD();
+    set => _DD = value;
+}
+public Core7DD _DD;
+
 
 
     public void ScriptMain(IScriptInterface bot)

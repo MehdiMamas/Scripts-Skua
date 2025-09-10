@@ -14,8 +14,20 @@ public class ShadowGates
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public Core13LoC Loc = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public Core13LoC Loc
+{
+    get => _Loc ??= new Core13LoC();
+    set => _Loc = value;
+}
+public Core13LoC _Loc;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

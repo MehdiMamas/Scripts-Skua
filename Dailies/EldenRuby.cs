@@ -11,7 +11,13 @@ public class EldenRuby
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreDailies Daily = new();
+public CoreDailies Daily
+{
+    get => _Daily ??= new CoreDailies();
+    set => _Daily = value;
+}
+public CoreDailies _Daily;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

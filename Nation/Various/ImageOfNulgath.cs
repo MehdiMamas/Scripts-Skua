@@ -20,12 +20,48 @@ public class ImageOfNulgath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreNation Nation = new();
-    public CoreAdvanced Adv = new();
-    private JuggernautItemsofNulgath Jug = new();
-    private TempleDelve TD = new();
-    private VoidChasm VC = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+private JuggernautItemsofNulgath Jug
+{
+    get => _Jug ??= new JuggernautItemsofNulgath();
+    set => _Jug = value;
+}
+private JuggernautItemsofNulgath _Jug;
+
+private TempleDelve TD
+{
+    get => _TD ??= new TempleDelve();
+    set => _TD = value;
+}
+private TempleDelve _TD;
+
+private VoidChasm VC
+{
+    get => _VC ??= new VoidChasm();
+    set => _VC = value;
+}
+private VoidChasm _VC;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

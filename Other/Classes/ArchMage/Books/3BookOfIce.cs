@@ -25,7 +25,13 @@ public class BookOfIce
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreArchMage AM = new();
+private CoreArchMage AM
+{
+    get => _AM ??= new CoreArchMage();
+    set => _AM = value;
+}
+private CoreArchMage _AM;
+
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ArchMage";

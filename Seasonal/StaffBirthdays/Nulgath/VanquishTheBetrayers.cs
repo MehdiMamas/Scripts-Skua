@@ -26,7 +26,7 @@ public class VanquishTheBetrayers
     public void GetRewards()
     {
 
-        List<ItemBase> RewardOptions = Core.EnsureLoad(QuestID).Rewards;
+       List<ItemBase> RewardOptions = Core.EnsureLoad(QuestID).Rewards;
 
         foreach (ItemBase item in RewardOptions)
             Core.AddDrop(item.Name);

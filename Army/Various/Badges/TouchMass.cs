@@ -21,14 +21,56 @@ public class TouchMass
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-    private CoreAdvanced Adv = new();
-    private CoreFarms Farm = new();
-    private CoreStory Story = new();
-    private CoreDailies Daily = new();
-    private CoreArmyLite Army = new();
+    private CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private CoreAdvanced _Adv;
 
-    private static CoreBots sCore = new();
-    private static CoreArmyLite sArmy = new();
+    private CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private CoreFarms _Farm;
+
+    private CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private CoreStory _Story;
+
+    private CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private CoreDailies _Daily;
+
+    private CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
+    private CoreArmyLite _Army;
+
+
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
+    private static CoreBots _sCore;
+
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
+    private static CoreArmyLite _sArmy;
+
 
     public string OptionsStorage = "Starfield Badge";
     public bool DontPreconfigure = true;
@@ -71,12 +113,13 @@ public class TouchMass
         Army.AggroMonStart("starfield");
         Army.DivideOnCells("r3");
 
+        bool ded = false;
+        Bot.Events.MonsterKilled += b => ded = true;
+
         while (!Bot.ShouldExit && !Core.HasWebBadge(badge))
         {
             foreach (Monster targetMonster in Bot.Monsters.CurrentAvailableMonsters)
             {
-                bool ded = false;
-                Bot.Events.MonsterKilled += b => ded = true;
 
                 while (!Bot.ShouldExit && !ded)
                 {
@@ -106,6 +149,7 @@ public class TouchMass
                 }
             }
         }
+        Bot.Events.MonsterKilled -= b => ded = true;
 
     }
     private string badge = "Touch Mass";

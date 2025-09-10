@@ -13,7 +13,13 @@ public class SearchForGiftsRewards
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private FrostBladeMaster FBM = new();
+private FrostBladeMaster FBM
+{
+    get => _FBM ??= new FrostBladeMaster();
+    set => _FBM = value;
+}
+private FrostBladeMaster _FBM;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

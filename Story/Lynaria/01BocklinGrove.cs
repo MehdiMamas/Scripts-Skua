@@ -12,7 +12,13 @@ public class BocklinGrove
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreLynaria Lyn = new();
+public CoreLynaria Lyn
+{
+    get => _Lyn ??= new CoreLynaria();
+    set => _Lyn = value;
+}
+public CoreLynaria _Lyn;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

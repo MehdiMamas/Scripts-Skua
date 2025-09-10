@@ -15,8 +15,20 @@ public class ThanatostheDestroyer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreIsleOfFotia CoreIsleOfFotia = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreIsleOfFotia CoreIsleOfFotia
+{
+    get => _CoreIsleOfFotia ??= new CoreIsleOfFotia();
+    set => _CoreIsleOfFotia = value;
+}
+public CoreIsleOfFotia _CoreIsleOfFotia;
+
     private CoreAdvanced Adv => new();
 
 

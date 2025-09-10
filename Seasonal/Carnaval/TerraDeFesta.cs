@@ -12,8 +12,20 @@ public class TerraDeFesta
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreStory Story = new();
-    private Batista Bat = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private Batista Bat
+{
+    get => _Bat ??= new Batista();
+    set => _Bat = value;
+}
+private Batista _Bat;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

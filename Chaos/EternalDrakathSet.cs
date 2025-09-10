@@ -22,10 +22,34 @@ public class EternalDrakath
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public DrakathArmorBot Armor = new();
-    public CoreBLOD BLOD = new();
-    public StarSinc Star = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public DrakathArmorBot Armor
+{
+    get => _Armor ??= new DrakathArmorBot();
+    set => _Armor = value;
+}
+public DrakathArmorBot _Armor;
+
+public CoreBLOD BLOD
+{
+    get => _BLOD ??= new CoreBLOD();
+    set => _BLOD = value;
+}
+public CoreBLOD _BLOD;
+
+public StarSinc Star
+{
+    get => _Star ??= new StarSinc();
+    set => _Star = value;
+}
+public StarSinc _Star;
+
 
     private string[] Rewards = new[] { "Drakath the Eternal", "Drakath the Eternal's Visor", "Eternal Chaos Tassels", "Eternal Chaos Tassels", "Dual Everlasting Blades of Chaos" };
 

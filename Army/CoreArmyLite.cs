@@ -25,7 +25,13 @@ public class CoreArmyLite
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
     List<string> cellToAggro = new();
 
     public void ScriptMain(IScriptInterface bot)
@@ -34,7 +40,13 @@ public class CoreArmyLite
     }
 
     #region Army Logging
-    public ArmyLogging armyLogging = new();
+public ArmyLogging armyLogging
+{
+    get => _armyLogging ??= new ArmyLogging();
+    set => _armyLogging = value;
+}
+public ArmyLogging _armyLogging;
+
 
     public void setLogName(string name)
     {
@@ -118,16 +130,6 @@ public class CoreArmyLite
         return false;
     }
     #endregion Army Logging
-
-    public void initArmy()
-    {
-        Bot.Events.ScriptStopping += Events_ScriptStopping;
-
-        static bool Events_ScriptStopping(Exception? e)
-        {
-            return true;
-        }
-    }
 
     #region Aggro Mon
 #nullable enable
@@ -291,10 +293,34 @@ public class CoreArmyLite
     /// </summary>
     public void AggroMonMIDs(params int[] monsterMapIDs)
         => _AggroMonMIDs = monsterMapIDs.ToList();
-    private List<string> _AggroMonCells = new();
-    private List<string> _AggroMonNames = new();
-    private List<int> _AggroMonIDs = new();
-    private List<int> _AggroMonMIDs = new();
+private List<string> _AggroMonCells
+{
+    get => __AggroMonCells ??= new List<string>();
+    set => __AggroMonCells = value;
+}
+private List<string> __AggroMonCells;
+
+private List<string> _AggroMonNames
+{
+    get => __AggroMonNames ??= new List<string>();
+    set => __AggroMonNames = value;
+}
+private List<string> __AggroMonNames;
+
+private List<int> _AggroMonIDs
+{
+    get => __AggroMonIDs ??= new List<int>();
+    set => __AggroMonIDs = value;
+}
+private List<int> __AggroMonIDs;
+
+private List<int> _AggroMonMIDs
+{
+    get => __AggroMonMIDs ??= new List<int>();
+    set => __AggroMonMIDs = value;
+}
+private List<int> __AggroMonMIDs;
+
 
     /// <summary>
     /// Clears the stored Monster Cells/Names/IDs so you can set another AggroMon.
@@ -343,7 +369,13 @@ public class CoreArmyLite
         AggroMonStart(map);
     }
     private bool _getCellsForSmartAggroMon = false;
-    private List<string> _SmartAggroMonCells = new();
+private List<string> _SmartAggroMonCells
+{
+    get => __SmartAggroMonCells ??= new List<string>();
+    set => __SmartAggroMonCells = value;
+}
+private List<string> __SmartAggroMonCells;
+
 
     public void RunGeneratedAggroMon(string map, List<string> monNames, List<int> questIDs, ClassType classtype, List<string>? drops = null)
     {
@@ -1502,8 +1534,20 @@ public class CoreArmyLite
     public bool b_doCopyWalk = false;
     public int b_hibernationTimer = 0;
     public bool b_shouldHibernate = true;
-    public List<string> _attackPriority = new();
-    public List<string> _LockedMapsList = new();
+public List<string> _attackPriority
+{
+    get => __attackPriority ??= new List<string>();
+    set => __attackPriority = value;
+}
+public List<string> __attackPriority;
+
+public List<string> _LockedMapsList
+{
+    get => __LockedMapsList ??= new List<string>();
+    set => __LockedMapsList = value;
+}
+public List<string> __LockedMapsList;
+
 
     public bool tryGoto(string userName, out PlayerInfo? playerObject, int roomNumber)
     {

@@ -12,7 +12,13 @@ public class Committed
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public Asylum Asylum = new();
+public Asylum Asylum
+{
+    get => _Asylum ??= new Asylum();
+    set => _Asylum = value;
+}
+public Asylum _Asylum;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

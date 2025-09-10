@@ -22,14 +22,62 @@ public class NulgathDiamondMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreAdvanced Adv = new();
-    public CoreDailies Dailies = new();
-    public static CoreAdvanced sAdv = new();
-    public CoreNation Nation = new();
-    public TarosManslayer Taro = new();
-    public CoreBLOD BLOD = new();
-    private DragonBladeofNulgath DBoN = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreDailies Dailies
+{
+    get => _Dailies ??= new CoreDailies();
+    set => _Dailies = value;
+}
+public CoreDailies _Dailies;
+
+public static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+public static CoreAdvanced _sAdv;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public TarosManslayer Taro
+{
+    get => _Taro ??= new TarosManslayer();
+    set => _Taro = value;
+}
+public TarosManslayer _Taro;
+
+public CoreBLOD BLOD
+{
+    get => _BLOD ??= new CoreBLOD();
+    set => _BLOD = value;
+}
+public CoreBLOD _BLOD;
+
+private DragonBladeofNulgath DBoN
+{
+    get => _DBoN ??= new DragonBladeofNulgath();
+    set => _DBoN = value;
+}
+private DragonBladeofNulgath _DBoN;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

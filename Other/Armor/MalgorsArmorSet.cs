@@ -28,15 +28,69 @@ public class MalgorsArmorSet
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    public CoreAdvanced Adv = new();
-    public CoreSoW SoW = new();
-    public CoreYnR YNR = new();
-    private DeadLinesMerge DeadLinesMerge = new();
-    private ShadowflameFinaleMerge ShadowflameFinaleMerge = new();
-    private TimekeepMerge TimekeepMerge = new();
-    private StreamwarMerge StreamwarMerge = new();
-    private WorldsCoreMerge WorldsCoreMerge = new();
-    private ManaCradleMerge ManaCradleMerge = new();
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreSoW SoW
+{
+    get => _SoW ??= new CoreSoW();
+    set => _SoW = value;
+}
+public CoreSoW _SoW;
+
+public CoreYnR YNR
+{
+    get => _YNR ??= new CoreYnR();
+    set => _YNR = value;
+}
+public CoreYnR _YNR;
+
+private DeadLinesMerge DeadLinesMerge
+{
+    get => _DeadLinesMerge ??= new DeadLinesMerge();
+    set => _DeadLinesMerge = value;
+}
+private DeadLinesMerge _DeadLinesMerge;
+
+private ShadowflameFinaleMerge ShadowflameFinaleMerge
+{
+    get => _ShadowflameFinaleMerge ??= new ShadowflameFinaleMerge();
+    set => _ShadowflameFinaleMerge = value;
+}
+private ShadowflameFinaleMerge _ShadowflameFinaleMerge;
+
+private TimekeepMerge TimekeepMerge
+{
+    get => _TimekeepMerge ??= new TimekeepMerge();
+    set => _TimekeepMerge = value;
+}
+private TimekeepMerge _TimekeepMerge;
+
+private StreamwarMerge StreamwarMerge
+{
+    get => _StreamwarMerge ??= new StreamwarMerge();
+    set => _StreamwarMerge = value;
+}
+private StreamwarMerge _StreamwarMerge;
+
+private WorldsCoreMerge WorldsCoreMerge
+{
+    get => _WorldsCoreMerge ??= new WorldsCoreMerge();
+    set => _WorldsCoreMerge = value;
+}
+private WorldsCoreMerge _WorldsCoreMerge;
+
+private ManaCradleMerge ManaCradleMerge
+{
+    get => _ManaCradleMerge ??= new ManaCradleMerge();
+    set => _ManaCradleMerge = value;
+}
+private ManaCradleMerge _ManaCradleMerge;
+
 
     string[] ArmorSet =
     {

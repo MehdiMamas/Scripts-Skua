@@ -15,9 +15,27 @@ public class WeaponMasteryAC
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreNation Nation = new();
-    private CoreFarms Farm = new();
-    private Core13LoC LoC = new();
+private CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+private CoreNation _Nation;
+
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private Core13LoC LoC
+{
+    get => _LoC ??= new Core13LoC();
+    set => _LoC = value;
+}
+private Core13LoC _LoC;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

@@ -63,39 +63,231 @@ public class AllBadges
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
 
-    public CornelisRebornbadge CRB = new();
-    public DerpMoosefishBadge DMF = new();
-    public SkyPirateBadge SPB = new();
-    public YouMadBroBadge YMBB = new();
-    public MoglinPunter MPB = new();
-    public CtrlAltDelMemberBadge CAD = new();
-    public BirthdaySavior BS = new();
-    public BattleBabysitter BB = new();
-    public BattleConVIP BCV = new();
-    public CelestialArenaChampion CAC = new();
-    public ChaosPuppetMaster CPM = new();
-    public Committed C = new();
-    public ConZombieSlayer CZS = new();
-    public DesolichFreed DF = new();
-    public GoldenLaurel GL = new();
-    public GravelynsWarrior GW = new();
-    public HordeZombieSLAYER HZS = new();
-    public LordOfTheWeddingRing LOTWR = new();
-    public MummySlayerAndCruxShadowsDefender MSACSD = new();
-    public RavenlossWarAndChampion RWAC = new();
-    public ShadowVaultChampion SVC = new();
-    public StoneCold SC = new();
-    public TableFlipper TF = new();
-    public VoidHighlordBadge VHL = new();
-    public StoryArcBadge SA = new();
-    public JusticeSquadBadge JS = new();
-    public ThiefofChaosBadge ToC = new();
-    public UltraCarnaxBadge UC = new();
-    public GoalBadge G = new();
-    public FrostvaleBadges FV = new();
-    private YokaiAscension YA = new();
+
+public CornelisRebornbadge CRB
+{
+    get => _CRB ??= new CornelisRebornbadge();
+    set => _CRB = value;
+}
+public CornelisRebornbadge _CRB;
+
+public DerpMoosefishBadge DMF
+{
+    get => _DMF ??= new DerpMoosefishBadge();
+    set => _DMF = value;
+}
+public DerpMoosefishBadge _DMF;
+
+public SkyPirateBadge SPB
+{
+    get => _SPB ??= new SkyPirateBadge();
+    set => _SPB = value;
+}
+public SkyPirateBadge _SPB;
+
+public YouMadBroBadge YMBB
+{
+    get => _YMBB ??= new YouMadBroBadge();
+    set => _YMBB = value;
+}
+public YouMadBroBadge _YMBB;
+
+public MoglinPunter MPB
+{
+    get => _MPB ??= new MoglinPunter();
+    set => _MPB = value;
+}
+public MoglinPunter _MPB;
+
+public CtrlAltDelMemberBadge CAD
+{
+    get => _CAD ??= new CtrlAltDelMemberBadge();
+    set => _CAD = value;
+}
+public CtrlAltDelMemberBadge _CAD;
+
+public BirthdaySavior BS
+{
+    get => _BS ??= new BirthdaySavior();
+    set => _BS = value;
+}
+public BirthdaySavior _BS;
+
+public BattleBabysitter BB
+{
+    get => _BB ??= new BattleBabysitter();
+    set => _BB = value;
+}
+public BattleBabysitter _BB;
+
+public BattleConVIP BCV
+{
+    get => _BCV ??= new BattleConVIP();
+    set => _BCV = value;
+}
+public BattleConVIP _BCV;
+
+public CelestialArenaChampion CAC
+{
+    get => _CAC ??= new CelestialArenaChampion();
+    set => _CAC = value;
+}
+public CelestialArenaChampion _CAC;
+
+public ChaosPuppetMaster CPM
+{
+    get => _CPM ??= new ChaosPuppetMaster();
+    set => _CPM = value;
+}
+public ChaosPuppetMaster _CPM;
+
+public Committed C
+{
+    get => _C ??= new Committed();
+    set => _C = value;
+}
+public Committed _C;
+
+public ConZombieSlayer CZS
+{
+    get => _CZS ??= new ConZombieSlayer();
+    set => _CZS = value;
+}
+public ConZombieSlayer _CZS;
+
+public DesolichFreed DF
+{
+    get => _DF ??= new DesolichFreed();
+    set => _DF = value;
+}
+public DesolichFreed _DF;
+
+public GoldenLaurel GL
+{
+    get => _GL ??= new GoldenLaurel();
+    set => _GL = value;
+}
+public GoldenLaurel _GL;
+
+public GravelynsWarrior GW
+{
+    get => _GW ??= new GravelynsWarrior();
+    set => _GW = value;
+}
+public GravelynsWarrior _GW;
+
+public HordeZombieSLAYER HZS
+{
+    get => _HZS ??= new HordeZombieSLAYER();
+    set => _HZS = value;
+}
+public HordeZombieSLAYER _HZS;
+
+public LordOfTheWeddingRing LOTWR
+{
+    get => _LOTWR ??= new LordOfTheWeddingRing();
+    set => _LOTWR = value;
+}
+public LordOfTheWeddingRing _LOTWR;
+
+public MummySlayerAndCruxShadowsDefender MSACSD
+{
+    get => _MSACSD ??= new MummySlayerAndCruxShadowsDefender();
+    set => _MSACSD = value;
+}
+public MummySlayerAndCruxShadowsDefender _MSACSD;
+
+public RavenlossWarAndChampion RWAC
+{
+    get => _RWAC ??= new RavenlossWarAndChampion();
+    set => _RWAC = value;
+}
+public RavenlossWarAndChampion _RWAC;
+
+public ShadowVaultChampion SVC
+{
+    get => _SVC ??= new ShadowVaultChampion();
+    set => _SVC = value;
+}
+public ShadowVaultChampion _SVC;
+
+public StoneCold SC
+{
+    get => _SC ??= new StoneCold();
+    set => _SC = value;
+}
+public StoneCold _SC;
+
+public TableFlipper TF
+{
+    get => _TF ??= new TableFlipper();
+    set => _TF = value;
+}
+public TableFlipper _TF;
+
+public VoidHighlordBadge VHL
+{
+    get => _VHL ??= new VoidHighlordBadge();
+    set => _VHL = value;
+}
+public VoidHighlordBadge _VHL;
+
+public StoryArcBadge SA
+{
+    get => _SA ??= new StoryArcBadge();
+    set => _SA = value;
+}
+public StoryArcBadge _SA;
+
+public JusticeSquadBadge JS
+{
+    get => _JS ??= new JusticeSquadBadge();
+    set => _JS = value;
+}
+public JusticeSquadBadge _JS;
+
+public ThiefofChaosBadge ToC
+{
+    get => _ToC ??= new ThiefofChaosBadge();
+    set => _ToC = value;
+}
+public ThiefofChaosBadge _ToC;
+
+public UltraCarnaxBadge UC
+{
+    get => _UC ??= new UltraCarnaxBadge();
+    set => _UC = value;
+}
+public UltraCarnaxBadge _UC;
+
+public GoalBadge G
+{
+    get => _G ??= new GoalBadge();
+    set => _G = value;
+}
+public GoalBadge _G;
+
+public FrostvaleBadges FV
+{
+    get => _FV ??= new FrostvaleBadges();
+    set => _FV = value;
+}
+public FrostvaleBadges _FV;
+
+private YokaiAscension YA
+{
+    get => _YA ??= new YokaiAscension();
+    set => _YA = value;
+}
+private YokaiAscension _YA;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

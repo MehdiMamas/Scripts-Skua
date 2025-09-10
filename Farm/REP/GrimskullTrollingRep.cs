@@ -133,9 +133,27 @@ public class GrimskullTrollingRep
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public Grimgaol GrimGaolRun = new();
-    public static Grimgaol GGrimGaolRun = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public Grimgaol GrimGaolRun
+{
+    get => _GrimGaolRun ??= new Grimgaol();
+    set => _GrimGaolRun = value;
+}
+public Grimgaol _GrimGaolRun;
+
+public static Grimgaol GGrimGaolRun
+{
+    get => _GGrimGaolRun ??= new Grimgaol();
+    set => _GGrimGaolRun = value;
+}
+public static Grimgaol _GGrimGaolRun;
+
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = GGrimGaolRun.OptionsStorage;

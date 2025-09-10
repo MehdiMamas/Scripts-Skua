@@ -12,7 +12,13 @@ public class DreamMaster
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public MemetsRealm Memet = new();
+public MemetsRealm Memet
+{
+    get => _Memet ??= new MemetsRealm();
+    set => _Memet = value;
+}
+public MemetsRealm _Memet;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

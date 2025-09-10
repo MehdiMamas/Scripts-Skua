@@ -23,14 +23,56 @@ public class CoreNSOD
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private CoreDailies Daily = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
 
-    private CoreBLOD BLOD = new();
-    private CoreSDKA SDKA = new();
-    private Necromancer Necro = new();
-    private BattleUnder BattleUnder = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private CoreDailies Daily
+{
+    get => _Daily ??= new CoreDailies();
+    set => _Daily = value;
+}
+private CoreDailies _Daily;
+
+
+private CoreBLOD BLOD
+{
+    get => _BLOD ??= new CoreBLOD();
+    set => _BLOD = value;
+}
+private CoreBLOD _BLOD;
+
+private CoreSDKA SDKA
+{
+    get => _SDKA ??= new CoreSDKA();
+    set => _SDKA = value;
+}
+private CoreSDKA _SDKA;
+
+private Necromancer Necro
+{
+    get => _Necro ??= new Necromancer();
+    set => _Necro = value;
+}
+private Necromancer _Necro;
+
+private BattleUnder BattleUnder
+{
+    get => _BattleUnder ??= new BattleUnder();
+    set => _BattleUnder = value;
+}
+private BattleUnder _BattleUnder;
+
 
     public string OptionsStorage = "NecroticSwordOfDoomOptions";
     public bool DontPreconfigure = true;

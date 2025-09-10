@@ -15,8 +15,20 @@ public class DarkWitchyAndCurstedJester
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreMogloween CoreMogloween = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreMogloween CoreMogloween
+{
+    get => _CoreMogloween ??= new CoreMogloween();
+    set => _CoreMogloween = value;
+}
+public CoreMogloween _CoreMogloween;
+
 
 
     public void ScriptMain(IScriptInterface bot)

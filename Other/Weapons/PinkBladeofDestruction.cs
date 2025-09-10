@@ -16,9 +16,27 @@ public class PinkBladeOfDestruciton
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreBLOD BLoD = new();
-    public CoreStory Story = new();
-    public CoreDoomwood P3 = new();
+public CoreBLOD BLoD
+{
+    get => _BLoD ??= new CoreBLOD();
+    set => _BLoD = value;
+}
+public CoreBLOD _BLoD;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreDoomwood P3
+{
+    get => _P3 ??= new CoreDoomwood();
+    set => _P3 = value;
+}
+public CoreDoomwood _P3;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

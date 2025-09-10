@@ -41,14 +41,62 @@ public class VerusDoomKnightClass
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private SepulchuresOriginalHelm SOH = new();
-    private ArchDoomKnight ADK = new();
-    private SRoD SRoD = new();
-    private TerminaTempleMerge TTMerge = new();
-    private DoomPirateHaulMerge DPHM = new();
-    public CoreStory Story = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private SepulchuresOriginalHelm SOH
+{
+    get => _SOH ??= new SepulchuresOriginalHelm();
+    set => _SOH = value;
+}
+private SepulchuresOriginalHelm _SOH;
+
+private ArchDoomKnight ADK
+{
+    get => _ADK ??= new ArchDoomKnight();
+    set => _ADK = value;
+}
+private ArchDoomKnight _ADK;
+
+private SRoD SRoD
+{
+    get => _SRoD ??= new SRoD();
+    set => _SRoD = value;
+}
+private SRoD _SRoD;
+
+private TerminaTempleMerge TTMerge
+{
+    get => _TTMerge ??= new TerminaTempleMerge();
+    set => _TTMerge = value;
+}
+private TerminaTempleMerge _TTMerge;
+
+private DoomPirateHaulMerge DPHM
+{
+    get => _DPHM ??= new DoomPirateHaulMerge();
+    set => _DPHM = value;
+}
+private DoomPirateHaulMerge _DPHM;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

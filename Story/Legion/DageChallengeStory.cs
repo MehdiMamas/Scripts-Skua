@@ -16,9 +16,27 @@ public class DageChallengeStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public CoreLegion Legion = new();
-    public HeadoftheLegionBeast HOTLB = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+public CoreLegion _Legion;
+
+public HeadoftheLegionBeast HOTLB
+{
+    get => _HOTLB ??= new HeadoftheLegionBeast();
+    set => _HOTLB = value;
+}
+public HeadoftheLegionBeast _HOTLB;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

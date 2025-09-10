@@ -33,16 +33,76 @@ public class CoreHollowbornChaosEnvoy
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private CoreHollowborn HB = new();
-    private CoreQOM QOM = new();
-    private ChaosAvengerClass CAV = new();
-    private EternalDrakath ED = new();
-    private AscendedDrakathGear ADG = new();
-    private TitanStrikeGearMerge TGM = new();
-    private ChaosPuppetMaster CPM = new();
-    public CoreStory Story = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private CoreHollowborn HB
+{
+    get => _HB ??= new CoreHollowborn();
+    set => _HB = value;
+}
+private CoreHollowborn _HB;
+
+private CoreQOM QOM
+{
+    get => _QOM ??= new CoreQOM();
+    set => _QOM = value;
+}
+private CoreQOM _QOM;
+
+private ChaosAvengerClass CAV
+{
+    get => _CAV ??= new ChaosAvengerClass();
+    set => _CAV = value;
+}
+private ChaosAvengerClass _CAV;
+
+private EternalDrakath ED
+{
+    get => _ED ??= new EternalDrakath();
+    set => _ED = value;
+}
+private EternalDrakath _ED;
+
+private AscendedDrakathGear ADG
+{
+    get => _ADG ??= new AscendedDrakathGear();
+    set => _ADG = value;
+}
+private AscendedDrakathGear _ADG;
+
+private TitanStrikeGearMerge TGM
+{
+    get => _TGM ??= new TitanStrikeGearMerge();
+    set => _TGM = value;
+}
+private TitanStrikeGearMerge _TGM;
+
+private ChaosPuppetMaster CPM
+{
+    get => _CPM ??= new ChaosPuppetMaster();
+    set => _CPM = value;
+}
+private ChaosPuppetMaster _CPM;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
 
     public string OptionsStorage = "HollowbornChaosEnvoy";
     public bool DontPreconfigure = true;

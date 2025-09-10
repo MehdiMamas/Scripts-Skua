@@ -12,7 +12,13 @@ public class LordOfTheWeddingRing
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public ArtixWedding AW = new();
+public ArtixWedding AW
+{
+    get => _AW ??= new ArtixWedding();
+    set => _AW = value;
+}
+public ArtixWedding _AW;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -14,7 +14,13 @@ public class PineappleSlayerSet
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
 
 
     public string OptionsStorage = "PineappleSlayerSet";

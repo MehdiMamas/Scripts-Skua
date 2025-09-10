@@ -31,8 +31,20 @@ public class HDKAll
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreHollowbornDoomKnight HDK = new();
-    public static CoreHollowbornDoomKnight sHDK = new();
+public CoreHollowbornDoomKnight HDK
+{
+    get => _HDK ??= new CoreHollowbornDoomKnight();
+    set => _HDK = value;
+}
+public CoreHollowbornDoomKnight _HDK;
+
+public static CoreHollowbornDoomKnight sHDK
+{
+    get => _sHDK ??= new CoreHollowbornDoomKnight();
+    set => _sHDK = value;
+}
+public static CoreHollowbornDoomKnight _sHDK;
+
 
     public string OptionsStorage = sHDK.OptionsStorage;
     public bool DontPreconfigure = true;

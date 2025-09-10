@@ -16,11 +16,41 @@ public class LordOfOrder
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreAdvanced Adv = new();
-    private CoreFarms Farm = new();
-    private CoreStory Story = new();
-    private CitadelRuins CR = new();
-    private DragonFableOrigins DFO = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private CitadelRuins CR
+{
+    get => _CR ??= new CitadelRuins();
+    set => _CR = value;
+}
+private CitadelRuins _CR;
+
+private DragonFableOrigins DFO
+{
+    get => _DFO ??= new DragonFableOrigins();
+    set => _DFO = value;
+}
+private DragonFableOrigins _DFO;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

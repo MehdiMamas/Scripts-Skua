@@ -27,8 +27,20 @@ public class ArmyAllDailies
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private FarmAllDailies FAD = new();
-    private CoreArmyLite Army = new();
+private FarmAllDailies FAD
+{
+    get => _FAD ??= new FarmAllDailies();
+    set => _FAD = value;
+}
+private FarmAllDailies _FAD;
+
+private CoreArmyLite Army
+{
+    get => _Army ??= new CoreArmyLite();
+    set => _Army = value;
+}
+private CoreArmyLite _Army;
+
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ArmyAllDailies";

@@ -20,13 +20,43 @@ public class GetAllRanks
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreStory Story = new();
-    public CoreAdvanced Adv = new();
-    public CoreToD TOD = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreToD TOD
+{
+    get => _TOD ??= new CoreToD();
+    set => _TOD = value;
+}
+public CoreToD _TOD;
+
     public Core13LoC LOC => new();
     public GlaceraStory Glac => new();
-    public BrightOak BrightOak = new();
+public BrightOak BrightOak
+{
+    get => _BrightOak ??= new BrightOak();
+    set => _BrightOak = value;
+}
+public BrightOak _BrightOak;
+
 
 
     public bool DontPreconfigure = true;

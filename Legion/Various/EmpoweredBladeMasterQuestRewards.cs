@@ -19,11 +19,35 @@ public class EmpoweredBladeMaster
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public CoreFarms Farm = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
     public CoreAdvanced Adv => new();
-    public CoreLegion Legion = new();
-    public DageChallengeStory DageChallenge = new();
+public CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+public CoreLegion _Legion;
+
+public DageChallengeStory DageChallenge
+{
+    get => _DageChallenge ??= new DageChallengeStory();
+    set => _DageChallenge = value;
+}
+public DageChallengeStory _DageChallenge;
+
 
     public bool DontPreconfigure = true;
 

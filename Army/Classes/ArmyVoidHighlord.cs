@@ -27,20 +27,104 @@ public class VHLArmy
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreAdvanced Adv = new();
-    public CoreStory Story = new();
-    public CoreDailies Daily = new();
-    public CoreNation Nation = new();
-    public CoreVHL VHL = new();
-    public AssistingCragAndBamboozle ACAB = new();
-    public SevenCircles SC = new();
-    public ArmyEmblemOfNulgath EmblemOfNulgath = new();
-    public ArmyVoucherItemofNulgath VoucherItemofNulgath = new();
-    public ArmyTaintedGem TaintedGem = new();
-    private CoreArmyLite Army = new();
-    private static CoreBots sCore = new();
-    private static CoreArmyLite sArmy = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreDailies Daily
+{
+    get => _Daily ??= new CoreDailies();
+    set => _Daily = value;
+}
+public CoreDailies _Daily;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public CoreVHL VHL
+{
+    get => _VHL ??= new CoreVHL();
+    set => _VHL = value;
+}
+public CoreVHL _VHL;
+
+public AssistingCragAndBamboozle ACAB
+{
+    get => _ACAB ??= new AssistingCragAndBamboozle();
+    set => _ACAB = value;
+}
+public AssistingCragAndBamboozle _ACAB;
+
+public SevenCircles SC
+{
+    get => _SC ??= new SevenCircles();
+    set => _SC = value;
+}
+public SevenCircles _SC;
+
+public ArmyEmblemOfNulgath EmblemOfNulgath
+{
+    get => _EmblemOfNulgath ??= new ArmyEmblemOfNulgath();
+    set => _EmblemOfNulgath = value;
+}
+public ArmyEmblemOfNulgath _EmblemOfNulgath;
+
+public ArmyVoucherItemofNulgath VoucherItemofNulgath
+{
+    get => _VoucherItemofNulgath ??= new ArmyVoucherItemofNulgath();
+    set => _VoucherItemofNulgath = value;
+}
+public ArmyVoucherItemofNulgath _VoucherItemofNulgath;
+
+public ArmyTaintedGem TaintedGem
+{
+    get => _TaintedGem ??= new ArmyTaintedGem();
+    set => _TaintedGem = value;
+}
+public ArmyTaintedGem _TaintedGem;
+
+private CoreArmyLite Army
+{
+    get => _Army ??= new CoreArmyLite();
+    set => _Army = value;
+}
+private CoreArmyLite _Army;
+
+private static CoreBots sCore
+{
+    get => _sCore ??= new CoreBots();
+    set => _sCore = value;
+}
+private static CoreBots _sCore;
+
+private static CoreArmyLite sArmy
+{
+    get => _sArmy ??= new CoreArmyLite();
+    set => _sArmy = value;
+}
+private static CoreArmyLite _sArmy;
+
     private string[] EmblemItems = { "Fiend Seal", "Gem of Domination", "Emblem of Nulgath" };
 
 
@@ -228,6 +312,7 @@ public class VHLArmy
         */
         SCW(80, 43350000);
         Core.Logger("Prerequisites Finished.");
+        Bot.Events.PlayerAFK -= PlayerAFK;
     }
 
     public void BuyVHL(bool rankUpClass = true)

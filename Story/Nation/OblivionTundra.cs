@@ -14,8 +14,20 @@ public class OblivionTundra
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreStory Story = new();
-    private DeleuzeTundraStory DT = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private DeleuzeTundraStory DT
+{
+    get => _DT ??= new DeleuzeTundraStory();
+    set => _DT = value;
+}
+private DeleuzeTundraStory _DT;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

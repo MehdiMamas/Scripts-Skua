@@ -13,7 +13,13 @@ public class MultiQuestAggromonTemplate  //<-- replace
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public static CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
     public static CoreAdvanced Adv => new();
     private readonly CoreArmyLite Army = new();
 

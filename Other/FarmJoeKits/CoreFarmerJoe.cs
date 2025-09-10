@@ -162,59 +162,317 @@ public class CoreFarmerJoe
 {
     //other
     public static IScriptInterface Bot => IScriptInterface.Instance;
-    public FreeBoosts Boosts = new();
-    public FarmAllDailies FAD = new();
-    public InventoryEnhancer InvEn = new();
-    public SynderesMerge SM = new();
-    public ArchfiendDeathLord AFDeath = new();
-    private UnlockForgeEnhancements UnlockForgeEnhancements = new();
-    private ExaltedApotheosisPreReqs ExaltedApotheosisPreReqs = new();
+public FreeBoosts Boosts
+{
+    get => _Boosts ??= new FreeBoosts();
+    set => _Boosts = value;
+}
+public FreeBoosts _Boosts;
+
+public FarmAllDailies FAD
+{
+    get => _FAD ??= new FarmAllDailies();
+    set => _FAD = value;
+}
+public FarmAllDailies _FAD;
+
+public InventoryEnhancer InvEn
+{
+    get => _InvEn ??= new InventoryEnhancer();
+    set => _InvEn = value;
+}
+public InventoryEnhancer _InvEn;
+
+public SynderesMerge SM
+{
+    get => _SM ??= new SynderesMerge();
+    set => _SM = value;
+}
+public SynderesMerge _SM;
+
+public ArchfiendDeathLord AFDeath
+{
+    get => _AFDeath ??= new ArchfiendDeathLord();
+    set => _AFDeath = value;
+}
+public ArchfiendDeathLord _AFDeath;
+
+private UnlockForgeEnhancements UnlockForgeEnhancements
+{
+    get => _UnlockForgeEnhancements ??= new UnlockForgeEnhancements();
+    set => _UnlockForgeEnhancements = value;
+}
+private UnlockForgeEnhancements _UnlockForgeEnhancements;
+
+private ExaltedApotheosisPreReqs ExaltedApotheosisPreReqs
+{
+    get => _ExaltedApotheosisPreReqs ??= new ExaltedApotheosisPreReqs();
+    set => _ExaltedApotheosisPreReqs = value;
+}
+private ExaltedApotheosisPreReqs _ExaltedApotheosisPreReqs;
+
 
     //Cores
     public static CoreBots Core => CoreBots.Instance;
-    public CoreAdvanced Adv = new();
-    public CoreFarms Farm = new();
-    public CoreStory Story = new();
-    public CapeOfAwe COA = new();
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CapeOfAwe COA
+{
+    get => _COA ??= new CapeOfAwe();
+    set => _COA = value;
+}
+public CapeOfAwe _COA;
+
     public static Core13LoC LOC => new();
-    public CoreDailies Daily = new();
-    public CoreVHL VHL = new();
-    public CoreNation Nation = new();
-    public CoreYnR YNR = new();
+public CoreDailies Daily
+{
+    get => _Daily ??= new CoreDailies();
+    set => _Daily = value;
+}
+public CoreDailies _Daily;
+
+public CoreVHL VHL
+{
+    get => _VHL ??= new CoreVHL();
+    set => _VHL = value;
+}
+public CoreVHL _VHL;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public CoreYnR YNR
+{
+    get => _YNR ??= new CoreYnR();
+    set => _YNR = value;
+}
+public CoreYnR _YNR;
+
 
     //Classes
-    public MasterRanger MR = new();
-    public Shaman Shaman = new();
-    public GlacialBerserker GB = new();
-    public StoneCrusher SC = new();
-    public DragonShinobi DS = new();
-    public ArchPaladin AP = new();
-    public Dragonslayer DSlayer = new();
-    public DragonslayerGeneral DSG = new();
-    public LordOfOrder LOO = new();
-    public ScarletSorceress SS = new();
-    public EternalInversionist EI = new();
-    public DarkbloodStormKing DBSK = new();
-    public DragonOfTime DoT = new();
-    public BloodSorceress BS = new();
-    public BlazeBinder Bb = new();
-    public ArchFiend AF = new();
-    public Cryomancer Cryo = new();
-    public FrostSpiritReaver FSR = new();
-    public NorthlandsMonk NM = new();
+public MasterRanger MR
+{
+    get => _MR ??= new MasterRanger();
+    set => _MR = value;
+}
+public MasterRanger _MR;
+
+public Shaman Shaman
+{
+    get => _Shaman ??= new Shaman();
+    set => _Shaman = value;
+}
+public Shaman _Shaman;
+
+public GlacialBerserker GB
+{
+    get => _GB ??= new GlacialBerserker();
+    set => _GB = value;
+}
+public GlacialBerserker _GB;
+
+public StoneCrusher SC
+{
+    get => _SC ??= new StoneCrusher();
+    set => _SC = value;
+}
+public StoneCrusher _SC;
+
+public DragonShinobi DS
+{
+    get => _DS ??= new DragonShinobi();
+    set => _DS = value;
+}
+public DragonShinobi _DS;
+
+public ArchPaladin AP
+{
+    get => _AP ??= new ArchPaladin();
+    set => _AP = value;
+}
+public ArchPaladin _AP;
+
+public Dragonslayer DSlayer
+{
+    get => _DSlayer ??= new Dragonslayer();
+    set => _DSlayer = value;
+}
+public Dragonslayer _DSlayer;
+
+public DragonslayerGeneral DSG
+{
+    get => _DSG ??= new DragonslayerGeneral();
+    set => _DSG = value;
+}
+public DragonslayerGeneral _DSG;
+
+public LordOfOrder LOO
+{
+    get => _LOO ??= new LordOfOrder();
+    set => _LOO = value;
+}
+public LordOfOrder _LOO;
+
+public ScarletSorceress SS
+{
+    get => _SS ??= new ScarletSorceress();
+    set => _SS = value;
+}
+public ScarletSorceress _SS;
+
+public EternalInversionist EI
+{
+    get => _EI ??= new EternalInversionist();
+    set => _EI = value;
+}
+public EternalInversionist _EI;
+
+public DarkbloodStormKing DBSK
+{
+    get => _DBSK ??= new DarkbloodStormKing();
+    set => _DBSK = value;
+}
+public DarkbloodStormKing _DBSK;
+
+public DragonOfTime DoT
+{
+    get => _DoT ??= new DragonOfTime();
+    set => _DoT = value;
+}
+public DragonOfTime _DoT;
+
+public BloodSorceress BS
+{
+    get => _BS ??= new BloodSorceress();
+    set => _BS = value;
+}
+public BloodSorceress _BS;
+
+public BlazeBinder Bb
+{
+    get => _Bb ??= new BlazeBinder();
+    set => _Bb = value;
+}
+public BlazeBinder _Bb;
+
+public ArchFiend AF
+{
+    get => _AF ??= new ArchFiend();
+    set => _AF = value;
+}
+public ArchFiend _AF;
+
+public Cryomancer Cryo
+{
+    get => _Cryo ??= new Cryomancer();
+    set => _Cryo = value;
+}
+public Cryomancer _Cryo;
+
+public FrostSpiritReaver FSR
+{
+    get => _FSR ??= new FrostSpiritReaver();
+    set => _FSR = value;
+}
+public FrostSpiritReaver _FSR;
+
+public NorthlandsMonk NM
+{
+    get => _NM ??= new NorthlandsMonk();
+    set => _NM = value;
+}
+public NorthlandsMonk _NM;
+
 
     //Weapons
-    public DualChainSawKatanas DCSK = new();
-    public BurningBlade BB = new();
-    public BurningBladeOfAbezeth BBOA = new();
-    public EnchantedVictoryBladeWeapons EVBW = new();
-    public ShadowrealmMerge SRM = new();
+public DualChainSawKatanas DCSK
+{
+    get => _DCSK ??= new DualChainSawKatanas();
+    set => _DCSK = value;
+}
+public DualChainSawKatanas _DCSK;
+
+public BurningBlade BB
+{
+    get => _BB ??= new BurningBlade();
+    set => _BB = value;
+}
+public BurningBlade _BB;
+
+public BurningBladeOfAbezeth BBOA
+{
+    get => _BBOA ??= new BurningBladeOfAbezeth();
+    set => _BBOA = value;
+}
+public BurningBladeOfAbezeth _BBOA;
+
+public EnchantedVictoryBladeWeapons EVBW
+{
+    get => _EVBW ??= new EnchantedVictoryBladeWeapons();
+    set => _EVBW = value;
+}
+public EnchantedVictoryBladeWeapons _EVBW;
+
+public ShadowrealmMerge SRM
+{
+    get => _SRM ??= new ShadowrealmMerge();
+    set => _SRM = value;
+}
+public ShadowrealmMerge _SRM;
+
 
     //Story
-    public Tutorial Tutorial = new();
-    public CelestialArenaQuests CAQ = new();
-    public GlaceraStory GS = new();
-    public Mazumi Mazumi = new();
+public Tutorial Tutorial
+{
+    get => _Tutorial ??= new Tutorial();
+    set => _Tutorial = value;
+}
+public Tutorial _Tutorial;
+
+public CelestialArenaQuests CAQ
+{
+    get => _CAQ ??= new CelestialArenaQuests();
+    set => _CAQ = value;
+}
+public CelestialArenaQuests _CAQ;
+
+public GlaceraStory GS
+{
+    get => _GS ??= new GlaceraStory();
+    set => _GS = value;
+}
+public GlaceraStory _GS;
+
+public Mazumi Mazumi
+{
+    get => _Mazumi ??= new Mazumi();
+    set => _Mazumi = value;
+}
+public Mazumi _Mazumi;
+
 
     public string OptionsStorage = "FarmerJoePet";
     public bool DontPreconfigure = true;

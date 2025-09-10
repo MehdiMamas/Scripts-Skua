@@ -22,16 +22,76 @@ public class BeleensMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreStory Story = new();
-    public CoreAdvanced Adv = new();
-    public static CoreAdvanced sAdv = new();
-    public CoreLegion CoreLegion = new();
-    public LegionExercise3 LegionExercise3 = new();
-    public LegionExercise4 LegionExercise4 = new();
-    public CoreNation Nation = new();
-    public TarosManslayer TarosManslayer = new();
-    public ArtixWedding ArtixWedding = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+public static CoreAdvanced _sAdv;
+
+public CoreLegion CoreLegion
+{
+    get => _CoreLegion ??= new CoreLegion();
+    set => _CoreLegion = value;
+}
+public CoreLegion _CoreLegion;
+
+public LegionExercise3 LegionExercise3
+{
+    get => _LegionExercise3 ??= new LegionExercise3();
+    set => _LegionExercise3 = value;
+}
+public LegionExercise3 _LegionExercise3;
+
+public LegionExercise4 LegionExercise4
+{
+    get => _LegionExercise4 ??= new LegionExercise4();
+    set => _LegionExercise4 = value;
+}
+public LegionExercise4 _LegionExercise4;
+
+public CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+public CoreNation _Nation;
+
+public TarosManslayer TarosManslayer
+{
+    get => _TarosManslayer ??= new TarosManslayer();
+    set => _TarosManslayer = value;
+}
+public TarosManslayer _TarosManslayer;
+
+public ArtixWedding ArtixWedding
+{
+    get => _ArtixWedding ??= new ArtixWedding();
+    set => _ArtixWedding = value;
+}
+public ArtixWedding _ArtixWedding;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

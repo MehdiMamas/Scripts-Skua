@@ -15,8 +15,20 @@ public class BloodAncient
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreAdvanced Adv = new();
-    private BloodAncientMerge BAM = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private BloodAncientMerge BAM
+{
+    get => _BAM ??= new BloodAncientMerge();
+    set => _BAM = value;
+}
+private BloodAncientMerge _BAM;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

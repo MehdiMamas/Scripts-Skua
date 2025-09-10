@@ -15,7 +15,13 @@ public class FiendishStormOrbQuestPet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private StormCacheMerge SCM = new();
+private StormCacheMerge SCM
+{
+    get => _SCM ??= new StormCacheMerge();
+    set => _SCM = value;
+}
+private StormCacheMerge _SCM;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

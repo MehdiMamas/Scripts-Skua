@@ -59,10 +59,34 @@ public class ArcanaInvoker
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public CoreFarms Farm => new();
-    public CoreAdvanced Adv = new();
-    public CoreAstravia Astravia = new();
-    public ArcanaInvokerResourceMerge AIRM = new();
-    public CoreStory Story = new();
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CoreAstravia Astravia
+{
+    get => _Astravia ??= new CoreAstravia();
+    set => _Astravia = value;
+}
+public CoreAstravia _Astravia;
+
+public ArcanaInvokerResourceMerge AIRM
+{
+    get => _AIRM ??= new ArcanaInvokerResourceMerge();
+    set => _AIRM = value;
+}
+public ArcanaInvokerResourceMerge _AIRM;
+
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

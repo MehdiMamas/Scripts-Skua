@@ -16,9 +16,27 @@ public class LostVilla
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreStory Story = new();
-    private Banished Ban = new();
-    private CoreQOM CoreQOM = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private Banished Ban
+{
+    get => _Ban ??= new Banished();
+    set => _Ban = value;
+}
+private Banished _Ban;
+
+private CoreQOM CoreQOM
+{
+    get => _CoreQOM ??= new CoreQOM();
+    set => _CoreQOM = value;
+}
+private CoreQOM _CoreQOM;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

@@ -18,14 +18,56 @@ public class AkibaNewYear0DoAll
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreStory Story = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
 
-    private Bingwen Bingwen = new();
-    private LadyLua LadyLua = new();
-    private Parades Parades = new();
-    private YokaiHunt YokaiHunt = new();
-    private Zhu Zhu = new();
-    private SenlinMas SenlinMas = new();
+
+private Bingwen Bingwen
+{
+    get => _Bingwen ??= new Bingwen();
+    set => _Bingwen = value;
+}
+private Bingwen _Bingwen;
+
+private LadyLua LadyLua
+{
+    get => _LadyLua ??= new LadyLua();
+    set => _LadyLua = value;
+}
+private LadyLua _LadyLua;
+
+private Parades Parades
+{
+    get => _Parades ??= new Parades();
+    set => _Parades = value;
+}
+private Parades _Parades;
+
+private YokaiHunt YokaiHunt
+{
+    get => _YokaiHunt ??= new YokaiHunt();
+    set => _YokaiHunt = value;
+}
+private YokaiHunt _YokaiHunt;
+
+private Zhu Zhu
+{
+    get => _Zhu ??= new Zhu();
+    set => _Zhu = value;
+}
+private Zhu _Zhu;
+
+private SenlinMas SenlinMas
+{
+    get => _SenlinMas ??= new SenlinMas();
+    set => _SenlinMas = value;
+}
+private SenlinMas _SenlinMas;
+
 
     public void ScriptMain(IScriptInterface Bot)
     {

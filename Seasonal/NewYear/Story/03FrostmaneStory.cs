@@ -12,8 +12,20 @@ public class Frostmane
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public CoreNewYear NY = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public CoreNewYear NY
+{
+    get => _NY ??= new CoreNewYear();
+    set => _NY = value;
+}
+public CoreNewYear _NY;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

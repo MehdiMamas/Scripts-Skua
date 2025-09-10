@@ -20,14 +20,62 @@ public class LightCaster
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm = new();
-    public CoreAdvanced Adv = new();
-    public LightMage LM = new();
-    public AvatarOfDeathsScythe AODS = new();
-    public GuardianOfSpiritsBlade GOSB = new();
-    public LanceOfTime LOT = new();
-    public BurningBlade BB = new();
-    public BurningBladeOfAbezeth BBOA = new();
+public CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+public CoreFarms _Farm;
+
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public LightMage LM
+{
+    get => _LM ??= new LightMage();
+    set => _LM = value;
+}
+public LightMage _LM;
+
+public AvatarOfDeathsScythe AODS
+{
+    get => _AODS ??= new AvatarOfDeathsScythe();
+    set => _AODS = value;
+}
+public AvatarOfDeathsScythe _AODS;
+
+public GuardianOfSpiritsBlade GOSB
+{
+    get => _GOSB ??= new GuardianOfSpiritsBlade();
+    set => _GOSB = value;
+}
+public GuardianOfSpiritsBlade _GOSB;
+
+public LanceOfTime LOT
+{
+    get => _LOT ??= new LanceOfTime();
+    set => _LOT = value;
+}
+public LanceOfTime _LOT;
+
+public BurningBlade BB
+{
+    get => _BB ??= new BurningBlade();
+    set => _BB = value;
+}
+public BurningBlade _BB;
+
+public BurningBladeOfAbezeth BBOA
+{
+    get => _BBOA ??= new BurningBladeOfAbezeth();
+    set => _BBOA = value;
+}
+public BurningBladeOfAbezeth _BBOA;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

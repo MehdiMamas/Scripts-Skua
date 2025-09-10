@@ -14,7 +14,13 @@ public class DoomKnightWeaponKit
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreSDKA SDKA = new();
+public CoreSDKA SDKA
+{
+    get => _SDKA ??= new CoreSDKA();
+    set => _SDKA = value;
+}
+public CoreSDKA _SDKA;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

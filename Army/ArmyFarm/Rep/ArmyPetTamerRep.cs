@@ -16,9 +16,27 @@ public class Generated_ArmyPetTamerRep
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private PockeyMogsStory lite = new();
-    private CoreArmyLite Army = new();
-    private static CoreArmyLite sArmy = new();
+private PockeyMogsStory lite
+{
+    get => _lite ??= new PockeyMogsStory();
+    set => _lite = value;
+}
+private PockeyMogsStory _lite;
+
+private CoreArmyLite Army
+{
+    get => _Army ??= new CoreArmyLite();
+    set => _Army = value;
+}
+private CoreArmyLite _Army;
+
+private static CoreArmyLite sArmy
+{
+    get => _sArmy ??= new CoreArmyLite();
+    set => _sArmy = value;
+}
+private static CoreArmyLite _sArmy;
+
 
     public string OptionsStorage = "CustomAggroMon";
     public bool DontPreconfigure = true;
@@ -44,9 +62,9 @@ public class Generated_ArmyPetTamerRep
 
     public void ArmyPetTamerRep()
         => Army.RunGeneratedAggroMon(map, monNames, questIDs, classtype, drops);
-    private List<int> questIDs = new() { 5268, 5269, 5270, 5271, 5272, 5273 };
-    private List<string> monNames = new() { "Moglurker", "Zaplin", "Blood Moggot", "Flamog", "Vizally", "Toglin" };
-    private List<string> drops = new() { "" };
+    private static readonly int[] questIDs={ 5268, 5269, 5270, 5271, 5272, 5273 };
+    private static readonly string[] monNames={ "Moglurker", "Zaplin", "Blood Moggot", "Flamog", "Vizally", "Toglin" };
+    private static readonly string[] drops={ "" };
     private string map = "pockeymogs";
     private ClassType classtype = ClassType.Solo;
 }

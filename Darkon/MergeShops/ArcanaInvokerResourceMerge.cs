@@ -54,34 +54,196 @@ public class ArcanaInvokerResourceMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private static CoreAdvanced sAdv = new();
-    public Core13LoC LOC = new();
-    public GooseMerge GooseMerge = new();
-    public BrightForestMerge BrightForestMerge = new();
-    public TerminaTempleMerge TerminaTempleMerge = new();
-    public InfernalArena InfernalArena = new();
-    public DoomLegacyMerge DLM = new();
-    public CelestialChallengerMerge CCM = new();
-    public SpoilsofLightMerge SOLM = new();
-    public ArchiveofTimeMerge AOTM = new();
-    public CrocriverMerge CM = new();
-    public SuperSlayinMerge SSM = new();
-    public DreampalaceMerge DPM = new();
-    public BonecastleMerge BCM = new();
-    public CelestialRealmMerge CRM = new();
-    public ThreeLittleWolvesHousesMerge TLWHM = new();
-    public PotionBuyer PotionBuyer = new();
-    public MoonlightKhopeshMerge MoonlightKhopeshMerge = new();
-    public ShadowMerge ShadowMerge = new();
-    public ThirdspellMerge ThirdspellMerge = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
+public Core13LoC LOC
+{
+    get => _LOC ??= new Core13LoC();
+    set => _LOC = value;
+}
+public Core13LoC _LOC;
+
+public GooseMerge GooseMerge
+{
+    get => _GooseMerge ??= new GooseMerge();
+    set => _GooseMerge = value;
+}
+public GooseMerge _GooseMerge;
+
+public BrightForestMerge BrightForestMerge
+{
+    get => _BrightForestMerge ??= new BrightForestMerge();
+    set => _BrightForestMerge = value;
+}
+public BrightForestMerge _BrightForestMerge;
+
+public TerminaTempleMerge TerminaTempleMerge
+{
+    get => _TerminaTempleMerge ??= new TerminaTempleMerge();
+    set => _TerminaTempleMerge = value;
+}
+public TerminaTempleMerge _TerminaTempleMerge;
+
+public InfernalArena InfernalArena
+{
+    get => _InfernalArena ??= new InfernalArena();
+    set => _InfernalArena = value;
+}
+public InfernalArena _InfernalArena;
+
+public DoomLegacyMerge DLM
+{
+    get => _DLM ??= new DoomLegacyMerge();
+    set => _DLM = value;
+}
+public DoomLegacyMerge _DLM;
+
+public CelestialChallengerMerge CCM
+{
+    get => _CCM ??= new CelestialChallengerMerge();
+    set => _CCM = value;
+}
+public CelestialChallengerMerge _CCM;
+
+public SpoilsofLightMerge SOLM
+{
+    get => _SOLM ??= new SpoilsofLightMerge();
+    set => _SOLM = value;
+}
+public SpoilsofLightMerge _SOLM;
+
+public ArchiveofTimeMerge AOTM
+{
+    get => _AOTM ??= new ArchiveofTimeMerge();
+    set => _AOTM = value;
+}
+public ArchiveofTimeMerge _AOTM;
+
+public CrocriverMerge CM
+{
+    get => _CM ??= new CrocriverMerge();
+    set => _CM = value;
+}
+public CrocriverMerge _CM;
+
+public SuperSlayinMerge SSM
+{
+    get => _SSM ??= new SuperSlayinMerge();
+    set => _SSM = value;
+}
+public SuperSlayinMerge _SSM;
+
+public DreampalaceMerge DPM
+{
+    get => _DPM ??= new DreampalaceMerge();
+    set => _DPM = value;
+}
+public DreampalaceMerge _DPM;
+
+public BonecastleMerge BCM
+{
+    get => _BCM ??= new BonecastleMerge();
+    set => _BCM = value;
+}
+public BonecastleMerge _BCM;
+
+public CelestialRealmMerge CRM
+{
+    get => _CRM ??= new CelestialRealmMerge();
+    set => _CRM = value;
+}
+public CelestialRealmMerge _CRM;
+
+public ThreeLittleWolvesHousesMerge TLWHM
+{
+    get => _TLWHM ??= new ThreeLittleWolvesHousesMerge();
+    set => _TLWHM = value;
+}
+public ThreeLittleWolvesHousesMerge _TLWHM;
+
+public PotionBuyer PotionBuyer
+{
+    get => _PotionBuyer ??= new PotionBuyer();
+    set => _PotionBuyer = value;
+}
+public PotionBuyer _PotionBuyer;
+
+public MoonlightKhopeshMerge MoonlightKhopeshMerge
+{
+    get => _MoonlightKhopeshMerge ??= new MoonlightKhopeshMerge();
+    set => _MoonlightKhopeshMerge = value;
+}
+public MoonlightKhopeshMerge _MoonlightKhopeshMerge;
+
+public ShadowMerge ShadowMerge
+{
+    get => _ShadowMerge ??= new ShadowMerge();
+    set => _ShadowMerge = value;
+}
+public ShadowMerge _ShadowMerge;
+
+public ThirdspellMerge ThirdspellMerge
+{
+    get => _ThirdspellMerge ??= new ThirdspellMerge();
+    set => _ThirdspellMerge = value;
+}
+public ThirdspellMerge _ThirdspellMerge;
+
     public CoreDarkon Darkon => new();
-    public CoreShadowofDoom CoreShadowofDoom = new();
-    public FableForest FableForest = new();
-    public VoidRefuge VR = new();
-    private CoreAOR AOR = new();
-    public CoreSepulchure CoreSS = new();
+public CoreShadowofDoom CoreShadowofDoom
+{
+    get => _CoreShadowofDoom ??= new CoreShadowofDoom();
+    set => _CoreShadowofDoom = value;
+}
+public CoreShadowofDoom _CoreShadowofDoom;
+
+public FableForest FableForest
+{
+    get => _FableForest ??= new FableForest();
+    set => _FableForest = value;
+}
+public FableForest _FableForest;
+
+public VoidRefuge VR
+{
+    get => _VR ??= new VoidRefuge();
+    set => _VR = value;
+}
+public VoidRefuge _VR;
+
+private CoreAOR AOR
+{
+    get => _AOR ??= new CoreAOR();
+    set => _AOR = value;
+}
+private CoreAOR _AOR;
+
+public CoreSepulchure CoreSS
+{
+    get => _CoreSS ??= new CoreSepulchure();
+    set => _CoreSS = value;
+}
+public CoreSepulchure _CoreSS;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

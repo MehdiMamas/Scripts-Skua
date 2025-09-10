@@ -21,11 +21,41 @@ public class ShadowrealmMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreAdvanced Adv = new();
-    private YulgarsUndineMerge YUM = new();
-    private DawnFortressMerge DFM = new();
-    private static CoreAdvanced sAdv = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+private YulgarsUndineMerge YUM
+{
+    get => _YUM ??= new YulgarsUndineMerge();
+    set => _YUM = value;
+}
+private YulgarsUndineMerge _YUM;
+
+private DawnFortressMerge DFM
+{
+    get => _DFM ??= new DawnFortressMerge();
+    set => _DFM = value;
+}
+private DawnFortressMerge _DFM;
+
+private static CoreAdvanced sAdv
+{
+    get => _sAdv ??= new CoreAdvanced();
+    set => _sAdv = value;
+}
+private static CoreAdvanced _sAdv;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

@@ -14,8 +14,20 @@ public class BurningBladeOfAbezeth
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreAdvanced Adv = new();
-    public CelestialArenaQuests CAQ = new();
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+public CelestialArenaQuests CAQ
+{
+    get => _CAQ ??= new CelestialArenaQuests();
+    set => _CAQ = value;
+}
+public CelestialArenaQuests _CAQ;
+
     //public CelestialChampion CC = new();
     public void ScriptMain(IScriptInterface bot)
     {

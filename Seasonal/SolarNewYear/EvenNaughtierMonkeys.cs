@@ -13,9 +13,27 @@ public class EvenNaughtierMonkeys
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm = new();
-    private CoreNation Nation = new();
-    private WaterWar WW = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
+
+private CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+private CoreNation _Nation;
+
+private WaterWar WW
+{
+    get => _WW ??= new WaterWar();
+    set => _WW = value;
+}
+private WaterWar _WW;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

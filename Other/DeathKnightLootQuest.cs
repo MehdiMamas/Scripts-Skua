@@ -17,11 +17,29 @@ public class DeathKnightLootChestQuest
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     
-    private AranxQuests AR = new();
+private AranxQuests AR
+{
+    get => _AR ??= new AranxQuests();
+    set => _AR = value;
+}
+private AranxQuests _AR;
 
-    private CoreAdvanced Adv = new();
 
-    private CoreFarms Cf = new();
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+
+private CoreFarms Cf
+{
+    get => _Cf ??= new CoreFarms();
+    set => _Cf = value;
+}
+private CoreFarms _Cf;
+
 
 
 

@@ -18,8 +18,20 @@ public class AlphaPirate
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreAdvanced Adv = new();
-    private BlazeBeardMerge BBM = new();
+public CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+public CoreAdvanced _Adv;
+
+private BlazeBeardMerge BBM
+{
+    get => _BBM ??= new BlazeBeardMerge();
+    set => _BBM = value;
+}
+private BlazeBeardMerge _BBM;
+
 
     public void ScriptMain(IScriptInterface bot)
     {

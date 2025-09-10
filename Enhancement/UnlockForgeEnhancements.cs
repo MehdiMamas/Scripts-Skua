@@ -123,40 +123,214 @@ public class UnlockForgeEnhancements
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-    private CoreFarms Farm = new();
-    private CoreStory Story = new();
-    private CoreAdvanced Adv = new();
+private CoreFarms Farm
+{
+    get => _Farm ??= new CoreFarms();
+    set => _Farm = value;
+}
+private CoreFarms _Farm;
 
-    private CoreNation Nation = new();
-    private CoreLegion Legion = new();
-    private CoreDarkon Darkon = new();
-    private CoreSoWMats SOWM = new();
-    private CoreAwe Awe = new();
+private CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+private CoreStory _Story;
+
+private CoreAdvanced Adv
+{
+    get => _Adv ??= new CoreAdvanced();
+    set => _Adv = value;
+}
+private CoreAdvanced _Adv;
+
+
+private CoreNation Nation
+{
+    get => _Nation ??= new CoreNation();
+    set => _Nation = value;
+}
+private CoreNation _Nation;
+
+private CoreLegion Legion
+{
+    get => _Legion ??= new CoreLegion();
+    set => _Legion = value;
+}
+private CoreLegion _Legion;
+
+private CoreDarkon Darkon
+{
+    get => _Darkon ??= new CoreDarkon();
+    set => _Darkon = value;
+}
+private CoreDarkon _Darkon;
+
+private CoreSoWMats SOWM
+{
+    get => _SOWM ??= new CoreSoWMats();
+    set => _SOWM = value;
+}
+private CoreSoWMats _SOWM;
+
+private CoreAwe Awe
+{
+    get => _Awe ??= new CoreAwe();
+    set => _Awe = value;
+}
+private CoreAwe _Awe;
+
 
     private Core13LoC LOC => new();
-    private CoreNSOD CorNSOD = new();
-    private CoreAstravia Astravia => new();
-    private CoreDailies Daily = new();
-    private Core7DD DD = new();
-    private CoreYnR YNR = new();
+private CoreNSOD CorNSOD
+{
+    get => _CorNSOD ??= new CoreNSOD();
+    set => _CorNSOD = value;
+}
+private CoreNSOD _CorNSOD;
 
-    private CoreSoW SoW = new();
-    private CoreSepulchure CoreSS = new();
-    private ArchPaladin AP = new();
-    private DragonOfTime DOT = new();
-    private FireChampionsArmor FCA = new();
-    private EternalDrakath ED = new();
-    private SepulchuresOriginalHelm Seppy = new();
-    private PrinceDarkonsPoleaxePreReqs PDPPR = new();
-    private HeadoftheLegionBeast HOTLB = new();
-    private Awescended Awescended = new();
-    private NulgathDemandsWork NDW = new();
-    private ThirdSpell TSS = new();
-    private LordOfOrder LOO = new();
-    private SevenCircles Circles = new();
-    private YokaiQuests Yokai = new();
-    private MalgorsArmorSet MAS = new();
-    private PrimeFiendShard PFS = new();
+    private CoreAstravia Astravia => new();
+private CoreDailies Daily
+{
+    get => _Daily ??= new CoreDailies();
+    set => _Daily = value;
+}
+private CoreDailies _Daily;
+
+private Core7DD DD
+{
+    get => _DD ??= new Core7DD();
+    set => _DD = value;
+}
+private Core7DD _DD;
+
+private CoreYnR YNR
+{
+    get => _YNR ??= new CoreYnR();
+    set => _YNR = value;
+}
+private CoreYnR _YNR;
+
+
+private CoreSoW SoW
+{
+    get => _SoW ??= new CoreSoW();
+    set => _SoW = value;
+}
+private CoreSoW _SoW;
+
+private CoreSepulchure CoreSS
+{
+    get => _CoreSS ??= new CoreSepulchure();
+    set => _CoreSS = value;
+}
+private CoreSepulchure _CoreSS;
+
+private ArchPaladin AP
+{
+    get => _AP ??= new ArchPaladin();
+    set => _AP = value;
+}
+private ArchPaladin _AP;
+
+private DragonOfTime DOT
+{
+    get => _DOT ??= new DragonOfTime();
+    set => _DOT = value;
+}
+private DragonOfTime _DOT;
+
+private FireChampionsArmor FCA
+{
+    get => _FCA ??= new FireChampionsArmor();
+    set => _FCA = value;
+}
+private FireChampionsArmor _FCA;
+
+private EternalDrakath ED
+{
+    get => _ED ??= new EternalDrakath();
+    set => _ED = value;
+}
+private EternalDrakath _ED;
+
+private SepulchuresOriginalHelm Seppy
+{
+    get => _Seppy ??= new SepulchuresOriginalHelm();
+    set => _Seppy = value;
+}
+private SepulchuresOriginalHelm _Seppy;
+
+private PrinceDarkonsPoleaxePreReqs PDPPR
+{
+    get => _PDPPR ??= new PrinceDarkonsPoleaxePreReqs();
+    set => _PDPPR = value;
+}
+private PrinceDarkonsPoleaxePreReqs _PDPPR;
+
+private HeadoftheLegionBeast HOTLB
+{
+    get => _HOTLB ??= new HeadoftheLegionBeast();
+    set => _HOTLB = value;
+}
+private HeadoftheLegionBeast _HOTLB;
+
+private Awescended Awescended
+{
+    get => _Awescended ??= new Awescended();
+    set => _Awescended = value;
+}
+private Awescended _Awescended;
+
+private NulgathDemandsWork NDW
+{
+    get => _NDW ??= new NulgathDemandsWork();
+    set => _NDW = value;
+}
+private NulgathDemandsWork _NDW;
+
+private ThirdSpell TSS
+{
+    get => _TSS ??= new ThirdSpell();
+    set => _TSS = value;
+}
+private ThirdSpell _TSS;
+
+private LordOfOrder LOO
+{
+    get => _LOO ??= new LordOfOrder();
+    set => _LOO = value;
+}
+private LordOfOrder _LOO;
+
+private SevenCircles Circles
+{
+    get => _Circles ??= new SevenCircles();
+    set => _Circles = value;
+}
+private SevenCircles _Circles;
+
+private YokaiQuests Yokai
+{
+    get => _Yokai ??= new YokaiQuests();
+    set => _Yokai = value;
+}
+private YokaiQuests _Yokai;
+
+private MalgorsArmorSet MAS
+{
+    get => _MAS ??= new MalgorsArmorSet();
+    set => _MAS = value;
+}
+private MalgorsArmorSet _MAS;
+
+private PrimeFiendShard PFS
+{
+    get => _PFS ??= new PrimeFiendShard();
+    set => _PFS = value;
+}
+private PrimeFiendShard _PFS;
+
 
 
     public string OptionsStorage = "Forge Ehn Unlocks";

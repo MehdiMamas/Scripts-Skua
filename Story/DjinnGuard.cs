@@ -12,8 +12,20 @@ public class DjinnGuard
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public DjinnGateStory DjinnGateStory = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public DjinnGateStory DjinnGateStory
+{
+    get => _DjinnGateStory ??= new DjinnGateStory();
+    set => _DjinnGateStory = value;
+}
+public DjinnGateStory _DjinnGateStory;
+
 
 
     public void ScriptMain(IScriptInterface bot)

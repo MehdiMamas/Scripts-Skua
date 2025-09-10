@@ -12,8 +12,20 @@ public class AtlasPromenade
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreStory Story = new();
-    public SevenCircles SCW = new();
+public CoreStory Story
+{
+    get => _Story ??= new CoreStory();
+    set => _Story = value;
+}
+public CoreStory _Story;
+
+public SevenCircles SCW
+{
+    get => _SCW ??= new SevenCircles();
+    set => _SCW = value;
+}
+public SevenCircles _SCW;
+
 
     public void ScriptMain(IScriptInterface bot)
     {
