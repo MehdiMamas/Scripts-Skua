@@ -106,7 +106,6 @@ public CoreStory _Story;
         if (StopForGoldFarm)
             return;
 
-        // Bot.Events.CellChanged += CutSceneFixer;
         //Wrath Against the Machine  
         Core.EquipClass(ClassType.Solo);
         Story.KillQuest(7982, "sevencircleswar", "Wrath");

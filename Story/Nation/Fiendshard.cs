@@ -92,7 +92,6 @@ public Originul_Story _Originul;
         // Archfiend DeathLord quests can be done without finishing this quest.
         if (!Story.QuestProgression(7898))
         {
-            // Bot.Events.CellChanged += CutSceneFixer;
             Core.Join("fiendshard", "r9");
             while (!Bot.ShouldExit && Bot.Player.Cell != "r9")
             {

@@ -112,15 +112,17 @@ public class TouchMass
         Army.AggroMonMIDs(7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22);
         Army.AggroMonStart("starfield");
         Army.DivideOnCells("r3");
-
         bool ded = false;
-        Bot.Events.MonsterKilled += b => ded = true;
+
+        // Method must match the delegate signature
+        void OnMonsterKilled(int b) => ded = true;
+
+        Bot.Events.MonsterKilled += OnMonsterKilled;
 
         while (!Bot.ShouldExit && !Core.HasWebBadge(badge))
         {
             foreach (Monster targetMonster in Bot.Monsters.CurrentAvailableMonsters)
             {
-
                 while (!Bot.ShouldExit && !ded)
                 {
                     #region cell & alive checks
@@ -131,7 +133,7 @@ public class TouchMass
                         Bot.Wait.ForCellChange("r3");
                         Core.Sleep();
                     }
-                    #endregion cell & alive checks
+                    #endregion
                     if (Core.HasWebBadge(badge))
                     {
                         Core.JumpWait();
@@ -149,8 +151,9 @@ public class TouchMass
                 }
             }
         }
-        Bot.Events.MonsterKilled -= b => ded = true;
 
+        // Unsubscribe properly
+        Bot.Events.MonsterKilled -= OnMonsterKilled;
     }
     private string badge = "Touch Mass";
 

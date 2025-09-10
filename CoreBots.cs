@@ -384,8 +384,10 @@ public class CoreBots
                                                  (!PrivateRooms || PrivateRoomNumber < 1000 || PublicDifficult ? "\nGuess you should have stayed out of public rooms!" : string.Empty);
                                 Logger(message);
                                 Bot.ShowMessageBox(message, "Unauthorized joining of /prison detected!", "Oh fuck!");
+                                Bot.Events.MapChanged -= PrisonDetector;
                                 Bot.Stop(true);
                             }
+                            Bot.Events.MapChanged -= PrisonDetector;
                         }
                     }
 
@@ -447,12 +449,12 @@ public class CoreBots
         return false;
     }
 
-public List<string> BankingBlackList
-{
-    get => _BankingBlackList ??= new List<string>();
-    set => _BankingBlackList = value;
-}
-public List<string> _BankingBlackList;
+    public List<string> BankingBlackList
+    {
+        get => _BankingBlackList ??= new List<string>();
+        set => _BankingBlackList = value;
+    }
+    public List<string> _BankingBlackList;
 
     private readonly List<string> EquipmentBeforeBot = new();
     private bool joinedPrison = false;
@@ -466,6 +468,7 @@ public List<string> _BankingBlackList;
     {
         StopBotAsync();
         Bot.Handlers.Clear();
+
 
         if (Bot.Player.LoggedIn)
         {
@@ -548,6 +551,9 @@ public List<string> _BankingBlackList;
             {
                 SavedState(false);
 
+                Bot.Events.MapChanged -= CleanKilledMonstersList;
+                Bot.Events.MonsterKilled -= KilledMonsterListener;
+                Bot.Events.ExtensionPacketReceived -= RespawnListener;
                 if (AntiLag)
                 {
                     Bot.Options.SetFPS = 60;
@@ -569,6 +575,7 @@ public List<string> _BankingBlackList;
 
     public bool StopBotEvent(Exception? e)
     {
+        Bot.Events.ScriptStopping -= StopBotEvent;
         SetOptions(false);
         return StopBot(e != null);
     }
@@ -610,7 +617,7 @@ public List<string> _BankingBlackList;
         Logger("Crash (Debug)");
         Bot.Log(eSlice);
         Bot.Log("--------------------------------------");
-            Bot.Events.ScriptStopping -= CrashDetector;
+        Bot.Events.ScriptStopping -= CrashDetector;
 
         return false;
     }
@@ -3513,8 +3520,14 @@ public List<string> _BankingBlackList;
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                     Sleep();
+
                 bool ded = false;
-                Bot.Events.MonsterKilled += b => ded = true;
+
+                // Named local method to properly unsubscribe later
+                void OnMonsterKilled(int b) => ded = true;
+
+                Bot.Events.MonsterKilled += OnMonsterKilled;
+
                 while (!Bot.ShouldExit && !ded)
                 {
                     while (!Bot.ShouldExit && !Bot.Player.Alive)
@@ -3540,7 +3553,11 @@ public List<string> _BankingBlackList;
 
                     Bot.Sleep(100);
                 }
+
+                // Properly unsubscribe the event
+                Bot.Events.MonsterKilled -= OnMonsterKilled;
             }
+
             return;
         }
         else
@@ -3793,8 +3810,13 @@ public List<string> _BankingBlackList;
         else
         {
             bool ded = false;
-            Bot.Events.MonsterKilled += b => ded = true;
-            while (!Bot.ShouldExit && !ded || isTemp ? !Bot.TempInv.Contains(ItemID, quant) : !CheckInventory(ItemID, quant))
+
+            // Local method to handle the event
+            void OnMonsterKilled(int b) => ded = true;
+
+            Bot.Events.MonsterKilled += OnMonsterKilled;
+
+            while (!Bot.ShouldExit && (!ded || (isTemp ? !Bot.TempInv.Contains(ItemID, quant) : !CheckInventory(ItemID, quant))))
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                     Sleep();
@@ -3819,10 +3841,14 @@ public List<string> _BankingBlackList;
                 if (isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant))
                     break;
             }
-            Rest();
-        }
-        Bot.Wait.ForPickup(ItemID);
 
+            // Unsubscribe the event to prevent memory leaks
+            Bot.Events.MonsterKilled -= OnMonsterKilled;
+
+            Rest();
+
+            Bot.Wait.ForPickup(ItemID);
+        }
         // Reset attack option
         Bot.Options.AttackWithoutTarget = false;
     }
@@ -3911,7 +3937,12 @@ public List<string> _BankingBlackList;
                 FarmingLogger(item, quant);
 
             bool ded = false;
-            Bot.Events.MonsterKilled += b => ded = true;
+
+            // Local method to match delegate signature
+            void OnMonsterKilled(int b) => ded = true;
+
+            // Subscribe
+            Bot.Events.MonsterKilled += OnMonsterKilled;
 
             while (!Bot.ShouldExit && (!ded || (isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))))
             {
@@ -3927,6 +3958,9 @@ public List<string> _BankingBlackList;
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                     break;
             }
+
+            // Unsubscribe to prevent memory leaks
+            Bot.Events.MonsterKilled -= OnMonsterKilled;
 
             Bot.Options.AttackWithoutTarget = false;
             ToggleAggro(false);
@@ -4012,30 +4046,49 @@ public List<string> _BankingBlackList;
             if (!isTemp)
                 AddDrop(item);
 
-            ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).FirstOrDefault(x => x != null && x.Name == item);
+            ItemBase? Item = Bot.Inventory.Items
+                .Concat(Bot.Bank.Items)
+                .Concat(Bot.House.Items)
+                .FirstOrDefault(x => x != null && x.Name == item);
+
             if (Item != null && Item.Quantity == Item.MaxStack)
                 Bot.Drops.Remove(Item.ID);
 
             bool ded = false;
-            Bot.Events.MonsterKilled += b => ded = true;
-            while (!Bot.ShouldExit && !ded || isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))
+
+            // Local method matching delegate signature for proper unsubscription
+            void OnMonsterKilled(int b) => ded = true;
+
+            // Subscribe
+            Bot.Events.MonsterKilled += OnMonsterKilled;
+
+            while (!Bot.ShouldExit && (!ded || (isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))))
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                     Sleep();
+
                 if (Bot.Map.Name != map)
                     Join(map);
+
                 if (Bot.Player.Cell != targetMonster.Cell)
                     Jump(targetMonster.Cell);
 
                 Bot.Combat.Attack(targetMonster);
                 Sleep();
+
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                     break;
             }
+
+            // Unsubscribe to prevent memory leaks
+            Bot.Events.MonsterKilled -= OnMonsterKilled;
+
             if (Bot.Options.RestPackets)
                 Rest();
+
             Bot.Wait.ForPickup(item);
         }
+
 
         #region exit aggro
         Bot.Options.AttackWithoutTarget = false;
@@ -5191,6 +5244,7 @@ public List<string> _BankingBlackList;
                         Bot.Combat.Attack(monster);
                     Sleep();
                 }
+                Bot.Events.MonsterKilled -= b => killed = true;
 
                 if (rejectElse)
                     Bot.Drops.RejectExcept(item);
@@ -5272,7 +5326,12 @@ public List<string> _BankingBlackList;
                 if (Bot.ShouldExit || HasItem()) break;
 
                 bool ded = false;
-                Bot.Events.MonsterKilled += b => ded = true;
+
+                // Local method matching the delegate signature
+                void OnMonsterKilled(int b) => ded = true;
+
+                // Subscribe to the event
+                Bot.Events.MonsterKilled += OnMonsterKilled;
 
                 if (cell != null && Bot.Player.Cell != cell)
                 {
@@ -5287,11 +5346,15 @@ public List<string> _BankingBlackList;
                     Sleep();
                 }
 
+                // Unsubscribe to prevent memory leaks
+                Bot.Events.MonsterKilled -= OnMonsterKilled;
+
                 if (rejectElse && itemID > 0)
                     Bot.Drops.RejectExcept(itemID);
 
                 Sleep();
             }
+
         }
 
         if (itemID > 0)
@@ -5329,7 +5392,12 @@ public List<string> _BankingBlackList;
                     if (HasItem()) break;
 
                     bool ded = false;
-                    Bot.Events.MonsterKilled += b => ded = true;
+
+                    // Local method matching the delegate
+                    void OnMonsterKilled(int b) => ded = true;
+
+                    // Subscribe
+                    Bot.Events.MonsterKilled += OnMonsterKilled;
 
                     while (!Bot.ShouldExit && !ded && !HasItem())
                     {
@@ -5342,8 +5410,12 @@ public List<string> _BankingBlackList;
                         Sleep();
                     }
 
+                    // Unsubscribe to prevent memory leaks
+                    Bot.Events.MonsterKilled -= OnMonsterKilled;
+
                     if (HasItem()) break;
                 }
+
             }
             else
             {
@@ -5391,7 +5463,12 @@ public List<string> _BankingBlackList;
                     if (HasItem()) break;
 
                     bool ded = false;
-                    Bot.Events.MonsterKilled += b => ded = true;
+
+                    // Local method matching the delegate
+                    void OnMonsterKilled(int b) => ded = true;
+
+                    // Subscribe
+                    Bot.Events.MonsterKilled += OnMonsterKilled;
 
                     while (!Bot.ShouldExit && !ded && !HasItem())
                     {
@@ -5407,8 +5484,12 @@ public List<string> _BankingBlackList;
                         Sleep();
                     }
 
+                    // Unsubscribe to prevent memory leaks
+                    Bot.Events.MonsterKilled -= OnMonsterKilled;
+
                     if (HasItem()) break;
                 }
+
 
                 if (rejectElse)
                     Bot.Drops.RejectExcept(item);
@@ -9113,12 +9194,12 @@ public List<string> _BankingBlackList;
         return true;
     }
 
-private List<string> CBOList
-{
-    get => _CBOList ??= new List<string>();
-    set => _CBOList = value;
-}
-private List<string> _CBOList;
+    private List<string> CBOList
+    {
+        get => _CBOList ??= new List<string>();
+        set => _CBOList = value;
+    }
+    private List<string> _CBOList;
 
 
     public string MeasureExecutionTime(Action action, string? PrefixMessage = null)
