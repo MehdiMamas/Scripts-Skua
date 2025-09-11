@@ -450,8 +450,8 @@ public class Grimgaol
 
                     // Emperor Angler - VDK/DoT
                     case "r7":
-                        // if (Core.CheckInventory(verusdoomdnight))
-                        //     RVDK(Bot.Player?.Cell);
+                        if (Core.CheckInventory(verusdoomdnight))
+                            RVDK(Bot.Player?.Cell);
                         RYami(Bot.Player.Cell);
 
                         if (Bot.Config!.Get<bool>("RoomTimers"))
@@ -465,10 +465,10 @@ public class Grimgaol
 
                     // Treasure Chest - VDK/DOT
                     case "r8":
-                        // if (Core.CheckInventory(verusdoomdnight))
-                        //     RVDK(Bot.Player?.Cell);
-                        // else
-                        RDoT(Bot.Player.Cell);
+                        if (Core.CheckInventory(verusdoomdnight))
+                            RVDK(Bot.Player?.Cell);
+                        else
+                            RDoT(Bot.Player.Cell);
                         if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r8\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player?.Cell != "r9")
@@ -1466,46 +1466,45 @@ public class Grimgaol
         #region Equipment Setup
         EquipIfAvailable(dragonoftime);
         EquipIfAvailable(Bot.Config!.Get<string>("Elysium"));
-        EquipIfAvailable(!statues ? Bot.Config!.Get<string>("HealerHelm") : Bot.Config!.Get<string>("PneumaHelm"));
-        EquipIfAvailable(!statues ? Bot.Config!.Get<string>("HealerCape") : Bot.Config!.Get<string>("Vainglory"));
+        EquipIfAvailable(Bot.Config!.Get<string>("HealerHelm"));
+        EquipIfAvailable(Bot.Config!.Get<string>("HealerCape"));
         #endregion
 
         int skillIndex = 0;
-        // int[] skillList = new[] { 1, 2, 3, 2, 4, 2 };
-        // int[] skillList = new[] { 3, 2, 1, 2, 4, 2 };
-        int[] skillList = new[] { 3, 2, 1, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, 4, 3, 2, 1, 2, };
+        int[] skillList = new[] { 1, 2, 3, 2, 4, 2 };
 
 
-        foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters.Where(x => x != null && x.Cell == Bot.Player.Cell))
+        while (!Bot.ShouldExit)
         {
-            while (!Bot.ShouldExit)
+            if (!monsterAvail()) return;
+            foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
             {
                 if (m == null) continue;
-                if (!monsterAvail()) return;
-
-                if (!Bot.Player.Alive)
+             
+                while (!Bot.ShouldExit)
                 {
-                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                    skillIndex = 0;
+                    if (!monsterAvail()) return;
+
+                    if (!Bot.Player.Alive)
+                    {
+                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                        skillIndex = 0;
+                    }
+
+                    if (!Bot.Player.HasTarget)
+                        Bot.Combat.Attack(m.MapID);
+
+                    if (Bot.Player.Target?.HP <= 0)
+                        break;
+
+                    if (Bot.Player.HasTarget && Bot.Player.Target.Alive)
+                    {
+                        Bot.Skills.UseSkill(skillList[skillIndex]);
+                        skillIndex = (skillIndex + 1) % skillList.Length;
+                    }
+
+                    Core.Sleep(100); // prevent skill spam
                 }
-
-                if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(m.MapID);
-
-                if ((Bot.Player.HasTarget && Bot.Player.Target.HP <= 0) || m.HP <= 0)
-                {
-                    Bot.Combat.CancelAutoAttack();
-                    Bot.Combat.CancelTarget();
-                    break;
-                }
-
-                if (Bot.Player.HasTarget && Bot.Player.Target.Alive)
-                {
-                    Bot.Skills.UseSkill(skillList[skillIndex]);
-                    skillIndex = (skillIndex + 1) % skillList.Length;
-                }
-
-                Core.Sleep(100); // prevent skill spam
             }
         }
     }
