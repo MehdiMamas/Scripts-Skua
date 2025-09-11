@@ -16,41 +16,16 @@ public class EvovledHexOrbItems
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-private CoreNation _Nation;
-
-private EvolvedHexOrb EHO
-{
-    get => _EHO ??= new EvolvedHexOrb();
-    set => _EHO = value;
-}
-private EvolvedHexOrb _EHO;
-
-private PotionBuyer Potion
-{
-    get => _Potion ??= new PotionBuyer();
-    set => _Potion = value;
-}
-private PotionBuyer _Potion;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static EvolvedHexOrb EHO { get => _EHO ??= new EvolvedHexOrb(); set => _EHO = value; }
+    private static EvolvedHexOrb _EHO;
+    private static PotionBuyer Potion { get => _Potion ??= new PotionBuyer(); set => _Potion = value; }
+    private static PotionBuyer _Potion;
 
     public void ScriptMain(IScriptInterface Bot)
     {

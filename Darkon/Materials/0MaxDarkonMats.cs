@@ -15,14 +15,8 @@ public class MaxAllDarkon
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreDarkon Darkon => new();
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
+    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }    private static CoreDarkon _Darkon;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {

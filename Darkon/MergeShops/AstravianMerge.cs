@@ -17,13 +17,7 @@ public class AstravianMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
 public static CoreAdvanced sAdv
 {
     get => _sAdv ??= new CoreAdvanced();
@@ -31,20 +25,9 @@ public static CoreAdvanced sAdv
 }
 public static CoreAdvanced _sAdv;
 
-public CoreDarkon Darkon
-{
-    get => _Darkon ??= new CoreDarkon();
-    set => _Darkon = value;
-}
-public CoreDarkon _Darkon;
-
-private CoreAstravia Astravia
-{
-    get => _Astravia ??= new CoreAstravia();
-    set => _Astravia = value;
-}
-private CoreAstravia _Astravia;
-
+    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }    private static CoreDarkon _Darkon;
+    private static CoreAstravia Astravia { get => _Astravia ??= new CoreAstravia(); set => _Astravia = value; }
+    private static CoreAstravia _Astravia;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

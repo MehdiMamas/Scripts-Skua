@@ -16,13 +16,8 @@ public class AgeOfRuinDrops
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreAOR AOR
-{
-    get => _AOR ??= new CoreAOR();
-    set => _AOR = value;
-}
-private CoreAOR _AOR;
-
+    private static CoreAOR AOR { get => _AOR ??= new CoreAOR(); set => _AOR = value; }
+    private static CoreAOR _AOR;
 
     public void ScriptMain(IScriptInterface Bot)
     {

@@ -26,62 +26,14 @@ public class CoreHollowbornPaladin
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreHollowborn HB
-{
-    get => _HB ??= new CoreHollowborn();
-    set => _HB = value;
-}
-public CoreHollowborn _HB;
-
-public CoreBLOD BLOD
-{
-    get => _BLOD ??= new CoreBLOD();
-    set => _BLOD = value;
-}
-public CoreBLOD _BLOD;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public AscendedDrakathGear ADG
-{
-    get => _ADG ??= new AscendedDrakathGear();
-    set => _ADG = value;
-}
-public AscendedDrakathGear _ADG;
-
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
-public Artixpointe APointe
-{
-    get => _APointe ??= new Artixpointe();
-    set => _APointe = value;
-}
-public Artixpointe _APointe;
-
-public CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-public CoreDailies _Daily;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }    private static CoreHollowborn _HB;
+    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }    private static CoreBLOD _BLOD;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static AscendedDrakathGear ADG { get => _ADG ??= new AscendedDrakathGear(); set => _ADG = value; }    private static AscendedDrakathGear _ADG;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static Artixpointe APointe { get => _APointe ??= new Artixpointe(); set => _APointe = value; }    private static Artixpointe _APointe;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
 
     public void ScriptMain(IScriptInterface bot)
     {

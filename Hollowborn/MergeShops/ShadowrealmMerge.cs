@@ -21,39 +21,15 @@ public class ShadowrealmMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private YulgarsUndineMerge YUM
-{
-    get => _YUM ??= new YulgarsUndineMerge();
-    set => _YUM = value;
-}
-private YulgarsUndineMerge _YUM;
-
-private DawnFortressMerge DFM
-{
-    get => _DFM ??= new DawnFortressMerge();
-    set => _DFM = value;
-}
-private DawnFortressMerge _DFM;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static YulgarsUndineMerge YUM { get => _YUM ??= new YulgarsUndineMerge(); set => _YUM = value; }
+    private static YulgarsUndineMerge _YUM;
+    private static DawnFortressMerge DFM { get => _DFM ??= new DawnFortressMerge(); set => _DFM = value; }
+    private static DawnFortressMerge _DFM;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
 

@@ -12,20 +12,10 @@ public class VoidChasm
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-private CoreStory _Story;
-
-private VoidRefuge VR
-{
-    get => _VR ??= new VoidRefuge();
-    set => _VR = value;
-}
-private VoidRefuge _VR;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static VoidRefuge VR { get => _VR ??= new VoidRefuge(); set => _VR = value; }
+    private static VoidRefuge _VR;
 
     public void ScriptMain(IScriptInterface Bot)
     {

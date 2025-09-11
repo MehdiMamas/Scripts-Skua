@@ -74,13 +74,7 @@ public class SimpleItemFarm
             and the imports (no duplicates please check your script beforehand.)
             go at with the rest below the `public class --` part.
             Example: 
-public CoreLegion Legion
-{
-    get => _Legion ??= new CoreLegion();
-    set => _Legion = value;
-}
-public CoreLegion _Legion;
-
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
             */
 
         }

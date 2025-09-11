@@ -12,20 +12,8 @@ public class QueenBattle
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public OrbHunt OrbHunt
-{
-    get => _OrbHunt ??= new OrbHunt();
-    set => _OrbHunt = value;
-}
-public OrbHunt _OrbHunt;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static OrbHunt OrbHunt { get => _OrbHunt ??= new OrbHunt(); set => _OrbHunt = value; }    private static OrbHunt _OrbHunt;
 
     public void ScriptMain(IScriptInterface bot)
     {

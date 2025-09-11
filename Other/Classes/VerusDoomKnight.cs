@@ -41,62 +41,21 @@ public class VerusDoomKnightClass
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private SepulchuresOriginalHelm SOH
-{
-    get => _SOH ??= new SepulchuresOriginalHelm();
-    set => _SOH = value;
-}
-private SepulchuresOriginalHelm _SOH;
-
-private ArchDoomKnight ADK
-{
-    get => _ADK ??= new ArchDoomKnight();
-    set => _ADK = value;
-}
-private ArchDoomKnight _ADK;
-
-private SRoD SRoD
-{
-    get => _SRoD ??= new SRoD();
-    set => _SRoD = value;
-}
-private SRoD _SRoD;
-
-private TerminaTempleMerge TTMerge
-{
-    get => _TTMerge ??= new TerminaTempleMerge();
-    set => _TTMerge = value;
-}
-private TerminaTempleMerge _TTMerge;
-
-private DoomPirateHaulMerge DPHM
-{
-    get => _DPHM ??= new DoomPirateHaulMerge();
-    set => _DPHM = value;
-}
-private DoomPirateHaulMerge _DPHM;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static SepulchuresOriginalHelm SOH { get => _SOH ??= new SepulchuresOriginalHelm(); set => _SOH = value; }
+    private static SepulchuresOriginalHelm _SOH;
+    private static ArchDoomKnight ADK { get => _ADK ??= new ArchDoomKnight(); set => _ADK = value; }
+    private static ArchDoomKnight _ADK;
+    private static SRoD SRoD { get => _SRoD ??= new SRoD(); set => _SRoD = value; }
+    private static SRoD _SRoD;
+    private static TerminaTempleMerge TTMerge { get => _TTMerge ??= new TerminaTempleMerge(); set => _TTMerge = value; }
+    private static TerminaTempleMerge _TTMerge;
+    private static DoomPirateHaulMerge DPHM { get => _DPHM ??= new DoomPirateHaulMerge(); set => _DPHM = value; }
+    private static DoomPirateHaulMerge _DPHM;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
     {

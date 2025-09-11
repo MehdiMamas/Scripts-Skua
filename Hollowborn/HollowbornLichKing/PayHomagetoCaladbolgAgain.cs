@@ -36,34 +36,13 @@ public class PayHomagetoCaladbolgAgain
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-public CoreLegion Legion
-{
-    get => _Legion ??= new CoreLegion();
-    set => _Legion = value;
-}
-public CoreLegion _Legion;
-
-private CoreHollowbornLichKing CoreHollowbornLichKing
-{
-    get => _CoreHollowbornLichKing ??= new CoreHollowbornLichKing();
-    set => _CoreHollowbornLichKing = value;
-}
-private CoreHollowbornLichKing _CoreHollowbornLichKing;
-
-private HollowSoul HS
-{
-    get => _HS ??= new HollowSoul();
-    set => _HS = value;
-}
-private HollowSoul _HS;
-
-private Caladbolg Caladbolg
-{
-    get => _Caladbolg ??= new Caladbolg();
-    set => _Caladbolg = value;
-}
-private Caladbolg _Caladbolg;
-
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
+    private static CoreHollowbornLichKing CoreHollowbornLichKing { get => _CoreHollowbornLichKing ??= new CoreHollowbornLichKing(); set => _CoreHollowbornLichKing = value; }
+    private static CoreHollowbornLichKing _CoreHollowbornLichKing;
+    private static HollowSoul HS { get => _HS ??= new HollowSoul(); set => _HS = value; }
+    private static HollowSoul _HS;
+    private static Caladbolg Caladbolg { get => _Caladbolg ??= new Caladbolg(); set => _Caladbolg = value; }
+    private static Caladbolg _Caladbolg;
 
     public void ScriptMain(IScriptInterface bot)
     {

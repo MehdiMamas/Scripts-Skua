@@ -27,102 +27,24 @@ public class VHLArmy
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-public CoreDailies _Daily;
-
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
-public CoreVHL VHL
-{
-    get => _VHL ??= new CoreVHL();
-    set => _VHL = value;
-}
-public CoreVHL _VHL;
-
-public AssistingCragAndBamboozle ACAB
-{
-    get => _ACAB ??= new AssistingCragAndBamboozle();
-    set => _ACAB = value;
-}
-public AssistingCragAndBamboozle _ACAB;
-
-public SevenCircles SC
-{
-    get => _SC ??= new SevenCircles();
-    set => _SC = value;
-}
-public SevenCircles _SC;
-
-public ArmyEmblemOfNulgath EmblemOfNulgath
-{
-    get => _EmblemOfNulgath ??= new ArmyEmblemOfNulgath();
-    set => _EmblemOfNulgath = value;
-}
-public ArmyEmblemOfNulgath _EmblemOfNulgath;
-
-public ArmyVoucherItemofNulgath VoucherItemofNulgath
-{
-    get => _VoucherItemofNulgath ??= new ArmyVoucherItemofNulgath();
-    set => _VoucherItemofNulgath = value;
-}
-public ArmyVoucherItemofNulgath _VoucherItemofNulgath;
-
-public ArmyTaintedGem TaintedGem
-{
-    get => _TaintedGem ??= new ArmyTaintedGem();
-    set => _TaintedGem = value;
-}
-public ArmyTaintedGem _TaintedGem;
-
-private CoreArmyLite Army
-{
-    get => _Army ??= new CoreArmyLite();
-    set => _Army = value;
-}
-private CoreArmyLite _Army;
-
-private static CoreBots sCore
-{
-    get => _sCore ??= new CoreBots();
-    set => _sCore = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreVHL VHL { get => _VHL ??= new CoreVHL(); set => _VHL = value; }    private static CoreVHL _VHL;
+    private static AssistingCragAndBamboozle ACAB { get => _ACAB ??= new AssistingCragAndBamboozle(); set => _ACAB = value; }    private static AssistingCragAndBamboozle _ACAB;
+    private static SevenCircles SC { get => _SC ??= new SevenCircles(); set => _SC = value; }    private static SevenCircles _SC;
+    private static ArmyEmblemOfNulgath EmblemOfNulgath { get => _EmblemOfNulgath ??= new ArmyEmblemOfNulgath(); set => _EmblemOfNulgath = value; }    private static ArmyEmblemOfNulgath _EmblemOfNulgath;
+    private static ArmyVoucherItemofNulgath VoucherItemofNulgath { get => _VoucherItemofNulgath ??= new ArmyVoucherItemofNulgath(); set => _VoucherItemofNulgath = value; }    private static ArmyVoucherItemofNulgath _VoucherItemofNulgath;
+    private static ArmyTaintedGem TaintedGem { get => _TaintedGem ??= new ArmyTaintedGem(); set => _TaintedGem = value; }    private static ArmyTaintedGem _TaintedGem;
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
+private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
 private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy
-{
-    get => _sArmy ??= new CoreArmyLite();
-    set => _sArmy = value;
-}
+private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+
 private static CoreArmyLite _sArmy;
 
     private string[] EmblemItems = { "Fiend Seal", "Gem of Domination", "Emblem of Nulgath" };

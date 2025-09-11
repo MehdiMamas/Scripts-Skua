@@ -22,27 +22,9 @@ public class NulgathDiamondMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public CoreDailies Dailies
-{
-    get => _Dailies ??= new CoreDailies();
-    set => _Dailies = value;
-}
-public CoreDailies _Dailies;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreDailies Dailies { get => _Dailies ??= new CoreDailies(); set => _Dailies = value; }    private static CoreDailies _Dailies;
 public static CoreAdvanced sAdv
 {
     get => _sAdv ??= new CoreAdvanced();
@@ -50,34 +32,11 @@ public static CoreAdvanced sAdv
 }
 public static CoreAdvanced _sAdv;
 
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
-public TarosManslayer Taro
-{
-    get => _Taro ??= new TarosManslayer();
-    set => _Taro = value;
-}
-public TarosManslayer _Taro;
-
-public CoreBLOD BLOD
-{
-    get => _BLOD ??= new CoreBLOD();
-    set => _BLOD = value;
-}
-public CoreBLOD _BLOD;
-
-private DragonBladeofNulgath DBoN
-{
-    get => _DBoN ??= new DragonBladeofNulgath();
-    set => _DBoN = value;
-}
-private DragonBladeofNulgath _DBoN;
-
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static TarosManslayer Taro { get => _Taro ??= new TarosManslayer(); set => _Taro = value; }    private static TarosManslayer _Taro;
+    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }    private static CoreBLOD _BLOD;
+    private static DragonBladeofNulgath DBoN { get => _DBoN ??= new DragonBladeofNulgath(); set => _DBoN = value; }
+    private static DragonBladeofNulgath _DBoN;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

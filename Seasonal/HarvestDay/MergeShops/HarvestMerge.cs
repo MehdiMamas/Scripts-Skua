@@ -16,32 +16,12 @@ public class HarvestMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-public CoreHarvestDay HarvestDay
-{
-    get => _HarvestDay ??= new CoreHarvestDay();
-    set => _HarvestDay = value;
-}
-public CoreHarvestDay _HarvestDay;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreHarvestDay HarvestDay { get => _HarvestDay ??= new CoreHarvestDay(); set => _HarvestDay = value; }    private static CoreHarvestDay _HarvestDay;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
 

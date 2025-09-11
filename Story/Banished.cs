@@ -15,41 +15,12 @@ public class Banished
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-public CoreDailies _Daily;
-
-private CoreQOM CoreQOM
-{
-    get => _CoreQOM ??= new CoreQOM();
-    set => _CoreQOM = value;
-}
-private CoreQOM _CoreQOM;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static CoreQOM CoreQOM { get => _CoreQOM ??= new CoreQOM(); set => _CoreQOM = value; }
+    private static CoreQOM _CoreQOM;
 
     public string[] QuestDrops = { "Diabolical Tome Pet", "Diabolical Tome Cape" };
 

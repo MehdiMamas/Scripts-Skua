@@ -35,11 +35,7 @@ public class HBLK2
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private static CoreHollowbornLichKing sHBLK
-{
-    get => _sHBLK ??= new CoreHollowbornLichKing();
-    set => _sHBLK = value;
-}
+private static CoreHollowbornLichKing sHBLK { get => _sHBLK ??= new CoreHollowbornLichKing(); set => _sHBLK = value; }
 private static CoreHollowbornLichKing _sHBLK;
 
 

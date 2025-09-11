@@ -18,27 +18,9 @@ public class CharonsPurgeMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
 public static CoreAdvanced sAdv
 {
     get => _sAdv ??= new CoreAdvanced();
@@ -47,20 +29,8 @@ public static CoreAdvanced sAdv
 public static CoreAdvanced _sAdv;
 
 
-public CoreIsleOfFotia CoreIsleOfFotia
-{
-    get => _CoreIsleOfFotia ??= new CoreIsleOfFotia();
-    set => _CoreIsleOfFotia = value;
-}
-public CoreIsleOfFotia _CoreIsleOfFotia;
-
-public CoreLegion Legion
-{
-    get => _Legion ??= new CoreLegion();
-    set => _Legion = value;
-}
-public CoreLegion _Legion;
-
+    private static CoreIsleOfFotia CoreIsleOfFotia { get => _CoreIsleOfFotia ??= new CoreIsleOfFotia(); set => _CoreIsleOfFotia = value; }    private static CoreIsleOfFotia _CoreIsleOfFotia;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

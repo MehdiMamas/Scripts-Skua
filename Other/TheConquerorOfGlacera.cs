@@ -17,20 +17,10 @@ public class TheConquerorOfGlacera
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private GlaceraStory IWP
-{
-    get => _IWP ??= new GlaceraStory();
-    set => _IWP = value;
-}
-private GlaceraStory _IWP;
-
-private FrostSpiritReaver FSR
-{
-    get => _FSR ??= new FrostSpiritReaver();
-    set => _FSR = value;
-}
-private FrostSpiritReaver _FSR;
-
+    private static GlaceraStory IWP { get => _IWP ??= new GlaceraStory(); set => _IWP = value; }
+    private static GlaceraStory _IWP;
+    private static FrostSpiritReaver FSR { get => _FSR ??= new FrostSpiritReaver(); set => _FSR = value; }
+    private static FrostSpiritReaver _FSR;
 
     public void ScriptMain(IScriptInterface Bot)
     {

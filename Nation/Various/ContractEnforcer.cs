@@ -25,41 +25,16 @@ public class ContractEnforcer
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-private CoreNation _Nation;
-
-private NulgathDiamondMerge NDM
-{
-    get => _NDM ??= new NulgathDiamondMerge();
-    set => _NDM = value;
-}
-private NulgathDiamondMerge _NDM;
-
-private CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-private CoreDailies _Daily;
-
-private DirtlickersMerge DLM
-{
-    get => _DLM ??= new DirtlickersMerge();
-    set => _DLM = value;
-}
-private DirtlickersMerge _DLM;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static NulgathDiamondMerge NDM { get => _NDM ??= new NulgathDiamondMerge(); set => _NDM = value; }
+    private static NulgathDiamondMerge _NDM;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static DirtlickersMerge DLM { get => _DLM ??= new DirtlickersMerge(); set => _DLM = value; }
+    private static DirtlickersMerge _DLM;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {

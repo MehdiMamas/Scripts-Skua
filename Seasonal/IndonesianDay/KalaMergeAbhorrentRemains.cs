@@ -14,27 +14,9 @@ public class KalaMergeNonDaily
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public KalaSeasonal Kala
-{
-    get => _Kala ??= new KalaSeasonal();
-    set => _Kala = value;
-}
-public KalaSeasonal _Kala;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static KalaSeasonal Kala { get => _Kala ??= new KalaSeasonal(); set => _Kala = value; }    private static KalaSeasonal _Kala;
 
     public void ScriptMain(IScriptInterface bot)
     {

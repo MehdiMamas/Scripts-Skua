@@ -12,13 +12,7 @@ public class PookasGiftsMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public PookaStory Pooka
-{
-    get => _Pooka ??= new PookaStory();
-    set => _Pooka = value;
-}
-public PookaStory _Pooka;
-
+    private static PookaStory Pooka { get => _Pooka ??= new PookaStory(); set => _Pooka = value; }    private static PookaStory _Pooka;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -12,13 +12,7 @@ public class StoneCold
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreDoomwood DW
-{
-    get => _DW ??= new CoreDoomwood();
-    set => _DW = value;
-}
-public CoreDoomwood _DW;
-
+    private static CoreDoomwood DW { get => _DW ??= new CoreDoomwood(); set => _DW = value; }    private static CoreDoomwood _DW;
 
     public void ScriptMain(IScriptInterface bot)
     {

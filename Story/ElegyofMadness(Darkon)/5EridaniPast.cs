@@ -12,14 +12,8 @@ public class CompleteEridaniPast
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-    public CoreAstravia Astravia => new();
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreAstravia Astravia { get => _Astravia ??= new CoreAstravia(); set => _Astravia = value; }    private static CoreAstravia _Astravia;
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();

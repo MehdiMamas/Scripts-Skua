@@ -18,7 +18,8 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private readonly CoreArmyLite Army = new();
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
     private static readonly CoreArmyLite sArmy = new();
 
     public string OptionsStorage = "CustomAggroMon";

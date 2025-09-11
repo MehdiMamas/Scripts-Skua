@@ -20,34 +20,10 @@ public class ArchFiend
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
-public CoreNSOD NSoD
-{
-    get => _NSoD ??= new CoreNSOD();
-    set => _NSoD = value;
-}
-public CoreNSOD _NSoD;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreNSOD NSoD { get => _NSoD ??= new CoreNSOD(); set => _NSoD = value; }    private static CoreNSOD _NSoD;
 
     public void ScriptMain(IScriptInterface bot)
     {

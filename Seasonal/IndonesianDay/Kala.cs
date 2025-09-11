@@ -12,20 +12,8 @@ public class KalaSeasonal
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public RangdaSeasonal Ran
-{
-    get => _Ran ??= new RangdaSeasonal();
-    set => _Ran = value;
-}
-public RangdaSeasonal _Ran;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static RangdaSeasonal Ran { get => _Ran ??= new RangdaSeasonal(); set => _Ran = value; }    private static RangdaSeasonal _Ran;
 
     public void ScriptMain(IScriptInterface bot)
     {

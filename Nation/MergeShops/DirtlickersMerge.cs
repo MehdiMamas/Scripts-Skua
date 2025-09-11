@@ -22,14 +22,21 @@ public class DirtlickersMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private readonly CoreFarms Farm = new();
-    private readonly CoreDailies Daily = new();
-    private readonly CoreAdvanced Adv = new();
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
     private static readonly CoreAdvanced sAdv = new();
-    private readonly CoreNation Nation = new();
-    private readonly CoreBLOD BLOD = new();
-    private readonly TheLeeryContract TLC = new();
-    private readonly JuggernautItemsofNulgath Jugger = new();
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD _BLOD;
+    private static TheLeeryContract TLC { get => _TLC ??= new TheLeeryContract(); set => _TLC = value; }
+    private static TheLeeryContract _TLC;
+    private static JuggernautItemsofNulgath Jugger { get => _Jugger ??= new JuggernautItemsofNulgath(); set => _Jugger = value; }
+    private static JuggernautItemsofNulgath _Jugger;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

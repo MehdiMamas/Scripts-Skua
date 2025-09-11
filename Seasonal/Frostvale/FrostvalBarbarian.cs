@@ -17,41 +17,11 @@ public class FrostvalBarbarian
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public CoreFrostvale Frostvale
-{
-    get => _Frostvale ??= new CoreFrostvale();
-    set => _Frostvale = value;
-}
-public CoreFrostvale _Frostvale;
-
-public GlaceraStory Glacera
-{
-    get => _Glacera ??= new GlaceraStory();
-    set => _Glacera = value;
-}
-public GlaceraStory _Glacera;
-
-public CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-public CoreDailies _Daily;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFrostvale Frostvale { get => _Frostvale ??= new CoreFrostvale(); set => _Frostvale = value; }    private static CoreFrostvale _Frostvale;
+    private static GlaceraStory Glacera { get => _Glacera ??= new GlaceraStory(); set => _Glacera = value; }    private static GlaceraStory _Glacera;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
 
     public void ScriptMain(IScriptInterface bot)
     {

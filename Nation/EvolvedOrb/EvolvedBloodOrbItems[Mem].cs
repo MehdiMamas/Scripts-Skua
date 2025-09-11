@@ -16,41 +16,15 @@ public class EvolvedBloodOrbItems
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-private CoreNation _Nation;
-
-private EvolvedBloodOrb EBO
-{
-    get => _EBO ??= new EvolvedBloodOrb();
-    set => _EBO = value;
-}
-private EvolvedBloodOrb _EBO;
-
-public JuggernautItemsofNulgath juggernaut
-{
-    get => _juggernaut ??= new JuggernautItemsofNulgath();
-    set => _juggernaut = value;
-}
-public JuggernautItemsofNulgath _juggernaut;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static EvolvedBloodOrb EBO { get => _EBO ??= new EvolvedBloodOrb(); set => _EBO = value; }
+    private static EvolvedBloodOrb _EBO;
+    private static JuggernautItemsofNulgath juggernaut { get => _juggernaut ??= new JuggernautItemsofNulgath(); set => _juggernaut = value; }    private static JuggernautItemsofNulgath _juggernaut;
 
     public void ScriptMain(IScriptInterface Bot)
     {

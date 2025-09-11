@@ -12,20 +12,10 @@ public class TerraDeFesta
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-private CoreStory _Story;
-
-private Batista Bat
-{
-    get => _Bat ??= new Batista();
-    set => _Bat = value;
-}
-private Batista _Bat;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static Batista Bat { get => _Bat ??= new Batista(); set => _Bat = value; }
+    private static Batista _Bat;
 
     public void ScriptMain(IScriptInterface Bot)
     {

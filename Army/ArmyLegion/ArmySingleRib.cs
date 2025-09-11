@@ -17,15 +17,10 @@ public class ArmySingleRib
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private readonly CoreArmyLite Army = new();
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
     private static readonly CoreArmyLite sArmy = new();
-public CoreLegion Legion
-{
-    get => _Legion ??= new CoreLegion();
-    set => _Legion = value;
-}
-public CoreLegion _Legion;
-
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
 
     // Comment out one of these depending:
     readonly int[] QuestIDs = { 3393 };

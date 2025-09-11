@@ -19,34 +19,13 @@ public class ArchfiendDeathLord
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private Fiendshard_Story Fiendshard
-{
-    get => _Fiendshard ??= new Fiendshard_Story();
-    set => _Fiendshard = value;
-}
-private Fiendshard_Story _Fiendshard;
-
-private CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-private CoreNation _Nation;
-
-private WillpowerExtraction Willpower
-{
-    get => _Willpower ??= new WillpowerExtraction();
-    set => _Willpower = value;
-}
-private WillpowerExtraction _Willpower;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
+    private static Fiendshard_Story Fiendshard { get => _Fiendshard ??= new Fiendshard_Story(); set => _Fiendshard = value; }
+    private static Fiendshard_Story _Fiendshard;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static WillpowerExtraction Willpower { get => _Willpower ??= new WillpowerExtraction(); set => _Willpower = value; }
+    private static WillpowerExtraction _Willpower;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
 
     public string OptionsStorage = "ArchfiendDeathLord";
     public bool DontPreconfigure = true;

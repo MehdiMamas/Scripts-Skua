@@ -16,27 +16,9 @@ public class SuppliesWheelArmy
 {
     public static IScriptInterface Bot => IScriptInterface.Instance;
     public static CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreArmyLite Army
-{
-    get => _Army ??= new CoreArmyLite();
-    set => _Army = value;
-}
-public CoreArmyLite _Army;
-
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }    private static CoreArmyLite _Army;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
 
     private static readonly CoreArmyLite sArmy = new();
 

@@ -20,53 +20,19 @@ public class BocklinTreasuryMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-private CoreStory _Story;
-
-private CoreLynaria Lynaria
-{
-    get => _Lynaria ??= new CoreLynaria();
-    set => _Lynaria = value;
-}
-private CoreLynaria _Lynaria;
-
-private BocklinGroveMerge BocklinGroveM
-{
-    get => _BocklinGroveM ??= new BocklinGroveMerge();
-    set => _BocklinGroveM = value;
-}
-private BocklinGroveMerge _BocklinGroveM;
-
-private BocklinArmoryMerge BocklinArmoryM
-{
-    get => _BocklinArmoryM ??= new BocklinArmoryMerge();
-    set => _BocklinArmoryM = value;
-}
-private BocklinArmoryMerge _BocklinArmoryM;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreLynaria Lynaria { get => _Lynaria ??= new CoreLynaria(); set => _Lynaria = value; }
+    private static CoreLynaria _Lynaria;
+    private static BocklinGroveMerge BocklinGroveM { get => _BocklinGroveM ??= new BocklinGroveMerge(); set => _BocklinGroveM = value; }
+    private static BocklinGroveMerge _BocklinGroveM;
+    private static BocklinArmoryMerge BocklinArmoryM { get => _BocklinArmoryM ??= new BocklinArmoryMerge(); set => _BocklinArmoryM = value; }
+    private static BocklinArmoryMerge _BocklinArmoryM;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
 

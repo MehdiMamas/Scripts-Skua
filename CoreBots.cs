@@ -105,6 +105,7 @@ public class CoreBots
     //Max integer
     const int maxint = Int32.MaxValue;
 
+
     private static CoreBots? _instance;
     public static CoreBots Instance => _instance ??= new CoreBots();
     private IScriptInterface Bot => IScriptInterface.Instance;
@@ -135,7 +136,6 @@ public class CoreBots
 
             // Start the stopwatch for timing the script run
             _scriptStopwatch = Stopwatch.StartNew();
-            DeleteCompiledScript();
 
             loadedBot = Bot.Manager.LoadedScript.Replace("\\", "/").Split("/Scripts/").Last().Replace(".cs", "");
             Logger($"Bot Started [{loadedBot}]");
@@ -466,6 +466,7 @@ public class CoreBots
     /// </summary>
     private bool StopBot(bool crashed)
     {
+        DeleteCompiledScript();
         StopBotAsync();
         Bot.Handlers.Clear();
 
@@ -542,7 +543,7 @@ public class CoreBots
         }
         else Logger("Bot stopped successfully.");
 
-        GC.KeepAlive(Instance);
+        GC.KeepAlive(_instance);
         return scriptFinished;
 
         void StopBotAsync()
@@ -3521,17 +3522,10 @@ public class CoreBots
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                     Sleep();
 
-                bool ded = false;
-
-                // Named local method to properly unsubscribe later
-                void OnMonsterKilled(int b) => ded = true;
-
-                Bot.Events.MonsterKilled += OnMonsterKilled;
-
-                while (!Bot.ShouldExit && !ded)
+                while (!Bot.ShouldExit)
                 {
-                    while (!Bot.ShouldExit && !Bot.Player.Alive)
-                        Sleep();
+                    if (!Bot.Player.Alive)
+                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
                     if (cell != null && Bot.Player.Cell != cell)
                     {
@@ -3542,20 +3536,16 @@ public class CoreBots
                     if (!Bot.Player.HasTarget)
                         Bot.Combat.Attack(monster);
 
-                    if (targetMonster.MaxHP == 1)
-                        ded = true;
-
-                    if (ded)
+                    // If target died -> cancel & break (move to next monster)
+                    if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
                     {
+                        Bot.Combat.CancelAutoAttack();
                         Bot.Combat.CancelTarget();
                         break;
                     }
 
-                    Bot.Sleep(100);
+                    Sleep();
                 }
-
-                // Properly unsubscribe the event
-                Bot.Events.MonsterKilled -= OnMonsterKilled;
             }
 
             return;
@@ -3936,15 +3926,15 @@ public class CoreBots
             if (log)
                 FarmingLogger(item, quant);
 
-            bool ded = false;
+            // bool ded = false;
 
-            // Local method to match delegate signature
-            void OnMonsterKilled(int b) => ded = true;
+            // // Local method to match delegate signature
+            // void OnMonsterKilled(int b) => ded = true;
 
             // Subscribe
-            Bot.Events.MonsterKilled += OnMonsterKilled;
+            // Bot.Events.MonsterKilled += OnMonsterKilled;
 
-            while (!Bot.ShouldExit && (!ded || (isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))))
+            while (!Bot.ShouldExit && ((isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))))
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                     Sleep();
@@ -3952,15 +3942,20 @@ public class CoreBots
                 if (Bot.Player.Cell != targetMonster.Cell)
                     Jump(targetMonster.Cell);
 
-                Bot.Combat.Attack(targetMonster);
+                if (!Bot.Player.HasTarget)
+                    Bot.Combat.Attack(targetMonster);
+
                 Sleep();
+
+                if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                    continue;
 
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                     break;
             }
 
             // Unsubscribe to prevent memory leaks
-            Bot.Events.MonsterKilled -= OnMonsterKilled;
+            // Bot.Events.MonsterKilled -= OnMonsterKilled;
 
             Bot.Options.AttackWithoutTarget = false;
             ToggleAggro(false);
@@ -4054,15 +4049,15 @@ public class CoreBots
             if (Item != null && Item.Quantity == Item.MaxStack)
                 Bot.Drops.Remove(Item.ID);
 
-            bool ded = false;
+            // bool ded = false;
 
-            // Local method matching delegate signature for proper unsubscription
-            void OnMonsterKilled(int b) => ded = true;
+            // // Local method matching delegate signature for proper unsubscription
+            // void OnMonsterKilled(int b) => ded = true;
 
             // Subscribe
-            Bot.Events.MonsterKilled += OnMonsterKilled;
+            // Bot.Events.MonsterKilled += OnMonsterKilled;
 
-            while (!Bot.ShouldExit && (!ded || (isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))))
+            while (!Bot.ShouldExit && ((isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))))
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                     Sleep();
@@ -4073,15 +4068,18 @@ public class CoreBots
                 if (Bot.Player.Cell != targetMonster.Cell)
                     Jump(targetMonster.Cell);
 
-                Bot.Combat.Attack(targetMonster);
+                if (!Bot.Player.HasTarget)
+                    Bot.Combat.Attack(targetMonster);
                 Sleep();
 
+                if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                    continue;
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                     break;
             }
 
             // Unsubscribe to prevent memory leaks
-            Bot.Events.MonsterKilled -= OnMonsterKilled;
+            // Bot.Events.MonsterKilled -= OnMonsterKilled;
 
             if (Bot.Options.RestPackets)
                 Rest();
@@ -4656,7 +4654,7 @@ public class CoreBots
 
         if (item is not null && !isTemp)
             AddDrop(item);
-
+        Bot.Events.ExtensionPacketReceived += StaffRespawnListner;
         if (item is null)
         {
             if (log)
@@ -4674,59 +4672,72 @@ public class CoreBots
         void _KillEscherion(string? item = null, int quant = 1, bool isTemp = false)
         {
             #region new staff killing method
-            bool StaffRespawn = false;
             Bot.Options.AggroMonsters = true;
-            while (!Bot.ShouldExit && (item == null || (isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))))
+            bool HasItem = item == null || (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant));
+            while (!Bot.ShouldExit && !HasItem)
             {
-                while (!Bot.ShouldExit && !Bot.Player.Alive) Sleep();
+                if (!Bot.Player.Alive)
+                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
                 if (Bot.Map.Name != "escherion")
                     Join("escherion");
                 if (Bot.Player.Cell != "Boss")
                     Jump("Boss", "Left");
 
-                if (!KilledMonsters.Contains(2))
+                foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
                 {
-                    Bot.Kill.Monster(2);
-                    if (Bot.Player.HasTarget && Bot.Player.Target != null && Bot.Player.Target.MapID == 2)
-                        Bot.Combat.CancelTarget();
-                }
-                if (StaffRespawn)
-                {
-                    Bot.Kill.Monster(2);
-                    if (Bot.Player.HasTarget && Bot.Player.Target != null && Bot.Player.Target.MapID == 2)
-                        Bot.Combat.CancelTarget();
-                    StaffRespawn = false;
-                }
-                else Bot.Combat.Attack(3);
-                Sleep(500);
+                    if (m == null)
+                        continue;
 
-                // Sell voucher area
-                if (item != "Voucher of Nulgath" && SellVoucher && CheckInventory("Voucher of Nulgath"))
-                {
-                    while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
-                    {
-                        Bot.Combat.CancelTarget();
-                        Bot.Wait.ForCombatExit();
-                        JumpWait();
-                        Sleep();
-                    }
+                    if (!Bot.Player.Alive)
+                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-                    if (Bot.Player.Gold < 100000000)
-                    {
-                        Bot.Wait.ForPickup("Voucher of Nulgath");
-                        SellItem("Voucher of Nulgath", all: true);
-                        Bot.Wait.ForItemSell();
-                    }
+                    if (Bot.Map.Name != "escherion")
+                        Join("escherion");
+                    if (Bot.Player.Cell != "Boss")
+                        Jump("Boss", "Left");
+
+
+                    // Attack staff
+                    if (m.MapID == 2 && m.HP > 0)
+                        Bot.Kill.Monster(2);
+                    // Attack Escherion when staff is down
+                    else Bot.Combat.Attack(3);
+
+                    if (HasItem)
+                        break;
+
+                    Sleep();
                 }
-                DoSwindlesReturnArea(ReturnDuring, ReturnItem);
             }
-            Bot.Options.AggroMonsters = false;
-            if (!isTemp && item != null)
-                Bot.Wait.ForPickup(item);
-            #endregion new staff killing method
-        }
 
+            // Sell voucher area
+            if (item != "Voucher of Nulgath" && SellVoucher && CheckInventory("Voucher of Nulgath"))
+            {
+                while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
+                {
+                    Bot.Combat.CancelTarget();
+                    Bot.Wait.ForCombatExit();
+                    JumpWait();
+                    Sleep();
+                }
+
+                if (Bot.Player.Gold < 100000000)
+                {
+                    Bot.Wait.ForPickup("Voucher of Nulgath");
+                    SellItem("Voucher of Nulgath", all: true);
+                    Bot.Wait.ForItemSell();
+                }
+            }
+            DoSwindlesReturnArea(ReturnDuring, ReturnItem);
+        }
+        Bot.Options.AggroMonsters = false;
+        if (!isTemp && item != null)
+            Bot.Wait.ForPickup(item);
+        #endregion new staff killing method
+
+
+        Bot.Events.ExtensionPacketReceived -= StaffRespawnListner;
         Bot.Options.AttackWithoutTarget = false;
         ToggleAggro(false);
         Jump();
@@ -4734,6 +4745,32 @@ public class CoreBots
         JumpWait();
         Rest();
         Bot.Options.HidePlayers = false;
+
+        void StaffRespawnListner(dynamic packet)
+        {
+            // Example packet: %xt%respawnMon%-1%12% (monster map ID is 12)
+            string type = packet["params"].type;
+            dynamic data = packet["params"].dataObj;
+
+            if (type is not null and "str")
+            {
+                string cmd = data[0];
+                switch (cmd)
+                {
+                    case "respawnMon":
+                        int monsterID = (int)data[2];
+                        if (monsterID == 2) // Staff monster ID
+                        {
+                            Bot.Log("Staff has respawned!");
+                            // TODO: implement actual handling later
+                        }
+
+                        // Optional: still remove it from killed list
+                        KilledMonsters.RemoveAll(id => id == monsterID);
+                        break;
+                }
+            }
+        }
 
         void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
         {
@@ -5321,33 +5358,44 @@ public class CoreBots
                 continue;
             }
 
-            foreach (Monster monster in candidates)
+            while (!Bot.ShouldExit && !HasItem())
             {
-                if (Bot.ShouldExit || HasItem()) break;
-
-                bool ded = false;
-
-                // Local method matching the delegate signature
-                void OnMonsterKilled(int b) => ded = true;
-
-                // Subscribe to the event
-                Bot.Events.MonsterKilled += OnMonsterKilled;
-
-                if (cell != null && Bot.Player.Cell != cell)
+                foreach (Monster monster in candidates)
                 {
-                    Jump(cell, "Left");
-                    Bot.Wait.ForCellChange(cell);
-                }
+                    if (HasItem()) break;
 
-                while (!Bot.ShouldExit && !ded && !HasItem())
-                {
-                    if (!Bot.Combat.StopAttacking)
+                    // bool ded = false;
+
+                    // Local method matching the delegate signature
+                    // void OnMonsterKilled(int b) => ded = true;
+
+                    // // Subscribe to the event
+                    // Bot.Events.MonsterKilled += OnMonsterKilled;
+
+                    if (cell != null && Bot.Player.Cell != cell)
+                    {
+                        Jump(cell, "Left");
+                        Bot.Wait.ForCellChange(cell);
+                    }
+
+                    if (!Bot.Player.Alive)
+                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+                    if (!Bot.Player.HasTarget)
                         Bot.Combat.Attack(monster.Name);
+
                     Sleep();
+
+                    if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                        continue;
+
+                    if (HasItem())
+                        break;
+
                 }
 
                 // Unsubscribe to prevent memory leaks
-                Bot.Events.MonsterKilled -= OnMonsterKilled;
+                // Bot.Events.MonsterKilled -= OnMonsterKilled;
 
                 if (rejectElse && itemID > 0)
                     Bot.Drops.RejectExcept(itemID);
@@ -5383,113 +5431,143 @@ public class CoreBots
         if (log && name != "*")
             Logger($"Attacking Monster: {name}, for {item}  {dynamicQuant(item, isTemp)}/{quantity}");
 
+        // Put these once (outside the main while) so they persist across iterations
+        System.DateTime lastRefresh = DateTime.MinValue;
+        Monster[] monsterSnapshot = Array.Empty<Monster>();
+
         while (!Bot.ShouldExit && !HasItem())
         {
+            // Only wait if player is dead
+            if (!Bot.Player.Alive)
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
             if (name == "*")
             {
-                foreach (Monster monster in Bot.Monsters.MapMonsters.Where(x => x != null && x.Cell == cell))
+                // Refresh snapshot every ~300ms
+                if ((System.DateTime.Now - lastRefresh).TotalMilliseconds > 300 || monsterSnapshot.Length == 0)
                 {
-                    if (HasItem()) break;
+                    monsterSnapshot = Bot.Monsters.MapMonsters
+                        .Where(m => m != null && m.Cell == cell)
+                        .Select(m => m!) // filtered out nulls
+                        .ToArray();
 
-                    bool ded = false;
-
-                    // Local method matching the delegate
-                    void OnMonsterKilled(int b) => ded = true;
-
-                    // Subscribe
-                    Bot.Events.MonsterKilled += OnMonsterKilled;
-
-                    while (!Bot.ShouldExit && !ded && !HasItem())
-                    {
-                        if (cell != null && Bot.Player.Cell != cell)
-                            Jump(cell, "Left");
-
-                        if (!Bot.Combat.StopAttacking)
-                            Bot.Combat.Attack(monster);
-
-                        Sleep();
-                    }
-
-                    // Unsubscribe to prevent memory leaks
-                    Bot.Events.MonsterKilled -= OnMonsterKilled;
-
-                    if (HasItem()) break;
+                    lastRefresh = System.DateTime.Now;
                 }
 
+                foreach (Monster monster in monsterSnapshot)
+                {
+                    if (HasItem() || Bot.ShouldExit)
+                        break;
+
+                    while (!Bot.ShouldExit && !HasItem())
+                    {
+                        // Only wait if dead
+                        if (!Bot.Player.Alive)
+                        {
+                            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                            continue;
+                        }
+
+                        if (cell != null && Bot.Player.Cell != cell)
+                        {
+                            Bot.Map.Jump(cell, "Left");
+                            Bot.Wait.ForCellChange(cell);
+                        }
+
+                        // If no target OR current target is different from this monster -> attack again
+                        if (!Bot.Player.HasTarget || Bot.Player.Target?.MapID != monster.MapID)
+                            Bot.Combat.Attack(monster.MapID);
+
+                        // If target died -> cancel and move on
+                        if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                        {
+                            Bot.Combat.CancelAutoAttack();
+                            Bot.Combat.CancelTarget();
+                            break;
+                        }
+
+                        // Adaptive sleep: shorter when idle, longer when in combat
+                        Sleep();
+                    }
+                }
             }
             else
             {
-                // Logic to ensure player is in `Cell` for monster finding.
+                // Ensure we're in the right cell before searching
                 while (!Bot.ShouldExit && Bot.Player.Cell != cell && cell != null)
                 {
                     Bot.Map.Jump(cell, "Left", autoCorrect: false);
                     Bot.Wait.ForCellChange(cell);
                 }
 
-                List<Monster> matchingMonsters = Bot.Monsters.MapMonsters
-                    .Where(x => x != null && x.Cell == cell && x.Name.FormatForCompare() == trimmedName)
-                    .ToList();
+                // One-time build per outer loop to avoid per-tick allocations
+                Monster[] matchingSnapshot = Bot.Monsters.MapMonsters
+                    .Where(m => m != null && m.Cell == cell && m.Name.FormatForCompare() == trimmedName)
+                    .Select(m => m!)
+                    .ToArray();
 
-                if (matchingMonsters.Count == 0)
+                if (matchingSnapshot.Length == 0)
                 {
                     Logger($"Monster \"{name}\" not found in current cell.");
 
                     Monster? fallback = Bot.Monsters.MapMonsters
-                        .FirstOrDefault(x => x.Name.Contains(trimmedName, StringComparison.OrdinalIgnoreCase));
+                        .FirstOrDefault(x => x != null && x.Name.Contains(trimmedName, StringComparison.OrdinalIgnoreCase));
 
                     if (fallback != null)
                     {
-                        Logger($"\u26a0\ufe0f Monster name may have been updated to \"{fallback.Name}\". This mob will be used instead of \"{name}\". Ping Tato or Bogalj if incorrect.");
+                        Logger("\u26a0\ufe0f Monster name may have been updated to \"" + fallback.Name + "\". This mob will be used instead of \"" + name + "\".");
                         name = fallback.Name;
                         trimmedName = name.Trim().FormatForCompare();
-                        matchingMonsters.Add(fallback);
-                        cell = fallback.Cell; // only override if fallback used
+                        matchingSnapshot = new[] { fallback };
+                        cell = fallback.Cell;
                     }
                     else
                     {
                         string[] visible = Bot.Monsters.MapMonsters
                             .Where(x => !string.IsNullOrWhiteSpace(x?.Name))
-                            .Select(x => $"\"{x!.Name}\"")
+                            .Select(x => "\"" + x!.Name + "\"")
                             .Distinct()
                             .ToArray();
 
-                        Logger($"\u274c No approximate match found for {name}. Visible monsters: {string.Join(", ", visible)}");
+                        Logger("\u274c No approximate match found for " + name + ". Visible monsters: " + string.Join(", ", visible));
                         return;
                     }
                 }
 
-                foreach (Monster targetMonster in matchingMonsters)
+                foreach (Monster targetMonster in matchingSnapshot)
                 {
-                    if (HasItem()) break;
+                    if (HasItem() || Bot.ShouldExit)
+                        break;
 
-                    bool ded = false;
-
-                    // Local method matching the delegate
-                    void OnMonsterKilled(int b) => ded = true;
-
-                    // Subscribe
-                    Bot.Events.MonsterKilled += OnMonsterKilled;
-
-                    while (!Bot.ShouldExit && !ded && !HasItem())
+                    while (!Bot.ShouldExit && !HasItem())
                     {
-                        if (cell != null && Bot.Player.Cell != cell)
+                        if (!Bot.Player.Alive)
                         {
-                            Jump(cell, "Left");
-                            Bot.Wait.ForCellChange(cell);
-                            Sleep();
+                            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                            continue;
                         }
 
-                        if (!Bot.Combat.StopAttacking)
-                            Bot.Combat.Attack(targetMonster);
+                        if (cell != null && Bot.Player.Cell != cell)
+                        {
+                            Bot.Map.Jump(cell, "Left");
+                            Bot.Wait.ForCellChange(cell);
+                        }
+
+                        // If no target or wrong target -> attack
+                        if (!Bot.Player.HasTarget || Bot.Player.Target?.MapID != targetMonster.MapID)
+                            Bot.Combat.Attack(targetMonster.MapID);
+
+                        // If target died -> cancel & break (move to next monster)
+                        if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                        {
+                            Bot.Combat.CancelAutoAttack();
+                            Bot.Combat.CancelTarget();
+                            break;
+                        }
+
                         Sleep();
                     }
-
-                    // Unsubscribe to prevent memory leaks
-                    Bot.Events.MonsterKilled -= OnMonsterKilled;
-
-                    if (HasItem()) break;
                 }
-
 
                 if (rejectElse)
                     Bot.Drops.RejectExcept(item);
@@ -5498,6 +5576,7 @@ public class CoreBots
             Bot.Wait.ForDrop(item);
             Bot.Wait.ForPickup(item);
         }
+
     }
 
     #region  IsMonsterAlive

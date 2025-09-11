@@ -19,55 +19,13 @@ public class SepulchuresOriginalHelm
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-public CoreDailies _Daily;
-
-public Core13LoC LOC
-{
-    get => _LOC ??= new Core13LoC();
-    set => _LOC = value;
-}
-public Core13LoC _LOC;
-
-public CoreToD TOD
-{
-    get => _TOD ??= new CoreToD();
-    set => _TOD = value;
-}
-public CoreToD _TOD;
-
-public CoreDoomwood DW
-{
-    get => _DW ??= new CoreDoomwood();
-    set => _DW = value;
-}
-public CoreDoomwood _DW;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static Core13LoC LOC { get => _LOC ??= new Core13LoC(); set => _LOC = value; }    private static Core13LoC _LOC;
+    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }    private static CoreToD _TOD;
+    private static CoreDoomwood DW { get => _DW ??= new CoreDoomwood(); set => _DW = value; }    private static CoreDoomwood _DW;
     public string[] GravelynsDoomFireTokenItems = { "Empowered Essence", "Gravelyn's Blessing", "Painful Memory Bubble", "Burning Passion Flame", "Father's Sorrowful Tear", "Gravelyn's DoomFire Token", "Necrotic Sword of Doom", "Sepulchure's DoomKnight Armor" };
 
     public void ScriptMain(IScriptInterface bot)

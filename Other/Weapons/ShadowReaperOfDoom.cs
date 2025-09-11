@@ -14,7 +14,8 @@ public class SRoD
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private readonly Core13LoC LoC = new();
+    private static Core13LoC LoC { get => _LoC ??= new Core13LoC(); set => _LoC = value; }
+    private static Core13LoC _LoC;
 
     public void ScriptMain(IScriptInterface bot)
     {

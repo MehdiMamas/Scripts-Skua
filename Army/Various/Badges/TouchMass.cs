@@ -21,54 +21,29 @@ public class TouchMass
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-    private CoreAdvanced Adv
-    {
-        get => _Adv ??= new CoreAdvanced();
-        set => _Adv = value;
-    }
-    private CoreAdvanced _Adv;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
-    private CoreFarms Farm
-    {
-        get => _Farm ??= new CoreFarms();
-        set => _Farm = value;
-    }
-    private CoreFarms _Farm;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
 
-    private CoreStory Story
-    {
-        get => _Story ??= new CoreStory();
-        set => _Story = value;
-    }
-    private CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
-    private CoreDailies Daily
-    {
-        get => _Daily ??= new CoreDailies();
-        set => _Daily = value;
-    }
-    private CoreDailies _Daily;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
 
-    private CoreArmyLite Army
-    {
-        get => _Army ??= new CoreArmyLite();
-        set => _Army = value;
-    }
-    private CoreArmyLite _Army;
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
 
 
-    private static CoreBots sCore
-    {
-        get => _sCore ??= new CoreBots();
-        set => _sCore = value;
-    }
+    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+
+
     private static CoreBots _sCore;
 
-    private static CoreArmyLite sArmy
-    {
-        get => _sArmy ??= new CoreArmyLite();
-        set => _sArmy = value;
-    }
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+
     private static CoreArmyLite _sArmy;
 
 

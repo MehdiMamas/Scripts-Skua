@@ -15,13 +15,8 @@ public class Mockingbird
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFrostvale Frost
-{
-    get => _Frost ??= new CoreFrostvale();
-    set => _Frost = value;
-}
-private CoreFrostvale _Frost;
-
+    private static CoreFrostvale Frost { get => _Frost ??= new CoreFrostvale(); set => _Frost = value; }
+    private static CoreFrostvale _Frost;
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();

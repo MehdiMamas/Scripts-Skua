@@ -31,69 +31,24 @@ public class SinoftheSinoftheUndyingNoInsignia
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreLegion LR
-{
-    get => _LR ??= new CoreLegion();
-    set => _LR = value;
-}
-private CoreLegion _LR;
-
-private HeadoftheLegionBeast HotLB
-{
-    get => _HotLB ??= new HeadoftheLegionBeast();
-    set => _HotLB = value;
-}
-private HeadoftheLegionBeast _HotLB;
-
-private AtlasFalls AtlasFalls
-{
-    get => _AtlasFalls ??= new AtlasFalls();
-    set => _AtlasFalls = value;
-}
-private AtlasFalls _AtlasFalls;
-
-private CoreYnR YnR
-{
-    get => _YnR ??= new CoreYnR();
-    set => _YnR = value;
-}
-private CoreYnR _YnR;
-
-private VulcarsMerge VulcarsMerge
-{
-    get => _VulcarsMerge ??= new VulcarsMerge();
-    set => _VulcarsMerge = value;
-}
-private VulcarsMerge _VulcarsMerge;
-
-private UnderworldTeamMerge UnderworldTeamMerge
-{
-    get => _UnderworldTeamMerge ??= new UnderworldTeamMerge();
-    set => _UnderworldTeamMerge = value;
-}
-private UnderworldTeamMerge _UnderworldTeamMerge;
-
-private SoulForgeMerge SoulForgeMerge
-{
-    get => _SoulForgeMerge ??= new SoulForgeMerge();
-    set => _SoulForgeMerge = value;
-}
-private SoulForgeMerge _SoulForgeMerge;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreLegion LR { get => _LR ??= new CoreLegion(); set => _LR = value; }
+    private static CoreLegion _LR;
+    private static HeadoftheLegionBeast HotLB { get => _HotLB ??= new HeadoftheLegionBeast(); set => _HotLB = value; }
+    private static HeadoftheLegionBeast _HotLB;
+    private static AtlasFalls AtlasFalls { get => _AtlasFalls ??= new AtlasFalls(); set => _AtlasFalls = value; }
+    private static AtlasFalls _AtlasFalls;
+    private static CoreYnR YnR { get => _YnR ??= new CoreYnR(); set => _YnR = value; }
+    private static CoreYnR _YnR;
+    private static VulcarsMerge VulcarsMerge { get => _VulcarsMerge ??= new VulcarsMerge(); set => _VulcarsMerge = value; }
+    private static VulcarsMerge _VulcarsMerge;
+    private static UnderworldTeamMerge UnderworldTeamMerge { get => _UnderworldTeamMerge ??= new UnderworldTeamMerge(); set => _UnderworldTeamMerge = value; }
+    private static UnderworldTeamMerge _UnderworldTeamMerge;
+    private static SoulForgeMerge SoulForgeMerge { get => _SoulForgeMerge ??= new SoulForgeMerge(); set => _SoulForgeMerge = value; }
+    private static SoulForgeMerge _SoulForgeMerge;
 
     public void ScriptMain(IScriptInterface bot)
     {

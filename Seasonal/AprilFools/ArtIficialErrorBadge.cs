@@ -12,13 +12,8 @@ public class ArtificialErrorBadge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-private EbilArt EA
-{
-    get => _EA ??= new EbilArt();
-    set => _EA = value;
-}
-private EbilArt _EA;
-
+    private static EbilArt EA { get => _EA ??= new EbilArt(); set => _EA = value; }
+    private static EbilArt _EA;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -10,13 +10,7 @@ using Skua.Core.Interfaces;
 public class KisstheVoid
 {
     public CoreBots Core => CoreBots.Instance;
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
 
     /// <summary>
     /// List of Betrayal Blades

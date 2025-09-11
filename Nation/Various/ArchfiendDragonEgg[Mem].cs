@@ -14,20 +14,8 @@ public class ArchfiendDragonEgg
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreHollowborn HB
-{
-    get => _HB ??= new CoreHollowborn();
-    set => _HB = value;
-}
-public CoreHollowborn _HB;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }    private static CoreHollowborn _HB;
 
     public void ScriptMain(IScriptInterface bot)
     {

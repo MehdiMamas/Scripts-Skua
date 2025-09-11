@@ -14,20 +14,10 @@ public class ImpossibleEmpoweredItemsofNulgath
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private TheLeeryContract TLC
-{
-    get => _TLC ??= new TheLeeryContract();
-    set => _TLC = value;
-}
-private TheLeeryContract _TLC;
-
-private CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-private CoreNation _Nation;
-
+    private static TheLeeryContract TLC { get => _TLC ??= new TheLeeryContract(); set => _TLC = value; }
+    private static TheLeeryContract _TLC;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
 
     public void ScriptMain(IScriptInterface Bot)
     {

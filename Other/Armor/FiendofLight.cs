@@ -16,14 +16,10 @@ public class FiendofLight
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreAdvanced Adv => new();
-private CoreSepulchure CoreSS
-{
-    get => _CoreSS ??= new CoreSepulchure();
-    set => _CoreSS = value;
-}
-private CoreSepulchure _CoreSS;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreSepulchure CoreSS { get => _CoreSS ??= new CoreSepulchure(); set => _CoreSS = value; }
+    private static CoreSepulchure _CoreSS;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "FiendOfLight";

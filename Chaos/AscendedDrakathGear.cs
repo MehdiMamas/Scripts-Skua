@@ -21,27 +21,9 @@ public class AscendedDrakathGear
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public DrakathArmorBot DA
-{
-    get => _DA ??= new DrakathArmorBot();
-    set => _DA = value;
-}
-public DrakathArmorBot _DA;
-
-public TowerOfDoom TOD
-{
-    get => _TOD ??= new TowerOfDoom();
-    set => _TOD = value;
-}
-public TowerOfDoom _TOD;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static DrakathArmorBot DA { get => _DA ??= new DrakathArmorBot(); set => _DA = value; }    private static DrakathArmorBot _DA;
+    private static TowerOfDoom TOD { get => _TOD ??= new TowerOfDoom(); set => _TOD = value; }    private static TowerOfDoom _TOD;
 
     public void ScriptMain(IScriptInterface bot)
     {

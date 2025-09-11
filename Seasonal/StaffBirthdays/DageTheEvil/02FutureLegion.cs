@@ -12,13 +12,8 @@ public class FutureLegion
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreDageBirthday Dage
-{
-    get => _Dage ??= new CoreDageBirthday();
-    set => _Dage = value;
-}
-private CoreDageBirthday _Dage;
-
+    private static CoreDageBirthday Dage { get => _Dage ??= new CoreDageBirthday(); set => _Dage = value; }
+    private static CoreDageBirthday _Dage;
 
     public void ScriptMain(IScriptInterface Bot)
     {

@@ -24,62 +24,23 @@ public class ArmyLeveling
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }    private static CoreArmyLite _Army;
+    private static SevenCircles SC { get => _SC ??= new SevenCircles(); set => _SC = value; }    private static SevenCircles _SC;
+    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW _SoW;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreDOY CoreDOY { get => _CoreDOY ??= new CoreDOY(); set => _CoreDOY = value; }
+    private static CoreDOY _CoreDOY;
 
-    private CoreAdvanced Adv => new();
-public CoreArmyLite Army
-{
-    get => _Army ??= new CoreArmyLite();
-    set => _Army = value;
-}
-public CoreArmyLite _Army;
+private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
 
-public SevenCircles SC
-{
-    get => _SC ??= new SevenCircles();
-    set => _SC = value;
-}
-public SevenCircles _SC;
-
-private CoreSoW SoW
-{
-    get => _SoW ??= new CoreSoW();
-    set => _SoW = value;
-}
-private CoreSoW _SoW;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-private CoreDOY CoreDOY
-{
-    get => _CoreDOY ??= new CoreDOY();
-    set => _CoreDOY = value;
-}
-private CoreDOY _CoreDOY;
-
-
-private static CoreBots sCore
-{
-    get => _sCore ??= new CoreBots();
-    set => _sCore = value;
-}
 private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy
-{
-    get => _sArmy ??= new CoreArmyLite();
-    set => _sArmy = value;
-}
+private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+
 private static CoreArmyLite _sArmy;
 
 

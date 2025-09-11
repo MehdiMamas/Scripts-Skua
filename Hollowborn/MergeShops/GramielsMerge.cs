@@ -27,41 +27,17 @@ public class GramielsMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
-private DawnsanctumMerge DM
-{
-    get => _DM ??= new DawnsanctumMerge();
-    set => _DM = value;
-}
-private DawnsanctumMerge _DM;
-
-private HBVNonInsig HBV
-{
-    get => _HBV ??= new HBVNonInsig();
-    set => _HBV = value;
-}
-private HBVNonInsig _HBV;
-
+    private static DawnsanctumMerge DM { get => _DM ??= new DawnsanctumMerge(); set => _DM = value; }
+    private static DawnsanctumMerge _DM;
+    private static HBVNonInsig HBV { get => _HBV ??= new HBVNonInsig(); set => _HBV = value; }
+    private static HBVNonInsig _HBV;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

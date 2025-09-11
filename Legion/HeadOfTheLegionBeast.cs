@@ -34,41 +34,11 @@ public class HeadoftheLegionBeast
 
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public CoreLegion Legion
-{
-    get => _Legion ??= new CoreLegion();
-    set => _Legion = value;
-}
-public CoreLegion _Legion;
-
-public SevenCircles Circles
-{
-    get => _Circles ??= new SevenCircles();
-    set => _Circles = value;
-}
-public SevenCircles _Circles;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
+    private static SevenCircles Circles { get => _Circles ??= new SevenCircles(); set => _Circles = value; }    private static SevenCircles _Circles;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -15,13 +15,7 @@ public class UnboundThread
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreSoWMats SOWM
-{
-    get => _SOWM ??= new CoreSoWMats();
-    set => _SOWM = value;
-}
-public CoreSoWMats _SOWM;
-
+    private static CoreSoWMats SOWM { get => _SOWM ??= new CoreSoWMats(); set => _SOWM = value; }    private static CoreSoWMats _SOWM;
 
     public void ScriptMain(IScriptInterface bot)
     {

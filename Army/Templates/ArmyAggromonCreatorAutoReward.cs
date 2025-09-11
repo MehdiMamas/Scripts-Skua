@@ -20,20 +20,15 @@ public class ArmyAggromonCreatorAutoReward
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private readonly CoreArmyLite Army = new();
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
 
-private static CoreBots sCore
-{
-    get => _sCore ??= new CoreBots();
-    set => _sCore = value;
-}
+private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+
 private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy
-{
-    get => _sArmy ??= new CoreArmyLite();
-    set => _sArmy = value;
-}
+private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+
 private static CoreArmyLite _sArmy;
 
 

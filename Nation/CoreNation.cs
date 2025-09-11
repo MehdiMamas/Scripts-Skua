@@ -15,7 +15,8 @@ public class CoreNation
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private readonly CoreFarms Farm = new();
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
 
     //CanChange: If enabled will sell the "Voucher of Nulgath" item during farms if it's not needed.
     bool sellMemVoucher = true;

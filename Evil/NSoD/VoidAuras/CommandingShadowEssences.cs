@@ -21,13 +21,7 @@ public class CommandingShadowEssences
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public static CoreBots sCore => CoreBots.Instance;
-public CoreNSOD NSoD
-{
-    get => _NSoD ??= new CoreNSOD();
-    set => _NSoD = value;
-}
-public CoreNSOD _NSoD;
-
+    private static CoreNSOD NSoD { get => _NSoD ??= new CoreNSOD(); set => _NSoD = value; }    private static CoreNSOD _NSoD;
 public static CoreNSOD sNSoD
 {
     get => _sNSoD ??= new CoreNSOD();

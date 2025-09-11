@@ -16,13 +16,8 @@ public class CrownedAxes
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-private GetLegionCastle LC
-{
-    get => _LC ??= new GetLegionCastle();
-    set => _LC = value;
-}
-private GetLegionCastle _LC;
-
+    private static GetLegionCastle LC { get => _LC ??= new GetLegionCastle(); set => _LC = value; }
+    private static GetLegionCastle _LC;
 
     public void ScriptMain(IScriptInterface bot)
     {

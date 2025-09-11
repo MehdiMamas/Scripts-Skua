@@ -16,25 +16,13 @@ public class CoreLegion
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private CoreFarms Farm
-    {
-        get => _Farm ??= new CoreFarms();
-        set => _Farm = value;
-    }
+    private CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
     private CoreFarms _Farm;
 
-    private CoreStory Story
-    {
-        get => _Story ??= new CoreStory();
-        set => _Story = value;
-    }
+    private CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
     private CoreStory _Story;
 
-    private CoreAdvanced Adv
-    {
-        get => _Adv ??= new CoreAdvanced();
-        set => _Adv = value;
-    }
+    private CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private CoreAdvanced _Adv;
 
 
@@ -463,12 +451,7 @@ public class CoreLegion
         Core.AddDrop("Legion Token", "Legion Token Pile");
         Core.RegisterQuests(4704, 4703);
         Core.ConfigureAggro();
-        while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
-        {
-            Core.KillMonster("brightfortress", "r3", "Right", "*", "Badge of Loyalty", 10);
-            Core.KillMonster("brightfortress", "r3", "Right", "*", "Badge of Corruption", 8);
-            Core.KillMonster("brightfortress", "r3", "Right", "*", "Twisted Light Token", 6);
-        }
+        Core.KillMonster("brightfortress", "r3", "Right", "*", "Legion Token", quant, isTemp: false);
         Core.ConfigureAggro(false);
         Core.CancelRegisteredQuests();
     }

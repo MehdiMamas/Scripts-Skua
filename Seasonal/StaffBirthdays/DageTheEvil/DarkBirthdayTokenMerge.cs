@@ -22,46 +22,16 @@ public class DarkBirthdayTokenMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-public CoreLegion Legion
-{
-    get => _Legion ??= new CoreLegion();
-    set => _Legion = value;
-}
-public CoreLegion _Legion;
-
-private CoreDageBirthday Dage
-{
-    get => _Dage ??= new CoreDageBirthday();
-    set => _Dage = value;
-}
-private CoreDageBirthday _Dage;
-
-private AtlasFallsGearMerge AFGM
-{
-    get => _AFGM ??= new AtlasFallsGearMerge();
-    set => _AFGM = value;
-}
-private AtlasFallsGearMerge _AFGM;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
+    private static CoreDageBirthday Dage { get => _Dage ??= new CoreDageBirthday(); set => _Dage = value; }
+    private static CoreDageBirthday _Dage;
+    private static AtlasFallsGearMerge AFGM { get => _AFGM ??= new AtlasFallsGearMerge(); set => _AFGM = value; }
+    private static AtlasFallsGearMerge _AFGM;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
 

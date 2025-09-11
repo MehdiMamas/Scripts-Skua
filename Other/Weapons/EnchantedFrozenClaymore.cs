@@ -13,20 +13,8 @@ public class EnchantedFrozenClaymore
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public DragonFableOrigins DFO
-{
-    get => _DFO ??= new DragonFableOrigins();
-    set => _DFO = value;
-}
-public DragonFableOrigins _DFO;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static DragonFableOrigins DFO { get => _DFO ??= new DragonFableOrigins(); set => _DFO = value; }    private static DragonFableOrigins _DFO;
 
     public void ScriptMain(IScriptInterface bot)
     {

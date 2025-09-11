@@ -33,76 +33,25 @@ public class CoreHollowbornChaosEnvoy
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CoreHollowborn HB
-{
-    get => _HB ??= new CoreHollowborn();
-    set => _HB = value;
-}
-private CoreHollowborn _HB;
-
-private CoreQOM QOM
-{
-    get => _QOM ??= new CoreQOM();
-    set => _QOM = value;
-}
-private CoreQOM _QOM;
-
-private ChaosAvengerClass CAV
-{
-    get => _CAV ??= new ChaosAvengerClass();
-    set => _CAV = value;
-}
-private ChaosAvengerClass _CAV;
-
-private EternalDrakath ED
-{
-    get => _ED ??= new EternalDrakath();
-    set => _ED = value;
-}
-private EternalDrakath _ED;
-
-private AscendedDrakathGear ADG
-{
-    get => _ADG ??= new AscendedDrakathGear();
-    set => _ADG = value;
-}
-private AscendedDrakathGear _ADG;
-
-private TitanStrikeGearMerge TGM
-{
-    get => _TGM ??= new TitanStrikeGearMerge();
-    set => _TGM = value;
-}
-private TitanStrikeGearMerge _TGM;
-
-private ChaosPuppetMaster CPM
-{
-    get => _CPM ??= new ChaosPuppetMaster();
-    set => _CPM = value;
-}
-private ChaosPuppetMaster _CPM;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }
+    private static CoreHollowborn _HB;
+    private static CoreQOM QOM { get => _QOM ??= new CoreQOM(); set => _QOM = value; }
+    private static CoreQOM _QOM;
+    private static ChaosAvengerClass CAV { get => _CAV ??= new ChaosAvengerClass(); set => _CAV = value; }
+    private static ChaosAvengerClass _CAV;
+    private static EternalDrakath ED { get => _ED ??= new EternalDrakath(); set => _ED = value; }
+    private static EternalDrakath _ED;
+    private static AscendedDrakathGear ADG { get => _ADG ??= new AscendedDrakathGear(); set => _ADG = value; }
+    private static AscendedDrakathGear _ADG;
+    private static TitanStrikeGearMerge TGM { get => _TGM ??= new TitanStrikeGearMerge(); set => _TGM = value; }
+    private static TitanStrikeGearMerge _TGM;
+    private static ChaosPuppetMaster CPM { get => _CPM ??= new ChaosPuppetMaster(); set => _CPM = value; }
+    private static ChaosPuppetMaster _CPM;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
 
     public string OptionsStorage = "HollowbornChaosEnvoy";
     public bool DontPreconfigure = true;

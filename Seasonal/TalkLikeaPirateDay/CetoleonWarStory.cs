@@ -12,20 +12,8 @@ public class CetoleonWarStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public HeartOfTheSeaStory HeartOfTheSeaStory
-{
-    get => _HeartOfTheSeaStory ??= new HeartOfTheSeaStory();
-    set => _HeartOfTheSeaStory = value;
-}
-public HeartOfTheSeaStory _HeartOfTheSeaStory;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static HeartOfTheSeaStory HeartOfTheSeaStory { get => _HeartOfTheSeaStory ??= new HeartOfTheSeaStory(); set => _HeartOfTheSeaStory = value; }    private static HeartOfTheSeaStory _HeartOfTheSeaStory;
 
     public void ScriptMain(IScriptInterface bot)
     {

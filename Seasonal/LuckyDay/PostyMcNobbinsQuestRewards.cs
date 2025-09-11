@@ -14,7 +14,7 @@ public class PostyMcNobbinsQuestRewards
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreAdvanced Adv => new();
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
 
     string[] PotDrops =
     {

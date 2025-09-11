@@ -21,37 +21,22 @@ public class CoreArmyRep
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
+    private static Core13LoC LOC { get => _LOC ??= new Core13LoC(); set => _LOC = value; }    private static Core13LoC _LOC;
+    private static RavenlossSaga RavenlossSaga { get => _RavenlossSaga ??= new RavenlossSaga(); set => _RavenlossSaga = value; }    private static RavenlossSaga _RavenlossSaga;
+    private static CoreDailies Dailies { get => _Dailies ??= new CoreDailies(); set => _Dailies = value; }    private static CoreDailies _Dailies;
 
-    private CoreAdvanced Adv => new();
-private CoreArmyLite Army
-{
-    get => _Army ??= new CoreArmyLite();
-    set => _Army = value;
-}
-private CoreArmyLite _Army;
+private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
 
-    public Core13LoC LOC => new();
-    public RavenlossSaga RavenlossSaga => new();
-    public CoreDailies Dailies => new();
-
-private static CoreBots sCore
-{
-    get => _sCore ??= new CoreBots();
-    set => _sCore = value;
-}
 private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy
-{
-    get => _sArmy ??= new CoreArmyLite();
-    set => _sArmy = value;
-}
+private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+
 private static CoreArmyLite _sArmy;
 
 

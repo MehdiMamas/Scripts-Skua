@@ -14,20 +14,10 @@ public class Dragonslayer
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private Lair Lair
-{
-    get => _Lair ??= new Lair();
-    set => _Lair = value;
-}
-private Lair _Lair;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static Lair Lair { get => _Lair ??= new Lair(); set => _Lair = value; }
+    private static Lair _Lair;
 
     public void ScriptMain(IScriptInterface Bot)
     {

@@ -13,20 +13,8 @@ public class Eden
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public Shinkansen Shin
-{
-    get => _Shin ??= new Shinkansen();
-    set => _Shin = value;
-}
-public Shinkansen _Shin;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static Shinkansen Shin { get => _Shin ??= new Shinkansen(); set => _Shin = value; }    private static Shinkansen _Shin;
 
     public void ScriptMain(IScriptInterface bot)
     {

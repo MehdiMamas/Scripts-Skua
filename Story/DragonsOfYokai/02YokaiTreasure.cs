@@ -12,13 +12,7 @@ public class YokaiTreasure
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreDOY DOY
-{
-    get => _DOY ??= new CoreDOY();
-    set => _DOY = value;
-}
-public CoreDOY _DOY;
-
+    private static CoreDOY DOY { get => _DOY ??= new CoreDOY(); set => _DOY = value; }    private static CoreDOY _DOY;
 
     public void ScriptMain(IScriptInterface bot)
     {

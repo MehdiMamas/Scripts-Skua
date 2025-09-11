@@ -18,39 +18,14 @@ public class AweMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-public CoreAwe Awe
-{
-    get => _Awe ??= new CoreAwe();
-    set => _Awe = value;
-}
-public CoreAwe _Awe;
-
-private ArmorOfAwe AoA
-{
-    get => _AoA ??= new ArmorOfAwe();
-    set => _AoA = value;
-}
-private ArmorOfAwe _AoA;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreAwe Awe { get => _Awe ??= new CoreAwe(); set => _Awe = value; }    private static CoreAwe _Awe;
+    private static ArmorOfAwe AoA { get => _AoA ??= new ArmorOfAwe(); set => _AoA = value; }
+    private static ArmorOfAwe _AoA;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
 

@@ -17,27 +17,10 @@ public class ExaltedHarbinger
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-private DarkBirthdayTokenMerge DBTM
-{
-    get => _DBTM ??= new DarkBirthdayTokenMerge();
-    set => _DBTM = value;
-}
-private DarkBirthdayTokenMerge _DBTM;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static DarkBirthdayTokenMerge DBTM { get => _DBTM ??= new DarkBirthdayTokenMerge(); set => _DBTM = value; }
+    private static DarkBirthdayTokenMerge _DBTM;
 
     public void ScriptMain(IScriptInterface bot)
     {

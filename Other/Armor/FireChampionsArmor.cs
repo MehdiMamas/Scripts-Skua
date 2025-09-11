@@ -17,41 +17,11 @@ public class FireChampionsArmor
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public DragonslayerGeneral DSG
-{
-    get => _DSG ??= new DragonslayerGeneral();
-    set => _DSG = value;
-}
-public DragonslayerGeneral _DSG;
-
-public WarfuryEmblem WFE
-{
-    get => _WFE ??= new WarfuryEmblem();
-    set => _WFE = value;
-}
-public WarfuryEmblem _WFE;
-
-public Lair Lair
-{
-    get => _Lair ??= new Lair();
-    set => _Lair = value;
-}
-public Lair _Lair;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static DragonslayerGeneral DSG { get => _DSG ??= new DragonslayerGeneral(); set => _DSG = value; }    private static DragonslayerGeneral _DSG;
+    private static WarfuryEmblem WFE { get => _WFE ??= new WarfuryEmblem(); set => _WFE = value; }    private static WarfuryEmblem _WFE;
+    private static Lair Lair { get => _Lair ??= new Lair(); set => _Lair = value; }    private static Lair _Lair;
 
     public void ScriptMain(IScriptInterface bot)
     {

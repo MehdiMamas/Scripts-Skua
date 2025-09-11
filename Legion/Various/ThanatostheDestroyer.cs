@@ -15,21 +15,10 @@ public class ThanatostheDestroyer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreIsleOfFotia CoreIsleOfFotia
-{
-    get => _CoreIsleOfFotia ??= new CoreIsleOfFotia();
-    set => _CoreIsleOfFotia = value;
-}
-public CoreIsleOfFotia _CoreIsleOfFotia;
-
-    private CoreAdvanced Adv => new();
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreIsleOfFotia CoreIsleOfFotia { get => _CoreIsleOfFotia ??= new CoreIsleOfFotia(); set => _CoreIsleOfFotia = value; }    private static CoreIsleOfFotia _CoreIsleOfFotia;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
 
     public void ScriptMain(IScriptInterface bot)

@@ -23,56 +23,21 @@ public class CoreNSOD
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
 
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-private CoreDailies _Daily;
-
-
-private CoreBLOD BLOD
-{
-    get => _BLOD ??= new CoreBLOD();
-    set => _BLOD = value;
-}
-private CoreBLOD _BLOD;
-
-private CoreSDKA SDKA
-{
-    get => _SDKA ??= new CoreSDKA();
-    set => _SDKA = value;
-}
-private CoreSDKA _SDKA;
-
-private Necromancer Necro
-{
-    get => _Necro ??= new Necromancer();
-    set => _Necro = value;
-}
-private Necromancer _Necro;
-
-private BattleUnder BattleUnder
-{
-    get => _BattleUnder ??= new BattleUnder();
-    set => _BattleUnder = value;
-}
-private BattleUnder _BattleUnder;
-
+    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD _BLOD;
+    private static CoreSDKA SDKA { get => _SDKA ??= new CoreSDKA(); set => _SDKA = value; }
+    private static CoreSDKA _SDKA;
+    private static Necromancer Necro { get => _Necro ??= new Necromancer(); set => _Necro = value; }
+    private static Necromancer _Necro;
+    private static BattleUnder BattleUnder { get => _BattleUnder ??= new BattleUnder(); set => _BattleUnder = value; }
+    private static BattleUnder _BattleUnder;
 
     public string OptionsStorage = "NecroticSwordOfDoomOptions";
     public bool DontPreconfigure = true;

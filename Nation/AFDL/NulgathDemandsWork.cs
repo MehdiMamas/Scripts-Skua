@@ -16,34 +16,10 @@ public class NulgathDemandsWork
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
-public GoldenHanzoVoid GHV
-{
-    get => _GHV ??= new GoldenHanzoVoid();
-    set => _GHV = value;
-}
-public GoldenHanzoVoid _GHV;
-
-public WillpowerExtraction WillpowerExtraction
-{
-    get => _WillpowerExtraction ??= new WillpowerExtraction();
-    set => _WillpowerExtraction = value;
-}
-public WillpowerExtraction _WillpowerExtraction;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static GoldenHanzoVoid GHV { get => _GHV ??= new GoldenHanzoVoid(); set => _GHV = value; }    private static GoldenHanzoVoid _GHV;
+    private static WillpowerExtraction WillpowerExtraction { get => _WillpowerExtraction ??= new WillpowerExtraction(); set => _WillpowerExtraction = value; }    private static WillpowerExtraction _WillpowerExtraction;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
 
     public string[] NDWItems =
     {

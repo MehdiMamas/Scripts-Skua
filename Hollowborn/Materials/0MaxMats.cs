@@ -17,48 +17,18 @@ public class MaxHollowbornVindicatorMats
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-private VindicatorBadge VB
-{
-    get => _VB ??= new VindicatorBadge();
-    set => _VB = value;
-}
-private VindicatorBadge _VB;
-
-private DeathsPower DP
-{
-    get => _DP ??= new DeathsPower();
-    set => _DP = value;
-}
-private DeathsPower _DP;
-
-private GraceOrb GO
-{
-    get => _GO ??= new GraceOrb();
-    set => _GO = value;
-}
-private GraceOrb _GO;
-
-private GramielsEmblem GE
-{
-    get => _GE ??= new GramielsEmblem();
-    set => _GE = value;
-}
-private GramielsEmblem _GE;
-
-private VindicatorCrest VC
-{
-    get => _VC ??= new VindicatorCrest();
-    set => _VC = value;
-}
-private VindicatorCrest _VC;
-
-private HollowSoul HS
-{
-    get => _HS ??= new HollowSoul();
-    set => _HS = value;
-}
-private HollowSoul _HS;
-
+    private static VindicatorBadge VB { get => _VB ??= new VindicatorBadge(); set => _VB = value; }
+    private static VindicatorBadge _VB;
+    private static DeathsPower DP { get => _DP ??= new DeathsPower(); set => _DP = value; }
+    private static DeathsPower _DP;
+    private static GraceOrb GO { get => _GO ??= new GraceOrb(); set => _GO = value; }
+    private static GraceOrb _GO;
+    private static GramielsEmblem GE { get => _GE ??= new GramielsEmblem(); set => _GE = value; }
+    private static GramielsEmblem _GE;
+    private static VindicatorCrest VC { get => _VC ??= new VindicatorCrest(); set => _VC = value; }
+    private static VindicatorCrest _VC;
+    private static HollowSoul HS { get => _HS ??= new HollowSoul(); set => _HS = value; }
+    private static HollowSoul _HS;
 
     public void ScriptMain(IScriptInterface bot)
     {

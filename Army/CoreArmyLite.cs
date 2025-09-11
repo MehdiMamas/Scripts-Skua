@@ -25,13 +25,8 @@ public class CoreArmyLite
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
     List<string> cellToAggro = new();
 
     public void ScriptMain(IScriptInterface bot)
@@ -40,13 +35,7 @@ private CoreFarms _Farm;
     }
 
     #region Army Logging
-public ArmyLogging armyLogging
-{
-    get => _armyLogging ??= new ArmyLogging();
-    set => _armyLogging = value;
-}
-public ArmyLogging _armyLogging;
-
+    private static ArmyLogging armyLogging { get => _armyLogging ??= new ArmyLogging(); set => _armyLogging = value; }    private static ArmyLogging _armyLogging;
 
     public void setLogName(string name)
     {

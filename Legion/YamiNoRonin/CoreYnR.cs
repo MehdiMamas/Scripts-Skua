@@ -16,34 +16,10 @@ public class CoreYnR
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public CoreLegion Legion
-{
-    get => _Legion ??= new CoreLegion();
-    set => _Legion = value;
-}
-public CoreLegion _Legion;
-
-public CoreSoW SOW
-{
-    get => _SOW ??= new CoreSoW();
-    set => _SOW = value;
-}
-public CoreSoW _SOW;
-
-public SwordMaster SM
-{
-    get => _SM ??= new SwordMaster();
-    set => _SM = value;
-}
-public SwordMaster _SM;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
+    private static CoreSoW SOW { get => _SOW ??= new CoreSoW(); set => _SOW = value; }    private static CoreSoW _SOW;
+    private static SwordMaster SM { get => _SM ??= new SwordMaster(); set => _SM = value; }    private static SwordMaster _SM;
 
     private bool nonLegion = false;
 

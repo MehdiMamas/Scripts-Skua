@@ -13,20 +13,8 @@ public class BreakIntotheHoard
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-public CoreDailies _Daily;
-
-public BoneBreak BoneBreak
-{
-    get => _BoneBreak ??= new BoneBreak();
-    set => _BoneBreak = value;
-}
-public BoneBreak _BoneBreak;
-
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static BoneBreak BoneBreak { get => _BoneBreak ??= new BoneBreak(); set => _BoneBreak = value; }    private static BoneBreak _BoneBreak;
 
     public void ScriptMain(IScriptInterface bot)
     {

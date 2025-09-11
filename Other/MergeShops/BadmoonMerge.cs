@@ -23,48 +23,19 @@ public class BadmoonMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
-private ShadowslayerSummoningRitual SSR
-{
-    get => _SSR ??= new ShadowslayerSummoningRitual();
-    set => _SSR = value;
-}
-private ShadowslayerSummoningRitual _SSR;
-
-private ShadowslayerSummoningRitual2 ssr2
-{
-    get => _ssr2 ??= new ShadowslayerSummoningRitual2();
-    set => _ssr2 = value;
-}
-private ShadowslayerSummoningRitual2 _ssr2;
-
-private ShadowSlayerKMerge SSKM
-{
-    get => _SSKM ??= new ShadowSlayerKMerge();
-    set => _SSKM = value;
-}
-private ShadowSlayerKMerge _SSKM;
-
+    private static ShadowslayerSummoningRitual SSR { get => _SSR ??= new ShadowslayerSummoningRitual(); set => _SSR = value; }
+    private static ShadowslayerSummoningRitual _SSR;
+    private static ShadowslayerSummoningRitual2 ssr2 { get => _ssr2 ??= new ShadowslayerSummoningRitual2(); set => _ssr2 = value; }
+    private static ShadowslayerSummoningRitual2 _ssr2;
+    private static ShadowSlayerKMerge SSKM { get => _SSKM ??= new ShadowSlayerKMerge(); set => _SSKM = value; }
+    private static ShadowSlayerKMerge _SSKM;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

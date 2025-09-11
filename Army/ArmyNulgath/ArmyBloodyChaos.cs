@@ -15,7 +15,8 @@ public class ArmyBloodyChaos
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private readonly CoreArmyLite Army = new();
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
 
     private static readonly CoreArmyLite sArmy = new();
 

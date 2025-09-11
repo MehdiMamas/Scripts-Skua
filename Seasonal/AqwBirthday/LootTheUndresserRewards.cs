@@ -14,13 +14,8 @@ public class LootTheUndresser
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreToD TOD
-{
-    get => _TOD ??= new CoreToD();
-    set => _TOD = value;
-}
-private CoreToD _TOD;
-
+    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }
+    private static CoreToD _TOD;
 
     public void ScriptMain(IScriptInterface bot)
     {

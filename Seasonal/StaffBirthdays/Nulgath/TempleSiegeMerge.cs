@@ -18,46 +18,17 @@ public class TempleSiegeMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-private CoreNation _Nation;
-
-private DragonBladeofNulgath DB
-{
-    get => _DB ??= new DragonBladeofNulgath();
-    set => _DB = value;
-}
-private DragonBladeofNulgath _DB;
-
-private TempleSiege TS
-{
-    get => _TS ??= new TempleSiege();
-    set => _TS = value;
-}
-private TempleSiege _TS;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static DragonBladeofNulgath DB { get => _DB ??= new DragonBladeofNulgath(); set => _DB = value; }
+    private static DragonBladeofNulgath _DB;
+    private static TempleSiege TS { get => _TS ??= new TempleSiege(); set => _TS = value; }
+    private static TempleSiege _TS;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
 

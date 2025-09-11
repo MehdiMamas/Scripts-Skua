@@ -14,20 +14,10 @@ public class TwigguHunt
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-private CoreStory _Story;
-
-private MurderMoon MM
-{
-    get => _MM ??= new MurderMoon();
-    set => _MM = value;
-}
-private MurderMoon _MM;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static MurderMoon MM { get => _MM ??= new MurderMoon(); set => _MM = value; }
+    private static MurderMoon _MM;
 
     public void ScriptMain(IScriptInterface Bot)
     {

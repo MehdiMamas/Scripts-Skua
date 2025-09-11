@@ -14,13 +14,7 @@ public class Beleen
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreSummer Summer
-{
-    get => _Summer ??= new CoreSummer();
-    set => _Summer = value;
-}
-public CoreSummer _Summer;
-
+    private static CoreSummer Summer { get => _Summer ??= new CoreSummer(); set => _Summer = value; }    private static CoreSummer _Summer;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -21,55 +21,19 @@ public class DoomMetalNecro
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-private CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-private CoreDailies _Daily;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private BattleConcertClassQuests BCCQ
-{
-    get => _BCCQ ??= new BattleConcertClassQuests();
-    set => _BCCQ = value;
-}
-private BattleConcertClassQuests _BCCQ;
-
-private NeoMetalNecro NMN
-{
-    get => _NMN ??= new NeoMetalNecro();
-    set => _NMN = value;
-}
-private NeoMetalNecro _NMN;
-
-private ArchDoomKnight ADK
-{
-    get => _ADK ??= new ArchDoomKnight();
-    set => _ADK = value;
-}
-private ArchDoomKnight _ADK;
-
-private VordredArmor VA
-{
-    get => _VA ??= new VordredArmor();
-    set => _VA = value;
-}
-private VordredArmor _VA;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static BattleConcertClassQuests BCCQ { get => _BCCQ ??= new BattleConcertClassQuests(); set => _BCCQ = value; }
+    private static BattleConcertClassQuests _BCCQ;
+    private static NeoMetalNecro NMN { get => _NMN ??= new NeoMetalNecro(); set => _NMN = value; }
+    private static NeoMetalNecro _NMN;
+    private static ArchDoomKnight ADK { get => _ADK ??= new ArchDoomKnight(); set => _ADK = value; }
+    private static ArchDoomKnight _ADK;
+    private static VordredArmor VA { get => _VA ??= new VordredArmor(); set => _VA = value; }
+    private static VordredArmor _VA;
 
     public void ScriptMain(IScriptInterface Bot)
     {

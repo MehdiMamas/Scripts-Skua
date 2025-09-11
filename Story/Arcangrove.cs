@@ -14,14 +14,8 @@ public class Arcangrove
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-    public Core13LoC LoC => new();
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static Core13LoC LoC { get => _LoC ??= new Core13LoC(); set => _LoC = value; }    private static Core13LoC _LoC;
 
 
     public void ScriptMain(IScriptInterface bot)

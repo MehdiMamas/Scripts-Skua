@@ -278,618 +278,192 @@ public class AllClasses
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
 
     #region Dailies
-private CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-private CoreDailies _Daily;
-
-private BlazeBinder BB
-{
-    get => _BB ??= new BlazeBinder();
-    set => _BB = value;
-}
-private BlazeBinder _BB;
-
-private Cryomancer Cryo
-{
-    get => _Cryo ??= new Cryomancer();
-    set => _Cryo = value;
-}
-private Cryomancer _Cryo;
-
-private LordOfOrder LOO
-{
-    get => _LOO ??= new LordOfOrder();
-    set => _LOO = value;
-}
-private LordOfOrder _LOO;
-
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static BlazeBinder BB { get => _BB ??= new BlazeBinder(); set => _BB = value; }
+    private static BlazeBinder _BB;
+    private static Cryomancer Cryo { get => _Cryo ??= new Cryomancer(); set => _Cryo = value; }
+    private static Cryomancer _Cryo;
+    private static LordOfOrder LOO { get => _LOO ??= new LordOfOrder(); set => _LOO = value; }
+    private static LordOfOrder _LOO;
     #endregion Dailies
 
     #region Rep
-private Arachnomancer Arach
-{
-    get => _Arach ??= new Arachnomancer();
-    set => _Arach = value;
-}
-private Arachnomancer _Arach;
-
-private ChaosSlayer CS
-{
-    get => _CS ??= new ChaosSlayer();
-    set => _CS = value;
-}
-private ChaosSlayer _CS;
-
-private DarkbloodStormKing DBSK
-{
-    get => _DBSK ??= new DarkbloodStormKing();
-    set => _DBSK = value;
-}
-private DarkbloodStormKing _DBSK;
-
-private ElementalDracomancer ED
-{
-    get => _ED ??= new ElementalDracomancer();
-    set => _ED = value;
-}
-private ElementalDracomancer _ED;
-
-private EternalInversionist EI
-{
-    get => _EI ??= new EternalInversionist();
-    set => _EI = value;
-}
-private EternalInversionist _EI;
-
-private EvolvedShaman ES
-{
-    get => _ES ??= new EvolvedShaman();
-    set => _ES = value;
-}
-private EvolvedShaman _ES;
-
-private GlacialBerserker GB
-{
-    get => _GB ??= new GlacialBerserker();
-    set => _GB = value;
-}
-private GlacialBerserker _GB;
-
-private HorcEvader HE
-{
-    get => _HE ??= new HorcEvader();
-    set => _HE = value;
-}
-private HorcEvader _HE;
-
-private ImperialChunin IC
-{
-    get => _IC ??= new ImperialChunin();
-    set => _IC = value;
-}
-private ImperialChunin _IC;
-
-private Lycan Lycan
-{
-    get => _Lycan ??= new Lycan();
-    set => _Lycan = value;
-}
-private Lycan _Lycan;
-
-private MasterRanger MR
-{
-    get => _MR ??= new MasterRanger();
-    set => _MR = value;
-}
-private MasterRanger _MR;
-
-private Paladin Pal
-{
-    get => _Pal ??= new Paladin();
-    set => _Pal = value;
-}
-private Paladin _Pal;
-
-private RoyalBattleMage RBM
-{
-    get => _RBM ??= new RoyalBattleMage();
-    set => _RBM = value;
-}
-private RoyalBattleMage _RBM;
-
-private Shaman Shaman
-{
-    get => _Shaman ??= new Shaman();
-    set => _Shaman = value;
-}
-private Shaman _Shaman;
-
-private StoneCrusher SC
-{
-    get => _SC ??= new StoneCrusher();
-    set => _SC = value;
-}
-private StoneCrusher _SC;
-
-private ThiefOfHours TOH
-{
-    get => _TOH ??= new ThiefOfHours();
-    set => _TOH = value;
-}
-private ThiefOfHours _TOH;
-
-private TrollSpellsmith TS
-{
-    get => _TS ??= new TrollSpellsmith();
-    set => _TS = value;
-}
-private TrollSpellsmith _TS;
-
+    private static Arachnomancer Arach { get => _Arach ??= new Arachnomancer(); set => _Arach = value; }
+    private static Arachnomancer _Arach;
+    private static ChaosSlayer CS { get => _CS ??= new ChaosSlayer(); set => _CS = value; }
+    private static ChaosSlayer _CS;
+    private static DarkbloodStormKing DBSK { get => _DBSK ??= new DarkbloodStormKing(); set => _DBSK = value; }
+    private static DarkbloodStormKing _DBSK;
+    private static ElementalDracomancer ED { get => _ED ??= new ElementalDracomancer(); set => _ED = value; }
+    private static ElementalDracomancer _ED;
+    private static EternalInversionist EI { get => _EI ??= new EternalInversionist(); set => _EI = value; }
+    private static EternalInversionist _EI;
+    private static EvolvedShaman ES { get => _ES ??= new EvolvedShaman(); set => _ES = value; }
+    private static EvolvedShaman _ES;
+    private static GlacialBerserker GB { get => _GB ??= new GlacialBerserker(); set => _GB = value; }
+    private static GlacialBerserker _GB;
+    private static HorcEvader HE { get => _HE ??= new HorcEvader(); set => _HE = value; }
+    private static HorcEvader _HE;
+    private static ImperialChunin IC { get => _IC ??= new ImperialChunin(); set => _IC = value; }
+    private static ImperialChunin _IC;
+    private static Lycan Lycan { get => _Lycan ??= new Lycan(); set => _Lycan = value; }
+    private static Lycan _Lycan;
+    private static MasterRanger MR { get => _MR ??= new MasterRanger(); set => _MR = value; }
+    private static MasterRanger _MR;
+    private static Paladin Pal { get => _Pal ??= new Paladin(); set => _Pal = value; }
+    private static Paladin _Pal;
+    private static RoyalBattleMage RBM { get => _RBM ??= new RoyalBattleMage(); set => _RBM = value; }
+    private static RoyalBattleMage _RBM;
+    private static Shaman Shaman { get => _Shaman ??= new Shaman(); set => _Shaman = value; }
+    private static Shaman _Shaman;
+    private static StoneCrusher SC { get => _SC ??= new StoneCrusher(); set => _SC = value; }
+    private static StoneCrusher _SC;
+    private static ThiefOfHours TOH { get => _TOH ??= new ThiefOfHours(); set => _TOH = value; }
+    private static ThiefOfHours _TOH;
+    private static TrollSpellsmith TS { get => _TS ??= new TrollSpellsmith(); set => _TS = value; }
+    private static TrollSpellsmith _TS;
     #endregion Rep
 
     #region Member
-private AlphaOmega AO
-{
-    get => _AO ??= new AlphaOmega();
-    set => _AO = value;
-}
-private AlphaOmega _AO;
-
-private Acolyte Acolyte
-{
-    get => _Acolyte ??= new Acolyte();
-    set => _Acolyte = value;
-}
-private Acolyte _Acolyte;
-
-private Bard Bard
-{
-    get => _Bard ??= new Bard();
-    set => _Bard = value;
-}
-private Bard _Bard;
-
-private BeastMaster BM
-{
-    get => _BM ??= new BeastMaster();
-    set => _BM = value;
-}
-private BeastMaster _BM;
-
-private BloodAncient BA
-{
-    get => _BA ??= new BloodAncient();
-    set => _BA = value;
-}
-private BloodAncient _BA;
-
-private BloodTitan BT
-{
-    get => _BT ??= new BloodTitan();
-    set => _BT = value;
-}
-private BloodTitan _BT;
-
-private ChronoAssassin CA
-{
-    get => _CA ??= new ChronoAssassin();
-    set => _CA = value;
-}
-private ChronoAssassin _CA;
-
-private DeathKnight DK
-{
-    get => _DK ??= new DeathKnight();
-    set => _DK = value;
-}
-private DeathKnight _DK;
-
-private DoomKnight DoomK
-{
-    get => _DoomK ??= new DoomKnight();
-    set => _DoomK = value;
-}
-private DoomKnight _DoomK;
-
-private DrakelWarlord DW
-{
-    get => _DW ??= new DrakelWarlord();
-    set => _DW = value;
-}
-private DrakelWarlord _DW;
-
-private LegionDoomKnight LDK
-{
-    get => _LDK ??= new LegionDoomKnight();
-    set => _LDK = value;
-}
-private LegionDoomKnight _LDK;
-
-private LegendaryElementalWarrior LEW
-{
-    get => _LEW ??= new LegendaryElementalWarrior();
-    set => _LEW = value;
-}
-private LegendaryElementalWarrior _LEW;
-
-private Renegade Ren
-{
-    get => _Ren ??= new Renegade();
-    set => _Ren = value;
-}
-private Renegade _Ren;
-
-private UndeadSlayer US
-{
-    get => _US ??= new UndeadSlayer();
-    set => _US = value;
-}
-private UndeadSlayer _US;
-
+    private static AlphaOmega AO { get => _AO ??= new AlphaOmega(); set => _AO = value; }
+    private static AlphaOmega _AO;
+    private static Acolyte Acolyte { get => _Acolyte ??= new Acolyte(); set => _Acolyte = value; }
+    private static Acolyte _Acolyte;
+    private static Bard Bard { get => _Bard ??= new Bard(); set => _Bard = value; }
+    private static Bard _Bard;
+    private static BeastMaster BM { get => _BM ??= new BeastMaster(); set => _BM = value; }
+    private static BeastMaster _BM;
+    private static BloodAncient BA { get => _BA ??= new BloodAncient(); set => _BA = value; }
+    private static BloodAncient _BA;
+    private static BloodTitan BT { get => _BT ??= new BloodTitan(); set => _BT = value; }
+    private static BloodTitan _BT;
+    private static ChronoAssassin CA { get => _CA ??= new ChronoAssassin(); set => _CA = value; }
+    private static ChronoAssassin _CA;
+    private static DeathKnight DK { get => _DK ??= new DeathKnight(); set => _DK = value; }
+    private static DeathKnight _DK;
+    private static DoomKnight DoomK { get => _DoomK ??= new DoomKnight(); set => _DoomK = value; }
+    private static DoomKnight _DoomK;
+    private static DrakelWarlord DW { get => _DW ??= new DrakelWarlord(); set => _DW = value; }
+    private static DrakelWarlord _DW;
+    private static LegionDoomKnight LDK { get => _LDK ??= new LegionDoomKnight(); set => _LDK = value; }
+    private static LegionDoomKnight _LDK;
+    private static LegendaryElementalWarrior LEW { get => _LEW ??= new LegendaryElementalWarrior(); set => _LEW = value; }
+    private static LegendaryElementalWarrior _LEW;
+    private static Renegade Ren { get => _Ren ??= new Renegade(); set => _Ren = value; }
+    private static Renegade _Ren;
+    private static UndeadSlayer US { get => _US ??= new UndeadSlayer(); set => _US = value; }
+    private static UndeadSlayer _US;
     #endregion Member
 
     #region Seasonal
-private AlphaPirate APir
-{
-    get => _APir ??= new AlphaPirate();
-    set => _APir = value;
-}
-private AlphaPirate _APir;
-
-private DarkLord DL
-{
-    get => _DL ??= new DarkLord();
-    set => _DL = value;
-}
-private DarkLord _DL;
-
-private EvolvedLeprechaun EL
-{
-    get => _EL ??= new EvolvedLeprechaun();
-    set => _EL = value;
-}
-private EvolvedLeprechaun _EL;
-
-private ExaltedHarbinger EH
-{
-    get => _EH ??= new ExaltedHarbinger();
-    set => _EH = value;
-}
-private ExaltedHarbinger _EH;
-
-private FrostvalBarbarian FB
-{
-    get => _FB ??= new FrostvalBarbarian();
-    set => _FB = value;
-}
-private FrostvalBarbarian _FB;
-
-private LegionSwordMasterAssassin LSMA
-{
-    get => _LSMA ??= new LegionSwordMasterAssassin();
-    set => _LSMA = value;
-}
-private LegionSwordMasterAssassin _LSMA;
-
-private NorthlandsMonk NM
-{
-    get => _NM ??= new NorthlandsMonk();
-    set => _NM = value;
-}
-private NorthlandsMonk _NM;
-
-private PirateClass Pirate
-{
-    get => _Pirate ??= new PirateClass();
-    set => _Pirate = value;
-}
-private PirateClass _Pirate;
-
-private ShadowDragonShinobi SDS
-{
-    get => _SDS ??= new ShadowDragonShinobi();
-    set => _SDS = value;
-}
-private ShadowDragonShinobi _SDS;
-
-private PumpkinLord PL
-{
-    get => _PL ??= new PumpkinLord();
-    set => _PL = value;
-}
-private PumpkinLord _PL;
-
-private VampireLord VL
-{
-    get => _VL ??= new VampireLord();
-    set => _VL = value;
-}
-private VampireLord _VL;
-
-private NoHollowbornClass NHBC
-{
-    get => _NHBC ??= new NoHollowbornClass();
-    set => _NHBC = value;
-}
-private NoHollowbornClass _NHBC;
-
+    private static AlphaPirate APir { get => _APir ??= new AlphaPirate(); set => _APir = value; }
+    private static AlphaPirate _APir;
+    private static DarkLord DL { get => _DL ??= new DarkLord(); set => _DL = value; }
+    private static DarkLord _DL;
+    private static EvolvedLeprechaun EL { get => _EL ??= new EvolvedLeprechaun(); set => _EL = value; }
+    private static EvolvedLeprechaun _EL;
+    private static ExaltedHarbinger EH { get => _EH ??= new ExaltedHarbinger(); set => _EH = value; }
+    private static ExaltedHarbinger _EH;
+    private static FrostvalBarbarian FB { get => _FB ??= new FrostvalBarbarian(); set => _FB = value; }
+    private static FrostvalBarbarian _FB;
+    private static LegionSwordMasterAssassin LSMA { get => _LSMA ??= new LegionSwordMasterAssassin(); set => _LSMA = value; }
+    private static LegionSwordMasterAssassin _LSMA;
+    private static NorthlandsMonk NM { get => _NM ??= new NorthlandsMonk(); set => _NM = value; }
+    private static NorthlandsMonk _NM;
+    private static PirateClass Pirate { get => _Pirate ??= new PirateClass(); set => _Pirate = value; }
+    private static PirateClass _Pirate;
+    private static ShadowDragonShinobi SDS { get => _SDS ??= new ShadowDragonShinobi(); set => _SDS = value; }
+    private static ShadowDragonShinobi _SDS;
+    private static PumpkinLord PL { get => _PL ??= new PumpkinLord(); set => _PL = value; }
+    private static PumpkinLord _PL;
+    private static VampireLord VL { get => _VL ??= new VampireLord(); set => _VL = value; }
+    private static VampireLord _VL;
+    private static NoHollowbornClass NHBC { get => _NHBC ??= new NoHollowbornClass(); set => _NHBC = value; }
+    private static NoHollowbornClass _NHBC;
     #endregion Seasonal
 
     #region Various
-private AbyssalAngelsShadow AAS
-{
-    get => _AAS ??= new AbyssalAngelsShadow();
-    set => _AAS = value;
-}
-private AbyssalAngelsShadow _AAS;
-
-private ArchFiend AF
-{
-    get => _AF ??= new ArchFiend();
-    set => _AF = value;
-}
-private ArchFiend _AF;
-
-private BloodSorceress BS
-{
-    get => _BS ??= new BloodSorceress();
-    set => _BS = value;
-}
-private BloodSorceress _BS;
-
-private DoomMetalNecro DMN
-{
-    get => _DMN ??= new DoomMetalNecro();
-    set => _DMN = value;
-}
-private DoomMetalNecro _DMN;
-
-private Dragonslayer DS
-{
-    get => _DS ??= new Dragonslayer();
-    set => _DS = value;
-}
-private Dragonslayer _DS;
-
-private DragonslayerGeneral DSG
-{
-    get => _DSG ??= new DragonslayerGeneral();
-    set => _DSG = value;
-}
-private DragonslayerGeneral _DSG;
-
-private DragonShinobi DSS
-{
-    get => _DSS ??= new DragonShinobi();
-    set => _DSS = value;
-}
-private DragonShinobi _DSS;
-
-private Enforcer Enf
-{
-    get => _Enf ??= new Enforcer();
-    set => _Enf = value;
-}
-private Enforcer _Enf;
-
-private ExaltedSoulCleaver ESC
-{
-    get => _ESC ??= new ExaltedSoulCleaver();
-    set => _ESC = value;
-}
-private ExaltedSoulCleaver _ESC;
-
-private FrostSpiritReaver FSR
-{
-    get => _FSR ??= new FrostSpiritReaver();
-    set => _FSR = value;
-}
-private FrostSpiritReaver _FSR;
-
-private GrimNecromancer GN
-{
-    get => _GN ??= new GrimNecromancer();
-    set => _GN = value;
-}
-private GrimNecromancer _GN;
-
-private HighSeasCommander HSC
-{
-    get => _HSC ??= new HighSeasCommander();
-    set => _HSC = value;
-}
-private HighSeasCommander _HSC;
-
-private InfiniteLegionDC ILDC
-{
-    get => _ILDC ??= new InfiniteLegionDC();
-    set => _ILDC = value;
-}
-private InfiniteLegionDC _ILDC;
-
-private LightMage LM
-{
-    get => _LM ??= new LightMage();
-    set => _LM = value;
-}
-private LightMage _LM;
-
-private MechaJouster MJ
-{
-    get => _MJ ??= new MechaJouster();
-    set => _MJ = value;
-}
-private MechaJouster _MJ;
-
-private MartialArtist MA
-{
-    get => _MA ??= new MartialArtist();
-    set => _MA = value;
-}
-private MartialArtist _MA;
-
-private Necromancer Necro
-{
-    get => _Necro ??= new Necromancer();
-    set => _Necro = value;
-}
-private Necromancer _Necro;
-
-private NeoMetalNecro NMN
-{
-    get => _NMN ??= new NeoMetalNecro();
-    set => _NMN = value;
-}
-private NeoMetalNecro _NMN;
-
-private ProtoSartorium PS
-{
-    get => _PS ??= new ProtoSartorium();
-    set => _PS = value;
-}
-private ProtoSartorium _PS;
-
-private Rustbucket RB
-{
-    get => _RB ??= new Rustbucket();
-    set => _RB = value;
-}
-private Rustbucket _RB;
-
-private ScarletSorceress SS
-{
-    get => _SS ??= new ScarletSorceress();
-    set => _SS = value;
-}
-private ScarletSorceress _SS;
-
-private SkyChargedGrenadier SCG
-{
-    get => _SCG ??= new SkyChargedGrenadier();
-    set => _SCG = value;
-}
-private SkyChargedGrenadier _SCG;
-
-private SwordMaster SM
-{
-    get => _SM ??= new SwordMaster();
-    set => _SM = value;
-}
-private SwordMaster _SM;
-
-private Sentinel Sentinel
-{
-    get => _Sentinel ??= new Sentinel();
-    set => _Sentinel = value;
-}
-private Sentinel _Sentinel;
-
+    private static AbyssalAngelsShadow AAS { get => _AAS ??= new AbyssalAngelsShadow(); set => _AAS = value; }
+    private static AbyssalAngelsShadow _AAS;
+    private static ArchFiend AF { get => _AF ??= new ArchFiend(); set => _AF = value; }
+    private static ArchFiend _AF;
+    private static BloodSorceress BS { get => _BS ??= new BloodSorceress(); set => _BS = value; }
+    private static BloodSorceress _BS;
+    private static DoomMetalNecro DMN { get => _DMN ??= new DoomMetalNecro(); set => _DMN = value; }
+    private static DoomMetalNecro _DMN;
+    private static Dragonslayer DS { get => _DS ??= new Dragonslayer(); set => _DS = value; }
+    private static Dragonslayer _DS;
+    private static DragonslayerGeneral DSG { get => _DSG ??= new DragonslayerGeneral(); set => _DSG = value; }
+    private static DragonslayerGeneral _DSG;
+    private static DragonShinobi DSS { get => _DSS ??= new DragonShinobi(); set => _DSS = value; }
+    private static DragonShinobi _DSS;
+    private static Enforcer Enf { get => _Enf ??= new Enforcer(); set => _Enf = value; }
+    private static Enforcer _Enf;
+    private static ExaltedSoulCleaver ESC { get => _ESC ??= new ExaltedSoulCleaver(); set => _ESC = value; }
+    private static ExaltedSoulCleaver _ESC;
+    private static FrostSpiritReaver FSR { get => _FSR ??= new FrostSpiritReaver(); set => _FSR = value; }
+    private static FrostSpiritReaver _FSR;
+    private static GrimNecromancer GN { get => _GN ??= new GrimNecromancer(); set => _GN = value; }
+    private static GrimNecromancer _GN;
+    private static HighSeasCommander HSC { get => _HSC ??= new HighSeasCommander(); set => _HSC = value; }
+    private static HighSeasCommander _HSC;
+    private static InfiniteLegionDC ILDC { get => _ILDC ??= new InfiniteLegionDC(); set => _ILDC = value; }
+    private static InfiniteLegionDC _ILDC;
+    private static LightMage LM { get => _LM ??= new LightMage(); set => _LM = value; }
+    private static LightMage _LM;
+    private static MechaJouster MJ { get => _MJ ??= new MechaJouster(); set => _MJ = value; }
+    private static MechaJouster _MJ;
+    private static MartialArtist MA { get => _MA ??= new MartialArtist(); set => _MA = value; }
+    private static MartialArtist _MA;
+    private static Necromancer Necro { get => _Necro ??= new Necromancer(); set => _Necro = value; }
+    private static Necromancer _Necro;
+    private static NeoMetalNecro NMN { get => _NMN ??= new NeoMetalNecro(); set => _NMN = value; }
+    private static NeoMetalNecro _NMN;
+    private static ProtoSartorium PS { get => _PS ??= new ProtoSartorium(); set => _PS = value; }
+    private static ProtoSartorium _PS;
+    private static Rustbucket RB { get => _RB ??= new Rustbucket(); set => _RB = value; }
+    private static Rustbucket _RB;
+    private static ScarletSorceress SS { get => _SS ??= new ScarletSorceress(); set => _SS = value; }
+    private static ScarletSorceress _SS;
+    private static SkyChargedGrenadier SCG { get => _SCG ??= new SkyChargedGrenadier(); set => _SCG = value; }
+    private static SkyChargedGrenadier _SCG;
+    private static SwordMaster SM { get => _SM ??= new SwordMaster(); set => _SM = value; }
+    private static SwordMaster _SM;
+    private static Sentinel Sentinel { get => _Sentinel ??= new Sentinel(); set => _Sentinel = value; }
+    private static Sentinel _Sentinel;
     #endregion Various
 
     #region End game
-private ArcanaInvoker AI
-{
-    get => _AI ??= new ArcanaInvoker();
-    set => _AI = value;
-}
-private ArcanaInvoker _AI;
-
-private CoreArchMage AM
-{
-    get => _AM ??= new CoreArchMage();
-    set => _AM = value;
-}
-private CoreArchMage _AM;
-
-private ArchPaladin AP
-{
-    get => _AP ??= new ArchPaladin();
-    set => _AP = value;
-}
-private ArchPaladin _AP;
-
-private ChaosAvengerClass CAV
-{
-    get => _CAV ??= new ChaosAvengerClass();
-    set => _CAV = value;
-}
-private ChaosAvengerClass _CAV;
-
-private DragonOfTime DOT
-{
-    get => _DOT ??= new DragonOfTime();
-    set => _DOT = value;
-}
-private DragonOfTime _DOT;
-
-private HBVNonInsig HBV
-{
-    get => _HBV ??= new HBVNonInsig();
-    set => _HBV = value;
-}
-private HBVNonInsig _HBV;
-
-private Lich lich
-{
-    get => _lich ??= new Lich();
-    set => _lich = value;
-}
-private Lich _lich;
-
-private LightCaster LC
-{
-    get => _LC ??= new LightCaster();
-    set => _LC = value;
-}
-private LightCaster _LC;
-
-private CoreLR LR
-{
-    get => _LR ??= new CoreLR();
-    set => _LR = value;
-}
-private CoreLR _LR;
-
-private SovereignOfStorms SOS
-{
-    get => _SOS ??= new SovereignOfStorms();
-    set => _SOS = value;
-}
-private SovereignOfStorms _SOS;
-
-private VerusDoomKnightClass VDK
-{
-    get => _VDK ??= new VerusDoomKnightClass();
-    set => _VDK = value;
-}
-private VerusDoomKnightClass _VDK;
-
-private CoreVHL VHL
-{
-    get => _VHL ??= new CoreVHL();
-    set => _VHL = value;
-}
-private CoreVHL _VHL;
-
-private CoreYnR YNR
-{
-    get => _YNR ??= new CoreYnR();
-    set => _YNR = value;
-}
-private CoreYnR _YNR;
-
+    private static ArcanaInvoker AI { get => _AI ??= new ArcanaInvoker(); set => _AI = value; }
+    private static ArcanaInvoker _AI;
+    private static CoreArchMage AM { get => _AM ??= new CoreArchMage(); set => _AM = value; }
+    private static CoreArchMage _AM;
+    private static ArchPaladin AP { get => _AP ??= new ArchPaladin(); set => _AP = value; }
+    private static ArchPaladin _AP;
+    private static ChaosAvengerClass CAV { get => _CAV ??= new ChaosAvengerClass(); set => _CAV = value; }
+    private static ChaosAvengerClass _CAV;
+    private static DragonOfTime DOT { get => _DOT ??= new DragonOfTime(); set => _DOT = value; }
+    private static DragonOfTime _DOT;
+    private static HBVNonInsig HBV { get => _HBV ??= new HBVNonInsig(); set => _HBV = value; }
+    private static HBVNonInsig _HBV;
+    private static Lich lich { get => _lich ??= new Lich(); set => _lich = value; }
+    private static Lich _lich;
+    private static LightCaster LC { get => _LC ??= new LightCaster(); set => _LC = value; }
+    private static LightCaster _LC;
+    private static CoreLR LR { get => _LR ??= new CoreLR(); set => _LR = value; }
+    private static CoreLR _LR;
+    private static SovereignOfStorms SOS { get => _SOS ??= new SovereignOfStorms(); set => _SOS = value; }
+    private static SovereignOfStorms _SOS;
+    private static VerusDoomKnightClass VDK { get => _VDK ??= new VerusDoomKnightClass(); set => _VDK = value; }
+    private static VerusDoomKnightClass _VDK;
+    private static CoreVHL VHL { get => _VHL ??= new CoreVHL(); set => _VHL = value; }
+    private static CoreVHL _VHL;
+    private static CoreYnR YNR { get => _YNR ??= new CoreYnR(); set => _YNR = value; }
+    private static CoreYnR _YNR;
     #endregion End game
 
 

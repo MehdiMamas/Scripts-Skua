@@ -16,48 +16,12 @@ public class ArchFiendSpear
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
-public CoreHollowborn HB
-{
-    get => _HB ??= new CoreHollowborn();
-    set => _HB = value;
-}
-public CoreHollowborn _HB;
-
-public WillpowerExtraction Will
-{
-    get => _Will ??= new WillpowerExtraction();
-    set => _Will = value;
-}
-public WillpowerExtraction _Will;
-
-public ArchFiendEnchantedOrbs AFEO
-{
-    get => _AFEO ??= new ArchFiendEnchantedOrbs();
-    set => _AFEO = value;
-}
-public ArchFiendEnchantedOrbs _AFEO;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }    private static CoreHollowborn _HB;
+    private static WillpowerExtraction Will { get => _Will ??= new WillpowerExtraction(); set => _Will = value; }    private static WillpowerExtraction _Will;
+    private static ArchFiendEnchantedOrbs AFEO { get => _AFEO ??= new ArchFiendEnchantedOrbs(); set => _AFEO = value; }    private static ArchFiendEnchantedOrbs _AFEO;
 
     public void ScriptMain(IScriptInterface bot)
     {

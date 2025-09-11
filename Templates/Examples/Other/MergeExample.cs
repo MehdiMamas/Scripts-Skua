@@ -17,41 +17,11 @@ public class MergeExample
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public CoreAwe CAwe
-{
-    get => _CAwe ??= new CoreAwe();
-    set => _CAwe = value;
-}
-public CoreAwe _CAwe;
-
-public ArmorOfAwe AOA
-{
-    get => _AOA ??= new ArmorOfAwe();
-    set => _AOA = value;
-}
-public ArmorOfAwe _AOA;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreAwe CAwe { get => _CAwe ??= new CoreAwe(); set => _CAwe = value; }    private static CoreAwe _CAwe;
+    private static ArmorOfAwe AOA { get => _AOA ??= new ArmorOfAwe(); set => _AOA = value; }    private static ArmorOfAwe _AOA;
 public static CoreAdvanced sAdv
 {
     get => _sAdv ??= new CoreAdvanced();

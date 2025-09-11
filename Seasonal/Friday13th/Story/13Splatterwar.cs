@@ -12,13 +12,8 @@ public class Splatterwar
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFriday13th CoreFriday13th
-{
-    get => _CoreFriday13th ??= new CoreFriday13th();
-    set => _CoreFriday13th = value;
-}
-private CoreFriday13th _CoreFriday13th;
-
+    private static CoreFriday13th CoreFriday13th { get => _CoreFriday13th ??= new CoreFriday13th(); set => _CoreFriday13th = value; }
+    private static CoreFriday13th _CoreFriday13th;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -18,41 +18,17 @@ public class CurrentDailyGifts
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private static CoreBots sCore
-{
-    get => _sCore ??= new CoreBots();
-    set => _sCore = value;
-}
+private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
 private static CoreBots _sCore;
 
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private TwiggusGearMerge TGM
-{
-    get => _TGM ??= new TwiggusGearMerge();
-    set => _TGM = value;
-}
-private TwiggusGearMerge _TGM;
-
-private RoseRapiers RR
-{
-    get => _RR ??= new RoseRapiers();
-    set => _RR = value;
-}
-private RoseRapiers _RR;
-
-private CursedWazikashi CursedWazikashi
-{
-    get => _CursedWazikashi ??= new CursedWazikashi();
-    set => _CursedWazikashi = value;
-}
-private CursedWazikashi _CursedWazikashi;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static TwiggusGearMerge TGM { get => _TGM ??= new TwiggusGearMerge(); set => _TGM = value; }
+    private static TwiggusGearMerge _TGM;
+    private static RoseRapiers RR { get => _RR ??= new RoseRapiers(); set => _RR = value; }
+    private static RoseRapiers _RR;
+    private static CursedWazikashi CursedWazikashi { get => _CursedWazikashi ??= new CursedWazikashi(); set => _CursedWazikashi = value; }
+    private static CursedWazikashi _CursedWazikashi;
 
     public string OptionsStorage = "CurrentDailyGifts";
     public bool DontPreconfigure = true;

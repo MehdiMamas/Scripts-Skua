@@ -21,41 +21,11 @@ using Skua.Core.Interfaces;
 public class EvolvedOrb
 {
     public CoreBots Core => CoreBots.Instance;
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
-public EvolvedBloodOrb EBO
-{
-    get => _EBO ??= new EvolvedBloodOrb();
-    set => _EBO = value;
-}
-public EvolvedBloodOrb _EBO;
-
-public EvolvedHexOrb EHO
-{
-    get => _EHO ??= new EvolvedHexOrb();
-    set => _EHO = value;
-}
-public EvolvedHexOrb _EHO;
-
-public EvolvedShadowOrb ESO
-{
-    get => _ESO ??= new EvolvedShadowOrb();
-    set => _ESO = value;
-}
-public EvolvedShadowOrb _ESO;
-
-public EvolvedShadowOrbItems ESOItems
-{
-    get => _ESOItems ??= new EvolvedShadowOrbItems();
-    set => _ESOItems = value;
-}
-public EvolvedShadowOrbItems _ESOItems;
-
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static EvolvedBloodOrb EBO { get => _EBO ??= new EvolvedBloodOrb(); set => _EBO = value; }    private static EvolvedBloodOrb _EBO;
+    private static EvolvedHexOrb EHO { get => _EHO ??= new EvolvedHexOrb(); set => _EHO = value; }    private static EvolvedHexOrb _EHO;
+    private static EvolvedShadowOrb ESO { get => _ESO ??= new EvolvedShadowOrb(); set => _ESO = value; }    private static EvolvedShadowOrb _ESO;
+    private static EvolvedShadowOrbItems ESOItems { get => _ESOItems ??= new EvolvedShadowOrbItems(); set => _ESOItems = value; }    private static EvolvedShadowOrbItems _ESOItems;
 
     public void ScriptMain(IScriptInterface bot)
     {

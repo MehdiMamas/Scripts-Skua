@@ -22,27 +22,9 @@ public class BeleensMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
 public static CoreAdvanced sAdv
 {
     get => _sAdv ??= new CoreAdvanced();
@@ -50,48 +32,12 @@ public static CoreAdvanced sAdv
 }
 public static CoreAdvanced _sAdv;
 
-public CoreLegion CoreLegion
-{
-    get => _CoreLegion ??= new CoreLegion();
-    set => _CoreLegion = value;
-}
-public CoreLegion _CoreLegion;
-
-public LegionExercise3 LegionExercise3
-{
-    get => _LegionExercise3 ??= new LegionExercise3();
-    set => _LegionExercise3 = value;
-}
-public LegionExercise3 _LegionExercise3;
-
-public LegionExercise4 LegionExercise4
-{
-    get => _LegionExercise4 ??= new LegionExercise4();
-    set => _LegionExercise4 = value;
-}
-public LegionExercise4 _LegionExercise4;
-
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
-public TarosManslayer TarosManslayer
-{
-    get => _TarosManslayer ??= new TarosManslayer();
-    set => _TarosManslayer = value;
-}
-public TarosManslayer _TarosManslayer;
-
-public ArtixWedding ArtixWedding
-{
-    get => _ArtixWedding ??= new ArtixWedding();
-    set => _ArtixWedding = value;
-}
-public ArtixWedding _ArtixWedding;
-
+    private static CoreLegion CoreLegion { get => _CoreLegion ??= new CoreLegion(); set => _CoreLegion = value; }    private static CoreLegion _CoreLegion;
+    private static LegionExercise3 LegionExercise3 { get => _LegionExercise3 ??= new LegionExercise3(); set => _LegionExercise3 = value; }    private static LegionExercise3 _LegionExercise3;
+    private static LegionExercise4 LegionExercise4 { get => _LegionExercise4 ??= new LegionExercise4(); set => _LegionExercise4 = value; }    private static LegionExercise4 _LegionExercise4;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static TarosManslayer TarosManslayer { get => _TarosManslayer ??= new TarosManslayer(); set => _TarosManslayer = value; }    private static TarosManslayer _TarosManslayer;
+    private static ArtixWedding ArtixWedding { get => _ArtixWedding ??= new ArtixWedding(); set => _ArtixWedding = value; }    private static ArtixWedding _ArtixWedding;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

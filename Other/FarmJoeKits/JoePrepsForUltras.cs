@@ -284,97 +284,32 @@ public class JoePrepsForUltras
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private UnlockForgeEnhancements UnlockForgeEnhancements
-{
-    get => _UnlockForgeEnhancements ??= new UnlockForgeEnhancements();
-    set => _UnlockForgeEnhancements = value;
-}
-private UnlockForgeEnhancements _UnlockForgeEnhancements;
-
-private ArchPaladin AP
-{
-    get => _AP ??= new ArchPaladin();
-    set => _AP = value;
-}
-private ArchPaladin _AP;
-
-private StoneCrusher SC
-{
-    get => _SC ??= new StoneCrusher();
-    set => _SC = value;
-}
-private StoneCrusher _SC;
-
-private LordOfOrder LOO
-{
-    get => _LOO ??= new LordOfOrder();
-    set => _LOO = value;
-}
-private LordOfOrder _LOO;
-
-private PotionBuyer PotionBuyer
-{
-    get => _PotionBuyer ??= new PotionBuyer();
-    set => _PotionBuyer = value;
-}
-private PotionBuyer _PotionBuyer;
-
-private BuyScrolls Scroll
-{
-    get => _Scroll ??= new BuyScrolls();
-    set => _Scroll = value;
-}
-private BuyScrolls _Scroll;
-
-private AllStories AllStories
-{
-    get => _AllStories ??= new AllStories();
-    set => _AllStories = value;
-}
-private AllStories _AllStories;
-
-private CoreNSOD NSOD
-{
-    get => _NSOD ??= new CoreNSOD();
-    set => _NSOD = value;
-}
-private CoreNSOD _NSOD;
-
-private CoreLR LR
-{
-    get => _LR ??= new CoreLR();
-    set => _LR = value;
-}
-private CoreLR _LR;
-
-private CoreYnR YnR
-{
-    get => _YnR ??= new CoreYnR();
-    set => _YnR = value;
-}
-private CoreYnR _YnR;
-
-private VerusDoomKnightClass VDK
-{
-    get => _VDK ??= new VerusDoomKnightClass();
-    set => _VDK = value;
-}
-private VerusDoomKnightClass _VDK;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static UnlockForgeEnhancements UnlockForgeEnhancements { get => _UnlockForgeEnhancements ??= new UnlockForgeEnhancements(); set => _UnlockForgeEnhancements = value; }
+    private static UnlockForgeEnhancements _UnlockForgeEnhancements;
+    private static ArchPaladin AP { get => _AP ??= new ArchPaladin(); set => _AP = value; }
+    private static ArchPaladin _AP;
+    private static StoneCrusher SC { get => _SC ??= new StoneCrusher(); set => _SC = value; }
+    private static StoneCrusher _SC;
+    private static LordOfOrder LOO { get => _LOO ??= new LordOfOrder(); set => _LOO = value; }
+    private static LordOfOrder _LOO;
+    private static PotionBuyer PotionBuyer { get => _PotionBuyer ??= new PotionBuyer(); set => _PotionBuyer = value; }
+    private static PotionBuyer _PotionBuyer;
+    private static BuyScrolls Scroll { get => _Scroll ??= new BuyScrolls(); set => _Scroll = value; }
+    private static BuyScrolls _Scroll;
+    private static AllStories AllStories { get => _AllStories ??= new AllStories(); set => _AllStories = value; }
+    private static AllStories _AllStories;
+    private static CoreNSOD NSOD { get => _NSOD ??= new CoreNSOD(); set => _NSOD = value; }
+    private static CoreNSOD _NSOD;
+    private static CoreLR LR { get => _LR ??= new CoreLR(); set => _LR = value; }
+    private static CoreLR _LR;
+    private static CoreYnR YnR { get => _YnR ??= new CoreYnR(); set => _YnR = value; }
+    private static CoreYnR _YnR;
+    private static VerusDoomKnightClass VDK { get => _VDK ??= new VerusDoomKnightClass(); set => _VDK = value; }
+    private static VerusDoomKnightClass _VDK;
 
     public enum PlayerNumber
     {

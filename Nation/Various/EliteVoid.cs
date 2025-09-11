@@ -14,20 +14,8 @@ public class EliteVoid
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CitadelRuins CitadelRuins
-{
-    get => _CitadelRuins ??= new CitadelRuins();
-    set => _CitadelRuins = value;
-}
-public CitadelRuins _CitadelRuins;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CitadelRuins CitadelRuins { get => _CitadelRuins ??= new CitadelRuins(); set => _CitadelRuins = value; }    private static CitadelRuins _CitadelRuins;
 
     public void ScriptMain(IScriptInterface bot)
     {

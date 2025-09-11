@@ -13,20 +13,8 @@ public class PoisonForest
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public Manor Manor
-{
-    get => _Manor ??= new Manor();
-    set => _Manor = value;
-}
-public Manor _Manor;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static Manor Manor { get => _Manor ??= new Manor(); set => _Manor = value; }    private static Manor _Manor;
 
 
     public void ScriptMain(IScriptInterface bot)

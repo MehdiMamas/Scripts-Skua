@@ -12,20 +12,8 @@ public class Fiendshard_Story
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public Originul_Story Originul
-{
-    get => _Originul ??= new Originul_Story();
-    set => _Originul = value;
-}
-public Originul_Story _Originul;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static Originul_Story Originul { get => _Originul ??= new Originul_Story(); set => _Originul = value; }    private static Originul_Story _Originul;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -34,41 +34,11 @@ public class YulgarsDualWieldMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-public CoreDailies _Daily;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
 public static CoreAdvanced sAdv
 {
     get => _sAdv ??= new CoreAdvanced();
@@ -76,76 +46,21 @@ public static CoreAdvanced sAdv
 }
 public static CoreAdvanced _sAdv;
 
-public DualWield DW
-{
-    get => _DW ??= new DualWield();
-    set => _DW = value;
-}
-public DualWield _DW;
-
-public DragonBladeofNulgath DBoN
-{
-    get => _DBoN ??= new DragonBladeofNulgath();
-    set => _DBoN = value;
-}
-public DragonBladeofNulgath _DBoN;
-
-public SRoD SRoD
-{
-    get => _SRoD ??= new SRoD();
-    set => _SRoD = value;
-}
-public SRoD _SRoD;
-
-public JuggernautItemsofNulgath juggernaut
-{
-    get => _juggernaut ??= new JuggernautItemsofNulgath();
-    set => _juggernaut = value;
-}
-public JuggernautItemsofNulgath _juggernaut;
-
-public CoreLegion Legion
-{
-    get => _Legion ??= new CoreLegion();
-    set => _Legion = value;
-}
-public CoreLegion _Legion;
-
-private TheLeeryContract TLC
-{
-    get => _TLC ??= new TheLeeryContract();
-    set => _TLC = value;
-}
-private TheLeeryContract _TLC;
-
-private GoldenBladeOfFate GBOF
-{
-    get => _GBOF ??= new GoldenBladeOfFate();
-    set => _GBOF = value;
-}
-private GoldenBladeOfFate _GBOF;
-
-private HollowbornOblivionBlade HOB
-{
-    get => _HOB ??= new HollowbornOblivionBlade();
-    set => _HOB = value;
-}
-private HollowbornOblivionBlade _HOB;
-
-private NulgathDiamondMerge NDM
-{
-    get => _NDM ??= new NulgathDiamondMerge();
-    set => _NDM = value;
-}
-private NulgathDiamondMerge _NDM;
-
-private SpiritHunterMerge SHM
-{
-    get => _SHM ??= new SpiritHunterMerge();
-    set => _SHM = value;
-}
-private SpiritHunterMerge _SHM;
-
+    private static DualWield DW { get => _DW ??= new DualWield(); set => _DW = value; }    private static DualWield _DW;
+    private static DragonBladeofNulgath DBoN { get => _DBoN ??= new DragonBladeofNulgath(); set => _DBoN = value; }    private static DragonBladeofNulgath _DBoN;
+    private static SRoD SRoD { get => _SRoD ??= new SRoD(); set => _SRoD = value; }    private static SRoD _SRoD;
+    private static JuggernautItemsofNulgath juggernaut { get => _juggernaut ??= new JuggernautItemsofNulgath(); set => _juggernaut = value; }    private static JuggernautItemsofNulgath _juggernaut;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
+    private static TheLeeryContract TLC { get => _TLC ??= new TheLeeryContract(); set => _TLC = value; }
+    private static TheLeeryContract _TLC;
+    private static GoldenBladeOfFate GBOF { get => _GBOF ??= new GoldenBladeOfFate(); set => _GBOF = value; }
+    private static GoldenBladeOfFate _GBOF;
+    private static HollowbornOblivionBlade HOB { get => _HOB ??= new HollowbornOblivionBlade(); set => _HOB = value; }
+    private static HollowbornOblivionBlade _HOB;
+    private static NulgathDiamondMerge NDM { get => _NDM ??= new NulgathDiamondMerge(); set => _NDM = value; }
+    private static NulgathDiamondMerge _NDM;
+    private static SpiritHunterMerge SHM { get => _SHM ??= new SpiritHunterMerge(); set => _SHM = value; }
+    private static SpiritHunterMerge _SHM;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

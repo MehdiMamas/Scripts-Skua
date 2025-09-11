@@ -13,13 +13,7 @@ public class ChaosPuppetMaster
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreQOM QOM
-{
-    get => _QOM ??= new CoreQOM();
-    set => _QOM = value;
-}
-public CoreQOM _QOM;
-
+    private static CoreQOM QOM { get => _QOM ??= new CoreQOM(); set => _QOM = value; }    private static CoreQOM _QOM;
 
     public void ScriptMain(IScriptInterface bot)
     {

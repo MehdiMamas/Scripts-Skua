@@ -13,13 +13,7 @@ public class BirthdaySavior
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public Artixpointe AP
-{
-    get => _AP ??= new Artixpointe();
-    set => _AP = value;
-}
-public Artixpointe _AP;
-
+    private static Artixpointe AP { get => _AP ??= new Artixpointe(); set => _AP = value; }    private static Artixpointe _AP;
 
     public void ScriptMain(IScriptInterface bot)
     {

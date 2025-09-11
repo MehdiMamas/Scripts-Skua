@@ -13,20 +13,8 @@ public class SkyPirateBadge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public SkyGuardSaga SkyGuardSaga
-{
-    get => _SkyGuardSaga ??= new SkyGuardSaga();
-    set => _SkyGuardSaga = value;
-}
-public SkyGuardSaga _SkyGuardSaga;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static SkyGuardSaga SkyGuardSaga { get => _SkyGuardSaga ??= new SkyGuardSaga(); set => _SkyGuardSaga = value; }    private static SkyGuardSaga _SkyGuardSaga;
 
     public void ScriptMain(IScriptInterface bot)
     {

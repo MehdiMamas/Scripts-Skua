@@ -23,69 +23,25 @@ public class KathoolsChestMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
-private UndineCommissaryMerge UCM
-{
-    get => _UCM ??= new UndineCommissaryMerge();
-    set => _UCM = value;
-}
-private UndineCommissaryMerge _UCM;
-
-private SeaviewSouvenirsMerge SSM
-{
-    get => _SSM ??= new SeaviewSouvenirsMerge();
-    set => _SSM = value;
-}
-private SeaviewSouvenirsMerge _SSM;
-
-private TwilightZoneMerge TZM
-{
-    get => _TZM ??= new TwilightZoneMerge();
-    set => _TZM = value;
-}
-private TwilightZoneMerge _TZM;
-
-private AbyssalZoneMerge AZM
-{
-    get => _AZM ??= new AbyssalZoneMerge();
-    set => _AZM = value;
-}
-private AbyssalZoneMerge _AZM;
-
-private TrenchObserveMerge TOM
-{
-    get => _TOM ??= new TrenchObserveMerge();
-    set => _TOM = value;
-}
-private TrenchObserveMerge _TOM;
-
-private SeaVoiceMerge SVM
-{
-    get => _SVM ??= new SeaVoiceMerge();
-    set => _SVM = value;
-}
-private SeaVoiceMerge _SVM;
-
+    private static UndineCommissaryMerge UCM { get => _UCM ??= new UndineCommissaryMerge(); set => _UCM = value; }
+    private static UndineCommissaryMerge _UCM;
+    private static SeaviewSouvenirsMerge SSM { get => _SSM ??= new SeaviewSouvenirsMerge(); set => _SSM = value; }
+    private static SeaviewSouvenirsMerge _SSM;
+    private static TwilightZoneMerge TZM { get => _TZM ??= new TwilightZoneMerge(); set => _TZM = value; }
+    private static TwilightZoneMerge _TZM;
+    private static AbyssalZoneMerge AZM { get => _AZM ??= new AbyssalZoneMerge(); set => _AZM = value; }
+    private static AbyssalZoneMerge _AZM;
+    private static TrenchObserveMerge TOM { get => _TOM ??= new TrenchObserveMerge(); set => _TOM = value; }
+    private static TrenchObserveMerge _TOM;
+    private static SeaVoiceMerge SVM { get => _SVM ??= new SeaVoiceMerge(); set => _SVM = value; }
+    private static SeaVoiceMerge _SVM;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

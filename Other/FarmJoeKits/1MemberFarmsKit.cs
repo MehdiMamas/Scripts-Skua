@@ -169,153 +169,48 @@ public class MemberFarm
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-private CoreDailies _Daily;
-
-private CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-private CoreNation _Nation;
-
-private CoreSDKA SDKA
-{
-    get => _SDKA ??= new CoreSDKA();
-    set => _SDKA = value;
-}
-private CoreSDKA _SDKA;
-
-private TrobbolierPet Trobbolier
-{
-    get => _Trobbolier ??= new TrobbolierPet();
-    set => _Trobbolier = value;
-}
-private TrobbolierPet _Trobbolier;
-
-private CoinCollectorSet CoinCollector
-{
-    get => _CoinCollector ??= new CoinCollectorSet();
-    set => _CoinCollector = value;
-}
-private CoinCollectorSet _CoinCollector;
-
-private TheLostKnightAndBackupBlade LostKnight
-{
-    get => _LostKnight ??= new TheLostKnightAndBackupBlade();
-    set => _LostKnight = value;
-}
-private TheLostKnightAndBackupBlade _LostKnight;
-
-private SpellRaiser SpellRaiser
-{
-    get => _SpellRaiser ??= new SpellRaiser();
-    set => _SpellRaiser = value;
-}
-private SpellRaiser _SpellRaiser;
-
-private ArchfiendDragonEgg ArchfiendDragonPet
-{
-    get => _ArchfiendDragonPet ??= new ArchfiendDragonEgg();
-    set => _ArchfiendDragonPet = value;
-}
-private ArchfiendDragonEgg _ArchfiendDragonPet;
-
-private DragonBladeofNulgath DBoN
-{
-    get => _DBoN ??= new DragonBladeofNulgath();
-    set => _DBoN = value;
-}
-private DragonBladeofNulgath _DBoN;
-
-private BonecastleTowerMerge BonecastleTowerMerge
-{
-    get => _BonecastleTowerMerge ??= new BonecastleTowerMerge();
-    set => _BonecastleTowerMerge = value;
-}
-private BonecastleTowerMerge _BonecastleTowerMerge;
-
-private LegendaryElementalWarrior LegendaryElementalWarrior
-{
-    get => _LegendaryElementalWarrior ??= new LegendaryElementalWarrior();
-    set => _LegendaryElementalWarrior = value;
-}
-private LegendaryElementalWarrior _LegendaryElementalWarrior;
-
-private ChronoAssassin ChronoAssassin
-{
-    get => _ChronoAssassin ??= new ChronoAssassin();
-    set => _ChronoAssassin = value;
-}
-private ChronoAssassin _ChronoAssassin;
-
-private TachyonMerge Tachyon
-{
-    get => _Tachyon ??= new TachyonMerge();
-    set => _Tachyon = value;
-}
-private TachyonMerge _Tachyon;
-
-private CoreQOM QOM
-{
-    get => _QOM ??= new CoreQOM();
-    set => _QOM = value;
-}
-private CoreQOM _QOM;
-
-private DragonFableOrigins DFO
-{
-    get => _DFO ??= new DragonFableOrigins();
-    set => _DFO = value;
-}
-private DragonFableOrigins _DFO;
-
-private CruxShip Crux
-{
-    get => _Crux ??= new CruxShip();
-    set => _Crux = value;
-}
-private CruxShip _Crux;
-
-private TendurrrTheAssistantQuests Tendurr
-{
-    get => _Tendurr ??= new TendurrrTheAssistantQuests();
-    set => _Tendurr = value;
-}
-private TendurrrTheAssistantQuests _Tendurr;
-
-private TarosPrismaticManslayers TarosItems
-{
-    get => _TarosItems ??= new TarosPrismaticManslayers();
-    set => _TarosItems = value;
-}
-private TarosPrismaticManslayers _TarosItems;
-
-private EvolvedShadowOrb ShadowOrb
-{
-    get => _ShadowOrb ??= new EvolvedShadowOrb();
-    set => _ShadowOrb = value;
-}
-private EvolvedShadowOrb _ShadowOrb;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static CoreSDKA SDKA { get => _SDKA ??= new CoreSDKA(); set => _SDKA = value; }
+    private static CoreSDKA _SDKA;
+    private static TrobbolierPet Trobbolier { get => _Trobbolier ??= new TrobbolierPet(); set => _Trobbolier = value; }
+    private static TrobbolierPet _Trobbolier;
+    private static CoinCollectorSet CoinCollector { get => _CoinCollector ??= new CoinCollectorSet(); set => _CoinCollector = value; }
+    private static CoinCollectorSet _CoinCollector;
+    private static TheLostKnightAndBackupBlade LostKnight { get => _LostKnight ??= new TheLostKnightAndBackupBlade(); set => _LostKnight = value; }
+    private static TheLostKnightAndBackupBlade _LostKnight;
+    private static SpellRaiser SpellRaiser { get => _SpellRaiser ??= new SpellRaiser(); set => _SpellRaiser = value; }
+    private static SpellRaiser _SpellRaiser;
+    private static ArchfiendDragonEgg ArchfiendDragonPet { get => _ArchfiendDragonPet ??= new ArchfiendDragonEgg(); set => _ArchfiendDragonPet = value; }
+    private static ArchfiendDragonEgg _ArchfiendDragonPet;
+    private static DragonBladeofNulgath DBoN { get => _DBoN ??= new DragonBladeofNulgath(); set => _DBoN = value; }
+    private static DragonBladeofNulgath _DBoN;
+    private static BonecastleTowerMerge BonecastleTowerMerge { get => _BonecastleTowerMerge ??= new BonecastleTowerMerge(); set => _BonecastleTowerMerge = value; }
+    private static BonecastleTowerMerge _BonecastleTowerMerge;
+    private static LegendaryElementalWarrior LegendaryElementalWarrior { get => _LegendaryElementalWarrior ??= new LegendaryElementalWarrior(); set => _LegendaryElementalWarrior = value; }
+    private static LegendaryElementalWarrior _LegendaryElementalWarrior;
+    private static ChronoAssassin ChronoAssassin { get => _ChronoAssassin ??= new ChronoAssassin(); set => _ChronoAssassin = value; }
+    private static ChronoAssassin _ChronoAssassin;
+    private static TachyonMerge Tachyon { get => _Tachyon ??= new TachyonMerge(); set => _Tachyon = value; }
+    private static TachyonMerge _Tachyon;
+    private static CoreQOM QOM { get => _QOM ??= new CoreQOM(); set => _QOM = value; }
+    private static CoreQOM _QOM;
+    private static DragonFableOrigins DFO { get => _DFO ??= new DragonFableOrigins(); set => _DFO = value; }
+    private static DragonFableOrigins _DFO;
+    private static CruxShip Crux { get => _Crux ??= new CruxShip(); set => _Crux = value; }
+    private static CruxShip _Crux;
+    private static TendurrrTheAssistantQuests Tendurr { get => _Tendurr ??= new TendurrrTheAssistantQuests(); set => _Tendurr = value; }
+    private static TendurrrTheAssistantQuests _Tendurr;
+    private static TarosPrismaticManslayers TarosItems { get => _TarosItems ??= new TarosPrismaticManslayers(); set => _TarosItems = value; }
+    private static TarosPrismaticManslayers _TarosItems;
+    private static EvolvedShadowOrb ShadowOrb { get => _ShadowOrb ??= new EvolvedShadowOrb(); set => _ShadowOrb = value; }
+    private static EvolvedShadowOrb _ShadowOrb;
 
     public void ScriptMain(IScriptInterface Bot)
     {

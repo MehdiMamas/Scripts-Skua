@@ -16,20 +16,9 @@ public class ClassicBladeOfAwe
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-private TreasureHuntQuest THQ
-{
-    get => _THQ ??= new TreasureHuntQuest();
-    set => _THQ = value;
-}
-private TreasureHuntQuest _THQ;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static TreasureHuntQuest THQ { get => _THQ ??= new TreasureHuntQuest(); set => _THQ = value; }
+    private static TreasureHuntQuest _THQ;
 
     public void ScriptMain(IScriptInterface bot)
     {

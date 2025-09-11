@@ -15,35 +15,17 @@ public class ArmyPrimaticSeams
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-    private CoreAdvanced Adv => new();
-private CoreArmyLite Army
-{
-    get => _Army ??= new CoreArmyLite();
-    set => _Army = value;
-}
-private CoreArmyLite _Army;
-
-private static CoreArmyLite sArmy
-{
-    get => _sArmy ??= new CoreArmyLite();
-    set => _sArmy = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
+private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
 private static CoreArmyLite _sArmy;
 
-private CoreSoW SoW
-{
-    get => _SoW ??= new CoreSoW();
-    set => _SoW = value;
-}
-private CoreSoW _SoW;
-
+    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW _SoW;
 
     public string OptionsStorage = "CustomAggroMon";
     public bool DontPreconfigure = true;

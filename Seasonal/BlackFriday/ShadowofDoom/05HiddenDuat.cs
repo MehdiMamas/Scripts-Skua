@@ -12,20 +12,10 @@ public class HiddenDuat
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-private CoreStory _Story;
-
-private CoreShadowofDoom CoreSoD
-{
-    get => _CoreSoD ??= new CoreShadowofDoom();
-    set => _CoreSoD = value;
-}
-private CoreShadowofDoom _CoreSoD;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreShadowofDoom CoreSoD { get => _CoreSoD ??= new CoreShadowofDoom(); set => _CoreSoD = value; }
+    private static CoreShadowofDoom _CoreSoD;
 
     public void ScriptMain(IScriptInterface Bot)
     {

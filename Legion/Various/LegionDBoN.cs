@@ -17,27 +17,9 @@ public class LegionDBoN
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreLegion Legion
-{
-    get => _Legion ??= new CoreLegion();
-    set => _Legion = value;
-}
-public CoreLegion _Legion;
-
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
-public DragonBladeofNulgath DBoN
-{
-    get => _DBoN ??= new DragonBladeofNulgath();
-    set => _DBoN = value;
-}
-public DragonBladeofNulgath _DBoN;
-
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static DragonBladeofNulgath DBoN { get => _DBoN ??= new DragonBladeofNulgath(); set => _DBoN = value; }    private static DragonBladeofNulgath _DBoN;
 
     public void ScriptMain(IScriptInterface bot)
     {

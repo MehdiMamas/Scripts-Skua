@@ -25,7 +25,8 @@ public class CoreAdvanced
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private readonly CoreFarms Farm = new();
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
 
     // Thousand-level Constants
     const int OneK = 1000;        // 1k

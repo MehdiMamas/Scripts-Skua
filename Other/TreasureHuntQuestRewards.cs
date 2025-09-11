@@ -15,13 +15,8 @@ public class TreasureHuntQuest
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-private DracoCon DR
-{
-    get => _DR ??= new DracoCon();
-    set => _DR = value;
-}
-private DracoCon _DR;
-
+    private static DracoCon DR { get => _DR ??= new DracoCon(); set => _DR = value; }
+    private static DracoCon _DR;
 
     public void ScriptMain(IScriptInterface Bot)
     {

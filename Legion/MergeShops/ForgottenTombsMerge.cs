@@ -14,7 +14,8 @@ public class ForgottenTombsMerge
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private readonly CoreAdvanced Adv = new();
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
     private readonly static CoreAdvanced sAdv = new();
 
     public bool DontPreconfigure = true;

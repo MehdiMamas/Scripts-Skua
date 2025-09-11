@@ -17,10 +17,14 @@ public class CheckForDonatedACs
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private readonly CoreFarms Farm = new();
-    private readonly ChillysQuest CQ = new();
-    private readonly CoreDailies Daily = new();
-    private readonly CoreArmyLite Army = new();
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static ChillysQuest CQ { get => _CQ ??= new ChillysQuest(); set => _CQ = value; }
+    private static ChillysQuest _CQ;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
 
     public void ScriptMain(IScriptInterface Bot)
     {

@@ -12,13 +12,7 @@ public class BocklinCastle
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreLynaria Lyn
-{
-    get => _Lyn ??= new CoreLynaria();
-    set => _Lyn = value;
-}
-public CoreLynaria _Lyn;
-
+    private static CoreLynaria Lyn { get => _Lyn ??= new CoreLynaria(); set => _Lyn = value; }    private static CoreLynaria _Lyn;
 
     public void ScriptMain(IScriptInterface bot)
     {

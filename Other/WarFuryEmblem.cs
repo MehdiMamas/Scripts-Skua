@@ -14,20 +14,10 @@ public class WarfuryEmblem
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CoreSoW SoW
-{
-    get => _SoW ??= new CoreSoW();
-    set => _SoW = value;
-}
-private CoreSoW _SoW;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW _SoW;
 
     public void ScriptMain(IScriptInterface Bot)
     {

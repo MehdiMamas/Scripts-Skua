@@ -17,13 +17,7 @@ public class VoidHighlordsChallenge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreVHL VHL
-{
-    get => _VHL ??= new CoreVHL();
-    set => _VHL = value;
-}
-public CoreVHL _VHL;
-
+    private static CoreVHL VHL { get => _VHL ??= new CoreVHL(); set => _VHL = value; }    private static CoreVHL _VHL;
 public static CoreVHL sVHL
 {
     get => _sVHL ??= new CoreVHL();
@@ -31,13 +25,7 @@ public static CoreVHL sVHL
 }
 public static CoreVHL _sVHL;
 
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
 
     public string OptionsStorage = sVHL.OptionsStorage;
     public bool DontPreconfigure = true;

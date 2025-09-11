@@ -12,20 +12,10 @@ public class YokaiRiver
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-private CoreStory _Story;
-
-private Akiba Akiba
-{
-    get => _Akiba ??= new Akiba();
-    set => _Akiba = value;
-}
-private Akiba _Akiba;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static Akiba Akiba { get => _Akiba ??= new Akiba(); set => _Akiba = value; }
+    private static Akiba _Akiba;
 
     public void ScriptMain(IScriptInterface Bot)
     {

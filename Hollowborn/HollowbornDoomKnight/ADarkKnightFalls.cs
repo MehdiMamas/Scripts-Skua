@@ -31,13 +31,7 @@ public class ADKFalls
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreHollowbornDoomKnight HDK
-{
-    get => _HDK ??= new CoreHollowbornDoomKnight();
-    set => _HDK = value;
-}
-public CoreHollowbornDoomKnight _HDK;
-
+    private static CoreHollowbornDoomKnight HDK { get => _HDK ??= new CoreHollowbornDoomKnight(); set => _HDK = value; }    private static CoreHollowbornDoomKnight _HDK;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -19,60 +19,21 @@ public class DageChallengeMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-private CoreStory _Story;
-
-private CoreLegion Legion
-{
-    get => _Legion ??= new CoreLegion();
-    set => _Legion = value;
-}
-private CoreLegion _Legion;
-
-private SevenCircles Circles
-{
-    get => _Circles ??= new SevenCircles();
-    set => _Circles = value;
-}
-private SevenCircles _Circles;
-
-private HeadoftheLegionBeast HOTLB
-{
-    get => _HOTLB ??= new HeadoftheLegionBeast();
-    set => _HOTLB = value;
-}
-private HeadoftheLegionBeast _HOTLB;
-
-private DageChallengeStory DageChallenge
-{
-    get => _DageChallenge ??= new DageChallengeStory();
-    set => _DageChallenge = value;
-}
-private DageChallengeStory _DageChallenge;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion _Legion;
+    private static SevenCircles Circles { get => _Circles ??= new SevenCircles(); set => _Circles = value; }
+    private static SevenCircles _Circles;
+    private static HeadoftheLegionBeast HOTLB { get => _HOTLB ??= new HeadoftheLegionBeast(); set => _HOTLB = value; }
+    private static HeadoftheLegionBeast _HOTLB;
+    private static DageChallengeStory DageChallenge { get => _DageChallenge ??= new DageChallengeStory(); set => _DageChallenge = value; }
+    private static DageChallengeStory _DageChallenge;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
 

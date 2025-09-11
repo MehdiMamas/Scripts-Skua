@@ -15,13 +15,7 @@ public class DarkSpiritOrbs
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreSDKA SDKA
-{
-    get => _SDKA ??= new CoreSDKA();
-    set => _SDKA = value;
-}
-public CoreSDKA _SDKA;
-
+    private static CoreSDKA SDKA { get => _SDKA ??= new CoreSDKA(); set => _SDKA = value; }    private static CoreSDKA _SDKA;
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();

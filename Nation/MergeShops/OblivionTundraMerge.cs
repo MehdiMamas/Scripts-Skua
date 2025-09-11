@@ -22,48 +22,19 @@ public class OblivionTundraMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
-private CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-private CoreNation _Nation;
-
-private FiendishLoreMasterMerge FLM
-{
-    get => _FLM ??= new FiendishLoreMasterMerge();
-    set => _FLM = value;
-}
-private FiendishLoreMasterMerge _FLM;
-
-private OblivionTundra OT
-{
-    get => _OT ??= new OblivionTundra();
-    set => _OT = value;
-}
-private OblivionTundra _OT;
-
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static FiendishLoreMasterMerge FLM { get => _FLM ??= new FiendishLoreMasterMerge(); set => _FLM = value; }
+    private static FiendishLoreMasterMerge _FLM;
+    private static OblivionTundra OT { get => _OT ??= new OblivionTundra(); set => _OT = value; }
+    private static OblivionTundra _OT;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

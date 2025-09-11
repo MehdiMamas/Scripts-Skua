@@ -31,55 +31,20 @@ public class FarmAllDailies
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-private CoreDailies _Daily;
-
-private LordOfOrder LOO
-{
-    get => _LOO ??= new LordOfOrder();
-    set => _LOO = value;
-}
-private LordOfOrder _LOO;
-
-private GlaceraStory Glac
-{
-    get => _Glac ??= new GlaceraStory();
-    set => _Glac = value;
-}
-private GlaceraStory _Glac;
-
-private CoreBLOD BLOD
-{
-    get => _BLOD ??= new CoreBLOD();
-    set => _BLOD = value;
-}
-private CoreBLOD _BLOD;
-
-private Friendship FR
-{
-    get => _FR ??= new Friendship();
-    set => _FR = value;
-}
-private Friendship _FR;
-
-private CoreSDKA CSDKA
-{
-    get => _CSDKA ??= new CoreSDKA();
-    set => _CSDKA = value;
-}
-private CoreSDKA _CSDKA;
-
-private MineCrafting MineCrafting
-{
-    get => _MineCrafting ??= new MineCrafting();
-    set => _MineCrafting = value;
-}
-private MineCrafting _MineCrafting;
-
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static LordOfOrder LOO { get => _LOO ??= new LordOfOrder(); set => _LOO = value; }
+    private static LordOfOrder _LOO;
+    private static GlaceraStory Glac { get => _Glac ??= new GlaceraStory(); set => _Glac = value; }
+    private static GlaceraStory _Glac;
+    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD _BLOD;
+    private static Friendship FR { get => _FR ??= new Friendship(); set => _FR = value; }
+    private static Friendship _FR;
+    private static CoreSDKA CSDKA { get => _CSDKA ??= new CoreSDKA(); set => _CSDKA = value; }
+    private static CoreSDKA _CSDKA;
+    private static MineCrafting MineCrafting { get => _MineCrafting ??= new MineCrafting(); set => _MineCrafting = value; }
+    private static MineCrafting _MineCrafting;
     //private BankAllItems BAI = new();
 
     public bool DontPreconfigure = true;

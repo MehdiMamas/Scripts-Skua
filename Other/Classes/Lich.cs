@@ -137,48 +137,18 @@ public class Lich
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-private CoreStory _Story;
-
-private CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-private CoreDailies _Daily;
-
-private ColossalWaresMerge ColossalWaresMerge
-{
-    get => _ColossalWaresMerge ??= new ColossalWaresMerge();
-    set => _ColossalWaresMerge = value;
-}
-private ColossalWaresMerge _ColossalWaresMerge;
-
-private GrimskullTrollingRep GrimskullTrollingRep
-{
-    get => _GrimskullTrollingRep ??= new GrimskullTrollingRep();
-    set => _GrimskullTrollingRep = value;
-}
-private GrimskullTrollingRep _GrimskullTrollingRep;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static ColossalWaresMerge ColossalWaresMerge { get => _ColossalWaresMerge ??= new ColossalWaresMerge(); set => _ColossalWaresMerge = value; }
+    private static ColossalWaresMerge _ColossalWaresMerge;
+    private static GrimskullTrollingRep GrimskullTrollingRep { get => _GrimskullTrollingRep ??= new GrimskullTrollingRep(); set => _GrimskullTrollingRep = value; }
+    private static GrimskullTrollingRep _GrimskullTrollingRep;
 public static Grimgaol GRunOptions
 {
     get => _GRunOptions ??= new Grimgaol();
@@ -186,13 +156,7 @@ public static Grimgaol GRunOptions
 }
 public static Grimgaol _GRunOptions;
 
-public Grimgaol GrimGaolRun
-{
-    get => _GrimGaolRun ??= new Grimgaol();
-    set => _GrimGaolRun = value;
-}
-public Grimgaol _GrimGaolRun;
-
+    private static Grimgaol GrimGaolRun { get => _GrimGaolRun ??= new Grimgaol(); set => _GrimGaolRun = value; }    private static Grimgaol _GrimGaolRun;
 
 
     public bool DontPreconfigure = true;

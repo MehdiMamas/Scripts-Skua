@@ -27,20 +27,10 @@ public class ArmyAllDailies
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private FarmAllDailies FAD
-{
-    get => _FAD ??= new FarmAllDailies();
-    set => _FAD = value;
-}
-private FarmAllDailies _FAD;
-
-private CoreArmyLite Army
-{
-    get => _Army ??= new CoreArmyLite();
-    set => _Army = value;
-}
-private CoreArmyLite _Army;
-
+    private static FarmAllDailies FAD { get => _FAD ??= new FarmAllDailies(); set => _FAD = value; }
+    private static FarmAllDailies _FAD;
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ArmyAllDailies";

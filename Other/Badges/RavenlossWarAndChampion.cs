@@ -12,13 +12,7 @@ public class RavenlossWarAndChampion
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public RavenlossSaga Ravenloss
-{
-    get => _Ravenloss ??= new RavenlossSaga();
-    set => _Ravenloss = value;
-}
-public RavenlossSaga _Ravenloss;
-
+    private static RavenlossSaga Ravenloss { get => _Ravenloss ??= new RavenlossSaga(); set => _Ravenloss = value; }    private static RavenlossSaga _Ravenloss;
 
     public void ScriptMain(IScriptInterface bot)
     {

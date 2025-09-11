@@ -16,27 +16,9 @@ public class BloodWarLycanMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
 public static CoreAdvanced sAdv
 {
     get => _sAdv ??= new CoreAdvanced();
@@ -53,13 +35,7 @@ public static CoreAdvanced _sAdv;
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
-public BloodMoon BloodMoonQuests
-{
-    get => _BloodMoonQuests ??= new BloodMoon();
-    set => _BloodMoonQuests = value;
-}
-public BloodMoon _BloodMoonQuests;
-
+    private static BloodMoon BloodMoonQuests { get => _BloodMoonQuests ??= new BloodMoon(); set => _BloodMoonQuests = value; }    private static BloodMoon _BloodMoonQuests;
 
     public void ScriptMain(IScriptInterface bot)
     {

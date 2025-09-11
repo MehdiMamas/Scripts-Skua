@@ -16,13 +16,8 @@ public class BlindingDaggersofDestiny
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreBLOD BLOD
-{
-    get => _BLOD ??= new CoreBLOD();
-    set => _BLOD = value;
-}
-private CoreBLOD _BLOD;
-
+    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD _BLOD;
 
     public void ScriptMain(IScriptInterface Bot)
     {

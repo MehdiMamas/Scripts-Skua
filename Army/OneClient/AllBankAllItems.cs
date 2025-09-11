@@ -15,20 +15,10 @@ public class ArmyBankAllItems
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private BankAllItems BAI
-{
-    get => _BAI ??= new BankAllItems();
-    set => _BAI = value;
-}
-private BankAllItems _BAI;
-
-private CoreArmyLite Army
-{
-    get => _Army ??= new CoreArmyLite();
-    set => _Army = value;
-}
-private CoreArmyLite _Army;
-
+    private static BankAllItems BAI { get => _BAI ??= new BankAllItems(); set => _BAI = value; }
+    private static BankAllItems _BAI;
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
 
     public void ScriptMain(IScriptInterface Bot)
     {

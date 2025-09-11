@@ -15,27 +15,9 @@ public class TarosPrismaticManslayers
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-public CoreNation _Nation;
-
-public TarosManslayer Taro
-{
-    get => _Taro ??= new TarosManslayer();
-    set => _Taro = value;
-}
-public TarosManslayer _Taro;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static TarosManslayer Taro { get => _Taro ??= new TarosManslayer(); set => _Taro = value; }    private static TarosManslayer _Taro;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -22,69 +22,27 @@ public class ArmyGold
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
+    private static DarkWarLegionandNation DWLN { get => _DWLN ??= new DarkWarLegionandNation(); set => _DWLN = value; }
+    private static DarkWarLegionandNation _DWLN;
+    private static SevenCircles SC { get => _SC ??= new SevenCircles(); set => _SC = value; }    private static SevenCircles _SC;
+    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW _SoW;
+    private static CoreDOY CoreDOY { get => _CoreDOY ??= new CoreDOY(); set => _CoreDOY = value; }
+    private static CoreDOY _CoreDOY;
 
-    private CoreAdvanced Adv => new();
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
+private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
 
-private CoreArmyLite Army
-{
-    get => _Army ??= new CoreArmyLite();
-    set => _Army = value;
-}
-private CoreArmyLite _Army;
-
-private DarkWarLegionandNation DWLN
-{
-    get => _DWLN ??= new DarkWarLegionandNation();
-    set => _DWLN = value;
-}
-private DarkWarLegionandNation _DWLN;
-
-public SevenCircles SC
-{
-    get => _SC ??= new SevenCircles();
-    set => _SC = value;
-}
-public SevenCircles _SC;
-
-private CoreSoW SoW
-{
-    get => _SoW ??= new CoreSoW();
-    set => _SoW = value;
-}
-private CoreSoW _SoW;
-
-private CoreDOY CoreDOY
-{
-    get => _CoreDOY ??= new CoreDOY();
-    set => _CoreDOY = value;
-}
-private CoreDOY _CoreDOY;
-
-
-private static CoreBots sCore
-{
-    get => _sCore ??= new CoreBots();
-    set => _sCore = value;
-}
 private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy
-{
-    get => _sArmy ??= new CoreArmyLite();
-    set => _sArmy = value;
-}
+private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+
 private static CoreArmyLite _sArmy;
 
 

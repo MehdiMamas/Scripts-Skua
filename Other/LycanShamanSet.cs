@@ -14,20 +14,8 @@ public class LycanShamanSet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public BloodMoon BloodMoon
-{
-    get => _BloodMoon ??= new BloodMoon();
-    set => _BloodMoon = value;
-}
-public BloodMoon _BloodMoon;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static BloodMoon BloodMoon { get => _BloodMoon ??= new BloodMoon(); set => _BloodMoon = value; }    private static BloodMoon _BloodMoon;
 
     public void ScriptMain(IScriptInterface bot)
     {

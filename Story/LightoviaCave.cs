@@ -12,20 +12,8 @@ public class LightoviaCave
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public ShadowVoid ShadowVoid
-{
-    get => _ShadowVoid ??= new ShadowVoid();
-    set => _ShadowVoid = value;
-}
-public ShadowVoid _ShadowVoid;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static ShadowVoid ShadowVoid { get => _ShadowVoid ??= new ShadowVoid(); set => _ShadowVoid = value; }    private static ShadowVoid _ShadowVoid;
 
     public void ScriptMain(IScriptInterface bot)
     {

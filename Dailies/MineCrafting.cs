@@ -15,8 +15,10 @@ public class MineCrafting
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private readonly CoreDailies Daily = new();
-    private readonly CoreBLOD BLOD = new();
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD _BLOD;
 
     public void ScriptMain(IScriptInterface Bot)
     {

@@ -14,13 +14,8 @@ public class LavarockForge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private BuyScrolls Scroll
-{
-    get => _Scroll ??= new BuyScrolls();
-    set => _Scroll = value;
-}
-private BuyScrolls _Scroll;
-
+    private static BuyScrolls Scroll { get => _Scroll ??= new BuyScrolls(); set => _Scroll = value; }
+    private static BuyScrolls _Scroll;
 
     public string OptionsStorage = "LavarockForge";
     public bool DontPreconfigure = true;

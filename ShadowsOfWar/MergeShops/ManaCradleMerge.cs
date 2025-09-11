@@ -18,41 +18,17 @@ public class ManaCradleMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
-private CoreSoWMats SOWM
-{
-    get => _SOWM ??= new CoreSoWMats();
-    set => _SOWM = value;
-}
-private CoreSoWMats _SOWM;
-
-private CoreSoW SoW
-{
-    get => _SoW ??= new CoreSoW();
-    set => _SoW = value;
-}
-private CoreSoW _SoW;
-
+    private static CoreSoWMats SOWM { get => _SOWM ??= new CoreSoWMats(); set => _SOWM = value; }
+    private static CoreSoWMats _SOWM;
+    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW _SoW;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

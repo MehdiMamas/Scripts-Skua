@@ -26,27 +26,9 @@ public class UndeadLegionMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
 public static CoreAdvanced sAdv
 {
     get => _sAdv ??= new CoreAdvanced();
@@ -54,55 +36,14 @@ public static CoreAdvanced sAdv
 }
 public static CoreAdvanced _sAdv;
 
-public CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-public CoreDailies _Daily;
-
-public CoreLegion Legion
-{
-    get => _Legion ??= new CoreLegion();
-    set => _Legion = value;
-}
-public CoreLegion _Legion;
-
-public CoreLR LR
-{
-    get => _LR ??= new CoreLR();
-    set => _LR = value;
-}
-public CoreLR _LR;
-
-public LegionExercise3 LegionExercise3
-{
-    get => _LegionExercise3 ??= new LegionExercise3();
-    set => _LegionExercise3 = value;
-}
-public LegionExercise3 _LegionExercise3;
-
-public LegionExercise4 LegionExercise4
-{
-    get => _LegionExercise4 ??= new LegionExercise4();
-    set => _LegionExercise4 = value;
-}
-public LegionExercise4 _LegionExercise4;
-
-public DragonBladeofNulgath DBoN
-{
-    get => _DBoN ??= new DragonBladeofNulgath();
-    set => _DBoN = value;
-}
-public DragonBladeofNulgath _DBoN;
-
-private HollowSoul HS
-{
-    get => _HS ??= new HollowSoul();
-    set => _HS = value;
-}
-private HollowSoul _HS;
-
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
+    private static CoreLR LR { get => _LR ??= new CoreLR(); set => _LR = value; }    private static CoreLR _LR;
+    private static LegionExercise3 LegionExercise3 { get => _LegionExercise3 ??= new LegionExercise3(); set => _LegionExercise3 = value; }    private static LegionExercise3 _LegionExercise3;
+    private static LegionExercise4 LegionExercise4 { get => _LegionExercise4 ??= new LegionExercise4(); set => _LegionExercise4 = value; }    private static LegionExercise4 _LegionExercise4;
+    private static DragonBladeofNulgath DBoN { get => _DBoN ??= new DragonBladeofNulgath(); set => _DBoN = value; }    private static DragonBladeofNulgath _DBoN;
+    private static HollowSoul HS { get => _HS ??= new HollowSoul(); set => _HS = value; }
+    private static HollowSoul _HS;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

@@ -14,20 +14,10 @@ public class ArmyEldersBlood
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreArmyLite Army
-{
-    get => _Army ??= new CoreArmyLite();
-    set => _Army = value;
-}
-private CoreArmyLite _Army;
-
-private CoreDailies Dailies
-{
-    get => _Dailies ??= new CoreDailies();
-    set => _Dailies = value;
-}
-private CoreDailies _Dailies;
-
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
+    private static CoreDailies Dailies { get => _Dailies ??= new CoreDailies(); set => _Dailies = value; }
+    private static CoreDailies _Dailies;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ArmyEldersBlood";

@@ -18,34 +18,13 @@ public class MawOfTheVoid
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-private CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-private CoreNation _Nation;
-
-private JuggernautItemsofNulgath Jug
-{
-    get => _Jug ??= new JuggernautItemsofNulgath();
-    set => _Jug = value;
-}
-private JuggernautItemsofNulgath _Jug;
-
-private TempleSiegeMerge TSM
-{
-    get => _TSM ??= new TempleSiegeMerge();
-    set => _TSM = value;
-}
-private TempleSiegeMerge _TSM;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static JuggernautItemsofNulgath Jug { get => _Jug ??= new JuggernautItemsofNulgath(); set => _Jug = value; }
+    private static JuggernautItemsofNulgath _Jug;
+    private static TempleSiegeMerge TSM { get => _TSM ??= new TempleSiegeMerge(); set => _TSM = value; }
+    private static TempleSiegeMerge _TSM;
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();

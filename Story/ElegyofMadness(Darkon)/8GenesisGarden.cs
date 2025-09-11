@@ -12,7 +12,7 @@ public class CompleteGenesisGarden
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreAstravia Astravia => new();
+    private static CoreAstravia Astravia { get => _Astravia ??= new CoreAstravia(); set => _Astravia = value; }    private static CoreAstravia _Astravia;
 
     public void ScriptMain(IScriptInterface bot)
     {

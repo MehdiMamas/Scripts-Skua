@@ -132,58 +132,23 @@ using System.Globalization;
 
 public class Grimgaol
 {
-    public IScriptInterface Bot => IScriptInterface.Instance;
-    public static CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-private CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-private CoreStory _Story;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-private DoomVaultB DVB
-{
-    get => _DVB ??= new DoomVaultB();
-    set => _DVB = value;
-}
-private DoomVaultB _DVB;
-
-private InfernalArenaMerge IAM
-{
-    get => _IAM ??= new InfernalArenaMerge();
-    set => _IAM = value;
-}
-private InfernalArenaMerge _IAM;
-
-private J6Saga J6
-{
-    get => _J6 ??= new J6Saga();
-    set => _J6 = value;
-}
-private J6Saga _J6;
-
-private UnlockForgeEnhancements Forge
-{
-    get => _Forge ??= new UnlockForgeEnhancements();
-    set => _Forge = value;
-}
-private UnlockForgeEnhancements _Forge;
-
-
+    private IScriptInterface Bot => IScriptInterface.Instance;
+    private CoreBots Core => CoreBots.Instance;
+    
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static DoomVaultB DVB { get => _DVB ??= new DoomVaultB(); set => _DVB = value; }
+    private static DoomVaultB _DVB;
+    private static InfernalArenaMerge IAM { get => _IAM ??= new InfernalArenaMerge(); set => _IAM = value; }
+    private static InfernalArenaMerge _IAM;
+    private static J6Saga J6 { get => _J6 ??= new J6Saga(); set => _J6 = value; }
+    private static J6Saga _J6;
+    private static UnlockForgeEnhancements Forge { get => _Forge ??= new UnlockForgeEnhancements(); set => _Forge = value; }
+    private static UnlockForgeEnhancements _Forge;
 
     Stopwatch runTimer = new();
     TimeSpan bestTime = TimeSpan.MaxValue;

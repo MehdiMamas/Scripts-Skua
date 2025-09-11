@@ -30,20 +30,10 @@ public class LesserHollowbornCaladbolg
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreHollowbornLichKing CoreHollowbornLichKing
-{
-    get => _CoreHollowbornLichKing ??= new CoreHollowbornLichKing();
-    set => _CoreHollowbornLichKing = value;
-}
-private CoreHollowbornLichKing _CoreHollowbornLichKing;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
+    private static CoreHollowbornLichKing CoreHollowbornLichKing { get => _CoreHollowbornLichKing ??= new CoreHollowbornLichKing(); set => _CoreHollowbornLichKing = value; }
+    private static CoreHollowbornLichKing _CoreHollowbornLichKing;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {

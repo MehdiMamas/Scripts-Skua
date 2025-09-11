@@ -26,62 +26,22 @@ public class CoreArchMage
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private BuyScrolls Scroll
-{
-    get => _Scroll ??= new BuyScrolls();
-    set => _Scroll = value;
-}
-private BuyScrolls _Scroll;
-
-private CoreBLOD BLOD
-{
-    get => _BLOD ??= new CoreBLOD();
-    set => _BLOD = value;
-}
-private CoreBLOD _BLOD;
-
-private CoreQOM QOM
-{
-    get => _QOM ??= new CoreQOM();
-    set => _QOM = value;
-}
-private CoreQOM _QOM;
-
-private CoreSoW SoW
-{
-    get => _SoW ??= new CoreSoW();
-    set => _SoW = value;
-}
-private CoreSoW _SoW;
-
-private CoreSoWMats SOWM
-{
-    get => _SOWM ??= new CoreSoWMats();
-    set => _SOWM = value;
-}
-private CoreSoWMats _SOWM;
-
-private CoreNSOD NSOD
-{
-    get => _NSOD ??= new CoreNSOD();
-    set => _NSOD = value;
-}
-private CoreNSOD _NSOD;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static BuyScrolls Scroll { get => _Scroll ??= new BuyScrolls(); set => _Scroll = value; }
+    private static BuyScrolls _Scroll;
+    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD _BLOD;
+    private static CoreQOM QOM { get => _QOM ??= new CoreQOM(); set => _QOM = value; }
+    private static CoreQOM _QOM;
+    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW _SoW;
+    private static CoreSoWMats SOWM { get => _SOWM ??= new CoreSoWMats(); set => _SOWM = value; }
+    private static CoreSoWMats _SOWM;
+    private static CoreNSOD NSOD { get => _NSOD ??= new CoreNSOD(); set => _NSOD = value; }
+    private static CoreNSOD _NSOD;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ArchMage";

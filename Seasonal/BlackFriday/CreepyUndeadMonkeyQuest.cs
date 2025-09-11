@@ -14,7 +14,7 @@ public class CreepyUndeadMonkeyQuest
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreIsleOfFotia Fotia => new();
+    private static CoreIsleOfFotia Fotia { get => _Fotia ??= new CoreIsleOfFotia(); set => _Fotia = value; }    private static CoreIsleOfFotia _Fotia;
 
     public void ScriptMain(IScriptInterface Bot)
     {

@@ -25,75 +25,21 @@ public class ArmyLightCaster
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-    public CoreAdvanced Adv => new();
-private CoreArmyLite Army
-{
-    get => _Army ??= new CoreArmyLite();
-    set => _Army = value;
-}
-private CoreArmyLite _Army;
-
-public LightMage LM
-{
-    get => _LM ??= new LightMage();
-    set => _LM = value;
-}
-public LightMage _LM;
-
-public BurningBladeOfAbezeth BBOA
-{
-    get => _BBOA ??= new BurningBladeOfAbezeth();
-    set => _BBOA = value;
-}
-public BurningBladeOfAbezeth _BBOA;
-
-public AvatarOfDeathsScythe AODS
-{
-    get => _AODS ??= new AvatarOfDeathsScythe();
-    set => _AODS = value;
-}
-public AvatarOfDeathsScythe _AODS;
-
-public GuardianOfSpiritsBlade GOSB
-{
-    get => _GOSB ??= new GuardianOfSpiritsBlade();
-    set => _GOSB = value;
-}
-public GuardianOfSpiritsBlade _GOSB;
-
-public LanceOfTime LOT
-{
-    get => _LOT ??= new LanceOfTime();
-    set => _LOT = value;
-}
-public LanceOfTime _LOT;
-
-public BurningBlade BB
-{
-    get => _BB ??= new BurningBlade();
-    set => _BB = value;
-}
-public BurningBlade _BB;
-
-private static CoreBots sCore
-{
-    get => _sCore ??= new CoreBots();
-    set => _sCore = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
+    private static LightMage LM { get => _LM ??= new LightMage(); set => _LM = value; }    private static LightMage _LM;
+    private static BurningBladeOfAbezeth BBOA { get => _BBOA ??= new BurningBladeOfAbezeth(); set => _BBOA = value; }    private static BurningBladeOfAbezeth _BBOA;
+    private static AvatarOfDeathsScythe AODS { get => _AODS ??= new AvatarOfDeathsScythe(); set => _AODS = value; }    private static AvatarOfDeathsScythe _AODS;
+    private static GuardianOfSpiritsBlade GOSB { get => _GOSB ??= new GuardianOfSpiritsBlade(); set => _GOSB = value; }    private static GuardianOfSpiritsBlade _GOSB;
+    private static LanceOfTime LOT { get => _LOT ??= new LanceOfTime(); set => _LOT = value; }    private static LanceOfTime _LOT;
+    private static BurningBlade BB { get => _BB ??= new BurningBlade(); set => _BB = value; }    private static BurningBlade _BB;
+private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
 private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy
-{
-    get => _sArmy ??= new CoreArmyLite();
-    set => _sArmy = value;
-}
+private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+
 private static CoreArmyLite _sArmy;
 
 

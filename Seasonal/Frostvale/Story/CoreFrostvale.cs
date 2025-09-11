@@ -12,20 +12,8 @@ public class CoreFrostvale
 {
     public CoreBots Core => CoreBots.Instance;
     public IScriptInterface Bot => IScriptInterface.Instance;
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public GlaceraStory GlaceraStory
-{
-    get => _GlaceraStory ??= new GlaceraStory();
-    set => _GlaceraStory = value;
-}
-public GlaceraStory _GlaceraStory;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static GlaceraStory GlaceraStory { get => _GlaceraStory ??= new GlaceraStory(); set => _GlaceraStory = value; }    private static GlaceraStory _GlaceraStory;
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.RunCore();

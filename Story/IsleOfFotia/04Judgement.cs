@@ -13,13 +13,7 @@ public class Judgement
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreIsleOfFotia CoreIsleOfFotia
-{
-    get => _CoreIsleOfFotia ??= new CoreIsleOfFotia();
-    set => _CoreIsleOfFotia = value;
-}
-public CoreIsleOfFotia _CoreIsleOfFotia;
-
+    private static CoreIsleOfFotia CoreIsleOfFotia { get => _CoreIsleOfFotia ??= new CoreIsleOfFotia(); set => _CoreIsleOfFotia = value; }    private static CoreIsleOfFotia _CoreIsleOfFotia;
 
     public void ScriptMain(IScriptInterface bot)
     {

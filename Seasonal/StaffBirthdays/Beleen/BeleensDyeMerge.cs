@@ -18,46 +18,17 @@ public class BeleensDyeMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CyseroMerge CyseroMerge
-{
-    get => _CyseroMerge ??= new CyseroMerge();
-    set => _CyseroMerge = value;
-}
-private CyseroMerge _CyseroMerge;
-
-private ArtixWeddingMerge ArtixWeddingMerge
-{
-    get => _ArtixWeddingMerge ??= new ArtixWeddingMerge();
-    set => _ArtixWeddingMerge = value;
-}
-private ArtixWeddingMerge _ArtixWeddingMerge;
-
-private SwaggysChateau SwaggysChateau
-{
-    get => _SwaggysChateau ??= new SwaggysChateau();
-    set => _SwaggysChateau = value;
-}
-private SwaggysChateau _SwaggysChateau;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CyseroMerge CyseroMerge { get => _CyseroMerge ??= new CyseroMerge(); set => _CyseroMerge = value; }
+    private static CyseroMerge _CyseroMerge;
+    private static ArtixWeddingMerge ArtixWeddingMerge { get => _ArtixWeddingMerge ??= new ArtixWeddingMerge(); set => _ArtixWeddingMerge = value; }
+    private static ArtixWeddingMerge _ArtixWeddingMerge;
+    private static SwaggysChateau SwaggysChateau { get => _SwaggysChateau ??= new SwaggysChateau(); set => _SwaggysChateau = value; }
+    private static SwaggysChateau _SwaggysChateau;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
 

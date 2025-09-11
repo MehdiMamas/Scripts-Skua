@@ -58,35 +58,11 @@ public class ArcanaInvoker
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public CoreFarms Farm => new();
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public CoreAstravia Astravia
-{
-    get => _Astravia ??= new CoreAstravia();
-    set => _Astravia = value;
-}
-public CoreAstravia _Astravia;
-
-public ArcanaInvokerResourceMerge AIRM
-{
-    get => _AIRM ??= new ArcanaInvokerResourceMerge();
-    set => _AIRM = value;
-}
-public ArcanaInvokerResourceMerge _AIRM;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreAstravia Astravia { get => _Astravia ??= new CoreAstravia(); set => _Astravia = value; }    private static CoreAstravia _Astravia;
+    private static ArcanaInvokerResourceMerge AIRM { get => _AIRM ??= new ArcanaInvokerResourceMerge(); set => _AIRM = value; }    private static ArcanaInvokerResourceMerge _AIRM;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {

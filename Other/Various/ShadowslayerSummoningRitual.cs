@@ -19,48 +19,12 @@ public class ShadowslayerSummoningRitual
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-public CoreDailies _Daily;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public ShadowSlayerK ShadowStory
-{
-    get => _ShadowStory ??= new ShadowSlayerK();
-    set => _ShadowStory = value;
-}
-public ShadowSlayerK _ShadowStory;
-
-public Core7DD DD
-{
-    get => _DD ??= new Core7DD();
-    set => _DD = value;
-}
-public Core7DD _DD;
-
-public BuyScrolls Scroll
-{
-    get => _Scroll ??= new BuyScrolls();
-    set => _Scroll = value;
-}
-public BuyScrolls _Scroll;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static ShadowSlayerK ShadowStory { get => _ShadowStory ??= new ShadowSlayerK(); set => _ShadowStory = value; }    private static ShadowSlayerK _ShadowStory;
+    private static Core7DD DD { get => _DD ??= new Core7DD(); set => _DD = value; }    private static Core7DD _DD;
+    private static BuyScrolls Scroll { get => _Scroll ??= new BuyScrolls(); set => _Scroll = value; }    private static BuyScrolls _Scroll;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -19,8 +19,8 @@ public class HeadlessHorsemanGear
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    public CoreAdvanced Adv => new();
-    public MogloweenSeasonalMerge MogloweenMerge => new();
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static MogloweenSeasonalMerge MogloweenMerge { get => _MogloweenMerge ??= new MogloweenSeasonalMerge(); set => _MogloweenMerge = value; }    private static MogloweenSeasonalMerge _MogloweenMerge;
 
     public void ScriptMain(IScriptInterface Bot)
     {

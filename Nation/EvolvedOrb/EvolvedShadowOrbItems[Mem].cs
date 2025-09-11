@@ -19,55 +19,20 @@ public class EvolvedShadowOrbItems
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-private CoreNation _Nation;
-
-private EvolvedShadowOrb ESO
-{
-    get => _ESO ??= new EvolvedShadowOrb();
-    set => _ESO = value;
-}
-private EvolvedShadowOrb _ESO;
-
-private Bard Bard
-{
-    get => _Bard ??= new Bard();
-    set => _Bard = value;
-}
-private Bard _Bard;
-
-private BattleConGearMerge BCon
-{
-    get => _BCon ??= new BattleConGearMerge();
-    set => _BCon = value;
-}
-private BattleConGearMerge _BCon;
-
-private PotionBuyer Potion
-{
-    get => _Potion ??= new PotionBuyer();
-    set => _Potion = value;
-}
-private PotionBuyer _Potion;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static EvolvedShadowOrb ESO { get => _ESO ??= new EvolvedShadowOrb(); set => _ESO = value; }
+    private static EvolvedShadowOrb _ESO;
+    private static Bard Bard { get => _Bard ??= new Bard(); set => _Bard = value; }
+    private static Bard _Bard;
+    private static BattleConGearMerge BCon { get => _BCon ??= new BattleConGearMerge(); set => _BCon = value; }
+    private static BattleConGearMerge _BCon;
+    private static PotionBuyer Potion { get => _Potion ??= new PotionBuyer(); set => _Potion = value; }
+    private static PotionBuyer _Potion;
 
     public void ScriptMain(IScriptInterface Bot)
     {

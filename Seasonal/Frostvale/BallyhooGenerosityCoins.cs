@@ -12,7 +12,8 @@ public class BallyhooGC
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private ChillysQuest Chillys => new();
+    private static ChillysQuest Chillys { get => _Chillys ??= new ChillysQuest(); set => _Chillys = value; }
+    private static ChillysQuest _Chillys;
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();

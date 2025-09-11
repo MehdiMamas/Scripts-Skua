@@ -16,34 +16,10 @@ public class FrostSpiritReaver
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public GlaceraStory Glacera
-{
-    get => _Glacera ??= new GlaceraStory();
-    set => _Glacera = value;
-}
-public GlaceraStory _Glacera;
-
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreDailies Dailies
-{
-    get => _Dailies ??= new CoreDailies();
-    set => _Dailies = value;
-}
-public CoreDailies _Dailies;
-
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static GlaceraStory Glacera { get => _Glacera ??= new GlaceraStory(); set => _Glacera = value; }    private static GlaceraStory _Glacera;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreDailies Dailies { get => _Dailies ??= new CoreDailies(); set => _Dailies = value; }    private static CoreDailies _Dailies;
 
     public void ScriptMain(IScriptInterface bot)
     {

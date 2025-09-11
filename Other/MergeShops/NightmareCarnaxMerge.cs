@@ -25,63 +25,24 @@ public class NightmareCarnaxMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
-
-private CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-private CoreStory _Story;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
 private static CoreAdvanced _sAdv;
 
 
-private DarkCarnaxStory DarkCarnax
-{
-    get => _DarkCarnax ??= new DarkCarnaxStory();
-    set => _DarkCarnax = value;
-}
-private DarkCarnaxStory _DarkCarnax;
-
-private CoreNSOD NSOD
-{
-    get => _NSOD ??= new CoreNSOD();
-    set => _NSOD = value;
-}
-private CoreNSOD _NSOD;
-
-private ArchFiend AF
-{
-    get => _AF ??= new ArchFiend();
-    set => _AF = value;
-}
-private ArchFiend _AF;
-
-private UltimateBLoD uBLOD
-{
-    get => _uBLOD ??= new UltimateBLoD();
-    set => _uBLOD = value;
-}
-private UltimateBLoD _uBLOD;
-
+    private static DarkCarnaxStory DarkCarnax { get => _DarkCarnax ??= new DarkCarnaxStory(); set => _DarkCarnax = value; }
+    private static DarkCarnaxStory _DarkCarnax;
+    private static CoreNSOD NSOD { get => _NSOD ??= new CoreNSOD(); set => _NSOD = value; }
+    private static CoreNSOD _NSOD;
+    private static ArchFiend AF { get => _AF ??= new ArchFiend(); set => _AF = value; }
+    private static ArchFiend _AF;
+    private static UltimateBLoD uBLOD { get => _uBLOD ??= new UltimateBLoD(); set => _uBLOD = value; }
+    private static UltimateBLoD _uBLOD;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

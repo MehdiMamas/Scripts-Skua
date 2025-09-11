@@ -13,13 +13,8 @@ public class ForTheCraterGood
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-private CraterHouseMerge CHM
-{
-    get => _CHM ??= new CraterHouseMerge();
-    set => _CHM = value;
-}
-private CraterHouseMerge _CHM;
-
+    private static CraterHouseMerge CHM { get => _CHM ??= new CraterHouseMerge(); set => _CHM = value; }
+    private static CraterHouseMerge _CHM;
 
     public void ScriptMain(IScriptInterface bot)
     {

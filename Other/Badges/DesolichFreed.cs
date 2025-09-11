@@ -13,20 +13,8 @@ public class DesolichFreed
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public EtherStormWastes ESW
-{
-    get => _ESW ??= new EtherStormWastes();
-    set => _ESW = value;
-}
-public EtherStormWastes _ESW;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static EtherStormWastes ESW { get => _ESW ??= new EtherStormWastes(); set => _ESW = value; }    private static EtherStormWastes _ESW;
 
     public void ScriptMain(IScriptInterface bot)
     {

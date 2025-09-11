@@ -36,15 +36,24 @@ public class CoreHollowbornLichKing
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private readonly CoreFarms Farm = new();
-    private readonly CoreAdvanced Adv = new();
-    private readonly CoreHollowborn HB = new();
-    private readonly CoreLegion Legion = new();
-    private readonly UndeadLegionMerge UndeadLegionMerge = new();
-    private readonly AnotherOneBitesTheDust AnotherOneBitesTheDust = new();
-    private readonly HollowSoul HollowSoul = new();
-    private readonly LetItBurn LetItBurn = new();
-    private readonly CoreLR CoreLR = new();
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }
+    private static CoreHollowborn _HB;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion _Legion;
+    private static UndeadLegionMerge UndeadLegionMerge { get => _UndeadLegionMerge ??= new UndeadLegionMerge(); set => _UndeadLegionMerge = value; }
+    private static UndeadLegionMerge _UndeadLegionMerge;
+    private static AnotherOneBitesTheDust AnotherOneBitesTheDust { get => _AnotherOneBitesTheDust ??= new AnotherOneBitesTheDust(); set => _AnotherOneBitesTheDust = value; }
+    private static AnotherOneBitesTheDust _AnotherOneBitesTheDust;
+    private static HollowSoul HollowSoul { get => _HollowSoul ??= new HollowSoul(); set => _HollowSoul = value; }
+    private static HollowSoul _HollowSoul;
+    private static LetItBurn LetItBurn { get => _LetItBurn ??= new LetItBurn(); set => _LetItBurn = value; }
+    private static LetItBurn _LetItBurn;
+    private static CoreLR CoreLR { get => _CoreLR ??= new CoreLR(); set => _CoreLR = value; }
+    private static CoreLR _CoreLR;
 
 
     public string OptionsStorage = "HollowbornLichKing";

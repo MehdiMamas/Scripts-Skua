@@ -15,13 +15,7 @@ using Skua.Core.Interfaces;
 public class EmblemofDage
 {
     public CoreBots Core => CoreBots.Instance;
-public CoreLegion CL
-{
-    get => _CL ??= new CoreLegion();
-    set => _CL = value;
-}
-public CoreLegion _CL;
-
+    private static CoreLegion CL { get => _CL ??= new CoreLegion(); set => _CL = value; }    private static CoreLegion _CL;
 
     public void ScriptMain(IScriptInterface bot)
     {

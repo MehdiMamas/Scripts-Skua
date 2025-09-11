@@ -17,34 +17,10 @@ public class DragonCapitalMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public DragonCapitalStory DCS
-{
-    get => _DCS ??= new DragonCapitalStory();
-    set => _DCS = value;
-}
-public DragonCapitalStory _DCS;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static DragonCapitalStory DCS { get => _DCS ??= new DragonCapitalStory(); set => _DCS = value; }    private static DragonCapitalStory _DCS;
 public static CoreAdvanced sAdv
 {
     get => _sAdv ??= new CoreAdvanced();

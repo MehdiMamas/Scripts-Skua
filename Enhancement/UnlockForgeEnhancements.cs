@@ -123,214 +123,71 @@ public class UnlockForgeEnhancements
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-private CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-private CoreFarms _Farm;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
-private CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-private CoreStory _Story;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion _Legion;
+    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }
+    private static CoreDarkon _Darkon;
+    private static CoreSoWMats SOWM { get => _SOWM ??= new CoreSoWMats(); set => _SOWM = value; }
+    private static CoreSoWMats _SOWM;
+    private static CoreAwe Awe { get => _Awe ??= new CoreAwe(); set => _Awe = value; }
+    private static CoreAwe _Awe;
 
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
+    private static Core13LoC LOC { get => _LOC ??= new Core13LoC(); set => _LOC = value; }
+    private static Core13LoC _LOC;
+    private static CoreNSOD CorNSOD { get => _CorNSOD ??= new CoreNSOD(); set => _CorNSOD = value; }
+    private static CoreNSOD _CorNSOD;
+    private static CoreAstravia Astravia { get => _Astravia ??= new CoreAstravia(); set => _Astravia = value; }
+    private static CoreAstravia _Astravia;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static Core7DD DD { get => _DD ??= new Core7DD(); set => _DD = value; }
+    private static Core7DD _DD;
+    private static CoreYnR YNR { get => _YNR ??= new CoreYnR(); set => _YNR = value; }
+    private static CoreYnR _YNR;
 
-
-private CoreNation Nation
-{
-    get => _Nation ??= new CoreNation();
-    set => _Nation = value;
-}
-private CoreNation _Nation;
-
-private CoreLegion Legion
-{
-    get => _Legion ??= new CoreLegion();
-    set => _Legion = value;
-}
-private CoreLegion _Legion;
-
-private CoreDarkon Darkon
-{
-    get => _Darkon ??= new CoreDarkon();
-    set => _Darkon = value;
-}
-private CoreDarkon _Darkon;
-
-private CoreSoWMats SOWM
-{
-    get => _SOWM ??= new CoreSoWMats();
-    set => _SOWM = value;
-}
-private CoreSoWMats _SOWM;
-
-private CoreAwe Awe
-{
-    get => _Awe ??= new CoreAwe();
-    set => _Awe = value;
-}
-private CoreAwe _Awe;
-
-
-    private Core13LoC LOC => new();
-private CoreNSOD CorNSOD
-{
-    get => _CorNSOD ??= new CoreNSOD();
-    set => _CorNSOD = value;
-}
-private CoreNSOD _CorNSOD;
-
-    private CoreAstravia Astravia => new();
-private CoreDailies Daily
-{
-    get => _Daily ??= new CoreDailies();
-    set => _Daily = value;
-}
-private CoreDailies _Daily;
-
-private Core7DD DD
-{
-    get => _DD ??= new Core7DD();
-    set => _DD = value;
-}
-private Core7DD _DD;
-
-private CoreYnR YNR
-{
-    get => _YNR ??= new CoreYnR();
-    set => _YNR = value;
-}
-private CoreYnR _YNR;
-
-
-private CoreSoW SoW
-{
-    get => _SoW ??= new CoreSoW();
-    set => _SoW = value;
-}
-private CoreSoW _SoW;
-
-private CoreSepulchure CoreSS
-{
-    get => _CoreSS ??= new CoreSepulchure();
-    set => _CoreSS = value;
-}
-private CoreSepulchure _CoreSS;
-
-private ArchPaladin AP
-{
-    get => _AP ??= new ArchPaladin();
-    set => _AP = value;
-}
-private ArchPaladin _AP;
-
-private DragonOfTime DOT
-{
-    get => _DOT ??= new DragonOfTime();
-    set => _DOT = value;
-}
-private DragonOfTime _DOT;
-
-private FireChampionsArmor FCA
-{
-    get => _FCA ??= new FireChampionsArmor();
-    set => _FCA = value;
-}
-private FireChampionsArmor _FCA;
-
-private EternalDrakath ED
-{
-    get => _ED ??= new EternalDrakath();
-    set => _ED = value;
-}
-private EternalDrakath _ED;
-
-private SepulchuresOriginalHelm Seppy
-{
-    get => _Seppy ??= new SepulchuresOriginalHelm();
-    set => _Seppy = value;
-}
-private SepulchuresOriginalHelm _Seppy;
-
-private PrinceDarkonsPoleaxePreReqs PDPPR
-{
-    get => _PDPPR ??= new PrinceDarkonsPoleaxePreReqs();
-    set => _PDPPR = value;
-}
-private PrinceDarkonsPoleaxePreReqs _PDPPR;
-
-private HeadoftheLegionBeast HOTLB
-{
-    get => _HOTLB ??= new HeadoftheLegionBeast();
-    set => _HOTLB = value;
-}
-private HeadoftheLegionBeast _HOTLB;
-
-private Awescended Awescended
-{
-    get => _Awescended ??= new Awescended();
-    set => _Awescended = value;
-}
-private Awescended _Awescended;
-
-private NulgathDemandsWork NDW
-{
-    get => _NDW ??= new NulgathDemandsWork();
-    set => _NDW = value;
-}
-private NulgathDemandsWork _NDW;
-
-private ThirdSpell TSS
-{
-    get => _TSS ??= new ThirdSpell();
-    set => _TSS = value;
-}
-private ThirdSpell _TSS;
-
-private LordOfOrder LOO
-{
-    get => _LOO ??= new LordOfOrder();
-    set => _LOO = value;
-}
-private LordOfOrder _LOO;
-
-private SevenCircles Circles
-{
-    get => _Circles ??= new SevenCircles();
-    set => _Circles = value;
-}
-private SevenCircles _Circles;
-
-private YokaiQuests Yokai
-{
-    get => _Yokai ??= new YokaiQuests();
-    set => _Yokai = value;
-}
-private YokaiQuests _Yokai;
-
-private MalgorsArmorSet MAS
-{
-    get => _MAS ??= new MalgorsArmorSet();
-    set => _MAS = value;
-}
-private MalgorsArmorSet _MAS;
-
-private PrimeFiendShard PFS
-{
-    get => _PFS ??= new PrimeFiendShard();
-    set => _PFS = value;
-}
-private PrimeFiendShard _PFS;
-
+    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW _SoW;
+    private static CoreSepulchure CoreSS { get => _CoreSS ??= new CoreSepulchure(); set => _CoreSS = value; }
+    private static CoreSepulchure _CoreSS;
+    private static ArchPaladin AP { get => _AP ??= new ArchPaladin(); set => _AP = value; }
+    private static ArchPaladin _AP;
+    private static DragonOfTime DOT { get => _DOT ??= new DragonOfTime(); set => _DOT = value; }
+    private static DragonOfTime _DOT;
+    private static FireChampionsArmor FCA { get => _FCA ??= new FireChampionsArmor(); set => _FCA = value; }
+    private static FireChampionsArmor _FCA;
+    private static EternalDrakath ED { get => _ED ??= new EternalDrakath(); set => _ED = value; }
+    private static EternalDrakath _ED;
+    private static SepulchuresOriginalHelm Seppy { get => _Seppy ??= new SepulchuresOriginalHelm(); set => _Seppy = value; }
+    private static SepulchuresOriginalHelm _Seppy;
+    private static PrinceDarkonsPoleaxePreReqs PDPPR { get => _PDPPR ??= new PrinceDarkonsPoleaxePreReqs(); set => _PDPPR = value; }
+    private static PrinceDarkonsPoleaxePreReqs _PDPPR;
+    private static HeadoftheLegionBeast HOTLB { get => _HOTLB ??= new HeadoftheLegionBeast(); set => _HOTLB = value; }
+    private static HeadoftheLegionBeast _HOTLB;
+    private static Awescended Awescended { get => _Awescended ??= new Awescended(); set => _Awescended = value; }
+    private static Awescended _Awescended;
+    private static NulgathDemandsWork NDW { get => _NDW ??= new NulgathDemandsWork(); set => _NDW = value; }
+    private static NulgathDemandsWork _NDW;
+    private static ThirdSpell TSS { get => _TSS ??= new ThirdSpell(); set => _TSS = value; }
+    private static ThirdSpell _TSS;
+    private static LordOfOrder LOO { get => _LOO ??= new LordOfOrder(); set => _LOO = value; }
+    private static LordOfOrder _LOO;
+    private static SevenCircles Circles { get => _Circles ??= new SevenCircles(); set => _Circles = value; }
+    private static SevenCircles _Circles;
+    private static YokaiQuests Yokai { get => _Yokai ??= new YokaiQuests(); set => _Yokai = value; }
+    private static YokaiQuests _Yokai;
+    private static MalgorsArmorSet MAS { get => _MAS ??= new MalgorsArmorSet(); set => _MAS = value; }
+    private static MalgorsArmorSet _MAS;
+    private static PrimeFiendShard PFS { get => _PFS ??= new PrimeFiendShard(); set => _PFS = value; }
+    private static PrimeFiendShard _PFS;
 
 
     public string OptionsStorage = "Forge Ehn Unlocks";

@@ -21,34 +21,13 @@ public class NeoMetalNecro
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-private CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-private CoreAdvanced _Adv;
-
-private BattleConcertClassQuests BCCQ
-{
-    get => _BCCQ ??= new BattleConcertClassQuests();
-    set => _BCCQ = value;
-}
-private BattleConcertClassQuests _BCCQ;
-
-private ArchDoomKnight ADK
-{
-    get => _ADK ??= new ArchDoomKnight();
-    set => _ADK = value;
-}
-private ArchDoomKnight _ADK;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static BattleConcertClassQuests BCCQ { get => _BCCQ ??= new BattleConcertClassQuests(); set => _BCCQ = value; }
+    private static BattleConcertClassQuests _BCCQ;
+    private static ArchDoomKnight ADK { get => _ADK ??= new ArchDoomKnight(); set => _ADK = value; }
+    private static ArchDoomKnight _ADK;
 
     public void ScriptMain(IScriptInterface Bot)
     {

@@ -14,7 +14,8 @@ public class JointheLegion
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private readonly CoreLegion Legion = new();
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion _Legion;
 
     public void ScriptMain(IScriptInterface bot)
     {

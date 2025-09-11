@@ -21,9 +21,12 @@ public class BeetleQuests
     public static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
     private static CoreAdvanced Adv => new();
-    private readonly TempleSiegeMerge TSM = new();
-    private readonly CoreNation Nation = new();
-    private readonly CoreHollowborn HB = new();
+    private static TempleSiegeMerge TSM { get => _TSM ??= new TempleSiegeMerge(); set => _TSM = value; }
+    private static TempleSiegeMerge _TSM;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }
+    private static CoreHollowborn _HB;
 
 
     public string OptionsStorage = "BeetleQuests";

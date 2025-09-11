@@ -28,83 +28,17 @@ public class DragonOfTime
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-public CoreFarms Farm
-{
-    get => _Farm ??= new CoreFarms();
-    set => _Farm = value;
-}
-public CoreFarms _Farm;
-
-public CoreAdvanced Adv
-{
-    get => _Adv ??= new CoreAdvanced();
-    set => _Adv = value;
-}
-public CoreAdvanced _Adv;
-
-public CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-public CoreStory _Story;
-
-public CoreDarkon Darkon
-{
-    get => _Darkon ??= new CoreDarkon();
-    set => _Darkon = value;
-}
-public CoreDarkon _Darkon;
-
-public GoldenBladeOfFate GBoF
-{
-    get => _GBoF ??= new GoldenBladeOfFate();
-    set => _GBoF = value;
-}
-public GoldenBladeOfFate _GBoF;
-
-public PinkBladeOfDestruciton PBoD
-{
-    get => _PBoD ??= new PinkBladeOfDestruciton();
-    set => _PBoD = value;
-}
-public PinkBladeOfDestruciton _PBoD;
-
-public CoreQOM QOM
-{
-    get => _QOM ??= new CoreQOM();
-    set => _QOM = value;
-}
-public CoreQOM _QOM;
-
-public CoreToD TOD
-{
-    get => _TOD ??= new CoreToD();
-    set => _TOD = value;
-}
-public CoreToD _TOD;
-
-public MysteriousEgg Egg
-{
-    get => _Egg ??= new MysteriousEgg();
-    set => _Egg = value;
-}
-public MysteriousEgg _Egg;
-
-public CoreSummer Coll
-{
-    get => _Coll ??= new CoreSummer();
-    set => _Coll = value;
-}
-public CoreSummer _Coll;
-
-public Borgars Borgars
-{
-    get => _Borgars ??= new Borgars();
-    set => _Borgars = value;
-}
-public Borgars _Borgars;
-
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }    private static CoreDarkon _Darkon;
+    private static GoldenBladeOfFate GBoF { get => _GBoF ??= new GoldenBladeOfFate(); set => _GBoF = value; }    private static GoldenBladeOfFate _GBoF;
+    private static PinkBladeOfDestruciton PBoD { get => _PBoD ??= new PinkBladeOfDestruciton(); set => _PBoD = value; }    private static PinkBladeOfDestruciton _PBoD;
+    private static CoreQOM QOM { get => _QOM ??= new CoreQOM(); set => _QOM = value; }    private static CoreQOM _QOM;
+    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }    private static CoreToD _TOD;
+    private static MysteriousEgg Egg { get => _Egg ??= new MysteriousEgg(); set => _Egg = value; }    private static MysteriousEgg _Egg;
+    private static CoreSummer Coll { get => _Coll ??= new CoreSummer(); set => _Coll = value; }    private static CoreSummer _Coll;
+    private static Borgars Borgars { get => _Borgars ??= new Borgars(); set => _Borgars = value; }    private static Borgars _Borgars;
 
     public void ScriptMain(IScriptInterface bot)
     {

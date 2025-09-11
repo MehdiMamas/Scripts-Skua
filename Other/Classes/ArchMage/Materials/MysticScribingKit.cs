@@ -24,13 +24,8 @@ public class MysticScribingKit
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreArchMage AM
-{
-    get => _AM ??= new CoreArchMage();
-    set => _AM = value;
-}
-private CoreArchMage _AM;
-
+    private static CoreArchMage AM { get => _AM ??= new CoreArchMage(); set => _AM = value; }
+    private static CoreArchMage _AM;
 
     public void ScriptMain(IScriptInterface Bot)
     {

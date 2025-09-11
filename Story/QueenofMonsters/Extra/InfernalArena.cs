@@ -14,20 +14,10 @@ public class InfernalArena
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private CoreStory Story
-{
-    get => _Story ??= new CoreStory();
-    set => _Story = value;
-}
-private CoreStory _Story;
-
-private CelestialArenaQuests CAQuests
-{
-    get => _CAQuests ??= new CelestialArenaQuests();
-    set => _CAQuests = value;
-}
-private CelestialArenaQuests _CAQuests;
-
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CelestialArenaQuests CAQuests { get => _CAQuests ??= new CelestialArenaQuests(); set => _CAQuests = value; }
+    private static CelestialArenaQuests _CAQuests;
 
     public void ScriptMain(IScriptInterface Bot)
     {
