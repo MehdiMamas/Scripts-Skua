@@ -802,7 +802,13 @@ public class CoreStory
                 Bot.Map.Jump(targetMonster.Cell, targetMonster.Cell == "Enter" ? "Spawn" : "Left");
                 Bot.Wait.ForCellChange(targetMonster.Cell);
             }
-            Bot.Combat.Attack(targetMonster);
+            
+            if (!Bot.Player.HasTarget)
+                Bot.Combat.Attack(targetMonster);
+
+            if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                continue;
+
             Core.Sleep();
 
             // Update itemInInventory status after attempting to get the item
