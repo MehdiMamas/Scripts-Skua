@@ -196,7 +196,7 @@ public class Grimgaol
         Core.SetOptions(false);
     }
 
-    public void DoGrimGaol(int rank = 11)
+    public void DoGrimGaol(int rank = 10)
     {
         if (Farm.FactionRank("Grimskull Trolling") >= rank)
         {
@@ -404,7 +404,7 @@ public class Grimgaol
                         }
                         break;
 
-                    // Treasure Chest - archmage/VDK/VHL
+                    // Treasure Chest - VDK
                     case "r4":
                         RVHL(Bot.Player.Cell);
                         if (Bot.Config!.Get<bool>("RoomTimers"))
@@ -448,8 +448,6 @@ public class Grimgaol
                     case "r7":
                         if (Core.CheckInventory(verusdoomdnight))
                             RVDK(Bot.Player?.Cell);
-                        RYNR(Bot.Player.Cell);
-
                         if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r7\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player?.Cell != "r8")
@@ -487,8 +485,6 @@ public class Grimgaol
 
                     // Mechro Lich + Rarchmagepaging Cyborg - DoT
                     case "r10":
-                        // if (Core.CheckInventory(archmage))
-                        //     Rarchmage(Bot.Player.Cell);
                         R10();
                         if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r10\" Done in: {runTimer.Elapsed}");
@@ -1658,7 +1654,7 @@ public class Grimgaol
     };
 
         // Optional: Check all and log missing
-        string[] requiredClasses = { dragonoftime, voidhighlord, verusdoomdnight, archmage };
+        string[] requiredClasses = { dragonoftime, voidhighlord, verusdoomdnight };
         string[] missingClasses = requiredClasses.Where(c => !Core.CheckInventory(c)).ToArray();
         if (missingClasses.Length > 0)
             Core.Logger($"Missing required classes ({missingClasses.Length}):\n- {string.Join("\n- ", missingClasses)}", "Missing required classes", stopBot: true, messageBox: true);
