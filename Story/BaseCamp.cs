@@ -32,8 +32,8 @@ public class BaseCamp
         {
             Core.HuntMonsterQuest(10270,
                 ("cornelis", "Gargoyle", ClassType.Farm),
-                ("cornelis", "Stone Golem", ClassType.Farm),
-                ("faerie", "Cyclops Warlord", ClassType.Farm));
+                ("cornelis", "Stone Golem", ClassType.Solo),
+                ("faerie", "Cyclops Warlord", ClassType.Solo));
         }
 
 

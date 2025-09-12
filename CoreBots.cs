@@ -3839,8 +3839,9 @@ public class CoreBots
     public void HuntMonster(string map, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
     {
         string trimmedMonster = monster.Trim();
+        bool HasItem() => isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant);
 
-        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+        if (item != null && HasItem())
             return;
 
         // Join the specified map
@@ -3924,9 +3925,8 @@ public class CoreBots
         {
             if (log)
                 FarmingLogger(item, quant);
-            bool HasItem = isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant);
 
-            while (!Bot.ShouldExit && !HasItem)
+            while (!Bot.ShouldExit && !HasItem())
             {
                 if (!Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
@@ -3938,19 +3938,12 @@ public class CoreBots
                 }
 
                 if (!Bot.Player.HasTarget)
-                {
-                    Monster m = Bot.Monsters.MapMonsters.FirstOrDefault(x => x?.HP > 0);
-                    Bot.Combat.Attack(m?.MapID ?? targetMonster!.MapID);
-                }
-
+                    Bot.Combat.Attack(targetMonster.MapID);
 
                 Sleep();
 
                 if (Bot.Player.Target?.HP <= 0)
                     continue;
-
-                if (HasItem)
-                    break;
             }
 
             Bot.Options.AttackWithoutTarget = false;
