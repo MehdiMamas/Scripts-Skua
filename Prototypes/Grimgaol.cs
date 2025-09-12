@@ -1654,7 +1654,6 @@ public class Grimgaol
         { "PneumaHelm", Bot.Config!.Get<string>("PneumaHelm")},
         { "AnimaHelm", Bot.Config!.Get<string>("AnimaHelm") },
         { "HealerHelm", Bot.Config!.Get<string>("HealerHelm") },
-        { "WizHelm",  Bot.Config!.Get<string>("WizHelm") },
         { "LuckHelm", Bot.Config!.Get<string>("LuckHelm") },
     };
 
@@ -1744,7 +1743,6 @@ public class Grimgaol
         EnhanceIfFound(gear["Elysium"], EnhancementType.Healer, weapon: WeaponSpecial.Elysium);
 
         // Helm enhancements
-        EnhanceIfFound(gear["WizHelm"], EnhancementType.Wizard);
         EnhanceIfFound(gear["LuckHelm"], EnhancementType.Lucky);
         // EnhanceIfFound(gear["HealerHelm"], EnhancementType.Healer);
         EnhanceIfFound(gear["AnimaHelm"], EnhancementType.Lucky, helm: HelmSpecial.Anima);
