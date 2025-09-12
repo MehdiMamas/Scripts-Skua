@@ -5431,30 +5431,22 @@ public class CoreBots
         if (log && name != "*")
             Logger($"Attacking Monster: {name}, for {item}  {dynamicQuant(item, isTemp)}/{quantity}");
 
-        // Put these once (outside the main while) so they persist across iterations
-        System.DateTime lastRefresh = DateTime.MinValue;
-        Monster[] monsterSnapshot = Array.Empty<Monster>();
 
         while (!Bot.ShouldExit && !HasItem())
         {
             // Only wait if player is dead
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                
+            if (cell != null && Bot.Player.Cell != cell)
+            {
+                Bot.Map.Jump(cell, "Left");
+                Bot.Wait.ForCellChange(cell);
+            }
 
             if (name == "*")
             {
-                // Refresh snapshot every ~300ms
-                if ((System.DateTime.Now - lastRefresh).TotalMilliseconds > 300 || monsterSnapshot.Length == 0)
-                {
-                    monsterSnapshot = Bot.Monsters.MapMonsters
-                        .Where(m => m != null && m.Cell == cell)
-                        .Select(m => m!) // filtered out nulls
-                        .ToArray();
-
-                    lastRefresh = System.DateTime.Now;
-                }
-
-                foreach (Monster monster in monsterSnapshot)
+                foreach (Monster monster in Bot.Monsters.CurrentAvailableMonsters)
                 {
                     if (HasItem() || Bot.ShouldExit)
                         break;
@@ -5463,10 +5455,7 @@ public class CoreBots
                     {
                         // Only wait if dead
                         if (!Bot.Player.Alive)
-                        {
                             Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                            continue;
-                        }
 
                         if (cell != null && Bot.Player.Cell != cell)
                         {
@@ -5474,8 +5463,8 @@ public class CoreBots
                             Bot.Wait.ForCellChange(cell);
                         }
 
-                        // If no target OR current target is different from this monster -> attack again
-                        if (!Bot.Player.HasTarget || Bot.Player.Target?.MapID != monster.MapID)
+                        // If no target -> attack
+                        if (!Bot.Player.HasTarget)
                             Bot.Combat.Attack(monster.MapID);
 
                         // If target died -> cancel and move on
@@ -5501,12 +5490,12 @@ public class CoreBots
                 }
 
                 // One-time build per outer loop to avoid per-tick allocations
-                Monster[] matchingSnapshot = Bot.Monsters.MapMonsters
+                Monster[] matching = Bot.Monsters.MapMonsters
                     .Where(m => m != null && m.Cell == cell && m.Name.FormatForCompare() == trimmedName)
                     .Select(m => m!)
                     .ToArray();
 
-                if (matchingSnapshot.Length == 0)
+                if (matching.Length == 0)
                 {
                     Logger($"Monster \"{name}\" not found in current cell.");
 
@@ -5518,7 +5507,7 @@ public class CoreBots
                         Logger("\u26a0\ufe0f Monster name may have been updated to \"" + fallback.Name + "\". This mob will be used instead of \"" + name + "\".");
                         name = fallback.Name;
                         trimmedName = name.Trim().FormatForCompare();
-                        matchingSnapshot = new[] { fallback };
+                        matching = new[] { fallback };
                         cell = fallback.Cell;
                     }
                     else
@@ -5534,7 +5523,7 @@ public class CoreBots
                     }
                 }
 
-                foreach (Monster targetMonster in matchingSnapshot)
+                foreach (Monster targetMonster in Bot.Monsters.CurrentAvailableMonsters)
                 {
                     if (HasItem() || Bot.ShouldExit)
                         break;
@@ -5542,10 +5531,7 @@ public class CoreBots
                     while (!Bot.ShouldExit && !HasItem())
                     {
                         if (!Bot.Player.Alive)
-                        {
                             Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                            continue;
-                        }
 
                         if (cell != null && Bot.Player.Cell != cell)
                         {
@@ -5553,8 +5539,8 @@ public class CoreBots
                             Bot.Wait.ForCellChange(cell);
                         }
 
-                        // If no target or wrong target -> attack
-                        if (!Bot.Player.HasTarget || Bot.Player.Target?.MapID != targetMonster.MapID)
+                        // If no target -> attack
+                        if (!Bot.Player.HasTarget)
                             Bot.Combat.Attack(targetMonster.MapID);
 
                         // If target died -> cancel & break (move to next monster)
