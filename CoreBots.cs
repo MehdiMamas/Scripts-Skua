@@ -1295,20 +1295,14 @@ public class CoreBots
     {
         if (CheckInventory(itemID, quant))
             return;
-        DebugLogger(this);
         _CheckInventorySpace();
 
-        DebugLogger(this);
         if (Bot.Map.Name != map)
         {
-            DebugLogger(this);
             Join(map);
-            DebugLogger(this);
             Bot.Wait.ForMapLoad(map);
-            DebugLogger(this);
         }
 
-        DebugLogger(this);
 
         // Load shop data
         int retry = 0;
@@ -1324,14 +1318,12 @@ public class CoreBots
         }
         retry = 0;
 
-        DebugLogger(this);
         ShopItem? item = parseShopItem(GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.ID == itemID : x.ShopItemID == shopItemID).ToList(), shopID, itemID.ToString(), shopItemID);
         if (item == null)
         {
             Logger($"Failed to find the item with ID {itemID} in the shop with ID {shopID}, skipping it");
             return;
         }
-        DebugLogger(this);
         if (!string.IsNullOrEmpty(item.CategoryString) && CategoryStrings.Contains(item.CategoryString))
             _CheckHouseSpace();
         _BuyItem(map, shopID, item, quant, Log);
@@ -5475,15 +5467,8 @@ public class CoreBots
                 {
                     foreach (Monster monster in Bot.Monsters.CurrentAvailableMonsters.Where(x => x != null))
                     {
-                        if (monster == null)
+                        if (monster == null || monster != null && monster?.HP <= 0)
                         {
-                            Bot.Log("monster is null");
-                            continue;
-                        }
-
-                        if (monster != null && monster?.HP <= 0)
-                        {
-                            Bot.Log($"{monster.MapID} already dead");
                             continue;
                         }
 
@@ -5529,49 +5514,21 @@ public class CoreBots
                     Bot.Wait.ForCellChange(cell);
                 }
 
-                // One-time build per outer loop to avoid per-tick allocations
-                Monster[] matching = Bot.Monsters.MapMonsters
-                    .Where(m => m != null && m.Cell == cell && m.Name.FormatForCompare() == trimmedName)
-                    .Select(m => m!)
-                    .ToArray();
-
-                if (matching.Length == 0)
-                {
-                    Logger($"Monster \"{name}\" not found in current cell.");
-
-                    Monster? fallback = Bot.Monsters.MapMonsters
-                        .FirstOrDefault(x => x != null && x.Name.Contains(trimmedName, StringComparison.OrdinalIgnoreCase));
-
-                    if (fallback != null)
-                    {
-                        Logger("\u26a0\ufe0f Monster name may have been updated to \"" + fallback.Name + "\". This mob will be used instead of \"" + name + "\".");
-                        name = fallback.Name;
-                        trimmedName = name.Trim().FormatForCompare();
-                        matching = new[] { fallback };
-                        cell = fallback.Cell;
-                    }
-                    else
-                    {
-                        string[] visible = Bot.Monsters.MapMonsters
-                            .Where(x => !string.IsNullOrWhiteSpace(x?.Name))
-                            .Select(x => "\"" + x!.Name + "\"")
-                            .Distinct()
-                            .ToArray();
-
-                        Logger("\u274c No approximate match found for " + name + ". Visible monsters: " + string.Join(", ", visible));
-                        return;
-                    }
-                }
 
                 while (!Bot.ShouldExit && !HasItem())
                 {
-                    foreach (Monster targetMonster in Bot.Monsters.CurrentAvailableMonsters.Where(x => x != null))
+                    foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters
+                    .Where(x => x != null && x.Name.FormatForCompare() == name.FormatForCompare()))
                     {
-                        if (targetMonster == null || targetMonster?.HP <= 0)
+                        if (m == null || m.HP <= 0)
+                        {
                             continue;
+                        }
 
                         if (HasItem())
+                        {
                             break;
+                        }
 
                         while (!Bot.ShouldExit && !HasItem())
                         {
@@ -5586,7 +5543,7 @@ public class CoreBots
 
                             // If no target -> attack
                             if (!Bot.Player.HasTarget)
-                                Bot.Combat.Attack(targetMonster);
+                                Bot.Combat.Attack(m.MapID);
 
                             // If target died -> cancel & break (move to next monster)
                             if (Bot.Player.Target?.HP <= 0)
