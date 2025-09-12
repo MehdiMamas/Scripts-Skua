@@ -144,8 +144,8 @@ public class Grimgaol
     private static CoreAdvanced _Adv;
     private static DoomVaultB DVB { get => _DVB ??= new DoomVaultB(); set => _DVB = value; }
     private static DoomVaultB _DVB;
-    private static InfernalArenaMerge Iarchmage { get => _Iarchmage ??= new InfernalArenaMerge(); set => _Iarchmage = value; }
-    private static InfernalArenaMerge _Iarchmage;
+    private static InfernalArenaMerge InfernalArena { get => _InfernalArena ??= new InfernalArenaMerge(); set => _InfernalArena = value; }
+    private static InfernalArenaMerge _InfernalArena;
     private static J6Saga J6 { get => _J6 ??= new J6Saga(); set => _J6 = value; }
     private static J6Saga _J6;
     private static UnlockForgeEnhancements Forge { get => _Forge ??= new UnlockForgeEnhancements(); set => _Forge = value; }
@@ -1781,7 +1781,7 @@ public class Grimgaol
         // Strike the Boulder! (9464)
         if (!Story.QuestProgression(9464))
         {
-            Iarchmage.BuyAllMerge("Scythe of Azalith");
+            InfernalArena.BuyAllMerge("Scythe of Azalith");
             Core.EnsureAccept(9464);
             Core.GetMapItem(12328, map: "gaolcell");
             Core.EnsureComplete(9464);
