@@ -3476,8 +3476,8 @@ public class CoreBots
 
         List<Monster> FindMonsters()
         {
-            while (!Bot.ShouldExit && !Bot.Player.Alive)
-                Sleep();
+            if (!Bot.Player.Alive)
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
             while (!Bot.ShouldExit && Bot.Player.Loaded && Bot.Player.Cell != cell)
             {
@@ -3515,37 +3515,28 @@ public class CoreBots
             return;
         }
 
+
         if (item == null)
         {
-            foreach (Monster targetMonster in targetMonsters)
+            while (!Bot.ShouldExit)
             {
-                while (!Bot.ShouldExit && !Bot.Player.Alive)
-                    Sleep();
+                if (!Bot.Player.Alive)
+                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-                while (!Bot.ShouldExit)
+                if (cell != null && Bot.Player.Cell != cell)
                 {
-                    if (!Bot.Player.Alive)
-                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-                    if (cell != null && Bot.Player.Cell != cell)
-                    {
-                        Bot.Map.Jump(cell, pad);
-                        Bot.Wait.ForCellChange(cell);
-                    }
-
-                    if (!Bot.Player.HasTarget)
-                        Bot.Combat.Attack(monster);
-
-                    // If target died -> cancel & break (move to next monster)
-                    if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
-                    {
-                        Bot.Combat.CancelAutoAttack();
-                        Bot.Combat.CancelTarget();
-                        break;
-                    }
-
-                    Sleep();
+                    Bot.Map.Jump(cell, pad);
+                    Bot.Wait.ForCellChange(cell);
                 }
+
+                if (!Bot.Player.HasTarget)
+                    Bot.Combat.Attack(monster);
+
+                // If target died -> cancel & break (move to next monster)
+                if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                    break;
+
+                Sleep();
             }
 
             return;
@@ -3862,7 +3853,10 @@ public class CoreBots
 
         // Join the specified map
         if (Bot.Map.Name != map)
+        {
             Join(map, publicRoom: publicRoom);
+            Bot.Wait.ForMapLoad(map);
+        }
 
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
@@ -3911,13 +3905,26 @@ public class CoreBots
 
         if (item == null)
         {
-            while (!Bot.ShouldExit && Bot.Player.Cell != targetMonster.Cell)
+            while (!Bot.ShouldExit)
             {
-                Jump(targetMonster.Cell, "Left");
-                Bot.Wait.ForCellChange(targetMonster.Cell);
-                Bot.Player.SetSpawnPoint();
+                if (!Bot.Player.Alive)
+                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+                if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
+                {
+                    Jump(targetMonster?.Cell, "Left");
+                    Bot.Wait.ForCellChange(targetMonster?.Cell);
+                    Bot.Player.SetSpawnPoint();
+                }
+
+                if (!Bot.Player.HasTarget)
+                    Bot.Combat.Attack(targetMonster.Name ?? "*");
+
+                if (Bot.Player.Target?.HP <= 0)
+                    break;
+
+                Sleep();
             }
-            Bot.Kill.Monster(targetMonster);
             JumpWait();
             Rest();
         }
@@ -3925,37 +3932,34 @@ public class CoreBots
         {
             if (log)
                 FarmingLogger(item, quant);
+            bool HasItem = isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant);
 
-            // bool ded = false;
-
-            // // Local method to match delegate signature
-            // void OnMonsterKilled(int b) => ded = true;
-
-            // Subscribe
-            // Bot.Events.MonsterKilled += OnMonsterKilled;
-
-            while (!Bot.ShouldExit && ((isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))))
+            while (!Bot.ShouldExit && !HasItem)
             {
-                while (!Bot.ShouldExit && !Bot.Player.Alive)
-                    Sleep();
+                if (!Bot.Player.Alive)
+                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-                if (Bot.Player.Cell != targetMonster.Cell)
-                    Jump(targetMonster.Cell);
+                if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
+                {
+                    Jump(targetMonster?.Cell, "Left");
+                    Bot.Wait.ForCellChange(targetMonster?.Cell);
+                }
 
                 if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(targetMonster);
+                {
+                    Monster m = Bot.Monsters.MapMonsters.FirstOrDefault(x => x?.HP > 0);
+                    Bot.Combat.Attack(m?.MapID ?? targetMonster!.MapID);
+                }
+
 
                 Sleep();
 
-                if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                if (Bot.Player.Target?.HP <= 0)
                     continue;
 
-                if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+                if (HasItem)
                     break;
             }
-
-            // Unsubscribe to prevent memory leaks
-            // Bot.Events.MonsterKilled -= OnMonsterKilled;
 
             Bot.Options.AttackWithoutTarget = false;
             ToggleAggro(false);
@@ -4026,13 +4030,26 @@ public class CoreBots
 
         if (item == null)
         {
-            while (!Bot.ShouldExit && Bot.Player.Cell != targetMonster.Cell)
+            while (!Bot.ShouldExit)
             {
-                Jump(targetMonster.Cell, pad);
-                Bot.Wait.ForCellChange(targetMonster.Cell);
-                Bot.Player.SetSpawnPoint();
+                if (!Bot.Player.Alive)
+                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+                if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
+                {
+                    Jump(targetMonster?.Cell, "Left");
+                    Bot.Wait.ForCellChange(targetMonster?.Cell);
+                    Bot.Player.SetSpawnPoint();
+                }
+
+                if (!Bot.Player.HasTarget)
+                    Bot.Combat.Attack(targetMonster);
+
+                if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                    break;
+
+                Sleep();
             }
-            Bot.Kill.Monster(targetMonster);
             JumpWait();
             Rest();
         }
@@ -4049,38 +4066,47 @@ public class CoreBots
             if (Item != null && Item.Quantity == Item.MaxStack)
                 Bot.Drops.Remove(Item.ID);
 
-            // bool ded = false;
+            bool hasItem = isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant);
 
-            // // Local method matching delegate signature for proper unsubscription
-            // void OnMonsterKilled(int b) => ded = true;
-
-            // Subscribe
-            // Bot.Events.MonsterKilled += OnMonsterKilled;
-
-            while (!Bot.ShouldExit && ((isTemp ? !Bot.TempInv.Contains(item, quant) : !CheckInventory(item, quant))))
+            while (!Bot.ShouldExit && hasItem)
             {
-                while (!Bot.ShouldExit && !Bot.Player.Alive)
-                    Sleep();
+                foreach (Monster monster in Bot.Monsters.MapMonsters.Where(x => x != null && x.Name == targetMonster?.Name))
+                {
+                    if (monster == null)
+                        continue;
 
-                if (Bot.Map.Name != map)
-                    Join(map);
+                    while (!Bot.ShouldExit)
+                    {
+                        if (!Bot.Player.Alive)
+                            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-                if (Bot.Player.Cell != targetMonster.Cell)
-                    Jump(targetMonster.Cell);
+                        // Ensure we're in correct map
+                        if (Bot.Map.Name != null && Bot.Map.Name != map)
+                        {
+                            Join(map);
+                            Bot.Wait.ForMapLoad(map);
+                        }
 
-                if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(targetMonster);
-                Sleep();
+                        // Ensure we're in targetMonster's Cell
+                        if (Bot.Player.Cell != null && Bot.Player.Cell != monster?.Cell)
+                        {
+                            Jump(monster?.Cell);
+                            Bot.Wait.ForCellChange(monster?.Cell);
+                        }
 
-                if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
-                    continue;
-                if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-                    break;
+                        if (!Bot.Player.HasTarget)
+                            Bot.Combat.Attack(monster!);
+
+                        Sleep();
+
+                        if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                            break;
+
+                        if (hasItem)
+                            break;
+                    }
+                }
             }
-
-            // Unsubscribe to prevent memory leaks
-            // Bot.Events.MonsterKilled -= OnMonsterKilled;
-
             if (Bot.Options.RestPackets)
                 Rest();
 
@@ -5266,7 +5292,7 @@ public class CoreBots
 
             foreach (Monster monster in monsters)
             {
-                if (Bot.ShouldExit || HasItem()) break;
+                if (HasItem()) break;
 
                 if (log) Logger($"Attacking MonsterMapID: {monster}");
 
@@ -5431,14 +5457,13 @@ public class CoreBots
         if (log && name != "*")
             Logger($"Attacking Monster: {name}, for {item}  {dynamicQuant(item, isTemp)}/{quantity}");
 
-
         while (!Bot.ShouldExit && !HasItem())
         {
             // Only wait if player is dead
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                
-            if (cell != null && Bot.Player.Cell != cell)
+
+            if (cell != null && Bot.Player.Cell != null && Bot.Player.Cell != cell)
             {
                 Bot.Map.Jump(cell, "Left");
                 Bot.Wait.ForCellChange(cell);
@@ -5446,37 +5471,52 @@ public class CoreBots
 
             if (name == "*")
             {
-                foreach (Monster monster in Bot.Monsters.CurrentAvailableMonsters)
+                while (!Bot.ShouldExit && !HasItem())
                 {
-                    if (HasItem() || Bot.ShouldExit)
-                        break;
-
-                    while (!Bot.ShouldExit && !HasItem())
+                    foreach (Monster monster in Bot.Monsters.CurrentAvailableMonsters.Where(x => x != null))
                     {
-                        // Only wait if dead
-                        if (!Bot.Player.Alive)
-                            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-                        if (cell != null && Bot.Player.Cell != cell)
+                        if (monster == null)
                         {
-                            Bot.Map.Jump(cell, "Left");
-                            Bot.Wait.ForCellChange(cell);
+                            Bot.Log("monster is null");
+                            continue;
                         }
 
-                        // If no target -> attack
-                        if (!Bot.Player.HasTarget)
-                            Bot.Combat.Attack(monster.MapID);
-
-                        // If target died -> cancel and move on
-                        if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                        if (monster != null && monster?.HP <= 0)
                         {
-                            Bot.Combat.CancelAutoAttack();
-                            Bot.Combat.CancelTarget();
+                            Bot.Log($"{monster.MapID} already dead");
+                            continue;
+                        }
+
+                        if (HasItem())
                             break;
-                        }
 
-                        // Adaptive sleep: shorter when idle, longer when in combat
-                        Sleep();
+                        while (!Bot.ShouldExit && !HasItem())
+                        {
+                            // Only wait if dead
+                            if (!Bot.Player.Alive)
+                                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+                            if (cell != null && Bot.Player.Cell != cell)
+                            {
+                                Bot.Map.Jump(cell, "Left");
+                                Bot.Wait.ForCellChange(cell);
+                            }
+
+                            // If no target -> attack
+                            if (!Bot.Player.HasTarget)
+                                Bot.Combat.Attack(monster.MapID);
+
+                            // If target died -> cancel and move on
+                            if (Bot.Player.Target?.HP <= 0)
+                            {
+                                Bot.Combat.CancelTarget();
+                                Bot.Log($"{monster.MapID} is dedge");
+                                break;
+                            }
+
+                            // Adaptive sleep: shorter when idle, longer when in combat
+                            Sleep();
+                        }
                     }
                 }
             }
@@ -5485,7 +5525,7 @@ public class CoreBots
                 // Ensure we're in the right cell before searching
                 while (!Bot.ShouldExit && Bot.Player.Cell != cell && cell != null)
                 {
-                    Bot.Map.Jump(cell, "Left", autoCorrect: false);
+                    Bot.Map.Jump(cell, "Left");
                     Bot.Wait.ForCellChange(cell);
                 }
 
@@ -5523,38 +5563,39 @@ public class CoreBots
                     }
                 }
 
-                foreach (Monster targetMonster in Bot.Monsters.CurrentAvailableMonsters)
+                while (!Bot.ShouldExit && !HasItem())
                 {
-                    if (HasItem() || Bot.ShouldExit)
-                        break;
-
-                    while (!Bot.ShouldExit && !HasItem())
+                    foreach (Monster targetMonster in Bot.Monsters.CurrentAvailableMonsters.Where(x => x != null))
                     {
-                        if (!Bot.Player.Alive)
-                            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                        if (targetMonster == null || targetMonster?.HP <= 0)
+                            continue;
 
-                        if (cell != null && Bot.Player.Cell != cell)
-                        {
-                            Bot.Map.Jump(cell, "Left");
-                            Bot.Wait.ForCellChange(cell);
-                        }
-
-                        // If no target -> attack
-                        if (!Bot.Player.HasTarget)
-                            Bot.Combat.Attack(targetMonster.MapID);
-
-                        // If target died -> cancel & break (move to next monster)
-                        if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
-                        {
-                            Bot.Combat.CancelAutoAttack();
-                            Bot.Combat.CancelTarget();
+                        if (HasItem())
                             break;
-                        }
 
-                        Sleep();
+                        while (!Bot.ShouldExit && !HasItem())
+                        {
+                            if (!Bot.Player.Alive)
+                                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+                            if (cell != null && Bot.Player.Cell != cell)
+                            {
+                                Bot.Map.Jump(cell, "Left");
+                                Bot.Wait.ForCellChange(cell);
+                            }
+
+                            // If no target -> attack
+                            if (!Bot.Player.HasTarget)
+                                Bot.Combat.Attack(targetMonster);
+
+                            // If target died -> cancel & break (move to next monster)
+                            if (Bot.Player.Target?.HP <= 0)
+                                break;
+
+                            Sleep();
+                        }
                     }
                 }
-
                 if (rejectElse)
                     Bot.Drops.RejectExcept(item);
             }

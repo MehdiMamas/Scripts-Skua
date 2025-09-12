@@ -792,27 +792,35 @@ public class CoreStory
         // Main loop for hunting the monster until the item is acquired
         while (!Bot.ShouldExit && !itemInInventory)
         {
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
             if (Bot.Map.Name != map)
             {
                 Core.Join(map);
                 Bot.Wait.ForMapLoad(map);
             }
-            if (Bot.Player.Cell != targetMonster.Cell)
+
+            if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
             {
-                Bot.Map.Jump(targetMonster.Cell, targetMonster.Cell == "Enter" ? "Spawn" : "Left");
-                Bot.Wait.ForCellChange(targetMonster.Cell);
+                Bot.Map.Jump(targetMonster?.Cell, "Left");
+                Bot.Wait.ForCellChange(targetMonster?.Cell);
             }
-            
+
             if (!Bot.Player.HasTarget)
                 Bot.Combat.Attack(targetMonster);
 
-            if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+            if (Bot.Player.HasTarget && Bot.Player.Target.HP <= 0)
+            {
+                Core.Sleep();
                 continue;
+            }
 
             Core.Sleep();
 
-            // Update itemInInventory status after attempting to get the item
-            itemInInventory = itemName != null && (isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity));
             if (itemInInventory)
                 break;
         }
