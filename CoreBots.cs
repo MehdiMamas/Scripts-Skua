@@ -4712,7 +4712,7 @@ public class CoreBots
 
                 foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
                 {
-                    if (m == null)
+                    if (m == null || m?.HP <= 0)
                         continue;
 
                     if (!Bot.Player.Alive)
@@ -4725,7 +4725,7 @@ public class CoreBots
 
 
                     // Attack staff
-                    if (m.MapID == 2 && m.HP > 0)
+                    if (m?.MapID == 2 && m?.HP > 0)
                         Bot.Kill.Monster(2);
                     // Attack Escherion when staff is down
                     else Bot.Combat.Attack(3);
