@@ -127,7 +127,6 @@ public class CoreBots
     public void SetOptions(bool changeTo = true, bool disableClassSwap = false)
     {
         EnforceInvariantCulture();
-        // These things need to be set and checked before anything else
 
         if (changeTo)
         {
