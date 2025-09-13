@@ -35,7 +35,8 @@ public class CoreArmyLite
     }
 
     #region Army Logging
-    private static ArmyLogging armyLogging { get => _armyLogging ??= new ArmyLogging(); set => _armyLogging = value; }    private static ArmyLogging _armyLogging;
+    private static ArmyLogging armyLogging { get => _armyLogging ??= new ArmyLogging(); set => _armyLogging = value; }
+    private static ArmyLogging _armyLogging;
 
     public void setLogName(string name)
     {
@@ -148,8 +149,9 @@ public class CoreArmyLite
             }
         }
 
-        aggroCTS.Cancel();
-        aggroCTS.Dispose();
+
+        aggroCTS?.Cancel();
+        aggroCTS?.Dispose();
         aggroCTS = new();
         Task.Run(async () =>
                {
@@ -183,7 +185,8 @@ public class CoreArmyLite
         Core.PrivateRoomNumber = getRoomNr();
 
         Bot.Map.Join($"{map}-{Core.PrivateRoomNumber}", "Enter", "Spawn", autoCorrect: false);
-        Bot.Wait.ForMapLoad(map);
+        if (map != null)
+            Bot.Wait.ForMapLoad(map);
 
         Bot.Map.Jump(_cell ?? "Enter", _pad ?? "Spawn", autoCorrect: false);
         Bot.Wait.ForCellChange(_cell ?? "Enter");
@@ -252,7 +255,7 @@ public class CoreArmyLite
     Retry:
         Bot.Options.AttackWithoutTarget = false;
         aggroCTS?.Cancel();
-        aggroCTS.Dispose();
+        aggroCTS?.Dispose();
         aggroCTS = null;
         if (clear)
             AggroMonClear();
@@ -282,33 +285,33 @@ public class CoreArmyLite
     /// </summary>
     public void AggroMonMIDs(params int[] monsterMapIDs)
         => _AggroMonMIDs = monsterMapIDs.ToList();
-private List<string> _AggroMonCells
-{
-    get => __AggroMonCells ??= new List<string>();
-    set => __AggroMonCells = value;
-}
-private List<string> __AggroMonCells;
+    private List<string> _AggroMonCells
+    {
+        get => __AggroMonCells ??= new List<string>();
+        set => __AggroMonCells = value;
+    }
+    private List<string> __AggroMonCells;
 
-private List<string> _AggroMonNames
-{
-    get => __AggroMonNames ??= new List<string>();
-    set => __AggroMonNames = value;
-}
-private List<string> __AggroMonNames;
+    private List<string> _AggroMonNames
+    {
+        get => __AggroMonNames ??= new List<string>();
+        set => __AggroMonNames = value;
+    }
+    private List<string> __AggroMonNames;
 
-private List<int> _AggroMonIDs
-{
-    get => __AggroMonIDs ??= new List<int>();
-    set => __AggroMonIDs = value;
-}
-private List<int> __AggroMonIDs;
+    private List<int> _AggroMonIDs
+    {
+        get => __AggroMonIDs ??= new List<int>();
+        set => __AggroMonIDs = value;
+    }
+    private List<int> __AggroMonIDs;
 
-private List<int> _AggroMonMIDs
-{
-    get => __AggroMonMIDs ??= new List<int>();
-    set => __AggroMonMIDs = value;
-}
-private List<int> __AggroMonMIDs;
+    private List<int> _AggroMonMIDs
+    {
+        get => __AggroMonMIDs ??= new List<int>();
+        set => __AggroMonMIDs = value;
+    }
+    private List<int> __AggroMonMIDs;
 
 
     /// <summary>
@@ -337,8 +340,9 @@ private List<int> __AggroMonMIDs;
         Bot.Wait.ForMapLoad(map);
 
         //Devining variables
-        var _monsters = Bot.Monsters.MapMonsters.Where(m => monsters.Contains(m.Name)).ToList();
-        var cellComparison = new Dictionary<string, int>();
+        var _monsters = Bot.Monsters.MapMonsters
+            .Where(m => !string.IsNullOrEmpty(m.Name) && monsters.Any(name => name == m.Name))
+            .ToList(); var cellComparison = new Dictionary<string, int>();
 
         //Prioritizing monsters of which fewer excist
         foreach (Monster m in _monsters)
@@ -358,12 +362,12 @@ private List<int> __AggroMonMIDs;
         AggroMonStart(map);
     }
     private bool _getCellsForSmartAggroMon = false;
-private List<string> _SmartAggroMonCells
-{
-    get => __SmartAggroMonCells ??= new List<string>();
-    set => __SmartAggroMonCells = value;
-}
-private List<string> __SmartAggroMonCells;
+    private List<string> _SmartAggroMonCells
+    {
+        get => __SmartAggroMonCells ??= new List<string>();
+        set => __SmartAggroMonCells = value;
+    }
+    private List<string> __SmartAggroMonCells;
 
 
     public void RunGeneratedAggroMon(string map, List<string> monNames, List<int> questIDs, ClassType classtype, List<string>? drops = null)
@@ -1523,19 +1527,19 @@ private List<string> __SmartAggroMonCells;
     public bool b_doCopyWalk = false;
     public int b_hibernationTimer = 0;
     public bool b_shouldHibernate = true;
-public List<string> _attackPriority
-{
-    get => __attackPriority ??= new List<string>();
-    set => __attackPriority = value;
-}
-public List<string> __attackPriority;
+    public List<string> _attackPriority
+    {
+        get => __attackPriority ??= new List<string>();
+        set => __attackPriority = value;
+    }
+    public List<string> __attackPriority;
 
-public List<string> _LockedMapsList
-{
-    get => __LockedMapsList ??= new List<string>();
-    set => __LockedMapsList = value;
-}
-public List<string> __LockedMapsList;
+    public List<string> _LockedMapsList
+    {
+        get => __LockedMapsList ??= new List<string>();
+        set => __LockedMapsList = value;
+    }
+    public List<string> __LockedMapsList;
 
 
     public bool tryGoto(string userName, out PlayerInfo? playerObject, int roomNumber)
