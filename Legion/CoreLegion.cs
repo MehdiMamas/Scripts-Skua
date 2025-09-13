@@ -891,6 +891,7 @@ public class CoreLegion
 
             Core.PvPMove(12, "r12", 758, 338);
 
+            if (!canSoloBoss)
             Core.PVPKilling();
 
             if (!Bot.Player.Alive || Bot.Player.Cell == "Enter0")
@@ -900,8 +901,8 @@ public class CoreLegion
                 goto Start;
             }
             Core.PvPMove(23, "r13", 933, 394);
-
-            Core.PVPKilling();
+            if (!canSoloBoss)
+                Core.PVPKilling();
 
             if (!Bot.Player.Alive || Bot.Player.Cell == "Enter0")
             {
@@ -911,6 +912,7 @@ public class CoreLegion
             }
             Core.PvPMove(25, "r14", 846, 181);
 
+            if (!canSoloBoss)
             Core.PVPKilling();
 
             if (!Bot.Player.Alive || Bot.Player.Cell == "Enter0")
