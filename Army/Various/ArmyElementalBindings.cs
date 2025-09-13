@@ -23,8 +23,8 @@ public class ArmyElementalBinding
     private static CoreAdvanced _Adv;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyElementalBindings";
@@ -57,7 +57,7 @@ private static CoreArmyLite _sArmy;
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
-        bool sellBindings = Bot.Config.Get<bool>("GoldFarm");
+        bool sellBindings = Bot.Config!.Get<bool>("GoldFarm");
 
         Core.EquipClass(ClassType.Solo);
         Core.AddDrop("Elemental Binding");
