@@ -16,12 +16,20 @@ public class Generated_ArmyPetTamerRep
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static PockeyMogsStory lite { get => _lite ??= new PockeyMogsStory(); set => _lite = value; }
-    private static PockeyMogsStory _lite;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
-private static CoreArmyLite _sArmy;
+    private static CoreArmyRep CAR { get => _CAR ??= new CoreArmyRep(); set => _CAR = value; }
+    private static CoreArmyRep _CAR;
+    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots _sCore;
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite _sArmy;
+    private static PockeyMogsStory lite { get => _lite ??= new PockeyMogsStory(); set => _lite = value; }
+    private static PockeyMogsStory _lite;
 
 
     public string OptionsStorage = "CustomAggroMon";
@@ -41,16 +49,8 @@ private static CoreArmyLite _sArmy;
     {
         Core.SetOptions();
         lite.PockeyMogs();
+        static void Setup() => CAR.ArmyRavenlossRep();
 
-        ArmyPetTamerRep();
         Core.SetOptions(false);
     }
-
-    public void ArmyPetTamerRep()
-        => Army.RunGeneratedAggroMon(map, monNames, questIDs, classtype, drops);
-    private static readonly int[] questIDs={ 5268, 5269, 5270, 5271, 5272, 5273 };
-    private static readonly string[] monNames={ "Moglurker", "Zaplin", "Blood Moggot", "Flamog", "Vizally", "Toglin" };
-    private static readonly string[] drops={ "" };
-    private string map = "pockeymogs";
-    private ClassType classtype = ClassType.Solo;
 }
