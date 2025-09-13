@@ -686,11 +686,7 @@ public class Grimgaol
                     Core.Sleep();
 
                     if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-                    {
-                        Bot.Combat.CancelAutoAttack();
-                        Bot.Combat.CancelTarget();
                         break;
-                    }
 
                     if (Bot.Player.Health <= 2500 && Bot.Skills.CanUseSkill(2))
                         Bot.Skills.UseSkill(2);
