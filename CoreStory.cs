@@ -779,7 +779,8 @@ public class CoreStory
 
 
         // Find the target monster
-        Monster? targetMonster = Core.InitializeWithRetries(() => Bot.Monsters.MapMonsters.Find(x => x.Name.FormatForCompare() == monster.FormatForCompare()));
+        Monster? targetMonster = Core.InitializeWithRetries(() =>
+        Bot.Monsters.MapMonsters.Find(x => x != null && x.Name.FormatForCompare() == monster.FormatForCompare()));
         if (targetMonster == null)
         {
             Core.Logger($"Monster \"{monster}\" not found on the map \"{Bot.Map.Name}\" for \"{itemName}\", Its Probably been renamed, please report this Missing monster to @Tato2 or @bogalj on Discord", $"Missing Monster", stopBot: true);
@@ -787,10 +788,10 @@ public class CoreStory
             return;
         }
 
-        Core.Logger($"Hunting \"{monster}\" for \"{itemName}\" x{quantity}", "MonsterHunt");
+        Core.Logger($"Hunting \"{monster}\" for \"{itemName}\" x{quantity}", "_MonsterHunt");
 
         // Main loop for hunting the monster until the item is acquired
-        while (!Bot.ShouldExit && !itemInInventory)
+        while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity)))
         {
             if (!Bot.Player.Alive)
             {
@@ -811,18 +812,14 @@ public class CoreStory
                 Bot.Wait.ForCellChange(cellToJump);
             }
 
-            if (!Bot.Player.HasTarget && targetMonster != null)
-                Bot.Combat.Attack(targetMonster);
-
+            if (!Bot.Player.HasTarget)
+                Bot.Combat.Attack(targetMonster.Name);
 
             if (itemInInventory)
                 break;
 
-            if (Bot.Player.HasTarget && Bot.Player.Target != null && Bot.Player.Target.HP <= 0)
-            {
-                Core.Sleep();
+            if (Bot.Player.HasTarget && Bot.Player.Target.HP <= 0)
                 continue;
-            }
 
             Core.Sleep();
         }
