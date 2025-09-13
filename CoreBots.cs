@@ -5518,14 +5518,7 @@ public class CoreBots
                     .Where(x => x != null && x.Name.FormatForCompare() == name.FormatForCompare()))
                     {
                         if (m == null || m.HP <= 0)
-                        {
                             continue;
-                        }
-
-                        if (HasItem())
-                        {
-                            break;
-                        }
 
                         while (!Bot.ShouldExit && !HasItem())
                         {
@@ -8148,6 +8141,9 @@ public class CoreBots
                     Bot.Wait.ForMapLoad("dagepvp");
                     return;
                 }
+
+                if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                    continue;
             }
         }
 
