@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 386135,
+    "size": 386600,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 36432,
+    "size": 36424,
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreStory.cs"
   },
@@ -3913,7 +3913,7 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/GenerateQueuedScript.cs"
   },
   {
-    "name": null,
+    "name": "Grimgoal",
     "description": "Goes through the grimgaol dungeon... Testing Phase",
     "tags": [
       "grimgoal",
@@ -3928,7 +3928,7 @@
       "beta"
     ],
     "path": "Prototypes/Grimgaol.cs",
-    "size": 71319,
+    "size": 65108,
     "fileName": "Grimgaol.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
@@ -28515,7 +28515,7 @@
       "void aura"
     ],
     "path": "Evil/NSoD/VoidAuras/CommandingShadowEssences.cs",
-    "size": 1500,
+    "size": 1526,
     "fileName": "CommandingShadowEssences.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Evil/NSoD/VoidAuras/CommandingShadowEssences.cs"
   },
