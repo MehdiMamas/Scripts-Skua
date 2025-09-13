@@ -806,18 +806,19 @@ public class CoreStory
 
             if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
             {
-                Bot.Map.Jump(targetMonster?.Cell, "Left");
-                Bot.Wait.ForCellChange(targetMonster?.Cell);
+                string cellToJump = targetMonster?.Cell ?? "Enter";
+                Bot.Map.Jump(cellToJump, "Left");
+                Bot.Wait.ForCellChange(cellToJump);
             }
 
-            if (!Bot.Player.HasTarget)
+            if (!Bot.Player.HasTarget && targetMonster != null)
                 Bot.Combat.Attack(targetMonster);
 
 
             if (itemInInventory)
                 break;
 
-            if (Bot.Player.HasTarget && Bot.Player.Target.HP <= 0)
+            if (Bot.Player.HasTarget && Bot.Player.Target != null && Bot.Player.Target.HP <= 0)
             {
                 Core.Sleep();
                 continue;
