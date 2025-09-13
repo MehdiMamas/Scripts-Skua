@@ -3833,11 +3833,6 @@ public class CoreBots
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
-
-        if (item == null)
-            Bot.Log("item is null");
-
-
         // Join the specified map
         if (Bot.Map.Name != map)
         {
@@ -3854,7 +3849,7 @@ public class CoreBots
             Bot.Monsters.MapMonsters.Find(x => x != null && x.Name.FormatForCompare() == monster.FormatForCompare());
 
         Monster? targetMonster = FindMonster();
-        DebugLogger(this, $"TargetMonser: {targetMonster.MapID}" ?? "is null");
+        // DebugLogger(this, $"TargetMonser: {targetMonster.MapID}" ?? "is null");
 
         if (targetMonster == null)
         {
@@ -3895,31 +3890,21 @@ public class CoreBots
         {
             while (!Bot.ShouldExit)
             {
-                if (targetMonster == null)
-                {
-                    DebugLogger(this, "targetMonster == null");
-                    continue;
-                }
                 if (!Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
                 if (Bot.Player?.Cell != targetMonster?.Cell)
                 {
-                    string cellToJump = targetMonster?.Cell ?? "Enter";
-                    Jump(cellToJump, "Left");
-                    Bot.Wait.ForCellChange(cellToJump);
+                    Jump(targetMonster?.Cell ?? "Enter");
+                    Bot.Wait.ForCellChange(targetMonster?.Cell ?? "Enter");
                     Bot.Player.SetSpawnPoint();
                 }
 
                 if (!Bot.Player.HasTarget)
-                {
-                    Bot.Combat.Attack(monster);
-                }
+                    Bot.Combat.Attack(targetMonster?.Name);
 
                 if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-                {
                     return;
-                }
 
                 Sleep();
             }
