@@ -5514,14 +5514,7 @@ public class CoreBots
                     .Where(x => x != null && x.Name.FormatForCompare() == name.FormatForCompare()))
                     {
                         if (m == null || m.HP <= 0)
-                        {
                             continue;
-                        }
-
-                        if (HasItem())
-                        {
-                            break;
-                        }
 
                         while (!Bot.ShouldExit && !HasItem())
                         {
@@ -8135,15 +8128,15 @@ public class CoreBots
                 Bot.Combat.Attack(target);
                 Bot.Sleep(500);
 
-                if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
-                    continue;
-
                 if (Bot.Map.Name == "legionpvp")
                 {
                     Join("dagepvp-999999", "Enter0", "Spawn");
                     Bot.Wait.ForMapLoad("dagepvp");
                     return;
                 }
+                
+                if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                    continue;
             }
         }
 
