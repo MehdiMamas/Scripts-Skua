@@ -3902,7 +3902,7 @@ public class CoreBots
                 if (!Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-                if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
+                if (Bot.Player?.Cell != targetMonster?.Cell)
                 {
                     string cellToJump = targetMonster?.Cell ?? "Enter";
                     Jump(cellToJump, "Left");
@@ -3914,7 +3914,7 @@ public class CoreBots
                     Bot.Combat.Attack(targetMonster?.Name ?? "*");
 
                 if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-                    break;
+                    return;
 
                 Sleep();
             }
