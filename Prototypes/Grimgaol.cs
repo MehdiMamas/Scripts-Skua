@@ -392,9 +392,10 @@ public class Grimgaol
                         }
                         break;
 
-                    // Empress Angler - VDK / YNR
+                    // Empress Angler - YNR
                     case "r3":
                         RVDK(Bot.Player.Cell);
+                        // RYNR(Bot.Player.Cell);
                         if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r3\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player?.Cell != "r4")
@@ -404,7 +405,7 @@ public class Grimgaol
                         }
                         break;
 
-                    // Treasure Chest - VDK
+                    // Treasure Chest - VHL
                     case "r4":
                         RVHL(Bot.Player.Cell);
                         if (Bot.Config!.Get<bool>("RoomTimers"))
@@ -447,7 +448,7 @@ public class Grimgaol
                     // Emperor Angler - VDK/DoT
                     case "r7":
                         if (Core.CheckInventory(verusdoomdnight))
-                            RVDK(Bot.Player.Cell);
+                            RDoT(Bot.Player.Cell);
                         if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r7\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player?.Cell != "r8")
@@ -665,11 +666,8 @@ public class Grimgaol
         {
             if (!monsterAvail()) return;
 
-            foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
+            foreach (Monster? m in Bot.Monsters.CurrentAvailableMonsters)
             {
-                if (m == null || m?.HP <= 0 || m?.State == 0)
-                    continue;
-
                 while (!Bot.ShouldExit)
                 {
                     if (!Bot.Player.Alive)
@@ -686,20 +684,24 @@ public class Grimgaol
                     Core.Sleep();
 
                     if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                    {
+                        Bot.Combat.CancelAutoAttack();
+                        Bot.Combat.CancelTarget();
                         break;
+                    }
 
                     if (Bot.Player.Health <= 2500 && Bot.Skills.CanUseSkill(2))
                         Bot.Skills.UseSkill(2);
 
-                    if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && !Bot.Self.HasActiveAura("Shackled") && skillIndex == 0
-                     && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+                    else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && !Bot.Self.HasActiveAura("Shackled") && skillIndex == 0
+                      && Bot.Skills.CanUseSkill(skillList[skillIndex]))
                     {
                         Bot.Skills.UseSkill(skillList[skillIndex]);
                         skillIndex = (skillIndex + 1) % skillList.Length;
                     }
 
-                    if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && skillIndex != 0
-                     && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+                    else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
+                      && Bot.Skills.CanUseSkill(skillList[skillIndex]))
                     {
                         Bot.Skills.UseSkill(skillList[skillIndex]);
                     }
@@ -1038,7 +1040,7 @@ public class Grimgaol
                         skillIndex = (skillIndex + 1) % skillList.Length;
                     }
 
-                    Core.Sleep(100); // prevent skill spam
+                    Core.Sleep(100);
                 }
             }
         }
@@ -1108,7 +1110,7 @@ public class Grimgaol
                     skillIndex = (skillIndex + 1) % skillList.Length;
                 }
 
-                Core.Sleep(100); // prevent skill spam
+                Core.Sleep(100);
             }
         }
     }
@@ -1197,7 +1199,7 @@ public class Grimgaol
                 skillIndex = (skillIndex + 1) % skillList.Length;
             }
 
-            Core.Sleep(200); // prevent skill spam
+            Core.Sleep(200);
         }
     }
 
@@ -1297,7 +1299,7 @@ public class Grimgaol
                     skillIndex = (skillIndex + 1) % skillList.Length;
                 }
 
-                Core.Sleep(100); // prevent skill spam
+                Core.Sleep(100);
             }
         }
     }
@@ -1330,7 +1332,7 @@ public class Grimgaol
 
 
         int skillIndex = 0;
-        int[] skillList = { 1, 2, 3, 4 /* 1, 2, 3, 1, 2, 4, 3, 2, 1, 3, 2, 4 */};
+        int[] skillList = { 1, 3, 4 /* 1, 2, 3, 1, 2, 4, 3, 2, 1, 3, 2, 4 */};
         // int[] skillList = { 1, 2, 3, 4, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 1, 2, 4, 3 };
 
 
@@ -1365,18 +1367,16 @@ public class Grimgaol
                 break;
             }
 
-            // Heal if needed
-            if (Bot.Player.Health <= 2500)
+            if (Bot.Player.HasTarget && Bot.Player.Health < Bot.Player.MaxHealth * 0.9 && Bot.Skills?.CanUseSkill(2) == true)
                 Bot.Skills.UseSkill(2);
-
             // Use next skill
-            if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0)
+            else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0)
             {
                 Bot.Skills.UseSkill(skillList[skillIndex]);
                 skillIndex = (skillIndex + 1) % skillList.Length;
             }
 
-            Core.Sleep(); // prevent skill spam
+            Bot.Sleep(500);
         }
     }
 
@@ -1464,7 +1464,7 @@ public class Grimgaol
                 }
             }
 
-            Core.Sleep(200); // prevent skill spam
+            Core.Sleep(200);
         }
     }
 
@@ -1542,7 +1542,7 @@ public class Grimgaol
                         skillIndex = (skillIndex + 1) % skillList.Length;
                     }
 
-                    Core.Sleep(100); // prevent skill spam
+                    Core.Sleep(100);
                 }
             }
         }
