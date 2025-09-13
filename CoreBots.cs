@@ -3905,13 +3905,14 @@ public class CoreBots
 
                 if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
                 {
-                    Jump(targetMonster?.Cell, "Left");
-                    Bot.Wait.ForCellChange(targetMonster?.Cell);
+                    string cellToJump = targetMonster?.Cell ?? "Enter";
+                    Jump(cellToJump, "Left");
+                    Bot.Wait.ForCellChange(cellToJump);
                     Bot.Player.SetSpawnPoint();
                 }
 
                 if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(targetMonster.Name ?? "*");
+                    Bot.Combat.Attack(targetMonster?.Name ?? "*");
 
                 if (Bot.Player.Target?.HP <= 0)
                     break;
@@ -3933,11 +3934,12 @@ public class CoreBots
 
                 if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
                 {
-                    Jump(targetMonster?.Cell, "Left");
-                    Bot.Wait.ForCellChange(targetMonster?.Cell);
+                    string cellToJump = targetMonster?.Cell ?? "Enter";
+                    Jump(cellToJump, "Left");
+                    Bot.Wait.ForCellChange(cellToJump);
                 }
 
-                if (!Bot.Player.HasTarget)
+                if (!Bot.Player.HasTarget && targetMonster != null)
                     Bot.Combat.Attack(targetMonster.MapID);
 
                 Sleep();
@@ -4022,13 +4024,14 @@ public class CoreBots
 
                 if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
                 {
-                    Jump(targetMonster?.Cell, "Left");
-                    Bot.Wait.ForCellChange(targetMonster?.Cell);
+                    string cellToJump = targetMonster?.Cell ?? "Enter";
+                    Jump(cellToJump, "Left");
+                    Bot.Wait.ForCellChange(cellToJump);
                     Bot.Player.SetSpawnPoint();
                 }
 
-                if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(targetMonster);
+                if (!Bot.Player.HasTarget && targetMonster != null)
+                    Bot.Combat.Attack(targetMonster.MapID);
 
                 if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
                     break;
@@ -4075,8 +4078,9 @@ public class CoreBots
                         // Ensure we're in targetMonster's Cell
                         if (Bot.Player.Cell != null && Bot.Player.Cell != monster?.Cell)
                         {
-                            Jump(monster?.Cell);
-                            Bot.Wait.ForCellChange(monster?.Cell);
+                            string cellToJump = monster?.Cell ?? "Enter";
+                            Jump(cellToJump);
+                            Bot.Wait.ForCellChange(cellToJump);
                         }
 
                         if (!Bot.Player.HasTarget)
@@ -5397,7 +5401,7 @@ public class CoreBots
 
                     Sleep();
 
-                    if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                    if (Bot.Player.HasTarget && Bot.Player.Target != null && !Bot.Player.Target.Alive)
                         continue;
 
                     if (HasItem())
@@ -5481,11 +5485,11 @@ public class CoreBots
                             }
 
                             // If no target -> attack
-                            if (!Bot.Player.HasTarget)
+                            if (!Bot.Player.HasTarget && monster != null)
                                 Bot.Combat.Attack(monster.MapID);
 
                             // If target died -> cancel and move on
-                            if (Bot.Player.Target?.HP <= 0)
+                            if (Bot.Player.Target?.HP <= 0 && monster != null)
                             {
                                 Bot.Combat.CancelTarget();
                                 Bot.Log($"{monster.MapID} is dedge");
@@ -8135,7 +8139,7 @@ public class CoreBots
                 Bot.Combat.Attack(target);
                 Bot.Sleep(500);
 
-                if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                if (Bot.Player.HasTarget && Bot.Player.Target != null && !Bot.Player.Target.Alive)
                     continue;
 
                 if (Bot.Map.Name == "legionpvp")
