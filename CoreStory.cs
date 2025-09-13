@@ -813,6 +813,10 @@ public class CoreStory
             if (!Bot.Player.HasTarget)
                 Bot.Combat.Attack(targetMonster);
 
+
+            if (itemInInventory)
+                break;
+
             if (Bot.Player.HasTarget && Bot.Player.Target.HP <= 0)
             {
                 Core.Sleep();
@@ -820,9 +824,6 @@ public class CoreStory
             }
 
             Core.Sleep();
-
-            if (itemInInventory)
-                break;
         }
 
         // Handle item pickup if not temporary
