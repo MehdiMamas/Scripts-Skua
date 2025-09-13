@@ -907,23 +907,15 @@ public class CoreFarms
         // Farming between levels 75-100
         while (!Bot.ShouldExit)
         {
-            while (!Bot.ShouldExit && !Bot.Player.Alive)
+            if (!Bot.Player.Alive)
             {
-                if (Bot.Player.Alive)
-                {
-                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
-                    Bot.Sleep(1000);
-                    if (Bot.Player.Cell != "r2")
-                        if (Bot.Player.Cell != (Core.IsMember
-                ? "r13"
-                : "r2"))
-                            Core.Jump(Core.IsMember
-                            ? "r13"
-                            : "r2", "Left");
-                    break;
-                }
-                else
-                    Bot.Sleep(1000);
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+                Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+                Bot.Sleep(1000);
+                if (Bot.Player.Cell != "r2")
+                    Core.Jump("r2", "Left");
+                break;
             }
 
             if (!rankUpClass && Bot.Player.Level >= level)
@@ -935,19 +927,11 @@ public class CoreFarms
             if (!Bot.Player.IsMember)
                 Core.ByPassCheck();
 
-            if (Bot.Map.Name != (Core.IsMember
-                ? "nightmare"
-                : "icestormunder"))
-                Core.Join(Core.IsMember
-                ? "nightmare"
-                : "icestormunder", publicRoom: Core.PrivateRooms);
+            if (Bot.Map.Name != "icestormunder")
+                Core.Join("icestormunder", publicRoom: Core.PrivateRooms);
 
-            if (Bot.Player.Cell != (Core.IsMember
-                ? "r13"
-                : "r2"))
-                Core.Jump(Core.IsMember
-                ? "r13"
-                : "r2", "Left");
+            if (Bot.Player.Cell != "r2"))
+                Core.Jump("r2", "Left");
             Core.CanWeAggro();
 
             Bot.Combat.Attack("*");
