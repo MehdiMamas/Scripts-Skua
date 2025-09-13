@@ -13,8 +13,8 @@ public class ArmyPrinceDarkonsPoleaxeMats
     private CoreBots Core => CoreBots.Instance;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyPrinceDarkonsPoleaxeMats";
@@ -48,7 +48,7 @@ private static CoreArmyLite _sArmy;
 
         Core.SetOptions(disableClassSwap: false);
 
-        Army.initArmy();
+        //Army.initArmy();
         Army.setLogName(OptionsStorage);
         ArmyHunt("arcangrove", new[] { "Right", "LeftBack" }, "Darkon's Receipt", 7324, 22);
         ArmyHunt("astravia", new[] { "r6", "r7", "r8" }, "La's Gratitude", 8001, 22);

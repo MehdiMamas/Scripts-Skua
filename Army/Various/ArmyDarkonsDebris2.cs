@@ -13,8 +13,8 @@ public class ArmyDarkonsDebris2
     private CoreBots Core => CoreBots.Instance;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyDarkonsDebris2";
@@ -48,7 +48,7 @@ private static CoreArmyLite _sArmy;
 
         Core.SetOptions(disableClassSwap: false);
 
-        Army.initArmy();
+        //Army.initArmy();
         Army.setLogName(OptionsStorage);
         ArmyHunt("theworld", new[] { "r9" }, "Unfinished Musical Score", "", 0, 22);
         ArmyHunt("eridanipast", new[] { "r2", "r3", "r10" }, "Bandit's Correspondence", "r10", 8531, 22);

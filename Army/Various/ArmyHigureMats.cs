@@ -14,8 +14,8 @@ public class ArmyHigureMats
     private CoreBots Core => CoreBots.Instance;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyHigureMats";
@@ -40,7 +40,7 @@ private static CoreArmyLite _sArmy;
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
 
-        Army.initArmy();
+        //Army.initArmy();
         Army.setLogName(OptionsStorage);
 
         Army.ClearLogFile();

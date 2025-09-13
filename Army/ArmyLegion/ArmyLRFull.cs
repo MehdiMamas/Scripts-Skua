@@ -45,9 +45,9 @@ public class ArmyLR
     private static DarkWarLegionandNation DWLN { get => _DWLN ??= new DarkWarLegionandNation(); set => _DWLN = value; }
     private static DarkWarLegionandNation _DWLN;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
 
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyLR";
@@ -131,7 +131,7 @@ private static CoreArmyLite _sArmy;
 
         Bot.Options.SetFPS = 30;
 
-        Army.initArmy();
+        //Army.initArmy();
         Army.setLogName(OptionsStorage);
 
         Army.ClearLogFile();
