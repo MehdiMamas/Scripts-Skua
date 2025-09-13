@@ -8090,69 +8090,24 @@ public class CoreBots
         }
 
         //attempt to set monster state
-        foreach (Monster target in Bot.Monsters.MapMonsters
-        .Where(x => x != null && x.Cell == Bot.Player.Cell))
+        foreach (Monster target in Bot.Monsters.CurrentAvailableMonsters)
         {
-
-            while (!Bot.ShouldExit && target.HP > 0)
-            {
-                if (target.HP <= 0)
-                    break;
-
-                Bot.Combat.Attack(target);
-                Bot.Sleep(500);
-
-                if (Bot.Player.HasTarget && Bot.Player.Target != null && !Bot.Player.Target.Alive)
-                    continue;
-
-                if (Bot.Map.Name == "legionpvp")
-                {
-                    Join("dagepvp-999999", "Enter0", "Spawn");
-                    Bot.Wait.ForMapLoad("dagepvp");
-                    return;
-                }
-
-                if (Bot.Player.HasTarget && Bot.Player.Target != null && !Bot.Player.Target.Alive)
-                    continue;
-            }
-        }
-
-        if (!Bot.Monsters.MapMonsters
-        .Any(x => x != null && x.Cell == Bot.Player.Cell && x.State > 0))
-        {
-            Logger("All mobs in room where killed during State setting process onto the next room");
-        }
-
-        //with state set, we can identifiy if they're dead or not
-        foreach (Monster targetMonster in Bot.Monsters.CurrentAvailableMonsters
-        .Where(x => x != null))
-        {
-            if (targetMonster == null || targetMonster?.HP <= 0 || targetMonster?.State == 0)
+            if (target == null)
                 continue;
-            // else
-            // Log Killing {targetMonster.MapID}
-            // Logger($"Killing {targetMonster.MapID}");
 
             while (!Bot.ShouldExit)
             {
-                // If we're deadge or player is in a different map due to afking
-                while (!Bot.ShouldExit && (!Bot.Player.Alive || Bot.Map.Name == "legionpvp"))
-                {
-                    Sleep();
-                    if (Bot.Map.Name == "legionpvp")
-                    {
-                        Join("dagepvp-999999", "Enter0", "Spawn");
-                        Bot.Wait.ForMapLoad("dagepvp");
-                        return;
-                    }
-                    return;
-                }
+                if (!Bot.Player.HasTarget)
+                    Bot.Combat.Attack(target.MapID);
 
-                Bot.Combat.Attack(targetMonster.MapID);
                 Sleep();
 
-                if (targetMonster?.HP <= 0)
+                if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                {
+                    Bot.Combat.CancelAutoAttack();
+                    Bot.Combat.CancelTarget();
                     break;
+                }
             }
         }
     }

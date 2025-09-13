@@ -882,7 +882,8 @@ public class CoreLegion
             if (scrollQuant > 0)
                 FarmScrollArea();
 
-            if (trophyQuant == 0 && techniqueQuant == 0)
+            if ((trophyQuant == 0 || Core.CheckInventory("Legion Combat Trophy", trophyQuant))
+            && (techniqueQuant == 0 || Core.CheckInventory("Technique Observed", techniqueQuant)))
             {
                 Exit("Enter0", exitAttempt: ref exitAttempt);
                 goto Start;
