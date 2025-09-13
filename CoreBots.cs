@@ -8142,7 +8142,7 @@ public class CoreBots
                     return;
                 }
 
-                if (Bot.Player.HasTarget && !Bot.Player.Target.Alive)
+                if (Bot.Player.HasTarget && Bot.Player.Target != null && !Bot.Player.Target.Alive)
                     continue;
             }
         }
