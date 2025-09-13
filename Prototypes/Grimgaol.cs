@@ -1115,7 +1115,7 @@ public class Grimgaol
         }
     }
 
-    private void RVHL(string cell, bool r11 = false)
+    private void RVHL(string cell)
     {
         // Jump to cell if needed
         if (Bot.Player?.Cell != cell)
@@ -1132,19 +1132,33 @@ public class Grimgaol
         #region Equipment Setup
         EquipIfAvailable(voidhighlord);
         EquipIfAvailable(Bot.Config!.Get<string>("Dauntless"));
-
-        string? helm = cell is "r11" or "r12"
-            ? Bot.Config!.Get<string>("LuckHelm")
-            : Bot.Config!.Get<string>("AnimaHelm");
-        EquipIfAvailable(helm);
-
+        EquipIfAvailable(Bot.Config!.Get<string>("AnimaHelm"));
         EquipIfAvailable(Bot.Config!.Get<string>("Vainglory"));
         #endregion
 
 
-
         int skillIndex = 0;
-        int[] skillList = !r11 ? new[] { 2, 4 } : new[] { 1, 2, 3, 4 };
+        string[] SkillsPerCell = new[] { "Enter", "r2", "r11", "r12" };
+        int[] skillList = Array.Empty<int>();
+
+        foreach (string skillCell in SkillsPerCell)
+        {
+            switch (skillCell)
+            {
+                case "Enter":
+                    skillList = new[] { 1, 4, 2 };
+                    break;
+
+                case "r2":
+                    skillList = new[] { 1, 4, 2, 3 };
+                    break;
+
+                case "r11":
+                case "r12":
+                    skillList = new[] { 1, 2, 3, 4 };
+                    break;
+            }
+        }
 
         while (!Bot.ShouldExit)
         {
@@ -1321,24 +1335,16 @@ public class Grimgaol
         #region Equipment Setup
         EquipIfAvailable(verusdoomdnight);
         EquipIfAvailable(Bot.Config!.Get<string>("Dauntless"));
-
-        string? helm = cell is "r11" or "r12"
-            ? Bot.Config!.Get<string>("LuckHelm")
-            : Bot.Config!.Get<string>("AnimaHelm");
-        EquipIfAvailable(helm);
-
+        EquipIfAvailable(Bot.Config!.Get<string>("AnimaHelm"));
         EquipIfAvailable(Bot.Config!.Get<string>("Vainglory"));
         #endregion
 
 
         int skillIndex = 0;
-        int[] skillList = { 1, 3, 4 /* 1, 2, 3, 1, 2, 4, 3, 2, 1, 3, 2, 4 */};
-        // int[] skillList = { 1, 2, 3, 4, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 1, 2, 4, 3 };
-
+        int[] skillList = { 1, 3, 4};
 
         while (!Bot.ShouldExit)
         {
-
             if (!Bot.Player.Alive)
             {
                 Core.Sleep(100);
@@ -1396,18 +1402,13 @@ public class Grimgaol
         #region Equipment Setup
         EquipIfAvailable("Yami No Ronin");
         EquipIfAvailable(Bot.Config!.Get<string>("Dauntless"));
-
-        string? helm = cell is "r11" or "r12"
-            ? Bot.Config!.Get<string>("LuckHelm")
-            : Bot.Config!.Get<string>("AnimaHelm");
-        EquipIfAvailable(helm);
-
+        EquipIfAvailable(Bot.Config!.Get<string>("AnimaHelm"));
         EquipIfAvailable(Bot.Config!.Get<string>("Vainglory"));
         #endregion
 
 
         int skillIndex = 0;
-        int[] skillList = { /*1, 2, 3, 4*/ 1, 3 };
+        int[] skillList = { 2, 1, 3 };
 
         while (!Bot.ShouldExit)
         {
