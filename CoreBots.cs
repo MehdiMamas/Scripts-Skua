@@ -1342,9 +1342,7 @@ public class CoreBots
         int StaticQuant = quant;
         // This process will return early if the materials run out (hopefully) - from `_CalcBuyQuantity`'s calculations. [Line 1695]
         if (item == null || (buy_quant = _CalcBuyQuantity(item, quant)) <= 0 || !_canBuy(shopID, item, quant))
-        {
             return;
-        }
 
         if (Bot.Map.Name != map)
         {
@@ -2260,9 +2258,7 @@ public class CoreBots
     public void AddDrop(params string[] items)
     {
         if (items == null || items.Length == 0)
-        {
             return;
-        }
         Unbank(items);
         Bot.Drops.Add(items);
     }
@@ -2274,9 +2270,7 @@ public class CoreBots
     public void AddDrop(params int[] items)
     {
         if (items == null || items.Length == 0)
-        {
             return;
-        }
         Unbank(items);
         Bot.Drops.Add(items);
     }
@@ -3426,9 +3420,7 @@ public class CoreBots
     public void KillMonster(string map, string cell, string pad, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
     {
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
-        {
             return;
-        }
 
         if (Bot.Map.Name != map)
         {
@@ -3838,10 +3830,13 @@ public class CoreBots
     /// <param name="publicRoom">Whether to use a public room.</param>
     public void HuntMonster(string map, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
     {
-        string trimmedMonster = monster.Trim();
-
-        if (item != null && isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
+
+
+        if (item == null)
+            Bot.Log("item is null");
+
 
         // Join the specified map
         if (Bot.Map.Name != map)
@@ -3852,13 +3847,14 @@ public class CoreBots
 
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
-        if (item is not null && !isTemp)
+        if (item != null && !isTemp)
             AddDrop(item);
 
         Monster? FindMonster() =>
-            Bot.Monsters.MapMonsters.Find(x => x != null && x.Name.FormatForCompare() == trimmedMonster.FormatForCompare());
+            Bot.Monsters.MapMonsters.Find(x => x != null && x.Name.FormatForCompare() == monster.FormatForCompare());
 
         Monster? targetMonster = FindMonster();
+        DebugLogger(this, $"TargetMonser: {targetMonster.MapID}" ?? "is null");
 
         if (targetMonster == null)
         {
@@ -3866,7 +3862,7 @@ public class CoreBots
 
             // Fallback to first partial name match (case-insensitive)
             Monster? fallback = Bot.Monsters.MapMonsters
-                .FirstOrDefault(x => x?.Name?.Contains(trimmedMonster, StringComparison.OrdinalIgnoreCase) == true);
+                .FirstOrDefault(x => x != null && x?.Name?.Contains(monster, StringComparison.OrdinalIgnoreCase) == true);
 
             if (fallback != null)
             {
@@ -3899,6 +3895,11 @@ public class CoreBots
         {
             while (!Bot.ShouldExit)
             {
+                if (targetMonster == null)
+                {
+                    DebugLogger(this, "targetMonster == null");
+                    continue;
+                }
                 if (!Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
@@ -3911,10 +3912,14 @@ public class CoreBots
                 }
 
                 if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(targetMonster?.Name ?? "*");
+                {
+                    Bot.Combat.Attack(monster);
+                }
 
                 if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                {
                     return;
+                }
 
                 Sleep();
             }
@@ -3943,7 +3948,7 @@ public class CoreBots
 
                 Sleep();
 
-                if ((isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+                if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                     break;
 
                 if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
@@ -4088,7 +4093,7 @@ public class CoreBots
 
                         Sleep();
 
-                        if ((isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+                        if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                             break;
 
                         if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
@@ -4848,7 +4853,7 @@ public class CoreBots
     /// <param name="log"></param>
     public void KillVath(string? item = null, int quant = 1, bool isTemp = false, bool log = true)
     {
-        if (item is not null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
         Join("stalagbite");
@@ -5004,7 +5009,7 @@ public class CoreBots
     /// <param name="Phase">Which phase of the boss to kill.</param>
     public void KillTrigoras(string item, int quant = 1, int Phase = 1, bool isTemp = false)
     {
-        if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
         EquipClass(ClassType.Solo);
@@ -5022,11 +5027,8 @@ public class CoreBots
 
     public void KillDoomKitten(string? item = null, int quant = 1, bool isTemp = false, bool log = true)
     {
-        if (item != null)
-        {
-            if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-                return;
-        }
+        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+            return;
 
         List<string> DOTClasses = new()
         {
@@ -5075,7 +5077,10 @@ public class CoreBots
 
                     Bot.Skills.StartAdvanced("4 | 1 | 3M<30 | 2H<30");
                     while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+                    {
                         Bot.Combat.Attack("*");
+                        Bot.Sleep(500);
+                    }
                 }
                 else
                     HuntMonster("doomkitten", "DoomKitten", item, quant, isTemp, log);
@@ -5102,7 +5107,7 @@ public class CoreBots
     /// <param name="log">Specifies whether to log the process.</param>
     public void KillXiang(string item, int quant = 1, bool ultra = false, bool isTemp = false, bool log = true)
     {
-        if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
         if (CheckInventory("Dragon of Time"))
