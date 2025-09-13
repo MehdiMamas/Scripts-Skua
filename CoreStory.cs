@@ -769,8 +769,7 @@ public class CoreStory
     private void _MonsterHunt(string map, ref bool shouldRepeat, string monster, string itemName, int quantity, bool isTemp, int index)
     {
         // Check if the item is already in inventory
-        bool itemInInventory = itemName != null && (isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity));
-        if (itemInInventory)
+        if (itemName != null && (isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity)))
         {
             CurrentRequirements.RemoveAt(index);
             shouldRepeat = false;
@@ -813,12 +812,12 @@ public class CoreStory
             }
 
             if (!Bot.Player.HasTarget)
-                Bot.Combat.Attack(targetMonster.Name);
+                Bot.Combat.Attack(targetMonster?.Name);
 
-            if (itemInInventory)
+            if (isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity))
                 break;
 
-            if (Bot.Player.HasTarget && Bot.Player.Target.HP <= 0)
+            if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
                 continue;
 
             Core.Sleep();
