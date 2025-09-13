@@ -930,7 +930,7 @@ public class CoreFarms
             if (Bot.Map.Name != "icestormunder")
                 Core.Join("icestormunder", publicRoom: Core.PrivateRooms);
 
-            if (Bot.Player.Cell != "r2"))
+            if (Bot.Player.Cell != "r2")
                 Core.Jump("r2", "Left");
             Core.CanWeAggro();
 
