@@ -38,7 +38,7 @@ public class ToxicBloodBlade
         Core.EnsureAccept(7602);
 
         Nation.FarmUni13(2);
-        Nation.SwindleBulk(100);
+        Nation.FarmTaintedGem(100);
         Nation.FarmDarkCrystalShard(150);
         Nation.FarmTotemofNulgath(3);
         Nation.FarmBloodGem(40);

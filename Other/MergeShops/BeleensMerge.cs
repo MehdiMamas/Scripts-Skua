@@ -173,7 +173,7 @@ public static CoreAdvanced _sAdv;
                     {
                        Nation.ApprovalAndFavor(10, 0);
                        Nation.FarmDiamondofNulgath(5);
-                       Nation.SwindleBulk(10);
+                       Nation.FarmTaintedGem(10);
                         Adv.BuyItem("ArchPortal", 1211, "Raw Dreadsaw");
                     }
                    Nation.ApprovalAndFavor(40, 20);
@@ -196,7 +196,7 @@ public static CoreAdvanced _sAdv;
                             TarosManslayer.GuardianTaro(ManslayerOnly: true);
                            Nation.FarmDiamondofNulgath(7);
                            Nation.FarmDarkCrystalShard(13);
-                           Nation.SwindleBulk(13);
+                           Nation.FarmTaintedGem(13);
                            Nation.FarmUni13(1);
                            Nation.FarmVoucher(member: true);
                             Core.HuntMonster("Underworld", "Undead Bruiser", "Undead Bruiser Rune");

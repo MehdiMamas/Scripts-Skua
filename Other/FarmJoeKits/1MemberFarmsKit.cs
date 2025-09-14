@@ -470,7 +470,7 @@ public class MemberFarm
                 }
                 Nation.FarmDiamondofNulgath(10);
                 Nation.FarmDarkCrystalShard(5);
-                Nation.SwindleBulk(5);
+                Nation.FarmTaintedGem(5);
                 Nation.FarmUni13(1);
                 Core.EquipClass(ClassType.Solo);
                 if (!Core.CheckInventory("Abaddon's Terror"))

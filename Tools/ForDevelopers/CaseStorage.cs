@@ -4078,7 +4078,7 @@ case ""Unidentified 27"":
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Nation.Supplies(""Unidentified 26"");
-                        Nation.SwindleBulk(5);
+                        Nation.FarmTaintedGem(5);
 
                         Core.ResetQuest(7551);
                         Core.DarkMakaiItem(""Dark Makai Sigil"");
@@ -4149,7 +4149,7 @@ case ""Crystal Phoenix Blade of Nulgath"":
                     Nation.FarmTotemofNulgath(3);
                     Nation.FarmGemofNulgath(20);
                     Nation.FarmVoucher(false);
-                    Nation.SwindleBulk(50);
+                    Nation.FarmTaintedGem(50);
 
                     Core.EnsureAccept(837);
                     Core.HuntMonster(""underworld"", ""Undead Bruiser"", ""Undead Bruiser Rune"");
@@ -4552,7 +4552,7 @@ case ""Nulgath Nation House"":
                     Nation.FarmDarkCrystalShard(250);
                     Nation.FarmTotemofNulgath(30);
                     Nation.FarmGemofNulgath(150);
-                    Nation.SwindleBulk(200);
+                    Nation.FarmTaintedGem(200);
                     Nation.FarmBloodGem(100);
                     Nation.ApprovalAndFavor(1000, 0);
 
@@ -7066,7 +7066,7 @@ case ""Iron Dreadsaw"":
                     {
                        Nation.ApprovalAndFavor(10, 0);
                        Nation.FarmDiamondofNulgath(5);
-                       Nation.SwindleBulk(10);
+                       Nation.FarmTaintedGem(10);
                         Adv.BuyItem(""ArchPortal"", 1211, ""Raw Dreadsaw"");
                     }
                    Nation.ApprovalAndFavor(40, 20);
@@ -7089,7 +7089,7 @@ case ""Dual Manslayer of Taro"":
                             TarosManslayer.GuardianTaro(ManslayerOnly: true);
                            Nation.FarmDiamondofNulgath(7);
                            Nation.FarmDarkCrystalShard(13);
-                           Nation.SwindleBulk(13);
+                           Nation.FarmTaintedGem(13);
                            Nation.FarmUni13(1);
                            Nation.FarmVoucher(member: true);
                             Core.HuntMonster(""Underworld"", ""Undead Bruiser"", ""Undead Bruiser Rune"");
@@ -22323,7 +22323,7 @@ case ""Phoenix Blade of Nulgath"":
                     Core.HuntMonster(""lair"", ""Red Dragon"", ""Phoenix Blade"", isTemp: false);
                     Nation.FarmDarkCrystalShard(5);
                     Nation.FarmDiamondofNulgath(10);
-                    Nation.SwindleBulk(5);
+                    Nation.FarmTaintedGem(5);
                     Nation.FarmUni13(1);
                     Core.HuntMonster(""underworld"", ""Undead Bruiser"", ""Undead Bruiser Sigil"");
                     Core.AddDrop(req.Name);
@@ -22589,7 +22589,7 @@ case ""Soulreaper of Nulgath"":
                     }
                     Nation.FarmDiamondofNulgath(10);
                     Nation.FarmDarkCrystalShard(5);
-                    Nation.SwindleBulk(5);
+                    Nation.FarmTaintedGem(5);
                     Nation.FarmUni13(1);
                     Core.EquipClass(ClassType.Solo);
                     if (!Core.CheckInventory(""Abaddon's Terror""))

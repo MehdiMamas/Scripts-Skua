@@ -55,7 +55,7 @@ public class VoidDestroyer
         {
             Core.EnsureAccept(5661);
             Nation.Supplies("Unidentified 4");
-            Nation.SwindleBulk(1);
+            Nation.FarmTaintedGem(1);
             Nation.FarmDarkCrystalShard(1);
             Nation.EssenceofNulgath(1);
             Nation.FarmGemofNulgath(1);

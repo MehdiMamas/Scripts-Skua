@@ -90,7 +90,7 @@ public class WillpowerExtraction
                 Core.HuntMonster("battleundera", "Bone Terror", "Shadow Terror Axe", 1, false);
                 Core.EquipClass(ClassType.Farm);
                 Nation.FarmDarkCrystalShard(5);
-                Nation.SwindleBulk(5);
+                Nation.FarmTaintedGem(5);
                 Nation.FarmDiamondofNulgath(1);
                 Core.EnsureComplete(3046, 18768);
 

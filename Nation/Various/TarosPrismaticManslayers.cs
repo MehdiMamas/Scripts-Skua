@@ -69,7 +69,7 @@ public class TarosPrismaticManslayers
             }
 
             Core.EnsureAccept(8496);
-            Nation.SwindleBulk(200);
+            Nation.FarmTaintedGem(200);
             Nation.FarmDarkCrystalShard(125);
             Nation.FarmDiamondofNulgath(300);
             Nation.FarmGemofNulgath(75);

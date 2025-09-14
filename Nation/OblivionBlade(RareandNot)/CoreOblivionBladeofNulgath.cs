@@ -86,7 +86,7 @@ public class CoreOblivionBladeofNulgath
 
         Nation.FarmDiamondofNulgath(10);
         Nation.FarmDarkCrystalShard(5);
-        Nation.SwindleBulk(5);
+        Nation.FarmTaintedGem(5);
         Nation.FarmUni13(1);
         Core.HuntMonster("lair", "Onyx Lava Dragon", "Phoenix Blade", isTemp: false);
         Core.HuntMonster("underworld", "Undead Bruiser", "Undead Bruiser Sigil");
@@ -104,7 +104,7 @@ public class CoreOblivionBladeofNulgath
 
         Nation.Supplies("Unidentified 6");
         Nation.FarmDarkCrystalShard(10);
-        Nation.SwindleBulk(10);
+        Nation.FarmTaintedGem(10);
         Core.HuntMonster("underworld", "Skull Warrior", "Skull Warrior Rune");
 
         Core.CancelRegisteredQuests();
@@ -118,7 +118,7 @@ public class CoreOblivionBladeofNulgath
 
         PetCheck(2560, 591);
 
-        Nation.SwindleBulk(10);
+        Nation.FarmTaintedGem(10);
         Adv.BuyItem("Necropolis", 407, "Doom Worm Creepers");
         Core.HuntMonster("underworld", "Legion Fenrir", "Legion Fenrir Rune");
 
@@ -188,7 +188,7 @@ public class CoreOblivionBladeofNulgath
 
         Adv.BuyItem("tercessuinotlim", 68, "Fiend Cloak of Nulgath");
         Nation.FarmVoucher(true);
-        Nation.SwindleBulk(7);
+        Nation.FarmTaintedGem(7);
         Nation.FarmDarkCrystalShard(7);
         Nation.FarmDiamondofNulgath(3);
         Core.HuntMonster("underworld", "Undead Bruiser", "Undead Bruiser Rune");

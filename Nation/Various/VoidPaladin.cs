@@ -73,7 +73,7 @@ public class VoidPaladin
             Nation.FarmDarkCrystalShard(25);
             Nation.FarmDiamondofNulgath(13);
             Nation.EmblemofNulgath(2);
-            Nation.SwindleBulk(35);
+            Nation.FarmTaintedGem(35);
             Nation.FarmTotemofNulgath(1);
             Nation.FarmUni13(1);
 
@@ -105,7 +105,7 @@ public class VoidPaladin
         Core.EnsureAccept(5827);
 
         Nation.FarmDiamondofNulgath(25);
-        Nation.SwindleBulk(40);
+        Nation.FarmTaintedGem(40);
         Nation.FarmVoucher(false);
         Nation.FarmGemofNulgath(25);
         Nation.FarmDarkCrystalShard(40);
@@ -131,7 +131,7 @@ public class VoidPaladin
 
         Nation.FarmDarkCrystalShard(40);
         Nation.FarmDiamondofNulgath(40);
-        Nation.SwindleBulk(40);
+        Nation.FarmTaintedGem(40);
         Nation.FarmGemofNulgath(20);
         Nation.EmblemofNulgath(3);
         Nation.FarmTotemofNulgath(1);

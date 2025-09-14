@@ -54,7 +54,7 @@ public class SerpentineLarvae
                 Core.HuntMonster(Core.IsMember ? "nulgath" : "evilmarsh", "Tainted Elemental", "Tainted Soul", 5, isTemp: false, log: false);
                 Core.HuntMonster("northlands", "Aisha's Drake", "Blade of Holy Might", isTemp: false, log: false);
                 Nation.FarmDarkCrystalShard(10);
-                Nation.SwindleBulk(15);
+                Nation.FarmTaintedGem(15);
                 Adv.BuyItem("evilwarnul", 456, "Oversoul Witch of Nulgath");
                 Core.HuntMonster("dragonhame", "Infected Dragon", "Infected Dragon Soul", 5, isTemp: false, log: false);
                 Core.EnsureComplete(questID, item.ID);

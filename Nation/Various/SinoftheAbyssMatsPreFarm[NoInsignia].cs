@@ -46,7 +46,7 @@ public class SofAPreFarm
         Core.Logger($"MergeSword config: {Bot.Config!.Get<bool>("MergeSword")}");
 
         // Perform material farming
-        Nation.SwindleBulk(300);
+        Nation.FarmTaintedGem(300);
         Nation.FarmDarkCrystalShard(200);
         Nation.FarmDiamondofNulgath(500);
         Nation.FarmTotemofNulgath(50);

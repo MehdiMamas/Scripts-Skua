@@ -79,7 +79,7 @@ public class TendurrrTheAssistantQuests
             Nation.EssenceofNulgath(20);
             Nation.FarmGemofNulgath(30);
             Nation.FarmDarkCrystalShard(30);
-            Nation.SwindleBulk(30);
+            Nation.FarmTaintedGem(30);
             Nation.FarmDiamondofNulgath(30);
             Nation.FarmVoucher(member: true);
             Nation.FarmBloodGem(10);

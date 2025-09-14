@@ -74,7 +74,7 @@ public class JuggernautItemsofNulgath
             Nation.FarmTotemofNulgath(3);
             Nation.FarmGemofNulgath(20);
             Nation.FarmVoucher(false);
-            Nation.SwindleBulk(50);
+            Nation.FarmTaintedGem(50);
             Core.HuntMonster("underworld", "Undead Bruiser", "Undead Bruiser Rune");
 
             if (Bot.Config?.Get<RewardsSelection>("RewardsSelection") == RewardsSelection.All)

@@ -108,7 +108,7 @@ public class EvovledHexOrbItems
         //Blood Tears - 4783
         Core.EnsureAccept(4783);
         Nation.FarmUni10(30);
-        Nation.SwindleBulk(30);
+        Nation.FarmTaintedGem(30);
         Nation.FarmDarkCrystalShard(30);
         Nation.FarmVoucher(false);
         Nation.FarmTotemofNulgath(10);

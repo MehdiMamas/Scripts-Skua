@@ -70,7 +70,7 @@ public class ArchFiend
         if (!Core.CheckInventory("Abyssal Star"))
         {
             Nation.FarmDarkCrystalShard(200);
-            Nation.SwindleBulk(300);
+            Nation.FarmTaintedGem(300);
             Nation.FarmGemofNulgath(200);
             Core.BuyItem("evilwarnul", 456, "Abyssal Star");
         }

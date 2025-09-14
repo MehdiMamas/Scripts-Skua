@@ -90,7 +90,7 @@ public class DirtlickersMerge
                     Nation.FarmDarkCrystalShard(250);
                     Nation.FarmTotemofNulgath(30);
                     Nation.FarmGemofNulgath(150);
-                    Nation.SwindleBulk(200);
+                    Nation.FarmTaintedGem(200);
                     Nation.FarmBloodGem(100);
                     Nation.ApprovalAndFavor(1000, 0);
 

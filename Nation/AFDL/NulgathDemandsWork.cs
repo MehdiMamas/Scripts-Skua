@@ -87,7 +87,7 @@ public class NulgathDemandsWork
                 Nation.FarmDarkCrystalShard(45);
                 Uni27();
                 Nation.FarmGemofNulgath(15);
-                Nation.SwindleBulk(50);
+                Nation.FarmTaintedGem(50);
                 GHV.GetGHV();
                 Nation.FarmVoucher(true);
 

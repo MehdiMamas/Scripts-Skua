@@ -59,7 +59,7 @@ public class WeaponMasteryAC
         {
             Core.EnsureAccept(Core.CheckInventory(33366, toInv: false) ? 4786 : 4784);
             Nation.FarmUni13(1);
-            Nation.SwindleBulk(10);
+            Nation.FarmTaintedGem(10);
             Nation.FarmDarkCrystalShard(10);
             Nation.FarmTotemofNulgath(1);
             Nation.FarmGemofNulgath(10);

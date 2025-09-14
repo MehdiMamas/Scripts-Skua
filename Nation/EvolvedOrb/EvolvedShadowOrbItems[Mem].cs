@@ -144,7 +144,7 @@ public class EvolvedShadowOrbItems
         Core.EnsureAccept(4775);
         Core.EquipClass(ClassType.Farm);
         Nation.FarmUni10(30);
-        Nation.SwindleBulk(30);
+        Nation.FarmTaintedGem(30);
         Nation.FarmDarkCrystalShard(30);
         Nation.Supplies("Unidentified 29");
         Nation.Supplies("Random Weapon of Nulgath");

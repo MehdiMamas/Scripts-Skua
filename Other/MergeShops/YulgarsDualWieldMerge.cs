@@ -207,7 +207,7 @@ public static CoreAdvanced _sAdv;
                     Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
                     Nation.FarmDarkCrystalShard(5);
                     Nation.FarmDiamondofNulgath(10);
-                    Nation.SwindleBulk(5);
+                    Nation.FarmTaintedGem(5);
                     Nation.FarmUni13(1);
                     Core.HuntMonster("underworld", "Undead Bruiser", "Undead Bruiser Sigil");
                     Core.AddDrop(req.Name);
@@ -246,7 +246,7 @@ public static CoreAdvanced _sAdv;
                             Core.Logger($"You dont own Raw Dreadsaw, getting it first");
                             Nation.ApprovalAndFavor(10, 0);
                             Nation.FarmDiamondofNulgath(5);
-                            Nation.SwindleBulk(10);
+                            Nation.FarmTaintedGem(10);
                             Adv.BuyItem("archportal", 1211, "Raw Dreadsaw");
                         }
                         Nation.ApprovalAndFavor(40, 20);
@@ -401,7 +401,7 @@ public static CoreAdvanced _sAdv;
                     }
                     Nation.FarmDiamondofNulgath(10);
                     Nation.FarmDarkCrystalShard(5);
-                    Nation.SwindleBulk(5);
+                    Nation.FarmTaintedGem(5);
                     Nation.FarmUni13(1);
                     Core.EquipClass(ClassType.Solo);
                     if (!Core.CheckInventory("Abaddon's Terror"))

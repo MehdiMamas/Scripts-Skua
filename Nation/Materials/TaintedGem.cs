@@ -17,7 +17,7 @@ public class TaintedGem
     {
         Core.SetOptions();
 
-        Nation.SwindleBulk();
+        Nation.FarmTaintedGem();
 
         Core.SetOptions(false);
     }

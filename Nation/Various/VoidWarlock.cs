@@ -67,7 +67,7 @@ public class VoidWarlock
             Nation.FarmUni13(2);
             Nation.FarmVoucher(false);
             Nation.FarmBloodGem(90);
-            Nation.SwindleBulk(100);
+            Nation.FarmTaintedGem(100);
             Core.EnsureComplete(6683, reward.ID);
             Bot.Wait.ForQuestComplete(6683);
             Core.ToBank(reward.ID);
@@ -90,7 +90,7 @@ public class VoidWarlock
             Nation.FarmVoucher(true);
             Nation.FarmDiamondofNulgath(75);
             Nation.FarmGemofNulgath(100);
-            Nation.SwindleBulk(75);
+            Nation.FarmTaintedGem(75);
             Nation.ApprovalAndFavor(1000, 0);
             Core.HuntMonster("northlands", "Aisha's Drake", "Brittney's Winter Diamond", 1, false);
             Core.EnsureComplete(6684, reward.ID);

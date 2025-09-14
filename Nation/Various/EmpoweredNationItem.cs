@@ -97,7 +97,7 @@ public class EmpoweredWeaponsofNulgath
                     Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
 
                 Core.EnsureAccept(8696);
-                Nation.SwindleBulk(350);
+                Nation.FarmTaintedGem(350);
                 Nation.FarmDarkCrystalShard(200);
                 Nation.FarmDiamondofNulgath(500);
                 Nation.FarmVoucher(false);
@@ -177,7 +177,7 @@ public class EmpoweredWeaponsofNulgath
                     Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
 
                 Core.EnsureAccept(8693);
-                Nation.SwindleBulk(200);
+                Nation.FarmTaintedGem(200);
                 Nation.FarmDarkCrystalShard(100);
                 Nation.FarmDiamondofNulgath(400);
                 Nation.FarmVoucher(false);
@@ -201,7 +201,7 @@ public class EmpoweredWeaponsofNulgath
 
 
                 Core.EnsureAccept(8697);
-                Nation.SwindleBulk(400);
+                Nation.FarmTaintedGem(400);
                 Nation.FarmDarkCrystalShard(250);
                 Nation.FarmDiamondofNulgath(600);
                 Nation.FarmGemofNulgath(150);
@@ -215,7 +215,7 @@ public class EmpoweredWeaponsofNulgath
                     Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
 
                 Core.EnsureAccept(8695);
-                Nation.SwindleBulk(350);
+                Nation.FarmTaintedGem(350);
                 Nation.FarmDarkCrystalShard(200);
                 Nation.FarmDiamondofNulgath(500);
                 Nation.FarmVoucher(false);
@@ -227,7 +227,7 @@ public class EmpoweredWeaponsofNulgath
                     Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
 
                 Core.EnsureAccept(8694);
-                Nation.SwindleBulk(200);
+                Nation.FarmTaintedGem(200);
                 Nation.FarmDarkCrystalShard(100);
                 Nation.FarmDiamondofNulgath(400);
                 Nation.FarmVoucher(false);

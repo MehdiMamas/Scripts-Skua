@@ -44,7 +44,7 @@ public class ImpossibleEmpoweredItemsofNulgath
         if (Core.CheckInventory("Gemstone of Nulgath") && Core.IsMember)
             Nation.ForgeTaintedGems(5);
         else
-            Nation.SwindleBulk(5);
+            Nation.FarmTaintedGem(5);
         Nation.FarmUni13(1);
         Core.HuntMonster("twilight", "Abaddon", "Abaddon's Terror", isTemp: false);
         TLC.QuestItems(TheLeeryContract.RewardsSelection.Godly_Golden_Dragon_Axe);

@@ -119,7 +119,7 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Nation.Supplies("Unidentified 26");
-                        Nation.SwindleBulk(5);
+                        Nation.FarmTaintedGem(5);
 
                         Core.ResetQuest(7551);
                         Core.DarkMakaiItem("Dark Makai Sigil");

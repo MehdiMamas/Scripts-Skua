@@ -65,7 +65,7 @@ public class SwirlingTheAbyss
         {
             Nation.FarmBloodGem(10);
             Nation.FarmUni13(3);
-            Nation.SwindleBulk(75);
+            Nation.FarmTaintedGem(75);
             Nation.FarmDarkCrystalShard(50);
             Nation.FarmGemofNulgath(50);
             Nation.FarmVoucher(true);

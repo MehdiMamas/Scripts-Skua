@@ -101,7 +101,7 @@ public class CoreVHL
             Nation.FarmGemofNulgath(20);
             Nation.EmblemofNulgath(20);
             Nation.EssenceofNulgath(50);
-            Nation.SwindleBulk(100);
+            Nation.FarmTaintedGem(100);
             Nation.ApprovalAndFavor(300, 300);
 
 
@@ -132,7 +132,7 @@ public class CoreVHL
         {
             Core.Logger("Obtaining Void Crystal A ");
             Nation.FarmUni10(200);
-            Nation.SwindleBulk(200);
+            Nation.FarmTaintedGem(200);
             Nation.FarmDarkCrystalShard(200);
             Nation.FarmGemofNulgath(150);
             Adv.BuyItem("tercessuinotlim", 1355, "Void Crystal A");
@@ -186,7 +186,7 @@ public class CoreVHL
         Nation.FarmGemofNulgath(1000);
         Nation.EmblemofNulgath(500);
         Nation.EssenceofNulgath(60);
-        Nation.SwindleBulk(1000);
+        Nation.FarmTaintedGem(1000);
         Nation.ApprovalAndFavor(5000, 5000);// Core.AddDrop("Totem of Nulgath", "Blood Gem of Nulgath", "Voucher of Nulgath", "Voucher of Nulgath (non-mem)");
         Nation.FarmBloodGem();
         if (!Core.CheckInventory("Unidentified 19"))
