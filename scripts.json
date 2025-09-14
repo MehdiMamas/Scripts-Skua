@@ -20398,6 +20398,33 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/SpiritHunterMerge[Mem].cs"
   },
   {
+    "name": "Aiwass Blessings Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Aiwass Blessings Merge [2619] in /sanctuaryaiwass",
+    "tags": [
+      "aiwass",
+      "blessings",
+      "merge",
+      "sanctuaryaiwass",
+      "adamas",
+      "tenebris",
+      "warrior",
+      "rex",
+      "morph",
+      "horns",
+      "farblight",
+      "spines",
+      "ex",
+      "unbreakable",
+      "fist",
+      "fists",
+      "enchanted"
+    ],
+    "path": "Other/MergeShops/AiwassBlessingsMerge.cs",
+    "size": 8771,
+    "fileName": "AiwassBlessingsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/AiwassBlessingsMerge.cs"
+  },
+  {
     "name": "EaglesReachArmoryMerge",
     "description": "null",
     "tags": [
