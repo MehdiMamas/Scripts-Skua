@@ -3928,9 +3928,20 @@
       "beta"
     ],
     "path": "Prototypes/Grimgaol.cs",
-    "size": 66730,
+    "size": 66684,
     "fileName": "Grimgaol.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Grimgaol.cs"
+  },
+  {
+    "name": "MoreSkullsWorldBoss",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Prototypes/MoreSkullsBoss.cs",
+    "size": 8295,
+    "fileName": "MoreSkullsBoss.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/MoreSkullsBoss.cs"
   },
   {
     "name": "Butler",
@@ -3950,17 +3961,6 @@
     "size": 26678,
     "fileName": "Butler2[WIP].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Butler2[WIP].cs"
-  },
-  {
-    "name": "MoreSkullsWorldBoss",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Prototypes/MoreSkullsWorldBoss.cs",
-    "size": 8295,
-    "fileName": "MoreSkullsWorldBoss.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/MoreSkullsWorldBoss.cs"
   },
   {
     "name": "Dragon of Time Army",
