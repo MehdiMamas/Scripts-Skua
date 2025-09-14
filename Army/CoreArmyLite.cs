@@ -1757,16 +1757,7 @@ public class CoreArmyLite
 
                 Core.Sleep();
 
-                Core.MeasureExecutionTime(() =>
-                {
-                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
-                    {
-                        foundPlayer = _PO;
-                        return;
-                    }
-                }, $"{b_playerName} found in: ");
-
-                if (foundPlayer != null)
+                if (b_playerName != null && Bot.Map.PlayerNames.Contains(b_playerName))
                 {
                     Core.Logger($"Found {b_playerName} in /{map}");
                     return;
@@ -1795,16 +1786,7 @@ public class CoreArmyLite
 
                 Core.Sleep();
 
-                Core.MeasureExecutionTime(() =>
-                {
-                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
-                    {
-                        foundPlayer = _PO;
-                        return;
-                    }
-                }, $"{b_playerName} found in: ");
-
-                if (foundPlayer != null)
+                if (b_playerName != null && Bot.Map.PlayerNames.Contains(b_playerName))
                 {
                     Core.Logger($"Found {b_playerName} in /{mapInfo.Map}");
                     return;
@@ -1827,16 +1809,7 @@ public class CoreArmyLite
 
                 Core.Sleep();
 
-                Core.MeasureExecutionTime(() =>
-                {
-                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
-                    {
-                        foundPlayer = _PO;
-                        return;
-                    }
-                }, $"{b_playerName} found in: ");
-
-                if (foundPlayer != null)
+                if (b_playerName != null && Bot.Map.PlayerNames.Contains(b_playerName))
                 {
                     Core.Logger($"Found {b_playerName} in /{map}");
                     return;
@@ -1861,16 +1834,7 @@ public class CoreArmyLite
 
                     Core.Sleep();
 
-                    Core.MeasureExecutionTime(() =>
-                {
-                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
-                    {
-                        foundPlayer = _PO;
-                        return;
-                    }
-                }, $"{b_playerName} found in: ");
-
-                    if (foundPlayer != null)
+                    if (b_playerName != null && Bot.Map.PlayerNames.Contains(b_playerName))
                     {
                         Core.Logger($"Found {b_playerName} in /{map}");
                         return;
@@ -1896,16 +1860,7 @@ public class CoreArmyLite
 
                 Core.Sleep();
 
-                Core.MeasureExecutionTime(() =>
-                {
-                    if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
-                    {
-                        foundPlayer = _PO;
-                        return;
-                    }
-                }, $"{b_playerName} found in: ");
-
-                if (foundPlayer != null)
+                if (b_playerName != null && Bot.Map.PlayerNames.Contains(b_playerName))
                 {
                     Core.Logger($"Found {b_playerName} in /{map}");
                     return;
@@ -1914,9 +1869,12 @@ public class CoreArmyLite
             }
         }
 
-        Core.Join($"whitemap-{RoomNumber}");
-        Core.Logger($"Could not find {b_playerName} in any of the maps.", "LockedZoneHandler");
-
+        if (!(b_playerName != null && Bot.Map.PlayerNames.Contains(b_playerName)))
+        {
+            Core.Join($"whitemap-{RoomNumber}");
+            Core.Logger($"Could not find {b_playerName} in any of the maps.", "LockedZoneHandler");
+        }
+        
         if (!b_shouldHibernate)
             return;
 
@@ -1932,10 +1890,10 @@ public class CoreArmyLite
                     return;
             }
 
-            if (tryGoto(b_playerName!, out PlayerInfo? playerObject, RoomNumber))
+            if (b_playerName != null && Bot.Map.PlayerNames.Contains(b_playerName))
             {
                 Core.Logger($"{b_playerName} found!");
-                return;
+                break;
             }
 
             min += b_hibernationTimer;
