@@ -382,10 +382,9 @@ public class Grimgaol
 
                     // Grim Bomb - VHL
                     case "r2":
-                        // if (Core.CheckInventory(dragonoftime))
-                        //     RDoT(Bot.Player.Cell);
-                        // else
-                        R2();
+                        if (Core.CheckInventory(dragonoftime))
+                            RDoT(Bot.Player.Cell);
+                        else R2();
                         if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r2\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player?.Cell != "r3")
