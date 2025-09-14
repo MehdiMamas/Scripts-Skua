@@ -13531,13 +13531,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/01TerminaTemple.cs"
   },
   {
+    "name": "Sanctuary Aiwass Storyline",
+    "description": "Completes the Sanctuary Aiwass storyline (quests 10375–10384)",
+    "tags": [
+      "sanctuaryaiwass",
+      "storyline"
+    ],
+    "path": "Story/AgeOfRuin/19SanctuaryAiwass.cs",
+    "size": 833,
+    "fileName": "19SanctuaryAiwass.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/19SanctuaryAiwass.cs"
+  },
+  {
     "name": "null",
     "description": "null",
     "tags": [
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 39237,
+    "size": 42299,
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
