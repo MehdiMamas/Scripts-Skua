@@ -397,8 +397,8 @@ public class Grimgaol
 
                     // Empress Angler - YNR
                     case "r3":
-                        RVDK(Bot.Player.Cell);
-                        // RYNR(Bot.Player.Cell);
+                        // RVDK(Bot.Player.Cell);
+                        RYNR(Bot.Player.Cell);
                         if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r3\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player?.Cell != "r4")
@@ -1072,8 +1072,11 @@ public class Grimgaol
         if (!monsterAvail()) return;
         Bot.Player?.SetSpawnPoint();
 
-    #region Equipment Setup
-    // Equipment handled elsewhere; skipping per request
+        #region Equipment Setup  
+        EquipIfAvailable(dragonoftime);
+        EquipIfAvailable(Bot.Config!.Get<string>("Elysium"));
+        EquipIfAvailable(Bot.Config!.Get<string>("HealerHelm"));
+        EquipIfAvailable(Bot.Config!.Get<string>("HealerCape"));
     #endregion
 
     Restart:
