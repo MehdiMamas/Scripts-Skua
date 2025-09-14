@@ -22,7 +22,8 @@ public class CoreAOR
     public CoreBots Core => CoreBots.Instance;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
     private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
     private static CoreSoW _SoW;
 
@@ -51,6 +52,7 @@ public class CoreAOR
         ColdThunder();
         ThelimaCity();
         MountMaleno();
+        SanctuaryAiwass();
     }
 
     private bool isSeaVoiceCalled = false;
@@ -978,6 +980,81 @@ public class CoreAOR
         }
 
 
+    }
+
+    public void SanctuaryAiwass()
+    {
+        if (Core.isCompletedBefore(10384))
+            return;
+
+        Story.PreLoad(this);
+
+        // 10375 - Raw Dove x12 (Dropped by Dove)
+        Story.KillQuest(10375, "sanctuaryaiwass", "Dove");
+
+        // 10376 - Albedo Bracelet x4 (Dropped by Albedo Elemental)
+        Story.KillQuest(10376, "sanctuaryaiwass", "Albedo Elemental");
+
+        // 10377 - Pristine Feather x18 (Dropped by Albedo Match)
+        Story.KillQuest(10377, "sanctuaryaiwass", "Albedo Match");
+
+        // 10378 - Leonal's Dream x15 (Dropped by Leonal)
+        //        Map items: Svala (14865), Snowbeard (14866)
+        if (!Story.QuestProgression(10378))
+        {
+            Core.EnsureAccept(10378);
+            Core.HuntMonster("sanctuaryaiwass", "Leonal", "Leonal's Dream", 15);
+            Core.GetMapItem(14865, map: "sanctuaryaiwass"); // Svala
+            Core.GetMapItem(14866, map: "sanctuaryaiwass"); // Snowbeard
+            Core.EnsureComplete(10378);
+        }
+
+        // 10379 - Salt Sigil x1 (Dropped by Crystal Prima)
+        //        Map item: Geopetal (14867)
+        if (!Story.QuestProgression(10379))
+        {
+            Core.EnsureAccept(10379);
+            Core.GetMapItem(14867, map: "sanctuaryaiwass"); // Geopetal
+            Core.HuntMonster("sanctuaryaiwass", "Crystal Prima", "Salt Sigil", 1);
+            Core.EnsureComplete(10379);
+        }
+
+        // 10380 - Albedo Materia x1 (Dropped by Albedo Elemental)
+        //        Map item: Isiri (14868)
+        if (!Story.QuestProgression(10380))
+        {
+            Core.EnsureAccept(10380);
+            Core.HuntMonster("sanctuaryaiwass", "Albedo Elemental", "Albedo Materia", 1);
+            Core.GetMapItem(14868, map: "sanctuaryaiwass"); // Isiri
+            Core.EnsureComplete(10380);
+        }
+
+        // 10381 - Match's Scar x5 (Dropped by Albedo Match)
+        Story.KillQuest(10381, "sanctuaryaiwass", "Albedo Match");
+
+        // 10382 - Mercury Sigil x1 (Dropped by Mercury Prima)
+        //        Sulfur Sigil x1 (Dropped by Sulfur Prima)
+        if (!Story.QuestProgression(10382))
+        {
+            Core.EnsureAccept(10382);
+            Core.HuntMonster("sanctuaryaiwass", "Mercury Prima", "Mercury Sigil", 1);
+            Core.HuntMonster("sanctuaryaiwass", "Sulfur Prima", "Sulfur Sigil", 1);
+            Core.EnsureComplete(10382);
+        }
+
+        // 10383 - Offer Flowers x8, Read Strange Scroll x1
+        //        Map items: Blue arrows (14869) x8, Strange Scroll (14870)
+        if (!Story.QuestProgression(10383))
+        {
+            Core.EnsureAccept(10383);
+            for (int i = 0; i < 8; i++)
+                Core.GetMapItem(14869, map: "sanctuaryaiwass"); // Click blue arrows 8 times
+            Core.GetMapItem(14870, map: "sanctuaryaiwass"); // Read Strange Scroll
+            Core.EnsureComplete(10383);
+        }
+
+        // 10384 - Commune with Aiwass x1 (Dropped by Anima Animus Aiwass)
+        Story.KillQuest(10384, "sanctuaryaiwass", "Anima Animus Aiwass");
     }
 
     // Mostly for `Skye's Lightning` for the Merge
