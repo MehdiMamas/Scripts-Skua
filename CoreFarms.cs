@@ -907,35 +907,52 @@ public class CoreFarms
         // Farming between levels 75-100
         while (!Bot.ShouldExit)
         {
+            // Wait if dead, then spoof levelUp
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-                Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+                Bot.Send.ClientPacket(
+                    "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
+                    type: "json");
                 Bot.Sleep(1000);
-                if (Bot.Player.Cell != "r2")
-                    Core.Jump("r2", "Left");
-                break;
+                continue;
             }
 
+            // Ensure map
+            if (Bot.Map.Name != "icestormunder")
+            {
+                Core.Join("icestormunder", publicRoom: Core.PrivateRooms);
+                Bot.Wait.ForMapLoad("icestormunder");
+            }
+
+            // Ensure position
+            if (Bot.Player.Cell != "r2")
+            {
+                Bot.Map.Jump("r2", "Top", autoCorrect: false);
+                Bot.Wait.ForCellChange("r2");
+                Bot.Player.SetSpawnPoint();
+            }
+
+            // Break conditions
             if (!rankUpClass && Bot.Player.Level >= level)
                 break;
 
-            if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+            if (rankUpClass && Core.CheckClassRank(true) >= 10)
                 break;
 
-            if (!Bot.Player.IsMember)
-                Core.ByPassCheck();
-
-            if (Bot.Map.Name != "icestormunder")
-                Core.Join("icestormunder", publicRoom: Core.PrivateRooms);
-
-            if (Bot.Player.Cell != "r2")
-                Core.Jump("r2", "Left");
+            // Misc checks
+            Core.ByPassCheck();
             Core.CanWeAggro();
 
-            Bot.Combat.Attack("*");
-            Core.Sleep();
+            // Attack first living mob (fallback: first non-null)
+            Monster? target = Bot.Monsters.CurrentAvailableMonsters
+                .FirstOrDefault(x => x?.HP > 0)
+                ?? Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null);
+
+            if (target != null)
+                Bot.Combat.Attack(target.MapID);
+
+            Bot.Sleep(500);
         }
         #endregion level checks
 
