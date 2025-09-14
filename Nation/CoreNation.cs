@@ -469,7 +469,7 @@ public class CoreNation
 
         if (item != null)
         {
-            ItemBase? Reward = Core.EnsureLoad(870)?.Rewards.Find(x => x.Name == item);
+            ItemBase? Reward = Core.EnsureLoad(870)?.Rewards.Find(x => x != null && x.Name == item);
             if (Reward == null)
             {
                 Core.Logger($"Reward item \"{item}\" not found.");
@@ -480,7 +480,7 @@ public class CoreNation
             Core.FarmingLogger(rewardName, quant > 1 ? quant : Reward.MaxStack);
             while (!Bot.ShouldExit && !Core.CheckInventory(rewardName, quant > 1 ? quant : Reward.MaxStack))
             {
-                switch (rewardName)
+                switch (Reward.Name)
                 {
                     case "Tainted Gem":
                         Supplies("Diamond of Nulgath", 45);
@@ -1520,6 +1520,7 @@ public class CoreNation
 
         Core.AddDrop(bagDrops);
         Core.EquipClass(ClassType.Solo);
+        Core.Logger($"Reward Chosen: {reward} [{(int)rewardEnum}]");
         Core.FarmingLogger(reward, quant);
         while (!Bot.ShouldExit && !Core.CheckInventory(reward, quant))
         {
@@ -1662,11 +1663,10 @@ public class CoreNation
         if (Core.CheckInventory("Gem of Nulgath", quant))
             return;
 
-        FarmContractExchage("Gem of Nulgath", quant);
         Core.AddDrop("Gem of Nulgath");
+        FarmContractExchage("Gem of Nulgath", quant);
         VoidKnightSwordQuest("Gem of Nulgath", quant);
-
-        VoucherItemTotemofNulgath(VoucherItemTotem.Gem_of_Nulgath, quant);
+        Supplies("Gem of Nulgath", quant);
     }
 
     /// <summary>
@@ -2504,7 +2504,7 @@ public enum ContractExchangeRewards
     Diamond_of_Nulgath = 4771,
     Gem_of_Nulgath = 6136,
     Blood_Gem_of_the_Archfiend = 22332,
-    All = 0
+    All = 9999
 }
 
 public enum SwindlesReturnReward
