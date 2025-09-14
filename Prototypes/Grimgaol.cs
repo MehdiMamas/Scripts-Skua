@@ -385,7 +385,7 @@ public class Grimgaol
                         // if (Core.CheckInventory(dragonoftime))
                         //     RDoT(Bot.Player.Cell);
                         // else
-                            R2();
+                        R2();
                         if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r2\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player?.Cell != "r3")
@@ -532,7 +532,7 @@ public class Grimgaol
                 Core.Logger("Object Bot.Player is null.");
                 break;
             }
-            Core.Sleep();
+            Bot.Sleep(200);
         }
 
         // End runtime here
@@ -593,7 +593,7 @@ public class Grimgaol
                 Core.Logger("jump back to enter");
                 Bot.Map.Jump("Enter", "Left", autoCorrect: false);
                 Bot.Wait.ForCellChange("Enter");
-                Core.Sleep(1000);
+                Bot.Sleep(1000);
             }
 
             if (Bot.Player.HasTarget && Bot.Target?.HasActiveAura("Talon Twisting") == true)
@@ -601,7 +601,7 @@ public class Grimgaol
                 Bot.Combat.CancelAutoAttack();
                 Bot.Combat.StopAttacking = true;
 
-                Core.Sleep(500);
+                Bot.Sleep(500);
 
                 // Wait until the target has the "Retaliate" aura
                 Bot.Wait.ForTrue(() => Bot.Player.HasTarget && Bot.Target?.HasActiveAura("Retaliate") == true, 20);
@@ -636,7 +636,7 @@ public class Grimgaol
                 skillIndex = (skillIndex + 1) % skillList.Length;
             }
 
-            Core.Sleep();
+            Bot.Sleep(200);
         }
     }
 
@@ -648,7 +648,7 @@ public class Grimgaol
             Bot.Map.Jump("r2", "Left", autoCorrect: false);
             Bot.Wait.ForCellChange("r2");
         }
-        Core.Sleep(1000);
+        Bot.Sleep(1000);
 
         if (!monsterAvail()) return;
         Bot.Player?.SetSpawnPoint();
@@ -675,7 +675,7 @@ public class Grimgaol
             {
                 if (!Bot.Player.Alive)
                 {
-                    Core.Sleep(100);
+                    Bot.Sleep(100);
                     if (Bot.Player.Alive)
                         skillIndex = 0;
                     goto Restart;
@@ -717,9 +717,8 @@ public class Grimgaol
                     Bot.Skills.UseSkill(skillList[skillIndex]);
                 }
                 skillIndex = (skillIndex + 1) % skillList.Length;
-                Core.Sleep();
+                Bot.Sleep(200);
 
-                Core.Sleep(100);
             }
         }
 
@@ -846,7 +845,7 @@ public class Grimgaol
             Bot.Map.Jump("r9", "Left", autoCorrect: false);
             Bot.Wait.ForCellChange("r9");
         }
-        Core.Sleep(1000);
+        Bot.Sleep(1000);
 
         if (!monsterAvail()) return;
         Bot.Player?.SetSpawnPoint();
@@ -899,7 +898,7 @@ public class Grimgaol
             Bot.Map.Jump("r10", "Left", autoCorrect: false);
             Bot.Wait.ForCellChange("r10");
         }
-        Core.Sleep(1000);
+        Bot.Sleep(1000);
 
         if (!monsterAvail()) return;
         Bot.Player?.SetSpawnPoint();
@@ -1054,7 +1053,7 @@ public class Grimgaol
                         skillIndex = (skillIndex + 1) % skillList.Length;
                     }
 
-                    Core.Sleep(100);
+                    Bot.Sleep(200);
                 }
             }
         }
@@ -1124,7 +1123,7 @@ public class Grimgaol
                     skillIndex = (skillIndex + 1) % skillList.Length;
                 }
 
-                Core.Sleep(100);
+                Bot.Sleep(100);
             }
         }
     }
@@ -1227,7 +1226,7 @@ public class Grimgaol
                 skillIndex = (skillIndex + 1) % skillList.Length;
             }
 
-            Core.Sleep(200);
+            Bot.Sleep(200);
         }
     }
 
@@ -1266,7 +1265,7 @@ public class Grimgaol
             {
                 if (!Bot.Player.Alive)
                 {
-                    Core.Sleep(100);
+                    Bot.Sleep(100);
                     if (Bot.Player.Alive)
                         skillIndex = 0;
                     goto Restart;
@@ -1327,7 +1326,7 @@ public class Grimgaol
                     skillIndex = (skillIndex + 1) % skillList.Length;
                 }
 
-                Core.Sleep(100);
+                Bot.Sleep(100);
             }
         }
     }
@@ -1361,7 +1360,7 @@ public class Grimgaol
         {
             if (!Bot.Player.Alive)
             {
-                Core.Sleep(100);
+                Bot.Sleep(100);
                 if (Bot.Player.Alive)
                     skillIndex = 0;
                 continue;
@@ -1428,7 +1427,7 @@ public class Grimgaol
         {
             if (!Bot.Player.Alive)
             {
-                Core.Sleep(100);
+                Bot.Sleep(100);
                 if (Bot.Player.Alive)
                     skillIndex = 0;
                 continue;
@@ -1479,7 +1478,7 @@ public class Grimgaol
                 }
             }
 
-            Core.Sleep(200);
+            Bot.Sleep(200);
         }
     }
 
@@ -1557,7 +1556,7 @@ public class Grimgaol
                         skillIndex = (skillIndex + 1) % skillList.Length;
                     }
 
-                    Core.Sleep(100);
+                    Bot.Sleep(100);
                 }
             }
         }
