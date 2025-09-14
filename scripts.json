@@ -922,7 +922,7 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 101857,
+    "size": 101910,
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -9501,7 +9501,7 @@
       "null"
     ],
     "path": "Nation/VHL/CoreVHL.cs",
-    "size": 8665,
+    "size": 8674,
     "fileName": "CoreVHL.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/VHL/CoreVHL.cs"
   },
@@ -9591,7 +9591,7 @@
       "fragment"
     ],
     "path": "Nation/AFDL/NulgathDemandsWork.cs",
-    "size": 5174,
+    "size": 5177,
     "fileName": "NulgathDemandsWork.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/AFDL/NulgathDemandsWork.cs"
   },
@@ -9616,7 +9616,7 @@
       "null"
     ],
     "path": "Nation/AFDL/WillpowerExtraction.cs",
-    "size": 4533,
+    "size": 4536,
     "fileName": "WillpowerExtraction.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/AFDL/WillpowerExtraction.cs"
   },
@@ -9640,7 +9640,7 @@
       "nothingness"
     ],
     "path": "Nation/EvolvedOrb/EvolvedShadowOrbItems[Mem].cs",
-    "size": 5870,
+    "size": 5873,
     "fileName": "EvolvedShadowOrbItems[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/EvolvedOrb/EvolvedShadowOrbItems[Mem].cs"
   },
@@ -9695,7 +9695,7 @@
       "null"
     ],
     "path": "Nation/EvolvedOrb/EvovledHexOrbItems[Mem].cs",
-    "size": 4148,
+    "size": 4151,
     "fileName": "EvovledHexOrbItems[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/EvolvedOrb/EvovledHexOrbItems[Mem].cs"
   },
@@ -9761,7 +9761,7 @@
       "null"
     ],
     "path": "Nation/Materials/TaintedGem.cs",
-    "size": 558,
+    "size": 561,
     "fileName": "TaintedGem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Materials/TaintedGem.cs"
   },
@@ -9913,7 +9913,7 @@
       "null"
     ],
     "path": "Nation/OblivionBlade(RareandNot)/CoreOblivionBladeofNulgath.cs",
-    "size": 7845,
+    "size": 7857,
     "fileName": "CoreOblivionBladeofNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/OblivionBlade(RareandNot)/CoreOblivionBladeofNulgath.cs"
   },
@@ -10046,7 +10046,7 @@
       "warmonger"
     ],
     "path": "Nation/MergeShops/NulgathWarMerge.cs",
-    "size": 8898,
+    "size": 8901,
     "fileName": "NulgathWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/NulgathWarMerge.cs"
   },
@@ -10280,7 +10280,7 @@
       "arachnomancer"
     ],
     "path": "Nation/MergeShops/NulgathDiamondMerge.cs",
-    "size": 17738,
+    "size": 17741,
     "fileName": "NulgathDiamondMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/NulgathDiamondMerge.cs"
   },
@@ -10307,7 +10307,7 @@
       "enchanted nulgath nation house"
     ],
     "path": "Nation/MergeShops/DirtlickersMerge.cs",
-    "size": 11371,
+    "size": 11374,
     "fileName": "DirtlickersMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/DirtlickersMerge.cs"
   },
@@ -10456,7 +10456,7 @@
       "null"
     ],
     "path": "Nation/Various/GoldenHanzoVoid.cs",
-    "size": 1401,
+    "size": 1404,
     "fileName": "GoldenHanzoVoid.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/GoldenHanzoVoid.cs"
   },
@@ -10521,7 +10521,7 @@
       "yo mama"
     ],
     "path": "Nation/Various/Archfiend.cs",
-    "size": 3278,
+    "size": 3281,
     "fileName": "Archfiend.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/Archfiend.cs"
   },
@@ -10543,7 +10543,7 @@
       "null"
     ],
     "path": "Nation/Various/TarosPrismaticManslayers.cs",
-    "size": 2748,
+    "size": 2751,
     "fileName": "TarosPrismaticManslayers.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/TarosPrismaticManslayers.cs"
   },
@@ -10599,7 +10599,7 @@
       "evovled void armor"
     ],
     "path": "Nation/Various/EmpoweredNationItem.cs",
-    "size": 11876,
+    "size": 11891,
     "fileName": "EmpoweredNationItem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/EmpoweredNationItem.cs"
   },
@@ -10642,7 +10642,7 @@
       "voidwarlock"
     ],
     "path": "Nation/Various/VoidWarlock.cs",
-    "size": 4246,
+    "size": 4252,
     "fileName": "VoidWarlock.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/VoidWarlock.cs"
   },
@@ -10664,7 +10664,7 @@
       "null"
     ],
     "path": "Nation/Various/SinoftheAbyssMatsPreFarm[NoInsignia].cs",
-    "size": 2881,
+    "size": 2884,
     "fileName": "SinoftheAbyssMatsPreFarm[NoInsignia].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/SinoftheAbyssMatsPreFarm[NoInsignia].cs"
   },
@@ -10722,7 +10722,7 @@
       "null"
     ],
     "path": "Nation/Various/SwirlingTheAbyss.cs",
-    "size": 3092,
+    "size": 3095,
     "fileName": "SwirlingTheAbyss.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/SwirlingTheAbyss.cs"
   },
@@ -10744,7 +10744,7 @@
       "null"
     ],
     "path": "Nation/Various/TendurrrTheAssistantQuests.cs",
-    "size": 3626,
+    "size": 3629,
     "fileName": "TendurrrTheAssistantQuests.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/TendurrrTheAssistantQuests.cs"
   },
@@ -10842,7 +10842,7 @@
       "null"
     ],
     "path": "Nation/Various/JuggernautItems.cs",
-    "size": 4632,
+    "size": 4635,
     "fileName": "JuggernautItems.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/JuggernautItems.cs"
   },
@@ -10853,7 +10853,7 @@
       "null"
     ],
     "path": "Nation/Various/VoidDestroyer.cs",
-    "size": 2329,
+    "size": 2332,
     "fileName": "VoidDestroyer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/VoidDestroyer.cs"
   },
@@ -10866,7 +10866,7 @@
       "nulgath"
     ],
     "path": "Nation/Various/EnchantedNulgathNationHouse.cs",
-    "size": 3299,
+    "size": 3302,
     "fileName": "EnchantedNulgathNationHouse.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/EnchantedNulgathNationHouse.cs"
   },
@@ -10915,7 +10915,7 @@
       "member"
     ],
     "path": "Nation/Various/ImpossibleEmpoweredItemsofNulgath.cs",
-    "size": 1863,
+    "size": 1866,
     "fileName": "ImpossibleEmpoweredItemsofNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/ImpossibleEmpoweredItemsofNulgath.cs"
   },
@@ -10959,7 +10959,7 @@
       "null"
     ],
     "path": "Nation/Various/VoidPaladin.cs",
-    "size": 5292,
+    "size": 5301,
     "fileName": "VoidPaladin.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/VoidPaladin.cs"
   },
@@ -11004,7 +11004,7 @@
       "underfiend"
     ],
     "path": "Nation/Various/WeaponMastery(AC).cs",
-    "size": 2958,
+    "size": 2961,
     "fileName": "WeaponMastery(AC).cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/WeaponMastery(AC).cs"
   },
@@ -19168,7 +19168,7 @@
       "set"
     ],
     "path": "Other/Pets/SerpentineLarvae.cs",
-    "size": 2504,
+    "size": 2507,
     "fileName": "SerpentineLarvae.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Pets/SerpentineLarvae.cs"
   },
@@ -21714,7 +21714,7 @@
       "null"
     ],
     "path": "Other/MergeShops/BeleensMerge.cs",
-    "size": 21721,
+    "size": 21727,
     "fileName": "BeleensMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BeleensMerge.cs"
   },
@@ -22166,7 +22166,7 @@
       "katanas"
     ],
     "path": "Other/MergeShops/YulgarsDualWieldMerge.cs",
-    "size": 47766,
+    "size": 47775,
     "fileName": "YulgarsDualWieldMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/YulgarsDualWieldMerge.cs"
   },
@@ -24702,7 +24702,7 @@
       "legend"
     ],
     "path": "Other/FarmJoeKits/1MemberFarmsKit.cs",
-    "size": 30367,
+    "size": 30370,
     "fileName": "1MemberFarmsKit.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/1MemberFarmsKit.cs"
   },
@@ -24808,7 +24808,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 918368,
+    "size": 918389,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -28278,7 +28278,7 @@
       "another science experiment"
     ],
     "path": "Seasonal/StaffBirthdays/Bido/ToxicBloodBlade[Mem].cs",
-    "size": 2632,
+    "size": 2635,
     "fileName": "ToxicBloodBlade[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/Bido/ToxicBloodBlade[Mem].cs"
   },
@@ -28293,7 +28293,7 @@
       "little science experiment"
     ],
     "path": "Seasonal/StaffBirthdays/Bido/ToxicOblivionBladeofAlchemy.cs",
-    "size": 2647,
+    "size": 2650,
     "fileName": "ToxicOblivionBladeofAlchemy.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/Bido/ToxicOblivionBladeofAlchemy.cs"
   },
