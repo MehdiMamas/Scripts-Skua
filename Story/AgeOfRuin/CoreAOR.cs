@@ -1038,7 +1038,7 @@ public class CoreAOR
         {
             Core.EnsureAccept(10382);
             Core.HuntMonster("sanctuaryaiwass", "Mercury Prima", "Mercury Sigil", 1);
-            Core.HuntMonster("sanctuaryaiwass", "Sulfur Prima", "Sulfur Sigil", 1);
+            Core.KillMonster("sanctuaryaiwass", "r9", "Top", "*", "Sulfur Sigil", 1);
             Core.EnsureComplete(10382);
         }
 
