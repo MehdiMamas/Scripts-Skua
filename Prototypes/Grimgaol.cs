@@ -396,9 +396,9 @@ public class Grimgaol
 
                     // Empress Angler - YNR
                     case "r3":
-                        if (!Adv.uDauntless())
-                            RYNR(Bot.Player.Cell);
-                        else RVDK(Bot.Player.Cell);
+                        if (Core.CheckInventory(verusdoomdnight))
+                            RVDK(Bot.Player.Cell);
+                        else RYNR(Bot.Player.Cell);
                         if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r3\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player?.Cell != "r4")
@@ -1417,7 +1417,7 @@ public class Grimgaol
         Bot.Player?.SetSpawnPoint();
         #region Equipment Setup
         EquipIfAvailable("Yami No Ronin");
-        EquipIfAvailable(Bot.Config!.Get<string>("Dauntless"));
+        EquipIfAvailable(Bot.Config!.Get<string>(Adv.uDauntless() ? "Dauntless" : "Valiance"));
         EquipIfAvailable(Bot.Config!.Get<string>("AnimaHelm"));
         EquipIfAvailable(Bot.Config!.Get<string>("Vainglory"));
         #endregion
