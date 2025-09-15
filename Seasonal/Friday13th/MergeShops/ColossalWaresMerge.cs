@@ -11,7 +11,7 @@ tags: colossal, wares, merge, moreskulls, deathbound, knight, thorn, crown, skul
 //cs_include Scripts/Story/Doomwood/CoreDoomwood.cs
 //cs_include Scripts/Evil/SDKA/CoreSDKA.cs
 //cs_include Scripts/Evil/VordredsArmor.cs
-//cs_include Scripts/Prototypes/MoreSkullsWorldBoss.cs
+//cs_include Scripts/Prototypes/MoreSkullsBoss.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;

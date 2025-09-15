@@ -15,7 +15,7 @@ tags: Lich, class, pre-requisites, necronomicon, nictos, klaatu, verata, necromi
 //cs_include Scripts/Evil/SDKA/CoreSDKA.cs
 //cs_include Scripts/Evil/VordredsArmor.cs
 //cs_include Scripts/Farm/REP/GrimskullTrollingRep.cs
-//cs_include Scripts/Prototypes/MoreSkullsWorldBoss.cs
+//cs_include Scripts/Prototypes/MoreSkullsBoss.cs
 //cs_include Scripts/Chaos/DrakathsArmor.cs
 //cs_include Scripts/Chaos/EternalDrakathSet.cs
 //cs_include Scripts/Dailies/LordOfOrder.cs

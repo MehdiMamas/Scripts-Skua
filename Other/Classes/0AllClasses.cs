@@ -204,7 +204,7 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Hollowborn/Materials/VindicatorCrest.cs
 //cs_include Scripts/Seasonal/Friday13th/MergeShops/ColossalWaresMerge.cs
 //cs_include Scripts/Farm/REP/GrimskullTrollingRep.cs
-//cs_include Scripts/Prototypes/MoreSkullsWorldBoss.cs
+//cs_include Scripts/Prototypes/MoreSkullsBoss.cs
 //cs_include Scripts/Other/Classes/Lich.cs
 //cs_include Scripts/Chaos/DrakathsArmor.cs
 //cs_include Scripts/Chaos/EternalDrakathSet.cs
