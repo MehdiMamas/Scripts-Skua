@@ -1227,7 +1227,6 @@ public class CoreNation
         }
     }
 
-    public bool hasOBoNPet = Core.IsMember && Core.CheckInventory(new[] { 4809, 5373 }, any: true);
     /// <summary>
     /// Performs the "Bamblooze vs. Drudgen" quest for the desired item.
     /// </summary>
@@ -1244,6 +1243,7 @@ public class CoreNation
 
         Core.AddDrop("Relic of Chaos", "Tainted Core");
         Core.AddDrop(string.IsNullOrEmpty(item) ? bagDrops : new string[] { item });
+        bool hasOBoNPet = Bot.Player.IsMember && Core.CheckInventory(new[] { 4809, 5373 }, any: true);
 
 
         if (hasOBoNPet)
@@ -1287,12 +1287,8 @@ public class CoreNation
         // 2857 - Supplies to Spin The Wheel of Chance
         QuestToRegister.AddRange(new[] { 2857, 609 });
 
-        if (Core.IsMember && hasOBoNPet)
-        {
-            // 599 - The Dark Deal (Rare) - Oblivion Blade of Nulgath Pet (Rare)
-            // 2561 - The Dark Deal - Oblivion Blade of Nulgath (non rare)
+        if (hasOBoNPet)
             QuestToRegister.Add(Core.CheckInventory(4809) ? 599 : 2561);
-        }
 
         // 7551 - Swindle's Return Policy
         if (returnPolicyDuringSupplies)
