@@ -4052,7 +4052,7 @@ public class CoreBots
             {
                 foreach (Monster monster in Bot.Monsters.MapMonsters.Where(x => x != null && x.Name == targetMonster?.Name))
                 {
-                    if (monster == null || (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+                    if (monster == null || (monster.HP <= 0 || monster.State == 0) || (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
                         continue;
 
                     while (!Bot.ShouldExit)
@@ -4076,7 +4076,7 @@ public class CoreBots
                         }
 
                         if (!Bot.Player.HasTarget)
-                            Bot.Combat.Attack(monster!);
+                            Bot.Combat.Attack(monster.MapID);
 
                         Sleep();
 
