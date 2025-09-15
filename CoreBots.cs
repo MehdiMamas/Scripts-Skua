@@ -3517,9 +3517,12 @@ public class CoreBots
 
                 // If target died -> cancel & break (move to next monster)
                 if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                {
+                    Sleep(200);
                     break;
+                }
 
-                Sleep();
+                Sleep(200);
             }
 
             return;
@@ -5459,11 +5462,12 @@ public class CoreBots
                             {
                                 Bot.Combat.CancelAutoAttack();
                                 Bot.Combat.CancelTarget();
+                                Sleep(200);
                                 break;
                             }
 
                             // Adaptive sleep: shorter when idle, longer when in combat
-                            Sleep();
+                            Sleep(200);
                         }
                     }
                 }
