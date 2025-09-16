@@ -3898,11 +3898,11 @@ public class CoreBots
                 {
                     Jump(targetMonster?.Cell ?? "Enter");
                     Bot.Wait.ForCellChange(targetMonster?.Cell ?? "Enter");
-                    Bot.Player.SetSpawnPoint();
+                    Bot.Player!.SetSpawnPoint();
                 }
 
-                if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(targetMonster?.Name);
+                if (!Bot.Player!.HasTarget)
+                    Bot.Combat.Attack(targetMonster!.Name);
 
                 if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
                     return;
@@ -4185,12 +4185,12 @@ public class CoreBots
 
                 if (!string.Equals(Bot.Player?.Cell, target?.Cell, StringComparison.OrdinalIgnoreCase))
                 {
-                    Bot.Map.Jump(target?.Cell, pad);
-                    Bot.Wait.ForCellChange(target?.Cell);
+                    Bot.Map.Jump(target!.Cell, pad);
+                    Bot.Wait.ForCellChange(target!.Cell);
                 }
 
-                if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID)
-                    Bot.Combat.Attack(target.MapID);
+                if (!Bot.Player!.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID)
+                    Bot.Combat.Attack(target!.MapID);
 
                 Sleep();
 
@@ -4223,13 +4223,13 @@ public class CoreBots
 
                 if (!string.Equals(Bot.Player?.Cell, target?.Cell, StringComparison.OrdinalIgnoreCase))
                 {
-                    Bot.Map.Jump(target?.Cell, pad);
-                    Bot.Wait.ForCellChange(target?.Cell);
+                    Bot.Map.Jump(target!.Cell, pad);
+                    Bot.Wait.ForCellChange(target!.Cell);
                 }
 
-                if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID)
+                if (!Bot.Player!.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID)
                 {
-                    Bot.Combat.Attack(target.MapID);
+                    Bot.Combat.Attack(target!.MapID);
                 }
 
                 Sleep();
@@ -4830,7 +4830,11 @@ public class CoreBots
             #region new staff killing method
             Bot.Options.AggroMonsters = true;
 
-            while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+            if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+                return;
+
+            bool done = false;
+            while (!Bot.ShouldExit && !done)
             {
                 if (!Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
@@ -4860,8 +4864,17 @@ public class CoreBots
                     // Attack Escherion when staff is down
                     else Bot.Combat.Attack(3);
 
-                    if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+                    if (item == null)
+                    {
+                        Logger("No item selected, killing Escherion once");
+                        done = true;
                         break;
+                    }
+                    else if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+                    {
+                        done = true;
+                        break;
+                    }
 
                     Sleep();
                 }
@@ -5212,10 +5225,19 @@ public class CoreBots
                     Join("doomkitten");
 
                     Bot.Skills.StartAdvanced("4 | 1 | 3M<30 | 2H<30");
-                    while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+                    if (item == null)
                     {
+                        Logger("No item selected, killing DoomKitten once");
                         Bot.Combat.Attack("*");
                         Bot.Sleep(500);
+                    }
+                    else
+                    {
+                        while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+                        {
+                            Bot.Combat.Attack("*");
+                            Bot.Sleep(500);
+                        }
                     }
                 }
                 else
@@ -5403,12 +5425,12 @@ public class CoreBots
             .Where(x => x != null && x.Cell == cell && x.Name.FormatForCompare() == name.Name.FormatForCompare())
             .ToList();
 
-        while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
+        while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item!, quantity) : CheckInventory(item, quantity)))
         {
             if (Bot.Player.Cell != name?.Cell)
             {
-                Bot.Map.Jump(name.Cell, "Left", autoCorrect: false);
-                Bot.Wait.ForCellChange(name?.Cell);
+                Bot.Map.Jump(name!.Cell, "Left", autoCorrect: false);
+                Bot.Wait.ForCellChange(name!.Cell);
             }
 
 
@@ -5418,7 +5440,7 @@ public class CoreBots
                 continue;
             }
 
-            if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
+            if (isTemp ? Bot.TempInv.Contains(item!, quantity) : CheckInventory(item, quantity))
                 break;
 
             if (log) Logger($"Attacking MonsterMapID: {name.MapID}");
@@ -5600,8 +5622,8 @@ public class CoreBots
                             }
 
                             // If no target -> attack
-                            if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monster.MapID)
-                                Bot.Combat.Attack(monster.MapID);
+                            if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monster!.MapID)
+                                Bot.Combat.Attack(monster!.MapID);
 
                             if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
                                 break;
@@ -5651,8 +5673,8 @@ public class CoreBots
                             }
 
                             // If no target -> attack
-                            if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != m.MapID)
-                                Bot.Combat.Attack(m.MapID);
+                            if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != m!.MapID)
+                                Bot.Combat.Attack(m!.MapID);
 
                             if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
                                 break;
@@ -5904,7 +5926,8 @@ public class CoreBots
 
         foreach (string l in compiledScript[compiledClassLine..Array.FindIndex(compiledScript, compiledClassLine, l => l == "}")])
         {
-            continue;
+            if (!l.Contains("DebugLogger(this)"))
+                continue;
 
             count++;
             lastIndex = Array.FindIndex(compiledScript, lastIndex + 1, _l => _l.Trim() == l.Trim());
@@ -5917,7 +5940,8 @@ public class CoreBots
         string[] selectedScript = inCurrentScript || includedScript == null ? currentScript : includedScript;
         foreach (string l in selectedScript)
         {
-            continue;
+            if (!l.Contains("DebugLogger(this)"))
+                continue;
 
             count2++;
             lastIndex2 = Array.FindIndex(selectedScript, lastIndex2 + 1, _l => _l.Trim() == l.Trim());
