@@ -448,21 +448,20 @@ public class CoreArchMage
     public void UnboundTome(int quant = 36)
     {
         if (Core.CheckInventory("Unbound Tome", quant))
-        {
             return;
-        }
 
         if (!Bot.Quests.IsUnlocked(8912))
-        {
             ArcaneLocus(1);
-        }
+
+        int current = Bot.Inventory.GetQuantity("Unbound Tome");
+        int remaining = quant - current;
 
         Core.FarmingLogger("Unbound Tome", quant);
 
-        // quant = 30? farm 30 of each
-        MysticScribingKit(quant);
-        PrismaticEther(quant);
-        ArcaneLocus(quant);
+        MysticScribingKit(remaining);
+        PrismaticEther(remaining);
+        ArcaneLocus(remaining);
+
 
         Core.AddDrop("Unbound Tome");
 
