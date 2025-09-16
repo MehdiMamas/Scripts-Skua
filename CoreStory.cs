@@ -769,13 +769,12 @@ public class CoreStory
     private void _MonsterHunt(string map, ref bool shouldRepeat, string monster, string itemName, int quantity, bool isTemp, int index)
     {
         // Check if the item is already in inventory
-        if (itemName != null && (isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity)))
+        if (itemName == null || (itemName != null && (isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity))))
         {
             CurrentRequirements.RemoveAt(index);
             shouldRepeat = false;
             return;
         }
-
 
         // Find the target monster
         Monster? targetMonster = Core.InitializeWithRetries(() =>
@@ -790,7 +789,7 @@ public class CoreStory
         Core.Logger($"Hunting \"{monster}\" for \"{itemName}\" x{quantity}", "_MonsterHunt");
 
         // Main loop for hunting the monster until the item is acquired
-        while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity)))
+        while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(itemName!, quantity) : Core.CheckInventory(itemName, quantity)))
         {
             if (!Bot.Player.Alive)
             {
@@ -812,9 +811,9 @@ public class CoreStory
             }
 
             if (!Bot.Player.HasTarget)
-                Bot.Combat.Attack(targetMonster?.Name);
+                Bot.Combat.Attack(targetMonster!.Name);
 
-            if (isTemp ? Bot.TempInv.Contains(itemName, quantity) : Core.CheckInventory(itemName, quantity))
+            if (isTemp ? Bot.TempInv.Contains(itemName!, quantity) : Core.CheckInventory(itemName, quantity))
                 break;
 
             if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
