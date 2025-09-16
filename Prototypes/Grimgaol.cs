@@ -580,7 +580,7 @@ public class Grimgaol
         int[] skillList = { 1, 4, 2 };
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player.Alive)
+            if (!Bot.Player!.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 skillIndex = 0;
@@ -596,7 +596,7 @@ public class Grimgaol
                 Bot.Sleep(1000);
             }
 
-            if (Bot.Player.HasTarget && Bot.Target?.HasActiveAura("Talon Twisting") == true)
+            if (Bot.Player!.HasTarget && Bot.Target?.HasActiveAura("Talon Twisting") == true)
             {
                 Bot.Combat.CancelAutoAttack();
                 Bot.Combat.StopAttacking = true;
@@ -619,7 +619,7 @@ public class Grimgaol
             if (Bot.Player.HasTarget && Bot.Player?.Target?.HP <= 0)
                 break;
 
-            if (Bot.Player.Health <= 2500 && Bot.Skills.CanUseSkill(2))
+            if (Bot.Player!.Health <= 2500 && Bot.Skills.CanUseSkill(2))
                 Bot.Skills.UseSkill(2);
 
             if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && !Bot.Self.HasActiveAura("Shackled") && skillIndex == 0
@@ -673,7 +673,7 @@ public class Grimgaol
 
             while (!Bot.ShouldExit)
             {
-                if (!Bot.Player.Alive)
+                if (!Bot.Player!.Alive)
                 {
                     Bot.Sleep(100);
                     if (Bot.Player.Alive)
@@ -691,8 +691,8 @@ public class Grimgaol
                 if (!monsterAvail()) return;
 
                 // Start attack if no target
-                if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(m.MapID);
+                if (!Bot.Player!.HasTarget)
+                    Bot.Combat.Attack(m!.MapID);
 
                 if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
                 {
@@ -765,7 +765,7 @@ public class Grimgaol
                     if (!monsterAvail()) return;
 
 
-                    if (!Bot.Player.Alive)
+                    if (!Bot.Player!.Alive)
                     {
                         Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                         skillIndex = 0;
@@ -773,7 +773,7 @@ public class Grimgaol
 
                     // Check if target is set, otherwise target this monster
                     if (!Bot.Player.HasTarget)
-                        Bot.Combat.Attack(m.MapID);
+                        Bot.Combat.Attack(m!.MapID);
 
                     Bot.Sleep(500);
 
@@ -863,7 +863,7 @@ public class Grimgaol
         while (!Bot.ShouldExit)
         {
 
-            if (!Bot.Player.Alive)
+            if (!Bot.Player!.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 skillIndex = 0;
@@ -919,7 +919,7 @@ public class Grimgaol
         while (!Bot.ShouldExit)
         {
 
-            if (!Bot.Player.Alive)
+            if (!Bot.Player!.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 skillIndex = 0;
@@ -997,7 +997,7 @@ public class Grimgaol
 
                 while (!Bot.ShouldExit)
                 {
-                    if (!Bot.Player.Alive)
+                    if (!Bot.Player!.Alive)
                     {
                         Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                         if (Bot.Player.Alive)
@@ -1015,8 +1015,8 @@ public class Grimgaol
                     if (!monsterAvail()) return;
 
                     // Start attack if no target
-                    if (!Bot.Player.HasTarget)
-                        Bot.Combat.Attack(m.MapID);
+                    if (!Bot.Player!.HasTarget)
+                        Bot.Combat.Attack(m!.MapID);
 
                     if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
                     {
@@ -1090,7 +1090,7 @@ public class Grimgaol
 
             while (!Bot.ShouldExit)
             {
-                if (!Bot.Player.Alive)
+                if (!Bot.Player!.Alive)
                 {
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                     if (Bot.Player.Alive)
@@ -1108,8 +1108,8 @@ public class Grimgaol
                 if (!monsterAvail()) return;
 
                 // Start attack if no target
-                if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(m.MapID);
+                if (!Bot.Player!.HasTarget)
+                    Bot.Combat.Attack(m!.MapID);
 
                 if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
                 {
@@ -1178,7 +1178,7 @@ public class Grimgaol
 
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player.Alive)
+            if (!Bot.Player!.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 if (Bot.Player.Alive)
@@ -1196,7 +1196,7 @@ public class Grimgaol
             if (!monsterAvail()) return;
 
             // Start attack if no target
-            if (!Bot.Player.HasTarget)
+            if (!Bot.Player!.HasTarget)
                 Bot.Combat.Attack("*");
 
             if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
@@ -1266,7 +1266,7 @@ public class Grimgaol
 
             while (!Bot.ShouldExit)
             {
-                if (!Bot.Player.Alive)
+                if (!Bot.Player!.Alive)
                 {
                     Bot.Sleep(100);
                     if (Bot.Player.Alive)
@@ -1284,8 +1284,8 @@ public class Grimgaol
                 if (!monsterAvail()) return;
 
                 // Start attack if no target
-                if (!Bot.Player.HasTarget || (Bot.Player.HasTarget && !Bot.Target.HasActiveAura("Crit Damage Amplified")))
-                    Bot.Combat.Attack(m.MapID);
+                if (!Bot.Player!.HasTarget || (Bot.Player.HasTarget && !Bot.Target.HasActiveAura("Crit Damage Amplified")))
+                    Bot.Combat.Attack(m!.MapID);
 
                 if (Bot.Player.HasTarget && (Bot.Player.Target?.HP <= 0))
                 {
@@ -1361,7 +1361,7 @@ public class Grimgaol
 
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player.Alive)
+            if (!Bot.Player!.Alive)
             {
                 Bot.Sleep(100);
                 if (Bot.Player.Alive)
@@ -1379,7 +1379,7 @@ public class Grimgaol
             if (!monsterAvail()) return;
 
             // Start attack if no target
-            if (!Bot.Player.HasTarget)
+            if (!Bot.Player!.HasTarget)
                 Bot.Combat.Attack("*");
 
             if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
@@ -1394,7 +1394,7 @@ public class Grimgaol
             // Use next skill
             else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0)
             {
-                Bot.Skills.UseSkill(skillList[skillIndex]);
+                Bot.Skills!.UseSkill(skillList[skillIndex]);
                 skillIndex = (skillIndex + 1) % skillList.Length;
             }
 
@@ -1428,7 +1428,7 @@ public class Grimgaol
 
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player.Alive)
+            if (!Bot.Player!.Alive)
             {
                 Bot.Sleep(100);
                 if (Bot.Player.Alive)
@@ -1446,7 +1446,7 @@ public class Grimgaol
             if (!monsterAvail()) return;
 
             // Start attack if no target
-            if (!Bot.Player.HasTarget)
+            if (!Bot.Player!.HasTarget)
                 Bot.Combat.Attack("*");
 
             if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
@@ -1522,14 +1522,14 @@ public class Grimgaol
                 {
                     if (!monsterAvail()) return;
 
-                    if (!Bot.Player.Alive)
+                    if (!Bot.Player!.Alive)
                     {
                         Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                         skillIndex = 0;
                     }
 
                     if (!Bot.Player.HasTarget)
-                        Bot.Combat.Attack(m.MapID);
+                        Bot.Combat.Attack(m!.MapID);
 
                     if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
                     {
@@ -1620,7 +1620,7 @@ public class Grimgaol
             if (m == null || m?.HP <= 0 || m?.State == 0)
                 continue;
 
-            if (Bot.Player?.Cell != m.Cell)
+            if (Bot.Player?.Cell != m!.Cell)
             {
                 Bot.Map.Jump(m.Cell, "Left", autoCorrect: false);
                 Bot.Wait.ForCellChange(m.Cell);
