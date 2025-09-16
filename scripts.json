@@ -5735,6 +5735,28 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/SummerBreak/SweetSummerTreats.cs"
   },
   {
+    "name": "PirateHunt Merge",
+    "description": "Farms items for the PirateHunt Merge [2621] in /piratehunt",
+    "tags": [
+      "piratehunt",
+      "merge",
+      "novac",
+      "sal",
+      "pirate",
+      "privateer",
+      "morph",
+      "first",
+      "gold",
+      "cutlass",
+      "crew",
+      "awe"
+    ],
+    "path": "Seasonal/SummerBreak/PirateHuntMerge.cs",
+    "size": 11271,
+    "fileName": "PirateHuntMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/SummerBreak/PirateHuntMerge.cs"
+  },
+  {
     "name": "Treasures of Aotearoa",
     "description": "This script will farm all the rewards of \"Treasures of Aotearoa\" quest.",
     "tags": [
@@ -5904,6 +5926,19 @@
     "size": 2821,
     "fileName": "ForTheCraterGoodQuest.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/SummerBreak/ForTheCraterGoodQuest.cs"
+  },
+  {
+    "name": "Pirate Hunt Story",
+    "description": "Completes the storyline in piratehunt",
+    "tags": [
+      "piratehunt",
+      "story",
+      "saga"
+    ],
+    "path": "Seasonal/SummerBreak/PirateHunt.cs",
+    "size": 2080,
+    "fileName": "PirateHunt.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/SummerBreak/PirateHunt.cs"
   },
   {
     "name": "Volley Baller",
