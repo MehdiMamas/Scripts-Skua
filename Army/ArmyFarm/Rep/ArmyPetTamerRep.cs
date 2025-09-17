@@ -50,7 +50,7 @@ public class Generated_ArmyPetTamerRep
         Core.SetOptions();
         lite.PockeyMogs();
         static void Setup() => CAR.ArmyRavenlossRep();
-
+        Setup();
         Core.SetOptions(false);
     }
 }
