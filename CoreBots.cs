@@ -8210,6 +8210,66 @@ public class CoreBots
 
 
     /// <summary>
+    /// Sends getMapItem packets for one or more specified items.
+    /// </summary>
+    /// <param name="items">Collection of (ItemID, Quantity) pairs</param>
+    /// <param name="map">Optional map where the items are</param>
+    public void GetMapItems(IEnumerable<(int ItemID, int Quantity)> items, string? map = null)
+    {
+        if (items == null)
+            return;
+
+        if (map != null)
+            Join(map);
+
+        JumpWait();
+        Sleep();
+
+        foreach ((int itemID, int quant) in items)
+        {
+            if (Bot.TempInv.Contains(itemID, quant))
+            {
+                Logger($"Map item {itemID} already acquired ({quant})");
+                continue;
+            }
+
+            List<ItemBase>? initialItems = Bot.TempInv.Items?.ToList();
+            ItemBase? newItem = null;
+
+            for (int i = 0; i < quant; i++)
+            {
+                Bot.Map.GetMapItem(itemID);
+                Sleep(1000);
+
+                if (newItem != null)
+                    continue;
+
+                List<ItemBase>? newItems = Bot.TempInv.Items?.Except(initialItems ?? Enumerable.Empty<ItemBase>()).ToList();
+                newItem = newItems?.FirstOrDefault(x => x.ID == itemID) ?? newItems?.FirstOrDefault();
+            }
+
+            if (quant > 1 && newItem != null)
+            {
+                int attempts = 0;
+                while (Bot.TempInv.GetQuantity(newItem.Name) < quant &&
+                       Bot.TempInv.TryGetItem(newItem.Name, out ItemBase? item) &&
+                       (item?.Quantity < item?.MaxStack))
+                {
+                    Bot.Map.GetMapItem(itemID);
+                    Sleep(1000);
+                    attempts++;
+
+                    if (attempts > quant + 10 || Bot.TempInv.Contains(newItem.Name, quant))
+                        break;
+                }
+            }
+
+            Logger($"Map item {itemID} ({quant}) acquired");
+        }
+    }
+
+
+    /// <summary>
     /// This method is used to move between PvP rooms
     /// </summary>
     /// <param name="mtcid">Last number of the mtcid packet</param>
