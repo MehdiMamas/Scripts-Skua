@@ -14,8 +14,8 @@ public class Generated_ArmyObsidianRock
     private CoreBots Core => CoreBots.Instance;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "CustomAggroMon";
@@ -44,9 +44,9 @@ private static CoreArmyLite _sArmy;
 
     public void ArmyObsidianRock()
         => Army.RunGeneratedAggroMon(map, monNames, questIDs, classtype, drops);
-    private static readonly int[] questIDs={ 2742 };
-    private static readonly string[] monNames={ "Living Fire", "Sulfur Imp", "Firestorm Hatchling" };
-    private static readonly string[] drops={ "Obsidian Rock" };
+    private static readonly List<int> questIDs = new() { 2742 };
+    private static readonly List<string> monNames = new() { "Living Fire", "Sulfur Imp", "Firestorm Hatchling" };
+    private static readonly List<string> drops = new() { "Obsidian Rock" };
     private string map = "firestorm";
     private ClassType classtype = ClassType.Farm;
 }
