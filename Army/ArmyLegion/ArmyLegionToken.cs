@@ -23,11 +23,12 @@ public class ArmyLegionToken
     private static CoreAdvanced _Adv;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion _Legion;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
 
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyLegionToken";
@@ -81,7 +82,7 @@ private static CoreArmyLite _sArmy;
                 Army.AggroMonStart("dreadrock");
                 Army.DivideOnCells("r3", "r4", "r5", "r6", "r8", "r8a");
 
-                
+
 
                 while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
                 {
@@ -168,9 +169,12 @@ private static CoreArmyLite _sArmy;
                     Core.Logger("Pet not owned, stopping", stopBot: true);
 
                 //Adv.BestGear(RacialGearBoost.Dragonkin);
-                questIDs = new() { 4100 };
-                monNames = new() { "Zombie Dragon" };
-                drops = new() { "Legion Token" };
+                questIDs.Clear();
+                questIDs.AddRange(new[] { 4100 });
+                monNames.Clear();
+                monNames.AddRange(new[] { "Zombie Dragon" });
+                drops.Clear();
+                drops.AddRange(new[] { "Legion Token" });
                 map = "dragonheart";
                 classType = ClassType.Farm;
                 Adv.SmartEnhance(Core.FarmClass);
@@ -184,9 +188,12 @@ private static CoreArmyLite _sArmy;
                     Core.Logger("Pet not owned, stopping", stopBot: true);
 
                 //Adv.BestGear(GenericGearBoost.dmgAll);
-                questIDs = new() { 4704 };
-                monNames = new() { "Skeletal Ice mage" };
-                drops = new() { "Legion Token" };
+                questIDs.Clear();
+                questIDs.AddRange(new[] { 4704 });
+                monNames.Clear();
+                monNames.AddRange(new[] { "Skeletal Ice mage" });
+                drops.Clear();
+                drops.AddRange(new[] { "Legion Token" });
                 map = "brightfortress";
                 classType = ClassType.Farm;
                 Adv.SmartEnhance(Core.FarmClass);
@@ -235,9 +242,12 @@ private static CoreArmyLite _sArmy;
                     Core.Logger("Pet not owned, stopping", stopBot: true);
 
                 //Adv.BestGear(GenericGearBoost.dmgAll);
-                questIDs = new() { 5604 };
-                monNames = new() { "Ice Wolf" };
-                drops = new() { "Legion Token" };
+                questIDs.Clear();
+                questIDs.AddRange(new[] { 5604 });
+                monNames.Clear();
+                monNames.AddRange(new[] { "Ice Wolf" });
+                drops.Clear();
+                drops.AddRange(new[] { "Legion Token" });
                 map = "frozentower";
                 classType = ClassType.Farm;
                 Adv.SmartEnhance(Core.FarmClass);
@@ -270,9 +280,12 @@ private static CoreArmyLite _sArmy;
                     Core.Logger("Pet not owned / Seasonal Map not active, stopping", stopBot: true);
 
                 //Adv.BestGear(GenericGearBoost.dmgAll);
-                questIDs = new() { 3969 };
-                monNames = new() { "Frost Fangbeast" };
-                drops = new() { "Legion Token" };
+                questIDs.Clear();
+                questIDs.AddRange(new[] { 3969 });
+                monNames.Clear();
+                monNames.AddRange(new[] { "Frost Fangbeast" });
+                drops.Clear();
+                drops.AddRange(new[] { "Legion Token" });
                 map = "frozenruins";
                 classType = ClassType.Solo;
                 Adv.SmartEnhance(Core.SoloClass);
@@ -303,9 +316,12 @@ private static CoreArmyLite _sArmy;
                     Core.Logger("Pet not owned, stopping", stopBot: true);
 
                 //Adv.BestGear(GenericGearBoost.dmgAll);
-                questIDs = new() { 5738 };
-                monNames = new() { "Bloodfiend" };
-                drops = new() { "Legion Token" };
+                questIDs.Clear();
+                questIDs.AddRange(new[] { 5738 });
+                monNames.Clear();
+                monNames.AddRange(new[] { "Bloodfiend" });
+                drops.Clear();
+                drops.AddRange(new[] { "Legion Token" });
                 map = "underworld";
                 classType = ClassType.Farm;
                 Adv.SmartEnhance(Core.FarmClass);
@@ -322,8 +338,8 @@ private static CoreArmyLite _sArmy;
                 Adv.SmartEnhance(Core.FarmClass);
 
                 if (Core.CheckInventory("Shogun Paragon Pet"))
-                    questIDs = new() { 3722, 5755 };
-                else questIDs = new() { 3722 };
+                    questIDs.AddRange(new[] { 3722, 5755 });
+                else questIDs.AddRange(new[] { 3722 });
 
 
                 while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
@@ -345,9 +361,12 @@ private static CoreArmyLite _sArmy;
                     Core.Logger("Pet not owned, stopping", stopBot: true);
 
                 //Adv.BestGear(!Bot.Quests.IsUnlocked(793) ? RacialGearBoost.Undead : RacialGearBoost.Chaos);
-                questIDs = new() { !Bot.Quests.IsUnlocked(793) ? 3393 : 3394 };
-                monNames = new() { !Bot.Quests.IsUnlocked(793) ? "Binky" : "Ultra Chaos Warlord" };
-                drops = new() { "Legion Token" };
+                questIDs.Clear();
+                questIDs.AddRange(new[] { !Bot.Quests.IsUnlocked(793) ? 3393 : 3394 });
+                monNames.Clear();
+                monNames.AddRange(new[] { !Bot.Quests.IsUnlocked(793) ? "Binky" : "Ultra Chaos Warlord" });
+                drops.Clear();
+                drops.AddRange(new[] { "Legion Token" });
                 map = !Bot.Quests.IsUnlocked(793) ? "doomvault" : "chaosboss";
                 classType = ClassType.Solo;
                 Adv.SmartEnhance(Core.SoloClass);
@@ -362,9 +381,12 @@ private static CoreArmyLite _sArmy;
 
             default:
                 //Adv.BestGear(RacialGearBoost.Undead);
-                questIDs = new() { 6742, 6743 };
-                monNames = new() { "Legion Fiend Rider" };
-                drops = new() { "Legion Token", "Bone Sigil" };
+                questIDs.Clear();
+                questIDs.AddRange(new[] { 6742, 6743 });
+                monNames.Clear();
+                monNames.AddRange(new[] { "Legion Fiend Rider" });
+                drops.Clear();
+                drops.AddRange(new[] { "Legion Token", "Bone Sigil" });
                 map = "legionarena";
                 classType = ClassType.Solo;
                 Adv.SmartEnhance(Core.SoloClass);
@@ -427,9 +449,9 @@ private static CoreArmyLite _sArmy;
         Legion_Arena = 13,
     }
 
-    private static readonly int[] questIDs={ };
-    private static readonly string[] monNames={ };
-    private static readonly string[] drops={ };
+    private static readonly List<int> questIDs = new();
+    private static readonly List<string> monNames = new();
+    private static readonly List<string> drops = new();
     private string map = "";
     private ClassType classType;
 }
