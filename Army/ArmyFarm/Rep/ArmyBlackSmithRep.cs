@@ -72,7 +72,7 @@ private static CoreArmyLite _sArmy;
         }
 
         Core.AddDrop("Creature Shard", "Monster Trophy", "Hydra Scale Piece");
-        while (!Bot.ShouldExit && Farm.FactionRank("Blacksmithing") < 10)
+        while (!Bot.ShouldExit && Farm.FactionRank("Blacksmithing") < 11)
         {
             Core.EnsureAccept(8736);
             Core.EquipClass(ClassType.Farm);
