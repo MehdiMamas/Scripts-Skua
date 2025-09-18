@@ -628,7 +628,7 @@ public class AllClasses
         CheckAndExecute("Shadow Dragon Shinobi", () => SDS.GetClass(rankUpClass));
         CheckAndExecute("Pumpkin Lord", () => PL.GetClass(rankUpClass));
         CheckAndExecute("Vampire Lord", () => VL.GetClass(rankUpClass));
-        CheckAndExecute("No Hollowborn Class", () => NHBC.GetNHBC(rankUpClass));
+        // CheckAndExecute("No Hollowborn Class", () => NHBC.GetNHBC(rankUpClass));
 
         Adv.GearStore(true, true);
         Core.ToBank(new[] { "Alpha Pirate", "Dark Lord", "Evolved Leprechaun", "Exalted Harbinger", "Frostval Barbarian", "Legion SwordMaster Assassin", "Northlands Monk", "Pirate", "Shadow Dragon Shinobi", "Pumpkin Lord", "Vampire Lord" });
@@ -709,7 +709,7 @@ public class AllClasses
         CheckAndExecute("Hollowborn Vindicator", () => HBV.GetClass(rankUpClass)); // Non Insignia
         CheckAndExecute("Lich", () => lich.Example(rankUpClass));
         CheckAndExecute("ShadowScythe General", Daily.ShadowScytheClass);
-        CheckAndExecute("Sovereign of Storms", () => SOS.GetSOS(rankUpClass));
+        // CheckAndExecute("Sovereign of Storms", () => SOS.GetSOS(rankUpClass));
         Adv.GearStore(true, true);
         Core.ToBank(new[] { "Grim Necromancer", "SkyCharged Grenadier", "Sentinel", "LightCaster", "Legion Revenant", "Exalted Soul Cleaver", "Chaos Avenger", "Archmage", "Verus DoomKnight", "Arcana Invoker", "Hollowborn Vindicator", "Lich", "ShadowScythe General", "Sovereign of Storms" });
 
