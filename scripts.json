@@ -18583,7 +18583,7 @@
       "all"
     ],
     "path": "Other/Classes/0AllClasses.cs",
-    "size": 40921,
+    "size": 40936,
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
@@ -18726,17 +18726,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/LightCaster.cs"
   },
   {
-    "name": "Sentinel",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Other/Classes/Sentinal.cs",
-    "size": 1260,
-    "fileName": "Sentinal.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/Sentinal.cs"
-  },
-  {
     "name": "Martial Artist (Class)",
     "description": "This script will get Martial Artist class.",
     "tags": [
@@ -18817,6 +18806,17 @@
     "size": 1074,
     "fileName": "LightMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/LightMage.cs"
+  },
+  {
+    "name": "Sentinel",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Other/Classes/Sentinel.cs",
+    "size": 1260,
+    "fileName": "Sentinel.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/Sentinel.cs"
   },
   {
     "name": "HighSeasCommander[10y]",
