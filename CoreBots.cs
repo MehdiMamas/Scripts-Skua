@@ -7338,13 +7338,6 @@ public class CoreBots
                 SimpleQuestBypass((25, 22));
                 break;
 
-            case "titandrakath":
-                SimpleQuestBypass((470, 18));
-                JumpWait();
-                map = strippedMap + "-999999";
-                tryJoin();
-                break;
-
             case "desoloth":
                 SimpleQuestBypass((56, 35));
                 break;
@@ -7702,11 +7695,18 @@ public class CoreBots
             case "nothing":
             case "ravenscar":
             case "superslayin":
+            case "titandrakath":
             case "treetitanbattle":
             case "tlapd":
             case "trickortreat":
             case "vordredboss":
-                // Special
+                // if map needs a updatequest
+                switch (map)
+                {
+                    case "titandrakath":
+                        Bot.Quests.UpdateQuest(470, 18);
+                        break;
+                }
                 JumpWait();
                 map = strippedMap + "-999999";
                 tryJoin();
@@ -7810,104 +7810,250 @@ public class CoreBots
             Sleep(1500);
         }
 
+        // void tryJoin()
+        // {
+        //     try
+        //     {
+        //         #region ignore this
+        //         if (Bot.Events == null)
+        //         {
+        //             Logger("Bot.Events is null.");
+        //             return;
+        //         }
+
+        //         if (Bot.Options == null)
+        //         {
+        //             Logger("Bot.Options is null.");
+        //             return;
+        //         }
+
+        //         if (Bot.Wait == null)
+        //         {
+        //             Logger("Bot.Wait is null.");
+        //             return;
+        //         }
+
+        //         if (Bot.Map == null)
+        //         {
+        //             Logger("Bot.Map is null.");
+        //             return;
+        //         }
+
+        //         if (Bot.Player == null)
+        //         {
+        //             Logger("Bot.Player is null.");
+        //             return;
+        //         }
+        //         #endregion ignore this
+
+        //         Bot.Events.ExtensionPacketReceived += MapIsMemberLocked;
+        //         bool hasMapNumber = map.Contains('-') && int.TryParse(map.Split('-').Last(), out int result) && result >= 1000;
+        //         Random rnd = new();
+        //         for (int i = 0; i < 20; i++)
+        //         {
+        //             Bot.Wait.ForActionCooldown(GameActions.Transfer);
+        //             if (!string.IsNullOrEmpty(map) && Bot.Map.Name != map)
+        //             {
+        //                 Bot.Wait.ForActionCooldown(GameActions.Transfer);
+        //                 if (hasMapNumber)
+        //                 {
+        //                     if (map != null && Bot.Map.Name != map)
+        //                     {
+        //                         Bot.Map.Join(map, cell ?? "Enter", cell == null ? "Spawn" : pad ?? "Left");
+        //                     }
+        //                     Sleep();
+        //                 }
+        //                 else
+        //                 {
+        //                     if (map != null && Bot.Map.Name != map)
+        //                     {
+        //                         Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", cell == null ? "Spawn" : pad ?? "Left");
+        //                     }
+        //                     DebugLogger(this);
+        //                     Bot.Wait.ForMapLoad(strippedMap);
+        //                     // Exponential Backoff
+        //                     Sleep(Math.Max(1, 100 * rnd.Next((int)Math.Pow(2, i / 2.0))));
+        //                 }
+        //             }
+        //             // Update BlackListedJumptoCells with the regex pattern
+        //             BlackListedJumptoCells = BlackListedJumptoCells
+        //                 .Union(Bot.Map.Cells.Where(x => x != null
+        //                     && Regex.IsMatch(x, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|^r\d+$|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$", RegexOptions.IgnoreCase)))
+        //                 .Distinct()
+        //                 .ToArray();
+
+        //             // Check if map is not "oaklore" and filtering is needed
+        //             if (map != null && map != "oaklore" && (cell == null || cell == "Enter"))
+        //             {
+        //                 // Filter cells excluding blacklisted and "Enter" cells
+        //                 var validCells = Bot.Map.Cells
+        //                     .Where(x => !string.IsNullOrEmpty(x) && // Ensure the cell isn't null or empty
+        //                                 !BlackListedJumptoCells.Any(blacklisted =>
+        //                                     x.Contains(blacklisted, StringComparison.OrdinalIgnoreCase))) // Case-insensitive match
+        //                     .ToList();
+
+        //                 // Prioritize non-"Enter" cells or fall back to "Enter"
+        //                 cell = Bot.Map.Cells.Count(x => x.Contains("Enter", StringComparison.OrdinalIgnoreCase)) > 1
+        //                 ? validCells.FirstOrDefault()
+        //                 : "Enter";
+
+        //                 // Log and perform the jump if a valid cell is found and it's different from the current one
+        //                 if (cell != null && Bot.Player.Cell != cell)
+        //                 {
+        //                     Bot.Map.Jump(cell ?? "Enter", pad ?? "Spawn", false);
+        //                     Sleep(1000);
+        //                 }
+        //             }
+
+        //             // Check if the current map matches the desired map and proceed accordingly
+        //             if (Bot.Map.Name?.ToLower() == strippedMap)
+        //             {
+        //                 // If SafeTimings option is enabled
+        //                 if (Bot.Options.SafeTimings)
+        //                 {
+        //                     // Handle map load check and jump logic
+        //                     if (!string.IsNullOrEmpty(map) && !Bot.Wait.ForMapLoad(map, 20))
+        //                     {
+        //                         if (cell != null && Bot.Player.Cell != cell)
+        //                             Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad);
+        //                     }
+        //                     else if (cell != null && Bot.Player.Cell != cell)
+        //                     {
+        //                         Bot.Map.Jump(cell, pad ?? "Spawn");
+        //                     }
+
+        //                     // Sleep and wait for the player's cell change
+        //                     Sleep();
+        //                     Bot.Wait.ForCellChange(cell ?? "Enter");
+        //                 }
+        //                 break;
+        //             }
+
+
+        //             if (i == 19)
+        //                 Logger($"Failed to join {map}");
+        //         }
+
+        //         Bot.Events.ExtensionPacketReceived -= MapIsMemberLocked;
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Logger($"An error occurred: {ex.Message}. StackTrace: {ex.StackTrace}");
+        //     }
+
+        //     void MapIsMemberLocked(dynamic packet)
+        //     {
+        //         try
+        //         {
+        //             if (packet == null)
+        //             {
+        //                 Logger("Packet is null.");
+        //                 return;
+        //             }
+
+        //             string type = packet["params"].type;
+        //             dynamic data = packet["params"].dataObj;
+        //             if (type is not null and "str")
+        //             {
+        //                 string cmd = data[0];
+        //                 switch (cmd)
+        //                 {
+        //                     case "warning":
+        //                         if (Convert.ToString(packet).Contains("is an Membership-Only Map"))
+        //                         {
+        //                             Logger($" \"{map}\" requires membership to access it. Stopping the Bot.", stopBot: true);
+        //                             Bot.Events.ExtensionPacketReceived -= MapIsMemberLocked;
+        //                         }
+        //                         break;
+        //                 }
+        //             }
+        //         }
+        //         catch (Exception ex)
+        //         {
+        //             Logger($"An error occurred: {ex.Message}. StackTrace: {ex.StackTrace}");
+        //         }
+        //     }
+        // }
         void tryJoin()
         {
             try
             {
-                #region ignore this
-                if (Bot.Events == null)
-                {
-                    Logger("Bot.Events is null.");
-                    return;
-                }
-
-                if (Bot.Options == null)
-                {
-                    Logger("Bot.Options is null.");
-                    return;
-                }
-
-                if (Bot.Wait == null)
-                {
-                    Logger("Bot.Wait is null.");
-                    return;
-                }
-
-                if (Bot.Map == null)
-                {
-                    Logger("Bot.Map is null.");
-                    return;
-                }
-
-                if (Bot.Player == null)
-                {
-                    Logger("Bot.Player is null.");
-                    return;
-                }
-                #endregion ignore this
+                #region sanity checks
+                if (Bot.Events == null) { Logger("Bot.Events is null."); return; }
+                if (Bot.Options == null) { Logger("Bot.Options is null."); return; }
+                if (Bot.Wait == null) { Logger("Bot.Wait is null."); return; }
+                if (Bot.Map == null) { Logger("Bot.Map is null."); return; }
+                if (Bot.Player == null) { Logger("Bot.Player is null."); return; }
+                #endregion
 
                 Bot.Events.ExtensionPacketReceived += MapIsMemberLocked;
-                bool hasMapNumber = map.Contains('-') && int.TryParse(map.Split('-').Last(), out int result) && result >= 1000;
+
+                // Detect if map string already contains a numeric suffix
+                bool hasMapNumber = map.Contains('-') &&
+                                    int.TryParse(map.Split('-').Last(), out int result) &&
+                                    result >= 1000;
+
                 Random rnd = new();
                 for (int i = 0; i < 20; i++)
                 {
                     Bot.Wait.ForActionCooldown(GameActions.Transfer);
+
+                    // Join if we are not in the desired map
                     if (!string.IsNullOrEmpty(map) && Bot.Map.Name != map)
                     {
-                        Bot.Wait.ForActionCooldown(GameActions.Transfer);
                         if (hasMapNumber)
                         {
-                            if (map != null && Bot.Map.Name != map)
-                                Bot.Map.Join(map, cell ?? "Enter", cell == null ? "Spawn" : pad ?? "Left");
-                            Sleep();
+                            Bot.Map.Join(map, cell ?? "Enter", cell == null ? "Spawn" : pad ?? "Left");
                         }
                         else
                         {
-                            if (map != null && Bot.Map.Name != map)
-                                Bot.Map.Join((publicRoom && PublicDifficult) || !PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", cell ?? "Enter", cell == null ? "Spawn" : pad ?? "Left");
+                            string target = (publicRoom && PublicDifficult) || !PrivateRooms
+                                ? map
+                                : $"{map}-{PrivateRoomNumber}";
+
+                            Bot.Map.Join(target, cell ?? "Enter", cell == null ? "Spawn" : pad ?? "Left");
                         }
-                        Bot.Wait.ForMapLoad(strippedMap);
-                        // Exponential Backoff
+
+                        // Wait for the correct map (full name, not stripped)
+                        Bot.Wait.ForMapLoad(map);
+
+                        // Exponential backoff on retries
                         Sleep(Math.Max(1, 100 * rnd.Next((int)Math.Pow(2, i / 2.0))));
                     }
 
-                    // Update BlackListedJumptoCells with the regex pattern
+                    // Update blacklisted cells
                     BlackListedJumptoCells = BlackListedJumptoCells
-                        .Union(Bot.Map.Cells.Where(x => x != null
-                            && Regex.IsMatch(x, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|^r\d+$|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$", RegexOptions.IgnoreCase)))
+                        .Union(Bot.Map.Cells.Where(x => x != null &&
+                            Regex.IsMatch(x, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|^r\d+$|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$",
+                                RegexOptions.IgnoreCase)))
                         .Distinct()
                         .ToArray();
 
-                    // Check if map is not "oaklore" and filtering is needed
+                    // Auto-cell selection for maps (skip oaklore)
                     if (map != null && map != "oaklore" && (cell == null || cell == "Enter"))
                     {
-                        // Filter cells excluding blacklisted and "Enter" cells
                         var validCells = Bot.Map.Cells
-                            .Where(x => !string.IsNullOrEmpty(x) && // Ensure the cell isn't null or empty
-                                        !BlackListedJumptoCells.Any(blacklisted =>
-                                            x.Contains(blacklisted, StringComparison.OrdinalIgnoreCase))) // Case-insensitive match
+                            .Where(x => !string.IsNullOrEmpty(x) &&
+                                        !BlackListedJumptoCells.Any(b =>
+                                            x.Contains(b, StringComparison.OrdinalIgnoreCase)))
                             .ToList();
 
-                        // Prioritize non-"Enter" cells or fall back to "Enter"
                         cell = Bot.Map.Cells.Count(x => x.Contains("Enter", StringComparison.OrdinalIgnoreCase)) > 1
-                        ? validCells.FirstOrDefault()
-                        : "Enter";
+                            ? validCells.FirstOrDefault()
+                            : "Enter";
 
-                        // Log and perform the jump if a valid cell is found and it's different from the current one
                         if (cell != null && Bot.Player.Cell != cell)
                         {
-                            Bot.Map.Jump(cell ?? "Enter", pad ?? "Spawn", false);
+                            Bot.Map.Jump(cell, pad ?? "Spawn", false);
                             Sleep(1000);
                         }
                     }
 
-                    // Check if the current map matches the desired map and proceed accordingly
-                    if (Bot.Map.Name?.ToLower() == strippedMap)
+                    // Break out if we landed in the stripped map name
+                    if (Bot.Map.Name?.Equals(strippedMap, StringComparison.OrdinalIgnoreCase) == true)
                     {
-                        // If SafeTimings option is enabled
                         if (Bot.Options.SafeTimings)
                         {
-                            // Handle map load check and jump logic
                             if (!string.IsNullOrEmpty(map) && !Bot.Wait.ForMapLoad(map, 20))
                             {
                                 if (cell != null && Bot.Player.Cell != cell)
@@ -7918,13 +8064,11 @@ public class CoreBots
                                 Bot.Map.Jump(cell, pad ?? "Spawn");
                             }
 
-                            // Sleep and wait for the player's cell change
                             Sleep();
                             Bot.Wait.ForCellChange(cell ?? "Enter");
                         }
                         break;
                     }
-
 
                     if (i == 19)
                         Logger($"Failed to join {map}");
@@ -7937,30 +8081,24 @@ public class CoreBots
                 Logger($"An error occurred: {ex.Message}. StackTrace: {ex.StackTrace}");
             }
 
+            // Local handler for membership lock
             void MapIsMemberLocked(dynamic packet)
             {
                 try
                 {
-                    if (packet == null)
-                    {
-                        Logger("Packet is null.");
-                        return;
-                    }
+                    if (packet == null) { Logger("Packet is null."); return; }
 
                     string type = packet["params"].type;
                     dynamic data = packet["params"].dataObj;
+
                     if (type is not null and "str")
                     {
                         string cmd = data[0];
-                        switch (cmd)
+                        if (cmd == "warning" &&
+                            Convert.ToString(packet).Contains("is an Membership-Only Map"))
                         {
-                            case "warning":
-                                if (Convert.ToString(packet).Contains("is an Membership-Only Map"))
-                                {
-                                    Logger($" \"{map}\" requires membership to access it. Stopping the Bot.", stopBot: true);
-                                    Bot.Events.ExtensionPacketReceived -= MapIsMemberLocked;
-                                }
-                                break;
+                            Logger($" \"{map}\" requires membership to access it. Stopping the Bot.", stopBot: true);
+                            Bot.Events.ExtensionPacketReceived -= MapIsMemberLocked;
                         }
                     }
                 }
@@ -7970,6 +8108,9 @@ public class CoreBots
                 }
             }
         }
+
+
+
         void SimpleQuestBypass(params (int, int)[] slotValues)
         {
             try
