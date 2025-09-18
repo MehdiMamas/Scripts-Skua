@@ -192,7 +192,7 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Other/MergeShops/ColdThunderMerge.cs
 //cs_include Scripts/Other/MergeShops/LothianTreasuryMerge.cs
 //cs_include Scripts/Other/Classes/SovereignOfStorms.cs
-//cs_include Scripts/Other/Classes/Sentinal.cs
+//cs_include Scripts/Other/Classes/Sentinel.cs
 //cs_include Scripts/Other/Classes/MartialArtist.cs
 //cs_include Scripts/Other/Classes/NoClassClasses/NoHollowbornClass.cs
 //cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
@@ -700,14 +700,14 @@ public class AllClasses
 
         // Classes that require an army or are just to damn hard to solo,
         // these scripts will more then likely just return when they cant farm an item:
-        CheckAndExecute("Chaos Avenger", () => CAV.GetClass(rankUpClass));
-        CheckAndExecute("Archmage", () => AM.GetAM(rankUpClass));
-        CheckAndExecute("Verus DoomKnight", () => VDK.GetClass(rankUpClass));
+        // CheckAndExecute("Chaos Avenger", () => CAV.GetClass(rankUpClass));
+        // CheckAndExecute("Archmage", () => AM.GetAM(rankUpClass));
+        // CheckAndExecute("Verus DoomKnight", () => VDK.GetClass(rankUpClass));
 
         // Classes that take to long to farm for a bank class:
-        CheckAndExecute("Arcana Invoker", () => AI.GetAI(rankUpClass));
+        // CheckAndExecute("Arcana Invoker", () => AI.GetAI(rankUpClass));
         CheckAndExecute("Hollowborn Vindicator", () => HBV.GetClass(rankUpClass)); // Non Insignia
-        CheckAndExecute("Lich", () => lich.Example(rankUpClass));
+        // CheckAndExecute("Lich", () => lich.Example(rankUpClass));
         CheckAndExecute("ShadowScythe General", Daily.ShadowScytheClass);
         // CheckAndExecute("Sovereign of Storms", () => SOS.GetSOS(rankUpClass));
         Adv.GearStore(true, true);
