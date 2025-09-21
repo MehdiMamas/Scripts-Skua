@@ -5264,6 +5264,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/IndonesianDay/RoyalWentiraMerge.cs"
   },
   {
+    "name": "Nusantara Bosses Badge",
+    "description": "This script will obtain the Nusantara Bosses Character Page Badge.",
+    "tags": [
+      "nusantara",
+      "bosses",
+      "badge",
+      "seasonal",
+      "indonesian day",
+      "rangda",
+      "kala",
+      "kabasaran waranei",
+      "nusantara defender medali"
+    ],
+    "path": "Seasonal/IndonesianDay/NusantaraBossesBadge.cs",
+    "size": 1416,
+    "fileName": "NusantaraBossesBadge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/IndonesianDay/NusantaraBossesBadge.cs"
+  },
+  {
     "name": "Rangda Story",
     "description": "This will finish the Rangda storyline.",
     "tags": [
