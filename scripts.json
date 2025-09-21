@@ -15913,10 +15913,18 @@
       "incendo",
       "regius",
       "nástrandir",
-      "warbringer"
+      "warbringer",
+      "naval",
+      "scarf",
+      "eyepatch",
+      "bandana",
+      "focus",
+      "tide",
+      "despair",
+      "tides"
     ],
     "path": "Legion/MergeShops/UndeadLegionMerge.cs",
-    "size": 27207,
+    "size": 28607,
     "fileName": "UndeadLegionMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/MergeShops/UndeadLegionMerge.cs"
   },
