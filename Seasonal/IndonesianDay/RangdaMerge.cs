@@ -1,7 +1,7 @@
 /*
 name: Rangda Merge
 description: This bot will farm the items belonging to the selected mode for the Rangda Merge [1901] in /rangda
-tags: rangda, merge, rangda, gatotkaca, gatot, crown, bearded, sheath, keris, arjunas, bow, mace, wings
+tags: rangda, merge, rangda, gatotkaca, gatot, crown, bearded, sheath, keris, arjunas, bow, mace, wings, warok, warlord, ironbeard, morph, scarlet, singa, barong, waroks, binding, cord, cords, serpent, lash, ponorogo, nyi, roro, kidul, regalia, southern, kings, sea, kiduls, turban, tidebound, maiden, reog, companion, aegis, golden, garuda, sky, guardian, hidden, talon, sovereign, ceremonial
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -20,12 +20,12 @@ public class RangdaMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
-private static RangdaSeasonal RangdaSeasonal { get => _RangdaSeasonal ??= new RangdaSeasonal(); set => _RangdaSeasonal = value; }
+    private static RangdaSeasonal RangdaSeasonal { get => _RangdaSeasonal ??= new RangdaSeasonal(); set => _RangdaSeasonal = value; }
 
-private static RangdaSeasonal _RangdaSeasonal;
+    private static RangdaSeasonal _RangdaSeasonal;
 
 
     public bool DontPreconfigure = true;
@@ -38,7 +38,7 @@ private static RangdaSeasonal _RangdaSeasonal;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Rangda's Mask", "Abhorrent Remnant" });
+        Core.BankingBlackList.AddRange(new[] { "Rangda's Mask", "Abhorrent Remnant", "Batik Fabric", "Benang", "Elder Warok Morph", "Duskwind Warok Visage", "Warok's Wicked Snapper", "Southern King Hair", "Ocean Maiden's Locks" });
         Core.SetOptions();
 
         BuyAllMerge();
