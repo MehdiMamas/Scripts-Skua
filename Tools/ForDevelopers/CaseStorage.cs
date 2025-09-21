@@ -28098,6 +28098,80 @@ case ""Novac Sal Pirate Visage"":
                     goto default;
     "
 },
+{
+    "Bloodstained Doubloon",
+    @"
+case ""Bloodstained Doubloon"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(Core.IsMember ? 10412 : 10410,
+                        (""piratealliance"", ""S.S. Phantom Pirate"", ClassType.Farm),
+                        (""piratealliance"", ""Captain Squalus"", ClassType.Solo),
+                        (""piratealliance"", ""Phantom Jaws"", ClassType.Solo));
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Mer-Unit Operator Hair",
+    @"
+case ""Mer-Unit Operator Hair"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""piratealliance"", ""Phantom Jaws"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Mer-Unit Operator Locks",
+    @"
+case ""Mer-Unit Operator Locks"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""piratealliance"", ""Phantom Jaws"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Spear of Lost Jewels",
+    @"
+case ""Spear of Lost Jewels"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""piratealliance"", ""Phantom Jaws"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic)
