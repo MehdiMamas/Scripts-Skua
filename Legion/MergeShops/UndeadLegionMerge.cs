@@ -1,7 +1,7 @@
 /*
 name: Undead Legion Merge
 description: This bot will farm the items belonging to the selected mode for the Undead Legion Merge [238] in /underworld
-tags: undead, legion, merge, underworld, frostbite, overlord, zealith, reavers, blademaster, guiltius, legend, crown, face, judge, assassin, darkside, promotion, titan, cloak, exalted, champion, horns, archer, otherworldly, deathstare, deathdealer, shield, gutripper, skull, goggles, deathmask, apocalypse, dark, flaming, ultimate, lich, king, original, paragon, castle, soul, cleaver, smiling, dage, infinite, caster, loyal, warrior, swordmaster, draconic, plate, horned, spiked, guard, rhongomyniad, platinum, medal, gold, silver, bronze, yami, no, ronin, sheathed, katana, shuriken, shurikens, healer, mage, hatmask, rogue, , dragonblade, nulgath, monsterhunter, monsterhunters, revenant, seven, circles, beast, ancient, wraiths, winged, bone, crusher, crushers, warlord, great, twisted, yulgars, inn, house, parabellum, armaments, hammer, back, armet, void, vigilante, maw, battlegear, awakened, deaths, requiem, ops, armed, breach, morph, briefcase, tactical, gear, ghost, drone, cold, steel, kukri, kukris, rifle, rifles, corpsewax, candle, incendo, regius, nástrandir, warbringer
+tags: undead, legion, merge, underworld, frostbite, overlord, zealith, reavers, blademaster, guiltius, legend, crown, face, judge, assassin, darkside, promotion, titan, cloak, exalted, champion, horns, archer, otherworldly, deathstare, deathdealer, shield, gutripper, skull, goggles, deathmask, apocalypse, dark, flaming, ultimate, lich, king, original, paragon, castle, soul, cleaver, smiling, dage, infinite, caster, loyal, warrior, swordmaster, draconic, plate, horned, spiked, guard, rhongomyniad, platinum, medal, gold, silver, bronze, yami, no, ronin, sheathed, katana, shuriken, shurikens, healer, mage, hatmask, rogue, , dragonblade, nulgath, monsterhunter, monsterhunters, revenant, seven, circles, beast, ancient, wraiths, winged, bone, crusher, crushers, warlord, great, twisted, yulgars, inn, house, parabellum, armaments, hammer, back, armet, void, vigilante, maw, battlegear, awakened, deaths, requiem, ops, armed, breach, morph, briefcase, tactical, gear, ghost, drone, cold, steel, kukri, kukris, rifle, rifles, corpsewax, candle, incendo, regius, nástrandir, warbringer, naval, scarf, eyepatch, bandana, focus, tide, despair, tides
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -26,22 +26,31 @@ public class UndeadLegionMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static CoreLR LR { get => _LR ??= new CoreLR(); set => _LR = value; }    private static CoreLR _LR;
-    private static LegionExercise3 LegionExercise3 { get => _LegionExercise3 ??= new LegionExercise3(); set => _LegionExercise3 = value; }    private static LegionExercise3 _LegionExercise3;
-    private static LegionExercise4 LegionExercise4 { get => _LegionExercise4 ??= new LegionExercise4(); set => _LegionExercise4 = value; }    private static LegionExercise4 _LegionExercise4;
-    private static DragonBladeofNulgath DBoN { get => _DBoN ??= new DragonBladeofNulgath(); set => _DBoN = value; }    private static DragonBladeofNulgath _DBoN;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion _Legion;
+    private static CoreLR LR { get => _LR ??= new CoreLR(); set => _LR = value; }
+    private static CoreLR _LR;
+    private static LegionExercise3 LegionExercise3 { get => _LegionExercise3 ??= new LegionExercise3(); set => _LegionExercise3 = value; }
+    private static LegionExercise3 _LegionExercise3;
+    private static LegionExercise4 LegionExercise4 { get => _LegionExercise4 ??= new LegionExercise4(); set => _LegionExercise4 = value; }
+    private static LegionExercise4 _LegionExercise4;
+    private static DragonBladeofNulgath DBoN { get => _DBoN ??= new DragonBladeofNulgath(); set => _DBoN = value; }
+    private static DragonBladeofNulgath _DBoN;
     private static HollowSoul HS { get => _HS ??= new HollowSoul(); set => _HS = value; }
     private static HollowSoul _HS;
 
@@ -286,5 +295,14 @@ public static CoreAdvanced _sAdv;
         new Option<bool>("84482", "Awakened Death's Requiem Axe", "Mode: [select] only\nShould the bot buy \"Awakened Death's Requiem Axe\" ?", false),
         new Option<bool>("92236", "Nástrandir", "Mode: [select] only\nShould the bot buy \"Nástrandir\" ?", false),
         new Option<bool>("92221", "Underworld Warbringer Hood", "Mode: [select] only\nShould the bot buy \"Underworld Warbringer Hood\" ?", false),
-    };
+        new Option<bool>("95803", "Naval Dark Caster Hair", "Mode: [select] only\nShould the bot buy \"Naval Dark Caster Hair\" ?", false),
+        new Option<bool>("95807", "Naval Dark Caster Scarf Hair", "Mode: [select] only\nShould the bot buy \"Naval Dark Caster Scarf Hair\" ?", false),
+        new Option<bool>("95808", "Naval Dark Caster Eyepatch", "Mode: [select] only\nShould the bot buy \"Naval Dark Caster Eyepatch\" ?", false),
+        new Option<bool>("95813", "Naval Dark Caster Locks", "Mode: [select] only\nShould the bot buy \"Naval Dark Caster Locks\" ?", false),
+        new Option<bool>("95816", "Naval Dark Caster Eyepatch Locks", "Mode: [select] only\nShould the bot buy \"Naval Dark Caster Eyepatch Locks\" ?", false),
+        new Option<bool>("95819", "Naval Dark Caster Bandana Locks", "Mode: [select] only\nShould the bot buy \"Naval Dark Caster Bandana Locks\" ?", false),
+        new Option<bool>("95823", "Naval Dark Caster Focus Rune", "Mode: [select] only\nShould the bot buy \"Naval Dark Caster Focus Rune\" ?", false),
+        new Option<bool>("95843", "Tide of Despair", "Mode: [select] only\nShould the bot buy \"Tide of Despair\" ?", false),
+        new Option<bool>("95844", "Tides of Despair", "Mode: [select] only\nShould the bot buy \"Tides of Despair\" ?", false),
+   };
 }

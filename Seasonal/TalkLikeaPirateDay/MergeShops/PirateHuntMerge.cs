@@ -7,7 +7,7 @@ tags: piratehunt, merge, novac, sal, pirate, privateer, morph, first, gold, cutl
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/Seasonal/SummerBreak/PirateHunt.cs
+//cs_include Scripts/Seasonal/TalkLikeaPirateDay/PirateHunt.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
