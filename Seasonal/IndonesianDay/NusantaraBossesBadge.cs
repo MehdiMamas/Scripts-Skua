@@ -5,7 +5,7 @@ tags: nusantara, bosses, badge, seasonal,indonesian day,rangda,kala,kabasaran wa
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/Seasonal\IndonesianDay\Rangda.cs
+//cs_include Scripts/Seasonal/IndonesianDay/Rangda.cs
 using Skua.Core.Interfaces;
 
 public class NusantaraBosses
