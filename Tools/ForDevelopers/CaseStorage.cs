@@ -27508,6 +27508,596 @@ case ""Silver Vindicator Swords"":
                     break;
     "
 },
+{
+    "Gold Voucher 100K",
+    @"
+case ""Gold Voucher 100K"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Farm.Gold(100000 * quant);
+                    Core.BuyItem(""sanctuaryaiwass"", 2619, req.Name, quant);
+                    break;
+    "
+},
+{
+    "Aiwass Diamond",
+    @"
+case ""Aiwass Diamond"":
+                    int questID = Core.IsMember ? 10387 : 10385;
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.RegisterQuests(questID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.KillMonster(""sanctuaryaiwass"", ""r9"", ""Top"", ""*"", ""Sal Alembroth"", 1, false);
+                        Core.KillMonster(""sanctuaryaiwass"", ""r9"", ""Top"", ""*"", ""Milk of Sulfur"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Aeon Dream"", 1, false);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Adamas Tenebris Drow",
+    @"
+case ""Adamas Tenebris Drow"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Farblight Fur"", 1, false);
+                    }
+                    break;
+    "
+},
+{
+    "Adamas Tenebris Hair",
+    @"
+case ""Adamas Tenebris Hair"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Farblight Fur"", 1, false);
+                    }
+                    break;
+    "
+},
+{
+    "Adamas Tenebris Locks",
+    @"
+case ""Adamas Tenebris Locks"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Farblight Fur"", 1, false);
+                    }
+                    break;
+    "
+},
+{
+    "Enchanted Tenebris Drow",
+    @"
+case ""Enchanted Tenebris Drow"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Farblight Fur"", 1, false);
+                    }
+                    break;
+    "
+},
+{
+    "Enchanted Tenebris Hair",
+    @"
+case ""Enchanted Tenebris Hair"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Farblight Fur"", 1, false);
+                    }
+                    break;
+    "
+},
+{
+    "Enchanted Tenebris Locks",
+    @"
+case ""Enchanted Tenebris Locks"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Farblight Fur"", 1, false);
+                    }
+                    break;
+    "
+},
+{
+    "Farblight Fur",
+    @"
+case ""Farblight Fur"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Adamas Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Drow"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Hair"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Enchanted Tenebris Locks"", 1, false);
+                        Core.HuntMonster(""sanctuaryaiwass"", ""Anima Animus Aiwass"", ""Farblight Fur"", 1, false);
+                    }
+                    break;
+    "
+},
+{
+    "Moeda Real",
+    @"
+case ""Moeda Real"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+
+                    Core.KillMonster(""povoheroico"", ""r2"", ""Bottom"", ""Brado Retumbante"", req.Name, quant, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Brabo Retumbante",
+    @"
+case ""Brabo Retumbante"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+
+                    Core.KillMonster(""povoheroico"", ""r2"", ""Bottom"", ""Brado Retumbante"", req.Name, quant, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Brabos Retumbantes",
+    @"
+case ""Brabos Retumbantes"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+
+                    Core.KillMonster(""povoheroico"", ""r2"", ""Bottom"", ""Brado Retumbante"", req.Name, quant, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Brado Retumbante",
+    @"
+case ""Brado Retumbante"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+
+                    Core.KillMonster(""povoheroico"", ""r2"", ""Bottom"", ""Brado Retumbante"", req.Name, quant, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Capuz Retumbante",
+    @"
+case ""Capuz Retumbante"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+
+                    Core.KillMonster(""povoheroico"", ""r2"", ""Bottom"", ""Brado Retumbante"", req.Name, quant, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Face Retumbante",
+    @"
+case ""Face Retumbante"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+
+                    Core.KillMonster(""povoheroico"", ""r2"", ""Bottom"", ""Brado Retumbante"", req.Name, quant, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Símbolo da Ordem",
+    @"
+case ""Símbolo da Ordem"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+
+                    Core.KillMonster(""povoheroico"", ""r2"", ""Bottom"", ""Brado Retumbante"", req.Name, quant, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Símbolo do Progresso",
+    @"
+case ""Símbolo do Progresso"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+
+                    Core.KillMonster(""povoheroico"", ""r2"", ""Bottom"", ""Brado Retumbante"", req.Name, quant, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Batik Fabric",
+    @"
+case ""Batik Fabric"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(10371); // TODO: Replace with actual quest ID
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster(""rangda"", ""Rangda"", req.Name, 1);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Benang",
+    @"
+case ""Benang"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(10372); // TODO: Replace with actual quest ID
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster(""rangda"", ""Tuyul"", ""Tuyul Soul"", 9);
+                        Core.HuntMonster(""rangda"", ""Leyak"", ""Leyak Jaw"", 9);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Warok's Wicked Snapper",
+    @"
+case ""Warok's Wicked Snapper"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""rangda"", ""Rangda"", req.Name, quant, isTemp: req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Duskwind Warok Visage",
+    @"
+case ""Duskwind Warok Visage"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""rangda"", ""Rangda"", req.Name, quant, isTemp: req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Elder Warok Morph",
+    @"
+case ""Elder Warok Morph"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""rangda"", ""Rangda"", req.Name, quant, isTemp: req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Southern King Hair",
+    @"
+case ""Southern King Hair"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""rangda"", ""Leyak"", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+
+    "
+},
+{
+    "Ocean Maiden’s Locks",
+    @"
+case ""Ocean Maiden’s Locks"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""rangda"", ""Leyak"", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+
+    "
+},
+{
+    "Belladonna's Flag",
+    @"
+case ""Belladonna's Flag"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.RegisterQuests(10390); // Bumbling Bellamy
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                        Core.KillMonster(""piratehunt"", ""r5"", ""Left"", ""Captain Bellamy"", ""Bellamy's Greasy Beard"", 1, false);
+                    Core.EnsureComplete(10390);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Bourgeois' Flag",
+    @"
+case ""Bourgeois' Flag"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.RegisterQuests(10392); // From the Top
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                        Core.KillMonster(""piratehunt"", ""r7"", ""Left"", ""Captain Verich"", ""Captain Verich's Tricorn"", 1, false);
+                    Core.EnsureComplete(10392);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Pirated Tech's Flag",
+    @"
+case ""Pirated Tech's Flag"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.RegisterQuests(10394); // Subversive Sailor
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                        Core.KillMonster(""piratehunt"", ""r9"", ""Left"", ""Captain Chamfer"", ""Captain Chamfer's Mods"", 1, false);
+                    Core.EnsureComplete(10394);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Merry Celeste's Flag",
+    @"
+case ""Merry Celeste's Flag"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.RegisterQuests(10396); // Salty Spirit
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                        Core.KillMonster(""piratehunt"", ""r11"", ""Left"", ""Captain Haines"", ""Captain Haines' Soul"", 1, false);
+                    Core.EnsureComplete(10396);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Mercurius' Flag",
+    @"
+case ""Mercurius' Flag"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.RegisterQuests(10398); // Mercurious
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.KillMonster(""piratehunt"", ""r13"", ""Left"", ""*"", ""Larunda's Counterfeit Amulet"", 1, false);
+                        Core.KillMonster(""piratehunt"", ""r13"", ""Left"", ""*"", ""Mercurius' Funny Hat"", 1, false);
+                    }
+                    Core.EnsureComplete(10398);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Cutlass of Awe",
+    @"
+case ""Cutlass of Awe"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(""Cutlass of Awe"");
+
+                    while (!Bot.ShouldExit && !Core.CheckInventory(""Cutlass of Awe"", quant))
+                    {
+                        if (!Core.isCompletedBefore(10388) && !Core.CheckInventory(""Cutlass of Awe""))
+                            Core.EnsureAccept(10388);
+
+                        if (!Core.CheckInventory(""Cutlass of Awe Handle""))
+                            Core.KillMonster(""seakingkurok"", ""r2"", ""Left"", ""Sea King Gravefang"", ""Cutlass of Awe Handle"", 1, false);
+
+                        if (!Core.CheckInventory(""Cutlass of Awe Hilt""))
+                            Core.KillMonster(""dragoncapital"", ""r8"", ""Left"", ""Empowered Scalebeard"", ""Cutlass of Awe Hilt"", 1, false);
+
+                        if (!Core.CheckInventory(""Cutlass of Awe Blade""))
+                            Core.KillMonster(""kaijuwar"", ""r9"", ""Left"", ""Captain Kraylox"", ""Cutlass of Awe Blade"", 1, false);
+
+                        if (!Core.CheckInventory(""Awe Binding Spell""))
+                            Core.KillMonster(""blazingbeach"", ""r8"", ""Left"", ""Magma Blazebeard"", ""Awe Binding Spell"", 1, false);
+
+                        if (Core.CheckInventory(""Cutlass of Awe Handle"") &&
+                            Core.CheckInventory(""Cutlass of Awe Hilt"") &&
+                            Core.CheckInventory(""Cutlass of Awe Blade"") &&
+                            Core.CheckInventory(""Awe Binding Spell""))
+                        {
+                            Core.EnsureComplete(10388);
+                            Bot.Wait.ForPickup(""Cutlass of Awe"");
+                        }
+                    }
+                    break;
+    "
+},
+{
+    "Dual Cutlass of Awe",
+    @"
+case ""Dual Cutlass of Awe"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(""Cutlass of Awe"");
+
+                    while (!Bot.ShouldExit && !Core.CheckInventory(""Cutlass of Awe"", quant))
+                    {
+                        if (!Core.isCompletedBefore(10388) && !Core.CheckInventory(""Cutlass of Awe""))
+                            Core.EnsureAccept(10388);
+
+                        if (!Core.CheckInventory(""Cutlass of Awe Handle""))
+                            Core.KillMonster(""seakingkurok"", ""r2"", ""Left"", ""Sea King Gravefang"", ""Cutlass of Awe Handle"", 1, false);
+
+                        if (!Core.CheckInventory(""Cutlass of Awe Hilt""))
+                            Core.KillMonster(""dragoncapital"", ""r8"", ""Left"", ""Empowered Scalebeard"", ""Cutlass of Awe Hilt"", 1, false);
+
+                        if (!Core.CheckInventory(""Cutlass of Awe Blade""))
+                            Core.KillMonster(""kaijuwar"", ""r9"", ""Left"", ""Captain Kraylox"", ""Cutlass of Awe Blade"", 1, false);
+
+                        if (!Core.CheckInventory(""Awe Binding Spell""))
+                            Core.KillMonster(""blazingbeach"", ""r8"", ""Left"", ""Magma Blazebeard"", ""Awe Binding Spell"", 1, false);
+
+                        if (Core.CheckInventory(""Cutlass of Awe Handle"") &&
+                            Core.CheckInventory(""Cutlass of Awe Hilt"") &&
+                            Core.CheckInventory(""Cutlass of Awe Blade"") &&
+                            Core.CheckInventory(""Awe Binding Spell""))
+                        {
+                            Core.EnsureComplete(10388);
+                            Bot.Wait.ForPickup(""Cutlass of Awe"");
+                        }
+                    }
+                    break;
+    "
+},
+{
+    "Gold Voucher 100k",
+    @"
+case ""Gold Voucher 100k"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Adv.BuyItem(""piratehunt"", 2621, req.Name, quant);
+                    break;
+    "
+},
+{
+    "J6's Secret Hideout Map",
+    @"
+case ""J6's Secret Hideout Map"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.Name);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                        Core.HuntMonster(""j6"", ""Sketchy Dragon"", req.Name, quant, isTemp: false);
+                    break;
+    "
+},
+{
+    "Novac Sal Privateer",
+    @"
+case ""Novac Sal Privateer"":
+                    if (!Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership. Skipping."");
+                        break;
+                    }
+                    goto default;
+    "
+},
+{
+    "Novac Sal Pirate Morph",
+    @"
+case ""Novac Sal Pirate Morph"":
+                    if (!Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership. Skipping."");
+                        break;
+                    }
+                    goto default;
+    "
+},
+{
+    "Novac Sal Pirate Visage",
+    @"
+case ""Novac Sal Pirate Visage"":
+                    if (!Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership. Skipping."");
+                        break;
+                    }
+                    goto default;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic)
