@@ -7259,6 +7259,23 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/HeartOfTheSeaStory.cs"
   },
   {
+    "name": "Pirate Alliance Story",
+    "description": "Completes the storyline in /piratealliance",
+    "tags": [
+      "pirate alliance",
+      "alliance",
+      "tlapd",
+      "piratealliance",
+      "story",
+      "pirate",
+      "captain rubharb"
+    ],
+    "path": "Seasonal/TalkLikeaPirateDay/PirateAlliance.cs",
+    "size": 3457,
+    "fileName": "PirateAlliance.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/PirateAlliance.cs"
+  },
+  {
     "name": "Low Tide Story",
     "description": "This will finish the Low Tide Story Quest.",
     "tags": [
