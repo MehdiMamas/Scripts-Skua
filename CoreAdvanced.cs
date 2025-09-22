@@ -811,7 +811,7 @@ public class CoreAdvanced
             if (item.Upgrade && !Core.IsMember)
             {
                 Core.Logger($"Skipping {item.Name} [{item.ID}] as it is member-only.");
-                break;
+                continue;
             }
 
             if (!matsOnly)
