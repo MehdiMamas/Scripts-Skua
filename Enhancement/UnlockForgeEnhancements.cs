@@ -536,12 +536,16 @@ public class UnlockForgeEnhancements
         DOT.GetDoT(doExtra: false);
         ED.getSet(true, "Drakath the Eternal");
         if (!Core.CheckInventory("Drakath the Eternal"))
+        {
             Core.Logger("Cannot \"Finish\" `Heros Valiance quest. We'll continue farming it though...\n" +
-            $"\"Drakath Armor\": x{Bot.Inventory.GetQuantity("Drakath Armor")}\n" +
-            $"\"Dage's Scroll Fragment\" x{Bot.Inventory.GetQuantity("Dage's Scroll Fragment")}\n" +
-            $"\"Drakath the Eternal\" x{Bot.Inventory.GetQuantity("Drakath the Eternal")}"); ;
+         $"\"Drakath Armor\": x{Bot.Inventory.GetQuantity("Drakath Armor")}\n" +
+         $"\"Dage's Scroll Fragment\" x{Bot.Inventory.GetQuantity("Dage's Scroll Fragment")}\n" +
+         $"\"Drakath the Eternal\" x{Bot.Inventory.GetQuantity("Drakath the Eternal")}");
+        }
+
         LOO.GetLoO();
 
+        // Eternity Blade
         if (!Core.CheckInventory(23689))
         {
             Core.EquipClass(ClassType.Solo);
