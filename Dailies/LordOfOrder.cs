@@ -43,8 +43,8 @@ public class LordOfOrder
         // LOO Collector Chest ItemID: 50576
 
         // Check if the item is already in inventory or if extras are needed
-        if ((Core.CheckInventory(new[] { 50741, 50576 }, any: true, toInv: false) && !getExtras) ||
-            (getExtras && Core.CheckInventory(Core.QuestRewards(7165), toInv: false)))
+        if ((Core.CheckInventory(new[] { 50741, 50576 }, any: true, toInv: false) && !getExtras && Core.isCompletedBefore(7165)) ||
+            (getExtras && Core.CheckInventory(Core.QuestRewards(7165), toInv: false) && Core.isCompletedBefore(7165)))
         {
             if (rankUpClass)
                 Adv.RankUpClass("Lord Of Order");
@@ -247,9 +247,11 @@ public class LordOfOrder
         Core.EnsureAccept(7165);
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("ultradrakath", "Champion of Chaos", "Champion of Chaos Confronted", isTemp: false, publicRoom: Core.PublicDifficult);
-        if (!Core.CheckInventory(50741, toInv: false) || !getExtras)
+        Bot.Drops.Add(50741);
+        // If quest 7165 is not completed and either missing extras or missing key items
+        if (!Core.isCompletedBefore(7165) &&
+            (!Core.CheckInventory(new[] { 50741, 50576 }, any: true, toInv: false) || !getExtras))
         {
-            Bot.Drops.Add(50741);
             Core.EnsureComplete(7165, 50741);
             Bot.Wait.ForPickup(50741);
 
@@ -261,5 +263,6 @@ public class LordOfOrder
             Core.EnsureCompleteChoose(7165);
             Core.ToBank(Core.QuestRewards(7165).Except("Lord Of Order"));
         }
+
     }
 }
