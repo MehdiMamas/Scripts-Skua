@@ -66,31 +66,27 @@ private static CoreArmyLite _sArmy;
         Core.EquipClass(ClassType.Solo);
         Core.EnsureAccept(8653);
 
-        //Army.WaitForParty("Icestormarena", "Glacial Pinion");
-        Army.SmartAggroMonStart("icewing", "Warlord Icewing");
-
-
-
+        Bot.Map.Join("icewing", autoCorrect: false);
+        Bot.Wait.ForMapLoad("icewing");
+        Army.WaitForPartyCell("Enter", "Spawn", 4, 60);
         while (!Bot.ShouldExit && !Core.CheckInventory("Glacial Pinion"))
             Bot.Combat.Attack("*");
         Army.AggroMonStop();
         Core.JumpWait();
 
-        //Army.WaitForParty("hydrachallenge", "Hydra Eyeball");
-        Army.SmartAggroMonStart("hydrachallenge", "Hydra Head 90");
 
-
-
+        Bot.Map.Join("hydrachallenge", autoCorrect: false);
+        Bot.Wait.ForMapLoad("hydrachallenge");
+        Army.WaitForPartyCell("h90", "Left", 4, 60);
         while (!Bot.ShouldExit && !Core.CheckInventory("Hydra Eyeball", 3))
             Bot.Combat.Attack("*");
         Army.AggroMonStop();
         Core.JumpWait();
+        
 
-        //Army.WaitForParty("voidflibbi", "Flibbitigiblets");
-        Army.SmartAggroMonStart("voidflibbi", "Flibbitiestgibbet");
-
-
-
+        Bot.Map.Join("hydrachallenge", autoCorrect: false);
+        Bot.Wait.ForMapLoad("hydrachallenge");
+        Army.WaitForPartyCell("Enter", "Spawn", 4, 60);
         while (!Bot.ShouldExit && !Core.CheckInventory("Flibbitigiblets"))
             Bot.Combat.Attack("*");
         Army.AggroMonStop();
