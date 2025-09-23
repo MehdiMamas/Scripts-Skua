@@ -6637,7 +6637,7 @@ public class CoreBots
     public void SavedState(bool on = true)
     {
         // Method implementation intentionally left blank as it is currently unused.
-        GC.Collect();
+        // GC.Collect();
 
     }
 

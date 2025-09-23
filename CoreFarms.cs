@@ -231,42 +231,16 @@ public class CoreFarms
 
         Core.AddDrop("Berserker Bunny");
         Core.EquipClass(ClassType.Solo);
-        Core.SavedState();
-        Core.Logger($"Farming {goldQuant:N0}  using BerserkerBunny Method");
+        Core.Logger($"{Bot.Player.Gold}/{goldQuant} Gold", "BerserkerBunny Method");
 
         Core.RegisterQuests(236);
         while (!Bot.ShouldExit && Bot.Player.Gold < goldQuant)
         {
             Core.KillMonster("greenguardwest", "West12", "Up", "*");
-
-            if (Bot.Inventory.Contains("Berserker Bunny"))
-                SellItem("Berserker Bunny");
+            Core.SellItem("Berserker Bunny", all: true);
         }
         Core.CancelRegisteredQuests();
-        Core.SavedState(false);
-
-        // Helper method *specificly* for berserker bunny
-        void SellItem(string itemName)
-        {
-            if (!sell || !Bot.Inventory.Contains(itemName))
-                return;
-
-            // Jump to exit (potential) combat
-            Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad, autoCorrect: false);
-            // Sleep to ensure we've loaded into cell
-            Bot.Sleep(1000);
-
-            // Keep trying to sell it till we sell it ( with a delay to not spam)
-            while (!Bot.ShouldExit && Bot.Inventory.Contains(itemName))
-            {
-                Bot.Wait.ForActionCooldown(GameActions.SellItem);
-                Bot.Send.Packet($"%xt%zm%sellItem%{Bot.Map.RoomID}%34417%1%{1049211823}%");
-                Bot.Wait.ForItemSell();
-                Core.Sleep();
-                if (!Bot.Inventory.Contains(itemName))
-                    break;
-            }
-        }
+        Core.SavedState();
     }
 
     // <summary>
