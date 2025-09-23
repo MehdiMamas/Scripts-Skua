@@ -17,18 +17,20 @@ public class ArmyNSoDDaily
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
 
-private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
 
-private static CoreBots _sCore;
+    private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
 
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyNSODDaily";
@@ -66,7 +68,7 @@ private static CoreArmyLite _sArmy;
         Core.EquipClass(ClassType.Solo);
         Core.EnsureAccept(8653);
 
-        Bot.Map.Join("icewing", autoCorrect: false);
+        Bot.Map.Join("icewing-" + Core.PrivateRoomNumber, autoCorrect: false);
         Bot.Wait.ForMapLoad("icewing");
         Army.WaitForPartyCell("Enter", "Spawn", 4, 60);
         while (!Bot.ShouldExit && !Core.CheckInventory("Glacial Pinion"))
@@ -75,16 +77,16 @@ private static CoreArmyLite _sArmy;
         Core.JumpWait();
 
 
-        Bot.Map.Join("hydrachallenge", autoCorrect: false);
+        Bot.Map.Join("hydrachallenge-" + Core.PrivateRoomNumber, autoCorrect: false);
         Bot.Wait.ForMapLoad("hydrachallenge");
         Army.WaitForPartyCell("h90", "Left", 4, 60);
         while (!Bot.ShouldExit && !Core.CheckInventory("Hydra Eyeball", 3))
             Bot.Combat.Attack("*");
         Army.AggroMonStop();
         Core.JumpWait();
-        
 
-        Bot.Map.Join("hydrachallenge", autoCorrect: false);
+
+        Bot.Map.Join("hydrachallenge-" + Core.PrivateRoomNumber, autoCorrect: false);
         Bot.Wait.ForMapLoad("hydrachallenge");
         Army.WaitForPartyCell("Enter", "Spawn", 4, 60);
         while (!Bot.ShouldExit && !Core.CheckInventory("Flibbitigiblets"))
