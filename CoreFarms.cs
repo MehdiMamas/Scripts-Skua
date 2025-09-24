@@ -2726,7 +2726,7 @@ public class CoreFarms
         var runTimer = new System.Diagnostics.Stopwatch();
         runTimer.Start();
 
-        foreach (int QID in new[] { 5153, 5156, 5157, 5165 })
+        foreach (int QID in new[] { 5156, 5165 })
         {
             if (Bot.Quests.IsUnlocked(QID))
                 Core.RegisterQuests(QID);
