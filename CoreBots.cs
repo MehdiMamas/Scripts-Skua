@@ -7736,27 +7736,25 @@ public class CoreBots
             #endregion baconcat.. is annoying
 
             #region Maps that cant be private and you must do yourself. (thanks AE)
-            case "fearhouse":
-            case "warehouse":
-                Skua.Core.Models.DialogResult ForcePublic = Bot.ShowMessageBox(
-                                    $"Do you want to join the Following map: \"{map}\"\n" +
-                                    "using a public room?\n" +
-                                    "(Bot will stop otherwise)", "PublicRoom Only",
-                                    "Yes", "No"
-                                );
+                // Skua.Core.Models.DialogResult ForcePublic = Bot.ShowMessageBox(
+                //                     $"Do you want to join the Following map: \"{map}\"\n" +
+                //                     "using a public room?\n" +
+                //                     "(Bot will stop otherwise)", "PublicRoom Only",
+                //                     "Yes", "No"
+                //                 );
 
-                if (ForcePublic.Value == 1)
-                    Logger("Unfortunitaly AE forgot to make these maps privateable only\n" +
-                    "to continue \"yes\" must be selcted, otherwise for `allstories` just comment it out with 2 /'s", stopBot: true);
-                else
-                {
-                    Logger("You've Chosen to bot publicly... good luck in this *public only* map.");
-                    JumpWait();
-                    if (Bot.Map.Name != null && Bot.Map.Name != map)
-                        Bot.Map.Join(map);
-                    Bot.Wait.ForMapLoad(map);
-                }
-                break;
+                // if (ForcePublic.Value == 1)
+                //     Logger("Unfortunitaly AE forgot to make these maps privateable only\n" +
+                //     "to continue \"yes\" must be selcted, otherwise for `allstories` just comment it out with 2 /'s", stopBot: true);
+                // else
+                // {
+                //     Logger("You've Chosen to bot publicly... good luck in this *public only* map.");
+                //     JumpWait();
+                //     if (Bot.Map.Name != null && Bot.Map.Name != map)
+                //         Bot.Map.Join(map);
+                //     Bot.Wait.ForMapLoad(map);
+                // }
+                // break;
             #endregion
 
             #region Bypass Banned
