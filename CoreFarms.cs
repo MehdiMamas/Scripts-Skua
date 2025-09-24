@@ -2751,7 +2751,8 @@ public class CoreFarms
         int RunCount = 1;
 
     Start:
-        while (!Bot.ShouldExit && ((item != null && !Core.CheckInventory(item, quant)) || (item == null && FactionRank("Death Pit Brawl") < rank)))
+        while (!Bot.ShouldExit && (item != null && !Core.CheckInventory(item, quant) && FactionRank("Death Pit Brawl") < rank
+        || (item == null && FactionRank("Death Pit Brawl") < rank)))
         {
             while (!Bot.ShouldExit && Bot.Map.Name != "deathpitbrawl")
             {
