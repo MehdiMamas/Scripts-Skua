@@ -245,9 +245,6 @@ public class PrimeFiendShard
         {
             Core.EnsureAccept(9559);
 
-            //10x roent
-            VHL.VHLChallenge(10);
-
             Nation.FarmUni13(13);
             Nation.FarmTaintedGem(750);
             Nation.FarmDarkCrystalShard(400);
