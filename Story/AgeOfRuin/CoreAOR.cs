@@ -593,8 +593,8 @@ public class CoreAOR
         Story.PreLoad(this);
 
         // Wicker Magic (9755)
-        Story.KillQuest(9755, "loughshine", "Skye Cailleach");
         Story.MapItemQuest(9755, "loughshine", 13273);
+        Story.KillQuest(9755, "loughshine", "Skye Cailleach");
 
         // Maigh Eo (9756)
         Story.KillQuest(9756, "loughshine", "Scorched Elder Yew");
