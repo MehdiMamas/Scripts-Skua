@@ -559,7 +559,7 @@ public class CoreAOR
 
         // Caretaker's Shadow 9735 
         Story.MapItemQuest(9735, "castleeblana", 13204);
-        Story.KillQuest(9735, "castleeblana", new[] { "Skye Warrior", "Skye Executor" });
+        Story.KillQuest(9735, "castleeblana", new[] { "Skye Warrior", "Skye Executor", "Skye Executor" });
 
         // Harbinger's Tears 9736 
         Story.KillQuest(9736, "castleeblana", "Bananach Raven");
