@@ -2726,7 +2726,7 @@ public class CoreFarms
         var runTimer = new System.Diagnostics.Stopwatch();
         runTimer.Start();
 
-        foreach (int QID in new[] { 5153, 5156, 5157, 5165 })
+        foreach (int QID in new[] { 5156, 5165 })
         {
             if (Bot.Quests.IsUnlocked(QID))
                 Core.RegisterQuests(QID);
@@ -2751,7 +2751,8 @@ public class CoreFarms
         int RunCount = 1;
 
     Start:
-        while (!Bot.ShouldExit && ((item != null && !Core.CheckInventory(item, quant)) || (item == null && FactionRank("Death Pit Brawl") < rank)))
+        while (!Bot.ShouldExit && (item != null && !Core.CheckInventory(item, quant) && FactionRank("Death Pit Brawl") < rank
+        || (item == null && FactionRank("Death Pit Brawl") < rank)))
         {
             while (!Bot.ShouldExit && Bot.Map.Name != "deathpitbrawl")
             {
