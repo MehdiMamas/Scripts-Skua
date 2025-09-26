@@ -34,6 +34,7 @@ using System.Globalization;
 using Skua.Core.Models.Auras;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
+using System.Drawing;
 
 public class CoreBots
 {
