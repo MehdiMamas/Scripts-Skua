@@ -33,7 +33,6 @@ using System.Text;
 using System.Globalization;
 using Skua.Core.Models.Auras;
 using System.Windows.Forms;
-using System.Drawing;
 using Newtonsoft.Json.Linq;
 
 public class CoreBots
@@ -3138,7 +3137,7 @@ public class CoreBots
                 Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot) >= QuestData.Value;
 
             // Commented out to reduce spam
-            // Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
+            Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
             return complete;
         }
 
