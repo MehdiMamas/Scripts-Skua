@@ -21531,6 +21531,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/DragonCapitalStory.cs"
   },
   {
+    "name": "Gravelyn's Undead Doom Parrot",
+    "description": "This script will complete the quest to obtain Gravelyn's Undead Doom Parrot pet.",
+    "tags": [
+      "undead doom parrot",
+      "gravelyn",
+      "seasonal",
+      "tlapd",
+      "talk like a pirate day",
+      "pet",
+      "celebrate the successful siege",
+      "doom pirate",
+      "dusk"
+    ],
+    "path": "Seasonal/TalkLikeaPirateDay/GravelynsUndeadDoomParrot.cs",
+    "size": 1750,
+    "fileName": "GravelynsUndeadDoomParrot.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/GravelynsUndeadDoomParrot.cs"
+  },
+  {
     "name": "Blood Isles Story",
     "description": "This will finish the Blood Isles story.",
     "tags": [
