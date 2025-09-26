@@ -465,7 +465,7 @@ public class CoreBots
     /// </summary>
     private bool StopBot(bool crashed)
     {
-        ClearCompiledScript();
+        DeleteCompiledScript();
         StopBotAsync();
         Bot.Handlers.Clear();
 
@@ -576,20 +576,10 @@ public class CoreBots
     public bool StopBotEvent(Exception? e)
     {
         Bot.Events.ScriptStopping -= StopBotEvent;
-        DisableAllBoosts();
         SetOptions(false);
-
         return StopBot(e != null);
     }
 
-    public void DisableAllBoosts()
-    {
-        Bot.Boosts.UseGoldBoost = false;
-        Bot.Boosts.UseClassBoost = false;
-        Bot.Boosts.UseReputationBoost = false;
-        Bot.Boosts.UseExperienceBoost = false;
-        Bot.Boosts.Stop();
-    }
     public bool CrashDetector(Exception? e)
     {
         if (e == null || e is OperationCanceledException)
@@ -9040,23 +9030,38 @@ public class CoreBots
         return files.Length > 0 && files.Any(x => x.Contains("~!") && (x.Split("~!").Last() == (Username().ToLower() + ".txt")));
     }
 
-    public void ClearCompiledScript()
+    public void DeleteCompiledScript()
     {
         string? scriptDir = ClientFileSources.SkuaScriptsDIR;
         if (string.IsNullOrEmpty(scriptDir))
             return;
 
         string filePath = Path.Combine(scriptDir, "z_CompiledScript.cs");
-        if (!File.Exists(filePath))
-            return;
+        if (!File.Exists(filePath) || new FileInfo(filePath).Length == 0)
+            return; // Skip deletion if file doesn't exist or is empty
 
         try
         {
-            using FileStream _ = new(filePath, FileMode.Truncate, FileAccess.Write, FileShare.None);
+            File.Delete(filePath);
         }
-        catch
+        catch (IOException)
         {
-            // Ignore all errors (locked, in use, no permission, etc. and just continue as if nothing happened)
+            // Retry deleting the file if it's locked (e.g., OneDrive syncing)
+            const int retryCount = 3;
+            for (int i = 0; i < retryCount; i++)
+            {
+                Bot.Sleep(1000); // Wait before retrying
+                try
+                {
+                    File.Delete(filePath);
+                    return;
+                }
+                catch (IOException)
+                {
+                    if (i == retryCount - 1)
+                        Bot.Log($"Error deleting '{filePath}'. Please pause or quit OneDrive from the bottom right, and try again.");
+                }
+            }
         }
     }
 
