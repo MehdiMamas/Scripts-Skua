@@ -85,7 +85,7 @@ public class CarcossaCanteenMerge
                     {
                         Core.HuntMonsterQuest(10423,
                         ("forgealbedo", "Defensive Turret", ClassType.Farm),
-                        ("forgealbedo", "Defensive Droid", ClassType.Farm),
+                        ("forgealbedo", "Defense Droid", ClassType.Farm),
                         ("forgealbedo", "Flame of Albedo", ClassType.Solo));
                         Bot.Wait.ForPickup(req.Name);
                     }
