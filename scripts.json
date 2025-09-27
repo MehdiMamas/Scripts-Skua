@@ -9805,7 +9805,7 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 42318,
+    "size": 44911,
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -9938,10 +9938,15 @@
       "thelima",
       "thelimacity",
       "mount maleno",
-      "mountmaleno"
+      "mountmaleno",
+      "sanctuary",
+      "aiwass",
+      "sanctuaryaiwass",
+      "forgealbedo",
+      "forge albedo"
     ],
     "path": "Story/AgeOfRuin/00DoAll.cs",
-    "size": 1125,
+    "size": 1184,
     "fileName": "00DoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/00DoAll.cs"
   },
@@ -10038,6 +10043,23 @@
     "size": 826,
     "fileName": "04TwilightZone.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/04TwilightZone.cs"
+  },
+  {
+    "name": "Forge Albedo",
+    "description": "Completes the Forge Albedo storyline.",
+    "tags": [
+      "forgealbedo",
+      "storyline",
+      "aor",
+      "age of ruin",
+      "albedo",
+      "aleister",
+      "jaania"
+    ],
+    "path": "Story/AgeOfRuin/20ForgeAlbedo.cs",
+    "size": 821,
+    "fileName": "20ForgeAlbedo.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/20ForgeAlbedo.cs"
   },
   {
     "name": "Naoise Grave",
