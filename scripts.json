@@ -14736,6 +14736,32 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FellBeastMerge.cs"
   },
   {
+    "name": "Carcossa Canteen Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Carcossa Canteen Merge [2624] in /forgealbedo",
+    "tags": [
+      "carcossa",
+      "canteen",
+      "merge",
+      "forgealbedo",
+      "knight",
+      "noelle",
+      "squire",
+      "morph",
+      "winged",
+      "capella",
+      "shrine",
+      "scorched",
+      "warlic",
+      "warlics",
+      "ponytail",
+      "bob"
+    ],
+    "path": "Other/MergeShops/CarcossaCanteenMerge.cs",
+    "size": 8800,
+    "fileName": "CarcossaCanteenMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CarcossaCanteenMerge.cs"
+  },
+  {
     "name": "4DPyramidHouseMerge",
     "description": "null",
     "tags": [
