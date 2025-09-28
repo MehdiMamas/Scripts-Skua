@@ -50,7 +50,7 @@ public class PoisonForest
             Quest Q = Core.InitializeWithRetries(() => Core.EnsureLoad(1949));
             if (Q.Requirements?.FirstOrDefault(x => x != null && x.ID == 11803).Quantity != 9)
             {
-                Core.Logger("This Quest is literaly impossible until AE fixes the quest -- the quest ( when fixed will autoprogress and this message wont appear anymopre)", "PosionForest - AE Broke it");
+                Core.Logger("This Quest is literaly impossible until AE fixes the quest ( when fixed will autoprogress and this message wont appear anymopre)", "PosionForest - AE Broke it");
                 return;
             }
             else Core.GetMapItem(963, 9, "PoisonForest");
