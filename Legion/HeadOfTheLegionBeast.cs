@@ -92,9 +92,9 @@ public class HeadoftheLegionBeast
         //Adv.BestGear(RacialGearBoost.Undead);
         Core.KillMonster("sevencircleswar", "r17", "Left", "The Beast", "Beast Soul", 15, isTemp: false, publicRoom: true, log: false);
 
-        Adv.BuyItem("sevencircleswar", 1984, "Head of the Legion Beast");
+        Adv.BuyItem("sevencircleswar", 1984, HeadName);
 
-        if (wantBadge)
+        if (wantBadge && !hasBadge)
         {
             DoBadgeQuest();
         }
