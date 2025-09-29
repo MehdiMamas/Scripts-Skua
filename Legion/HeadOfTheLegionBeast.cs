@@ -65,10 +65,19 @@ public class HeadoftheLegionBeast
 
     public void LegionBeastHead(bool badge = false)
     {
-        badge = (Bot.Config?.Get<bool>("badge") ?? false) || badge;
+        const string HeadName = "Head of the Legion Beast";
+        bool hasHead = Core.CheckInventory(HeadName);
+        bool wantBadge = (Bot.Config?.Get<bool>("badge") ?? false) || badge;
+        bool hasBadge = Core.HasWebBadge(HeadName);
 
-        if (Core.CheckInventory("Head of the Legion Beast") && (!badge || Core.HasWebBadge("Head of the Legion Beast")))
+        if (hasHead && (!wantBadge || hasBadge))
             return;
+
+        if (hasHead && wantBadge && !hasBadge)
+        {
+            DoBadgeQuest();
+            return;
+        }
 
 
         Circles.CirclesWar();
@@ -87,13 +96,19 @@ public class HeadoftheLegionBeast
 
         if (badge)
         {
-            // Head of the Legion Beast (8082)
-            Core.Unbank("Head of the Legion Beast");
-            Core.EnsureAccept(8082);
-            Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("sevencircleswar", "The Beast", "Beast Slain");
-            Core.EnsureComplete(8082);
+            DoBadgeQuest();
         }
+    }
+
+    private void DoBadgeQuest()
+    {
+        // Head of the Legion Beast (8082)
+        Core.Unbank("Head of the Legion Beast");
+        Core.EnsureAccept(8082);
+        Core.EquipClass(ClassType.Solo);
+        Core.HuntMonster("sevencircleswar", "The Beast", "Beast Slain");
+        Core.EnsureComplete(8082);
+
     }
 
     public void HelmSevenCircles()
