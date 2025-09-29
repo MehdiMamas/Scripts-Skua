@@ -65,8 +65,11 @@ public class HeadoftheLegionBeast
 
     public void LegionBeastHead(bool badge = false)
     {
+        badge = (Bot.Config?.Get<bool>("badge") ?? false) || badge;
+
         if (Core.CheckInventory("Head of the Legion Beast") && (!badge || Core.HasWebBadge("Head of the Legion Beast")))
             return;
+
 
         Circles.CirclesWar();
         Core.AddDrop(HeadLegionBeast);
