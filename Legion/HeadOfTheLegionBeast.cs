@@ -94,7 +94,7 @@ public class HeadoftheLegionBeast
 
         Adv.BuyItem("sevencircleswar", 1984, "Head of the Legion Beast");
 
-        if (badge)
+        if (wantBadge)
         {
             DoBadgeQuest();
         }
