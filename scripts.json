@@ -12830,6 +12830,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/BloodSorceress.cs"
   },
   {
+    "name": "Death Knight Lord Post-update farming script",
+    "description": "Death Knight Lord, post-update farming script, deathknight lord, golden deathknight lord, silver deathknight lord, dkl, member, class",
+    "tags": [
+      "death knight lord",
+      "member",
+      "class"
+    ],
+    "path": "Other/Classes/DeathKnightLord[mem].cs",
+    "size": 6504,
+    "fileName": "DeathKnightLord[mem].cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/DeathKnightLord[mem].cs"
+  },
+  {
     "name": "ScarletSorceress",
     "description": "null",
     "tags": [
