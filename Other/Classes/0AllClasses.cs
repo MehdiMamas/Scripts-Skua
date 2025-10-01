@@ -268,6 +268,7 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Prototypes/Grimgaol.cs
 //cs_include Scripts/Story/7DeadlyDragons/Extra/HatchTheEgg.cs
 //cs_include Scripts/Other/MergeShops/InfernalArenaMerge.cs
+//cs_include Scripts/Other/Classes/DeathKnightLord[mem].cs
 #endregion includes
 
 using Skua.Core.Interfaces;
@@ -331,6 +332,8 @@ public class AllClasses
     #region Member
     private static AlphaOmega AO { get => _AO ??= new AlphaOmega(); set => _AO = value; }
     private static AlphaOmega _AO;
+    private static DeathKnightLord DKL { get => _DKL ??= new DeathKnightLord(); set => _DKL = value; }
+    private static DeathKnightLord _DKL;
     private static Acolyte Acolyte { get => _Acolyte ??= new Acolyte(); set => _Acolyte = value; }
     private static Acolyte _Acolyte;
     private static Bard Bard { get => _Bard ??= new Bard(); set => _Bard = value; }
@@ -542,7 +545,6 @@ public class AllClasses
         CheckAndExecute("Blaze Binder", () => BB.GetClass(rankUpClass));
         CheckAndExecute("The Collector", Daily.CollectorClass);
         CheckAndExecute("Cryomancer", () => Cryo.DoCryomancer(rankUpClass));
-        CheckAndExecute("Death KnightLord", Daily.DeathKnightLord);
         CheckAndExecute("Lord of Order", () => LOO.GetLoO(rankUpClass));
         Adv.GearStore(true, true);
         Core.ToBank(new[] { "Blaze Binder", "The Collector", "Cryomancer", "Death KnightLord", "Lord of Order" });
@@ -592,6 +594,7 @@ public class AllClasses
         Core.Logger("=== Doing Member Classes ===");
 
         Adv.GearStore();
+        CheckAndExecute("Death KnightLord", () => DKL.DKL());
         CheckAndExecute("Alpha Omega", () => AO.GetAlphaOmega(rankUpClass));
         CheckAndExecute("Acolyte", () => Acolyte.GetAcolyte(rankUpClass));
         CheckAndExecute("Bard", () => Bard.GetBard(rankUpClass));
