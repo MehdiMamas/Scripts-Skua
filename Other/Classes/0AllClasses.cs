@@ -172,6 +172,7 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Story/DreamPalace.cs
 //cs_include Scripts/Other/MergeShops/DreampalaceMerge.cs
 //cs_include Scripts/Other/MergeShops/BonecastleMerge.cs
+//cs_include Scripts/Other/MergeShops/BonecastleTowerMerge.cs
 //cs_include Scripts/Other/MergeShops/CelestialRealmMerge.cs
 //cs_include Scripts/Other/MergeShops/3LittleWolvesHousesMerge.cs
 //cs_include Scripts/Other/Various/Potions.cs
@@ -279,7 +280,8 @@ public class AllClasses
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
     #region Dailies
     private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
@@ -594,7 +596,6 @@ public class AllClasses
         Core.Logger("=== Doing Member Classes ===");
 
         Adv.GearStore();
-        CheckAndExecute("Death KnightLord", () => DKL.DKL());
         CheckAndExecute("Alpha Omega", () => AO.GetAlphaOmega(rankUpClass));
         CheckAndExecute("Acolyte", () => Acolyte.GetAcolyte(rankUpClass));
         CheckAndExecute("Bard", () => Bard.GetBard(rankUpClass));
@@ -603,6 +604,7 @@ public class AllClasses
         CheckAndExecute("Blood Titan", () => BT.Getclass(rankUpClass));
         CheckAndExecute("Chrono Assassin", () => CA.GetChronoAss(rankUpClass));
         CheckAndExecute("DeathKnight", () => DK.GetDK(rankUpClass));
+        CheckAndExecute("Death KnightLord", () => DKL.DKL());
         CheckAndExecute("DoomKnight", () => DoomK.GetDoomKnight(rankUpClass));
         CheckAndExecute("Drakel Warlord", () => DW.GetClass(rankUpClass));
         CheckAndExecute("Legion DoomKnight", () => LDK.GetLDK(rankUpClass));
