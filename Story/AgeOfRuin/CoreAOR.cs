@@ -1161,6 +1161,8 @@ public class CoreAOR
             return;
         }
 
+        Core.EquipClass(ClassType.Solo);
+
         // Reset potion flags
         bool needsPotion = false;
         bool potionApplied = false;
