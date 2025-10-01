@@ -568,11 +568,9 @@ public class CoreBLOD
             if (!Core.CheckInventory((int)metal))
                 Daily.MineCrafting(new[] { metal.ToString() });
             if (!Core.CheckInventory((int)metal))
-            {
                 Core.Logger($"Can't complete {fullMetalName.Split(' ')[..2].Join(' ')} Enchantment (missing {metal}).\n" +
-                        "This requires a daily, please run the bot again after the daily reset has occurred.");
-                return;
-            }
+                            "This requires a daily, please run the bot again after the daily reset has occurred.", messageBox: true, stopBot: true);
+
             Farm.BattleUnderB("Undead Energy", 25);
             SpiritOrb(5);
             Core.HuntMonster("arcangrove", "Seed Spitter", "Paladaffodil", 25);
