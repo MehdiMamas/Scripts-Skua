@@ -1008,9 +1008,9 @@ public class CoreAOR
         if (!Story.QuestProgression(10378))
         {
             Core.EnsureAccept(10378);
-            Core.HuntMonster("sanctuaryaiwass", "Leonal", "Leonal's Dream", 15);
             Core.GetMapItem(14865, map: "sanctuaryaiwass"); // Svala
             Core.GetMapItem(14866, map: "sanctuaryaiwass"); // Snowbeard
+            Core.HuntMonster("sanctuaryaiwass", "Leonal", "Leonal's Dream", 15);
             Core.EnsureComplete(10378);
         }
 
