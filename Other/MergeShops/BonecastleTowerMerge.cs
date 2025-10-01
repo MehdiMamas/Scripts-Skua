@@ -6,6 +6,8 @@ tags: bonecastle, tower, merge, towersilver, deathknight, lord, deathknights, si
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreStory.cs
+//cs_include Scripts/Story/ThroneofDarkness/CoreToD.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -43,6 +45,7 @@ public class BonecastleTowerMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        TOD.BoneTowerAll();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("towersilver", 1243, findIngredients, buyOnlyThis, buyMode: buyMode);
 
