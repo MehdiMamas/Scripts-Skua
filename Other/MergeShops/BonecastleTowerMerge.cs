@@ -72,15 +72,16 @@ public class BonecastleTowerMerge
                 case "Bonecastle Amulet":
                 case "Shadow Skull":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(4993);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
+                        Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("bonecastle", "Green Rat", "Gamey Rat Meat", 3);
                         Core.HuntMonster("bonecastle", "Undead Waiter", "Waiter's Notepad");
                         Core.HuntMonster("bonecastle", "Turtle", "Turtle's Eggs", 6);
                         Core.HuntMonster("bonecastle", "Ghoul", "Ghoul \"Vinegar\"", 6);
                         Core.HuntMonster("bonecastle", "Grateful Undead", "Spices", 2);
+                        Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("bonecastle", "The Butcher", "Bag of Bone Flour");
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -99,7 +100,12 @@ public class BonecastleTowerMerge
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
+                case "SilverSkull Amulet":
+                    Core.RegisterQuests(5010);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster("towersilver", "Bloody Scary", req.Name, req.Quantity, isTemp: req.Temp);
+                    break;
 
                 case "DeathKnight Lord Gauntlets":
                 case "DeathKnight Lord Greaves":
@@ -121,15 +127,14 @@ public class BonecastleTowerMerge
                 case "Silver DeathKnight Lord Chest Plate":
                 case "Silver DeathKnight Lord Hauberk":
                 case "Silver DeathKnight Lord Boots":
-                case "SilverSkull Amulet":
                     Core.AddDrop(
-                        "Silver DeathKnight Lord Gauntlets",
-                        "Silver DeathKnight Lord Greaves",
-                        "Silver DeathKnight Lord Chest Plate",
-                        "Silver DeathKnight Lord Hauberk",
-                        "Silver DeathKnight Lord Boots",
-                        "SilverSkull Amulet"
-                    );
+                          "Silver DeathKnight Lord Gauntlets",
+                          "Silver DeathKnight Lord Greaves",
+                          "Silver DeathKnight Lord Chest Plate",
+                          "Silver DeathKnight Lord Hauberk",
+                          "Silver DeathKnight Lord Boots",
+                          "SilverSkull Amulet"
+                      );
                     Core.HuntMonster("towersilver", "Flester the Silver", req.Name, isTemp: false);
                     break;
 
