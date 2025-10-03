@@ -2,8 +2,7 @@ name: Sync Fork
 
 on:
   schedule:
-    # Run every 10 minutes
-    - cron: '*/10 * * * *'
+    - cron: '0 0 * * *' # once a day at midnight UTC
   workflow_dispatch: # allow manual trigger
 
 jobs:
