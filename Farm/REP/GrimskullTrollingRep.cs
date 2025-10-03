@@ -151,7 +151,7 @@ public class GrimskullTrollingRep
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.SetOptions();
+        Core.SetOptions(disableClassSwap: true);
         DoGrimskullTrollingRep();
         Core.SetOptions(false);
     }
@@ -164,6 +164,6 @@ public class GrimskullTrollingRep
             return;
         }
 
-        GrimGaolRun.DoGrimGaol();
+        GrimGaolRun.DoGrimGaol(rank);
     }
 }
