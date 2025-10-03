@@ -55,7 +55,8 @@ public class VerusDoomKnightClass
     private static TerminaTempleMerge _TTMerge;
     private static DoomPirateHaulMerge DPHM { get => _DPHM ??= new DoomPirateHaulMerge(); set => _DPHM = value; }
     private static DoomPirateHaulMerge _DPHM;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -120,6 +121,8 @@ public class VerusDoomKnightClass
         // Life Carve (9417)
         if (!Story.QuestProgression(9417))
         {
+            Farm.Experience(70);
+            Farm.EvilREP();
             Bot.Quests.UpdateQuest(3773);
             Core.EnsureAccept(9417);
             Core.Logger("The map \"Wanders\", is a bit broke,\n" +
