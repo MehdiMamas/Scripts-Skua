@@ -8327,11 +8327,11 @@ public class CoreBots
         while (!Bot.ShouldExit && !Bot.TempInv.Contains(itemID, quant))
         {
             Bot.Map.GetMapItem(itemID);
-            Sleep(1000);
+            Bot.Wait.ForActionCooldown(GameActions.GetMapItem);
             attempts++;
 
             // Safety stop in case of bugged item or wrong map
-            if (attempts > quant + 10)
+            if (attempts > quant + 10 || Bot.TempInv.Contains(itemID, quant))
                 break;
         }
 
