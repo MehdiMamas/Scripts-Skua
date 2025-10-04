@@ -400,7 +400,7 @@ public class CoreArchMage
         while (!Bot.ShouldExit && !Core.CheckInventory(73333, quant))
         {
             Core.EnsureAccept(8910);
-            Core.KillNulgathFiendShard("Infernal Ether");
+                        Core.KillMonster("fiendshard", "r9", "Left", 15, "Infernal Ether");
             Core.HuntMonster("celestialarenad", "Aranx", "Celestial Ether", isTemp: false);
             Core.HuntMonster("eternalchaos", "Eternal Drakath", "Chaotic Ether", isTemp: false);
             Core.KillMonster("shadowattack", "Boss", "Left", "Death", "Mortal Ether", isTemp: false);
