@@ -39,10 +39,7 @@ public class DefaultTemplate
     public void Example(bool TestMode = false)
     {
         // Test Area vv
-
-        Core.EnsureAccept(7898);
-        Core.KillMonster("fiendshard", "r9", "Left", 15, "Nulgath's Fiend Shard Destroyed");
-        Core.KillMonster("fiendshard", "r9", "Left", "Paladin Fiend", "Fiends Fended Off", 15);
+        
         // Test Area ^^
 
         // Optional Test Mode
