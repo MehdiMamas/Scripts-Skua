@@ -4818,7 +4818,7 @@ public class CoreBots
 
         if (item is not null && !isTemp)
             AddDrop(item);
-        Bot.Events.ExtensionPacketReceived += StaffRespawnListner;
+        // Bot.Events.ExtensionPacketReceived += StaffRespawnListner;
         if (item is null)
         {
             if (log)
@@ -4867,8 +4867,11 @@ public class CoreBots
 
 
                     // Attack staff
-                    if (m?.MapID == 2 && m?.HP > 0)
-                        Bot.Kill.Monster(2);
+                    if (Bot.Player.Target?.MapID == 3 && Bot.Player.Target?.State == 2)
+                        while (!Bot.ShouldExit && Bot.Player.Target?.HP > 0)
+                            Bot.Combat.Attack(2);
+                    // if (m?.MapID == 2 && m?.HP > 0)
+                    //     Bot.Kill.Monster(2);
                     // Attack Escherion when staff is down
                     else Bot.Combat.Attack(3);
 
@@ -4914,7 +4917,7 @@ public class CoreBots
         #endregion new staff killing method
 
 
-        Bot.Events.ExtensionPacketReceived -= StaffRespawnListner;
+        // Bot.Events.ExtensionPacketReceived -= StaffRespawnListner;
         Bot.Options.AttackWithoutTarget = false;
         ToggleAggro(false);
         Jump();
