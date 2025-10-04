@@ -16357,6 +16357,34 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FiendPastMerge.cs"
   },
   {
+    "name": "Argyrons Wares Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Argyrons Wares Merge [2626] in /abaddoncave",
+    "tags": [
+      "argyrons",
+      "wares",
+      "merge",
+      "abaddoncave",
+      "arachnosapien",
+      "abaddon",
+      "hybrid",
+      "spineback",
+      "horned",
+      "tarsus",
+      "abdomen",
+      "broodmaster",
+      "venom",
+      "plague",
+      "xl",
+      "guest",
+      "abbadon",
+      "guard"
+    ],
+    "path": "Other/MergeShops/ArgyronsWaresMerge.cs",
+    "size": 6572,
+    "fileName": "ArgyronsWaresMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ArgyronsWaresMerge.cs"
+  },
+  {
     "name": "ShadowScytheGeneralMerge",
     "description": "null",
     "tags": [
