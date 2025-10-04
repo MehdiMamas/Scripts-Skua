@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 34944,
+    "size": 35003,
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreStory.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 398856,
+    "size": 398780,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -5111,7 +5111,7 @@
       "do all"
     ],
     "path": "Hollowborn/HollowbornChaosEnvoy/0RunAll.cs",
-    "size": 1913,
+    "size": 1921,
     "fileName": "0RunAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/0RunAll.cs"
   },
@@ -26519,7 +26519,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/0ArchMage.cs",
-    "size": 1140,
+    "size": 1283,
     "fileName": "0ArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/0ArchMage.cs"
   },
