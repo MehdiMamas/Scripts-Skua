@@ -5288,6 +5288,19 @@ public class CoreBots
         KillMonster("mirrorportal", ultra ? "r6" : "r4", "Right", ultra ? "Ultra Xiang" : "Chaos Lord Xiang", item, quant, isTemp, log);
     }
 
+    /// <summary>
+    /// Kills Nulgath Fiend Shards to obtain the desired item.
+    /// </summary>
+    /// <param name="item">The name of the item to obtain.</param>
+    /// <param name="quant">The desired quantity of the item.</param>
+    /// <param name="isTemp">Specifies whether the item is temporary.</param>
+    /// <param name="log"></param>
+    public void KillNulgathFiendShard(string? item = null, int quant = 1, bool isTemp = false, bool log = false)
+    {
+        //Void no longer in use) 
+        return;
+    }
+
     public void _KillForItem(Monster name, string? item, int quantity, bool isTemp = false, bool rejectElse = false, bool log = true, string? cell = null)
     {
         if (item == null) throw new ArgumentNullException(nameof(item));
