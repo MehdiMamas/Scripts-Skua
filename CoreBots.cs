@@ -8212,8 +8212,11 @@ public class CoreBots
         if (items == null)
             return;
 
-        if (Bot.Map!.Name != map)
+        if (map != null)
             Join(map);
+
+        JumpWait();
+        Sleep();
 
         foreach ((int itemID, int quant) in items)
             AcquireMapItem(itemID, quant);
@@ -8227,18 +8230,20 @@ public class CoreBots
     {
         if (Bot.TempInv.Contains(itemID, quant))
         {
-            Logger($"Map item {itemID} already acquired (x{quant})");
+            Logger($"Map item {itemID} already acquired ({quant})");
             return;
         }
 
+        int attempts = 0;
+
         while (!Bot.ShouldExit && !Bot.TempInv.Contains(itemID, quant))
         {
-            Bot.Wait.ForActionCooldown(GameActions.GetMapItem);
             Bot.Map.GetMapItem(itemID);
-            Bot.Sleep(500);
+            Bot.Wait.ForActionCooldown(GameActions.GetMapItem);
+            attempts++;
 
             // Safety stop in case of bugged item or wrong map
-            if (Bot.TempInv.Contains(itemID, quant))
+            if (attempts > quant + 10 || Bot.TempInv.Contains(itemID, quant))
                 break;
         }
 
