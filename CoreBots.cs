@@ -4818,7 +4818,7 @@ public class CoreBots
 
         if (item is not null && !isTemp)
             AddDrop(item);
-        Bot.Events.ExtensionPacketReceived += StaffRespawnListner;
+        // Bot.Events.ExtensionPacketReceived += StaffRespawnListner;
         if (item is null)
         {
             if (log)
@@ -4867,8 +4867,11 @@ public class CoreBots
 
 
                     // Attack staff
-                    if (m?.MapID == 2 && m?.HP > 0)
-                        Bot.Kill.Monster(2);
+                    if (Bot.Player.Target?.MapID == 3 && Bot.Player.Target?.State == 2)
+                        while (!Bot.ShouldExit && Bot.Player.Target?.HP > 0)
+                            Bot.Combat.Attack(2);
+                    // if (m?.MapID == 2 && m?.HP > 0)
+                    //     Bot.Kill.Monster(2);
                     // Attack Escherion when staff is down
                     else Bot.Combat.Attack(3);
 
@@ -4914,7 +4917,7 @@ public class CoreBots
         #endregion new staff killing method
 
 
-        Bot.Events.ExtensionPacketReceived -= StaffRespawnListner;
+        // Bot.Events.ExtensionPacketReceived -= StaffRespawnListner;
         Bot.Options.AttackWithoutTarget = false;
         ToggleAggro(false);
         Jump();
@@ -5297,99 +5300,8 @@ public class CoreBots
     /// <param name="log"></param>
     public void KillNulgathFiendShard(string? item = null, int quant = 1, bool isTemp = false, bool log = false)
     {
-        if (CheckInventory(item, quant))
-            return;
-
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
-
-        Join("fiendshard", "r9", "Left");
-        if (Bot.Player.Cell != "r9")
-        {
-            Jump("r9", "Left");
-            Sleep();
-        }
-
-
-        if (item != null && log)
-            FarmingLogger(item, quant);
-
-        bool PreFarmKill = false;
-
-        Monster? monster = Bot.Monsters.MapMonsters.FirstOrDefault(m => m.MapID == 15);
-
-        if (item == null)
-        {
-            _KillFiendShard();
-        }
-        else
-        {
-            if (log)
-                Logger("Killing Nulgath's FiendShard");
-            if (!isTemp)
-                AddDrop(item);
-
-            while (!Bot.ShouldExit && !CheckInventory(item, quant))
-                _KillFiendShard();
-
-            Bot.Wait.ForPickup(item);
-            Jump("Enter", "Spawn");
-            Rest();
-        }
-        Jump("Enter", "Spawn");
-        Bot.Wait.ForCellChange("Enter");
-        Bot.Wait.ForPickup(item!);
-        Bot.Options.AttackWithoutTarget = false;
-
-        void _KillFiendShard()
-        {
-            if (monster == null)
-            {
-                Logger("Monster with MapID 15 not found.");
-                return;
-            }
-            // Initialize combat (to set hp)
-            if (!PreFarmKill)
-            {
-
-                CheckCell(monster.Cell ?? "r9");
-                Logger("PreFarm kill to set Hp");
-                Bot.Kill.Monster(monster.MapID);
-                Bot.Wait.ForMonsterSpawn(monster.MapID);
-                PreFarmKill = true;
-            }
-            CheckCell(monster?.Cell ?? "r9");
-            monster = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID == 15);
-            if (monster == null)
-            {
-                Logger("Monster with MapID 15 not found after respawn.");
-                return;
-            }
-
-            if (monster?.State == 1 || monster?.State == 2)
-            {
-                CheckCell(monster.Cell ?? "r9");
-                Bot.Kill.Monster(monster.MapID);
-                Bot.Combat.CancelTarget();
-            }
-            else if (monster?.State == 0)
-            {
-                CheckCell(monster?.Cell ?? "r9");
-                Bot.Combat.Attack("*");
-                Sleep();
-            }
-        }
-
-        void CheckCell(string? cell = null, string pad = "left")
-        {
-            if (Bot.Player.Cell == cell)
-                return;
-
-            if (Bot.Player.Cell != cell)
-                Bot.Map.Jump(cell ?? "r9", pad);
-            Bot.Wait.ForCellChange(cell ?? "r9");
-            Bot.Player.SetSpawnPoint();
-        }
+        //Void no longer in use) 
+        return;
     }
 
     public void _KillForItem(Monster name, string? item, int quantity, bool isTemp = false, bool rejectElse = false, bool log = true, string? cell = null)
