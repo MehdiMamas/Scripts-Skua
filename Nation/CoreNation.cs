@@ -1216,7 +1216,7 @@ public class CoreNation
             Core.FarmingLogger(item, quant);
             while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             {
-                LogMobItemQuant(item, quant);
+                LogMobItemQuant(item!, quant);
                 if (farmGold)
                     Farm.Gold(1000000);
 
