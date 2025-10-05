@@ -4926,31 +4926,6 @@ public class CoreBots
         Rest();
         Bot.Options.HidePlayers = false;
 
-        void StaffRespawnListner(dynamic packet)
-        {
-            // Example packet: %xt%respawnMon%-1%12% (monster map ID is 12)
-            string type = packet["params"].type;
-            dynamic data = packet["params"].dataObj;
-
-            if (type is not null and "str")
-            {
-                string cmd = data[0];
-                switch (cmd)
-                {
-                    case "respawnMon":
-                        int monsterID = (int)data[2];
-                        if (monsterID == 2) // Staff monster ID
-                        {
-                            Bot.Log("Staff has respawned!");
-                            // TODO: implement actual handling later
-                        }
-
-                        // Optional: still remove it from killed list
-                        KilledMonsters.RemoveAll(id => id == monsterID);
-                        break;
-                }
-            }
-        }
 
         void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
         {
@@ -9008,8 +8983,8 @@ public class CoreBots
 
         void FaultyInput(string text) => Bot.ShowMessageBox($"Invalid Discord username detected:\n{text}!", "Invalid AutoReport Identity");
     }
- 
-   public class LockedQuestData
+
+    public class LockedQuestData
     {
         public int ID { get; set; }
         public string Name { get; set; }
