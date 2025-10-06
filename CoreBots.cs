@@ -7179,6 +7179,13 @@ public class CoreBots
                 blackListedCells.Add("Boss");
                 break;
 
+            case "yokaigrave":
+                blackListedCells.UnionWith(new[] { "Quest" });
+                break;
+
+            case "pyramid":
+                blackListedCells.UnionWith(new[] { "Game" });
+                break;
 
             case "stalagbite":
                 blackListedCells.UnionWith(new[] { "Enter", "r1", "CutShow" });
