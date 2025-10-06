@@ -1386,8 +1386,8 @@ public class Core13LoC
         Story.KillQuest(1419, "ancienttemple", "Chaotic Vulture");
 
         //Ancient Ointment
-        Story.KillQuest(1420, "ancienttemple", "Chaotic Vulture");
         Story.MapItemQuest(1420, "ancienttemple", 706, 7);
+        Story.KillQuest(1420, "ancienttemple", "Chaotic Vulture");
 
         //Anoint the Ancients
         Story.KillQuest(1421, "ancienttemple", "Chaos Troll Spirit");
@@ -1402,8 +1402,8 @@ public class Core13LoC
         Story.MapItemQuest(1451, "orecavern", 717);
 
         //Out of the Darkness
-        Story.KillQuest(1452, "orecavern", "Crashroom");
         Story.MapItemQuest(1452, "orecavern", 719, 5);
+        Story.KillQuest(1452, "orecavern", "Crashroom");
 
         //Shine a Light on Deception
         Story.MapItemQuest(1453, "orecavern", 718, 5);
@@ -2109,7 +2109,7 @@ public class Core13LoC
         Story.KillQuest(3082, "archives", "Chaos Spider");
 
         //Still More Research To Be Done!
-        Story.KillQuest(3083, "archives", new[] { "Chaos Spider", "Chaos Rat" });
+        Story.KillQuest(3083, "archives", new[] { "Chaos Rat" , "Chaos Spider" });
 
         //That's One Big Sludgebeast.
         Story.KillQuest(3084, "archives", "Sludgelord");
