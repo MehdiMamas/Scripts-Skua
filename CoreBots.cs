@@ -3431,126 +3431,117 @@ public class CoreBots
 
         if (Bot.Map.Name != map)
         {
-            Join(map, publicRoom: publicRoom);
-            Bot.Wait.ForMapLoad(map);
-            Bot.Wait.ForTrue(() => Bot.Player.Loaded, 10);
+            Join(map, publicRoom: publicRoom); // 🗺️
+            Bot.Wait.ForMapLoad(map); // ⏳
+            Bot.Wait.ForTrue(() => Bot.Player.Loaded, 10); // 🔄
         }
 
         if (!Bot.Map.Cells.Any(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)))
-            cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell;
+            cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell; // 🔀
 
-        pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
+        pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower()); // 📝
 
         if (Bot.Player.Cell != cell)
         {
-            Bot.Map.Jump(cell, pad);
-            Bot.Wait.ForCellChange(cell);
+            Bot.Map.Jump(cell, pad); // ➡️
+            Bot.Wait.ForCellChange(cell); // ⏳
         }
 
-        Bot.Player.SetSpawnPoint();
+        Bot.Player.SetSpawnPoint(); // 📍
 
         if (item != null && !isTemp)
-            AddDrop(item);
+            AddDrop(item); // 💎
 
-        ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).FirstOrDefault(x => x != null && x.Name == item);
+        ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).FirstOrDefault(x => x != null && x.Name == item); // 📦
 
-        Bot.Options.AggroAllMonsters = false;
+        Bot.Options.AggroAllMonsters = false; // ⚔️
 
-        //fuck it lets test it.
         if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
         {
-            Bot.Options.AggroMonsters = true;
-            //hide players to reduce lag (Trust Tato)
-            Bot.Options.HidePlayers = true;
+            Bot.Options.AggroMonsters = true; // 👹
+            Bot.Options.HidePlayers = true; // 🙈
         }
-        else Bot.Options.AggroMonsters = false;
+        else Bot.Options.AggroMonsters = false; // ❌
 
         List<Monster> FindMonsters()
         {
             if (!Bot.Player.Alive)
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20); // 💀➡️💖
 
             while (!Bot.ShouldExit && Bot.Player.Loaded && Bot.Player.Cell != cell)
             {
-                Bot.Map.Jump(cell, pad);
-                Bot.Wait.ForCellChange(cell);
+                Bot.Map.Jump(cell, pad); // ➡️
+                Bot.Wait.ForCellChange(cell); // ⏳
             }
 
             IEnumerable<Monster> monsters = Bot.Monsters.MapMonsters
-                .Where(x => x?.Cell == cell);
+                .Where(x => x?.Cell == cell); // 👀
 
             if (monster == "*")
-                return monsters.ToList();
+                return monsters.ToList(); // 🐺
 
             List<Monster> matched = monsters
                 .Where(x => x?.Name.FormatForCompare() == monster.FormatForCompare())
-                .ToList();
+                .ToList(); // 🎯
 
             if (matched.Count > 0)
                 return matched;
 
-            // Optional fallbacks
             matched = Bot.Monsters.MapMonsters
                 .Where(x => x?.Cell == Bot.Player.Cell)
-                .ToList();
+                .ToList(); // 🔄
 
             return matched.Count > 0
                 ? matched
-                : Bot.Monsters.MapMonsters.Where(x => x?.Name == monster).ToList();
+                : Bot.Monsters.MapMonsters.Where(x => x?.Name == monster).ToList(); // 🏹
         }
-        List<Monster> targetMonsters = FindMonsters();
+        List<Monster> targetMonsters = FindMonsters(); // 🕵️
 
         if (targetMonsters == null || !targetMonsters.Any())
         {
-            Logger($"Monster {monster} not found in cell {cell}, pad {pad} in /{map}");
+            Logger($"⚠️ Monster ${monster} not found in cell ${cell}, pad ${pad} in /${map}");
             return;
         }
-
 
         if (item == null)
         {
             while (!Bot.ShouldExit)
             {
                 if (!Bot.Player.Alive)
-                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20); // 💀➡️💖
 
                 if (cell != null && Bot.Player.Cell != cell)
                 {
-                    Bot.Map.Jump(cell, pad);
-                    Bot.Wait.ForCellChange(cell);
+                    Bot.Map.Jump(cell, pad); // ➡️
+                    Bot.Wait.ForCellChange(cell); // ⏳
                 }
 
                 if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(monster);
+                    Bot.Combat.Attack(monster); // ⚔️
 
-                // If target died -> cancel & break (move to next monster)
                 if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
                 {
-                    Sleep(200);
+                    Sleep(200); // 💤
                     break;
                 }
 
-                Sleep(200);
+                Sleep(200); // 💤
             }
 
             return;
         }
         else
         {
-
             if (monster == "*")
-            {
-                _KillForItem("*", item, quant, isTemp, log: log, cell: cell);
-            }
+                _KillForItem("*", item, quant, isTemp, log: log, cell: cell); // 🐺💎
             else
-                _KillForItem(monster, item, quant, isTemp, log: log, cell: cell);
+                _KillForItem(monster, item, quant, isTemp, log: log, cell: cell); // 🎯💎
         }
 
-        Bot.Options.AttackWithoutTarget = false;
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
+        Bot.Options.AttackWithoutTarget = false; // ⚔️❌
+        Bot.Options.AggroAllMonsters = false; // ❌
+        Bot.Options.AggroMonsters = false; // ❌
 
-        // Filter out blacklisted cells, cells with monsters, and prioritize based on conditions
         string? targetCell = Bot.Map.Cells
             .Where(c => c != null &&
                         !BlackListedJumptoCells.Contains(c) &&
@@ -3559,12 +3550,12 @@ public class CoreBots
                                  (Bot.Map.Cells.Count(cell => cell.Contains("Enter")) > 1 || !c.Contains("Enter")))
             ?? "Enter";
 
-        Bot.Map.Jump(targetCell, targetCell == "Enter" ? "Spawn" : "Left");
-        Bot.Wait.ForCellChange(targetCell);
-        Sleep();
-        JumpWait();
-        Rest();
-        Bot.Options.HidePlayers = false;
+        Bot.Map.Jump(targetCell, targetCell == "Enter" ? "Spawn" : "Left"); // ➡️
+        Bot.Wait.ForCellChange(targetCell); // ⏳
+        Sleep(); // 💤
+        JumpWait(); // 🏃‍♂️
+        Rest(); // 🛌
+        Bot.Options.HidePlayers = false; // 👀
     }
 
     /// <summary>
@@ -3581,50 +3572,50 @@ public class CoreBots
     /// <param name="publicRoom"></param>
     public void KillMonster(string map, string cell, string pad, int MonsterMapID, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
     {
-        pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
-        cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell;
+        pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower()); // 📝
+        cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell; // 🔀
 
         // Check if the item is already in inventory
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
-            return;
+            return; // 💎✅
 
         if (log)
-            FarmingLogger(item, quant);
+            FarmingLogger(item, quant); // 📝💎
 
         // Add item to drop list if it's not a temporary item
         if (item != null && !isTemp)
-            AddDrop(item);
+            AddDrop(item); // 💎🛒
 
-        ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).FirstOrDefault(x => x != null && x.Name == item);
+        ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).FirstOrDefault(x => x != null && x.Name == item); // 📦
 
         // Join the specified map, cell, and pad
         if (Bot.Map.Name != map)
-            Join(map, cell, pad, publicRoom: publicRoom);
+            Join(map, cell, pad, publicRoom: publicRoom); // 🗺️➡️
 
         // Ensure the player is in the correct cell
         if (Bot.Player.Cell != cell)
-            Bot.Map.Jump(cell, pad);
-        Bot.Wait.ForCellChange(cell);
+            Bot.Map.Jump(cell, pad); // ➡️
+        Bot.Wait.ForCellChange(cell); // ⏳
 
         // Set bot options for monster aggression
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
+        Bot.Options.AggroAllMonsters = false; // ⚔️❌
+        Bot.Options.AggroMonsters = false; // 👹❌
 
         // Define method to find all target monsters by ID
         List<Monster> FindMonsters()
         {
             return Bot.Monsters.MapMonsters
                 .Where(m => m != null && m.Cell == cell && (m.MapID == MonsterMapID || m.ID == MonsterMapID))
-                .ToList();
+                .ToList(); // 🐲
         }
 
         // Find all target monsters by ID
-        List<Monster> targetMonsters = FindMonsters();
+        List<Monster> targetMonsters = FindMonsters(); // 🕵️
 
         // Log and exit if no monsters are found
         if (!targetMonsters.Any())
         {
-            if (log) Logger($"No monsters with ID {MonsterMapID} found in cell {cell}.");
+            if (log) Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
             return;
         }
 
@@ -3632,72 +3623,71 @@ public class CoreBots
         if (item == null)
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
-                Sleep();
+                Sleep(); // 💀➡️💖
 
             if (Bot.Map.Name != map)
-                Join(map, cell, pad, publicRoom: publicRoom);
+                Join(map, cell, pad, publicRoom: publicRoom); // 🗺️➡️
 
             if (Bot.Player.Cell != cell)
-                Jump(cell, pad);
+                Jump(cell, pad); // ➡️
 
             Monster? monsterToAttack = targetMonsters.FirstOrDefault(x => x != null);
             if (monsterToAttack != null)
             {
-                Bot.Combat.Attack(monsterToAttack);
-                Sleep();
+                Bot.Combat.Attack(monsterToAttack); // ⚔️
+                Sleep(); // 💤
             }
             else
             {
-                Logger($"No monsters with ID {MonsterMapID} found in cell {cell}.");
+                Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
             }
 
         }
         else
         {
             // Handle the item drop scenario
-
             if (Bot.Map.Name != map)
-                Join(map, cell, pad, publicRoom: publicRoom);
+                Join(map, cell, pad, publicRoom: publicRoom); // 🗺️➡️
 
             if (Bot.Player.Cell != cell)
-                Jump(cell, pad);
+                Jump(cell, pad); // ➡️
 
-            while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+            while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))) // 💎🔄
             {
                 foreach (Monster targetMonster in targetMonsters)
                 {
                     while (!Bot.ShouldExit && !Bot.Player.Alive)
-                        Sleep();
+                        Sleep(); // 💀➡️💖
 
                     if (Bot.Map.Name != map)
-                        Join(map, cell, pad, publicRoom: publicRoom);
+                        Join(map, cell, pad, publicRoom: publicRoom); // 🗺️➡️
 
                     if (Bot.Player.Cell != cell)
-                        Jump(cell, pad);
+                        Jump(cell, pad); // ➡️
 
                     Monster? monsterToAttack = targetMonsters.FirstOrDefault(x => x != null);
                     if (monsterToAttack != null)
                     {
-                        Bot.Combat.Attack(monsterToAttack);
-                        Sleep();
+                        Bot.Combat.Attack(monsterToAttack); // ⚔️
+                        Sleep(); // 💤
                     }
                     else
                     {
-                        Logger($"No monsters with ID {MonsterMapID} found in cell {cell}.");
+                        Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
                     }
 
-
-                    if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+                    if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)) // 💎✅
                         break;
-
                 }
             }
-            Rest();
+            Rest(); // 🛌
         }
+
         if (item != null)
-            Bot.Wait.ForPickup(item);
+            Bot.Wait.ForPickup(item); // 💎📥
+
         // Reset attack option
-        Bot.Options.AttackWithoutTarget = false;
+        Bot.Options.AttackWithoutTarget = false; // ⚔️❌
     }
 
     /// <summary>
@@ -3714,118 +3704,117 @@ public class CoreBots
     /// <param name="publicRoom"></param>
     public void KillMonster(string map, string cell, string pad, int MonsterMapID, int ItemID = 0, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
     {
-        pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
-        cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell;
+        pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower()); // 📝
+        cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell; // 🔀
 
         // Check if the item is already in inventory
         if (ItemID != 0 && (isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant)))
-            return;
+            return; // 💎✅
 
         // Add item to drop list if it's not a temporary item
         if (ItemID != 0 && !isTemp)
-            AddDrop(ItemID);
+            AddDrop(ItemID); // 💎🛒
 
-        ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == ItemID);
+        ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x != null && x.ID == ItemID); // 📦
 
         // Join the specified map, cell, and pad
         if (Bot.Map.Name != map)
-            Join(map, cell, pad, publicRoom: publicRoom);
+            Join(map, cell, pad, publicRoom: publicRoom); // 🗺️➡️
 
         // Ensure the player is in the correct cell
         if (Bot.Player.Cell != cell)
-            Bot.Map.Jump(cell, pad);
-        Bot.Wait.ForCellChange(cell);
+            Bot.Map.Jump(cell, pad); // ➡️
+        Bot.Wait.ForCellChange(cell); // ⏳
 
         // Set bot options for monster aggression
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
+        Bot.Options.AggroAllMonsters = false; // ⚔️❌
+        Bot.Options.AggroMonsters = false; // 👹❌
 
         // Define method to find all target monsters by ID
         List<Monster> FindMonsters()
         {
             return Bot.Monsters.MapMonsters
                 .Where(m => m != null && m.Cell == cell && (m.MapID == MonsterMapID || m.ID == MonsterMapID))
-                .ToList();
+                .ToList(); // 🐲
         }
 
         // Find all target monsters by ID
-        List<Monster> targetMonsters = FindMonsters();
+        List<Monster> targetMonsters = FindMonsters(); // 🕵️
 
         // Log and exit if no monsters are found
         if (!targetMonsters.Any())
         {
-            if (log) Logger($"No monsters with ID {MonsterMapID} found in cell {cell}.");
+            if (log) Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
             return;
         }
 
         // Handle the scenario where no item is specified
         if (ItemID == 0)
         {
-
             while (!Bot.ShouldExit && !Bot.Player.Alive)
-                Sleep();
+                Sleep(); // 💀➡️💖
 
             if (Bot.Map.Name != map)
-                Join(map, cell, pad, publicRoom: publicRoom);
+                Join(map, cell, pad, publicRoom: publicRoom); // 🗺️➡️
 
             if (Bot.Player.Cell != cell)
-                Jump(cell, pad);
+                Jump(cell, pad); // ➡️
 
             Monster? monsterToAttack = targetMonsters.FirstOrDefault(x => x != null);
             if (monsterToAttack != null)
             {
-                Bot.Combat.Attack(monsterToAttack);
-                Sleep();
+                Bot.Combat.Attack(monsterToAttack); // ⚔️
+                Sleep(); // 💤
             }
             else
             {
-                Logger($"No monsters with ID {MonsterMapID} found in cell {cell}.");
+                Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
             }
         }
         else
         {
-            bool ded = false;
+            bool ded = false; // ☠️
 
             // Local method to handle the event
-            void OnMonsterKilled(int b) => ded = true;
+            void OnMonsterKilled(int b) => ded = true; // ⚔️➡️☠️
 
             Bot.Events.MonsterKilled += OnMonsterKilled;
 
-            while (!Bot.ShouldExit && (!ded || (isTemp ? !Bot.TempInv.Contains(ItemID, quant) : !CheckInventory(ItemID, quant))))
+            while (!Bot.ShouldExit && (!ded || (isTemp ? !Bot.TempInv.Contains(ItemID, quant) : !CheckInventory(ItemID, quant)))) // 💎🔄
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
-                    Sleep();
+                    Sleep(); // 💀➡️💖
 
                 if (Bot.Map.Name != map)
-                    Join(map, cell, pad, publicRoom: publicRoom);
+                    Join(map, cell, pad, publicRoom: publicRoom); // 🗺️➡️
 
                 if (Bot.Player.Cell != cell)
-                    Jump(cell, pad);
+                    Jump(cell, pad); // ➡️
 
                 Monster? monsterToAttack = targetMonsters.FirstOrDefault(x => x != null);
                 if (monsterToAttack != null)
                 {
-                    Bot.Combat.Attack(monsterToAttack);
-                    Sleep();
+                    Bot.Combat.Attack(monsterToAttack); // ⚔️
+                    Sleep(); // 💤
                 }
                 else
                 {
-                    Logger($"No monsters with ID {MonsterMapID} found in cell {cell}.");
+                    Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
                 }
 
-                if (isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant))
+                if (isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant)) // 💎✅
                     break;
             }
 
             // Unsubscribe the event to prevent memory leaks
-            Bot.Events.MonsterKilled -= OnMonsterKilled;
+            Bot.Events.MonsterKilled -= OnMonsterKilled; // 🧹
 
-            Rest();
-
-            Bot.Wait.ForPickup(ItemID);
+            Rest(); // 🛌
+            Bot.Wait.ForPickup(ItemID); // 💎📥
         }
+
         // Reset attack option
-        Bot.Options.AttackWithoutTarget = false;
+        Bot.Options.AttackWithoutTarget = false; // ⚔️❌
     }
 
     /// <summary>
@@ -3862,7 +3851,7 @@ public class CoreBots
 
         if (targetMonster == null)
         {
-            Logger($"Monster \"{monster}\" not found in /{map}.");
+            Logger($"⚠️ Monster \"{monster}\" not found in /{map}.");
 
             // Fallback to first partial name match (case-insensitive)
             Monster? fallback = Bot.Monsters.MapMonsters
@@ -3923,7 +3912,7 @@ public class CoreBots
         else
         {
             if (log)
-                FarmingLogger(item, quant);
+                FarmingLogger($"💎 {item}", quant); // 💎 logger emote
 
             while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             {
@@ -4156,7 +4145,6 @@ public class CoreBots
     // }
 
     //Non-Choose Variants
-
     public void HuntMonsterMapID(string map, int monsterMapID, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false, string pad = "Left")
     {
         // Join map if needed
@@ -4166,8 +4154,8 @@ public class CoreBots
             Bot.Wait.ForMapLoad(map);
         }
 
-        if (log)
-            FarmingLogger(item, quant);
+        if (log && item != null)
+            FarmingLogger($"💎 {item}", quant); // 💎 logger emote
 
         // Get the target monster
         Monster? target = Bot.Monsters.MapMonsters.FirstOrDefault(m => m != null && m.MapID == monsterMapID);
@@ -4181,9 +4169,7 @@ public class CoreBots
             while (!Bot.ShouldExit)
             {
                 if (!Bot.Player.Alive)
-                {
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                }
 
                 if (!string.Equals(Bot.Map.Name, map, StringComparison.OrdinalIgnoreCase))
                 {
@@ -4203,12 +4189,8 @@ public class CoreBots
                 Sleep();
 
                 if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-                {
                     return;
-                }
-
             }
-
         }
         else
         {
@@ -4219,9 +4201,7 @@ public class CoreBots
             while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             {
                 if (!Bot.Player.Alive)
-                {
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                }
 
                 if (!string.Equals(Bot.Map.Name, map, StringComparison.OrdinalIgnoreCase))
                 {
@@ -4236,25 +4216,22 @@ public class CoreBots
                 }
 
                 if (!Bot.Player!.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID)
-                {
                     Bot.Combat.Attack(target!.MapID);
-                }
 
                 Sleep();
 
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                     break;
-
             }
 
             Bot.Wait.ForDrop(item);
-            Bot.Wait.ForPickup(item);
+            Bot.Wait.ForPickup(item); // 💎📥
         }
 
         #region exit aggro
-        Bot.Options.AttackWithoutTarget = false;
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
+        Bot.Options.AttackWithoutTarget = false; // ⚔️❌
+        Bot.Options.AggroAllMonsters = false; // 👹❌
+        Bot.Options.AggroMonsters = false; // 👹❌
 
         // Filter out blacklisted cells, cells with monsters, and prioritize based on conditions
         string? targetCell = Bot.Map.Cells
@@ -4265,17 +4242,14 @@ public class CoreBots
                                  (Bot.Map.Cells.Count(cell => cell.Contains("Enter")) > 1 || !c.Contains("Enter")))
             ?? "Enter";
 
-        Bot.Map.Jump(targetCell, targetCell == "Enter" ? "Spawn" : "Left");
-        Bot.Wait.ForCellChange(targetCell);
-        Sleep();
+        Bot.Map.Jump(targetCell, targetCell == "Enter" ? "Spawn" : "Left"); // ➡️
+        Bot.Wait.ForCellChange(targetCell); // ⏳
+        Sleep(); // 💤
         JumpWait();
-        Rest();
+        Rest(); // 🛌
         Bot.Options.HidePlayers = false;
         #endregion exit aggro
-
     }
-
-
 
     /// <summary>
     /// Hunts monsters based on the requirements of a specified quest and an optional array of map and monster names.
@@ -4287,7 +4261,7 @@ public class CoreBots
         Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
         if (quest == null)
         {
-            Logger($"Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
+            Logger($"❌ Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true); // ❌
             return;
         }
 
@@ -4304,9 +4278,7 @@ public class CoreBots
                                 .Where(x => x != null && !x.Temp)
                                 .Select(x => x.ID)
                                 .Distinct()
-                                .ToArray());
-
-
+                                .ToArray()); // 💎🛒
 
         // If no MapMonsterClassPairs are provided, auto-generate default values
         if (MapMonsterClassPairs.Length == 0)
@@ -4322,19 +4294,19 @@ public class CoreBots
             var (mapName, monsterName, classType) = MapMonsterClassPairs[i];
 
             if (CheckInventory(requirement.ID, requirement.Quantity))
-                continue;
+                continue; // 💎✅
 
             // Equip the class before hunting
-            EquipClass(classType);
+            EquipClass(classType); // 🛡️⚔️
 
             if (!Bot.Quests.IsInProgress(questId))
-                EnsureAccept(questId);
+                EnsureAccept(questId); // 📝
 
-            HuntMonster(mapName ?? Bot.Map.Name, monsterName ?? "*", requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp);
+            HuntMonster(mapName ?? Bot.Map.Name, monsterName ?? "*", requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp); // ⚔️💎
         }
 
         if (!Bot.Quests.EnsureComplete(questId))
-            EnsureCompleteMulti(questId);
+            EnsureCompleteMulti(questId); // 🏆
     }
 
     /// <summary>
@@ -4349,7 +4321,7 @@ public class CoreBots
         Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questId));
         if (quest == null)
         {
-            Logger($"Quest {questId} not found");
+            Logger($"⚠️ Quest {questId} not found"); // ⚠️
             return;
         }
 
@@ -4359,20 +4331,20 @@ public class CoreBots
         // Ensure that there are requirements to hunt
         if (allRequirements.Count == 0)
         {
-            Logger($"Quest {questId} has no requirements.");
+            Logger($"⚠️ Quest {questId} has no requirements."); // ⚠️
             return;
         }
 
         // Unbank the required items
         var itemsToUnbank = allRequirements.Select(x => x.ID).Distinct().ToArray();
-        Unbank(itemsToUnbank);
+        Unbank(itemsToUnbank); // 🏦➡️👜
 
         // Add non-temp items to the drop list
         Bot.Drops.Add(allRequirements
             .Where(x => !x.Temp)
             .Select(x => x.ID)
             .Distinct()
-            .ToArray());
+            .ToArray()); // 📦🛒
 
         // Process each requirement for hunting
         foreach (var requirement in quest.Requirements)
@@ -4382,15 +4354,15 @@ public class CoreBots
             string huntMonsterName = monsterName ?? "*";
 
             if (!Bot.Quests.EnsureAccept(questId))
-                EnsureAccept(questId);
+                EnsureAccept(questId); // 📝✅
 
-            HuntMonster(huntMapName, huntMonsterName, requirement.Name ?? "", requirement.Quantity, requirement.Temp, log);
+            HuntMonster(huntMapName, huntMonsterName, requirement.Name ?? "", requirement.Quantity, requirement.Temp, log); // ⚔️🐲💎
         }
 
         // Ensure quest completion if possible
         if (Bot.Quests.CanCompleteFullCheck(questId))
         {
-            EnsureCompleteMulti(questId);
+            EnsureCompleteMulti(questId); // 🏁📜
         }
     }
 
@@ -4408,58 +4380,37 @@ public class CoreBots
         Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
         if (quest == null)
         {
-            Logger($"Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
+            Logger($"⚠️💀 Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
             return;
         }
 
-        // Ensure quest.Requirements and quest.Rewards are not null or empty
         if (quest.Requirements == null || quest.Requirements.Count == 0)
         {
-            Logger($"Quest with ID [{questId}] has no requirements.", stopBot: true);
+            Logger($"⚠️👻 Quest with ID [{questId}] has no requirements.", stopBot: true);
             return;
         }
 
         if (quest.Rewards == null || quest.Rewards.Count == 0)
         {
-            Logger($"Quest with ID [{questId}] has no rewards.", stopBot: true);
+            Logger($"⚠️🎁 Quest with ID [{questId}] has no rewards.", stopBot: true);
             return;
         }
 
-        // Combine quest.AcceptRequirements and quest.Requirements
         var allRequirements = quest.AcceptRequirements.Concat(quest.Requirements).ToList();
 
-        // Add reward to itemsToUnbank if specified
         if (!string.IsNullOrEmpty(reward))
-        {
-            allRequirements.AddRange(quest.Rewards
-                .Where(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase)));
-        }
+            allRequirements.AddRange(quest.Rewards.Where(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase)));
 
-        // Unbank required items
         var itemsToUnbank = allRequirements.Select(x => x.ID).Distinct().ToArray();
         Unbank(itemsToUnbank);
 
-        // Add non-temp items to the drop pickup list
-        Bot.Drops.Add(allRequirements
-            .Where(x => x != null && !x.Temp)
-            .Select(x => x.Name)
-            .Distinct()
-            .ToArray());
+        Bot.Drops.Add(allRequirements.Where(x => x != null && !x.Temp).Select(x => x.Name).Distinct().ToArray());
 
-
-        // Auto-generate default map-monster-class pairs if not provided
         if (mapMonsterClassPairs.Length == 0)
-        {
-            mapMonsterClassPairs = quest.Requirements
-                .Select(_ => ("default_map", "default_monster", ClassType.Solo))
-                .ToArray();
-        }
+            mapMonsterClassPairs = quest.Requirements.Select(_ => ("default_map", "default_monster", ClassType.Solo)).ToArray();
         else if (mapMonsterClassPairs.Length > quest.Requirements.Count)
-        {
-            Logger($"Warning: More map-monster-class pairs provided than quest requirements. Extra pairs will be ignored.", stopBot: false);
-        }
+            Logger($"⚠️🛑 More map-monster-class pairs provided than quest requirements. Extra pairs will be ignored.", stopBot: false);
 
-        // Process each map-monster-class pair
         for (int i = 0; i < mapMonsterClassPairs.Length && i < quest.Requirements.Count; i++)
         {
             ItemBase requirement = quest.Requirements[i];
@@ -4468,20 +4419,18 @@ public class CoreBots
             if (CheckInventory(requirement.ID, requirement.Quantity))
                 continue;
 
-            // Ensure the quest is accepted if not in progress
             if (!Bot.Quests.IsInProgress(questId))
                 EnsureAccept(questId);
 
-            // Equip the appropriate class and hunt the monster
             EquipClass(classType);
             HuntMonster(mapName, monsterName, requirement.Name, requirement.Quantity, requirement.Temp);
         }
 
-        // Complete the quest, retrying if necessary
         if (!Bot.Quests.EnsureComplete(questId, reward != null
                     ? quest.Rewards.FirstOrDefault(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase))?.ID ?? -1
                     : -1))
         {
+            Logger($"🛡️✅ Retry completing quest {questId} with reward {reward ?? "none"}");
             EnsureCompleteMulti(
                 questId,
                 itemID: reward != null
@@ -4505,76 +4454,50 @@ public class CoreBots
         Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
         if (quest == null)
         {
-            Logger($"Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
+            Logger($"⚠️💀 Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
             return;
         }
 
-        // Ensure quest.Requirements and quest.Rewards are not null or empty
         if (quest.Requirements == null || quest.Requirements.Count == 0)
         {
-            Logger($"Quest with ID [{questId}] has no requirements.", stopBot: true);
+            Logger($"⚠️👻 Quest with ID [{questId}] has no requirements.", stopBot: true);
             return;
         }
 
         if (quest.Rewards == null || quest.Rewards.Count == 0)
         {
-            Logger($"Quest with ID [{questId}] has no rewards.", stopBot: true);
+            Logger($"⚠️🎁 Quest with ID [{questId}] has no rewards.", stopBot: true);
             return;
         }
 
-        // Combine quest.AcceptRequirements and quest.Requirements
         var allRequirements = quest.AcceptRequirements.Concat(quest.Requirements).ToList();
 
-        // Add reward to itemsToUnbank if specified
         if (!string.IsNullOrEmpty(reward))
+            allRequirements.AddRange(quest.Rewards.Where(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase)));
+
+        Unbank(allRequirements.Select(x => x.ID).Distinct().ToArray());
+        Bot.Drops.Add(allRequirements.Where(x => !x.Temp).Select(x => x.Name).Distinct().ToArray());
+
+        mapName ??= "default_map";
+        monsterName ??= "*";
+
+        foreach (var requirement in quest.Requirements)
         {
-            allRequirements.AddRange(quest.Rewards
-                .Where(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase)));
-        }
-
-        // Unbank required items
-        var itemsToUnbank = allRequirements.Select(x => x.ID).Distinct().ToArray();
-        Unbank(itemsToUnbank);
-
-        // Add non-temp items to the drop pickup list
-        Bot.Drops.Add(allRequirements
-            .Where(x => x != null && !x.Temp)
-            .Select(x => x.Name)
-            .Distinct()
-            .ToArray());
-
-
-
-        // Auto-generate default map-monster-class pairs if not provided
-        if (string.IsNullOrEmpty(mapName) || string.IsNullOrEmpty(monsterName))
-        {
-            mapName ??= "default_map";
-            monsterName ??= "*";
-        }
-
-        // Process each requirement
-        for (int i = 0; i < quest.Requirements.Count; i++)
-        {
-            ItemBase requirement = quest.Requirements[i];
-
-            // Skip if the required item is already in inventory
             if (CheckInventory(requirement.ID, requirement.Quantity))
                 continue;
 
-            // Ensure the quest is accepted if not in progress
             if (!Bot.Quests.IsInProgress(questId))
                 EnsureAccept(questId);
 
-            // Equip the appropriate class and hunt the monster
-            EquipClass(ClassType.Solo); // Default class, can be adjusted if needed
-            HuntMonster(mapName, monsterName, requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp, log);
+            EquipClass(ClassType.Solo);
+            HuntMonster(mapName, monsterName, requirement.Name ?? "", requirement.Quantity, requirement.Temp, log);
         }
 
-        // Complete the quest, retrying if necessary
         if (!Bot.Quests.EnsureComplete(questId, reward != null
-                    ? quest.Rewards.FirstOrDefault(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase))?.ID ?? -1
-                    : -1))
+            ? quest.Rewards.FirstOrDefault(x => x.Name.Equals(reward, StringComparison.OrdinalIgnoreCase))?.ID ?? -1
+            : -1))
         {
+            Logger($"🛡️✅ Retrying completion of quest {questId} with reward {reward ?? "none"}");
             EnsureCompleteMulti(
                 questId,
                 itemID: reward != null
@@ -4583,7 +4506,6 @@ public class CoreBots
             );
         }
     }
-
     //Choose Variants - Int
 
     /// <summary>
@@ -4598,59 +4520,35 @@ public class CoreBots
         Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
         if (quest == null)
         {
-            Logger($"Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
+            Logger($"⚠️💀 Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
             return;
         }
 
-        // Ensure quest.Requirements and quest.Rewards are not null or empty
         if (quest.Requirements == null || quest.Requirements.Count == 0)
         {
-            Logger($"Quest with ID [{questId}] has no requirements.", stopBot: true);
+            Logger($"⚠️👻 Quest with ID [{questId}] has no requirements.", stopBot: true);
             return;
         }
 
         if (quest.Rewards == null || quest.Rewards.Count == 0)
         {
-            Logger($"Quest with ID [{questId}] has no rewards.", stopBot: true);
+            Logger($"⚠️🎁 Quest with ID [{questId}] has no rewards.", stopBot: true);
             return;
         }
 
-        // Combine quest.AcceptRequirements and quest.Requirements
         var allRequirements = quest.AcceptRequirements.Concat(quest.Requirements).ToList();
 
-        // Add reward to itemsToUnbank if specified
         if (rewardId > 0)
-        {
-            allRequirements.AddRange(quest.Rewards
-                .Where(x => x.ID == rewardId));
-        }
+            allRequirements.AddRange(quest.Rewards.Where(x => x.ID == rewardId));
 
-        // Unbank required items
-        var itemsToUnbank = allRequirements.Select(x => x.ID).Distinct().ToArray();
-        Unbank(itemsToUnbank);
+        Unbank(allRequirements.Select(x => x.ID).Distinct().ToArray());
+        Bot.Drops.Add(allRequirements.Where(x => !x.Temp).Select(x => x.Name).Distinct().ToArray());
 
-        // Add non-temp items to the drop pickup list
-        Bot.Drops.Add(allRequirements
-            .Where(x => x != null && !x.Temp)
-            .Select(x => x.Name)
-            .Distinct()
-            .ToArray());
-
-
-
-        // Auto-generate default map-monster-class pairs if not provided
         if (mapMonsterClassPairs.Length == 0)
-        {
-            mapMonsterClassPairs = quest.Requirements
-                .Select(_ => ("default_map", "default_monster", ClassType.Solo))
-                .ToArray();
-        }
+            mapMonsterClassPairs = quest.Requirements.Select(_ => ("default_map", "default_monster", ClassType.Solo)).ToArray();
         else if (mapMonsterClassPairs.Length > quest.Requirements.Count)
-        {
-            Logger($"Warning: More map-monster-class pairs provided than quest requirements. Extra pairs will be ignored.", stopBot: false);
-        }
+            Logger($"⚠️🛑 More map-monster-class pairs provided than quest requirements. Extra pairs will be ignored.", stopBot: false);
 
-        // Process each map-monster-class pair
         for (int i = 0; i < mapMonsterClassPairs.Length && i < quest.Requirements.Count; i++)
         {
             ItemBase requirement = quest.Requirements[i];
@@ -4659,20 +4557,18 @@ public class CoreBots
             if (CheckInventory(requirement.ID, requirement.Quantity))
                 continue;
 
-            // Ensure the quest is accepted if not in progress
             if (!Bot.Quests.IsInProgress(questId))
                 EnsureAccept(questId);
 
-            // Equip the appropriate class and hunt the monster
             EquipClass(classType);
-            HuntMonster(mapName ?? "default_map", monsterName ?? "*", requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp, log: false);
+            HuntMonster(mapName ?? "default_map", monsterName ?? "*", requirement.Name ?? "", requirement.Quantity, requirement.Temp);
         }
 
-        // Complete the quest, retrying if necessary
         if (!Bot.Quests.EnsureComplete(questId, rewardId > 0
-                    ? quest.Rewards.FirstOrDefault(x => x.ID == rewardId)?.ID ?? -1
-                    : -1))
+            ? quest.Rewards.FirstOrDefault(x => x.ID == rewardId)?.ID ?? -1
+            : -1))
         {
+            Logger($"🛡️✅ Retrying completion of quest {questId} with reward ID {rewardId}");
             EnsureCompleteMulti(
                 questId,
                 itemID: rewardId > 0
@@ -4696,76 +4592,49 @@ public class CoreBots
         Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
         if (quest == null)
         {
-            Logger($"Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
+            Logger($"⚠️💀 Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
             return;
         }
 
-        // Ensure quest.Requirements and quest.Rewards are not null or empty
         if (quest.Requirements == null || quest.Requirements.Count == 0)
         {
-            Logger($"Quest with ID [{questId}] has no requirements.", stopBot: true);
+            Logger($"⚠️👻 Quest with ID [{questId}] has no requirements.", stopBot: true);
             return;
         }
 
         if (quest.Rewards == null || quest.Rewards.Count == 0)
         {
-            Logger($"Quest with ID [{questId}] has no rewards.", stopBot: true);
+            Logger($"⚠️🎁 Quest with ID [{questId}] has no rewards.", stopBot: true);
             return;
         }
 
-        // Combine quest.AcceptRequirements and quest.Requirements
         var allRequirements = quest.AcceptRequirements.Concat(quest.Requirements).ToList();
-
-        // Add reward to itemsToUnbank if specified
         if (rewardId > 0)
+            allRequirements.AddRange(quest.Rewards.Where(x => x.ID == rewardId));
+
+        Unbank(allRequirements.Select(x => x.ID).Distinct().ToArray());
+        Bot.Drops.Add(allRequirements.Where(x => !x.Temp).Select(x => x.Name).Distinct().ToArray());
+
+        mapName ??= "default_map";
+        monsterName ??= "*";
+
+        foreach (ItemBase requirement in quest.Requirements)
         {
-            allRequirements.AddRange(quest.Rewards
-                .Where(x => x.ID == rewardId));
-        }
-
-        // Unbank required items
-        var itemsToUnbank = allRequirements.Select(x => x.ID).Distinct().ToArray();
-        Unbank(itemsToUnbank);
-
-        // Add non-temp items to the drop pickup list
-        Bot.Drops.Add(allRequirements
-            .Where(x => x != null && !x.Temp)
-            .Select(x => x.Name)
-            .Distinct()
-            .ToArray());
-
-
-
-        // Auto-generate default map-monster-class pairs if not provided
-        if (string.IsNullOrEmpty(mapName) || string.IsNullOrEmpty(monsterName))
-        {
-            mapName ??= "default_map";
-            monsterName ??= "*";
-        }
-
-        // Process each requirement
-        for (int i = 0; i < quest.Requirements.Count; i++)
-        {
-            ItemBase requirement = quest.Requirements[i];
-
-            // Skip if the required item is already in inventory
             if (CheckInventory(requirement.ID, requirement.Quantity))
                 continue;
 
-            // Ensure the quest is accepted if not in progress
             if (!Bot.Quests.IsInProgress(questId))
                 EnsureAccept(questId);
 
-            // Equip the appropriate class and hunt the monster
-            EquipClass(ClassType.Solo); // Default class, can be adjusted if needed
+            EquipClass(ClassType.Solo);
             HuntMonster(mapName, monsterName, requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp, log);
         }
 
-        // Complete the quest, retrying if necessary
         if (!Bot.Quests.EnsureComplete(questId, rewardId > 0
-                    ? quest.Rewards.FirstOrDefault(x => x.ID == rewardId)?.ID ?? -1
-                    : -1))
+            ? quest.Rewards.FirstOrDefault(x => x.ID == rewardId)?.ID ?? -1
+            : -1))
         {
+            Logger($"🛡️✅ Retrying completion of quest {questId} with reward ID {rewardId}");
             EnsureCompleteMulti(
                 questId,
                 itemID: rewardId > 0
@@ -4812,30 +4681,27 @@ public class CoreBots
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
-        if (!FromSupplies)
-            if (item is not null && log)
-                FarmingLogger(item, quant);
+        if (!FromSupplies && item != null && log)
+            FarmingLogger($"⚔️ {item}", quant);
 
-        if (item is not null && !isTemp)
+        if (item != null && !isTemp)
             AddDrop(item);
-        // Bot.Events.ExtensionPacketReceived += StaffRespawnListner;
-        if (item is null)
+
+        if (item == null)
         {
             if (log)
-                Logger("Killing Escherion");
+                Logger("💀 Killing Escherion");
 
             _KillEscherion();
         }
         else
         {
             _KillEscherion(item, quant, isTemp);
-
             Rest();
         }
 
         void _KillEscherion(string? item = null, int quant = 1, bool isTemp = false)
         {
-            #region new staff killing method
             Bot.Options.AggroMonsters = true;
 
             if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
@@ -4850,8 +4716,6 @@ public class CoreBots
                 if (Bot.Map.Name != "escherion")
                 {
                     Join("escherion", "Boss", "Left");
-
-                    // CutScene (due to quest progress) -- attempted fix
                     Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                     Bot.Sleep(1500);
                     if (Bot.Player?.Cell == "Cut1")
@@ -4861,7 +4725,7 @@ public class CoreBots
                     }
                 }
 
-                if (!string.Equals(Bot.Player?.Cell, "Boss", StringComparison.Ordinal))
+                if (Bot.Player?.Cell != "Boss")
                 {
                     Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                     Bot.Wait.ForCellChange("Boss");
@@ -4869,7 +4733,7 @@ public class CoreBots
 
                 foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
                 {
-                    if (m == null || m?.HP <= 0)
+                    if (m == null || m.HP <= 0)
                         continue;
 
                     if (!(Bot.Player?.Alive ?? false))
@@ -4884,7 +4748,6 @@ public class CoreBots
                         Bot.Wait.ForCellChange("Boss");
                     }
 
-                    // Attack staff
                     Monster? target = Bot.Player?.Target;
                     if ((target?.MapID ?? -1) == 3 && (target?.State ?? -1) == 2)
                     {
@@ -4893,15 +4756,12 @@ public class CoreBots
                     }
                     else
                     {
-                        // Attack Escherion when staff is down
                         Bot.Combat.Attack(3);
                     }
 
-
-
                     if (item == null)
                     {
-                        Logger("No item selected, killing Escherion once");
+                        if (log) Logger("💀 No item selected, killing Escherion once");
                         done = true;
                         break;
                     }
@@ -4915,35 +4775,11 @@ public class CoreBots
                 }
             }
 
-            // Sell voucher area
-            if (item != "Voucher of Nulgath" && SellVoucher && CheckInventory("Voucher of Nulgath"))
-            {
-                while (!Bot.ShouldExit
-                    && ((Bot.Player?.HasTarget ?? false) || (Bot.Player?.InCombat ?? false))
-                    && !string.Equals(Bot.Player?.Cell, "Enter", StringComparison.Ordinal))
-                {
-                    Bot.Combat.CancelTarget();
-                    Bot.Wait.ForCombatExit();
-                    JumpWait();
-                    Sleep();
-                }
-
-                if ((Bot.Player?.Gold ?? 0) < 100000000)
-                {
-                    Bot.Wait.ForPickup("Voucher of Nulgath");
-                    SellItem("Voucher of Nulgath", all: true);
-                    Bot.Wait.ForItemSell();
-                }
-            }
-            DoSwindlesReturnArea(ReturnDuring, ReturnItem);
+            Bot.Options.AggroMonsters = false;
+            if (!isTemp && item != null)
+                Bot.Wait.ForPickup(item);
         }
-        Bot.Options.AggroMonsters = false;
-        if (!isTemp && item != null)
-            Bot.Wait.ForPickup(item);
-        #endregion new staff killing method
 
-
-        // Bot.Events.ExtensionPacketReceived -= StaffRespawnListner;
         Bot.Options.AttackWithoutTarget = false;
         ToggleAggro(false);
         Jump();
@@ -4951,59 +4787,7 @@ public class CoreBots
         JumpWait();
         Rest();
         Bot.Options.HidePlayers = false;
-
-
-        void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
-        {
-            // Return if the policy isn't active or required items are missing
-            if (!returnPolicyActive || !CheckInventory(new[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20) }))
-                return;
-
-            bool retry = true;
-
-            while (!Bot.ShouldExit && retry)
-            {
-                retry = false; // Reset retry flag
-                ResetQuest(7551);
-                DarkMakaiItem("Dark Makai Rune");
-
-                // Load quest and find rewards
-                Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
-                if (quest == null)
-                {
-                    Logger("Failed to load quest 7551, retrying...");
-                    Sleep();
-                    retry = true;
-                    continue;
-                }
-
-                // Handle null `item` by skipping directly to reward selection
-                ItemBase? targetReward = item == null
-                    ? null
-                    : quest.Rewards.FirstOrDefault(r => r.Name == item && r.Name != "Receipt of Swindle");
-
-                int rewardID = targetReward?.ID ??
-                               quest.Rewards.FirstOrDefault(r => !CheckInventory(r.ID, r.MaxStack))?.ID ?? -1;
-
-                if (rewardID != -1 && Bot.Quests.CanCompleteFullCheck(7551))
-                {
-                    Logger($"Completing with: {quest.Rewards.First(r => r.ID == rewardID).Name} [ID: {rewardID}]");
-                    EnsureComplete(7551, rewardID);
-                }
-                else
-                {
-                    Logger("All rewards maxed. Completing with fallback reward ID: -1 (\"Receipt of Swindle\").");
-                    EnsureComplete(7551);
-                }
-            }
-        }
-
-
-        string Uni(int nr)
-            => $"Unidentified {nr}";
-
     }
-
 
     /// <summary>
     /// Kill Vath for the desired item
@@ -5021,82 +4805,54 @@ public class CoreBots
         Bot.Wait.ForMapLoad("stalagbite");
         Jump("r2", "Left");
         Bot.Wait.ForCellChange("r2");
-        bool PreFarmKill = false;
 
-        Monster? Vath = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID is 7);
-        Monster? Stalagbite = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID is 8);
-        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
+        if (item == null)
         {
-            Bot.Options.AggroMonsters = true;
-            //hide players to reduce lag (Trust Tato)
-            Bot.Options.HidePlayers = true;
-        }
-        else Bot.Options.AggroMonsters = false;
-        if (item is null)
-        {
-            if (log)
-                Logger("Killing Vath");
-            KillVath();
+            if (log) Logger("⚡ Killing Vath");
+            KillVathInternal();
         }
         else
         {
             if (!isTemp)
                 AddDrop(item);
             if (log)
-                Logger($"Killing Vath for {item} ({dynamicQuant(item, isTemp)}/{quant}) [Temp = {isTemp}]");
+                Logger($"⚡ Killing Vath for {item} ({dynamicQuant(item, isTemp)}/{quant}) [Temp = {isTemp}]");
             while (!Bot.ShouldExit && !CheckInventory(item, quant))
-                KillVath();
+                KillVathInternal();
         }
+
         Bot.Options.AttackWithoutTarget = false;
         Bot.Options.AggroMonsters = false;
         Bot.Options.HidePlayers = false;
         JumpWait();
-        void KillVath()
+
+        void KillVathInternal()
         {
-            if (Bot.Map.Name is not "stalagbite")
+            if (Bot.Map.Name != "stalagbite")
             {
                 Join("stalagbite");
                 Bot.Wait.ForMapLoad("stalagbite");
                 Sleep();
             }
 
-            if (Bot.Player.Cell is not "r2")
+            if (Bot.Player.Cell != "r2")
             {
                 Jump("r2");
                 Bot.Wait.ForCellChange("r2");
                 Sleep();
             }
 
-            // Initialize combat (to set hp)
-            if (!PreFarmKill && Stalagbite is not null)
+            Monster? vath = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID == 7);
+            Monster? stalagbite = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID == 8);
+
+            if (stalagbite != null)
             {
-                Bot.Kill.Monster(Stalagbite);
-                PreFarmKill = true;
-            }
-
-            Stalagbite = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID is 8);
-            Vath = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID is 7);
-
-            // if (Stalagbite is not null && Stalagbite.State is 1 or 2)
-            // {
-            //     Bot.Kill.Monster(Stalagbite);
-            //     Bot.Combat.CancelTarget();
-            // }
-            // else if (Vath is not null && Stalagbite is not null && Vath.State is not 0 && Stalagbite.State is 0)
-            // {
-            //     Bot.Combat.Attack(Vath);
-            //     Sleep();
-            // }
-
-            if (Stalagbite != null)
-            {
-                Bot.Wait.ForMonsterSpawn(Stalagbite.Name);
-                if (Vath is not null)
-                    Bot.Combat.Attack(Stalagbite.State is 1 or 2 ? Stalagbite : Vath);
+                Bot.Wait.ForMonsterSpawn(stalagbite.Name);
+                if (vath != null)
+                    Bot.Combat.Attack(stalagbite.State is 1 or 2 ? stalagbite : vath);
                 Sleep();
             }
         }
-
     }
 
     /// <summary>
@@ -5116,8 +4872,7 @@ public class CoreBots
 
         if (item == null)
         {
-            if (log)
-                Logger("Killing Kitsune");
+            if (log) Logger("🌀 Killing Kitsune");
             Bot.Kill.Monster("Kitsune");
         }
         else
@@ -5125,37 +4880,27 @@ public class CoreBots
             if (!isTemp)
                 AddDrop(item);
             if (log)
-                Logger($"Killing Kitsune for {item} ({dynamicQuant(item, isTemp)}/{quant}) [Temp = {isTemp}]");
+                Logger($"🌀 Killing Kitsune for {item} ({dynamicQuant(item, isTemp)}/{quant}) [Temp = {isTemp}]");
             while (!Bot.ShouldExit && !CheckInventory(item, quant))
                 Bot.Combat.Attack("*");
         }
+
         Bot.Events.ExtensionPacketReceived -= KitsuneListener;
 
         void KitsuneListener(dynamic packet)
         {
             string type = packet["params"].type;
             dynamic data = packet["params"].dataObj;
-            if (type is not null and "json")
+            if (type == "json")
             {
                 string cmd = data.cmd.ToString();
-                switch (cmd)
+                if (cmd == "ct" && data.a != null)
                 {
-                    case "ct":
-                        if (data.a is not null)
-                        {
-                            foreach (dynamic a in data.a)
-                            {
-                                if (a is null)
-                                    continue;
-
-                                if (a.aura is not null && (string)a.aura["nam"] is "Shapeshifted")
-                                {
-                                    Bot.Combat.StopAttacking = ((string)a.cmd)[^0] == '+';
-                                    break;
-                                }
-                            }
-                        }
-                        break;
+                    foreach (dynamic a in data.a)
+                    {
+                        if (a?.aura?["nam"]?.ToString() == "Shapeshifted")
+                            Bot.Combat.StopAttacking = ((string)a.cmd)[^0] == '+';
+                    }
                 }
             }
         }
@@ -5176,12 +4921,18 @@ public class CoreBots
         EquipClass(ClassType.Solo);
         Join("trigoras");
 
+        if (Phase == 1)
+            Logger("⚔️ Killing Trigoras Phase 1");
+        else
+            Logger("⚔️ Killing Trigoras Phase 2");
+
         while (!Bot.ShouldExit && !CheckInventory(item, quant))
         {
             Jump(Phase == 1 ? "r4" : "r4a", "Left");
             Bot.Combat.Attack("trigoras");
             Bot.Wait.ForCellChange(Phase == 1 ? "r4a" : "Enter");
         }
+
         Bot.Wait.ForCellChange(Phase == 1 ? "r4a" : "Enter");
         JumpWait();
     }
@@ -5192,7 +4943,7 @@ public class CoreBots
             return;
 
         List<string> DOTClasses = new()
-        {
+    {
         "ShadowStalker of Time",
         "ShadowWeaver of Time",
         "ShadowWalker of Time",
@@ -5209,37 +4960,34 @@ public class CoreBots
         "Void Highlord",
     };
 
-        // Check if the bot has any of the classes from the DOTClasses list
         bool hasAnyClass = DOTClasses.Any(c => CheckInventory(c));
 
         if (!hasAnyClass)
         {
+            Logger("⚠️ Damage over Time class / VHL not found. Check the logs for suggestions. Stopping.", messageBox: true, stopBot: true);
             Logger("--------------------------------");
-            Logger("Possible classes for DoomKitten:\n" + string.Join("\n", DOTClasses));
+            Logger(string.Join("\n", DOTClasses));
             Logger("--------------------------------");
-
-            Logger($"'Damage over Time' class / VHL not found. See the logs to see suggestions. Please get one and run the bot again. Stopping.", messageBox: true, stopBot: true);
-            return; // Stop execution as the bot doesn't have any of the required classes.
+            return;
         }
 
         InventoryItem? classItem = null;
         foreach (string className in DOTClasses)
         {
-            classItem = Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == className.ToLower().Trim() && i.Category == ItemCategory.Class);
-
+            classItem = Bot.Inventory.Items.Find(i => i.Name.Equals(className, StringComparison.OrdinalIgnoreCase) && i.Category == ItemCategory.Class);
             if (classItem != null)
             {
                 Equip(classItem.Name);
 
-                if (className == "DragonSoul Shinobi" || className == "Shadow Dragon Shinobi")
+                if (className is "DragonSoul Shinobi" or "Shadow Dragon Shinobi")
                 {
-                    Logger("Due to the nature of this class and the hit range of the kitten, this is basically RNG gl!");
+                    Logger("🎯 RNG Gl due to class and kitten hit range!");
                     Join("doomkitten");
-
                     Bot.Skills.StartAdvanced("4 | 1 | 3M<30 | 2H<30");
+
                     if (item == null)
                     {
-                        Logger("No item selected, killing DoomKitten once");
+                        Logger("🎯 No item selected, killing DoomKitten once");
                         Bot.Combat.Attack("*");
                         Bot.Sleep(500);
                     }
@@ -5253,18 +5001,14 @@ public class CoreBots
                     }
                 }
                 else
+                {
                     HuntMonster("doomkitten", "DoomKitten", item, quant, isTemp, log);
-                return; // Exit the method after handling the class.
+                }
+                return;
             }
         }
 
-        if (classItem == null)
-        {
-            Logger("Could not find any of the Damage over Time classes in the bot's inventory. Stopping.", messageBox: true, stopBot: true);
-            return; // Stop execution as the bot doesn't have any of the required classes.
-        }
-
-        HuntMonster("doomkitten", "DoomKitten", item, quant, isTemp, log);
+        Logger("⚠️ Could not find any Damage over Time class in inventory. Stopping.", messageBox: true, stopBot: true);
     }
 
     /// <summary>
@@ -5289,6 +5033,7 @@ public class CoreBots
 
         JumpWait();
 
+        if (log) Logger($"🔥 Killing {(ultra ? "Ultra Xiang" : "Chaos Lord Xiang")} for {item} ({dynamicQuant(item, isTemp)}/{quant}) [Temp = {isTemp}]");
         KillMonster("mirrorportal", ultra ? "r6" : "r4", "Right", ultra ? "Ultra Xiang" : "Chaos Lord Xiang", item, quant, isTemp, log);
     }
 
@@ -5301,7 +5046,7 @@ public class CoreBots
     /// <param name="log"></param>
     public void KillNulgathFiendShard(string? item = null, int quant = 1, bool isTemp = false, bool log = false)
     {
-        //Void no longer in use) 
+        Logger("💨 Void method: KillNulgathFiendShard is no longer in use.");
         return;
     }
 
@@ -5313,17 +5058,17 @@ public class CoreBots
 
         if (!Bot.Monsters.CurrentAvailableMonsters.Any(x => x != null && x.Name.FormatForCompare() == trimmedName))
         {
-            Logger($"Monster \"{name.Name}\" not found in current cell.");
+            Logger($"⚠️ Monster \"{name.Name}\" not found in current cell.");
 
             Monster? fallback = Bot.Monsters.CurrentAvailableMonsters
                 .FirstOrDefault(x => x?.Cell == cell && x?.Name?.Contains(trimmedName, StringComparison.OrdinalIgnoreCase) == true);
 
             if (fallback != null)
             {
-                Logger($"⚠️ Cell [{cell}] | Monster name may have changed to \"{fallback.Name}\". Using this instead. Ping Tato or Bogalj if wrong.");
+                Logger($"✅ Cell [{cell}] | Monster name may have changed to \"{fallback.Name}\". Using fallback.");
                 name = fallback;
                 trimmedName = fallback.Name.Trim().FormatForCompare();
-                cell = fallback.Cell; // only override cell *because* we used fallback
+                cell = fallback.Cell;
             }
             else
             {
@@ -5354,7 +5099,6 @@ public class CoreBots
                 Bot.Wait.ForCellChange(name!.Cell);
             }
 
-
             if (monsters.Count == 0)
             {
                 Sleep(); // Wait if no monsters found
@@ -5363,8 +5107,6 @@ public class CoreBots
 
             if (isTemp ? Bot.TempInv.Contains(item!, quantity) : CheckInventory(item, quantity))
                 break;
-
-            if (log) Logger($"Attacking MonsterMapID: {name.MapID}");
 
             if (!Bot.Combat.StopAttacking)
                 Bot.Combat.Attack(name.MapID);
@@ -5398,23 +5140,21 @@ public class CoreBots
         if (itemID != 0 && (isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity)))
             return;
 
-        if (log)
-            FarmingLogger(itemID.ToString(), quantity);
+        if (log) FarmingLogger(itemID.ToString(), quantity);
 
-        // Attempt fallback if no exact match is found
         if (!Bot.Monsters.MapMonsters.Any(x => x != null && x.Name.FormatForCompare() == trimmedName))
         {
-            Logger($"Monster \"{name}\" not found in /{Bot.Map.Name}.");
+            Logger($"⚠️ Monster \"{name}\" not found in /{Bot.Map.Name}.");
 
             Monster? fallback = Bot.Monsters.MapMonsters
                 .FirstOrDefault(x => x?.Cell == cell && x?.Name?.Contains(trimmedName, StringComparison.OrdinalIgnoreCase) == true);
 
             if (fallback != null)
             {
-                Logger($"⚠️ Map [{Bot.Map.Name}] | Monster name may have been updated to \"{fallback.Name}\". Using fallback. Ping Tato or Bogalj if incorrect.");
+                Logger($"✅ Map [{Bot.Map.Name}] | Monster name may have been updated to \"{fallback.Name}\". Using fallback.");
                 name = fallback.Name;
                 trimmedName = name.Trim().FormatForCompare();
-                cell = fallback.Cell; // Only override cell if fallback is applied
+                cell = fallback.Cell;
             }
             else
             {
@@ -5428,6 +5168,7 @@ public class CoreBots
                 return;
             }
         }
+
         while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity)))
         {
             IEnumerable<Monster> candidates = Bot.Monsters.MapMonsters
@@ -5439,36 +5180,24 @@ public class CoreBots
                 continue;
             }
 
-            while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity)))
+            foreach (Monster monster in candidates)
             {
-                foreach (Monster monster in candidates)
+                while (!Bot.ShouldExit)
                 {
-                    while (!Bot.ShouldExit)
+                    if (!Bot.Player.Alive) Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                    if (cell != null && Bot.Player.Cell != cell)
                     {
-                        if (!Bot.Player.Alive)
-                            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-                        if (cell != null && Bot.Player.Cell != cell)
-                        {
-                            Jump(cell, "Left");
-                            Bot.Wait.ForCellChange(cell);
-                        }
-
-                        if (!Bot.Player.HasTarget)
-                            Bot.Combat.Attack(monster.MapID);
-
-                        Sleep();
-
-                        if (Bot.Player.HasTarget && Bot.Player.Target != null && !Bot.Player.Target.Alive)
-                            continue;
-
-                        if (isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity))
-                            break;
-
-                        if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-                            break;
+                        Jump(cell, "Left");
+                        Bot.Wait.ForCellChange(cell);
                     }
 
+                    if (!Bot.Player.HasTarget) Bot.Combat.Attack(monster.MapID);
+
+                    if (isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity))
+                        break;
+
+                    if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                        break;
                 }
 
                 if (rejectElse && itemID > 0)
@@ -5476,7 +5205,6 @@ public class CoreBots
 
                 Sleep();
             }
-
         }
 
         if (itemID > 0)
@@ -5502,13 +5230,11 @@ public class CoreBots
         if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)) return;
 
         if (log && name != "*")
-            Logger($"Attacking Monster: {name}, for {item}  {dynamicQuant(item, isTemp)}/{quantity}");
+            Logger($"⚔️ Attacking Monster: {name}, for {item}  {dynamicQuant(item, isTemp)}/{quantity}");
 
         while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
         {
-            // Only wait if player is dead
-            if (!Bot.Player.Alive)
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+            if (!Bot.Player.Alive) Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
             if (cell != null && Bot.Player.Cell != null && Bot.Player.Cell != cell)
             {
@@ -5518,101 +5244,62 @@ public class CoreBots
 
             if (name == "*")
             {
-                while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
+                foreach (Monster monster in Bot.Monsters.CurrentAvailableMonsters.Where(x => x != null && x.HP > 0))
                 {
-                    foreach (Monster monster in Bot.Monsters.CurrentAvailableMonsters.Where(x => x != null))
+                    if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)) break;
+
+                    while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
                     {
-                        if (monster == null || monster != null && monster?.HP <= 0)
+                        if (!Bot.Player.Alive) Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                        if (cell != null && Bot.Player.Cell != cell)
                         {
-                            continue;
+                            Bot.Map.Jump(cell, "Left");
+                            Bot.Wait.ForCellChange(cell);
                         }
 
-                        if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
-                            break;
+                        if (!Bot.Player.HasTarget || Bot.Player.Target?.MapID != monster.MapID)
+                            Bot.Combat.Attack(monster.MapID);
 
-                        while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
+                        if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)) break;
+
+                        if (Bot.Player.Target?.HP <= 0)
                         {
-                            // Only wait if dead
-                            if (!Bot.Player.Alive)
-                                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-                            if (cell != null && Bot.Player.Cell != cell)
-                            {
-                                Bot.Map.Jump(cell, "Left");
-                                Bot.Wait.ForCellChange(cell);
-                            }
-
-                            // If no target -> attack
-                            if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monster!.MapID)
-                                Bot.Combat.Attack(monster!.MapID);
-
-                            if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
-                                break;
-
-                            // If target died -> cancel and move on
-                            if (Bot.Player.Target?.HP <= 0 && monster != null)
-                            {
-                                Bot.Combat.CancelAutoAttack();
-                                Bot.Combat.CancelTarget();
-                                Sleep(200);
-                                break;
-                            }
-
-                            // Adaptive sleep: shorter when idle, longer when in combat
+                            Bot.Combat.CancelAutoAttack();
+                            Bot.Combat.CancelTarget();
                             Sleep(200);
+                            break;
                         }
+
+                        Sleep(200);
                     }
                 }
             }
             else
             {
-                // Ensure we're in the right cell before searching
-                while (!Bot.ShouldExit && Bot.Player.Cell != cell && cell != null)
+                foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters
+                         .Where(x => x != null && x.Name.FormatForCompare() == name.FormatForCompare()))
                 {
-                    Bot.Map.Jump(cell, "Left");
-                    Bot.Wait.ForCellChange(cell);
-                }
+                    if (m.HP <= 0) continue;
 
-
-                while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
-                {
-                    foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters
-                    .Where(x => x != null && x.Name.FormatForCompare() == name.FormatForCompare()))
+                    while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
                     {
-                        if (m == null || m.HP <= 0)
-                            continue;
-
-                        while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
+                        if (!Bot.Player.Alive) Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                        if (cell != null && Bot.Player.Cell != cell)
                         {
-                            if (!Bot.Player.Alive)
-                                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-                            if (cell != null && Bot.Player.Cell != cell)
-                            {
-                                Bot.Map.Jump(cell, "Left");
-                                Bot.Wait.ForCellChange(cell);
-                            }
-
-                            // If no target -> attack
-                            if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != m!.MapID)
-                                Bot.Combat.Attack(m!.MapID);
-
-                            if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
-                                break;
-
-                            // If target died -> cancel and move on
-                            if (Bot.Player.Target?.HP <= 0 && m != null)
-                            {
-                                Sleep(200);
-                                break;
-                            }
-
-                            // Adaptive sleep: shorter when idle, longer when in combat
-                            Sleep(200);
-
+                            Bot.Map.Jump(cell, "Left");
+                            Bot.Wait.ForCellChange(cell);
                         }
+
+                        if (!Bot.Player.HasTarget || Bot.Player.Target?.MapID != m.MapID)
+                            Bot.Combat.Attack(m.MapID);
+
+                        if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)) break;
+                        if (Bot.Player.Target?.HP <= 0) { Sleep(200); break; }
+
+                        Sleep(200);
                     }
                 }
+
                 if (rejectElse)
                     Bot.Drops.RejectExcept(item);
             }
@@ -5620,7 +5307,6 @@ public class CoreBots
             Bot.Wait.ForDrop(item);
             Bot.Wait.ForPickup(item);
         }
-
     }
 
     #region  IsMonsterAlive
