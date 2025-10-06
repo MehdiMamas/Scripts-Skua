@@ -7113,70 +7113,104 @@ public class CoreBots
     /// </summary>
     public void JumpWait()
     {
-        // Initialize blacklisted cells and bot options
+        // Disable all combat-related options
         Bot.Options.AttackWithoutTarget = false;
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
 
-        HashSet<string> blackListedCells = Bot.Monsters.MapMonsters
-     .Select(monster => monster.Cell)
-     .Union(
-         Bot.Map.Cells
-             .Where(cell => cell != null
-                 && (Regex.IsMatch(cell, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|(^r\d+$)|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$", RegexOptions.IgnoreCase)
-                 || BlackListedJumptoCells.Contains(cell)
-                 || (Bot.Player.Cell != "Enter" && cell.Contains("Enter"))
-             ))
-     )
-     .ToHashSet();
+        string[] allCells = Bot.Map?.Cells?.ToArray() ?? Array.Empty<string>();
 
-        // Proceed to filtering cases based on the blacklisted cells
-        ProceedToFilteringCases(blackListedCells.Distinct().ToHashSet());
+        // Build blacklist with both static names and regex patterns
+        HashSet<string> blackListedCells = Bot.Monsters.MapMonsters
+            .Select(monster => monster.Cell)
+            .Union(
+                allCells.Where(cell => cell != null &&
+                    (
+                        // Inline regex exclusion rules
+                        Regex.IsMatch(cell, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|(^r\d+$)|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$", RegexOptions.IgnoreCase)
+                        // Check against static/regex blacklist entries
+                        || BlackListedJumptoCells.Any(pattern =>
+                            Regex.IsMatch(cell, $"^{pattern}$", RegexOptions.IgnoreCase))
+                        // Exclude cells containing "Enter" if not currently in "Enter"
+                        || (Bot.Player.Cell != "Enter" && cell.Contains("Enter", StringComparison.OrdinalIgnoreCase))
+                    )
+                )
+            )
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        // Delegate to case-based filtering and jump selection
+        ProceedToFilteringCases(blackListedCells);
     }
 
     private (string Cell, string Pad) TryFindSuitableCell(HashSet<string> blackListedCells)
     {
         string? cell = null;
+
+        // Combine dynamic and static blacklists
         blackListedCells.UnionWith(BlackListedJumptoCells);
+
+        string[] allCells = Bot.Map?.Cells?.ToArray() ?? Array.Empty<string>();
 
         // Try to find a valid cell, up to 5 attempts
         for (int i = 0; i < 5; i++)
         {
-            // First try to find a cell with "Enter", then try a non-blacklisted cell
-            cell = Bot.Map.Cells.FirstOrDefault(x => x.Contains("Enter")) ??
-                   Bot.Map.Cells.FirstOrDefault(x => !blackListedCells.Contains(x));
+            // Find a cell that isn't blacklisted (supports regex patterns)
+            cell = allCells.FirstOrDefault(x =>
+                x.Contains("Enter", StringComparison.OrdinalIgnoreCase) ||
+                !IsCellBlacklisted(x, blackListedCells));
 
-            if (cell != null) // If a valid cell is found
+            if (cell != null)
                 break;
 
             Logger($"Attempt {i + 1}: Suitable cell not found. Retrying...");
-            Sleep(1000); // Wait for 1 second before retrying
+            Sleep(1000);
         }
 
-        // If no suitable cell is found, return a default value
+        // Fallback if no suitable cell found
         if (cell == null)
-        {
             return (string.Empty, "Left");
-        }
 
-        // Determine the pad for the found cell
-        string pad = Bot.Map.Cells.Any(x => x.Contains("Enter")) ? "Spawn" : "Left";
+        // Use "Spawn" if any cell contains "Enter", otherwise "Left"
+        string pad = allCells.Any(x => x.Contains("Enter", StringComparison.OrdinalIgnoreCase))
+            ? "Spawn"
+            : "Left";
+
         return (cell, pad);
+    }
+
+    // Helper: checks if a cell is blacklisted (handles literal + regex)
+    private bool IsCellBlacklisted(string cell, IEnumerable<string> blacklist)
+    {
+        foreach (string pattern in blacklist)
+        {
+            // Try literal match first, then regex
+            if (string.Equals(cell, pattern, StringComparison.OrdinalIgnoreCase) ||
+                Regex.IsMatch(cell, pattern, RegexOptions.IgnoreCase))
+                return true;
+        }
+        return false;
     }
 
     private void ProceedToFilteringCases(HashSet<string> blackListedCells)
     {
+        // Build base blacklist: union of static patterns, regex matches, and logical filters
         blackListedCells = Bot.Monsters.MapMonsters
-        .Select(monster => monster.Cell)
-        .Union(
-            Bot.Map.Cells
-                .Where(cell => cell != null
-                    && (Regex.IsMatch(cell, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|(^r\d+$)|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$", RegexOptions.IgnoreCase)
-                    || BlackListedJumptoCells.Contains(cell)
-                    || (Bot.Player.Cell != "Enter" && cell.Contains("Enter"))
-                ))
-        )
-        .ToHashSet();
+            .Select(monster => monster.Cell)
+            .Union(
+                Bot.Map.Cells
+                    .Where(cell => cell != null &&
+                        (
+                            // Inline regex rules for common cases
+                            Regex.IsMatch(cell, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|(^r\d+$)|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$", RegexOptions.IgnoreCase)
+                            // Check against static or regex-defined BlackListedJumptoCells
+                            || BlackListedJumptoCells.Any(pattern =>
+                                Regex.IsMatch(cell, $"^{pattern}$", RegexOptions.IgnoreCase))
+                            // Cells containing "Enter" when not currently in Enter
+                            || (Bot.Player.Cell != "Enter" && cell.Contains("Enter", StringComparison.OrdinalIgnoreCase))
+                        )
+                    )
+            )
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         switch (Bot.Map.Name)
         {
@@ -7185,8 +7219,7 @@ public class CoreBots
                 break;
 
             case "escherion":
-                // Blacklist "Boss" plus all cells like "e" followed by digits
-                blackListedCells.UnionWith(Bot.Map?.Cells?.Where(c => Regex.IsMatch(c, @"^e\d+$")) ?? Array.Empty<string>());
+                blackListedCells.UnionWith(Bot.Map?.Cells?.Where(c => Regex.IsMatch(c, @"^(Frame|e)\d+$")) ?? Array.Empty<string>());
                 blackListedCells.Add("Boss");
                 break;
 
@@ -7195,6 +7228,7 @@ public class CoreBots
                 break;
 
             case "pyramid":
+            case "mqlesson":
                 blackListedCells.UnionWith(new[] { "Game" });
                 break;
 
@@ -7208,9 +7242,7 @@ public class CoreBots
 
             case "Gluttony":
                 if (Bot.Map.Cells != null)
-                {
-                    blackListedCells.UnionWith(Bot.Map.Cells.Where(x => x.StartsWith("Enter")));
-                }
+                    blackListedCells.UnionWith(Bot.Map.Cells.Where(x => x.StartsWith("Enter", StringComparison.OrdinalIgnoreCase)));
                 break;
 
             case "xantown":
@@ -7224,7 +7256,6 @@ public class CoreBots
                 break;
 
             case "mobius":
-                // Requires quest "The Star of Flames [2364]" to be completed
                 blackListedCells.UnionWith(new[] { "Hair" });
                 break;
 
@@ -7251,7 +7282,9 @@ public class CoreBots
             case "wanders":
                 Bot.Map.Jump("Boss", "left");
                 Bot.Sleep(2500);
-                blackListedCells.UnionWith(Bot.Player.Cell == "Boss" ? new[] { "r25", "Enter", "Enter2" } : new[] { "Boss", "Enter", "Enter2" });
+                blackListedCells.UnionWith(Bot.Player.Cell == "Boss"
+                    ? new[] { "r25", "Enter", "Enter2" }
+                    : new[] { "Boss", "Enter", "Enter2" });
                 break;
 
             case "zephyrus":
@@ -7285,14 +7318,15 @@ public class CoreBots
         if (!Bot.Player.IsMember)
             blackListedCells.Add("Eggs");
 
-        // Jump to a viable cell (or retry)
-        var cells = Bot.Map?.Cells ?? Enumerable.Empty<string>();
+        // Determine viable cells
+        IEnumerable<string> cells = Bot.Map?.Cells ?? Enumerable.Empty<string>();
         IEnumerable<string> viableCells = cells
             .Except(BlackListedJumptoCells.Concat(blackListedCells), StringComparer.OrdinalIgnoreCase);
 
         (string, string) cellPad = viableCells.Any()
-    ? (viableCells.First(), string.Equals(Bot.Map?.Name, "battleon", StringComparison.OrdinalIgnoreCase) ? "Spawn" : "Left")
-    : (Bot.Player?.Cell ?? "Enter", Bot.Player?.Pad ?? "Left");
+            ? (viableCells.First(), string.Equals(Bot.Map?.Name, "battleon", StringComparison.OrdinalIgnoreCase) ? "Spawn" : "Left")
+            : (Bot.Player?.Cell ?? "Enter", Bot.Player?.Pad ?? "Left");
+
         PerformJump(cellPad, viableCells.Any() ? 1 : 2);
     }
 
@@ -7316,9 +7350,14 @@ public class CoreBots
     private string lastMapJW = string.Empty;
     private (string, string) lastCellPadJW = (string.Empty, string.Empty);
 
-    // Combined static and dynamic blacklist
+    // Combined static and regex-based blacklist patterns
     public string[] BlackListedJumptoCells = new[]
-    { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame", "Quest", "Fall", "Move", "Cut", "Movie" };
+    {
+    "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame",
+    "Quest", "Game", "Fall", "Move", "Cut", "Movie",
+    @"^Frame\d+$", // matches Frame1, Frame2, Frame10, etc.
+    @"^e\d+$"      // matches e1, e2, e55, etc.
+};
 
     /// <summary>
     /// Joins a map and does bonus steps for said map if needed
