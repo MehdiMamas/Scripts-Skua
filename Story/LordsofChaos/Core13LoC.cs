@@ -1295,7 +1295,7 @@ public class Core13LoC
         }
 
         //The Time Grows Closer
-        Story.KillQuest(1227, "crossroads", new[] { "Koalion", "Lemurphant" });
+        Story.KillQuest(1227, "crossroads", new[] { "Lemurphant", "Koalion" });
 
         //Like Calls to Like
         if (!Story.QuestProgression(1228))
@@ -2126,7 +2126,7 @@ public class Core13LoC
 
         //Axe Them To Leave! 
         Story.KillQuest(3089, "armory", "Chaorrupted Prisoner");
-        
+
         //Freeze 'Em Out!
         Story.KillQuest(3090, "armory", "Chaos Mage");
 
