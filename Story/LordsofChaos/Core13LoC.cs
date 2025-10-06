@@ -1170,8 +1170,8 @@ public class Core13LoC
         Story.MapItemQuest(1456, "orecavern", 717);
 
         //Light in Underhome
-        Story.KillQuest(1457, "orecavern", "Crashroom");
         Story.MapItemQuest(1457, "orecavern", 719, 5);
+        Story.KillQuest(1457, "orecavern", "Crashroom");
 
         //Truth is its Own Light
         Story.MapItemQuest(1458, "orecavern", 718, 5);
