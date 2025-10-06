@@ -1506,7 +1506,7 @@ public class Core13LoC
         Story.KillQuest(2255, "timevoid", new[] { "Ephemerite", "Time-Travel Fairy" });
 
         //Fill the Empty Hours
-        Story.KillQuest(2256, "timevoid", new[] { "Void Phoenix", "Time-Travel Fairy" });
+        Story.KillQuest(2256, "timevoid", new[] { "Time-Travel Fairy", "Void Phoenix"  });
 
         //Clock of the Long Now
         Story.MapItemQuest(2257, "timevoid", new[] { 1440, 1441, 1442, 1443 });
