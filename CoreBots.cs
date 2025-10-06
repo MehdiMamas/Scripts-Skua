@@ -3146,7 +3146,7 @@ public class CoreBots
                 Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot) >= QuestData.Value;
 
             // Commented out to reduce spam
-            Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
+            DebugLogger(this, $"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
             return complete;
         }
 
@@ -4848,9 +4848,24 @@ public class CoreBots
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
                 if (Bot.Map.Name != "escherion")
-                    Join("escherion");
+                {
+                    Join("escherion", "Boss", "Left");
+
+                    // CutScene (due to quest progress) -- attempted fix
+                    Bot.Map.Jump("Boss", "Left", autoCorrect: false);
+                    Bot.Sleep(1500);
+                    if (Bot.Player?.Cell == "Cut1")
+                    {
+                        Bot.Map.Jump("Boss", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("Boss");
+                    }
+                }
+
                 if (Bot.Player.Cell != "Boss")
-                    Jump("Boss", "Left");
+                {
+                    Bot.Map.Jump("Boss", "Left", autoCorrect: false);
+                    Bot.Wait.ForCellChange("Boss");
+                }
 
                 foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
                 {
@@ -4861,19 +4876,23 @@ public class CoreBots
                         Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
                     if (Bot.Map.Name != "escherion")
-                        Join("escherion");
-                    if (Bot.Player.Cell != "Boss")
-                        Jump("Boss", "Left");
+                        Join("escherion", "Boss", "Left");
 
+                    if (Bot.Player?.Cell == "Cut1")
+                    {
+                        Bot.Map.Jump("Boss", "Left", autoCorrect: false);
+                        Bot.Wait.ForCellChange("Boss");
+                    }
 
                     // Attack staff
                     if (Bot.Player.Target?.MapID == 3 && Bot.Player.Target?.State == 2)
                         while (!Bot.ShouldExit && Bot.Player.Target?.HP > 0)
                             Bot.Combat.Attack(2);
-                    // if (m?.MapID == 2 && m?.HP > 0)
-                    //     Bot.Kill.Monster(2);
+
                     // Attack Escherion when staff is down
                     else Bot.Combat.Attack(3);
+
+
 
                     if (item == null)
                     {
@@ -7150,6 +7169,16 @@ public class CoreBots
 
         switch (Bot.Map.Name)
         {
+            case "hydra":
+                blackListedCells.UnionWith(new[] { "Boss" });
+                break;
+
+            case "escherion":
+                // Blacklist "Boss" plus all cells like "e" followed by digits
+                blackListedCells.UnionWith(Bot.Map?.Cells?.Where(c => Regex.IsMatch(c, @"^e\d+$")));
+                blackListedCells.Add("Boss");
+                break;
+
 
             case "stalagbite":
                 blackListedCells.UnionWith(new[] { "Enter", "r1", "CutShow" });
@@ -8362,7 +8391,6 @@ public class CoreBots
 
         Logger($"Map item {itemID} ({quant}) acquired");
     }
-
 
     /// <summary>
     /// Sends getMapItem packets for one or more specified items.
