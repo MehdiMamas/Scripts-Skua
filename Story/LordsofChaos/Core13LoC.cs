@@ -465,7 +465,7 @@ public class Core13LoC
 
         //The Hunt for the Hag
         Story.KillQuest(471, "junkyard", "Onibaba");
-        
+
         //Su-she
         Story.KillQuest(473, "yokairiver", new[] { "Funa-Yurei", "Funa-Yurei", "Funa-Yurei" });
 
@@ -1502,8 +1502,8 @@ public class Core13LoC
         }
 
         //Time to Prove Yourself
-        Story.MapItemQuest(2255, "timevoid", 1439, 15);
-        Story.KillQuest(2255, "timevoid", new[] { "Time-Travel Fairy", "Ephemerite" });
+        Story.MapItemQuest(2255, "timevoid", 1439, 12);
+        Story.KillQuest(2255, "timevoid", new[] { "Ephemerite", "Time-Travel Fairy" });
 
         //Fill the Empty Hours
         Story.KillQuest(2256, "timevoid", new[] { "Void Phoenix", "Time-Travel Fairy" });
