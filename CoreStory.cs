@@ -83,6 +83,9 @@ public class CoreStory
             return;
         }
 
+        //Prevent turnin spam
+        Core.AcceptandCompleteTries = 5;
+
         // Filter valid requirements and exclude items already obtained
         List<ItemBase> validRequirements = QuestData.Requirements
             .Where(r => r != null && !string.IsNullOrEmpty(r.Name))
@@ -129,6 +132,10 @@ public class CoreStory
                 break;
 
             _MonsterHuntBatch(MapName, MonsterName, itemsToFarm, QuestID);
+
+            //a little extra check for if it got turned in by itself...
+            if (QuestProgression(QuestID, GetReward, Reward, false))
+                return;
         }
 
         // Snapshot items farmed
@@ -182,6 +189,9 @@ public class CoreStory
             Core.DebugLogger(this, $"Quest {QuestID} has no requirements. Nothing to farm.");
             return;
         }
+
+        //Prevent turnin spam
+        Core.AcceptandCompleteTries = 5;
 
         // Filter valid requirements and exclude items already obtained
         List<ItemBase> validRequirements = QuestData.Requirements
@@ -642,7 +652,8 @@ public class CoreStory
     /// <param name="QuestID">ID of the quest</param>
     /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
     /// <param name="Reward">What item should be added with AddDrop</param>
-    public bool QuestProgression(int QuestID, bool GetReward = true, string Reward = "All")
+    /// <param name="Log"></param>
+    public bool QuestProgression(int QuestID, bool GetReward = true, string Reward = "All", bool Log = true)
     {
         if (QuestID != 0 && PreviousQuestID == QuestID)
             return PreviousQuestState;
@@ -728,9 +739,10 @@ public class CoreStory
 
         if (Core.isCompletedBefore(QuestID) && (!TestBot || QuestData.Once))
         {
-            if (TestBot)
-                Core.Logger($"Skipped (Once = true): [{QuestID}] - \"{QuestData.Name}\"");
-            else Core.Logger($"Already Completed: [{QuestID}] - \"{QuestData.Name}\"");
+            if (Log)
+                if (TestBot)
+                    Core.Logger($"Skipped (Once = true): [{QuestID}] - \"{QuestData.Name}\"");
+                else Core.Logger($"Already Completed: [{QuestID}] - \"{QuestData.Name}\"");
             PreviousQuestState = true;
             return true;
         }
