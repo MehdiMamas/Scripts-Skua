@@ -365,17 +365,18 @@ public class CoreStory
             {
                 Core.DebugLogger(this, $"Jumping to cell '{targetCell}' with {targetCellGroup?.Count() ?? 0} {monster}s", "_MonsterHuntBatch");
 
-                IScriptMap? mapApi = Bot.Map;
-                if (mapApi == null)
+                if (Bot.Map.Name != map)
                 {
                     Core.Join(map);
                     Bot.Wait.ForMapLoad(map);
-                    mapApi = Bot.Map;
                 }
 
-                mapApi?.Jump(targetCell, "Left");
-                Bot.Wait.ForCellChange(targetCell);
-                Bot.Player?.SetSpawnPoint();
+                if (Bot.Player.Cell != targetCell)
+                {
+                    Bot.Map.Jump(targetCell, "Left");
+                    Bot.Wait.ForCellChange(targetCell);
+                    Bot.Player?.SetSpawnPoint();
+                }
             }
 
             bool isAlive = Bot.Player?.Alive ?? false;
@@ -396,6 +397,18 @@ public class CoreStory
                     bool hasTarget = Bot.Player?.HasTarget ?? false;
                     int targetHP = Bot.Player?.Target?.HP ?? 0;
 
+                    if (Bot.Map.Name != map)
+                    {
+                        Core.Join(map);
+                        Bot.Wait.ForMapLoad(map);
+                    }
+
+                    if (Bot.Player.Cell != targetCell)
+                    {
+                        Bot.Map.Jump(targetCell, "Left");
+                        Bot.Wait.ForCellChange(targetCell);
+                        Bot.Player?.SetSpawnPoint();
+                    }
                     if (!hasTarget || targetHP <= 0)
                     {
                         Bot.Combat.Attack(M.MapID);
