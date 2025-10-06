@@ -130,8 +130,8 @@ public class CoreDageBirthday
         Story.MapItemQuest(5728, "futurelegion", 5167);
 
         //Destory the Force Field 5729
-        Story.KillQuest(5729, "futurelegion", "UW3017 Blaster");
         Story.MapItemQuest(5729, "futurelegion", 5168);
+        Story.KillQuest(5729, "futurelegion", "UW3017 Blaster");
 
         //Obtain Ozar's Soul 5730
         Story.KillQuest(5730, "futurelegion", "Commander Ozar");
