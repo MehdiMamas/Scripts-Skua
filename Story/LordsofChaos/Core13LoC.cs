@@ -1525,12 +1525,12 @@ public class Core13LoC
         Story.MapItemQuest(2378, "aqlesson", 1469);
 
         //Bolster the Elements
-        Story.KillQuest(2379, "aqlesson", new[] { "Eternite Ore", "Water Elemental" });
         Story.MapItemQuest(2379, "aqlesson", new[] { 1470, 1471 }, 3);
+        Story.KillQuest(2379, "aqlesson", new[] { "Eternite Ore", "Water Elemental" });
 
         //Maintain Elemental Strength
-        Story.KillQuest(2380, "aqlesson", new[] { "Ice Elemental", "Fire Elemental" });
         Story.MapItemQuest(2380, "aqlesson", new[] { 1473, 1472 }, 3);
+        Story.KillQuest(2380, "aqlesson", new[] { "Ice Elemental", "Fire Elemental" });
 
         //Rescue the Innocent
         Story.KillQuest(2381, "aqlesson", "Void Dragon");
@@ -1592,7 +1592,7 @@ public class Core13LoC
         Story.KillQuest(2476, "dflesson", "Chaorrupted Evil Soldier");
 
         //Defend the Town!
-        Story.KillQuest(2477, "dflesson", new[] { "Fire Elemental", "Lava Golem" });
+        Story.KillQuest(2477, "dflesson", new[] {"Lava Golem", "Fire Elemental" });
 
         //ChickenCows, Bacon, and Battle!
         Story.KillQuest(2478, "dflesson", new[] { "Chaotic Horcboar", "Chaotic Chicken" });
@@ -1820,8 +1820,8 @@ public class Core13LoC
         Story.MapItemQuest(2732, "deathpits", 1694, 12);
 
         //Destroy Wrathful Vestis and Secure The Tears
-        Story.KillQuest(2740, "deathpits", "Wrathful Vestis");
         Story.MapItemQuest(2740, "deathpits", 1695, 1);
+        Story.KillQuest(2740, "deathpits", "Wrathful Vestis");
 
         //Surveillance for Sir Valence
         Story.MapItemQuest(2792, "venomvaults", 1724);
@@ -1989,8 +1989,8 @@ public class Core13LoC
         Story.KillQuest(3166, "reddeath", "Fire Leech");
 
         //Nope, Still a Ghost
-        Story.KillQuest(3167, "reddeath", "Reddeath Moglin");
         Story.MapItemQuest(3167, "reddeath", new[] { 2178, 2179 });
+        Story.KillQuest(3167, "reddeath", "Reddeath Moglin");
 
         //First We Need a Beacon...
         Story.MapItemQuest(3168, "reddeath", 2180);
@@ -2099,8 +2099,8 @@ public class Core13LoC
         Story.KillQuest(3079, "archives", new[] { "Chaos Bandit", "Camouflaged Sp-eye" });
 
         //Locate the Source
-        Story.KillQuest(3080, "archives", "Chaos Bandit");
         Story.MapItemQuest(3080, "archives", 1937);
+        Story.KillQuest(3080, "archives", "Chaos Bandit");
 
         //Plagued Rats
         Story.KillQuest(3081, "archives", "Chaos Rat");
@@ -2118,8 +2118,8 @@ public class Core13LoC
         Story.KillQuest(3094, "armory", "Chaorrupted Prisoner");
 
         //We May Need A Militia
-        Story.KillQuest(3095, "armory", "Chaorrupted Prisoner");
         Story.MapItemQuest(3095, "armory", 1956, 4);
+        Story.KillQuest(3095, "armory", "Chaorrupted Prisoner");
 
         //An Ounce Of Prevention
         Story.KillQuest(3096, "armory", "Chaos Drifter");
@@ -2170,8 +2170,8 @@ public class Core13LoC
         Story.MapItemQuest(3125, "ceremony", 2118, 6);
 
         //Seal the Chapel
-        Story.MapItemQuest(3126, "ceremony", 2119);
         Story.KillQuest(3126, "ceremony", "Chaos Invader");
+        Story.MapItemQuest(3126, "ceremony", 2119);
 
         //Chaos Kills!
         Story.KillQuest(3127, "ceremony", "Chaos Justicar");
