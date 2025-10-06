@@ -324,10 +324,10 @@ public class CoreStory
         }
 
         // Refresh needed items once before the loop for the initial log
-        List<ItemBase>? neededItems = CurrentRequirements?
-            .Where(r => r != null && itemNames.Contains(r.Name) &&
-                        !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
-            .ToList();
+        List<ItemBase> neededItems = (CurrentRequirements ?? new List<ItemBase>())
+    .Where(r => r != null && itemNames.Contains(r.Name) &&
+                !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
+    .ToList();
 
         if (neededItems.Count == 0)
         {
@@ -340,10 +340,10 @@ public class CoreStory
 
         while (!Bot.ShouldExit)
         {
-            neededItems = CurrentRequirements?
-                .Where(r => r != null && itemNames.Contains(r.Name) &&
-                            !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
-                .ToList();
+            neededItems = (CurrentRequirements ?? new List<ItemBase>())
+    .Where(r => r != null && itemNames.Contains(r.Name) &&
+                !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
+    .ToList();
 
             if (neededItems.Count == 0)
                 break;
@@ -356,17 +356,28 @@ public class CoreStory
 
             string? targetCell = targetCellGroup?.Key ?? "Enter";
 
-            if (Bot.Player.Cell != targetCell)
+            string? currentCell = Bot.Player?.Cell;
+            if (!string.Equals(currentCell, targetCell, StringComparison.OrdinalIgnoreCase))
             {
                 Core.DebugLogger(this, $"Jumping to cell '{targetCell}' with {targetCellGroup?.Count() ?? 0} {monster}s", "_MonsterHuntBatch");
-                Bot.Map.Jump(targetCell, "Left");
+
+                IScriptMap? mapApi = Bot.Map;
+                if (mapApi == null)
+                {
+                    Core.Join(map);
+                    Bot.Wait.ForMapLoad(map);
+                    mapApi = Bot.Map;
+                }
+
+                mapApi?.Jump(targetCell, "Left");
                 Bot.Wait.ForCellChange(targetCell);
-                Bot.Player.SetSpawnPoint();
+                Bot.Player?.SetSpawnPoint();
             }
 
-            if (!Bot.Player.Alive)
+            bool isAlive = Bot.Player?.Alive ?? false;
+            if (!isAlive)
             {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
                 continue;
             }
 
@@ -378,13 +389,16 @@ public class CoreStory
 
                 while (!Bot.ShouldExit && neededItems.Count > 0)
                 {
-                    if (!Bot.Player.HasTarget || Bot.Player.Target?.HP <= 0)
+                    bool hasTarget = Bot.Player?.HasTarget ?? false;
+                    int targetHP = Bot.Player?.Target?.HP ?? 0;
+
+                    if (!hasTarget || targetHP <= 0)
                     {
                         Bot.Combat.Attack(M.MapID);
                         Bot.Sleep(500);
                     }
 
-                    if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                    if (hasTarget && targetHP <= 0)
                     {
                         Bot.Combat.CancelAutoAttack();
                         Bot.Combat.CancelTarget();
@@ -395,15 +409,22 @@ public class CoreStory
                     if (names.Length > 0 && Bot.Drops.CurrentDrops.Any(d => d != null && names.Contains(d)))
                         Bot.Drops.Pickup(names);
 
-                    neededItems = CurrentRequirements
+                    neededItems = (CurrentRequirements ?? Enumerable.Empty<ItemBase>())
                         .Where(r => r != null && itemNames.Contains(r.Name) &&
                                     !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
                         .ToList();
                 }
             }
 
-            CurrentRequirements.RemoveAll(r => itemNames.Contains(r.Name) &&
-                (r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)));
+            if (CurrentRequirements is { Count: > 0 } reqs)
+            {
+                reqs.RemoveAll(r =>
+                    r != null &&
+                    itemNames.Contains(r.Name) &&
+                    (r.Temp
+                        ? Bot.TempInv.Contains(r.Name, r.Quantity)
+                        : Core.CheckInventory(r.ID, r.Quantity)));
+            }
         }
     }
 
