@@ -1039,15 +1039,15 @@ public class CoreFarms
     /// <param name="level">Target level</param>
     /// <param name="rankUpClass">Whether to rank up the class</param>
     public void IcestormArena(int level = 100, bool rankUpClass = false)
+{
+    if (Bot.Player.Level >= level && !rankUpClass)
     {
-        if (Bot.Player.Level >= level && !rankUpClass)
-        {
-            Core.Logger("💯 Already at target level and no rank-up requested!");
-            return;
-        }
+        Core.Logger("💯 Already at target level and no rank-up requested!");
+        return;
+    }
 
-        LevelRange[] levelRanges = new[]
-        {
+    LevelRange[] levelRanges = new[]
+    {
         new LevelRange { Min = 1, Max = 5, Map = "icestormarena", Cell = "r4", Pad = "Bottom", ClassType = ClassType.Farm },
         new LevelRange { Min = 5, Max = 10, Map = "icestormarena", Cell = "r5", Pad = "Left", ClassType = ClassType.Farm },
         new LevelRange { Min = 10, Max = 20, Map = "icestormarena", Cell = "r6", Pad = "Left", ClassType = ClassType.Farm },
@@ -1056,97 +1056,101 @@ public class CoreFarms
         new LevelRange { Min = 30, Max = 35, Map = "icestormarena", Cell = "r11", Pad = "Left", Quests = new[] { 6629 }, ClassType = ClassType.Solo },
         new LevelRange { Min = 35, Max = 50, Map = "icestormarena", Cell = "r14", Pad = "Left", Quests = new[] { 6629 }, ClassType = ClassType.Farm },
         new LevelRange { Min = 50, Max = 61, Map = "icestormarena", Cell = "r16", Pad = "Left", ClassType = ClassType.Farm },
-        new LevelRange { Min = 61, Max = 75, Map = "icestormarena", Cell = "r17", Pad = "Left", ClassType = ClassType.Farm, RequiresRankUpClass = true },
+        new LevelRange { Min = 61, Max = 75, Map = "icestormarena", Cell = "r17", Pad = "Left", ClassType = ClassType.Farm },
         new LevelRange { Min = 61, Max = 75, Map = "battlegrounde", Cell = "r2", Pad = "Center", Quests = new[] { 3991, 3992 }, ClassType = ClassType.Farm },
         new LevelRange { Min = 75, Max = 100, Map = "icestormunder", Cell = "r2", Pad = "Top", ClassType = ClassType.Farm }
     };
 
-        Core.Logger("🚀 Starting IcestormArena leveling routine...");
-        Bot.Options.AttackWithoutTarget = false;
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
-        Core.ToggleAggro(true);
+    Core.Logger("🚀 Starting IcestormArena leveling routine...");
+    Bot.Options.AttackWithoutTarget = false;
+    Bot.Options.AggroAllMonsters = false;
+    Bot.Options.AggroMonsters = false;
+    Core.ToggleAggro(true);
 
-        foreach (var range in levelRanges)
+    foreach (var range in levelRanges)
+    {
+        if (Bot.Player.Level >= level) break; // Stop if target level reached
+        if (Bot.Player.Level >= range.Max) continue;
+
+        // Special handling for 61–75 ranges
+        if (range.Map == "battlegrounde" && rankUpClass && Core.CheckClassRank(true) < 10)
+            continue; // skip battlegrounde while rank-uping
+        if (range.Map == "icestormarena" && rankUpClass && Core.CheckClassRank(true) >= 10)
+            continue; // skip arena r17 if rank already done
+
+        Core.Logger($"🗺️ Moving to map {range.Map} for levels {range.Min}-{range.Max}!");
+        Core.EquipClass(range.ClassType);
+
+        if (range.Quests != null)
         {
-            if (Bot.Player.Level >= range.Max) continue;
-            if (range.RequiresRankUpClass && !rankUpClass) continue;
-            if (range.Map == "battlegrounde" && rankUpClass) continue;
-
-            Core.Logger($"🗺️ Moving to map {range.Map} for levels {range.Min}-{range.Max}!");
-            if (!rankUpClass || range.RequiresRankUpClass)
-                Core.EquipClass(range.ClassType);
-            else if (rankUpClass && !range.RequiresRankUpClass)
-                Core.EquipClass(ClassType.Farm);
-
-            if (range.Quests != null)
-            {
-                Core.Logger($"📜 Registering quests: {string.Join(", ", range.Quests)}");
-                Core.RegisterQuests(range.Quests);
-            }
-
-            if (Bot.Player.Level < 100) ToggleBoost(BoostType.Experience);
-            if (rankUpClass) ToggleBoost(BoostType.Class);
-            Bot.Options.RestPackets = true;
-
-            while (!Bot.ShouldExit && Bot.Player.Level >= range.Min &&
-                   (Bot.Player.Level < range.Max ||
-                    (rankUpClass && range.Max == 100 && Core.CheckClassRank(true) < 10)))
-            {
-                if (Bot.Map.Name != range.Map)
-                {
-                    Core.Logger($"↪ Joining map {range.Map}...");
-                    Core.Join(range.Map, publicRoom: Core.PrivateRooms);
-                    Bot.Wait.ForMapLoad(range.Map);
-                }
-                if (Bot.Player.Cell != range.Cell)
-                {
-                    Core.Logger($"↪ Jumping to cell {range.Cell} ({range.Pad})");
-                    Core.Jump(range.Cell, range.Pad);
-                    Bot.Wait.ForCellChange(range.Cell);
-                }
-
-                while (!Bot.ShouldExit && !Bot.Player.Alive)
-                {
-                    Core.Logger("💀 Player dead, waiting to respawn...");
-                    Bot.Sleep(1000);
-                }
-
-                if (rankUpClass && Core.CheckClassRank(true) >= 10)
-                {
-                    Core.Logger("🎉 Rank-up complete!");
-                    break;
-                }
-
-                var target = Bot.Monsters?.CurrentAvailableMonsters
-                             .Find(m => m != null && m?.HP > 0)
-                             ?? Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m != null);
-
-                if (target != null)
-                {
-                    Bot.Combat.Attack(target.MapID);
-                }
-
-                Bot.Sleep(250);
-                Core.Sleep();
-            }
-
-            if (range.Quests != null)
-            {
-                Core.Logger($"✅ Unregistering quests: {string.Join(", ", range.Quests)}");
-                Bot.Quests.UnregisterQuests(range.Quests);
-                Core.AbandonQuest(range.Quests);
-            }
+            Core.Logger($"📜 Registering quests: {string.Join(", ", range.Quests)}");
+            Core.RegisterQuests(range.Quests);
         }
 
-        Core.Logger("🏁 Finished leveling routine.");
-        Core.ToggleAggro(false);
-        Bot.Options.AggroMonsters = false;
-        Core.JumpWait();
-        Core.Rest();
-        ToggleBoost(BoostType.Class, false);
-        ToggleBoost(BoostType.Experience, false);
+        if (Bot.Player.Level < 100) ToggleBoost(BoostType.Experience);
+        if (rankUpClass) ToggleBoost(BoostType.Class);
+        Bot.Options.RestPackets = true;
+
+        while (!Bot.ShouldExit && Bot.Player.Level < Math.Min(level, range.Max))
+        {
+            if (Bot.Map.Name != range.Map)
+            {
+                Core.Logger($"↪ Joining map {range.Map}...");
+                Core.Join(range.Map, publicRoom: Core.PrivateRooms);
+                Bot.Wait.ForMapLoad(range.Map);
+            }
+
+            if (Bot.Player.Cell != range.Cell)
+            {
+                Core.Logger($"↪ Jumping to cell {range.Cell} ({range.Pad})");
+                Core.Jump(range.Cell, range.Pad);
+                Bot.Wait.ForCellChange(range.Cell);
+            }
+
+            while (!Bot.ShouldExit && !Bot.Player.Alive)
+            {
+                Core.Logger("💀 Player dead, waiting to respawn...");
+                Bot.Sleep(1000);
+            }
+
+            // Only rank-up if requested AND class rank < 10
+            if (rankUpClass && Core.CheckClassRank(true) < 10)
+            {
+                Core.Logger("⚡ Attempting rank-up while leveling...");
+                Core.EquipClass(ClassType.Solo); // equip rank-up class
+                var rankTarget = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault();
+                if (rankTarget != null)
+                    Bot.Combat.Attack(rankTarget.MapID);
+            }
+
+            // Normal leveling
+            var target = Bot.Monsters?.CurrentAvailableMonsters
+                         .Find(m => m != null && m.HP > 0)
+                         ?? Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m != null);
+
+            if (target != null)
+                Bot.Combat.Attack(target.MapID);
+
+            Bot.Sleep(250);
+            Core.Sleep();
+        }
+
+        if (range.Quests != null)
+        {
+            Core.Logger($"✅ Unregistering quests: {string.Join(", ", range.Quests)}");
+            Bot.Quests.UnregisterQuests(range.Quests);
+            Core.AbandonQuest(range.Quests);
+        }
     }
+
+    Core.Logger("🏁 Finished leveling routine.");
+    Core.ToggleAggro(false);
+    Bot.Options.AggroMonsters = false;
+    Core.JumpWait();
+    Core.Rest();
+    ToggleBoost(BoostType.Class, false);
+    ToggleBoost(BoostType.Experience, false);
+}
 
 
     /// <summary>
