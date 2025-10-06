@@ -1506,7 +1506,7 @@ public class Core13LoC
         Story.KillQuest(2255, "timevoid", new[] { "Ephemerite", "Time-Travel Fairy" });
 
         //Fill the Empty Hours
-        Story.KillQuest(2256, "timevoid", new[] { "Time-Travel Fairy", "Void Phoenix"  });
+        Story.KillQuest(2256, "timevoid", new[] { "Time-Travel Fairy", "Void Phoenix" });
 
         //Clock of the Long Now
         Story.MapItemQuest(2257, "timevoid", new[] { 1440, 1441, 1442, 1443 });
@@ -1592,7 +1592,7 @@ public class Core13LoC
         Story.KillQuest(2476, "dflesson", "Chaorrupted Evil Soldier");
 
         //Defend the Town!
-        Story.KillQuest(2477, "dflesson", new[] {"Lava Golem", "Fire Elemental" });
+        Story.KillQuest(2477, "dflesson", new[] { "Lava Golem", "Fire Elemental" });
 
         //ChickenCows, Bacon, and Battle!
         Story.KillQuest(2478, "dflesson", new[] { "Chaotic Horcboar", "Chaotic Chicken" });
@@ -2109,7 +2109,7 @@ public class Core13LoC
         Story.KillQuest(3082, "archives", "Chaos Spider");
 
         //Still More Research To Be Done!
-        Story.KillQuest(3083, "archives", new[] { "Chaos Rat" , "Chaos Spider" });
+        Story.KillQuest(3083, "archives", new[] { "Chaos Rat", "Chaos Spider" });
 
         //That's One Big Sludgebeast.
         Story.KillQuest(3084, "archives", "Sludgelord");
@@ -2124,9 +2124,9 @@ public class Core13LoC
         //An Ounce Of Prevention
         Story.KillQuest(3096, "armory", "Chaos Drifter");
 
-        //Axe Them To Leave! / Freeze 'Em Out! / Burn 'Em Up!
-        Story.KillQuest(3096, "armory", "Chaorrupted Prisoner");
-
+        //Axe Them To Leave! 
+        Story.KillQuest(3089, "armory", "Chaorrupted Prisoner");
+        
         //Freeze 'Em Out!
         Story.KillQuest(3090, "armory", "Chaos Mage");
 
