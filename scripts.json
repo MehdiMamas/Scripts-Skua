@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 172088,
+    "size": 153955,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 35003,
+    "size": 45419,
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreStory.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 399083,
+    "size": 404318,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -3497,7 +3497,7 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 101720,
+    "size": 108076,
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -12772,7 +12772,7 @@
       "null"
     ],
     "path": "Other/Classes/FrostSpiritReaver.cs",
-    "size": 10688,
+    "size": 10871,
     "fileName": "FrostSpiritReaver.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/FrostSpiritReaver.cs"
   },
@@ -16380,7 +16380,7 @@
       "guard"
     ],
     "path": "Other/MergeShops/ArgyronsWaresMerge.cs",
-    "size": 6572,
+    "size": 6566,
     "fileName": "ArgyronsWaresMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ArgyronsWaresMerge.cs"
   },
@@ -17857,7 +17857,7 @@
       "null"
     ],
     "path": "Other/MergeShops/IceDungeonMerge.cs",
-    "size": 9428,
+    "size": 9322,
     "fileName": "IceDungeonMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/IceDungeonMerge.cs"
   },
@@ -23078,7 +23078,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 959057,
+    "size": 959069,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },

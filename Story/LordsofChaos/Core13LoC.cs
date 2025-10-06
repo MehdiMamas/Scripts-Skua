@@ -113,7 +113,7 @@ public class Core13LoC
         Story.KillQuest(6218, "chaoscrypt", "Chaorrupted Knight");
 
         //Forest of Chaos
-        Story.KillQuest(6219, "forestchaos", new[] { "Chaorrupted Wolf", "Chaorrupted Bear" });
+        Story.KillQuest(6219, "forestchaos", new[] { "Chaorrupted Bear" , "Chaorrupted Wolf"});
     }
 
     public void Escherion()

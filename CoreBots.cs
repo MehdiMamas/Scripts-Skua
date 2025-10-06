@@ -4926,31 +4926,6 @@ public class CoreBots
         Rest();
         Bot.Options.HidePlayers = false;
 
-        void StaffRespawnListner(dynamic packet)
-        {
-            // Example packet: %xt%respawnMon%-1%12% (monster map ID is 12)
-            string type = packet["params"].type;
-            dynamic data = packet["params"].dataObj;
-
-            if (type is not null and "str")
-            {
-                string cmd = data[0];
-                switch (cmd)
-                {
-                    case "respawnMon":
-                        int monsterID = (int)data[2];
-                        if (monsterID == 2) // Staff monster ID
-                        {
-                            Bot.Log("Staff has respawned!");
-                            // TODO: implement actual handling later
-                        }
-
-                        // Optional: still remove it from killed list
-                        KilledMonsters.RemoveAll(id => id == monsterID);
-                        break;
-                }
-            }
-        }
 
         void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
         {
@@ -6119,15 +6094,135 @@ public class CoreBots
 
 
 
-    /// <summary>
-    /// Logs the player out and attempts to relogin to the same or a suitable server.
-    /// Temporarily disables <c>Options.AutoRelogin</c>. If no preferred server is set or available, 
-    /// connects to the first available server based on membership, ensuring it's not a test realm, 
-    /// isn't full, and is online.
-    /// </summary>
-    /// <exception cref="InvalidOperationException">
-    /// Thrown if server details cannot be fetched or no preferred server is set in <c>Options > Game</c>.
-    /// </exception>
+
+    #region Old relogin funct.
+    // public void Relogin(string reason = "")
+    // {
+    //     // Save original options
+    //     bool origAutoRelog = Bot.Options.AutoRelogin;
+    //     bool origAutoRelogAny = Bot.Options.AutoReloginAny;
+    //     bool origRetryRelogin = Bot.Options.RetryRelogin;
+    //     bool origSafeRelogin = Bot.Options.SafeRelogin;
+
+    //     try
+    //     {
+    //         Bot.Log($"Relogin Triggered{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}");
+    //         Bot.Servers.SetLoginInfo(Bot.Player?.Username, Bot.Player?.Password);
+
+    //         int tries = 0;
+    //         int maxTries = 5;
+    //         string? lastTriedServer = null;
+
+    //         while (!Bot.ShouldExit && tries < maxTries)
+    //         {
+    //             // Reset options each iteration
+    //             Bot.Options.AutoRelogin = false;
+    //             Bot.Options.AutoReloginAny = false;
+    //             Bot.Options.RetryRelogin = false;
+    //             Bot.Options.SafeRelogin = false;
+
+    //             Bot.Sleep(500);
+
+    //             // Logout if already logged in
+    //             if (Bot.Player?.LoggedIn == true)
+    //                 Bot.Servers.Logout();
+
+    //             Bot.Wait.ForTrue(() => !Bot.Player.LoggedIn, 20);
+    //             Bot.Sleep(2000);
+
+    //             // Fetch servers
+    //             var servers = Bot.Servers.GetServers(true).GetAwaiter().GetResult();
+    //             if (servers.Count == 0)
+    //             {
+    //                 Bot.Log("Failed to relogin: could not fetch server details.");
+    //                 break;
+    //             }
+
+    //             // Choose server
+    //             string? serverName = Bot.Servers.LastName;
+
+    //             if (string.IsNullOrWhiteSpace(serverName))
+    //             {
+    //                 serverName = servers
+    //                     .OfType<Server>()
+    //                     .FirstOrDefault(s =>
+    //                         s.Name != "Class Test Realm" &&
+    //                         !s.Upgrade &&
+    //                         s.PlayerCount < s.MaxPlayers &&
+    //                         s.Online
+    //                     )?.Name;
+    //             }
+
+    //             serverName ??= "Twilly";
+    //             lastTriedServer = serverName;
+
+    //             Bot.Log($"Attempting to relog... Server: {serverName}");
+    //             Bot.Servers.Login();
+    //             Bot.Wait.ForTrue(() => Bot.Player.LoggedIn, 20);
+
+    //             // Try LastIP first, otherwise fallback to Twilly
+    //             string? targetIP = servers.FirstOrDefault(s => s.IP == Bot.Servers.LastIP)?.IP
+    //                                ?? servers.FirstOrDefault(s => s != null && s.Name == "Twilly")?.IP;
+
+    //             if (targetIP != null)
+    //                 Bot.Servers.ConnectIP(targetIP);
+    //             else
+    //                 Bot.Log("No suitable server found to connect!");
+
+    //             if (!Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20))
+    //             {
+    //                 tries++;
+    //                 Bot.Log($"Player failed to fully load. Retrying relogin (try {tries}/{maxTries})...");
+    //                 continue;
+    //             }
+
+    //             // Attempt relogin
+    //             else
+    //             {
+    //                 // Success: send to house
+    //                 Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
+    //                 Bot.Log($"Relogin successful! Sending to house from {serverName}.");
+    //                 Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
+
+    //                 if (!Bot.Wait.ForMapLoad("house", 20))
+    //                 {
+    //                     Bot.Log("Failed to load house map, falling back to Battleon.");
+    //                     Join("battleon-100000");
+    //                 }
+    //                 return;
+    //             }
+    //         }
+
+    //         // Final fallback: Try Twilly if not already attempted, otherwise Twig
+    //         string fallbackServer = lastTriedServer?.Equals("Twilly", StringComparison.OrdinalIgnoreCase) == true
+    //             ? "Twig"
+    //             : "Twilly";
+
+    //         Bot.Log($"Max relogin attempts reached. Trying fallback server: {fallbackServer}...");
+    //         if (Bot.Servers.EnsureRelogin(fallbackServer))
+    //         {
+    //             if (Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20))
+    //             {
+    //                 Bot.Log($"Fallback relogin to {fallbackServer} successful.");
+    //                 Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
+    //                 return;
+    //             }
+    //         }
+
+    //         Bot.Log($"Relogin failed after all attempts including {fallbackServer} fallback.");
+    //         Bot.Stop();
+    //     }
+    //     finally
+    //     {
+    //         // Restore original AutoRelogin options
+    //         Bot.Options.AutoRelogin = origAutoRelog;
+    //         Bot.Options.AutoReloginAny = origAutoRelogAny;
+    //         Bot.Options.RetryRelogin = origRetryRelogin;
+    //         Bot.Options.SafeRelogin = origSafeRelogin;
+    //     }
+    // }
+    #endregion
+
     public void Relogin(string reason = "")
     {
         // Save original options
@@ -6138,96 +6233,116 @@ public class CoreBots
 
         try
         {
-            Bot.Log($"Relogin Triggered{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}");
-            Bot.Servers.SetLoginInfo(Bot.Player.Username, Bot.Player.Password);
+            Bot.Log($"⚡ Relogin Triggered{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}");
+            Bot.Servers.SetLoginInfo(Bot.Player?.Username, Bot.Player?.Password);
 
             int tries = 0;
+            int maxTries = 5;
+            string? lastTriedServer = null;
+            Random rand = new();
 
-            while (!Bot.ShouldExit && tries < Bot.Options.ReloginTries)
+            while (!Bot.ShouldExit && tries < maxTries)
             {
-                // Reset options each iteration
-                Bot.Options.AutoRelogin = false;
-                Bot.Options.AutoReloginAny = false;
-                Bot.Options.RetryRelogin = false;
-                Bot.Options.SafeRelogin = false;
+                ResetReloginOptions();
 
-                // Logout if already logged in
-                if (Bot.Player.LoggedIn)
+                if (Bot.Player?.LoggedIn == true)
                 {
                     Bot.Servers.Logout();
-                    Bot.Sleep(1500);
+                    Bot.Log("🔒 Logging out current session...");
                 }
 
-                Bot.Sleep(500);
+                Bot.Wait.ForTrue(() => !Bot.Player.LoggedIn, 20);
+                Bot.Sleep(2000);
 
-                // Fetch servers
-                var servers = Bot.Servers.GetServers(true).Result;
+                var servers = Bot.Servers.GetServers(true).GetAwaiter().GetResult();
                 if (servers.Count == 0)
                 {
-                    Bot.Log("Failed to relogin: could not fetch server details" +
-                            (Bot.Options.ReloginServer == null ? "." : " or the server set in Options > Game."));
-                    Bot.Stop();
-                    return;
+                    Bot.Log("❌ Failed to relogin: could not fetch server details.");
+                    break;
                 }
 
-                // Choose server: Preferred > LastUsed > FirstSuitable > fallback
-                string serverName = Bot.Options.ReloginServer
-                    ?? Bot.Servers.LastName
-                    ?? servers
-                        .FirstOrDefault(s =>
-                            s is Server srv &&
-                            srv.Name != "Class Test Realm" &&
-                            !srv.Upgrade &&
-                            srv.PlayerCount < srv.MaxPlayers &&
-                            srv.Online
-                        )?.Name
-                    ?? "Twilly";
+                Bot.Servers.Login();
+                Bot.Wait.ForTrue(() => Bot.Player.LoggedIn, 20);
 
+                // Pick target server
+                Server? targetServer = servers.FirstOrDefault(s => s.IP == Bot.Servers.LastIP)
+                                       ?? servers.FirstOrDefault(s => s.Name == "Twilly");
+
+                string serverName = targetServer?.Name;
                 if (string.IsNullOrWhiteSpace(serverName))
+                    serverName = "Twilly";
+
+                string targetIP = targetServer?.IP ?? "";
+                lastTriedServer = serverName;
+
+                // Fun logging with emotes
+                Bot.Log($"🎯 Attempt {tries + 1}/{maxTries} → Connecting to: {serverName} 🌐");
+
+                // Human-like small delay
+                Bot.Sleep(rand.Next(200, 800));
+
+                if (!string.IsNullOrEmpty(targetIP))
+                    Bot.Servers.ConnectIP(targetIP);
+                else
+                    Bot.Log("⚠️ No suitable server found to connect!");
+
+                if (!Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20))
                 {
-                    Bot.Log("No suitable server found for relogin.");
-                    Bot.Stop();
-                    return;
+                    tries++;
+                    Bot.Log($"⏳ Load failed. Retrying... 🔄 ({tries}/{maxTries})");
+                    Bot.Sleep(1000 * tries); // progressive backoff
+                    continue;
                 }
 
-                Bot.Log($"Attempting to relog... Server: {serverName}");
-
-                // Attempt relogin
-                if (Bot.Servers.EnsureRelogin(serverName))
-                {
-                    // If player isn’t fully loaded, retry the outer loop
-                    if (!Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20))
-                    {
-                        tries++;
-                        Bot.Log($"Player loaded unsuccessfully. Retrying relogin (try {tries}/{Bot.Options.ReloginTries})...");
-                        continue;
-                    }
-
-                    // Success: send to house
-                    Bot.Sleep(500);
-                    Bot.Log($"Relogin successful! Sending you to your house to avoid \"Bot movement\" / \"AFK\" behavior in Spawn map: {Bot.Map.Name}.");
-                    Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
-
-                    if (!Bot.Wait.ForMapLoad("house", 20))
-                        Bot.Log("Failed to load house map, staying in current map.");
-
-                    return; // done
-                }
-
-                tries++;
-                Bot.Log($"Relogin unsuccessful (try {tries}/{Bot.Options.ReloginTries}). Retrying...");
+                // Success
+                SendPlayerToHouse(serverName, reason);
+                return;
             }
 
-            Bot.Log($"Relogin failed after {Bot.Options.ReloginTries} attempts.");
+            // Fallback server logic
+            string fallbackServer = lastTriedServer?.Equals("Twilly", StringComparison.OrdinalIgnoreCase) == true
+                ? "Twig"
+                : "Twilly";
+
+            Bot.Log($"⚡ Max relogin attempts reached. Trying fallback server: {fallbackServer} 🔄");
+            if (Bot.Servers.EnsureRelogin(fallbackServer) && Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20))
+            {
+                Bot.Log($"✅ Fallback relogin to {fallbackServer} successful! 🎉");
+                Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
+                return;
+            }
+
+            Bot.Log($"❌ Relogin failed after all attempts including {fallbackServer} fallback. 🛑");
             Bot.Stop();
         }
         finally
         {
-            // Restore original AutoRelogin options
             Bot.Options.AutoRelogin = origAutoRelog;
             Bot.Options.AutoReloginAny = origAutoRelogAny;
             Bot.Options.RetryRelogin = origRetryRelogin;
             Bot.Options.SafeRelogin = origSafeRelogin;
+        }
+
+        // --- Helpers ---
+        void ResetReloginOptions()
+        {
+            Bot.Options.AutoRelogin = false;
+            Bot.Options.AutoReloginAny = false;
+            Bot.Options.RetryRelogin = false;
+            Bot.Options.SafeRelogin = false;
+            Bot.Sleep(500);
+        }
+
+        void SendPlayerToHouse(string serverName, string reason = "")
+        {
+            Bot.Log($"🏠 Relogin successful! Sending to house from {serverName}{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")} ✨");
+            Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
+
+            if (!Bot.Wait.ForMapLoad("house", 20))
+            {
+                Bot.Log("⚠️ Failed to load house map, falling back to Battleon. 🏰");
+                Join("battleon-100000");
+            }
         }
     }
 
@@ -8193,24 +8308,18 @@ public class CoreBots
 
 
     /// <summary>
-    /// Sends a getMapItem packet for the specified item.
+    /// Attempts to acquire a specified map item until the desired quantity is reached.
     /// </summary>
-    /// <param name="itemID">ID of the item</param>
-    /// <param name="quant">Desired quantity of the item</param>
-    /// <param name="map">Map where the item is</param>
+    /// <param name="itemID">The ID of the map item to acquire.</param>
+    /// <param name="quant">The desired quantity of the item (default is 1).</param>
+    /// <param name="map">Optional map to join before grabbing the item.</param>
     public void GetMapItem(int itemID, int quant = 1, string? map = null)
-        => GetMapItems(new[] { (itemID, quant) }, map);
-
-
-    /// <summary>
-    /// Sends getMapItem packets for one or more specified items.
-    /// </summary>
-    /// <param name="items">Collection of (ItemID, Quantity) pairs</param>
-    /// <param name="map">Optional map where the items are</param>
-    public void GetMapItems(IEnumerable<(int ItemID, int Quantity)> items, string? map = null)
     {
-        if (items == null)
+        if (Bot.TempInv.GetQuantity(itemID) >= quant)
+        {
+            Logger($"Map item {itemID} already acquired ({quant})");
             return;
+        }
 
         if (map != null)
             Join(map);
@@ -8218,36 +8327,68 @@ public class CoreBots
         JumpWait();
         Sleep();
 
-        foreach ((int itemID, int quant) in items)
-            AcquireMapItem(itemID, quant);
-    }
-
-
-    /// <summary>
-    /// Handles logic for acquiring a single map item.
-    /// </summary>
-    private void AcquireMapItem(int itemID, int quant)
-    {
-        if (Bot.TempInv.Contains(itemID, quant))
-        {
-            Logger($"Map item {itemID} already acquired ({quant})");
-            return;
-        }
-
+        int remaining = quant - Bot.TempInv.GetQuantity(itemID);
         int attempts = 0;
 
-        while (!Bot.ShouldExit && !Bot.TempInv.Contains(itemID, quant))
+        while (remaining > 0 && !Bot.ShouldExit)
         {
-            Bot.Map.GetMapItem(itemID);
             Bot.Wait.ForActionCooldown(GameActions.GetMapItem);
-            attempts++;
+            Bot.Map.GetMapItem(itemID);
+            Sleep(5005);
 
-            // Safety stop in case of bugged item or wrong map
-            if (attempts > quant + 10 || Bot.TempInv.Contains(itemID, quant))
-                break;
+            remaining = quant - Bot.TempInv.GetQuantity(itemID);
+
+            attempts++;
+            if (attempts > quant + 5) break;
         }
 
         Logger($"Map item {itemID} ({quant}) acquired");
+    }
+
+    /// <summary>
+    /// Attempts to acquire multiple map items until their desired quantities are reached.
+    /// </summary>
+    /// <param name="items">A collection of tuples containing the ItemID and desired Quantity.</param>
+    /// <param name="map">Optional map to join before grabbing the items.</param>
+    public void GetMapItems(IEnumerable<(int ItemID, int Quantity)> items, string? map = null)
+    {
+        if (items == null) return;
+
+        if (map != null)
+        {
+            Join(map);
+            Bot.Wait.ForMapLoad(map);
+        }
+
+        JumpWait();
+        Sleep();
+
+        foreach ((int itemID, int quant) in items)
+        {
+            int alreadyHave = Bot.TempInv.GetQuantity(itemID);
+            if (alreadyHave >= quant)
+            {
+                Logger($"Map item {itemID} already acquired ({quant})");
+                continue;
+            }
+
+            int remaining = quant - alreadyHave;
+            int attempts = 0;
+
+            while (remaining > 0 && !Bot.ShouldExit)
+            {
+                Bot.Wait.ForActionCooldown(GameActions.GetMapItem);
+                Bot.Map.GetMapItem(itemID);
+                Sleep(500);
+
+                remaining = quant - Bot.TempInv.GetQuantity(itemID);
+
+                attempts++;
+                if (attempts > quant + 5) break;
+            }
+
+            Logger($"Map item {itemID} ({quant}) acquired");
+        }
     }
 
 
