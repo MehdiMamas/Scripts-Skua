@@ -8308,14 +8308,15 @@ public class CoreBots
 
 
     /// <summary>
-    /// Attempts to acquire a specified map item until the desired quantity is reached.
+    /// Sends a getMapItem packet for the specified item.
     /// </summary>
-    /// <param name="itemID">The ID of the map item to acquire.</param>
-    /// <param name="quant">The desired quantity of the item (default is 1).</param>
-    /// <param name="map">Optional map to join before grabbing the item.</param>
+    /// <param name="itemID">ID of the item</param>
+    /// <param name="quant">Desired quantity of the item</param>
+    /// <param name="map">Map where the item is</param>
     public void GetMapItem(int itemID, int quant = 1, string? map = null)
     {
-        if (Bot.TempInv.GetQuantity(itemID) >= quant)
+        // Early exit if item already present in sufficient quantity
+        if (Bot.TempInv.Contains(itemID, quant))
         {
             Logger($"Map item {itemID} already acquired ({quant})");
             return;
@@ -8327,64 +8328,95 @@ public class CoreBots
         JumpWait();
         Sleep();
 
-        int remaining = quant - Bot.TempInv.GetQuantity(itemID);
-        int attempts = 0;
+        List<ItemBase>? initialItems = Bot.TempInv.Items?.ToList();
+        ItemBase? newItem = null;
 
-        while (remaining > 0 && !Bot.ShouldExit)
+        for (int i = 0; i < quant; i++)
         {
-            Bot.Wait.ForActionCooldown(GameActions.GetMapItem);
             Bot.Map.GetMapItem(itemID);
-            Sleep(5005);
+            Sleep(1000);
 
-            remaining = quant - Bot.TempInv.GetQuantity(itemID);
+            if (newItem != null)
+                continue;
 
-            attempts++;
-            if (attempts > quant + 5) break;
+            // Try to find the newly acquired item
+            List<ItemBase>? newItems = Bot.TempInv.Items?.Except(initialItems ?? Enumerable.Empty<ItemBase>()).ToList();
+            newItem = newItems?.FirstOrDefault(x => x.ID == itemID) ?? newItems?.FirstOrDefault();
+        }
+
+        if (quant > 1 && newItem != null)
+        {
+            int attempts = 0;
+            while (Bot.TempInv.GetQuantity(newItem.Name) < quant &&
+                   Bot.TempInv.TryGetItem(newItem.Name, out ItemBase? item) &&
+                   (item?.Quantity < item?.MaxStack))
+            {
+                Bot.Map.GetMapItem(itemID);
+                Sleep(1000);
+                attempts++;
+
+                if (attempts > quant + 10 || Bot.TempInv.Contains(newItem.Name, quant))
+                    break;
+            }
         }
 
         Logger($"Map item {itemID} ({quant}) acquired");
     }
 
+
     /// <summary>
-    /// Attempts to acquire multiple map items until their desired quantities are reached.
+    /// Sends getMapItem packets for one or more specified items.
     /// </summary>
-    /// <param name="items">A collection of tuples containing the ItemID and desired Quantity.</param>
-    /// <param name="map">Optional map to join before grabbing the items.</param>
+    /// <param name="items">Collection of (ItemID, Quantity) pairs</param>
+    /// <param name="map">Optional map where the items are</param>
     public void GetMapItems(IEnumerable<(int ItemID, int Quantity)> items, string? map = null)
     {
-        if (items == null) return;
+        if (items == null)
+            return;
 
         if (map != null)
-        {
             Join(map);
-            Bot.Wait.ForMapLoad(map);
-        }
 
         JumpWait();
         Sleep();
 
         foreach ((int itemID, int quant) in items)
         {
-            int alreadyHave = Bot.TempInv.GetQuantity(itemID);
-            if (alreadyHave >= quant)
+            if (Bot.TempInv.Contains(itemID, quant))
             {
                 Logger($"Map item {itemID} already acquired ({quant})");
                 continue;
             }
 
-            int remaining = quant - alreadyHave;
-            int attempts = 0;
+            List<ItemBase>? initialItems = Bot.TempInv.Items?.ToList();
+            ItemBase? newItem = null;
 
-            while (remaining > 0 && !Bot.ShouldExit)
+            for (int i = 0; i < quant; i++)
             {
-                Bot.Wait.ForActionCooldown(GameActions.GetMapItem);
                 Bot.Map.GetMapItem(itemID);
-                Sleep(500);
+                Sleep(1000);
 
-                remaining = quant - Bot.TempInv.GetQuantity(itemID);
+                if (newItem != null)
+                    continue;
 
-                attempts++;
-                if (attempts > quant + 5) break;
+                List<ItemBase>? newItems = Bot.TempInv.Items?.Except(initialItems ?? Enumerable.Empty<ItemBase>()).ToList();
+                newItem = newItems?.FirstOrDefault(x => x.ID == itemID) ?? newItems?.FirstOrDefault();
+            }
+
+            if (quant > 1 && newItem != null)
+            {
+                int attempts = 0;
+                while (Bot.TempInv.GetQuantity(newItem.Name) < quant &&
+                       Bot.TempInv.TryGetItem(newItem.Name, out ItemBase? item) &&
+                       (item?.Quantity < item?.MaxStack))
+                {
+                    Bot.Map.GetMapItem(itemID);
+                    Sleep(1000);
+                    attempts++;
+
+                    if (attempts > quant + 10 || Bot.TempInv.Contains(newItem.Name, quant))
+                        break;
+                }
             }
 
             Logger($"Map item {itemID} ({quant}) acquired");
