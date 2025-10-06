@@ -75,9 +75,7 @@ public class CoreStory
         }
 
         if (QuestProgression(QuestID, GetReward, Reward))
-        {
             return;
-        }
 
         if (QuestData.Requirements.Count == 0)
         {
@@ -85,69 +83,63 @@ public class CoreStory
             return;
         }
 
-        // Accept the quest
-        Core.DebugLogger(this, $"Accepting quest {QuestID} and joining map {MapName}");
-        Core.EnsureAccept(QuestID);
-        Core.Join(MapName);
-
-        // Filter valid requirements
+        // Filter valid requirements and exclude items already obtained
         List<ItemBase> validRequirements = QuestData.Requirements
             .Where(r => r != null && !string.IsNullOrEmpty(r.Name))
+            .Where(r => !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
             .ToList();
 
         if (validRequirements.Count == 0)
         {
-            Core.DebugLogger(this, $"Quest {QuestID} has no valid requirements after filtering.");
+            Core.DebugLogger(this, $"All quest requirements for Quest {QuestID} are already satisfied.");
             return;
         }
 
-        // Snapshot CurrentRequirements to avoid nulls after completion
+        // Accept the quest and join the map
+        Core.DebugLogger(this, $"Accepting quest {QuestID} and joining map {MapName}");
+        Core.EnsureAccept(QuestID);
+        Core.Join(MapName);
+
+        // Snapshot CurrentRequirements
         CurrentRequirements.Clear();
         CurrentRequirements.AddRange(validRequirements);
 
         // Add drops for quest items
-        var drops = CurrentRequirements.Where(r => !r.Temp && !string.IsNullOrEmpty(r.Name)).Select(r => r.Name).ToArray();
+        var drops = CurrentRequirements
+            .Where(r => !r.Temp && !string.IsNullOrEmpty(r.Name))
+            .Select(r => r.Name)
+            .ToArray();
+
         if (drops.Length > 0)
         {
             Core.AddDrop(drops);
             Core.DebugLogger(this, $"Added drops for quest {QuestID}: [{string.Join(", ", drops)}]");
         }
 
+        // Farming loop
         while (CurrentRequirements.Count > 0)
         {
-            int beforeCount = CurrentRequirements.Count;
+            // Remove already obtained items
             CurrentRequirements.RemoveAll(r => r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity));
-            int afterCount = CurrentRequirements.Count;
-
-            if (beforeCount != afterCount)
-                Core.Logger($"Removed {beforeCount - afterCount} completed requirements. Remaining: {afterCount}");
-
             if (CurrentRequirements.Count == 0)
-            {
                 break;
-            }
 
             List<string> itemsToFarm = CurrentRequirements.Select(r => r.Name).Where(n => !string.IsNullOrEmpty(n)).ToList();
             if (itemsToFarm.Count == 0)
-            {
-                Core.DebugLogger(this, "No valid items to farm remaining, exiting loop.");
                 break;
-            }
 
             _MonsterHuntBatch(MapName, MonsterName, itemsToFarm, QuestID);
         }
 
-        // Snapshot items farmed before completion
+        // Snapshot items farmed
         var farmedItems = validRequirements.Select(r => r.Name).ToArray();
 
         // Complete the quest
         Core.DebugLogger(this, $"Attempting to complete quest {QuestID}");
         TryComplete(QuestData, AutoCompleteQuest);
 
-        // Small delay to avoid stale references
+        // Delay & cleanup
         Bot.Sleep(200);
-
-        // Clear CurrentRequirements to avoid referencing null objects after completion
         CurrentRequirements.Clear();
 
         Core.DebugLogger(this, $"Finished KillQuest: QuestID={QuestID}. Items farmed: [{string.Join(", ", farmedItems)}]");
@@ -183,9 +175,7 @@ public class CoreStory
         }
 
         if (QuestProgression(QuestID, GetReward, Reward))
-        {
             return;
-        }
 
         if (QuestData.Requirements.Count == 0)
         {
@@ -193,14 +183,15 @@ public class CoreStory
             return;
         }
 
-        // Filter valid requirements
+        // Filter valid requirements and exclude items already obtained
         List<ItemBase> validRequirements = QuestData.Requirements
             .Where(r => r != null && !string.IsNullOrEmpty(r.Name))
+            .Where(r => !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
             .ToList();
 
         if (validRequirements.Count == 0)
         {
-            Core.DebugLogger(this, $"Quest {QuestID} has no valid requirements after filtering.");
+            Core.DebugLogger(this, $"All quest requirements for Quest {QuestID} are already satisfied.");
             return;
         }
 
@@ -225,23 +216,26 @@ public class CoreStory
         CurrentRequirements.Clear();
         CurrentRequirements.AddRange(validRequirements);
 
-        // Add drops
-        var drops = CurrentRequirements.Where(r => !r.Temp && !string.IsNullOrEmpty(r.Name)).Select(r => r.Name).ToArray();
+        // Add drops for items not already in inventory
+        var drops = CurrentRequirements
+            .Where(r => !r.Temp && !string.IsNullOrEmpty(r.Name))
+            .Select(r => r.Name)
+            .ToArray();
+
         if (drops.Length > 0)
         {
             Core.AddDrop(drops);
             Core.DebugLogger(this, $"Added drops: [{string.Join(", ", drops)}]");
         }
 
+        // Main farming loop
         while (CurrentRequirements.Any(r => !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity))))
         {
             // Remove completed items from CurrentRequirements
             CurrentRequirements.RemoveAll(r => r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity));
 
             if (CurrentRequirements.Count == 0)
-            {
                 break;
-            }
 
             // Group remaining items by monster
             var monsterGroups = CurrentRequirements
