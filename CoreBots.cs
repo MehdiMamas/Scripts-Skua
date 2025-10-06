@@ -7318,7 +7318,7 @@ public class CoreBots
 
     // Combined static and dynamic blacklist
     public string[] BlackListedJumptoCells = new[]
-    { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame", "Fall", "Move", "Cut", "Movie" };
+    { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame", "Quest", "Fall", "Move", "Cut", "Movie" };
 
     /// <summary>
     /// Joins a map and does bonus steps for said map if needed
