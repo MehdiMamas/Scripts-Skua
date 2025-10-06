@@ -465,7 +465,7 @@ public class Core13LoC
 
         //The Hunt for the Hag
         Story.KillQuest(471, "junkyard", "Onibaba");
-
+        
         //Su-she
         Story.KillQuest(473, "yokairiver", new[] { "Funa-Yurei", "Funa-Yurei", "Funa-Yurei" });
 
@@ -1114,8 +1114,8 @@ public class Core13LoC
         Story.KillQuest(1282, "ravinetemple", "Temple Guardian");
 
         //Defend the UnderMountain
-        Story.KillQuest(1283, "ravinetemple", "Temple Guardian");
         Story.MapItemQuest(1283, "ravinetemple", 557, 10);
+        Story.KillQuest(1283, "ravinetemple", "Temple Guardian");
 
         //Alliance Defiance
         Story.KillQuest(1284, "ravinetemple", "Temple Guardian");
