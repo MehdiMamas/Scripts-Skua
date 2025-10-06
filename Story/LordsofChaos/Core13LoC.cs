@@ -1154,8 +1154,8 @@ public class Core13LoC
         Story.KillQuest(1424, "ancienttemple", "Chaotic Vulture");
 
         //Chaorruption Cure?
-        Story.KillQuest(1425, "ancienttemple", "Chaotic Vulture");
         Story.MapItemQuest(1425, "ancienttemple", 706, 7);
+        Story.KillQuest(1425, "ancienttemple", "Chaotic Vulture");
 
         //Guardian Salvation
         Story.KillQuest(1426, "ancienttemple", "Chaos Troll Spirit");
