@@ -587,7 +587,7 @@ public class Core13LoC
         Story.KillQuest(534, "lycan", "Dire Wolf");
 
         //No Respect
-        Story.KillQuest(535, "lycan", new[] { "Lycan", "Lycan Knight" });
+        Story.KillQuest(535, "lycan", new[] { "Lycan Knight", "Lycan" });
 
         //Vampire Knights
         Story.KillQuest(536, "lycan", "Chaos Vampire Knight");
