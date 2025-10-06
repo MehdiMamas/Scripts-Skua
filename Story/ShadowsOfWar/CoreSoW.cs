@@ -658,8 +658,8 @@ public class CoreSoW
         Story.KillQuest(7461, "innershadows", "Infected Minion");
 
         //Dusty Boost (7462)
-        Story.KillQuest(7462, "innershadows", "Infected Minion");
         Story.MapItemQuest(7462, "innershadows", 7271);
+        Story.KillQuest(7462, "innershadows", "Infected Minion");
 
         //Defeat my Minions (7463)
         Story.KillQuest(7463, "innershadows", "Infected Minion");
@@ -1154,8 +1154,8 @@ public class CoreSoW
         Story.MapItemQuest(9122, "manacradle", 11270, 5);
 
         // In The Eye 9123
-        Story.KillQuest(9123, "manacradle", new[] { "Dark Tainted Mana", "Darkness Elemental" });
         Story.MapItemQuest(9123, "manacradle", 11271);
+        Story.KillQuest(9123, "manacradle", new[] { "Dark Tainted Mana", "Darkness Elemental" });
 
         string[] DodgeClasses = new[] { "Yami no Ronin", "TimeKeeper", "Void Highlord", "Void HighLord (IoDA)" };
         if (Core.CheckInventory(DodgeClasses, any: true))

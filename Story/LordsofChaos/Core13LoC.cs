@@ -1358,8 +1358,8 @@ public class Core13LoC
         Story.KillQuest(1276, "ravinetemple", "Temple Guardian");
 
         //Too Little, Too Late. Still Needed
-        Story.KillQuest(1277, "ravinetemple", "Temple Guardian");
         Story.MapItemQuest(1277, "ravinetemple", 557, 10);
+        Story.KillQuest(1277, "ravinetemple", "Temple Guardian");
 
         //Alliance Defiance
         Story.KillQuest(1278, "ravinetemple", "Temple Guardian");
@@ -2170,8 +2170,8 @@ public class Core13LoC
         Story.MapItemQuest(3125, "ceremony", 2118, 6);
 
         //Seal the Chapel
-        Story.KillQuest(3126, "ceremony", "Chaos Invader");
         Story.MapItemQuest(3126, "ceremony", 2119);
+        Story.KillQuest(3126, "ceremony", "Chaos Invader");
 
         //Chaos Kills!
         Story.KillQuest(3127, "ceremony", "Chaos Justicar");
