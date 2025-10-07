@@ -1295,7 +1295,7 @@ public class Core13LoC
         }
 
         //The Time Grows Closer
-        Story.KillQuest(1227, "crossroads", new[] { "Lemurphant", "Koalion" });
+        Story.KillQuest(1227, "crossroads", new[] { "Koalion", "Lemurphant" });
 
         //Like Calls to Like
         if (!Story.QuestProgression(1228))
