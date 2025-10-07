@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 153955,
+    "size": 154036,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -28,7 +28,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 141616,
+    "size": 152122,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 45419,
+    "size": 48972,
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreStory.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 404318,
+    "size": 399845,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -7479,7 +7479,7 @@
       "world-soul"
     ],
     "path": "Story/Legion/WorldSoul.cs",
-    "size": 1864,
+    "size": 1871,
     "fileName": "WorldSoul.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Legion/WorldSoul.cs"
   },
@@ -7996,7 +7996,7 @@
       "null"
     ],
     "path": "Story/ElegyofMadness(Darkon)/CoreAstravia.cs",
-    "size": 16054,
+    "size": 15973,
     "fileName": "CoreAstravia.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ElegyofMadness(Darkon)/CoreAstravia.cs"
   },
@@ -10132,7 +10132,7 @@
       "null"
     ],
     "path": "Story/LordsofChaos/Core13LoC.cs",
-    "size": 82227,
+    "size": 82185,
     "fileName": "Core13LoC.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/LordsofChaos/Core13LoC.cs"
   },
@@ -12613,7 +12613,7 @@
       "class"
     ],
     "path": "Other/Classes/VerusDoomKnight.cs",
-    "size": 15180,
+    "size": 15184,
     "fileName": "VerusDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/VerusDoomKnight.cs"
   },
@@ -22852,7 +22852,7 @@
       "seasonal"
     ],
     "path": "Seasonal/HerosHeartDay/YguasuFalls.cs",
-    "size": 1695,
+    "size": 1694,
     "fileName": "YguasuFalls.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/HerosHeartDay/YguasuFalls.cs"
   },
@@ -28446,7 +28446,7 @@
       "battlepet"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/YokaiTreasureMerge.cs",
-    "size": 8210,
+    "size": 8238,
     "fileName": "YokaiTreasureMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/YokaiTreasureMerge.cs"
   },

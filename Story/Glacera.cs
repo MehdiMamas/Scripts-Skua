@@ -184,9 +184,9 @@ public class GlaceraStory
         Story.KillQuest(3944, "frozenruins", "Frost Reaper");
 
         // Form the Lock
+        Story.MapItemQuest(3945, "frozenruins", 3050, 10);
         Story.KillQuest(3945, "frozenruins", "Frozen Moglinster");
 
-        Story.MapItemQuest(3945, "frozenruins", 3050, 10);
         // Glacera
         if (!Story.QuestProgression(3946))
         {

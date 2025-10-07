@@ -50,83 +50,157 @@ public class CoreFarms
         Core.RunCore();
     }
 
+    // public void ToggleBoost(BoostType type, bool enabled = true)
+    // {
+    //     if (enabled)
+    //     {
+    //         if (Core.CBOBool("doGoldBoost", out bool _doGoldBoost))
+    //             doGoldBoost = _doGoldBoost;
+    //         if (Core.CBOBool("doClassBoost", out bool _doClassBoost))
+    //             doClassBoost = _doClassBoost;
+    //         if (Core.CBOBool("doRepBoost", out bool _doRepBoost))
+    //             doRepBoost = _doRepBoost;
+    //         if (Core.CBOBool("doExpBoost", out bool _doExpBoost))
+    //             doExpBoost = _doExpBoost;
+
+    //         switch (type)
+    //         {
+    //             case BoostType.Gold:
+    //                 if (!doGoldBoost || Bot.Boosts.UseGoldBoost || Bot.Player.Gold >= 100000000)
+    //                     return;
+    //                 Bot.Boosts.SetGoldBoostID();
+    //                 Bot.Boosts.UseGoldBoost = true;
+    //                 break;
+
+    //             case BoostType.Class:
+    //                 if (!doClassBoost || Bot.Boosts.UseClassBoost)
+    //                     return;
+    //                 Bot.Boosts.SetClassBoostID();
+    //                 Bot.Boosts.UseClassBoost = true;
+    //                 break;
+
+    //             case BoostType.Reputation:
+    //                 if (!doRepBoost || Bot.Boosts.UseReputationBoost)
+    //                     return;
+    //                 Bot.Boosts.SetReputationBoostID();
+    //                 Bot.Boosts.UseReputationBoost = true;
+    //                 break;
+
+    //             case BoostType.Experience:
+    //                 if (!doExpBoost || Bot.Boosts.UseExperienceBoost || Bot.Player.Level == 100)
+    //                     return;
+    //                 Bot.Boosts.SetExperienceBoostID();
+    //                 Bot.Boosts.UseExperienceBoost = true;
+    //                 break;
+    //         }
+    //         Bot.Boosts.Start();
+    //     }
+    //     else
+    //     {
+    //         switch (type)
+    //         {
+    //             case BoostType.Gold:
+    //                 if (!Bot.Boosts.UseGoldBoost)
+    //                     return;
+    //                 Bot.Boosts.UseGoldBoost = false;
+    //                 break;
+
+    //             case BoostType.Class:
+    //                 if (!Bot.Boosts.UseClassBoost)
+    //                     return;
+    //                 Bot.Boosts.UseClassBoost = false;
+    //                 break;
+
+    //             case BoostType.Reputation:
+    //                 if (!Bot.Boosts.UseReputationBoost)
+    //                     return;
+    //                 Bot.Boosts.UseReputationBoost = false;
+    //                 break;
+
+    //             case BoostType.Experience:
+    //                 if (!Bot.Boosts.UseExperienceBoost)
+    //                     return;
+    //                 Bot.Boosts.UseExperienceBoost = false;
+    //                 break;
+    //         }
+    //         if (new[] { Bot.Boosts.UseGoldBoost, Bot.Boosts.UseClassBoost, Bot.Boosts.UseReputationBoost, Bot.Boosts.UseExperienceBoost }.All(on => !on))
+    //             Bot.Boosts.Stop();
+    //     }
+    // }
     public void ToggleBoost(BoostType type, bool enabled = true)
     {
         if (enabled)
         {
-            if (Core.CBOBool("doGoldBoost", out bool _doGoldBoost))
-                doGoldBoost = _doGoldBoost;
-            if (Core.CBOBool("doClassBoost", out bool _doClassBoost))
-                doClassBoost = _doClassBoost;
-            if (Core.CBOBool("doRepBoost", out bool _doRepBoost))
-                doRepBoost = _doRepBoost;
-            if (Core.CBOBool("doExpBoost", out bool _doExpBoost))
-                doExpBoost = _doExpBoost;
-
             switch (type)
             {
                 case BoostType.Gold:
-                    if (!doGoldBoost || Bot.Boosts.UseGoldBoost || Bot.Player.Gold >= 100000000)
-                        return;
+                    if (Bot.Boosts.UseGoldBoost || Bot.Player.Gold >= 100_000_000)
+                    {
+                        Core.Logger($"💰 Gold boost skipped (already active or max gold).");
+                        break;
+                    }
                     Bot.Boosts.SetGoldBoostID();
                     Bot.Boosts.UseGoldBoost = true;
+                    Core.Logger($"💰 Gold boost activated!");
                     break;
 
                 case BoostType.Class:
-                    if (!doClassBoost || Bot.Boosts.UseClassBoost)
-                        return;
+                    if (Bot.Boosts.UseClassBoost)
+                    {
+                        Core.Logger($"🛡️ Class boost skipped (already active).");
+                        break;
+                    }
                     Bot.Boosts.SetClassBoostID();
                     Bot.Boosts.UseClassBoost = true;
+                    Core.Logger($"🛡️ Class boost activated!");
                     break;
 
                 case BoostType.Reputation:
-                    if (!doRepBoost || Bot.Boosts.UseReputationBoost)
-                        return;
+                    if (Bot.Boosts.UseReputationBoost)
+                    {
+                        Core.Logger($"🏰 Reputation boost skipped (already active).");
+                        break;
+                    }
                     Bot.Boosts.SetReputationBoostID();
                     Bot.Boosts.UseReputationBoost = true;
+                    Core.Logger($"🏰 Reputation boost activated!");
                     break;
 
                 case BoostType.Experience:
-                    if (!doExpBoost || Bot.Boosts.UseExperienceBoost || Bot.Player.Level == 100)
-                        return;
+                    if (Bot.Boosts.UseExperienceBoost || Bot.Player.Level == 100)
+                    {
+                        Core.Logger($"📚 Experience boost skipped (already active or max level).");
+                        break;
+                    }
                     Bot.Boosts.SetExperienceBoostID();
                     Bot.Boosts.UseExperienceBoost = true;
+                    Core.Logger($"📚 Experience boost activated!");
                     break;
             }
+
+            // Start all active boosts
             Bot.Boosts.Start();
         }
         else
         {
             switch (type)
             {
-                case BoostType.Gold:
-                    if (!Bot.Boosts.UseGoldBoost)
-                        return;
-                    Bot.Boosts.UseGoldBoost = false;
-                    break;
-
-                case BoostType.Class:
-                    if (!Bot.Boosts.UseClassBoost)
-                        return;
-                    Bot.Boosts.UseClassBoost = false;
-                    break;
-
-                case BoostType.Reputation:
-                    if (!Bot.Boosts.UseReputationBoost)
-                        return;
-                    Bot.Boosts.UseReputationBoost = false;
-                    break;
-
-                case BoostType.Experience:
-                    if (!Bot.Boosts.UseExperienceBoost)
-                        return;
-                    Bot.Boosts.UseExperienceBoost = false;
-                    break;
+                case BoostType.Gold: Bot.Boosts.UseGoldBoost = false; Core.Logger($"💰 Gold boost deactivated."); break;
+                case BoostType.Class: Bot.Boosts.UseClassBoost = false; Core.Logger($"🛡️ Class boost deactivated."); break;
+                case BoostType.Reputation: Bot.Boosts.UseReputationBoost = false; Core.Logger($"🏰 Reputation boost deactivated."); break;
+                case BoostType.Experience: Bot.Boosts.UseExperienceBoost = false; Core.Logger($"📚 Experience boost deactivated."); break;
             }
-            if (new[] { Bot.Boosts.UseGoldBoost, Bot.Boosts.UseClassBoost, Bot.Boosts.UseReputationBoost, Bot.Boosts.UseExperienceBoost }.All(on => !on))
+
+            // Stop boosts if none are active
+            if (!Bot.Boosts.UseGoldBoost && !Bot.Boosts.UseClassBoost &&
+                !Bot.Boosts.UseReputationBoost && !Bot.Boosts.UseExperienceBoost)
+            {
                 Bot.Boosts.Stop();
+                Core.Logger("🛑 All boosts stopped.");
+            }
         }
     }
+
 
     #region Gold
     public void Gold(int quant = 100000000)
@@ -482,472 +556,601 @@ public class CoreFarms
 
 
 
-    /// <summary>
-    /// Farms level in Ice Storm Arena
-    /// </summary>
-    /// <param name="level">Desired level</param>
-    /// <param name="rankUpClass">Whether to rank up the class (true or false)</param>
-    public void IcestormArena(int level = 100, bool rankUpClass = false)
+    // /// <summary>
+    // /// Farms level in Ice Storm Arena
+    // /// </summary>
+    // /// <param name="level">Desired level</param>
+    // /// <param name="rankUpClass">Whether to rank up the class (true or false)</param>
+    // public void IcestormArena(int level = 100, bool rankUpClass = false)
+    // {
+    //     // Exit if the player's level has already reached the desired level and we are not ranking up the class
+    //     if (Bot.Player.Level >= level && !rankUpClass)
+    //         return;
+
+    //     #region level checks
+    //     // Equip the class for farming or rank up boost as needed
+    //     if (!rankUpClass)
+    //         Core.EquipClass(ClassType.Farm);
+    //     if (rankUpClass)
+    //         ToggleBoost(BoostType.Class);
+
+    //     // Enable aggro for the farm
+    //     Core.ToggleAggro(true);
+    //     Core.SavedState();
+
+    //     // Toggle experience boost if we are farming for experience
+    //     if (Bot.Player.Level < 100)
+    //         ToggleBoost(BoostType.Experience);
+
+    //     Core.ByPassCheck();
+    //     // Farming between levels 1-5
+    //     while (!Bot.ShouldExit && Bot.Player.Level < 5)
+    //     {
+    //         while (!Bot.ShouldExit && !Bot.Player.Alive)
+    //         {
+    //             if (Bot.Player.Alive)
+    //             {
+    //                 Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+    //                 Bot.Sleep(1000);
+    //                 Core.Jump("r4", "Bottom");
+    //                 Bot.Wait.ForCellChange("r4");
+    //                 break;
+    //             }
+    //             else
+    //                 Bot.Sleep(1000);
+    //         }
+
+    //         if (Bot.Map.Name != "icestormarena")
+    //         {
+    //             Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
+    //             Bot.Wait.ForMapLoad("icestormarena");
+    //         }
+    //         if (Bot.Player.Cell != "r4")
+    //         {
+    //             Core.Jump("r4", "Bottom");
+    //             Bot.Wait.ForCellChange("r4");
+    //         }
+
+    //         Core.CanWeAggro();
+    //         Bot.Combat.Attack("*");
+    //         if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+    //             break;
+    //     }
+
+    //     Core.ByPassCheck();
+    //     // Farming between levels 5-10
+    //     while (!Bot.ShouldExit && Bot.Player.Level >= 5 && Bot.Player.Level < 10)
+    //     {
+    //         while (!Bot.ShouldExit && !Bot.Player.Alive)
+    //         {
+    //             if (Bot.Player.Alive)
+    //             {
+    //                 Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+    //                 Bot.Sleep(1000);
+    //                 Core.Jump("r5", "Left");
+    //                 Bot.Wait.ForCellChange("r5");
+    //                 break;
+    //             }
+    //             else
+    //                 Bot.Sleep(1000);
+    //         }
+
+    //         if (Bot.Map.Name != "icestormarena")
+    //         {
+    //             Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
+    //             Bot.Wait.ForMapLoad("icestormarena");
+    //         }
+    //         if (Bot.Player.Cell != "r5")
+    //         {
+    //             Core.Jump("r5", "Left");
+    //             Bot.Wait.ForCellChange("r5");
+    //         }
+
+    //         Core.CanWeAggro();
+    //         Core.Sleep();
+    //         Bot.Combat.Attack("*");
+    //         if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+    //             break;
+    //     }
+
+    //     Core.ByPassCheck();
+    //     // Farming between levels 10-20
+    //     while (!Bot.ShouldExit && Bot.Player.Level >= 10 && Bot.Player.Level < 20)
+    //     {
+    //         while (!Bot.ShouldExit && !Bot.Player.Alive)
+    //         {
+    //             if (Bot.Player.Alive)
+    //             {
+    //                 Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+    //                 Bot.Sleep(1000);
+    //                 Core.Jump("r6", "Left");
+    //                 Bot.Wait.ForCellChange("r6");
+    //                 break;
+    //             }
+    //             else
+    //                 Bot.Sleep(1000);
+    //         }
+
+    //         if (Bot.Map.Name != "icestormarena")
+    //         {
+    //             Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
+    //             Bot.Wait.ForMapLoad("icestormarena");
+    //         }
+    //         if (Bot.Player.Cell != "r6")
+    //         {
+    //             Core.Jump("r6", "Left");
+    //             Bot.Wait.ForCellChange("r6");
+    //         }
+
+    //         Core.CanWeAggro();
+    //         Bot.Combat.Attack("*");
+    //         Core.Sleep();
+    //         if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+    //             break;
+    //     }
+
+    //     Core.ByPassCheck();
+    //     // Farming between levels 20-25
+    //     if (Bot.Player.Level < 25)
+    //     {
+    //         Core.RegisterQuests(6628);
+    //         while (!Bot.ShouldExit && Bot.Player.Level >= 20 && Bot.Player.Level < 25)
+    //         {
+    //             while (!Bot.ShouldExit && !Bot.Player.Alive)
+    //             {
+    //                 if (Bot.Player.Alive)
+    //                 {
+    //                     Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+    //                     Bot.Sleep(1000);
+    //                     Core.Jump("r7", "Left");
+    //                     Bot.Wait.ForCellChange("r7");
+    //                     break;
+    //                 }
+    //                 else
+    //                     Bot.Sleep(1000);
+    //             }
+
+    //             if (Bot.Map.Name != "icestormarena")
+    //             {
+    //                 Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
+    //                 Bot.Wait.ForMapLoad("icestormarena");
+    //             }
+    //             if (Bot.Player.Cell != "r7")
+    //             {
+    //                 Core.Jump("r7", "Left");
+    //                 Bot.Wait.ForCellChange("r7");
+    //             }
+    //             Core.CanWeAggro();
+
+    //             Bot.Combat.Attack("*");
+    //             Core.Sleep();
+    //             if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+    //                 break;
+    //         }
+    //         Core.AbandonQuest(6628);
+    //     }
+
+    //     Core.ByPassCheck();
+    //     // Farming between levels 25-30
+    //     while (!Bot.ShouldExit && Bot.Player.Level >= 25 && Bot.Player.Level < 30)
+    //     {
+    //         while (!Bot.ShouldExit && !Bot.Player.Alive)
+    //         {
+    //             if (Bot.Player.Alive)
+    //             {
+    //                 Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+    //                 Bot.Sleep(1000);
+    //                 Core.Jump("r10", "Left");
+    //                 Bot.Wait.ForCellChange("r10");
+    //                 break;
+    //             }
+    //             else
+    //                 Bot.Sleep(1000);
+    //         }
+
+    //         if (Bot.Map.Name != "icestormarena")
+    //         {
+    //             Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
+    //             Bot.Wait.ForMapLoad("icestormarena");
+    //         }
+    //         if (Bot.Player.Cell != "r10")
+    //         {
+    //             Core.Jump("r10", "Left");
+    //             Bot.Wait.ForCellChange("r10");
+    //         }
+
+    //         Core.CanWeAggro();
+    //         Bot.Combat.Attack("*");
+    //         Core.Sleep();
+    //         if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+    //             break;
+    //     }
+
+    //     Core.ByPassCheck();
+    //     // Farming between levels 30-35 (and switching to solo class if needed)
+    //     if (Bot.Player.Level >= 30 && Bot.Player.Level < 35)
+    //     {
+    //         if (!rankUpClass)
+    //             Core.EquipClass(ClassType.Solo);
+    //         Core.RegisterQuests(6629);
+    //         while (!Bot.ShouldExit && Bot.Player.Level >= 30 && Bot.Player.Level < 35)
+    //         {
+    //             while (!Bot.ShouldExit && !Bot.Player.Alive)
+    //             {
+    //                 if (Bot.Player.Alive)
+    //                 {
+    //                     Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+    //                     Bot.Sleep(1000);
+    //                     Core.Jump("r11", "Left");
+    //                     Bot.Wait.ForCellChange("r11");
+    //                     break;
+    //                 }
+    //                 else
+    //                     Bot.Sleep(1000);
+    //             }
+
+    //             if (Bot.Map.Name != "icestormarena")
+    //             {
+    //                 Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
+    //                 Bot.Wait.ForMapLoad("icestormarena");
+    //             }
+    //             if (Bot.Player.Cell != "r11")
+    //             {
+    //                 Core.Jump("r11", "Left");
+    //                 Bot.Wait.ForCellChange("r11");
+    //             }
+    //             Core.CanWeAggro();
+
+    //             Bot.Combat.Attack("*");
+    //             Core.Sleep();
+    //             if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+    //                 break;
+    //         }
+    //         Core.AbandonQuest(6629);
+    //     }
+
+    //     if (!rankUpClass)
+    //         Core.EquipClass(ClassType.Farm);
+
+    //     Core.ByPassCheck();
+    //     // Farming between levels 35-50
+    //     Core.RegisterQuests(6629);
+    //     while (!Bot.ShouldExit && Bot.Player.Level >= 35 && Bot.Player.Level < 50)
+    //     {
+    //         while (!Bot.ShouldExit && !Bot.Player.Alive)
+    //         {
+    //             if (Bot.Player.Alive)
+    //             {
+    //                 Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+    //                 Bot.Sleep(1000);
+    //                 Core.Jump("r14", "Left");
+    //                 Bot.Wait.ForCellChange("r14");
+    //                 break;
+    //             }
+    //             else
+    //                 Bot.Sleep(1000);
+    //         }
+
+    //         if (Bot.Map.Name != "icestormarena")
+    //         {
+    //             Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
+    //             Bot.Wait.ForMapLoad("icestormarena");
+    //         }
+    //         if (Bot.Player.Cell != "r11")
+    //         {
+    //             Core.Jump("r11", "Left");
+    //             Bot.Wait.ForCellChange("r11");
+    //         }
+
+    //         Core.CanWeAggro();
+    //         Bot.Combat.Attack("*");
+    //         Core.Sleep();
+    //     }
+    //     Bot.Quests.UnregisterQuests(6629);
+    //     Core.AbandonQuest(6629);
+
+    //     Core.ByPassCheck();
+    //     // Farming between levels 50-61
+    //     while (!Bot.ShouldExit && Bot.Player.Level >= 50 && Bot.Player.Level < 61)
+    //     {
+    //         while (!Bot.ShouldExit && !Bot.Player.Alive)
+    //         {
+    //             if (Bot.Player.Alive)
+    //             {
+    //                 Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+    //                 Bot.Sleep(1000);
+    //                 Core.Jump("r16", "Left");
+    //                 Bot.Wait.ForCellChange("r16");
+    //                 break;
+    //             }
+    //             else
+    //                 Bot.Sleep(1000);
+    //         }
+
+    //         Core.CanWeAggro();
+    //         if (Bot.Map.Name != "icestormarena")
+    //         {
+    //             Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
+    //             Bot.Wait.ForMapLoad("icestormarena");
+    //         }
+    //         if (Bot.Player.Cell != "r16")
+    //         {
+    //             Core.Jump("r16", "Left");
+    //             Bot.Wait.ForCellChange("r16");
+    //         }
+
+    //         Bot.Combat.Attack("*");
+    //         Core.Sleep();
+    //         if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+    //             break;
+    //     }
+
+    //     Core.ByPassCheck();
+    //     // Farming between levels 61-75 with BattleGroundE for non-rank-up class
+    //     if (Bot.Player.Level >= 61 && Bot.Player.Level < 75)
+    //     {
+    //         if (rankUpClass)
+    //         {
+    //             while (!Bot.ShouldExit && Bot.Player.Level >= 61 && Bot.Player.Level < 75)
+    //             {
+    //                 while (!Bot.ShouldExit && !Bot.Player.Alive)
+    //                 {
+    //                     if (Bot.Player.Alive)
+    //                     {
+    //                         Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
+    //                         Bot.Sleep(1000);
+    //                         if (Bot.Player.Cell != "r17")
+    //                             Core.Jump("r17", "Left");
+    //                         break;
+    //                     }
+    //                     else
+    //                         Bot.Sleep(1000);
+    //                 }
+
+    //                 if (Bot.Map.Name != "icestormarena")
+    //                     Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
+    //                 if (Bot.Player.Cell != "r17")
+    //                     Core.Jump("r17", "Left");
+
+    //                 Core.CanWeAggro();
+    //                 Bot.Combat.Attack("*");
+    //                 Core.Sleep();
+    //                 if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+    //                     break;
+    //             }
+    //         }
+    //         else
+    //         {
+    //             if (Bot.Player.Gold < OneHundredMillion)
+    //                 ToggleBoost(BoostType.Gold);
+
+    //             Core.RegisterQuests(3991, 3992);
+    //             while (!Bot.ShouldExit && Bot.Player.Level >= 61 && Bot.Player.Level < 75)
+    //             {
+    //                 while (!Bot.ShouldExit && !Bot.Player.Alive)
+    //                 {
+    //                     if (Bot.Player.Alive)
+    //                     {
+    //                         Bot.Sleep(1000);
+    //                         if (Bot.Player.Cell != "r2")
+    //                             Core.Jump("r2", "center");
+    //                         break;
+    //                     }
+    //                     else
+    //                         Bot.Sleep(1000);
+    //                 }
+
+    //                 if (Bot.Map.Name != "battlegrounde")
+    //                     Core.Join("battlegrounde", publicRoom: Core.PrivateRooms);
+    //                 if (Bot.Player.Cell != "r2")
+    //                     Core.Jump("r2", "center");
+
+    //                 Core.CanWeAggro();
+    //                 Bot.Combat.Attack("*");
+    //                 Core.Sleep();
+    //             }
+    //             Core.AbandonQuest(3991, 3992);
+    //             ToggleBoost(BoostType.Gold, false);
+    //         }
+    //     }
+
+    //     Core.ByPassCheck();
+    //     // Farming between levels 75-100
+    //     while (!Bot.ShouldExit)
+    //     {
+    //         // Wait if dead, then spoof levelUp
+    //         if (!Bot.Player.Alive)
+    //         {
+    //             Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+    //             Bot.Send.ClientPacket(
+    //                 "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
+    //                 type: "json");
+    //             Bot.Sleep(1000);
+    //             continue;
+    //         }
+
+    //         // Ensure map
+    //         if (Bot.Map.Name != "icestormunder")
+    //         {
+    //             Core.Join("icestormunder", publicRoom: Core.PrivateRooms);
+    //             Bot.Wait.ForMapLoad("icestormunder");
+    //         }
+
+    //         // Ensure position
+    //         if (Bot.Player.Cell != "r2")
+    //         {
+    //             Bot.Map.Jump("r2", "Top", autoCorrect: false);
+    //             Bot.Wait.ForCellChange("r2");
+    //             Bot.Player.SetSpawnPoint();
+    //         }
+
+    //         // Break conditions
+    //         if (!rankUpClass && Bot.Player.Level >= level)
+    //             break;
+
+    //         if (rankUpClass && Core.CheckClassRank(true) >= 10)
+    //             break;
+
+    //         // Misc checks
+    //         Core.ByPassCheck();
+    //         Core.CanWeAggro();
+
+    //         // Attack first living mob (fallback: first non-null)
+    //         Monster? target = Bot.Monsters.CurrentAvailableMonsters
+    //             .FirstOrDefault(x => x?.HP > 0)
+    //             ?? Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null);
+
+    //         if (target != null)
+    //             Bot.Combat.Attack(target.MapID);
+
+    //         Bot.Sleep(500);
+    //     }
+    //     #endregion level checks
+
+
+    //     Bot.Options.AttackWithoutTarget = false;
+    //     Core.ToggleAggro(false);
+    //     Core.Jump();
+    //     Bot.Options.AggroMonsters = false;
+    //     Core.JumpWait();
+    //     Core.Rest();
+
+    //     // Disable any active boosts
+    //     if (rankUpClass)
+    //         ToggleBoost(BoostType.Class, false);
+    //     ToggleBoost(BoostType.Experience, false);
+    // }
+
+    private class LevelRange
     {
-        // Exit if the player's level has already reached the desired level and we are not ranking up the class
-        if (Bot.Player.Level >= level && !rankUpClass)
-            return;
+        public int Min { get; set; }
+        public int Max { get; set; }
+        public string Map { get; set; } = "";
+        public string Cell { get; set; } = "";
+        public string Pad { get; set; } = "Left";
+        public int[]? Quests { get; set; } // null if no quest
+        public ClassType ClassType { get; set; } = ClassType.Farm;
+        public bool RequiresRankUpClass { get; set; } = false; // for special rank-up cases
+    }
 
-        #region level checks
-        // Equip the class for farming or rank up boost as needed
-        if (!rankUpClass)
-            Core.EquipClass(ClassType.Farm);
-        if (rankUpClass)
-            ToggleBoost(BoostType.Class);
+    /// <summary>
+    /// Farms levels in Ice Storm Arena (or related maps) with proper level ranges and rank-up handling.
+    /// </summary>
+    /// <param name="level">Target level</param>
+    /// <param name="rankUpClass">Whether to rank up the class</param>
+    public void IcestormArena(int level = 100, bool rankUpClass = false)
+{
+    if (Bot.Player.Level >= level && !rankUpClass)
+    {
+        Core.Logger("💯 Already at target level and no rank-up requested!");
+        return;
+    }
 
-        // Enable aggro for the farm
-        Core.ToggleAggro(true);
-        Core.SavedState();
+    LevelRange[] levelRanges = new[]
+    {
+        new LevelRange { Min = 1, Max = 5, Map = "icestormarena", Cell = "r4", Pad = "Bottom", ClassType = ClassType.Farm },
+        new LevelRange { Min = 5, Max = 10, Map = "icestormarena", Cell = "r5", Pad = "Left", ClassType = ClassType.Farm },
+        new LevelRange { Min = 10, Max = 20, Map = "icestormarena", Cell = "r6", Pad = "Left", ClassType = ClassType.Farm },
+        new LevelRange { Min = 20, Max = 25, Map = "icestormarena", Cell = "r7", Pad = "Left", Quests = new[] { 6628 }, ClassType = ClassType.Farm },
+        new LevelRange { Min = 25, Max = 30, Map = "icestormarena", Cell = "r10", Pad = "Left", ClassType = ClassType.Farm },
+        new LevelRange { Min = 30, Max = 35, Map = "icestormarena", Cell = "r11", Pad = "Left", Quests = new[] { 6629 }, ClassType = ClassType.Solo },
+        new LevelRange { Min = 35, Max = 50, Map = "icestormarena", Cell = "r14", Pad = "Left", Quests = new[] { 6629 }, ClassType = ClassType.Farm },
+        new LevelRange { Min = 50, Max = 61, Map = "icestormarena", Cell = "r16", Pad = "Left", ClassType = ClassType.Farm },
+        new LevelRange { Min = 61, Max = 75, Map = "icestormarena", Cell = "r17", Pad = "Left", ClassType = ClassType.Farm },
+        new LevelRange { Min = 61, Max = 75, Map = "battlegrounde", Cell = "r2", Pad = "Center", Quests = new[] { 3991, 3992 }, ClassType = ClassType.Farm },
+        new LevelRange { Min = 75, Max = 100, Map = "icestormunder", Cell = "r2", Pad = "Top", ClassType = ClassType.Farm }
+    };
 
-        // Toggle experience boost if we are farming for experience
-        if (Bot.Player.Level < 100)
-            ToggleBoost(BoostType.Experience);
+    Core.Logger("🚀 Starting IcestormArena leveling routine...");
+    Bot.Options.AttackWithoutTarget = false;
+    Bot.Options.AggroAllMonsters = false;
+    Bot.Options.AggroMonsters = false;
+    Core.ToggleAggro(true);
 
-        Core.ByPassCheck();
-        // Farming between levels 1-5
-        while (!Bot.ShouldExit && Bot.Player.Level < 5)
+    foreach (var range in levelRanges)
+    {
+        if (Bot.Player.Level >= level) break; // Stop if target level reached
+        if (Bot.Player.Level >= range.Max) continue;
+
+        // Special handling for 61–75 ranges
+        if (range.Map == "battlegrounde" && rankUpClass && Core.CheckClassRank(true) < 10)
+            continue; // skip battlegrounde while rank-uping
+        if (range.Map == "icestormarena" && rankUpClass && Core.CheckClassRank(true) >= 10)
+            continue; // skip arena r17 if rank already done
+
+        Core.Logger($"🗺️ Moving to map {range.Map} for levels {range.Min}-{range.Max}!");
+        Core.EquipClass(range.ClassType);
+
+        if (range.Quests != null)
         {
+            Core.Logger($"📜 Registering quests: {string.Join(", ", range.Quests)}");
+            Core.RegisterQuests(range.Quests);
+        }
+
+        if (Bot.Player.Level < 100) ToggleBoost(BoostType.Experience);
+        if (rankUpClass) ToggleBoost(BoostType.Class);
+        Bot.Options.RestPackets = true;
+
+        while (!Bot.ShouldExit && Bot.Player.Level < Math.Min(level, range.Max))
+        {
+            if (Bot.Map.Name != range.Map)
+            {
+                Core.Logger($"↪ Joining map {range.Map}...");
+                Core.Join(range.Map, publicRoom: Core.PrivateRooms);
+                Bot.Wait.ForMapLoad(range.Map);
+            }
+
+            if (Bot.Player.Cell != range.Cell)
+            {
+                Core.Logger($"↪ Jumping to cell {range.Cell} ({range.Pad})");
+                Core.Jump(range.Cell, range.Pad);
+                Bot.Wait.ForCellChange(range.Cell);
+            }
+
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
-                if (Bot.Player.Alive)
-                {
-                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
-                    Bot.Sleep(1000);
-                    Core.Jump("r4", "Bottom");
-                    Bot.Wait.ForCellChange("r4");
-                    break;
-                }
-                else
-                    Bot.Sleep(1000);
-            }
-
-            if (Bot.Map.Name != "icestormarena")
-            {
-                Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                Bot.Wait.ForMapLoad("icestormarena");
-            }
-            if (Bot.Player.Cell != "r4")
-            {
-                Core.Jump("r4", "Bottom");
-                Bot.Wait.ForCellChange("r4");
-            }
-
-            Core.CanWeAggro();
-            Bot.Combat.Attack("*");
-            if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
-                break;
-        }
-
-        Core.ByPassCheck();
-        // Farming between levels 5-10
-        while (!Bot.ShouldExit && Bot.Player.Level >= 5 && Bot.Player.Level < 10)
-        {
-            while (!Bot.ShouldExit && !Bot.Player.Alive)
-            {
-                if (Bot.Player.Alive)
-                {
-                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
-                    Bot.Sleep(1000);
-                    Core.Jump("r5", "Left");
-                    Bot.Wait.ForCellChange("r5");
-                    break;
-                }
-                else
-                    Bot.Sleep(1000);
-            }
-
-            if (Bot.Map.Name != "icestormarena")
-            {
-                Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                Bot.Wait.ForMapLoad("icestormarena");
-            }
-            if (Bot.Player.Cell != "r5")
-            {
-                Core.Jump("r5", "Left");
-                Bot.Wait.ForCellChange("r5");
-            }
-
-            Core.CanWeAggro();
-            Core.Sleep();
-            Bot.Combat.Attack("*");
-            if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
-                break;
-        }
-
-        Core.ByPassCheck();
-        // Farming between levels 10-20
-        while (!Bot.ShouldExit && Bot.Player.Level >= 10 && Bot.Player.Level < 20)
-        {
-            while (!Bot.ShouldExit && !Bot.Player.Alive)
-            {
-                if (Bot.Player.Alive)
-                {
-                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
-                    Bot.Sleep(1000);
-                    Core.Jump("r6", "Left");
-                    Bot.Wait.ForCellChange("r6");
-                    break;
-                }
-                else
-                    Bot.Sleep(1000);
-            }
-
-            if (Bot.Map.Name != "icestormarena")
-            {
-                Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                Bot.Wait.ForMapLoad("icestormarena");
-            }
-            if (Bot.Player.Cell != "r6")
-            {
-                Core.Jump("r6", "Left");
-                Bot.Wait.ForCellChange("r6");
-            }
-
-            Core.CanWeAggro();
-            Bot.Combat.Attack("*");
-            Core.Sleep();
-            if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
-                break;
-        }
-
-        Core.ByPassCheck();
-        // Farming between levels 20-25
-        if (Bot.Player.Level < 25)
-        {
-            Core.RegisterQuests(6628);
-            while (!Bot.ShouldExit && Bot.Player.Level >= 20 && Bot.Player.Level < 25)
-            {
-                while (!Bot.ShouldExit && !Bot.Player.Alive)
-                {
-                    if (Bot.Player.Alive)
-                    {
-                        Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
-                        Bot.Sleep(1000);
-                        Core.Jump("r7", "Left");
-                        Bot.Wait.ForCellChange("r7");
-                        break;
-                    }
-                    else
-                        Bot.Sleep(1000);
-                }
-
-                if (Bot.Map.Name != "icestormarena")
-                {
-                    Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                    Bot.Wait.ForMapLoad("icestormarena");
-                }
-                if (Bot.Player.Cell != "r7")
-                {
-                    Core.Jump("r7", "Left");
-                    Bot.Wait.ForCellChange("r7");
-                }
-                Core.CanWeAggro();
-
-                Bot.Combat.Attack("*");
-                Core.Sleep();
-                if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
-                    break;
-            }
-            Core.AbandonQuest(6628);
-        }
-
-        Core.ByPassCheck();
-        // Farming between levels 25-30
-        while (!Bot.ShouldExit && Bot.Player.Level >= 25 && Bot.Player.Level < 30)
-        {
-            while (!Bot.ShouldExit && !Bot.Player.Alive)
-            {
-                if (Bot.Player.Alive)
-                {
-                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
-                    Bot.Sleep(1000);
-                    Core.Jump("r10", "Left");
-                    Bot.Wait.ForCellChange("r10");
-                    break;
-                }
-                else
-                    Bot.Sleep(1000);
-            }
-
-            if (Bot.Map.Name != "icestormarena")
-            {
-                Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                Bot.Wait.ForMapLoad("icestormarena");
-            }
-            if (Bot.Player.Cell != "r10")
-            {
-                Core.Jump("r10", "Left");
-                Bot.Wait.ForCellChange("r10");
-            }
-
-            Core.CanWeAggro();
-            Bot.Combat.Attack("*");
-            Core.Sleep();
-            if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
-                break;
-        }
-
-        Core.ByPassCheck();
-        // Farming between levels 30-35 (and switching to solo class if needed)
-        if (Bot.Player.Level >= 30 && Bot.Player.Level < 35)
-        {
-            if (!rankUpClass)
-                Core.EquipClass(ClassType.Solo);
-            Core.RegisterQuests(6629);
-            while (!Bot.ShouldExit && Bot.Player.Level >= 30 && Bot.Player.Level < 35)
-            {
-                while (!Bot.ShouldExit && !Bot.Player.Alive)
-                {
-                    if (Bot.Player.Alive)
-                    {
-                        Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
-                        Bot.Sleep(1000);
-                        Core.Jump("r11", "Left");
-                        Bot.Wait.ForCellChange("r11");
-                        break;
-                    }
-                    else
-                        Bot.Sleep(1000);
-                }
-
-                if (Bot.Map.Name != "icestormarena")
-                {
-                    Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                    Bot.Wait.ForMapLoad("icestormarena");
-                }
-                if (Bot.Player.Cell != "r11")
-                {
-                    Core.Jump("r11", "Left");
-                    Bot.Wait.ForCellChange("r11");
-                }
-                Core.CanWeAggro();
-
-                Bot.Combat.Attack("*");
-                Core.Sleep();
-                if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
-                    break;
-            }
-            Core.AbandonQuest(6629);
-        }
-
-        if (!rankUpClass)
-            Core.EquipClass(ClassType.Farm);
-
-        Core.ByPassCheck();
-        // Farming between levels 35-50
-        Core.RegisterQuests(6629);
-        while (!Bot.ShouldExit && Bot.Player.Level >= 35 && Bot.Player.Level < 50)
-        {
-            while (!Bot.ShouldExit && !Bot.Player.Alive)
-            {
-                if (Bot.Player.Alive)
-                {
-                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
-                    Bot.Sleep(1000);
-                    Core.Jump("r14", "Left");
-                    Bot.Wait.ForCellChange("r14");
-                    break;
-                }
-                else
-                    Bot.Sleep(1000);
-            }
-
-            if (Bot.Map.Name != "icestormarena")
-            {
-                Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                Bot.Wait.ForMapLoad("icestormarena");
-            }
-            if (Bot.Player.Cell != "r11")
-            {
-                Core.Jump("r11", "Left");
-                Bot.Wait.ForCellChange("r11");
-            }
-
-            Core.CanWeAggro();
-            Bot.Combat.Attack("*");
-            Core.Sleep();
-        }
-        Bot.Quests.UnregisterQuests(6629);
-        Core.AbandonQuest(6629);
-
-        Core.ByPassCheck();
-        // Farming between levels 50-61
-        while (!Bot.ShouldExit && Bot.Player.Level >= 50 && Bot.Player.Level < 61)
-        {
-            while (!Bot.ShouldExit && !Bot.Player.Alive)
-            {
-                if (Bot.Player.Alive)
-                {
-                    Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
-                    Bot.Sleep(1000);
-                    Core.Jump("r16", "Left");
-                    Bot.Wait.ForCellChange("r16");
-                    break;
-                }
-                else
-                    Bot.Sleep(1000);
-            }
-
-            Core.CanWeAggro();
-            if (Bot.Map.Name != "icestormarena")
-            {
-                Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                Bot.Wait.ForMapLoad("icestormarena");
-            }
-            if (Bot.Player.Cell != "r16")
-            {
-                Core.Jump("r16", "Left");
-                Bot.Wait.ForCellChange("r16");
-            }
-
-            Bot.Combat.Attack("*");
-            Core.Sleep();
-            if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
-                break;
-        }
-
-        Core.ByPassCheck();
-        // Farming between levels 61-75 with BattleGroundE for non-rank-up class
-        if (Bot.Player.Level >= 61 && Bot.Player.Level < 75)
-        {
-            if (rankUpClass)
-            {
-                while (!Bot.ShouldExit && Bot.Player.Level >= 61 && Bot.Player.Level < 75)
-                {
-                    while (!Bot.ShouldExit && !Bot.Player.Alive)
-                    {
-                        if (Bot.Player.Alive)
-                        {
-                            Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json");
-                            Bot.Sleep(1000);
-                            if (Bot.Player.Cell != "r17")
-                                Core.Jump("r17", "Left");
-                            break;
-                        }
-                        else
-                            Bot.Sleep(1000);
-                    }
-
-                    if (Bot.Map.Name != "icestormarena")
-                        Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
-                    if (Bot.Player.Cell != "r17")
-                        Core.Jump("r17", "Left");
-
-                    Core.CanWeAggro();
-                    Bot.Combat.Attack("*");
-                    Core.Sleep();
-                    if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
-                        break;
-                }
-            }
-            else
-            {
-                if (Bot.Player.Gold < OneHundredMillion)
-                    ToggleBoost(BoostType.Gold);
-
-                Core.RegisterQuests(3991, 3992);
-                while (!Bot.ShouldExit && Bot.Player.Level >= 61 && Bot.Player.Level < 75)
-                {
-                    while (!Bot.ShouldExit && !Bot.Player.Alive)
-                    {
-                        if (Bot.Player.Alive)
-                        {
-                            Bot.Sleep(1000);
-                            if (Bot.Player.Cell != "r2")
-                                Core.Jump("r2", "center");
-                            break;
-                        }
-                        else
-                            Bot.Sleep(1000);
-                    }
-
-                    if (Bot.Map.Name != "battlegrounde")
-                        Core.Join("battlegrounde", publicRoom: Core.PrivateRooms);
-                    if (Bot.Player.Cell != "r2")
-                        Core.Jump("r2", "center");
-
-                    Core.CanWeAggro();
-                    Bot.Combat.Attack("*");
-                    Core.Sleep();
-                }
-                Core.AbandonQuest(3991, 3992);
-                ToggleBoost(BoostType.Gold, false);
-            }
-        }
-
-        Core.ByPassCheck();
-        // Farming between levels 75-100
-        while (!Bot.ShouldExit)
-        {
-            // Wait if dead, then spoof levelUp
-            if (!Bot.Player.Alive)
-            {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                Bot.Send.ClientPacket(
-                    "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
-                    type: "json");
+                Core.Logger("💀 Player dead, waiting to respawn...");
                 Bot.Sleep(1000);
-                continue;
             }
 
-            // Ensure map
-            if (Bot.Map.Name != "icestormunder")
+            // Only rank-up if requested AND class rank < 10
+            if (rankUpClass && Core.CheckClassRank(true) < 10)
             {
-                Core.Join("icestormunder", publicRoom: Core.PrivateRooms);
-                Bot.Wait.ForMapLoad("icestormunder");
+                Core.Logger("⚡ Attempting rank-up while leveling...");
+                Core.EquipClass(ClassType.Solo); // equip rank-up class
+                var rankTarget = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault();
+                if (rankTarget != null)
+                    Bot.Combat.Attack(rankTarget.MapID);
             }
 
-            // Ensure position
-            if (Bot.Player.Cell != "r2")
-            {
-                Bot.Map.Jump("r2", "Top", autoCorrect: false);
-                Bot.Wait.ForCellChange("r2");
-                Bot.Player.SetSpawnPoint();
-            }
-
-            // Break conditions
-            if (!rankUpClass && Bot.Player.Level >= level)
-                break;
-
-            if (rankUpClass && Core.CheckClassRank(true) >= 10)
-                break;
-
-            // Misc checks
-            Core.ByPassCheck();
-            Core.CanWeAggro();
-
-            // Attack first living mob (fallback: first non-null)
-            Monster? target = Bot.Monsters.CurrentAvailableMonsters
-                .FirstOrDefault(x => x?.HP > 0)
-                ?? Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null);
+            // Normal leveling
+            var target = Bot.Monsters?.CurrentAvailableMonsters
+                         .Find(m => m != null && m.HP > 0)
+                         ?? Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m != null);
 
             if (target != null)
                 Bot.Combat.Attack(target.MapID);
 
-            Bot.Sleep(500);
+            Bot.Sleep(250);
+            Core.Sleep();
         }
-        #endregion level checks
 
-
-        Bot.Options.AttackWithoutTarget = false;
-        Core.ToggleAggro(false);
-        Core.Jump();
-        Bot.Options.AggroMonsters = false;
-        Core.JumpWait();
-        Core.Rest();
-
-        // Disable any active boosts
-        if (rankUpClass)
-            ToggleBoost(BoostType.Class, false);
-        ToggleBoost(BoostType.Experience, false);
+        if (range.Quests != null)
+        {
+            Core.Logger($"✅ Unregistering quests: {string.Join(", ", range.Quests)}");
+            Bot.Quests.UnregisterQuests(range.Quests);
+            Core.AbandonQuest(range.Quests);
+        }
     }
 
-
+    Core.Logger("🏁 Finished leveling routine.");
+    Core.ToggleAggro(false);
+    Bot.Options.AggroMonsters = false;
+    Core.JumpWait();
+    Core.Rest();
+    ToggleBoost(BoostType.Class, false);
+    ToggleBoost(BoostType.Experience, false);
+}
 
 
     /// <summary>
