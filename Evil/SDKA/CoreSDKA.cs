@@ -272,8 +272,10 @@ public class CoreSDKA
             return;
 
         // Check for squire quest to be completed if !completed unlock via metal upgrade quest
-        if (!Bot.Quests.IsUnlocked(2144))
+        if (!Story.QuestProgression(2144, Log: false))
         {
+            Core.Logger("DoomSquire Weapon Kit Quest not unlocked, lets fix that.");
+
             string[] Metals = new[] { "Arsenic", "Beryllium", "Chromium", "Palladium", "Rhodium", "Thorium", "Mercury" };
             string metalName = Bot.Inventory.Items.Concat(Bot.Bank.Items)
                 .FirstOrDefault(x => x != null && Metals.Any(m => x.Name == m))?.Name ?? "Arsenic";
