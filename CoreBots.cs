@@ -5033,7 +5033,11 @@ public class CoreBots
 
         JumpWait();
 
-        if (log) Logger($"🔥 Killing {(ultra ? "Ultra Xiang" : "Chaos Lord Xiang")} for {item} ({dynamicQuant(item, isTemp)}/{quant}) [Temp = {isTemp}]");
+        if (log)
+        {
+            int current = item is null ? 0 : dynamicQuant(item, isTemp);
+            Logger($"🔥 Killing {(ultra ? "Ultra Xiang" : "Chaos Lord Xiang")} for {item ?? "(none)"} ({current}/{quant}) [Temp = {isTemp}]");
+        }
         KillMonster("mirrorportal", ultra ? "r6" : "r4", "Right", ultra ? "Ultra Xiang" : "Chaos Lord Xiang", item, quant, isTemp, log);
     }
 
