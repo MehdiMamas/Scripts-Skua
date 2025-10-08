@@ -28,7 +28,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 152604,
+    "size": 151740,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -1363,7 +1363,7 @@
       "glacera"
     ],
     "path": "Story/Glacera.cs",
-    "size": 12926,
+    "size": 12903,
     "fileName": "Glacera.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Glacera.cs"
   },
@@ -23026,7 +23026,7 @@
       "quest progression"
     ],
     "path": "Tools/ForDevelopers/WeeklyReleaseGenerator.cs",
-    "size": 5261,
+    "size": 6306,
     "fileName": "WeeklyReleaseGenerator.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/WeeklyReleaseGenerator.cs"
   },

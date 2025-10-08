@@ -11,7 +11,8 @@ public class GlaceraStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -84,7 +85,7 @@ public class GlaceraStory
 
         // Save the Astronomer Apprentice
         Story.MapItemQuest(3920, "frozentower", 3020);
-        Story.KillQuest(3920, "frozentower", new[] { "Ice Wolf", "Polar Elemental" });
+        Story.KillQuest(3920, "frozentower", new[] { "Polar Elemental", "Ice Wolf" });
 
         // Glacial Elixir
         Story.MapItemQuest(3921, "frozentower", 3017, 6);
@@ -149,16 +150,16 @@ public class GlaceraStory
             Core.EnsureComplete(3936);
         }
 
+        // Defeat the FrostSpawn Invaders
+        if (!Story.QuestProgression(3937))
+        {
+            Core.EnsureAccept(3937);
+            Core.HuntMonster("frozentower", "Frost Fangbeast", "Fangbeasts defeated", 15);
+            Core.EnsureComplete(3937);
+        }
+
         if (Cryomancer)
             return;
-
-        // Defeat the FrostSpawn Invaders
-            if (!Story.QuestProgression(3937))
-            {
-                Core.EnsureAccept(3937);
-                Core.HuntMonster("frozentower", "Frost Fangbeast", "Fangbeasts defeated", 15);
-                Core.EnsureComplete(3937);
-            }
     }
 
     public void FrozenRuins()
