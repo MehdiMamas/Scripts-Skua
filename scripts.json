@@ -18725,8 +18725,8 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/MermaidSushiMerge.cs"
   },
   {
-    "name": "16th Birthday Hero Character Page Badge",
-    "description": "This script will get the \"16th Birthday Hero\" Character Page Badge.",
+    "name": "17th Birthday Hero Character Page Badge",
+    "description": "This script will get the \"17th Birthday Hero\" Character Page Badge.",
     "tags": [
       "birthday",
       "badge",
@@ -18735,10 +18735,10 @@
       "quest",
       "seasonal"
     ],
-    "path": "Seasonal/AqwBirthday/16thBirthdayHeroBadge.cs",
+    "path": "Seasonal/AqwBirthday/17thBirthdayHeroBadge.cs",
     "size": 1128,
-    "fileName": "16thBirthdayHeroBadge.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/16thBirthdayHeroBadge.cs"
+    "fileName": "17thBirthdayHeroBadge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/17thBirthdayHeroBadge.cs"
   },
   {
     "name": "Aspiring Necromancer Rewards",
