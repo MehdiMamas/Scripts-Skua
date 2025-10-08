@@ -365,15 +365,18 @@ public class CoreStory
             {
                 Core.DebugLogger(this, $"Jumping to cell '{targetCell}' with {targetCellGroup?.Count() ?? 0} {monster}s", "_MonsterHuntBatch");
 
-                if (Bot.Map.Name != map)
+                IScriptMap? mapApi = Bot.Map;
+                if (!string.Equals(mapApi?.Name, map, StringComparison.OrdinalIgnoreCase))
                 {
                     Core.Join(map);
                     Bot.Wait.ForMapLoad(map);
+                    mapApi = Bot.Map; // refresh after load
                 }
 
-                if (Bot.Player.Cell != targetCell)
+                // jump only if player not already there (null-safe)
+                if (!string.Equals(Bot.Player?.Cell, targetCell, StringComparison.OrdinalIgnoreCase))
                 {
-                    Bot.Map.Jump(targetCell, "Left");
+                    mapApi?.Jump(targetCell, "Left");
                     Bot.Wait.ForCellChange(targetCell);
                     Bot.Player?.SetSpawnPoint();
                 }
@@ -397,15 +400,18 @@ public class CoreStory
                     bool hasTarget = Bot.Player?.HasTarget ?? false;
                     int targetHP = Bot.Player?.Target?.HP ?? 0;
 
-                    if (Bot.Map.Name != map)
+                    IScriptMap? innerMap = Bot.Map;
+                    if (!string.Equals(innerMap?.Name, map, StringComparison.OrdinalIgnoreCase))
                     {
                         Core.Join(map);
                         Bot.Wait.ForMapLoad(map);
+                        innerMap = Bot.Map; // refresh after load
                     }
 
-                    if (Bot.Player.Cell != targetCell)
+                    // null-safe cell check and jump
+                    if (!string.Equals(Bot.Player?.Cell, targetCell, StringComparison.OrdinalIgnoreCase))
                     {
-                        Bot.Map.Jump(targetCell, "Left");
+                        innerMap?.Jump(targetCell, "Left");
                         Bot.Wait.ForCellChange(targetCell);
                         Bot.Player?.SetSpawnPoint();
                     }
