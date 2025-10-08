@@ -5983,7 +5983,7 @@ public class CoreBots
                 }
 
                 Bot.Servers.Login();
-                Bot.Wait.ForTrue(() => (Bot.Player?.LoggedIn ?? false), 20);
+                Bot.Wait.ForTrue(() => Bot.Player?.LoggedIn ?? false, 20);
 
                 // Pick target server
                 Server? targetServer = servers.FirstOrDefault(s => s.IP == Bot.Servers.LastIP)
