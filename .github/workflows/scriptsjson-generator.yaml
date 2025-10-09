@@ -163,64 +163,60 @@ on:
       - dev
       - 'feature/*'
   schedule:
-    - cron: '0 */4 * * *' # Every 4 hours
+    - cron: '0 */4 * * *'
 
 jobs:
-  run-csharp-files:
+  generate-scripts:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        generator: [SkuaScriptsGenerator] # Only existing project
+        generator: [SkuaScriptsGenerator] # only existing projects
     steps:
-      # Checkout repository
       - name: Checkout code
         uses: actions/checkout@v4.2.2
 
-      # Cache NuGet packages
-      - name: Cache NuGet packages
-        uses: actions/cache@v4.2.0
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.cs') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-
-      # Cache build outputs
-      - name: Cache build outputs
-        uses: actions/cache@v4
-        with:
-          path: |
-            ${{ matrix.generator }}/bin
-            ${{ matrix.generator }}/obj
-          key: ${{ runner.os }}-build-${{ matrix.generator }}-${{ hashFiles(format('{0}/**/*.cs', matrix.generator)) }}
-          
-
-      # Setup .NET
-      - name: Setup .NET Core SDK
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4.2.0
         with:
           dotnet-version: '8.0.x'
 
-      # Build project
       - name: Build project
         run: dotnet build --configuration Release ${{ matrix.generator }}/${{ matrix.generator }}.csproj
 
-      # Run the generator DLL
       - name: Run C# generator
-        run: dotnet ${{ matrix.generator }}/bin/Release/net8.0/${{ matrix.generator }}.dll > ${{ matrix.generator }}.json 2> ${{ matrix.generator }}-error.log
+        run: dotnet ${{ matrix.generator }}/bin/Release/net8.0/${{ matrix.generator }}.dll > ${{ matrix.generator }}.json 2> error.log
 
-      # Upload error log if this generator fails
-      - name: Upload error log
-        if: failure()
-        uses: actions/upload-artifact@v4.6.0
-        with:
-          name: ${{ matrix.generator }}-error-${{ github.run_id }}.log
-          path: ${{ matrix.generator }}-error.log
-
-      # Upload scripts.json artifact
-      - name: Upload scripts artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v4.6.0
         with:
           name: ${{ matrix.generator }}-scripts-${{ github.run_id }}.json
           path: ${{ matrix.generator }}.json
           retention-days: 30
+
+  commit-scripts:
+    runs-on: ubuntu-latest
+    needs: generate-scripts
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Download main generator artifact
+        uses: actions/download-artifact@v4.6.0
+        with:
+          name: SkuaScriptsGenerator-scripts-${{ github.run_id }}.json
+          path: scripts.json
+
+      - name: Check if scripts.json changed
+        id: check_changes
+        run: |
+          git fetch origin ${{ github.ref_name }}
+          git diff --quiet scripts.json || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Git Auto Commit
+        if: steps.check_changes.outputs.changed == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5.1.0
+        with:
+          commit_message: 'Automatic commit by GitHub Actions'
+          file_pattern: 'scripts.json'
+          push_options: '--force'
+          branch: '${{ github.ref_name }}'
