@@ -17,10 +17,14 @@ public class CoreSDKA
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public static CoreBots sCore => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public string OptionsStorage = "SupulchuresDoomKnightArmorOptions";
     public bool DontPreconfigure = true;
@@ -745,7 +749,7 @@ public class CoreSDKA
             Core.EnsureAccept(upgradeMetalQuest);
 
             if (!Core.CheckInventory((int)metal))
-                Daily.MineCrafting(new[] { metal.ToString() });
+                Daily.HardCoreMetals(new[] { metal.ToString() });
             if (!Core.CheckInventory((int)metal))
                 Core.Logger($"Can't complete {fullMetalName.Split(' ')[..2].Join(' ')} Enchantment (missing {metal}).\n" +
                             "This requires a daily, please run the bot again after the daily reset has occurred.", messageBox: true, stopBot: true);
@@ -764,11 +768,14 @@ public class CoreSDKA
         Core.BuyItem("dwarfhold", 434, fullMetalName);
 
         // Unlocking "DoomSquire Weapon Kit" [Quest ID 2144]
-        Core.AddDrop(fullMetalName);
-        Core.EnsureAccept(forgeKeyQuest);
-        Core.HuntMonster("dwarfhold", "Albino Bat", "Forge Key", isTemp: false);
-        Core.EnsureComplete(forgeKeyQuest);
-        Bot.Wait.ForPickup(fullMetalName);
+        if (!Core.isCompletedBefore(2144))
+        {
+            Core.AddDrop(fullMetalName);
+            Core.EnsureAccept(forgeKeyQuest);
+            Core.HuntMonster("dwarfhold", "Albino Bat", "Forge Key", isTemp: false);
+            Core.EnsureComplete(forgeKeyQuest);
+            Bot.Wait.ForPickup(fullMetalName);
+        }
     }
 }
 
