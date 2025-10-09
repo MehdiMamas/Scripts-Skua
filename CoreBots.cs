@@ -4731,55 +4731,38 @@ public class CoreBots
                     Bot.Wait.ForCellChange("Boss");
                 }
 
-                foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
+                if (Bot.Player?.Cell == "Cut1")
                 {
-                    if (m == null || m.HP <= 0)
-                        continue;
-
-                    if (!(Bot.Player?.Alive ?? false))
-                        Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
-
-                    if (Bot.Map.Name != "escherion")
-                        Join("escherion", "Boss", "Left");
-
-                    if (Bot.Player?.Cell == "Cut1")
-                    {
-                        Bot.Map.Jump("Boss", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("Boss");
-                    }
-
-                    if (!Bot.Player.HasTarget)
-                    {
-                        Bot.Combat.Attack(m.MapID);
-                        Bot.Sleep(500);
-                    }
-
-                    // Esherion alive, but staff is up >> kill staff
-                    else if (Bot.Player?.Target?.MapID == 3 && Bot.Player?.Target?.State == 2)
-                        Bot.Kill.Monster(2);
-                        // Escherion down, staff up >> kill staff
-                    else if (Bot.Player?.Target?.MapID == 2 && Bot.Player?.Target?.HP > 0)
-                        Bot.Kill.Monster(2);
-                        // Staff down, kill Escherion
-                    else
-                    {
-                        Bot.Combat.Attack(3);
-                        Bot.Sleep(200);
-                    }
-
-                    if (item == null)
-                    {
-                        if (log) Logger("💀 No item selected, killing Escherion once");
-                        done = true;
-                        break;
-                    }
-                    else if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-                    {
-                        done = true;
-                        break;
-                    }
-
+                    Bot.Map.Jump("Boss", "Left", autoCorrect: false);
+                    Bot.Wait.ForCellChange("Boss");
                 }
+              
+               // MonsterMapIDs:
+                // 2 = Staff
+                // 3 = Escherion
+                if (!Bot.Player.HasTarget)
+                    Bot.Combat.Attack(3);
+                else
+                    Bot.Combat.Attack((Bot.Player?.Target?.MapID == 3 /* Escherion */
+                    && Bot.Player?.Target?.State == 2 /* Invulnerable */ )
+                        ? 2 /* Staff of Inversion */
+                        : 3 /* Escherion */);
+                Bot.Sleep(500);
+
+                // Bot.Wait.ForTrue(() => Bot.Monsters.CurrentAvailableMonsters.Any(x => x != null && x?.State != 2 && x?.HP > 0), 20);
+
+                if (item == null)
+                {
+                    if (log) Logger("💀 No item selected, killing Escherion once");
+                    done = true;
+                    break;
+                }
+                else if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+                {
+                    done = true;
+                    break;
+                }
+
             }
 
             Bot.Options.AggroMonsters = false;
