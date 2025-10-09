@@ -1,13 +1,14 @@
 /*
-name: Free Holiday AC Gift 2023
-description: This script will kill Burlingster in /borgars to get free 500 AC.
-tags: free, ac, burlingster, borgars, 500, 2023, holiday
+name: [Script Name Here]
+description: [Brief description of what this script does]
+tags: [comma-separated tags relevant to this script]
 */
+
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 using Skua.Core.Interfaces;
 
-public class HolidayAC2023
+public class FreeAcs
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
@@ -18,13 +19,19 @@ public class HolidayAC2023
     {
         Core.SetOptions();
 
-        FreeAcs();
+        GetYourAcsHere();
 
         Core.SetOptions(false);
     }
 
-    public void FreeAcs()
+    public void GetYourAcsHere()
     {
+        // if (Core.isCompletedBefore(0000))
+        // {
+        //     Core.Logger("Quest Already Complete");
+        //     return;
+        // }
+
         Core.Logger("Quest has been Removed, blame AE");
 
         // Core.OneTimeMessage("WARNING", "This Quest is a ONE-TIME quest (per account).", true, true);
@@ -35,13 +42,13 @@ public class HolidayAC2023
         //     return;
         // }
 
-        // if (!Core.isCompletedBefore(9578))
+        // if (!Core.isCompletedBefore(0000))
         // {
-        //     Core.EnsureAccept(9578);
-        //     Bot.Quests.UpdateQuest(7522);
+        //     Core.EnsureAccept(0000);
+        //     Bot.Quests.UpdateQuest(0000);
         //     Core.EquipClass(ClassType.Solo);
-        //     Core.HuntMonster("borgars", "Burglinster", "Cookie Dough");
-        //     Core.EnsureComplete(9578);
+        //     Core.HuntMonster("map", "mob", "item");
+        //     Core.EnsureComplete(0000);
         // }
     }
 }
