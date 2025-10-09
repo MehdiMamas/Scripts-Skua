@@ -371,7 +371,7 @@ public class CoreBLOD
             ItemBase? itemToUpgrade = Bot.Inventory.Items.Concat(Bot.Bank.Items)
                 .FirstOrDefault(i => Enum.TryParse<MineCraftingMetalsEnum>(i.Name, out var _));
 
-            // Upgrade the metal (fallback to Gold if none found)
+            // Upgrade the metal (fallback to Aluminum if none found)
             UpgradeMetal(itemToUpgrade != null
                 ? Enum.Parse<MineCraftingMetalsEnum>(itemToUpgrade.Name)
                 : MineCraftingMetalsEnum.Aluminum);
