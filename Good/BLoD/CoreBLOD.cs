@@ -12,6 +12,7 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Shops;
 using Skua.Core.Models.Items;
 using Skua.Core.Utils;
+using Skua.Core.Models.Quests;
 
 public class CoreBLOD
 {
@@ -540,6 +541,7 @@ public class CoreBLOD
         string fullMetalName = string.Empty;
         int upgradeMetalQuest = 0;
         int forgeKeyQuest = 0;
+        int forgekeyitemID = 0;
         switch (metal)
         {
             case MineCraftingMetalsEnum.Aluminum:
@@ -579,6 +581,11 @@ public class CoreBLOD
                 break;
         }
 
+        // Initialize quest data for forge key quest
+        Quest ForgeQuestdata = Core.InitializeWithRetries(() => Core.EnsureLoad(forgeKeyQuest));
+        // Get the forge key itemid for the quest
+        forgekeyitemID = ForgeQuestdata.Requirements.FirstOrDefault(x => x != null && x.Name.ToLower().Trim() == "Forge Key").ID;
+
         // Getting the name of the metal used to upgrade
         string upgradeMetalName = fullMetalName.Split(' ')[..2].Join(' ');
         Core.FarmingLogger(fullMetalName, 1);
@@ -615,7 +622,8 @@ public class CoreBLOD
         Bot.Log("Doing Quest to Unlock Basic Weapon Kit (hopefully...)");
         Core.AddDrop(fullMetalName);
         Core.EnsureAccept(forgeKeyQuest);
-        Core.HuntMonster("dwarfhold", "Albino Bat", "Forge Key", isTemp: false);
+        while (!Bot.ShouldExit && !Core.CheckInventory(forgekeyitemID))
+            Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat");
         Core.EnsureComplete(forgeKeyQuest);
         Bot.Wait.ForPickup(fullMetalName);
     }
