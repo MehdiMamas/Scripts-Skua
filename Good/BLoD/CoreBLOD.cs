@@ -583,8 +583,9 @@ public class CoreBLOD
 
         // Initialize quest data for forge key quest
         Quest ForgeQuestdata = Core.InitializeWithRetries(() => Core.EnsureLoad(forgeKeyQuest));
+
         // Get the forge key itemid for the quest
-        forgekeyitemID = ForgeQuestdata.Requirements.FirstOrDefault(x => x != null && x.Name.ToLower().Trim() == "Forge Key").ID;
+        forgekeyitemID = ForgeQuestdata.Requirements.FirstOrDefault(x => x != null && x.Name == "Forge Key").ID;
 
         // Getting the name of the metal used to upgrade
         string upgradeMetalName = fullMetalName.Split(' ')[..2].Join(' ');
