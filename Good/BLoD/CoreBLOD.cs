@@ -557,33 +557,35 @@ public class CoreBLOD
         // Getting the name of the metal used to upgrade
         string upgradeMetalName = fullMetalName.Split(' ')[..2].Join(' ');
         Core.FarmingLogger(fullMetalName, 1);
-
-        // Getting the partially upgraded metal
-        if (!Core.CheckInventory(upgradeMetalName))
+        if (!Core.CheckInventory(fullMetalName))
         {
-            Core.AddDrop(upgradeMetalName);
-            Core.FarmingLogger(upgradeMetalName, 1);
-            Core.EnsureAccept(upgradeMetalQuest);
+            // Getting the partially upgraded metal
+            if (!Core.CheckInventory(upgradeMetalName))
+            {
+                Core.AddDrop(upgradeMetalName);
+                Core.FarmingLogger(upgradeMetalName, 1);
+                Core.EnsureAccept(upgradeMetalQuest);
 
-            if (!Core.CheckInventory((int)metal))
-                Daily.MineCrafting(new[] { metal.ToString() });
-            if (!Core.CheckInventory((int)metal))
-                Core.Logger($"Can't complete {fullMetalName.Split(' ')[..2].Join(' ')} Enchantment (missing {metal}).\n" +
-                            "This requires a daily, please run the bot again after the daily reset has occurred.", messageBox: true, stopBot: true);
+                if (!Core.CheckInventory((int)metal))
+                    Daily.MineCrafting(new[] { metal.ToString() });
+                if (!Core.CheckInventory((int)metal))
+                    Core.Logger($"Can't complete {fullMetalName.Split(' ')[..2].Join(' ')} Enchantment (missing {metal}).\n" +
+                                "This requires a daily, please run the bot again after the daily reset has occurred.", messageBox: true, stopBot: true);
 
-            Farm.BattleUnderB("Undead Energy", 25);
-            SpiritOrb(5);
-            Core.HuntMonster("arcangrove", "Seed Spitter", "Paladaffodil", 25);
+                Farm.BattleUnderB("Undead Energy", 25);
+                SpiritOrb(5);
+                Core.HuntMonster("arcangrove", "Seed Spitter", "Paladaffodil", 25);
 
-            Core.EnsureComplete(upgradeMetalQuest);
-            Bot.Wait.ForPickup(upgradeMetalName);
+                Core.EnsureComplete(upgradeMetalQuest);
+                Bot.Wait.ForPickup(upgradeMetalName);
+            }
+
+            // Getting the fully upgraded metal
+            BrightAura(2);
+            LoyalSpiritOrb(5);
+            Core.BuyItem("dwarfhold", 434, fullMetalName);
         }
-
-        // Getting the fully upgraded metal
-        BrightAura(2);
-        LoyalSpiritOrb(5);
-        Core.BuyItem("dwarfhold", 434, fullMetalName);
-
+        
         // Unlocking "Basic Weapon Kit Construction" [Quest ID 2136]
         if (!Core.isCompletedBefore(2136))
         {
