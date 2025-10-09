@@ -9,6 +9,7 @@ tags: null
 //cs_include Scripts/CoreDailies.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Quests;
 using Skua.Core.Options;
 using Skua.Core.Utils;
 
@@ -696,6 +697,7 @@ public class CoreSDKA
         string fullMetalName = string.Empty;
         int upgradeMetalQuest = 0;
         int forgeKeyQuest = 0;
+        int forgekeyitemID = 0;
         switch (metal)
         {
             case HardCoreMetalsEnum.Arsenic:
@@ -735,8 +737,12 @@ public class CoreSDKA
                 break;
         }
 
-        if (Core.CheckInventory(fullMetalName))
-            return;
+
+        // Initialize quest data for forge key quest
+        Quest ForgeQuestdata = Core.InitializeWithRetries(() => Core.EnsureLoad(forgeKeyQuest));
+
+        // Get the forge key itemid for the quest
+        forgekeyitemID = ForgeQuestdata.Requirements.FirstOrDefault(x => x != null && x.Name == "Forge Key").ID;
 
         string upgradeMetalName = string.Join(' ', fullMetalName.Split(' ')[..2]);
         Core.FarmingLogger(fullMetalName, 1);
@@ -768,14 +774,12 @@ public class CoreSDKA
         Core.BuyItem("dwarfhold", 434, fullMetalName);
 
         // Unlocking "DoomSquire Weapon Kit" [Quest ID 2144]
-        if (!Core.isCompletedBefore(2144))
-        {
-            Core.AddDrop(fullMetalName);
-            Core.EnsureAccept(forgeKeyQuest);
-            Core.HuntMonster("dwarfhold", "Albino Bat", "Forge Key", isTemp: false);
-            Core.EnsureComplete(forgeKeyQuest);
-            Bot.Wait.ForPickup(fullMetalName);
-        }
+        Core.AddDrop(fullMetalName);
+        Core.EnsureAccept(forgeKeyQuest);
+        while (!Bot.ShouldExit && !Core.CheckInventory(forgekeyitemID))
+            Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat");
+        Core.EnsureComplete(forgeKeyQuest);
+        Bot.Wait.ForPickup(fullMetalName);
     }
 }
 
