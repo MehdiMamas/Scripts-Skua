@@ -32,8 +32,6 @@ public class FreeAcs
         //     return;
         // }
 
-        Core.Logger("Quest has been Removed, blame AE");
-
         // Core.OneTimeMessage("WARNING", "This Quest is a ONE-TIME quest (per account).", true, true);
 
         // if (!Bot.Flash.CallGameFunction<bool>("world.myAvatar.isEmailVerified") || Bot.Player.Level < 20)
