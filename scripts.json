@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 399943,
+    "size": 399912,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -1847,7 +1847,7 @@
       "dragon-road"
     ],
     "path": "Story/DragonRoad[Upholder].cs",
-    "size": 3829,
+    "size": 3958,
     "fileName": "DragonRoad[Upholder].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/DragonRoad[Upholder].cs"
   },
@@ -18725,8 +18725,8 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/MermaidSushiMerge.cs"
   },
   {
-    "name": "16th Birthday Hero Character Page Badge",
-    "description": "This script will get the \"16th Birthday Hero\" Character Page Badge.",
+    "name": "17th Birthday Hero Character Page Badge",
+    "description": "This script will get the \"17th Birthday Hero\" Character Page Badge.",
     "tags": [
       "birthday",
       "badge",
@@ -18735,10 +18735,10 @@
       "quest",
       "seasonal"
     ],
-    "path": "Seasonal/AqwBirthday/16thBirthdayHeroBadge.cs",
+    "path": "Seasonal/AqwBirthday/17thBirthdayHeroBadge.cs",
     "size": 1128,
-    "fileName": "16thBirthdayHeroBadge.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/16thBirthdayHeroBadge.cs"
+    "fileName": "17thBirthdayHeroBadge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/17thBirthdayHeroBadge.cs"
   },
   {
     "name": "Aspiring Necromancer Rewards",
@@ -26293,7 +26293,7 @@
       "extra"
     ],
     "path": "Story/QueenofMonsters/Extra/CelestialPast.cs",
-    "size": 1989,
+    "size": 1990,
     "fileName": "CelestialPast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/QueenofMonsters/Extra/CelestialPast.cs"
   },

@@ -5983,7 +5983,7 @@ public class CoreBots
                 }
 
                 Bot.Servers.Login();
-                Bot.Wait.ForTrue(() => (Bot.Player?.LoggedIn ?? false), 20);
+                Bot.Wait.ForTrue(() => Bot.Player?.LoggedIn ?? false, 20);
 
                 // Pick target server
                 Server? targetServer = servers.FirstOrDefault(s => s.IP == Bot.Servers.LastIP)
@@ -6936,7 +6936,7 @@ public class CoreBots
                 break;
 
             case "xantown":
-                blackListedCells.UnionWith(new[] { "r1", "r2", "r3", "r4", "r5", "r6", "r7", "r8", "r9", "r10", "r11", "r12", "Cut1", "Cut2", "Blank", "Wait", "Enter" });
+                blackListedCells.UnionWith(new[] { Bot.Map?.Cells.FirstOrDefault(x => x is not null && x != "r12") }.Where(x => x != null)!);
                 break;
 
             case "darkoviaforest":
