@@ -4748,15 +4748,23 @@ public class CoreBots
                         Bot.Wait.ForCellChange("Boss");
                     }
 
-                    Monster? target = Bot.Player?.Target;
-                    if ((target?.MapID ?? -1) == 3 && (target?.State ?? -1) == 2)
+                    if (!Bot.Player.HasTarget)
                     {
-                        while (!Bot.ShouldExit && ((Bot.Player?.Target?.HP ?? 0) > 0))
-                            Bot.Combat.Attack(2);
+                        Bot.Combat.Attack(m.MapID);
+                        Bot.Sleep(500);
                     }
+
+                    // Esherion alive, but staff is up >> kill staff
+                    else if (Bot.Player?.Target?.MapID == 3 && Bot.Player?.Target?.State == 2)
+                        Bot.Kill.Monster(2);
+                        // Escherion down, staff up >> kill staff
+                    else if (Bot.Player?.Target?.MapID == 2 && Bot.Player?.Target?.HP > 0)
+                        Bot.Kill.Monster(2);
+                        // Staff down, kill Escherion
                     else
                     {
                         Bot.Combat.Attack(3);
+                        Bot.Sleep(200);
                     }
 
                     if (item == null)
@@ -4771,7 +4779,6 @@ public class CoreBots
                         break;
                     }
 
-                    Sleep();
                 }
             }
 
