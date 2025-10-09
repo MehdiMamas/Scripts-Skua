@@ -170,7 +170,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        generator: [SkuaScriptsGenerator, SkuaScriptsGeneratorExtra] # Add more generators if needed
+        generator: [SkuaScriptsGenerator] # Only existing project
     steps:
       # Checkout repository
       - name: Checkout code
