@@ -1,6 +1,6 @@
 # name: Run Auto Generate JSON with C# File
 
-# # === Workflow Trigger ===
+# # === Workflow Triggers ===
 # on:
 #   push:
 #     branches:
@@ -13,60 +13,56 @@
 # # === Job Definition ===
 # jobs:
 #   run-csharp-file:
-#     runs-on: ubuntu-latest  # The job will run on the latest version of Ubuntu
+#     runs-on: ubuntu-latest
 
 #     steps:
 #     # === Step: Checkout Code ===
 #     - name: Checkout code
-#       uses: actions/checkout@v4.2.2  # Checks out the repository code
+#       uses: actions/checkout@v4.2.2
 
 #     # === Step: Cache NuGet Packages ===
 #     - name: Cache NuGet packages
-#       uses: actions/cache@v4.2.0  # Caches NuGet packages to speed up builds
+#       uses: actions/cache@v4.2.0
 #       with:
-#         path: ~/.nuget/packages  # Path to the NuGet package cache
-#         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.cs') }}  # Cache key based on OS and project files
+#         path: ~/.nuget/packages
+#         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.cs') }}
 #         restore-keys: |
-#           ${{ runner.os }}-nuget-  # Restore keys for cache
+#           ${{ runner.os }}-nuget-
 
 #     # === Step: Setup .NET ===
 #     - name: Setup .NET Core SDK
-#       uses: actions/setup-dotnet@v4.2.0  # Sets up the .NET environment
+#       uses: actions/setup-dotnet@v4.2.0
 #       with:
-#         dotnet-version: '6.0.x'  # Specifies the .NET version to use
+#         dotnet-version: '8.0.x'
 
 #     # === Step: Build the Project ===
 #     - name: Build the project
-#       run: dotnet build --configuration Release SkuaScriptsGenerator/SkuaScriptsGenerator.csproj  # Builds the project in Release mode
+#       run: dotnet build --configuration Release SkuaScriptsGenerator/SkuaScriptsGenerator.csproj
 
 #     # === Step: Run C# File ===
 #     - name: Run C# file
-#       run: dotnet run --project SkuaScriptsGenerator/SkuaScriptsGenerator.csproj > scripts.json  # Runs the C# program and outputs to scripts.json
+#       run: dotnet run --project SkuaScriptsGenerator/SkuaScriptsGenerator.csproj 2>/dev/null > scripts.json
 
-#     # === Step: Upload Artifact ===
+#     # === Step: Upload Artifact (only if changes are detected) ===
 #     - name: Upload artifact
-#       uses: actions/upload-artifact@v4.6.0  # Uploads the generated artifact
+#       uses: actions/upload-artifact@v4.6.0
 #       with:
-#         name: scripts-${{ github.run_id }}.json  # Names the artifact with the run ID for uniqueness
-#         path: scripts.json  # Path to the file to upload
-#         retention-days: 30  # Keeps the artifact for 30 days
+#         name: scripts-${{ github.run_id }}.json
+#         path: scripts.json
+#         retention-days: 60
 
-#     # === Step: Commit and Push Changes ===
+#     # === Step: Commit and Push Changes (only if changes are detected) ===
 #     - name: Git Auto Commit
 #       uses: stefanzweifel/git-auto-commit-action@v5.1.0
 #       with:
-#         commit_message: 'Automatic commit by GitHub Actions' # Custom commit message
-#         file_pattern: 'scripts.json'                         # File(s) to include in the commit
-#         push_options: '--force'                              # Force push to override remote changes
-#         branch: '${{ github.ref_name }}'                     # Dynamically use the current branch
-#         skip_dirty_check: true                               # Skip the dirty check to always commit
-# old ^^
-
+#         commit_message: 'Automatic commit by GitHub Actions'
+#         file_pattern: 'scripts.json'
+#         push_options: '--force'
+#         branch: '${{ github.ref_name }}'
 
 
 name: Run Auto Generate JSON with C# File
 
-# === Workflow Triggers ===
 on:
   push:
     branches:
@@ -75,18 +71,19 @@ on:
       - Skua
       - dev
       - 'feature/*'
+  schedule:
+    - cron: '0 */4 * * *' # Every 4 hours
 
-# === Job Definition ===
 jobs:
   run-csharp-file:
     runs-on: ubuntu-latest
 
     steps:
-    # === Step: Checkout Code ===
+    # Checkout repository
     - name: Checkout code
       uses: actions/checkout@v4.2.2
 
-    # === Step: Cache NuGet Packages ===
+    # Cache NuGet packages
     - name: Cache NuGet packages
       uses: actions/cache@v4.2.0
       with:
@@ -95,30 +92,56 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-nuget-
 
-    # === Step: Setup .NET ===
-    - name: Setup .NET Core SDK
+    # Cache build outputs
+    - name: Cache build outputs
+      uses: actions/cache@v4
+      with:
+        path: |
+          SkuaScriptsGenerator/bin
+          SkuaScriptsGenerator/obj
+        key: ${{ runner.os }}-build-${{ hashFiles('SkuaScriptsGenerator/**/*.cs') }}
+
+    # Setup .NET
+    - name: Setup .NET
       uses: actions/setup-dotnet@v4.2.0
       with:
         dotnet-version: '8.0.x'
 
-    # === Step: Build the Project ===
-    - name: Build the project
+    # Build project
+    - name: Build project
       run: dotnet build --configuration Release SkuaScriptsGenerator/SkuaScriptsGenerator.csproj
 
-    # === Step: Run C# File ===
+    # Run pre-built DLL to generate scripts.json
     - name: Run C# file
-      run: dotnet run --project SkuaScriptsGenerator/SkuaScriptsGenerator.csproj 2>/dev/null > scripts.json
+      run: dotnet SkuaScriptsGenerator/bin/Release/net8.0/SkuaScriptsGenerator.dll > scripts.json 2> error.log
 
-    # === Step: Upload Artifact (only if changes are detected) ===
+    # Upload error log if the run fails
+    - name: Upload error log
+      if: failure()
+      uses: actions/upload-artifact@v4.6.0
+      with:
+        name: scripts-error-${{ github.run_id }}.log
+        path: error.log
+
+    # Check if scripts.json changed
+    - name: Check if scripts.json changed
+      id: check_changes
+      run: |
+        git fetch origin ${{ github.ref_name }}
+        git diff --quiet scripts.json || echo "changed=true" >> $GITHUB_OUTPUT
+
+    # Upload scripts.json artifact only if changed
     - name: Upload artifact
+      if: steps.check_changes.outputs.changed == 'true'
       uses: actions/upload-artifact@v4.6.0
       with:
         name: scripts-${{ github.run_id }}.json
         path: scripts.json
-        retention-days: 60
+        retention-days: 30
 
-    # === Step: Commit and Push Changes (only if changes are detected) ===
+    # Commit and push changes only if scripts.json changed
     - name: Git Auto Commit
+      if: steps.check_changes.outputs.changed == 'true'
       uses: stefanzweifel/git-auto-commit-action@v5.1.0
       with:
         commit_message: 'Automatic commit by GitHub Actions'
