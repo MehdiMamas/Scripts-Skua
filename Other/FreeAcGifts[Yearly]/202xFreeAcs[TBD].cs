@@ -43,6 +43,7 @@ public class FreeAcs
         // if (!Core.isCompletedBefore(0000))
         // {
         //     Core.EnsureAccept(0000);
+        //     // Use the next line only if its in a map that you need a quest to unlock or see the mob in
         //     Bot.Quests.UpdateQuest(0000);
         //     Core.EquipClass(ClassType.Solo);
         //     Core.HuntMonster("map", "mob", "item");
