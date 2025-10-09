@@ -387,7 +387,7 @@ public class GlaceraStory
         IceWindPass();
 
         // Cold Open
-        Story.KillQuest(7832, "IceDungeon", new[] { "Frosted Banshee", "Frozen Undead", "Ice Symbiote" });
+        Story.KillQuest(7832, "IceDungeon", new[] { "Ice Symbiote", "Frosted Banshee", "Frozen Undead" });
 
         // Frost Fight
         Story.KillQuest(7833, "IceDungeon", new[] { "Spirit of Ice", "Ice Crystal", "Frigid Spirit" });
