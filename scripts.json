@@ -4333,7 +4333,7 @@
       "army."
     ],
     "path": "Army/OneClient/AccsForAll.cs",
-    "size": 3836,
+    "size": 1468,
     "fileName": "AccsForAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/OneClient/AccsForAll.cs"
   },
@@ -12015,50 +12015,15 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/ZodiacQuests/PiscesVenarisMaterRewards.cs"
   },
   {
-    "name": "Free Birthday AC Gift 2023",
-    "description": "This script will kill Agitated Orb for free 500 ACs.",
+    "name": "[Script Name Here]",
+    "description": "[Brief description of what this script does]",
     "tags": [
-      "ac",
-      "free",
-      "500",
-      "2023",
-      "birthday"
+      "[comma-separated tags relevant to this script]"
     ],
-    "path": "Other/FreeAcGifts[Yearly]/2024BirthdayAcGift.cs",
-    "size": 775,
-    "fileName": "2024BirthdayAcGift.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeAcGifts[Yearly]/2024BirthdayAcGift.cs"
-  },
-  {
-    "name": "Holdiay Ac Gift 2024",
-    "description": "This script will kill burlingster in /borgars to get free 500 AC.",
-    "tags": [
-      "ac",
-      "free",
-      "500",
-      "2024"
-    ],
-    "path": "Other/FreeAcGifts[Yearly]/2024HolidayAcGift.cs",
-    "size": 916,
-    "fileName": "2024HolidayAcGift.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeAcGifts[Yearly]/2024HolidayAcGift.cs"
-  },
-  {
-    "name": "Free Holiday AC Gift 2023",
-    "description": "This script will kill Burlingster in /borgars to get free 500 AC.",
-    "tags": [
-      "free",
-      "ac",
-      "burlingster",
-      "borgars",
-      "500",
-      "2023",
-      "holiday"
-    ],
-    "path": "Other/FreeAcGifts[Yearly]/2023HolidayAcGift.cs",
-    "size": 1449,
-    "fileName": "2023HolidayAcGift.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeAcGifts[Yearly]/2023HolidayAcGift.cs"
+    "path": "Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs",
+    "size": 1555,
+    "fileName": "202xFreeAcs[TBD].cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs"
   },
   {
     "name": "DarknessShard",
