@@ -192,7 +192,8 @@ jobs:
           path: |
             ${{ matrix.generator }}/bin
             ${{ matrix.generator }}/obj
-          key: ${{ runner.os }}-build-${{ matrix.generator }}-${{ hashFiles(matrix.generator + '/**/*.cs') }}
+          key: ${{ runner.os }}-build-${{ matrix.generator }}-${{ hashFiles(format('{0}/**/*.cs', matrix.generator)) }}
+          
 
       # Setup .NET
       - name: Setup .NET Core SDK
