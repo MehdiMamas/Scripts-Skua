@@ -353,6 +353,31 @@ public class CoreBLOD
         Core.FarmingLogger("Basic Wepon Kit", quant);
         Core.AddDrop("Basic Weapon Kit");
 
+        if (Core.isCompletedBefore(2136))
+        {
+            // Define valid metals in enum form
+            MineCraftingMetalsEnum[] validMetals = new[]
+            {
+                MineCraftingMetalsEnum.Aluminum,
+                MineCraftingMetalsEnum.Barium,
+                MineCraftingMetalsEnum.Gold,
+                MineCraftingMetalsEnum.Iron,
+                MineCraftingMetalsEnum.Copper,
+                MineCraftingMetalsEnum.Silver,
+                MineCraftingMetalsEnum.Platinum
+            };
+
+            // Find first matching item in inventory/bank
+            ItemBase? itemToUpgrade = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+                .FirstOrDefault(i => Enum.TryParse<MineCraftingMetalsEnum>(i.Name, out var _));
+
+            // Upgrade the metal (fallback to Gold if none found)
+            UpgradeMetal(itemToUpgrade != null
+                ? Enum.Parse<MineCraftingMetalsEnum>(itemToUpgrade.Name)
+                : MineCraftingMetalsEnum.Aluminum);
+        }
+
+
         while (!Bot.ShouldExit && !Core.CheckInventory("Basic Weapon Kit", quant))
         {
             Core.EnsureAccept(2136);
@@ -585,16 +610,14 @@ public class CoreBLOD
             LoyalSpiritOrb(5);
             Core.BuyItem("dwarfhold", 434, fullMetalName);
         }
-        
+
         // Unlocking "Basic Weapon Kit Construction" [Quest ID 2136]
-        if (!Core.isCompletedBefore(2136))
-        {
-            Core.AddDrop(fullMetalName);
-            Core.EnsureAccept(forgeKeyQuest);
-            Core.HuntMonster("dwarfhold", "Albino Bat", "Forge Key", isTemp: false);
-            Core.EnsureComplete(forgeKeyQuest);
-            Bot.Wait.ForPickup(fullMetalName);
-        }
+        Bot.Log("Doing Quest to Unlock Basic Weapon Kit (hopefully...)");
+        Core.AddDrop(fullMetalName);
+        Core.EnsureAccept(forgeKeyQuest);
+        Core.HuntMonster("dwarfhold", "Albino Bat", "Forge Key", isTemp: false);
+        Core.EnsureComplete(forgeKeyQuest);
+        Bot.Wait.ForPickup(fullMetalName);
     }
 
     #endregion
