@@ -301,14 +301,12 @@ public class GlaceraStory
         Story.KillQuest(3948, "Glacera", "Frost Invader");
 
         // Breaking Boulders
-        if (!Story.QuestProgression(3949))
+        if (!Core.isCompletedBefore(3950))
         {
             Core.EnsureAccept(3949);
             Core.GetMapItem(3049, 6, "glacera");
             Core.EnsureComplete(3949);
         }
-        
-        Story.MapItemQuest(3949, "Glacera", 3049, 6);
 
         // The Scythe of Vengeance
         Story.MapItemQuest(3950, "Glacera", 3047);
