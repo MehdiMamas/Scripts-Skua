@@ -586,12 +586,14 @@ public class CoreBLOD
 
         // Get the forge key itemid for the quest
         forgekeyitemID = ForgeQuestdata.Requirements.FirstOrDefault(x => x != null && x.Name == "Forge Key").ID;
-
-        // Getting the name of the metal used to upgrade
         string upgradeMetalName = fullMetalName.Split(' ')[..2].Join(' ');
-        Core.FarmingLogger(fullMetalName, 1);
+        
         if (!Core.CheckInventory(fullMetalName))
         {
+
+            // Getting the name of the metal used to upgrade
+            Core.FarmingLogger(fullMetalName, 1);
+
             // Getting the partially upgraded metal
             if (!Core.CheckInventory(upgradeMetalName))
             {
@@ -620,13 +622,16 @@ public class CoreBLOD
         }
 
         // Unlocking "Basic Weapon Kit Construction" [Quest ID 2136]
-        Bot.Log("Doing Quest to Unlock Basic Weapon Kit (hopefully...)");
-        Core.AddDrop(fullMetalName);
-        Core.EnsureAccept(forgeKeyQuest);
-        while (!Bot.ShouldExit && !Core.CheckInventory(forgekeyitemID))
-            Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat");
-        Core.EnsureComplete(forgeKeyQuest);
-        Bot.Wait.ForPickup(fullMetalName);
+        if (!Core.isCompletedBefore(2136))
+        {
+            Bot.Log("Doing Quest to Unlock Basic Weapon Kit (hopefully...)");
+            Core.AddDrop(fullMetalName);
+            Core.EnsureAccept(forgeKeyQuest);
+            while (!Bot.ShouldExit && !Core.CheckInventory(forgekeyitemID))
+                Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat");
+            Core.EnsureComplete(forgeKeyQuest);
+            Bot.Wait.ForPickup(fullMetalName);
+        }
     }
 
     #endregion
