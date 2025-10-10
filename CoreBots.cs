@@ -6022,8 +6022,7 @@ public class CoreBots
                     break;
                 }
 
-                CancellationTokenSource cts = new();
-                Bot.Wait.ForTrue(() => Bot.Servers.EnsureRelogin(cts.Token) ?? false, 20);
+                Bot.Servers.Login();
                 Bot.Wait.ForTrue(() => Bot.Player?.LoggedIn ?? false, 20);
 
                 // Pick target server
