@@ -17,11 +17,12 @@ public class FreeAcs
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.SetOptions();
+        // Core.SetOptions();
 
-        GetYourAcsHere();
+        // GetYourAcsHere();
+        Core.Logger("Quest Isnt aviable yet! if this is untrue, ping @tato2 or @bogalj on disc.", "Quest Isnt aviable yet!", true, true);
 
-        Core.SetOptions(false);
+        // Core.SetOptions(false);
     }
 
     public void GetYourAcsHere()
