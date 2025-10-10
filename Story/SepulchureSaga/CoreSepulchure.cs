@@ -13,7 +13,8 @@ public class CoreSepulchure
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -157,7 +158,7 @@ public class CoreSepulchure
         Story.KillQuest(6352, "scarsgarde", "Garde Captain");
 
         // Arm the Army 6353
-        Story.KillQuest(6353, "scarsgarde", new[] { "Garde Watch", "Garde Pikeman", "Garde Knight" });
+        Story.KillQuest(6353, "scarsgarde", new[] { "Garde Knight", "Garde Watch", "Garde Pikeman" });
     }
     #endregion
 
