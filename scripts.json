@@ -1363,7 +1363,7 @@
       "glacera"
     ],
     "path": "Story/Glacera.cs",
-    "size": 13039,
+    "size": 12902,
     "fileName": "Glacera.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Glacera.cs"
   },
@@ -2309,7 +2309,7 @@
       "skyguard-saga"
     ],
     "path": "Story/SkyGuardSaga.cs",
-    "size": 9867,
+    "size": 9869,
     "fileName": "SkyGuardSaga.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/SkyGuardSaga.cs"
   },
@@ -6958,7 +6958,7 @@
       "null"
     ],
     "path": "Story/SepulchureSaga/CoreSepulchure.cs",
-    "size": 15854,
+    "size": 15855,
     "fileName": "CoreSepulchure.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/SepulchureSaga/CoreSepulchure.cs"
   },
