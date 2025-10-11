@@ -84,7 +84,7 @@ public class BocklinTreasuryMerge
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(92791);
                     // Members get x2, non-members get x1 drops
-                    Core.RegisterQuests(Core.IsMember ? 10266 : 10267);
+                    Core.RegisterQuests(Core.IsMember ? 10267 : 10266);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
                     {
                         Core.HuntMonster("bocklinsanctum", "Thronekeeper", "Black Armorial Fleur");
