@@ -605,7 +605,7 @@ public class CoreAOR
         Story.MapItemQuest(9757, "loughshine", 13275);
 
         // Wisened Yew (9758)
-        Story.KillQuest(9758, "loughshine", new[] { "Scorched Elder Yew", "Skye Cailleach" });
+        Story.KillQuest(9758, "loughshine", new[] { "Skye Cailleach", "Scorched Elder Yew" });
 
         // Dragonflare (9759)
         Story.MapItemQuest(9759, "loughshine", 13276);
