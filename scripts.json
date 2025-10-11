@@ -12568,6 +12568,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/GrimNecromancer[600kAC].cs"
   },
   {
+    "name": "KingsEchoClassPrerequisites",
+    "description": "King's Echo Class Prerequisites",
+    "tags": [
+      "prerequisites",
+      "king's",
+      "king",
+      "echo",
+      "class"
+    ],
+    "path": "Other/Classes/KingsEcho[Prereqs].cs",
+    "size": 2512,
+    "fileName": "KingsEcho[Prereqs].cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/KingsEcho[Prereqs].cs"
+  },
+  {
     "name": "Verus DoomKnight Class",
     "description": "This script will farm Verus DoomKnight Class.",
     "tags": [
@@ -13875,7 +13890,7 @@
       "aquitaine"
     ],
     "path": "Other/MergeShops/BocklinGroveMerge.cs",
-    "size": 6510,
+    "size": 6451,
     "fileName": "BocklinGroveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BocklinGroveMerge.cs"
   },
@@ -16438,7 +16453,7 @@
       "kris"
     ],
     "path": "Other/MergeShops/BocklinArmoryMerge.cs",
-    "size": 10083,
+    "size": 10024,
     "fileName": "BocklinArmoryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BocklinArmoryMerge.cs"
   },
