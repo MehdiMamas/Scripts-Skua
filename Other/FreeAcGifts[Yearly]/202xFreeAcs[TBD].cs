@@ -17,38 +17,35 @@ public class FreeAcs
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        // Core.SetOptions();
+        Core.SetOptions(disableClassSwap: true);
 
-        // GetYourAcsHere();
-        Core.Logger("Quest Isnt aviable yet! if this is untrue, ping @tato2 or @bogalj on disc.", "Quest Isnt aviable yet!", true, true);
+        GetYourAcsHere();
+        // Core.Logger("Quest Isnt aviable yet! if this is untrue, ping @tato2 or @bogalj on disc.", "Quest Isnt aviable yet!", true, true);
 
-        // Core.SetOptions(false);
+        Core.SetOptions(false);
     }
 
     public void GetYourAcsHere()
     {
-        // if (Core.isCompletedBefore(0000))
-        // {
-        //     Core.Logger("Quest Already Complete");
-        //     return;
-        // }
+        if (Core.isCompletedBefore(10455))
+        {
+            Core.Logger("Quest Already Complete");
+            return;
+        }
 
-        // Core.OneTimeMessage("WARNING", "This Quest is a ONE-TIME quest (per account).", true, true);
+        Core.OneTimeMessage("WARNING", "This Quest is a ONE-TIME quest (per account).", true, true);
 
-        // if (!Bot.Flash.CallGameFunction<bool>("world.myAvatar.isEmailVerified") || Bot.Player.Level < 20)
-        // {
-        //     Core.Logger("You need to be level 20 and have a verified email!");
-        //     return;
-        // }
+        if (!Bot.Flash.CallGameFunction<bool>("world.myAvatar.isEmailVerified") || Bot.Player.Level < 20)
+        {
+            Core.Logger("You need to be level 20 and have a verified email!");
+            return;
+        }
 
-        // if (!Core.isCompletedBefore(0000))
-        // {
-        //     Core.EnsureAccept(0000);
-        //     // Use the next line only if its in a map that you need a quest to unlock or see the mob in
-        //     Bot.Quests.UpdateQuest(0000);
-        //     Core.EquipClass(ClassType.Solo);
-        //     Core.HuntMonster("map", "mob", "item");
-        //     Core.EnsureComplete(0000);
-        // }
+        if (!Core.isCompletedBefore(10455))
+        {
+            Core.EnsureAccept(10455);
+            Core.HuntMonster("yulgar", "Agitated Orb", "Free ACs...");
+            Core.EnsureComplete(10455);
+        }
     }
 }
