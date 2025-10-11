@@ -473,10 +473,7 @@ public class CoreStory
             return;
         }
         if (QuestProgression(QuestID, GetReward, Reward))
-        {
             return;
-        }
-
 
         if (Bot.Map.Name != MapName)
             Core.Join(MapName);
@@ -632,28 +629,39 @@ public class CoreStory
             Core.Logger("QuestData is null, cannot complete quest");
             return;
         }
+
         Quest? questData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestData.ID));
         if (questData == null)
         {
             Core.Logger($"Quest with ID {QuestData.ID} not found");
             return;
         }
-        if (!Bot.Quests.CanComplete(questData.ID))
+
+        // Collect all missing items and their current quantities
+        string[] missingItems = questData.Requirements
+      .Concat(questData.AcceptRequirements)
+      .Where(x => x != null && !Core.CheckInventory(x.ID, x.Quantity))
+      .Select(x =>
+      {
+          int have = x.Temp
+              ? Bot.TempInv.GetQuantity(x.ID)
+              : Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(m => m?.ID == x.ID)?.Quantity ?? 0;
+
+          return $"{x.Name}[{x.ID}] x{x.Quantity} (have {have})";
+      })
+      .ToArray();
+
+
+        if (missingItems.Length > 0)
         {
+            Core.Logger($"Missing items for quest [{questData.ID}] \"{questData.Name}\": {string.Join(", ", missingItems)}", "QuestProgression");
             return;
         }
 
         Core.Sleep();
 
-        if (questData.Once && !QuestProgression(questData.ID) || autoCompleteQuest)
-        {
+        if ((questData.Once && !QuestProgression(questData.ID)) || autoCompleteQuest)
             Core.EnsureComplete(questData.ID);
-        }
-
-        // if the quest is turned in by the game, wait a second
-        if (autoCompleteQuest == false)
-            Core.Sleep();
-
 
         Bot.Wait.ForQuestComplete(questData.ID);
         Core.Logger($"Completed Quest: [{questData.ID}] - \"{questData.Name}\"", "QuestProgression");
