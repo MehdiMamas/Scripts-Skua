@@ -756,7 +756,7 @@ public class CoreAOR
         Story.MapItemQuest(9821, "castlegaheris", new[] { 13379, 13380, 13381 });
 
         // Strangled Sobs (9822)
-        Story.KillQuest(9822, "castlegaheris", new[] { "Energy Elemental", "Ice Guardian" });
+        Story.KillQuest(9822, "castlegaheris", new[] { "Ice Guardian", "Energy Elemental" });
 
         // Distant Care (9823)
         Story.KillQuest(9823, "castlegaheris", "Dark Cage");
