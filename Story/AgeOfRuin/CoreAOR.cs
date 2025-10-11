@@ -304,7 +304,7 @@ public class CoreAOR
         Story.KillQuest(9298, "midnightzone", "Venerated Wraith");
 
         // Designated Taunters (9299)
-        Story.KillQuest(9299, "midnightzone", new[] { "Venerated Wraith", "Shadow Viscera" });
+        Story.KillQuest(9299, "midnightzone", new[] { "Shadow Viscera", "Venerated Wraith" });
 
         // Beloved Simulacrum (9230)
         Story.MapItemQuest(9300, "midnightzone", 11849, 4);
