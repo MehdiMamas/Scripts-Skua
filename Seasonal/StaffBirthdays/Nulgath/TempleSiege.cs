@@ -68,7 +68,7 @@ public class TempleSiege
         Story.KillQuest(9065, "templesiege", "Doomed Troll");
 
         //The Emperor's Shadow || 9066
-        Story.KillQuest(9066, "templesiege", new[] { "Doomed Beast", "Doomed Troll" });
+        Story.KillQuest(9066, "templesiege", new[] { "Doomed Troll","Doomed Beast" });
 
         //Throat Sores || 9067
         Story.KillQuest(9067, "templesiege", "Doomed Oblivion");
