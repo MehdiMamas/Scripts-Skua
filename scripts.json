@@ -4333,7 +4333,7 @@
       "army."
     ],
     "path": "Army/OneClient/AccsForAll.cs",
-    "size": 1468,
+    "size": 1463,
     "fileName": "AccsForAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/OneClient/AccsForAll.cs"
   },
@@ -12020,10 +12020,10 @@
     "tags": [
       "[comma-separated tags relevant to this script]"
     ],
-    "path": "Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs",
+    "path": "Other/FreeAcGifts[Yearly]/202xFreeAcs.cs",
     "size": 1539,
-    "fileName": "202xFreeAcs[TBD].cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs"
+    "fileName": "202xFreeAcs.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeAcGifts[Yearly]/202xFreeAcs.cs"
   },
   {
     "name": "DarknessShard",
