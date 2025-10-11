@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 49406,
+    "size": 49912,
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreStory.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 402107,
+    "size": 401847,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -842,7 +842,7 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 38899,
+    "size": 39089,
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -877,7 +877,7 @@
       "king"
     ],
     "path": "Legion/JoinLegion.cs",
-    "size": 941,
+    "size": 1024,
     "fileName": "JoinLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/JoinLegion.cs"
   },
