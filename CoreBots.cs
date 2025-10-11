@@ -517,7 +517,24 @@ public class CoreBots
 
                 if (EquipmentBeforeBot.Any())
                 {
-                    JumpWait();
+                    string[] PVPMaps = new[]
+                        {
+                            "bludrutbrawl",
+                            "darkoviapvp",
+                            "dagepvp",
+                            "deathpitbrawl",
+                            "frostbrawl",
+                            "chaosbrawl",
+                            "doomarenaa",
+                            "doomarenab",
+                            "doomarenac",
+                            "doomarenad"
+                        };
+
+                    if (PVPMaps.Contains(Bot.Map.Name))
+                        Join("whitemap");
+                    else JumpWait();
+
                     Equip(EquipmentBeforeBot.ToArray());
                 }
             }
