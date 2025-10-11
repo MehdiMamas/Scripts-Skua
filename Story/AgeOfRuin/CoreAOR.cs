@@ -623,7 +623,7 @@ public class CoreAOR
 
         // Parting the Clouds (9763)
         Story.MapItemQuest(9763, "loughshine", 13280);
-        Story.KillQuest(9763, "loughshine", new[] { "Energy Elemental", "Skye Executor" });
+        Story.KillQuest(9763, "loughshine", new[] { "Skye Executor", "Energy Elemental" });
 
         // Arrester (9764)
         if (!Story.QuestProgression(9764))
