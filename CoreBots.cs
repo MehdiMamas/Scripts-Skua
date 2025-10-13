@@ -6931,22 +6931,23 @@ public class CoreBots
     {
         // Build base blacklist: union of static patterns, regex matches, and logical filters
         blackListedCells = Bot.Monsters.MapMonsters
-            .Select(monster => monster.Cell)
-            .Union(
-                Bot.Map.Cells
-                    .Where(cell => cell != null &&
-                        (
-                            // Inline regex rules for common cases
-                            Regex.IsMatch(cell, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|(^r\d+$)|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$", RegexOptions.IgnoreCase)
-                            // Check against static or regex-defined BlackListedJumptoCells
-                            || BlackListedJumptoCells.Any(pattern =>
-                                Regex.IsMatch(cell, $"^{pattern}$", RegexOptions.IgnoreCase))
-                            // Cells containing "Enter" when not currently in Enter
-                            || (Bot.Player.Cell != "Enter" && cell.Contains("Enter", StringComparison.OrdinalIgnoreCase))
-                        )
-                    )
-            )
-            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+     .Select(monster => monster.Cell)
+     .Union(
+         Bot.Map.Cells
+             .Where(cell => cell != null &&
+                 (
+                     // Inline regex rules for common cases + added "move\d+", "moveframe", and "game"
+                     Regex.IsMatch(cell, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|(^r\d+$)|^(bs\d+|ar\d+|ms\d+|apo\d+|guild|move\d+|moveframe|game)$", RegexOptions.IgnoreCase)
+                     // Check against static or regex-defined BlackListedJumptoCells
+                     || BlackListedJumptoCells.Any(pattern =>
+                         Regex.IsMatch(cell, $"^{pattern}$", RegexOptions.IgnoreCase))
+                     // Cells containing "Enter" when not currently in Enter
+                     || (Bot.Player.Cell != "Enter" && cell.Contains("Enter", StringComparison.OrdinalIgnoreCase))
+                 )
+             )
+     )
+     .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        
 
         switch (Bot.Map.Name)
         {
