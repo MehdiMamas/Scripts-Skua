@@ -842,7 +842,7 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 39089,
+    "size": 39090,
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -1672,7 +1672,7 @@
       "crux-ship"
     ],
     "path": "Story/CruxShip.cs",
-    "size": 5283,
+    "size": 5497,
     "fileName": "CruxShip.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/CruxShip.cs"
   },
@@ -8942,7 +8942,7 @@
       "null"
     ],
     "path": "Story/Lynaria/CoreLynaria.cs",
-    "size": 8631,
+    "size": 8705,
     "fileName": "CoreLynaria.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lynaria/CoreLynaria.cs"
   },
