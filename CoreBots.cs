@@ -3152,7 +3152,7 @@ public class CoreBots
                 Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot) >= QuestData.Value;
 
             // Commented out to reduce spam
-            DebugLogger(this, $"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
+            Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
             return complete;
         }
 
