@@ -18593,6 +18593,23 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/BeleensPartyPresentsMerge.cs"
   },
   {
+    "name": "Castle Party Story",
+    "description": "This will finish the storyline of Castle Party.",
+    "tags": [
+      "castle party",
+      "castleparty",
+      "seasonal",
+      "aqwbirthday",
+      "tara",
+      "story",
+      "gifts"
+    ],
+    "path": "Seasonal/AqwBirthday/CastleParty.cs",
+    "size": 3243,
+    "fileName": "CastleParty.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/CastleParty.cs"
+  },
+  {
     "name": "Aspiring Necromancer Merge",
     "description": "This will get all or selected items on this merge shop.",
     "tags": [
