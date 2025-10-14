@@ -1638,8 +1638,7 @@ case ""Nightshade Thorn Assasasin"":
     "Gold Voucher 25k",
     @"
 case ""Gold Voucher 25k"":
-                    Adv.BuyItem(""sunlightzone"", 2288, 57304, quant, 7782);
-                    Bot.Wait.ForPickup(req.Name);
+                    Farm.Voucher(req.Name, req.Quantity);
                     break;
     "
 },
@@ -27501,9 +27500,7 @@ case ""Silver Vindicator Swords"":
     "Gold Voucher 100K",
     @"
 case ""Gold Voucher 100K"":
-                    Core.FarmingLogger(req.Name, quant);
-                    Farm.Gold(100000 * quant);
-                    Core.BuyItem(""sanctuaryaiwass"", 2619, req.Name, quant);
+                    Farm.Voucher(req.Name, req.Quantity);
                     break;
     "
 },
@@ -28034,8 +28031,7 @@ case ""Dual Cutlass of Awe"":
     "Gold Voucher 100k",
     @"
 case ""Gold Voucher 100k"":
-                    Core.FarmingLogger(req.Name, quant);
-                    Adv.BuyItem(""piratehunt"", 2621, req.Name, quant);
+                    Farm.Voucher(req.Name, req.Quantity);
                     break;
     "
 },

@@ -162,8 +162,7 @@ public class PirateHuntMerge
 
                 #region Direct Purchases
                 case "Gold Voucher 100k":
-                    Core.FarmingLogger(req.Name, quant);
-                    Adv.BuyItem("piratehunt", 2621, req.Name, quant);
+                    Farm.Voucher(req.Name, req.Quantity);
                     break;
 
                 case "J6's Secret Hideout Map":
