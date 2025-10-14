@@ -917,7 +917,7 @@ public class CoreSoW
         Story.MapItemQuest(8778, "ruinedcrown", new[] { 10380, 10382, 10383 });
 
         // 8779 Scraping the Barrel
-        Story.KillQuest(8779, "ruinedcrown", new[] { "Mana-Burdened Knight", "Mana-Burdened Minion" });
+        Story.KillQuest(8779, "ruinedcrown", new[] {  "Mana-Burdened Minion", "Mana-Burdened Knight" });
 
         // 8780 Fractals
         Story.MapItemQuest(8780, "ruinedcrown", 10384, 6);
