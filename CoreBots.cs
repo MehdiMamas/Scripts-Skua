@@ -6178,8 +6178,7 @@ public class CoreBots
 
             while (!Bot.ShouldExit && equipedClass != className)
             {
-                if (Bot.Player.InCombat)
-                    Bot.Combat.Exit();
+                JumpWait();
 
                 Equip(Bot.Inventory.Items.Concat(Bot.Bank.Items).First(x => x.Name.ToLower().Trim() == className && x.Category == ItemCategory.Class).ID);
                 Bot.Wait.ForItemEquip(Bot.Inventory.Items.Concat(Bot.Bank.Items).First(x => x.Name.ToLower().Trim() == className && x.Category == ItemCategory.Class).ID);
@@ -6947,7 +6946,7 @@ public class CoreBots
              )
      )
      .ToHashSet(StringComparer.OrdinalIgnoreCase);
-        
+
 
         switch (Bot.Map.Name)
         {
@@ -6958,6 +6957,9 @@ public class CoreBots
             case "escherion":
                 blackListedCells.UnionWith(Bot.Map?.Cells?.Where(c => Regex.IsMatch(c, @"^(Frame|e)\d+$")) ?? Array.Empty<string>());
                 blackListedCells.Add("Boss");
+                break;
+            case "originul":
+                blackListedCells.UnionWith(new[] { "r10" });
                 break;
 
             case "yokaigrave":
