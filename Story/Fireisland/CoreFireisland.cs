@@ -175,7 +175,8 @@ public class CoreFireIsland
 
         //Rumors and Smoke
         Story.MapItemQuest(4131, "feverfew", 3245);
-        Story.KillQuest(4131, "feverfew", new[] { "Firestorm Knight", "Firestorm Knight", "Firestorm Major", "Firestorm Major" });
+        Story.KillQuest(4131, "feverfew", new[]
+        { "Firestorm Knight", "Firestorm Major", "Firestorm Knight", "Firestorm Major" });
 
         //Dam the Flood
         Story.MapItemQuest(4132, "feverfew", 3244, 5);
