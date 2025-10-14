@@ -67,7 +67,7 @@ public class CoreFireIsland
         Story.PreLoad(this);
 
         //Flee the Flames
-        Story.KillQuest(4070, "pyrewatch", new[] { "Fyreborn Tiger", "Caustocrush", "Lavazard" });
+        Story.KillQuest(4070, "pyrewatch", new[] { "Lavazard", "Fyreborn Tiger", "Caustocrush" });
 
         //Taste of their own Medicine
         Story.KillQuest(4071, "pyrewatch", "Fire Pikeman");
