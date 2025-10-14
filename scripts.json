@@ -5384,7 +5384,7 @@
       "armaments"
     ],
     "path": "Hollowborn/MergeShops/ShadowrealmMerge.cs",
-    "size": 18107,
+    "size": 18048,
     "fileName": "ShadowrealmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/MergeShops/ShadowrealmMerge.cs"
   },
@@ -15604,7 +15604,7 @@
       "enchanted"
     ],
     "path": "Other/MergeShops/AiwassBlessingsMerge.cs",
-    "size": 9055,
+    "size": 8933,
     "fileName": "AiwassBlessingsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/AiwassBlessingsMerge.cs"
   },
@@ -20324,7 +20324,7 @@
       "new-year"
     ],
     "path": "Seasonal/NewYear/TimeRetaliateMerge.cs",
-    "size": 4827,
+    "size": 4546,
     "fileName": "TimeRetaliateMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/NewYear/TimeRetaliateMerge.cs"
   },
@@ -23149,7 +23149,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelper.cs",
-    "size": 13957,
+    "size": 13917,
     "fileName": "MergeTemplateHelper.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelper.cs"
   },
@@ -23175,7 +23175,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 971790,
+    "size": 971526,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -28077,7 +28077,7 @@
       "blasters"
     ],
     "path": "Seasonal/Mogloween/MergeShops/CandiedCostumesMerge.cs",
-    "size": 14456,
+    "size": 14389,
     "fileName": "CandiedCostumesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/CandiedCostumesMerge.cs"
   },
@@ -28872,7 +28872,7 @@
       "awe"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/PirateHuntMerge.cs",
-    "size": 11278,
+    "size": 11209,
     "fileName": "PirateHuntMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/PirateHuntMerge.cs"
   },
