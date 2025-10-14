@@ -645,7 +645,7 @@
       "null"
     ],
     "path": "Templates/MergeTemplate.cs",
-    "size": 3380,
+    "size": 3388,
     "fileName": "MergeTemplate.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Templates/MergeTemplate.cs"
   },
@@ -24816,7 +24816,7 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 33971,
+    "size": 33721,
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
