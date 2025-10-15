@@ -786,7 +786,6 @@ public class CoreNation
                 quest.Rewards.FirstOrDefault(r => r.Name == drop) is { } reward
                 && Core.CheckInventory(drop, reward.MaxStack)))
             return;
-
         //warning for idiots that wont read it
         Core.Logger("if Swindles is enabled, it will only accept the quest when it has the required Unis it needs");
 
@@ -866,6 +865,7 @@ public class CoreNation
                     {
                         while (!Bot.ShouldExit && !Core.CheckInventory(Item.ID, Item.MaxStack))
                         {
+                            UltraAlteon = Core.PublicDifficult;
                             if (UltraAlteon)
                                 Core.KillMonster("ultraalteon", "r10", "Left", "Ultra Alteon", log: false);
                             else
