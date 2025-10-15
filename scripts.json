@@ -3497,7 +3497,7 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 108076,
+    "size": 108110,
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -23175,7 +23175,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 971526,
+    "size": 971560,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
