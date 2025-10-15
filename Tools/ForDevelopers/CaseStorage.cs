@@ -10707,7 +10707,7 @@ case ""Hydra Scale Piece"":
 case ""Enchanted Pearl"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(""hydrachallenge"", ""Hydra Head 90"", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(""hydrachallenge"", ""Hydra Head 90"", req.Name, quant, req.Temp, false, publicRoom: Core.PublicDifficult);
                     break;
     "
 },
