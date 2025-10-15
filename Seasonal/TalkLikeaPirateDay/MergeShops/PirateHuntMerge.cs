@@ -123,10 +123,6 @@ public class PirateHuntMerge
                     Core.CancelRegisteredQuests();
                     break;
 
-                case "Gold Voucher 100k":
-                    Farm.Voucher(req.Name, req.Quantity);
-                    break;
-
                 #endregion
 
                 #region Cutlass of Awe Quest
