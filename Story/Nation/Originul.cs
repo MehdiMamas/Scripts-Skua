@@ -52,7 +52,7 @@ public class Originul_Story
         {
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(7887);
-            Core.KillMonster("Originul", "r7", "left", "Dreadfiend", "Dreadfiend Executed");
+            Core.KillMonster("Originul", "r7", "left", "Dreadfiend", "Dreadfiend Executed", 5);
             Core.EnsureComplete(7887);
         }
 
