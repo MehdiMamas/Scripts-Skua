@@ -1381,7 +1381,7 @@ public class CoreAdvanced
         }
 
         // Check if the class is already Rank 10 or unavailable due to membership requirement
-        if ((itemInv.Upgrade && !Bot.Player.IsMember) || (Bot.Inventory.Contains(itemInv.ID) && itemInv.Quantity >= 302500))
+        if ((itemInv.Upgrade && !Bot.Player.IsMember) || Core.CheckClassRank(false, className) == 10)
         {
             Core.Logger($"\"{itemInv.Name}\" is already Rank 10 or you are not a member and the item is members.");
             return;
