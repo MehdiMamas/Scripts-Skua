@@ -5792,7 +5792,7 @@ public class CoreBots
 
         if (CurrentClass && Bot.Player.CurrentClass != null)
         {
-            Logger($"Current Class: {Bot.Player.CurrentClass} | Current Rank: {Bot.Player.CurrentClassRank}");
+            DebugLogger(this, $"Current Class: {Bot.Player.CurrentClass} | Current Rank: {Bot.Player.CurrentClassRank}");
             return Bot.Player.CurrentClassRank;
         }
         else
@@ -5829,7 +5829,7 @@ public class CoreBots
                         break;
                 }
 
-                Logger($"Class Rank (based on ClassXP): {classRank}");
+                DebugLogger(this, $"Class Rank (based on ClassXP): {classRank}");
                 return classRank;
             }
         }
