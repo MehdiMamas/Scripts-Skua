@@ -11732,21 +11732,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/DragonslayerGeneral.cs"
   },
   {
-    "name": "KingsEchoClassPrerequisites",
-    "description": "King's Echo Class Prerequisites",
-    "tags": [
-      "prerequisites",
-      "king's",
-      "king",
-      "echo",
-      "class"
-    ],
-    "path": "Other/Classes/KingsEcho[Prereqs].cs",
-    "size": 2512,
-    "fileName": "KingsEcho[Prereqs].cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/KingsEcho[Prereqs].cs"
-  },
-  {
     "name": "LegionDoomKnight[Mem]",
     "description": "null",
     "tags": [
@@ -11801,6 +11786,21 @@
     "size": 15184,
     "fileName": "VerusDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/VerusDoomKnight.cs"
+  },
+  {
+    "name": "KingsEchoClassPrerequisites",
+    "description": "King's Echo Class Prerequisites",
+    "tags": [
+      "prerequisites",
+      "king's",
+      "king",
+      "echo",
+      "class"
+    ],
+    "path": "Other/Classes/KingsEcho.cs",
+    "size": 6027,
+    "fileName": "KingsEcho.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/KingsEcho.cs"
   },
   {
     "name": "Grim Necromancer Class (600k AC)",
