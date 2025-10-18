@@ -110,8 +110,8 @@ public class KingsEchoClassPrerequisites
                         Core.EquipClass(ClassType.Farm);
                         Core.KillMonster("thelimacity", "r5", "Center", "*", "Dwarven Gold", 30, isTemp: false);
                         Core.KillMonster("thelimacity", "r2", "Right", "*", "Atlas Gold", 75, isTemp: false);
-                        Core.KillMonster("camlan", "r9", "Left", "*", "Skye Gold", 50, isTemp: false);
                         Core.EquipClass(ClassType.Solo);
+                        Core.KillMonster("camlan", "r9", "Left", "*", "Skye Gold", 50, isTemp: false);
                         Core.EnsureComplete(10441);
                         break;
 
