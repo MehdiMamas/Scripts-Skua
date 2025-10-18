@@ -73,7 +73,7 @@ public class KingsEchoClassPrerequisites
             Quest q = Core.InitializeWithRetries(() => Core.EnsureLoad(10439));
             foreach (ItemBase item in q.AcceptRequirements)
             {
-                if (Core.CheckInventory(item.ID, item.Quantity))
+                if (Core.CheckInventory(item.ID))
                     continue;
 
                 switch (item.Name)
@@ -121,14 +121,9 @@ public class KingsEchoClassPrerequisites
                 }
             }
 
-            if (q.AcceptRequirements.All(x => x != null && Core.CheckInventory(x.Name, x.Quantity)))
-                Core.ChainComplete(10439);
-            else
-            {
-                Core.Logger($"Missing Requirements: {string.Join(", ", q.AcceptRequirements.Select(x => x.Name))}");
-            }
-
-            Adv.BuyItem("TerminaTemple", 2630, 95742);
+// Echo of the King
+            Core.ChainComplete(10439);
+            Core.BuyItem("TerminaTemple", 2630, 95742);
 
             if (rankup)
                 Adv.RankUpClass("King's Echo");
