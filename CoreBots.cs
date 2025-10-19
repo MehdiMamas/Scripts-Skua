@@ -4776,6 +4776,29 @@ public class CoreBots
                 Sleep();
 
 
+                // Working 1.3 version:
+                /*
+                  // Initialize by attacking Escherion
+                if (!Bot.Player.HasTarget)
+                {
+                    Bot.Combat.Attack(3);
+                    Bot.Sleep(500);
+                }
+
+                // Player doesnt have target > attack Escherion
+                else if (!Bot.Monsters.MapMonsters.Where(x => x != null && x.HP > 0).Any())
+                {
+                    Bot.Sleep(500);
+                    continue;
+                }
+                else if (Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.MapID == 2).HP > 0)
+                    Bot.Combat.Attack(2);
+                else
+                    Bot.Combat.Attack(3);
+                Bot.Sleep(500);
+                */
+
+
 
                 if (item == null)
                 {
@@ -6185,7 +6208,7 @@ public class CoreBots
                 Logger("You do not own " + className);
                 return false;
             }
-            
+
             if (!Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(x => x.Name.ToLower().Trim() == className.ToLower().Trim() && x.Category == ItemCategory.Class))
             {
                 Logger($"Class \"{className}\" found but not categorized as Class item - may be incorrect name");
@@ -6852,15 +6875,15 @@ public class CoreBots
                     // Check if item is already equipped
                     if (Bot.Inventory.IsEquipped(item.Name))
                         continue;
-                    
+
                     Logger($"Equipping best {category}: {item.Name} (MainMeta: {bestMainMetaValues[category]}, Additional: {bestAdditionalMetaScores[category]})");
-                    
+
                     // Check if item is in bank and unbank it if needed
                     if (Bot.Bank.Contains(item.Name))
                     {
                         Unbank(item.Name);
                     }
-                    
+
                     Equip(item.ID);
                 }
             }
