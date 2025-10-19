@@ -84,9 +84,8 @@ public class KingsEchoClassPrerequisites
                             Bot.Quests.UpdateQuest(8361);
 
                         Core.EnsureAccept(10440);
-                        Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("queenbattle", "Queen of Monsters", "Calcified Tear", 60, isTemp: false);
                         Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("queenbattle", "Queen of Monsters", "Calcified Tear", 60, isTemp: false);
                         Core.HuntMonster("Slugwrath", "dreadhaven", "Whispers of Chaos", 40, isTemp: false);
                         Core.HuntMonster("ultradrakath", "Champion of Chaos", "Trace of Chaos", 13, isTemp: false);
                         Core.EnsureComplete(10440);
@@ -95,12 +94,12 @@ public class KingsEchoClassPrerequisites
                     case "Royal Dragon Sword": // 10442 | The Path of the King
                         Core.EnsureAccept(10442);
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster("chaoswar", "r9", "Left", "*", "Endured Against Chaos", 90, isTemp: false);
+                        Core.KillMonster("chaoswar", "r9", "Left", "*", "Endured Against Chaos", 113, isTemp: false);
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("falcontower", "Sepuchure", "Endured Against a Fallen Friend", 100, isTemp: false);
+                        Core.HuntMonster("falcontower", "Sepulchure", "Endured Against a Fallen Friend", 100, isTemp: false);
                         Core.HuntMonster("naoisegrave", "Volgritian", "Endured Against the Great Dragon", 70, isTemp: false);
-                        Core.HuntMonster(Core.IsMember ? "shattersword" : "infernalarena", Core.IsMember ? "Graveclaw the Defiler" : "Destructive Defiler", "Endured Against the Defiler", 113, isTemp: false);
-                        Core.HuntMonster("ebondungeon", "Dethrix", "Endured Against the Monster King", 70, isTemp: false);
+                        Core.HuntMonster(Core.IsMember ? "shattersword" : "infernalarena", Core.IsMember ? "Graveclaw the Defiler" : "Destructive Defiler", "Endured Against the Defiler", 100, isTemp: false);
+                        Core.HuntMonster("ebondungeon", "Dethrix", "Endured Against the Monster King", 90, isTemp: false);
                         Core.EnsureComplete(10442);
                         break;
 
