@@ -98,7 +98,7 @@ public class KingsEchoClassPrerequisites
                         Core.KillMonster("chaoswar", "r9", "Left", "*", "Endured Against Chaos", 90, isTemp: false);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("falcontower", "Sepuchure", "Endured Against a Fallen Friend", 100, isTemp: false);
-                        Core.HuntMonster("naoisegrave", "Volgritian", "Endured Against the Great Dragon", 100, isTemp: false);
+                        Core.HuntMonster("naoisegrave", "Volgritian", "Endured Against the Great Dragon", 70, isTemp: false);
                         Core.HuntMonster(Core.IsMember ? "shattersword" : "infernalarena", Core.IsMember ? "Graveclaw the Defiler" : "Destructive Defiler", "Endured Against the Defiler", 113, isTemp: false);
                         Core.HuntMonster("ebondungeon", "Dethrix", "Endured Against the Monster King", 70, isTemp: false);
                         Core.EnsureComplete(10442);
