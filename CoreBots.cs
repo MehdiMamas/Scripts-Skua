@@ -4761,7 +4761,7 @@ public class CoreBots
                 // 3 = Escherion (can be killed if staff is dead)
 
                 // Player doesnt have target > attack Escherion
-                else if (Bot.Monsters.MapMonsters.Where(x => x != null && x.HP > 0).Count() == 0)
+                else if (!Bot.Monsters.MapMonsters.Where(x => x != null && x.HP > 0).Any())
                 {
                     Bot.Sleep(500);
                     continue;
