@@ -4721,6 +4721,8 @@ public class CoreBots
 
         void _KillEscherion(string? item = null, int quant = 1, bool isTemp = false)
         {
+            Bot.Options.AggroMonsters = true;
+
             if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
                 return;
 
@@ -4759,13 +4761,12 @@ public class CoreBots
                 // 3 = Escherion (can be killed if staff is dead)
 
                 // Player doesnt have target > attack Escherion
-                if (!Bot.Monsters.CurrentAvailableMonsters.Any(x => x != null && x?.Cell == Bot.Player?.Cell && x?.HP > 0))
+                else if (!Bot.Monsters.MapMonsters.Where(x => x != null && x.HP > 0).Any())
                 {
                     Bot.Sleep(500);
                     continue;
                 }
-
-                if (Bot.Monsters.CurrentAvailableMonsters.Any(x => x != null && x?.MapID == 2 && x?.HP > 0))
+                else if (Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.MapID == 2).HP > 0)
                     Bot.Combat.Attack(2);
                 else
                     Bot.Combat.Attack(3);
