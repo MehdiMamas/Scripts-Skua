@@ -129,7 +129,7 @@ public class CoreLR
             Core.KillMonster("revenant", "r2", "Left", "*", "Tethered Soul", 300, false);
             Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Darkened Essence", 500, false);
             //Adv.BestGear(RacialGearBoost.Undead);
-            Core.KillMonster("necrodungeon", "r22", "Down", "*", "Dracolich Contract", 1000, false, publicRoom: true);
+            Core.KillMonster("necrodungeon", "r22", "Down", "*", "Dracolich Contract", 1000, false, publicRoom: Core.PublicDifficult);
 
             Core.EnsureComplete(6897);
             Bot.Wait.ForPickup("Revenant's Spellscroll");
