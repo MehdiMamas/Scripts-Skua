@@ -109,9 +109,10 @@ public class KingsEchoClassPrerequisites
                         Farm.Voucher("Gold Voucher 500k", 100);
                         Core.EquipClass(ClassType.Farm);
                         Core.KillMonster("thelimacity", "r5", "Center", "*", "Dwarven Gold", 30, isTemp: false);
-                        Core.KillMonster("thelimacity", "r2", "Right", "*", "Atlas Gold", 75, isTemp: false);
+                        Core.KillMonster("liatarahill", "r9", "Left", "*", "Skye Gold", 50, isTemp: false);
+                        Core.KillMonster("atlaskingdom", "r2", "Left", "*", "Atlas Gold", 75, isTemp: false); // Temporary solution, needs to be replaced by a farmable alternative rather than a boss.
                         Core.EquipClass(ClassType.Solo);
-                        Core.KillMonster("camlan", "r9", "Left", "*", "Skye Gold", 50, isTemp: false);
+                        Core.KillMonster("camlan", "r9", "Left", "*", "Camlan Gold", 120, isTemp: false);
                         Core.EnsureComplete(10441);
                         break;
 
@@ -121,7 +122,7 @@ public class KingsEchoClassPrerequisites
                 }
             }
 
-// Echo of the King
+            // Echo of the King
             Core.ChainComplete(10439);
             Core.BuyItem("TerminaTemple", 2630, 95742);
 
