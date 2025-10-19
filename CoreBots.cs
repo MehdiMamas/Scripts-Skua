@@ -9495,34 +9495,40 @@ public class CoreBots
 
         //Class Equipment
         List<string> _SoloGear = new();
-        if (CBOString("Helm1Select", out string _Helm1))
-            _SoloGear.Add(_Helm1);
-        if (CBOString("Armor1Select", out string _Armor1))
-            _SoloGear.Add(_Armor1);
-        if (CBOString("Cape1Select", out string _Cape1))
-            _SoloGear.Add(_Cape1);
-        if (CBOString("Weapon1Select", out string _Weapon1))
-            _SoloGear.Add(_Weapon1);
-        if (CBOString("Pet1Select", out string _Pet1))
-            _SoloGear.Add(_Pet1);
-        if (CBOString("GroundItem1Select", out string _GroundItem1))
-            _SoloGear.Add(_GroundItem1);
+        if (SoloGearOn)
+        {
+            if (CBOString("Helm1Select", out string _Helm1))
+                _SoloGear.Add(_Helm1);
+            if (CBOString("Armor1Select", out string _Armor1))
+                _SoloGear.Add(_Armor1);
+            if (CBOString("Cape1Select", out string _Cape1))
+                _SoloGear.Add(_Cape1);
+            if (CBOString("Weapon1Select", out string _Weapon1))
+                _SoloGear.Add(_Weapon1);
+            if (CBOString("Pet1Select", out string _Pet1))
+                _SoloGear.Add(_Pet1);
+            if (CBOString("GroundItem1Select", out string _GroundItem1))
+                _SoloGear.Add(_GroundItem1);
+        }
         if (_SoloGear.Count > 0)
             SoloGear = _SoloGear.ToArray();
 
         List<string> _FarmGear = new();
-        if (CBOString("Helm2Select", out string _Helm2))
-            _FarmGear.Add(_Helm2);
-        if (CBOString("Armor2Select", out string _Armor2))
-            _FarmGear.Add(_Armor2);
-        if (CBOString("Cape2Select", out string _Cape2))
-            _FarmGear.Add(_Cape2);
-        if (CBOString("Weapon2Select", out string _Weapon2))
-            _FarmGear.Add(_Weapon2);
-        if (CBOString("Pet2Select", out string _Pet2))
-            _FarmGear.Add(_Pet2);
-        if (CBOString("GroundItem2Select", out string _GroundItem2))
-            _FarmGear.Add(_GroundItem2);
+        if (FarmGearOn)
+        {
+            if (CBOString("Helm2Select", out string _Helm2))
+                _FarmGear.Add(_Helm2);
+            if (CBOString("Armor2Select", out string _Armor2))
+                _FarmGear.Add(_Armor2);
+            if (CBOString("Cape2Select", out string _Cape2))
+                _FarmGear.Add(_Cape2);
+            if (CBOString("Weapon2Select", out string _Weapon2))
+                _FarmGear.Add(_Weapon2);
+            if (CBOString("Pet2Select", out string _Pet2))
+                _FarmGear.Add(_Pet2);
+            if (CBOString("GroundItem2Select", out string _GroundItem2))
+                _FarmGear.Add(_GroundItem2);
+        }
         if (_FarmGear.Count > 0)
             FarmGear = _FarmGear.ToArray();
 
