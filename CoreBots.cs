@@ -4741,6 +4741,7 @@ public class CoreBots
                     {
                         Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                         Bot.Wait.ForCellChange("Boss");
+                        Bot.Player.SetSpawnPoint();
                     }
                 }
 
@@ -4748,25 +4749,35 @@ public class CoreBots
                 {
                     Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                     Bot.Wait.ForCellChange("Boss");
+                    Bot.Player.SetSpawnPoint();
                 }
 
                 if (Bot.Player?.Cell == "Cut1")
                 {
                     Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                     Bot.Wait.ForCellChange("Boss");
+                    Bot.Player.SetSpawnPoint();
                 }
 
                 // MonsterMapIDs:
                 // 2 = Staff (if alive Escherion is invulvn)
                 // 3 = Escherion (can be killed if staff is dead)
 
-                // Player doesnt have target > attack Escherion
-                else if (!Bot.Monsters.MapMonsters.Where(x => x != null && x.HP > 0).Any())
+                // Initialize by attacking Escherion
+                if (!Bot.Player.HasTarget)
                 {
+                    Bot.Combat.Attack(3);
                     Bot.Sleep(500);
-                    continue;
                 }
-                else if (Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.MapID == 2).HP > 0)
+
+                // Player doesnt have target > attack Escherion
+                // else if (!Bot.Monsters.MapMonsters.Where(x => x != null && x.HP > 0).Any())
+                // {
+                //     Bot.Sleep(500);
+                //     continue;
+                // }
+                // else 
+                if (Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.MapID == 2).HP > 0)
                     Bot.Combat.Attack(2);
                 else
                     Bot.Combat.Attack(3);
