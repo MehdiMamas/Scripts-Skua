@@ -6846,7 +6846,18 @@ public class CoreBots
                 var item = bestItems[category];
                 if (item != null) // Additional null check
                 {
-                    Logger($"Equipping best item: {item.Name} in category {category}.");
+                    // Check if item is already equipped
+                    if (Bot.Inventory.IsEquipped(item.Name))
+                        continue;
+                    
+                    Logger($"Equipping best {category}: {item.Name} (MainMeta: {bestMainMetaValues[category]}, Additional: {bestAdditionalMetaScores[category]})");
+                    
+                    // Check if item is in bank and unbank it if needed
+                    if (Bot.Bank.Contains(item.Name))
+                    {
+                        Unbank(item.Name);
+                    }
+                    
                     Equip(item.ID);
                 }
             }
