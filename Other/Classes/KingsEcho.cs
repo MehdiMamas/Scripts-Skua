@@ -56,8 +56,6 @@ public class KingsEchoClassPrerequisites
         // Level 80
         Farm.Experience(80);
 
-        // Completion of the Rumbling of Cold Thunder saga
-        AOR.ColdThunder();
 
         // Rank 10 in the Good and Swordhaven factions
         Farm.GoodREP();
@@ -68,8 +66,9 @@ public class KingsEchoClassPrerequisites
 
         if (!Core.isCompletedBefore(10439))
         {
-            // Story       
-            AOR.TerminaTemple();
+            // Completion of the Rumbling of Cold Thunder saga
+            AOR.TerminaTemple(true, true);
+
             Quest q = Core.InitializeWithRetries(() => Core.EnsureLoad(10439));
             foreach (ItemBase item in q.AcceptRequirements)
             {
