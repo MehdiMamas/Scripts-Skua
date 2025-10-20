@@ -3506,6 +3506,7 @@ public class CoreAdvanced
                 case "martial artist":
                 case "master martial artist":
                 case "antique hunter":
+                case "king's echo":
                     type = EnhancementType.Lucky;
                     wSpecial = WeaponSpecial.Awe_Blast;
                     break;
