@@ -32,6 +32,8 @@ public class BocklinTreasuryMerge
     private static BocklinGroveMerge _BocklinGroveM;
     private static BocklinArmoryMerge BocklinArmoryM { get => _BocklinArmoryM ??= new BocklinArmoryMerge(); set => _BocklinArmoryM = value; }
     private static BocklinArmoryMerge _BocklinArmoryM;
+    private static CoreSepulchure Seppy { get => _Seppy ??= new CoreSepulchure(); set => _Seppy = value; }
+    private static CoreSepulchure _Seppy;
     private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
     private static CoreAdvanced _sAdv;
 
@@ -55,7 +57,10 @@ public class BocklinTreasuryMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        Seppy.ShadowfallRise();
         Lynaria.BocklinSanctum();
+
+        
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("bocklinsanctum", 2578, findIngredients, buyOnlyThis, buyMode: buyMode);
 
