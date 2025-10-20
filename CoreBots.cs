@@ -3505,7 +3505,7 @@ public class CoreBots
 
         if (targetMonsters == null || !targetMonsters.Any())
         {
-            Logger($"⚠️ Monster ${monster} not found in cell ${cell}, pad ${pad} in /${map}");
+            Logger($"⚠️ Monster {monster} not found in cell {cell}, pad ${pad} in /{map}");
             return;
         }
 
