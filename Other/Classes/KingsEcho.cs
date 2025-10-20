@@ -127,8 +127,15 @@ public class KingsEcho
                 }
             }
 
+            // Familial Blessing (10438)
+            Core.EnsureAccept(10438);
+            Core.GetMapItem(15048, 1, "terminatemple");
+            Core.EnsureComplete(10438);
+
             // Echo of the King
             Core.ChainComplete(10439);
+
+            // Buy the class
             Core.BuyItem("TerminaTemple", 2630, 95742);
 
             if (rankup)
