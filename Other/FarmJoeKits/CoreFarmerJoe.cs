@@ -348,9 +348,9 @@ public class CoreFarmerJoe
         foreach (int Level in Core.FromTo(0, 75))
         {
             // Always ensure we have 10 of each boost type
-            Farm.GetBoost("XP", 10, true);
             Farm.GetBoost("REP", 10, true);
-            Boosts.GetBoostsSelect(10, 10, 0);
+            Farm.GetBoost("XP", Bot.Player.Level >= 100 ? 0 : 10, true);
+            Boosts.GetBoostsSelect(Bot.Player.Gold >= 100000000 ? 0 : 10, 10, 0);
 
             // Handle special cases and leveling
             switch (Level)
