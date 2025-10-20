@@ -41,12 +41,12 @@ public class KingsEcho
     {
         Core.SetOptions(disableClassSwap: true);
 
-        Prerequisites();
+        GetKE();
 
         Core.SetOptions(false);
     }
 
-    public void Prerequisites(bool rankup = true)
+    public void GetKE(bool rankup = true)
     {
         if (Core.CheckInventory("King's Echo"))
         {
