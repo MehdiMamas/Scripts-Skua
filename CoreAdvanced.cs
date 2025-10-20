@@ -2469,7 +2469,7 @@ public class CoreAdvanced
                 #endregion
 
                 #region Ravenous
-                case "PlaceHodler":
+                case "PlaceHolder":
                     if (!uRavenous())
                         goto default;
 
@@ -3034,6 +3034,18 @@ public class CoreAdvanced
                     break;
                 #endregion
 
+                #region Lucky - Ravenous - Examen - Vainglory
+                case "king's echo":
+                    if (!uRavenous() || !uExamen() || !uVainglory())
+                        goto default;
+
+                    type = EnhancementType.Lucky;
+                    cSpecial = CapeSpecial.Vainglory;
+                    wSpecial = WeaponSpecial.Ravenous;
+                    hSpecial = HelmSpecial.Examen;
+                    break;
+                #endregion
+
                 #region Luck - Val/Smite/Mana - Anima - Vg
                 case "dragonslayer general":
                     type = EnhancementType.Lucky;
@@ -3190,7 +3202,6 @@ public class CoreAdvanced
                 case "infinite dark caster":
                 case "infinite legion dark caster":
                 case "infinity titan":
-                case "king's echo":
                 case "legendary naval commander":
                 case "legion blademaster assassin":
                 case "legion doomknight tester":
