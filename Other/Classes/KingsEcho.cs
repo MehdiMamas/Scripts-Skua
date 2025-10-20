@@ -14,6 +14,8 @@ tags: Prerequisites, King's, King, Echo, class
 //cs_include Scripts/Story/Lynaria/CoreLynaria.cs
 //cs_include Scripts/Other/MergeShops/BocklinGroveMerge.cs
 //cs_include Scripts/Other/MergeShops/BocklinArmoryMerge.cs
+//cs_include Scripts/Story/SepulchureSaga/CoreSepulchure.cs
+
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Quests;
