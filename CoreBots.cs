@@ -6030,6 +6030,8 @@ public class CoreBots
 
     public void Relogin(string reason = "")
     {
+        Bot.Log($"⚡ Relogin Triggered{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}");
+        
         // Save original options
         bool origAutoRelog = Bot.Options.AutoRelogin;
         bool origAutoRelogAny = Bot.Options.AutoReloginAny;
@@ -6038,108 +6040,69 @@ public class CoreBots
 
         try
         {
-            Bot.Log($"⚡ Relogin Triggered{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}");
-            // NEW: Only set login info if we have both
+            // Set login info if available
             string? username = Bot.Player?.Username;
             string? password = Bot.Player?.Password;
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
                 Bot.Servers.SetLoginInfo(username, password);
             else
                 Bot.Log("ℹ️ No cached credentials found; continuing without SetLoginInfo.");
-            int tries = 0;
-            int maxTries = 5;
-            string? lastTriedServer = null;
-            Random rand = new();
 
-            while (!Bot.ShouldExit && tries < maxTries)
-            {
-                ResetReloginOptions();
-
-                if (Bot.Player?.LoggedIn == true)
-                {
-                    Bot.Servers.Logout();
-                    Bot.Log("🔒 Logging out current session...");
-                }
-
-                Bot.Wait.ForTrue(() => !(Bot.Player?.LoggedIn ?? false), 20);
-                Bot.Sleep(2000);
-
-                var servers = Bot.Servers.GetServers(true).GetAwaiter().GetResult();
-                if (servers.Count == 0)
-                {
-                    Bot.Log("❌ Failed to relogin: could not fetch server details.");
-                    break;
-                }
-
-                Bot.Servers.Login();
-                Bot.Wait.ForTrue(() => Bot.Player?.LoggedIn ?? false, 20);
-
-                // Pick target server
-                Server? targetServer = servers.FirstOrDefault(s => s.IP == Bot.Servers.LastIP)
-                                       ?? servers.FirstOrDefault(s => s.Name == "Twilly");
-
-                string serverName = string.IsNullOrWhiteSpace(targetServer?.Name) ? "Twilly" : targetServer!.Name;
-
-
-                string targetIP = targetServer?.IP ?? "";
-                lastTriedServer = serverName;
-
-                // Fun logging with emotes
-                Bot.Log($"🎯 Attempt {tries + 1}/{maxTries} → Connecting to: {serverName} 🌐");
-
-                // Human-like small delay
-                Bot.Sleep(rand.Next(200, 800));
-
-                if (!string.IsNullOrEmpty(targetIP))
-                    Bot.Servers.ConnectIP(targetIP);
-                else
-                    Bot.Log("⚠️ No suitable server found to connect!");
-
-                if (!Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
-                {
-                    tries++;
-                    Bot.Log($"⏳ Load failed. Retrying... 🔄 ({tries}/{maxTries})");
-                    Bot.Sleep(1000 * tries); // progressive backoff
-                    continue;
-                }
-
-                // Success
-                SendPlayerToHouse(serverName, reason);
-                return;
-            }
-
-            // Fallback server logic
-            string fallbackServer = lastTriedServer?.Equals("Twilly", StringComparison.OrdinalIgnoreCase) == true
-                ? "Twig"
-                : "Twilly";
-
-            Bot.Log($"⚡ Max relogin attempts reached. Trying fallback server: {fallbackServer} 🔄");
-            if (Bot.Servers.EnsureRelogin(fallbackServer) && Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
-            {
-                Bot.Log($"✅ Fallback relogin to {fallbackServer} successful! 🎉");
-                Bot.Send.Packet($"%xt%zm%house%1%{Username()}%");
-                return;
-            }
-
-            Bot.Log($"❌ Relogin failed after all attempts including {fallbackServer} fallback. 🛑");
-            Bot.Stop();
-        }
-        finally
-        {
-            Bot.Options.AutoRelogin = origAutoRelog;
-            Bot.Options.AutoReloginAny = origAutoRelogAny;
-            Bot.Options.RetryRelogin = origRetryRelogin;
-            Bot.Options.SafeRelogin = origSafeRelogin;
-        }
-
-        // --- Helpers ---
-        void ResetReloginOptions()
-        {
+            // Reset relogin options
             Bot.Options.AutoRelogin = false;
             Bot.Options.AutoReloginAny = false;
             Bot.Options.RetryRelogin = false;
             Bot.Options.SafeRelogin = false;
-            Bot.Sleep(500);
+
+            // Logout if currently logged in
+            if (Bot.Player?.LoggedIn == true)
+            {
+                Bot.Servers.Logout();
+                Bot.Log("🔒 Logging out current session...");
+                Bot.Wait.ForTrue(() => !(Bot.Player?.LoggedIn ?? false), 20);
+                Bot.Sleep(2000);
+            }
+
+            // Try preferred server first (LastIP server or Twilly)
+            string preferredServer = Bot.Servers.LastName ?? "Twilly";
+            Bot.Log($"🎯 Attempting relogin to: {preferredServer} 🌐");
+            
+            if (Bot.Servers.EnsureRelogin(preferredServer))
+            {
+                if (Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
+                {
+                    SendPlayerToHouse(preferredServer, reason);
+                    return;
+                }
+            }
+
+            // Fallback servers
+            string[] fallbackServers = { "Twilly", "Twig", "Safiria" };
+            foreach (string server in fallbackServers.Where(s => s != preferredServer))
+            {
+                Bot.Log($"⚡ Trying fallback server: {server} 🔄");
+                if (Bot.Servers.EnsureRelogin(server))
+                {
+                    if (Bot.Wait.ForTrue(() => Bot.Player?.Loaded ?? false, 20))
+                    {
+                        Bot.Log($"✅ Fallback relogin to {server} successful! 🎉");
+                        SendPlayerToHouse(server, reason);
+                        return;
+                    }
+                }
+                Bot.Sleep(1000); // Brief delay between attempts
+            }
+
+            Bot.Log($"❌ Relogin failed after all attempts. 🛑");
+            Bot.Stop();
+        }
+        finally
+        {
+            // Restore original options
+            Bot.Options.AutoRelogin = origAutoRelog;
+            Bot.Options.AutoReloginAny = origAutoRelogAny;
+            Bot.Options.RetryRelogin = origRetryRelogin;
+            Bot.Options.SafeRelogin = origSafeRelogin;
         }
 
         void SendPlayerToHouse(string serverName, string reason = "")
