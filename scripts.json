@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 145636,
+    "size": 146043,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -11788,17 +11788,17 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/VerusDoomKnight.cs"
   },
   {
-    "name": "KingsEchoClassPrerequisites",
-    "description": "King's Echo Class Prerequisites",
+    "name": "King's Echo Class",
+    "description": "King's Echo Class",
     "tags": [
-      "prerequisites",
       "king's",
       "king",
       "echo",
-      "class"
+      "class",
+      "kingsecho"
     ],
     "path": "Other/Classes/KingsEcho.cs",
-    "size": 5943,
+    "size": 6024,
     "fileName": "KingsEcho.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/KingsEcho.cs"
   },
@@ -11917,7 +11917,7 @@
       "null"
     ],
     "path": "Other/FreeBoosts/RepBoost.cs",
-    "size": 715,
+    "size": 679,
     "fileName": "RepBoost.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeBoosts/RepBoost.cs"
   },
@@ -11933,7 +11933,7 @@
       "gold"
     ],
     "path": "Other/FreeBoosts/FreeBoostsQuest(10mns)[Rng].cs",
-    "size": 3574,
+    "size": 3875,
     "fileName": "FreeBoostsQuest(10mns)[Rng].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeBoosts/FreeBoostsQuest(10mns)[Rng].cs"
   },
@@ -11944,7 +11944,7 @@
       "null"
     ],
     "path": "Other/FreeBoosts/XPBoost.cs",
-    "size": 696,
+    "size": 667,
     "fileName": "XPBoost.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeBoosts/XPBoost.cs"
   },
@@ -12135,7 +12135,7 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 58589,
+    "size": 58945,
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
