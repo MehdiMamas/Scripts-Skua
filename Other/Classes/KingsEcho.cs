@@ -1,7 +1,7 @@
 /*
-name: KingsEchoClassPrerequisites
-description: King's Echo Class Prerequisites
-tags: Prerequisites, King's, King, Echo, class
+name: King's Echo Class
+description: King's Echo Class
+tags: King's, King, Echo, class,kingsecho
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
@@ -20,7 +20,7 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Quests;
 
-public class KingsEchoClassPrerequisites
+public class KingsEcho
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
@@ -71,7 +71,12 @@ public class KingsEchoClassPrerequisites
             // Completion of the Rumbling of Cold Thunder saga
             AOR.TerminaTemple(true, true);
 
-            Quest q = Core.InitializeWithRetries(() => Core.EnsureLoad(10439));
+            Quest? q = Core.InitializeWithRetries(() => Core.EnsureLoad(10439));
+            if (q == null)
+            {
+                Core.Logger("Failed to load the quest: 10439");
+                return;
+            }
             foreach (ItemBase item in q.AcceptRequirements)
             {
                 if (Core.CheckInventory(item.ID))
