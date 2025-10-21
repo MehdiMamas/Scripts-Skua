@@ -348,7 +348,7 @@ public class CoreFarmerJoe
         Core.Logger("We'll occasionaly get rep/class/gold boosts throguh out the script to help speed things up a bit.");
         foreach (int Level in Core.FromTo(0, 75))
         {
-            if (Bot.Config.Get<bool>("GetBoosts"))
+            if (Bot.Config!.Get<bool>("GetBoosts"))
             { // Always ensure we have 10 of each boost type
                 Farm.GetBoost("REP", 10, true);
                 Farm.GetBoost("XP", Bot.Player.Level >= 100 ? 0 : 10, true);
