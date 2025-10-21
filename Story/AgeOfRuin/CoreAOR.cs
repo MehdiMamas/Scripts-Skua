@@ -56,8 +56,6 @@ public class CoreAOR
         ForgeAlbedo();
     }
 
-    private bool isSeaVoiceCalled = false;
-    private bool isColdThunderCalled = false;
 
     public void TerminaTemple(bool seaVoice = false, bool coldThunder = false)
     {
