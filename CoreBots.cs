@@ -2265,46 +2265,70 @@ public class CoreBots
     #region Drops
 
     /// <summary>
-    /// Adds drops to the pickup list, un-bank the items.
+    /// Adds drops to the pickup list and un-banks the specified items.
+    /// Only adds items not already queued for pickup,
+    /// and immediately picks up those currently present in the drop list.
     /// </summary>
-    /// <param name="items">Items to add</param>
+    /// <param name="items">Items to add and (if present) immediately pick up.</param>
     public void AddDrop(params string[] items)
     {
-        if (items == null || items.Length == 0)
-            return;
+        if (items is null || items.Length == 0) return;
+
         Unbank(items);
-        Bot.Drops.Add(items);
+
+        // Add only items not already queued for pickup
+        foreach (string item in items)
+            if (!Bot.Drops.ToPickup.Contains(item))
+                Bot.Drops.Add(item);
+
+        // Immediately pick up matching items currently dropped
+        foreach (ItemBase drop in Bot.Drops.CurrentDropInfos)
+            if (items.Contains(drop.Name))
+                Bot.Drops.Pickup(drop.Name);
     }
 
     /// <summary>
-    /// Adds drops to the pickup list and un-banks the items.
+    /// Adds drops to the pickup list by item IDs and un-banks the specified items.
+    /// Only adds IDs not already queued for pickup.
     /// </summary>
-    /// <param name="items">Items to add.</param>
+    /// <param name="items">Item IDs to add.</param>
     public void AddDrop(params int[] items)
     {
-        if (items == null || items.Length == 0)
-            return;
+        if (items is null || items.Length == 0) return;
+
         Unbank(items);
-        Bot.Drops.Add(items);
+
+        foreach (int id in items)
+            if (!Bot.Drops.ToPickupIDs.Contains(id))
+                Bot.Drops.Add(id);
+
+        // Immediately pick up matching items currently dropped
+        foreach (ItemBase drop in Bot.Drops.CurrentDropInfos)
+            if (items.Contains(drop.ID))
+                Bot.Drops.Pickup(drop.ID);
     }
 
-
     /// <summary>
-    /// Removes drops from the pickup list.
+    /// Removes drops from the pickup list by item names.
     /// </summary>
-    /// <param name="items">Items to remove</param>
+    /// <param name="items">Item names to remove.</param>
     public void RemoveDrop(params string[] items)
     {
+        if (items is null || items.Length == 0) return;
         Bot.Drops.Remove(items);
     }
 
     /// <summary>
-    /// Removes drops from the pickup list.
+    /// Removes drops from the pickup list by item IDs.
     /// </summary>
-    /// <param name="items">Items to remove</param>
+    /// <param name="items">Item IDs to remove.</param>
     public void RemoveDrop(params int[] items)
     {
-        Bot.Drops.Remove(items);
+        if (items is null || items.Length == 0) return;
+
+        foreach (int id in items)
+            if (Bot.Drops.ToPickupIDs.Contains(id))
+                Bot.Drops.Remove(id);
     }
 
     #endregion
@@ -3455,7 +3479,7 @@ public class CoreBots
 
         Bot.Player.SetSpawnPoint(); // 📍
 
-        if (item != null && !isTemp)
+        if (!string.IsNullOrEmpty(item) && !isTemp)
             AddDrop(item); // 💎
 
         ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).FirstOrDefault(x => x != null && x.Name == item); // 📦
@@ -6031,7 +6055,7 @@ public class CoreBots
     public void Relogin(string reason = "")
     {
         Bot.Log($"⚡ Relogin Triggered{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}");
-        
+
         // Save original options
         bool origAutoRelog = Bot.Options.AutoRelogin;
         bool origAutoRelogAny = Bot.Options.AutoReloginAny;
@@ -6066,7 +6090,7 @@ public class CoreBots
             // Try preferred server first (LastIP server or Twilly)
             string preferredServer = Bot.Servers.LastName ?? "Twilly";
             Bot.Log($"🎯 Attempting relogin to: {preferredServer} 🌐");
-            
+
             if (Bot.Servers.EnsureRelogin(preferredServer))
             {
                 if (Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
