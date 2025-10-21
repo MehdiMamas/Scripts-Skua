@@ -791,10 +791,9 @@ public class CoreNation
 
         bool sellMemVoucher = Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher) && _sellMemVoucher == true;
         bool returnPolicyDuringSupplies = Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies == true;
-        UltraAlteon = UltraAlteon || (Core.CBOBool("PublicDifficult", out bool _Alteon) && _Alteon);
-        
-        // Uncommentt his for 1.3 release.
-        // UltraAlteon = UltraAlteon || (Core.CBOBool("UltraAlteonForSupplies", out bool _UltraAlteonForSupplies) && _UltraAlteonForSupplies);
+        if (Bot.Version.ToString() == "1.3.0.0")
+            UltraAlteon = UltraAlteon || (Core.CBOBool("UltraAlteonForSupplies", out bool _UltraAlteonForSupplies) && _UltraAlteonForSupplies);
+        else UltraAlteon = UltraAlteon || (Core.CBOBool("PublicDifficult", out bool _Alteon) && _Alteon);
 
         if (KeepVoucher && sellMemVoucher)
         {

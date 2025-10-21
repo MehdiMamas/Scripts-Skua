@@ -164,20 +164,24 @@ public class CoreBots
         ReadCBO();
         #region Social Privacy Options
         bool isStarting = changeTo;
-        CBOBool("AntiLag", out bool AntiLagisOn);
-        if (!AntiLagisOn)
-        {
-            if (isStarting == true)  // Only log when starting the script
-            {
-                Logger("[SetOptions] Anti-Lag in CBO is off. Skipping privacy settings.");
-            }
-        }
-        else
-        {
-            bool disabling = isStarting;
-            bool warned = false;
 
-            foreach ((string key, string label) in new Dictionary<string, string>
+        // 1.3 Feature
+        if (Bot.Version.ToString() == "1.3.0.0")
+        {
+            CBOBool("IncognitoMode", out bool IncognitoModeOn);
+            if (!IncognitoModeOn)
+            {
+                if (isStarting == true)
+                {
+                    Logger("Incognito Mode in CBO is off. Skipping privacy settings.");
+                }
+            }
+            else
+            {
+                bool disabling = isStarting;
+                bool warned = false;
+
+                foreach ((string key, string label) in new Dictionary<string, string>
         {
             { "bGoto", "Goto" },
             { "bParty", "Party invites" },
@@ -186,29 +190,30 @@ public class CoreBots
             { "bGuild", "Guild invites" },
             { "bWhisper", "Whisper" }
         })
-            {
-                if (label == "Goto" && !loadedBot.ToLower().Contains("butler"))
-                    continue;
-
-                bool current = Bot.Flash.GetGameObject<bool>($"uoPref.{key}");
-                if (disabling ? current : !current)
                 {
-                    if (disabling && !warned)
+                    if (label == "Goto" && !loadedBot.ToLower().Contains("butler"))
+                        continue;
+
+                    bool current = Bot.Flash.GetGameObject<bool>($"uoPref.{key}");
+                    if (disabling ? current : !current)
                     {
-                        Logger("[SetOptions] Turning certain \"Social\" options off to help protect you");
-                        warned = true;
+                        if (disabling && !warned)
+                        {
+                            Logger("[SetOptions] Turning certain \"Social\" options off to help protect you");
+                            warned = true;
+                        }
+
+                        Logger($"[SetOptions] {(disabling ? "Turning off" : "Re-enabling")}: {label}");
+                        SendPackets($"%xt%zm%cmd%1%uopref%{key}%{(!disabling).ToString().ToLower()}%");
+                        Bot.Sleep(500);
                     }
-
-                    Logger($"[SetOptions] {(disabling ? "Turning off" : "Re-enabling")}: {label}");
-                    SendPackets($"%xt%zm%cmd%1%uopref%{key}%{(!disabling).ToString().ToLower()}%");
-                    Bot.Sleep(500);
                 }
-            }
 
-            if (disabling)
-                GC.Collect();
+                if (disabling)
+                    GC.Collect();
+            }
         }
-        #endregion Social Privacy Options
+         #endregion Social Privacy Options
 
         // Set the member status
         IsMember = isUpgraded();
