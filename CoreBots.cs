@@ -4749,7 +4749,7 @@ public class CoreBots
                 {
                     Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                     Bot.Wait.ForCellChange("Boss");
-                    Bot.Player.SetSpawnPoint();
+                    Bot.Player?.SetSpawnPoint();
                 }
 
                 if (Bot.Player?.Cell == "Cut1")
@@ -4764,7 +4764,7 @@ public class CoreBots
                 // 3 = Escherion
                 if (Bot.Player is not { HasTarget: true })
                     Bot.Combat.Attack(3);
-                else if (/*Bot.Player?.Target?.MapID == 3 && Bot.Player?.Target?.State == 2 && */ Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x?.MapID == 2).Alive)
+                else if (/*Bot.Player?.Target?.MapID == 3 && Bot.Player?.Target?.State == 2 && */ Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.MapID == 2)?.Alive == true)
                     // Escherion is invulnerable → attack Staff of Inversion
                     Bot.Combat.Attack(2);
                 else if (Bot.Player?.Target?.MapID == 2 && Bot.Player?.Target?.HP > 0)
