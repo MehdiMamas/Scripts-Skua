@@ -791,7 +791,7 @@ public class CoreNation
 
         bool sellMemVoucher = Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher) && _sellMemVoucher == true;
         bool returnPolicyDuringSupplies = Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies == true;
-        UltraAlteon = UltraAlteon && Core.CBOBool("PublicDifficult", out bool _Alteon) && _Alteon;
+        UltraAlteon = UltraAlteon || (Core.CBOBool("PublicDifficult", out bool _Alteon) && _Alteon);
 
         if (KeepVoucher && sellMemVoucher)
         {
