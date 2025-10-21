@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 406634,
+    "size": 406825,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -3497,7 +3497,7 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 108210,
+    "size": 108408,
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -25853,7 +25853,7 @@
       "null"
     ],
     "path": "Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs",
-    "size": 1780,
+    "size": 1802,
     "fileName": "EmptyTemplate[Basics].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs"
   },
