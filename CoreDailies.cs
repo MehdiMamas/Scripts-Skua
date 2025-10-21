@@ -1078,7 +1078,7 @@ public class CoreDailies
                 Core.ChainComplete(9108);
                 Core.ToBank("Happy Penguin");
             }
-            Core.Logger("🥺 we don't have the cute little penguin so no badge for you...");
+            else Core.Logger("🥺 we don't have the cute little penguin so no badge for you...");
         }
 
         #region Local methods
