@@ -20294,13 +20294,28 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/PumpkinLord(Class).cs"
   },
   {
+    "name": "Eldritchbattletown",
+    "description": "This will complete the Eldritchbattletown Story quest.",
+    "tags": [
+      "story",
+      "quest",
+      "mogloween",
+      "seasonal",
+      "eldritchbattletown"
+    ],
+    "path": "Seasonal/Mogloween/015Eldritchbattletown.cs",
+    "size": 935,
+    "fileName": "015Eldritchbattletown.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/015Eldritchbattletown.cs"
+  },
+  {
     "name": "null",
     "description": "null",
     "tags": [
       "null"
     ],
     "path": "Seasonal/Mogloween/CoreMogloween.cs",
-    "size": 23701,
+    "size": 26689,
     "fileName": "CoreMogloween.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/CoreMogloween.cs"
   },
@@ -23127,7 +23142,7 @@
       "quest progression"
     ],
     "path": "Tools/ForDevelopers/WeeklyReleaseGenerator.cs",
-    "size": 6306,
+    "size": 6328,
     "fileName": "WeeklyReleaseGenerator.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/WeeklyReleaseGenerator.cs"
   },
@@ -28173,6 +28188,33 @@
     "size": 4660,
     "fileName": "VampireLordMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/VampireLordMerge.cs"
+  },
+  {
+    "name": "Ungourdly Gear Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Ungourdly Gear Merge [2629] in /eldritchbattletown",
+    "tags": [
+      "ungourdly",
+      "gear",
+      "merge",
+      "eldritchbattletown",
+      "gold",
+      "voucher",
+      "k",
+      "great",
+      "calabaza",
+      "pumpkin",
+      "kings",
+      "revenge",
+      "fever",
+      "kabocha",
+      "king",
+      "naginata",
+      "wrath"
+    ],
+    "path": "Seasonal/Mogloween/MergeShops/UngourdlyGearMerge.cs",
+    "size": 5851,
+    "fileName": "UngourdlyGearMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/UngourdlyGearMerge.cs"
   },
   {
     "name": "Tricktown Merge",
