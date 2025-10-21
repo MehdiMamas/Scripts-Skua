@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 405495,
+    "size": 406625,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -4729,7 +4729,7 @@
       "null"
     ],
     "path": "Hollowborn/HollowbornDoomKnight/CoreHollowbornDoomKnight.cs",
-    "size": 8771,
+    "size": 8888,
     "fileName": "CoreHollowbornDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornDoomKnight/CoreHollowbornDoomKnight.cs"
   },
@@ -4744,7 +4744,7 @@
       "hollowborn doomknight character page badge"
     ],
     "path": "Hollowborn/HollowbornDoomKnight/ADarkKnightReturns.cs",
-    "size": 2086,
+    "size": 2111,
     "fileName": "ADarkKnightReturns.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornDoomKnight/ADarkKnightReturns.cs"
   },
