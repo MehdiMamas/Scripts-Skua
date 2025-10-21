@@ -1369,7 +1369,7 @@ public class CoreAdvanced
     public void RankUpClass(string className, bool gearRestore = true, int itemid = 0)
     {
         // Determine search condition based on itemid
-        Func<InventoryItem, bool> classMatch = i => (itemid > 0 ? i.ID == itemid : i.Name.Equals(className, StringComparison.OrdinalIgnoreCase)) && i.Category == ItemCategory.Class;
+        bool classMatch(InventoryItem i) => (itemid > 0 ? i.ID == itemid : i.Name.Equals(className, StringComparison.OrdinalIgnoreCase)) && i.Category == ItemCategory.Class;
 
         // Find the class item in inventory and bank
         InventoryItem? itemInv = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(classMatch);
