@@ -3505,7 +3505,7 @@ public class CoreBots
 
         if (targetMonsters == null || !targetMonsters.Any())
         {
-            Logger($"⚠️ Monster {monster} not found in cell {cell}, pad ${pad} in /{map}");
+            Logger($"⚠️ Monster {monster} not found in cell {cell}, pad {pad} in /{map}");
             return;
         }
 
@@ -3621,7 +3621,7 @@ public class CoreBots
         // Log and exit if no monsters are found
         if (!targetMonsters.Any())
         {
-            if (log) Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
+            if (log) Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
             return;
         }
 
@@ -3645,7 +3645,7 @@ public class CoreBots
             }
             else
             {
-                Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
+                Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
             }
 
         }
@@ -3679,7 +3679,7 @@ public class CoreBots
                     }
                     else
                     {
-                        Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
+                        Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
                     }
 
                     if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)) // 💎✅
@@ -3750,7 +3750,7 @@ public class CoreBots
         // Log and exit if no monsters are found
         if (!targetMonsters.Any())
         {
-            if (log) Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
+            if (log) Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
             return;
         }
 
@@ -3774,7 +3774,7 @@ public class CoreBots
             }
             else
             {
-                Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
+                Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
             }
         }
         else
@@ -3805,7 +3805,7 @@ public class CoreBots
                 }
                 else
                 {
-                    Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
+                    Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
                 }
 
                 if (isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant)) // 💎✅
@@ -4956,12 +4956,37 @@ public class CoreBots
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
-        Join("kitsune", "Boss", "Left");
+        if (Bot.Map.Name != "kitsune")
+        {
+            Join("kitsune");
+            Bot.Wait.ForMapLoad("kitsune");
+        }
+
+        if (Bot.Player.Cell != "Boss")
+        {
+            Bot.Map.Jump("Boss", "Left");
+            Bot.Wait.ForCellChange("Boss");
+        }
+
         Bot.Events.ExtensionPacketReceived += KitsuneListener;
 
         if (item == null)
         {
             if (log) Logger("🌀 Killing Kitsune");
+            #region Map & Cell insurance
+            if (Bot.Map.Name != "kitsune")
+            {
+                Join("kitsune", "Boss", "Left");
+                Bot.Wait.ForMapLoad("kitsune");
+            }
+
+            if (Bot.Player.Cell != "Boss")
+            {
+                Bot.Map.Jump("Boss", "Left");
+                Bot.Wait.ForCellChange("Boss");
+            }
+            #endregion
+
             Bot.Kill.Monster("Kitsune");
         }
         else
@@ -4971,7 +4996,24 @@ public class CoreBots
             if (log)
                 Logger($"🌀 Killing Kitsune for {item} ({dynamicQuant(item, isTemp)}/{quant}) [Temp = {isTemp}]");
             while (!Bot.ShouldExit && !CheckInventory(item, quant))
+            {
+                #region Map & Cell insurance
+                if (Bot.Map.Name != "kitsune")
+                {
+                    Join("kitsune", "Boss", "Left");
+                    Bot.Wait.ForMapLoad("kitsune");
+                }
+
+                if (Bot.Player.Cell != "Boss")
+                {
+                    Bot.Map.Jump("Boss", "Left");
+                    Bot.Wait.ForCellChange("Boss");
+                }
+                #endregion
+
                 Bot.Combat.Attack("*");
+                Bot.Sleep(200);
+            }
         }
 
         Bot.Events.ExtensionPacketReceived -= KitsuneListener;
@@ -6031,7 +6073,7 @@ public class CoreBots
     public void Relogin(string reason = "")
     {
         Bot.Log($"⚡ Relogin Triggered{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}");
-        
+
         // Save original options
         bool origAutoRelog = Bot.Options.AutoRelogin;
         bool origAutoRelogAny = Bot.Options.AutoReloginAny;
@@ -6066,7 +6108,7 @@ public class CoreBots
             // Try preferred server first (LastIP server or Twilly)
             string preferredServer = Bot.Servers.LastName ?? "Twilly";
             Bot.Log($"🎯 Attempting relogin to: {preferredServer} 🌐");
-            
+
             if (Bot.Servers.EnsureRelogin(preferredServer))
             {
                 if (Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
