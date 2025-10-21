@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 404384,
+    "size": 405530,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -2383,7 +2383,7 @@
       "decay"
     ],
     "path": "Farm/BuyScrolls.cs",
-    "size": 4806,
+    "size": 4726,
     "fileName": "BuyScrolls.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/BuyScrolls.cs"
   },
@@ -12504,7 +12504,7 @@
       "kingsecho"
     ],
     "path": "Other/Classes/KingsEcho.cs",
-    "size": 6230,
+    "size": 6231,
     "fileName": "KingsEcho.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/KingsEcho.cs"
   },
@@ -16006,7 +16006,7 @@
       "armblades"
     ],
     "path": "Other/MergeShops/CrocriverMerge.cs",
-    "size": 9301,
+    "size": 9309,
     "fileName": "CrocriverMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CrocriverMerge.cs"
   },
