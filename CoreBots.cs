@@ -5590,25 +5590,54 @@ public class CoreBots
     }
 
     // Word wrap function
-    public static string WordWrap(string input, int lineLength)
+    public static string WordWrap(string? input, int lineLength)
     {
+        if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+
         StringBuilder sb = new();
         int length = 0;
+        bool inSentencePause = false;
 
-        foreach (string word in input.Split(' '))
+        foreach (string word in input.Split(' ', StringSplitOptions.RemoveEmptyEntries))
         {
-            if (length + word.Length > lineLength)
+            // Detect punctuation that signals a small pause
+            if (word.EndsWith('.') || word.EndsWith('!') || word.EndsWith('?') ||
+                word.EndsWith(',') || word.EndsWith(';') || word.EndsWith(':'))
+                inSentencePause = true;
+
+            // Handle long words by hard breaking them
+            if (word.Length > lineLength)
+            {
+                if (length > 0) { sb.AppendLine(); length = 0; }
+                for (int i = 0; i < word.Length; i += lineLength)
+                    sb.AppendLine(word.Substring(i, Math.Min(lineLength, word.Length - i)));
+                inSentencePause = false;
+                continue;
+            }
+
+            // Line wrap logic
+            if (length + word.Length + 1 > lineLength)
             {
                 sb.AppendLine();
                 length = 0;
             }
 
-            sb.Append(word + " ");
+            sb.Append(word).Append(' ');
             length += word.Length + 1;
+
+            // Add soft break after punctuation for readability
+            if (inSentencePause && length > lineLength / 1.3)
+            {
+                sb.AppendLine();
+                length = 0;
+                inSentencePause = false;
+            }
         }
 
-        return sb.ToString().Trim();
+        return sb.ToString().TrimEnd();
     }
+
+
 
     /// <summary>
     /// Logs farming activity for a specified item.
