@@ -87,7 +87,7 @@ public class UngourdlyGearMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
                         Core.HuntMonster("eldritchbattletown", "Kathool Kultist", "Tier 2 Kathool Member Card", 6, isTemp: false);
-                        Core.HuntMonster("eldritchbattletown", "MonsterName", "Dzeza Member Card", 6, isTemp: false);
+                        Core.HuntMonster("eldritchbattletown", "Dzeza Cultist", "Dzeza Member Card", 6, isTemp: false);
                         Core.HuntMonster("eldritchbattletown", "Harvest Acromegalia", "Gourd Twinning", isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
