@@ -139,10 +139,10 @@ public class CoreDailies
         Bot.Drops.Add(items);
 
         // Handle LOO dailies for quests within the specified range
-        if (quest >= 7156 && quest < 7166 && !Core.CheckInventory(50741, toInv: false))
+        if (quest >= 7156 && quest < 7166 && !Core.CheckInventory(50741, toInv: false) && !Core.isCompletedBefore(quest))
         {
             foreach (int questId in Enumerable.Range(7156, 10).Distinct())
-                if (!Core.isCompletedBefore(questId))
+                if (!Core.isCompletedBefore(questId) && !Bot.Quests.IsDailyComplete(questId))
                     Bot.Drops.Add(Core.QuestRewards(questId));
         }
 
