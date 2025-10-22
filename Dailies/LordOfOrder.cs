@@ -249,27 +249,26 @@ public class LordOfOrder
         }
 
         // The Final Challenge
-        if (!Bot.Quests.IsAvailable(7165))
-            return;
-        if (!Core.isCompletedBefore(7165))
+        if (Bot.Quests.IsAvailable(7165) && !Core.isCompletedBefore(7165))
         {
             Bot.Drops.Add(Core.QuestRewards(7165));
 
             Core.EnsureAccept(7165);
-        Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("ultradrakath", "Champion of Chaos", "Champion of Chaos Confronted", isTemp: false, publicRoom: Core.PublicDifficult);
-        Bot.Drops.Add(50741);
-        // If quest 7165 is not completed and either missing extras or missing key items
-        if (!Core.isCompletedBefore(7165))
-        {
-            Core.EnsureComplete(7165, 50741);
-            Bot.Wait.ForPickup(50741);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("ultradrakath", "Champion of Chaos", "Champion of Chaos Confronted", isTemp: false, publicRoom: Core.PublicDifficult);
+            Bot.Drops.Add(50741);
+            // If quest 7165 is not completed and either missing extras or missing key items
+            if (!Core.isCompletedBefore(7165))
+            {
+                Core.EnsureComplete(7165, 50741);
+                Bot.Wait.ForPickup(50741);
 
-            Core.EnsureCompleteChoose(7165);
-            Core.ToBank(Core.QuestRewards(7165).Except("Lord Of Order"));
+                Core.EnsureCompleteChoose(7165);
+                Core.ToBank(Core.QuestRewards(7165).Except("Lord Of Order"));
 
-            if (rankUpClass)
-                Adv.RankUpClass("Lord Of Order");
+                if (rankUpClass)
+                    Adv.RankUpClass("Lord Of Order");
+            }
         }
     }
 }
