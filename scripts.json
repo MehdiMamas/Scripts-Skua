@@ -20054,6 +20054,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/11ThatStory.cs"
   },
   {
+    "name": "Eldritch World Story",
+    "description": "This will complete the eldritch world Story quest.",
+    "tags": [
+      "story",
+      "quest",
+      "mogloween",
+      "seasonal",
+      "eldritch",
+      "world",
+      "eldritchworld",
+      "elodea"
+    ],
+    "path": "Seasonal/Mogloween/16EldritchWorld.cs",
+    "size": 811,
+    "fileName": "16EldritchWorld.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/16EldritchWorld.cs"
+  },
+  {
     "name": "Chromafection Story",
     "description": "This will complete the Chromafection story quest.",
     "tags": [
@@ -20315,7 +20333,7 @@
       "null"
     ],
     "path": "Seasonal/Mogloween/CoreMogloween.cs",
-    "size": 26689,
+    "size": 28997,
     "fileName": "CoreMogloween.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/CoreMogloween.cs"
   },
