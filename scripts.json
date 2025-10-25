@@ -3497,7 +3497,7 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 108408,
+    "size": 108526,
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -3563,7 +3563,7 @@
       "escherion"
     ],
     "path": "Nation/SuppliesToSpinTheWheelofChance.cs",
-    "size": 8101,
+    "size": 8218,
     "fileName": "SuppliesToSpinTheWheelofChance.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/SuppliesToSpinTheWheelofChance.cs"
   },
