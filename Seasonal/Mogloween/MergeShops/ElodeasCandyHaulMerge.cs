@@ -8,7 +8,7 @@ tags: elodeas, candy, haul, merge, eldritchworld, gold, voucher, k, horc, warrio
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Seasonal/Mogloween/CoreMogloween.cs
-//cs_include Scripts/Seasonal\Mogloween\MergeShops\UngourdlyGearMerge.cs
+//cs_include Scripts/Seasonal/Mogloween/MergeShops/UngourdlyGearMerge.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -298,7 +298,6 @@ public class ElodeasCandyHaulMerge
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("57304", "Gold Voucher 25k", "Mode: [select] only\nShould the bot buy \"Gold Voucher 25k\" ?", false),
         new Option<bool>("96437", "Horc Warrior Thok", "Mode: [select] only\nShould the bot buy \"Horc Warrior Thok\" ?", false),
         new Option<bool>("96438", "Magical Mariner Arcana", "Mode: [select] only\nShould the bot buy \"Magical Mariner Arcana\" ?", false),
         new Option<bool>("96439", "Cat Burglar Metrea", "Mode: [select] only\nShould the bot buy \"Cat Burglar Metrea\" ?", false),
