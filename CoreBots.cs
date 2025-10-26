@@ -5490,6 +5490,21 @@ public class CoreBots
         }
     }
 
+    /// <summary>
+    /// Fixes black screen after cutscene skip by toggling LagKiller
+    /// Runs asynchronously to not block bot execution
+    /// </summary>
+    private void FixCutsceneBlackScreen()
+    {
+        Task.Run(async () =>
+        {
+            await Task.Delay(500); // Wait 500ms for cutscene to be skipped
+            Bot.Options.LagKiller = true;
+            await Task.Delay(100);
+            Bot.Options.LagKiller = false;
+        });
+    }
+
     public bool IsDungeonMonsterAlive(Monster? mon)
         => mon != null && (mon.Alive || !KilledDungeonMonsters.Contains(mon.MapID));
     public bool IsDungeonMonsterAlive(string monsterName)
@@ -6973,6 +6988,7 @@ public class CoreBots
                 break;
         }
         Bot.Player.SetSpawnPoint();
+        FixCutsceneBlackScreen();
         GC.Collect();
     }
 
@@ -8190,6 +8206,9 @@ public class CoreBots
         if (Bot.Player.Cell == cutsceneCell)
         {
             Logger($"Player not in Cell: \"{cell}\", \nAttempting to fix");
+            
+            // Fix black screen after cutscene skip
+            FixCutsceneBlackScreen();
 
             // Fix the map if needed
             if (Bot.Map.Name != map)
