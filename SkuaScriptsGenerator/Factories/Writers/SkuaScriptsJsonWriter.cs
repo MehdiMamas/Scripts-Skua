@@ -8,7 +8,7 @@ namespace SkuaScriptsGenerator.Generators
     {
         public void Write()
         {
-            var rawScriptsURL = "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/";
+            var rawScriptsURL = "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/";
             var scripts = new List<ScriptInfo>();
             foreach (var script in Directory.EnumerateFiles("./", "*.cs", SearchOption.AllDirectories))
             {
@@ -35,16 +35,16 @@ namespace SkuaScriptsGenerator.Generators
                                 break;
                         }
                     }
-                    scriptInfo.Path = script.Replace("./", "");
-                    scriptInfo.FileName = script.Split('/').Last();
-                    scriptInfo.DownloadUrl = rawScriptsURL+scriptInfo.Path;
+                    scriptInfo.Path = script.Replace("./", "").Replace("\\", "/");
+                    scriptInfo.FileName = script.Split('/', '\\').Last();
+                    scriptInfo.DownloadUrl = rawScriptsURL + scriptInfo.Path;
 
                     var scriptB = File.ReadAllBytes(script);
                     // remove zero width no-break space
                     RemoveAllZeroWidth(ref scriptB);
                     scriptInfo.Size = scriptB.Length;
-                    
-                    scripts.Add(scriptInfo);     
+
+                    scripts.Add(scriptInfo);
                 }
             }
 
@@ -58,8 +58,8 @@ namespace SkuaScriptsGenerator.Generators
             var scriptS = Regex.Replace(Encoding.UTF8.GetString(scriptB), @"\u200B|\uFEFF", "");
             scriptB = Encoding.UTF8.GetBytes(scriptS);
         }
-        
-        class ScriptInfo 
+
+        class ScriptInfo
         {
             [JsonProperty("name")]
             public string? Name { get; set; }

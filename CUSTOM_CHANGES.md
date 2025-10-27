@@ -2,6 +2,26 @@
 
 This document tracks all custom modifications made to this fork that differ from the upstream repository.
 
+## ⚠️ IMPORTANT - KEEP THIS UPDATED!
+
+**After EVERY change, modification, fix, or new script you add:**
+
+1. ✅ Update this file (CUSTOM_CHANGES.md) with what was changed
+2. ✅ Update version history at the bottom
+3. ✅ Update "Last Updated" date
+4. ✅ Update AGENT.md if you added new patterns/guidelines
+
+**This is critical for:**
+
+- 📝 Tracking what differs from upstream
+- 🔄 Resolving merge conflicts when pulling updates
+- 📚 Understanding the fork's evolution
+- ✅ Knowing what custom features exist
+
+**Don't skip this step - document as you code!**
+
+---
+
 ## Modified Core Files
 
 ### 1. CoreBots.cs
@@ -81,7 +101,101 @@ The async delay is critical - cutscenes are skipped slightly AFTER movement/load
 
 ---
 
-## New Custom Files
+## New Custom Scripts
+
+### 1. Good/BLoD/BrightAuraFarm.cs
+
+**Purpose:** Dedicated script for farming Bright Aura using the fastest available methods.
+
+**What it does:**
+
+- Automatically detects which Blinding weapons you have
+- Uses the fastest farming method available:
+  - **Blinding Bow Quest (2174)** - 5 Bright Aura per turn-in (FASTEST)
+  - **Blinding Scythe/Broadsword Quests** - Alternative fast methods
+  - **Ultimate Weapon Kit Quest (2163)** - If unlocked
+  - **Loyal Spirit Orb Merge** - Fallback method (50 LSO = 1 Bright Aura)
+- Provides detailed logging about which method is being used
+- Configurable quantity option (default: 125)
+
+**Why it exists:** Based on Reddit community feedback, having the Blinding Bow gives 5x faster Bright Aura farming. This script optimizes the farming process by automatically selecting the best method.
+
+**scripts.json entry:**
+
+```json
+{
+  "name": "Bright Aura Farm",
+  "description": "Farms Bright Aura using the fastest methods available. Uses Blinding Bow quest (5 per turn-in) if available, Ultimate WK quest, or merges from Loyal Spirit Orbs as fallback.",
+  "tags": [
+    "bright aura",
+    "blod",
+    "blinding light of destiny",
+    "bow",
+    "spirit orb",
+    "loyal spirit orb"
+  ],
+  "path": "Good/BLoD/BrightAuraFarm.cs",
+  "size": 3346,
+  "fileName": "BrightAuraFarm.cs",
+  "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/Good/BLoD/BrightAuraFarm.cs"
+}
+```
+
+**Important:** Uses custom fork URL (`MehdiMamas/Scripts-Skua`) instead of upstream URL.
+
+---
+
+### 2. SkuaScriptsGenerator/Factories/Writers/SkuaScriptsJsonWriter.cs
+
+**Purpose:** Automatic scripts.json generator that scans all .cs files and creates the scripts.json database.
+
+**What was changed:**
+
+- **Line 11:** Changed base URL from upstream to fork URL
+
+  ```csharp
+  // BEFORE:
+  var rawScriptsURL = "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/";
+
+  // AFTER:
+  var rawScriptsURL = "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/";
+  ```
+
+**Why this change:**
+
+When you regenerate scripts.json (which happens when adding new scripts), this tool automatically:
+
+1. Scans all .cs files in the repository
+2. Reads their headers (name, description, tags)
+3. Generates downloadUrl for each script
+4. Creates the scripts.json file
+
+By changing the base URL to your fork, **all scripts automatically use your fork URL** when scripts.json is regenerated. This means:
+
+- ✅ You don't have to manually edit URLs after regenerating
+- ✅ All scripts (including upstream ones) point to your fork
+- ✅ Skua will download scripts from your fork, including your custom scripts
+- ✅ Consistent URL structure across all entries
+
+**Important for merge conflicts:**
+
+This file is unlikely to change in upstream, but if it does:
+
+- ✅ **KEEP:** Your custom fork URL on line 11
+- ✅ **MERGE:** Any other changes from upstream (new features, bug fixes)
+
+**How to regenerate scripts.json:**
+
+```bash
+cd SkuaScriptsGenerator
+dotnet run > ../scripts.json
+```
+
+This will regenerate scripts.json with all scripts pointing to your fork.
+
+---
+
+## New Custom Documentation Files
 
 ### 1. AGENT.md
 
@@ -124,6 +238,18 @@ The async delay is critical - cutscenes are skipped slightly AFTER movement/load
 
 1. `CoreBots.cs` - Added cutscene skip fix
 
+### Custom Scripts (✅ Safe, unique to this fork)
+
+1. `Good/BLoD/BrightAuraFarm.cs` - New custom script
+2. `scripts.json` - Modified to include custom script with fork URL
+
+### Configuration Files (⚠️ Important for fork maintenance)
+
+1. `SkuaScriptsGenerator/Factories/Writers/SkuaScriptsJsonWriter.cs` - Changed base URL
+   - **Line 11:** Changed from `BrenoHenrike/Scripts` to `MehdiMamas/Scripts-Skua`
+   - **Why:** Ensures all scripts.json entries use the fork URL when regenerated
+   - **Impact:** When regenerating scripts.json, all URLs automatically point to this fork
+
 ### Documentation Files (✅ Safe, no upstream equivalent)
 
 1. `AGENT.md` - New file
@@ -151,7 +277,6 @@ The async delay is critical - cutscenes are skipped slightly AFTER movement/load
 - ✅ **KEEP:** FixCutsceneBlackScreen method (lines ~5493-5506)
 - ✅ **KEEP:** FixCutsceneBlackScreen() calls in Jump, PerformJump, Join methods
 - ✅ **MERGE:** Any upstream changes to other parts of the file
-
 
 ### Medium Priority (Review Before Merging)
 
@@ -195,13 +320,49 @@ After merging upstream changes, test these features:
 
 - Forked from BrenoHenrike/Scripts (Skua branch)
 
-### v1.1 (Current - Custom Modifications)
+### v1.1 (Custom Modifications)
 
 - ✅ Added cutscene skip black screen fix (CoreBots.cs)
 - ✅ Fixed multi-monster KillQuest issue (CoreStory.cs)
 - ✅ Created AGENT.md documentation
 - ✅ Created FORK_WORKFLOW.md guide
 - ✅ Created CUSTOM_CHANGES.md tracking
+
+### v1.2 (Custom Scripts)
+
+- ✅ Created BrightAuraFarm.cs - Optimized Bright Aura farming script
+- ✅ Added script to scripts.json with custom fork URL
+- ✅ Updated CUSTOM_CHANGES.md to document new script
+- ✅ Updated AGENT.md with custom script guidelines
+- ✅ Created Good/BLoD/BRIGHT_AURA_README.md - Comprehensive farming guide
+
+### v1.3 (Documentation Standards)
+
+- ✅ Added prominent documentation reminders to AGENT.md (top and bottom)
+- ✅ Added documentation reminder section to CUSTOM_CHANGES.md (top)
+- ✅ Added "CRITICAL - ALWAYS UPDATE DOCUMENTATION" section to AGENT.md
+- ✅ Updated "Remember" checklist in AGENT.md to include documentation
+- ✅ Established documentation workflow and best practices
+
+**Why:** To ensure all future changes are properly documented, making merge conflicts easier to resolve and tracking the fork's evolution.
+
+### v1.4 (Current - Scripts Generator Configuration & Complete Regeneration)
+
+- ✅ Updated SkuaScriptsJsonWriter.cs to use fork URL instead of upstream URL
+- ✅ Changed line 11 from `BrenoHenrike/Scripts` to `MehdiMamas/Scripts-Skua`
+- ✅ Fixed path separator to use forward slashes (/) instead of backslashes (\)
+- ✅ Regenerated entire scripts.json with all 1,787 scripts using fork URL
+- ✅ Verified BrightAuraFarm.cs is included with correct fork URL
+- ✅ Documented in CUSTOM_CHANGES.md with full explanation
+- ✅ Added scripts.json regeneration instructions
+
+**Result:**
+
+- All 1,787 scripts in scripts.json now point to `https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/`
+- Skua will download ALL scripts from your fork (including your custom modifications)
+- Custom scripts automatically included when regenerating
+
+**Why:** Ensures Skua always downloads from your fork with all custom modifications and fixes.
 
 ---
 

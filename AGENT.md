@@ -13,6 +13,19 @@ You are an expert debugging agent for AQW bot scripts. Your job is to identify a
 - Items don't drop as expected
 - Story progression gets stuck
 
+## ⚠️ CRITICAL REMINDER - ALWAYS UPDATE DOCUMENTATION!
+
+**After EVERY change you make, you MUST update:**
+
+1. ✅ **CUSTOM_CHANGES.md** - Document what changed and why
+2. ✅ **Version history** - Increment version and list changes
+3. ✅ **Last Updated date** - Keep it current
+4. ✅ **This file (AGENT.md)** - If you added new patterns or guidelines
+
+**See the end of this file for the full documentation workflow.**
+
+---
+
 ## Project Structure
 
 ### Core Files (Framework)
@@ -803,6 +816,126 @@ If you're unsure about a fix:
 - **Always call** `Core.RunCore()` first in `ScriptMain()`
 - **Use proper initialization** pattern for Core objects (see "How Scripts Are Structured")
 
+📦 **ADDING CUSTOM SCRIPTS TO scripts.json:**
+
+When creating new custom scripts for this fork:
+
+1. **Create the script file** in the appropriate directory (e.g., `Good/BLoD/YourScript.cs`)
+2. **Include proper header** with name, description, and tags:
+
+```csharp
+/*
+name: Your Script Name
+description: What your script does
+tags: tag1, tag2, tag3
+*/
+```
+
+3. **Add to scripts.json** with the following structure:
+
+```json
+{
+  "name": "Your Script Name",
+  "description": "What your script does",
+  "tags": ["tag1", "tag2", "tag3"],
+  "path": "Good/BLoD/YourScript.cs",
+  "size": 1234,
+  "fileName": "YourScript.cs",
+  "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/Good/BLoD/YourScript.cs"
+}
+```
+
+**IMPORTANT:** Always use the custom fork URL:
+
+- ✅ **CORRECT:** `https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/...`
+- ❌ **WRONG:** `https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/...`
+
+Get file size: `(Get-Item "path/to/file.cs").length` in PowerShell
+
+4. **Document in CUSTOM_CHANGES.md** - Add entry to track the new custom script
+
+---
+
+🔧 **SCRIPTS.JSON GENERATOR CONFIGURATION:**
+
+**Important:** This fork uses a custom scripts.json generator that automatically creates the correct URLs.
+
+**Location:** `SkuaScriptsGenerator/Factories/Writers/SkuaScriptsJsonWriter.cs`
+
+**Configuration (Line 11):**
+
+```csharp
+var rawScriptsURL = "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/";
+```
+
+**What this means:**
+
+- ✅ When you regenerate scripts.json, ALL scripts automatically use the fork URL
+- ✅ No need to manually edit URLs after regeneration
+- ✅ Includes both custom scripts AND upstream scripts
+- ✅ Skua will download scripts from this fork (with your custom modifications)
+
+**To regenerate scripts.json:**
+
+```bash
+cd SkuaScriptsGenerator
+dotnet run > ../scripts.json
+```
+
+**After regenerating:**
+
+1. ✅ Review the generated scripts.json
+2. ✅ Make sure your custom scripts are included
+3. ✅ Verify URLs point to `MehdiMamas/Scripts-Skua/Skua/`
+4. ✅ Update CUSTOM_CHANGES.md if you added new scripts
+
+**Merge Conflict Warning:**
+
+- If upstream changes this file, **KEEP your fork URL on line 11**
+- Merge any other changes (new features, bug fixes)
+
+---
+
+⚠️ **CRITICAL - ALWAYS UPDATE DOCUMENTATION:**
+
+**After EVERY change you make (scripts, Core files, fixes, new features), you MUST update the .md files:**
+
+1. ✅ **CUSTOM_CHANGES.md** - Document what was changed and why
+
+   - Add to appropriate section (Modified Core Files / New Custom Scripts / etc.)
+   - Update version history
+   - Update "Last Updated" date
+
+2. ✅ **AGENT.md** - If you added new patterns, methods, or guidelines
+
+   - Add examples of the fix/pattern
+   - Update relevant sections
+
+3. ✅ **README (optional)** - Create a README.md in the script's directory for complex scripts
+   - Usage guide
+   - Method comparison
+   - Technical details
+
+**Why this is critical:**
+
+- 📝 Future you (or AI) needs to know what was changed
+- 🔄 Merge conflict resolution requires knowing custom modifications
+- 📚 Documentation helps understand the codebase
+- ✅ Tracks evolution of the fork
+
+**Example workflow:**
+
+```
+1. Fix bug in CoreBots.cs
+2. Test the fix
+3. ✅ Update CUSTOM_CHANGES.md with what was fixed
+4. ✅ Update AGENT.md if it's a new pattern others should follow
+5. ✅ Update version history
+6. Commit all changes together
+```
+
+**Never skip documentation updates - it will save hours later!**
+
 ---
 
 **Remember:** Your goal is to make the scripts work reliably. When in doubt:
@@ -811,3 +944,4 @@ If you're unsure about a fix:
 2. Be conservative and use explicit, clear code rather than clever shortcuts
 3. Verify with CSV data files before implementing fixes
 4. Never edit z_CompiledScript.cs
+5. **ALWAYS update CUSTOM_CHANGES.md after making changes**

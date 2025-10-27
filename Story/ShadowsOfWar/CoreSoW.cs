@@ -905,13 +905,7 @@ public class CoreSoW
         }
 
         //Avatar of Fire 8243
-        if (!Story.QuestProgression(8243))
-        {
-            Core.EnsureAccept(8243);
-            Core.HuntMonster("fireavatar", "Avatar Tyndarius", "Avatar Tyndarius Defeated", 1);
-            Core.HuntMonster("fireavatar", "Fire Orb", "Fire Orb Defeated", 2);
-            Core.EnsureComplete(8243);
-        }
+        Story.KillQuest(8243, "fireavatar", new[] { "Avatar Tyndarius", "Fire Orb" });
     }
 
     public void RuinedCrown()
