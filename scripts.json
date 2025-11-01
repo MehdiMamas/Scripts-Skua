@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 154882,
+    "size": 137312,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/CoreAdvanced.cs"
   },
@@ -74,7 +74,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 77134,
+    "size": 75449,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/Army/CoreArmyLite.cs"
   },
@@ -6958,7 +6958,7 @@
       "null"
     ],
     "path": "Story/SepulchureSaga/CoreSepulchure.cs",
-    "size": 15854,
+    "size": 15855,
     "fileName": "CoreSepulchure.cs",
     "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/Story/SepulchureSaga/CoreSepulchure.cs"
   },
@@ -7360,7 +7360,7 @@
       "null"
     ],
     "path": "Story/Hollowborn/CoreHollowbornStory.cs",
-    "size": 11260,
+    "size": 11261,
     "fileName": "CoreHollowbornStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/Story/Hollowborn/CoreHollowbornStory.cs"
   },
@@ -8452,7 +8452,7 @@
       "null"
     ],
     "path": "Story/ThroneofDarkness/CoreToD.cs",
-    "size": 47923,
+    "size": 48182,
     "fileName": "CoreToD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/Story/ThroneofDarkness/CoreToD.cs"
   },
@@ -28186,7 +28186,7 @@
       "penumbra"
     ],
     "path": "Seasonal/Mogloween/MergeShops/ElodeasCandyHaulMerge.cs",
-    "size": 15095,
+    "size": 15320,
     "fileName": "ElodeasCandyHaulMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/Seasonal/Mogloween/MergeShops/ElodeasCandyHaulMerge.cs"
   },
