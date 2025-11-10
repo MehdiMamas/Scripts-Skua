@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 406841,
+    "size": 406842,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/CoreBots.cs"
   },
@@ -8452,7 +8452,7 @@
       "null"
     ],
     "path": "Story/ThroneofDarkness/CoreToD.cs",
-    "size": 48182,
+    "size": 48183,
     "fileName": "CoreToD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/Story/ThroneofDarkness/CoreToD.cs"
   },
@@ -20262,6 +20262,23 @@
     "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/Seasonal/Mogloween/07MystcroftForestStory.cs"
   },
   {
+    "name": "Elodea Temple Story",
+    "description": "This will complete the elodea temple Story quest.",
+    "tags": [
+      "story",
+      "quest",
+      "mogloween",
+      "seasonal",
+      "elodea",
+      "temple",
+      "elodeatemple"
+    ],
+    "path": "Seasonal/Mogloween/17ElodeaTemple.cs",
+    "size": 797,
+    "fileName": "17ElodeaTemple.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/17ElodeaTemple.cs"
+  },
+  {
     "name": "Masquerade Story",
     "description": "This will complete the Masquerade story quest.",
     "tags": [
@@ -20333,7 +20350,7 @@
       "null"
     ],
     "path": "Seasonal/Mogloween/CoreMogloween.cs",
-    "size": 28997,
+    "size": 31799,
     "fileName": "CoreMogloween.cs",
     "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/Seasonal/Mogloween/CoreMogloween.cs"
   },
@@ -26314,7 +26331,7 @@
       "extra"
     ],
     "path": "Story/QueenofMonsters/Extra/LivingDungeon.cs",
-    "size": 6887,
+    "size": 6888,
     "fileName": "LivingDungeon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/Story/QueenofMonsters/Extra/LivingDungeon.cs"
   },
@@ -28307,6 +28324,52 @@
     "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/Seasonal/Mogloween/MergeShops/TricktownMerge.cs"
   },
   {
+    "name": "Feast of the Depths Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Feast of the Depths Merge [2633] in /elodeatemple",
+    "tags": [
+      "feast",
+      "of",
+      "the",
+      "depths",
+      "merge",
+      "elodeatemple",
+      "gold",
+      "voucher",
+      "k",
+      "pumpkin",
+      "warlock",
+      "witch",
+      "ponytail",
+      "long",
+      "twintails",
+      "twintail",
+      "mogloween",
+      "forest",
+      "mangelwurzel",
+      "broom",
+      "pet",
+      "standing",
+      "erudite",
+      "plague",
+      "doctor",
+      "faustian",
+      "moustache",
+      "cloak",
+      "crimson",
+      "darkling",
+      "lamp",
+      "lamps",
+      "iron",
+      "doctors",
+      "cane",
+      "forged"
+    ],
+    "path": "Seasonal/Mogloween/MergeShops/FeastoftheDepthsMerge.cs",
+    "size": 7615,
+    "fileName": "FeastoftheDepthsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/FeastoftheDepthsMerge.cs"
+  },
+  {
     "name": "Mogloween Seasonal Merge",
     "description": "This will merge all the Mogloween seasonal scripts into one.",
     "tags": [
@@ -29823,7 +29886,7 @@
       "null"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/UnderworldTeamMerge.cs",
-    "size": 5831,
+    "size": 5840,
     "fileName": "UnderworldTeamMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/MehdiMamas/Scripts-Skua/Skua/Seasonal/StaffBirthdays/DageTheEvil/UnderworldTeamMerge.cs"
   },
